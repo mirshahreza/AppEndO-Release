@@ -1,0 +1,62 @@
+import{p as xt}from"./chunk-JWPE2WC7-BuMS97O4.js";import{aP as gt,V as $t,$ as bt,aS as wt,W as Ct,aQ as vt,a as i,at as X,aO as Dt,B as kt,s as Tt,r as Q,X as U,N as At,a8 as at}from"./mermaid.core-DEZLzid-.js";import{p as Bt}from"./cynefin-VYW2F7L2-PGKkvOWK.js";import"./index-pnGHLJUm.js";import"./react-vendor-CsZD9bLw.js";import"./tanstack-query-BjZ08O4H.js";import"./dayjs.min-C5-DKurV.js";import"./AiFieldAssistSectionContext-BoTUCqWw.js";import"./useHwyPublicCultureId-jOpKWxju.js";import"./terminal-CHOKAhHr.js";import"./motion-CZjBJ88L.js";import"./HeroFieldControls-BJ1_fGXo.js";import"./loader-circle-Dj1cdodG.js";import"./lucide-react-eXK3j4Qm.js";import"./lock-Dooak1a4.js";import"./flask-conical-aWjsIcyt.js";import"./id-card-DwVrPr5x.js";import"./mail-BMFRi3DY.js";import"./FormChoiceFields-oWPXFxiy.js";import"./index-CxU6q1dv.js";import"./HwyPublicPortalLayout-DQEFURIc.js";import"./useHwyPublicPortalDocumentTitle-CgGlJFIc.js";import"./hwySelfRegistrationNumericInput-DEuxNN2L.js";import"./UsersIcon-DCeYIj7S.js";import"./tanstack-virtual-BF62Is0T.js";import"./transform-C3k1rBga.js";import"./iconify-DuHxJVmX.js";var rt=i(()=>({domains:new Map,transitions:[]}),"createDefaultData"),H=rt(),St=i(()=>H.domains,"getDomains"),Mt=i(()=>H.transitions,"getTransitions"),zt=i(t=>{if(t)for(const e of t){const n=e.domain,o=(e.items??[]).map(c=>({label:c.label}));H.domains.set(n,{name:n,items:o})}},"setDomains"),Lt=i(t=>{t&&(H.transitions=t.filter(e=>e.from===e.to?(X.warn(`Cynefin: self-loop transition on domain "${e.from}" is not meaningful and will be skipped.`),!1):!0).map(e=>({from:e.from,to:e.to,label:e.label||void 0})))},"setTransitions"),Nt=i(()=>Q({...At.cynefin,...U().cynefin}),"getConfig"),Pt=i(()=>{Tt(),H=rt()},"clear"),O={getDomains:St,getTransitions:Mt,setDomains:zt,setTransitions:Lt,getConfig:Nt,clear:Pt,setAccTitle:vt,getAccTitle:Ct,setDiagramTitle:wt,getDiagramTitle:bt,getAccDescription:$t,setAccDescription:gt},Wt=i(t=>{xt(t,O),O.setDomains(t.domains),O.setTransitions(t.transitions)},"populate"),It={parse:i(async t=>{const e=await Bt("cynefin",t);X.debug(e),Wt(e)},"parse")};function E(t){let e=t+1831565813|0;return e=Math.imul(e^e>>>15,e|1),e^=e+Math.imul(e^e>>>7,e|61),((e^e>>>14)>>>0)/4294967296}i(E,"seededRandom");function it(t){let e=0;for(let n=0;n<t.length;n++){const o=t.charCodeAt(n);e=(e<<5)-e+o,e|=0}return e}i(it,"hashString");function st(t,e){return typeof t=="number"&&Number.isFinite(t)&&t!==0?t:it(e)}i(st,"resolveSeed");function ct(t,e,n,o){const c=t/2,m=o??t*.015,v=7,I=e/v,d=[];for(let a=0;a<=v;a++){const p=E(n+a*17)*m*2-m;d.push({x:c+p,y:a*I})}let D=`M${d[0].x},${d[0].y}`;for(let a=0;a<d.length-1;a++){const p=d[a],s=d[a+1],f=(p.y+s.y)/2,b=a%2===0?1:-1,h=m*1.5*b*E(n+a*31+7),R=p.x+h,V=f,F=s.x-h;D+=` C${R},${V} ${F},${f} ${s.x},${s.y}`}return D}i(ct,"generateFoldPath");function lt(t,e,n,o){const c=e/2,m=o??e*.015,v=7,I=t/v,d=[];for(let a=0;a<=v;a++){const p=E(n+a*23)*m*2-m;d.push({x:a*I,y:c+p})}let D=`M${d[0].x},${d[0].y}`;for(let a=0;a<d.length-1;a++){const p=d[a],s=d[a+1],f=(p.x+s.x)/2,b=a%2===0?1:-1,h=m*1.5*b*E(n+a*37+11),R=f,V=p.y+h,F=f,z=s.y-h;D+=` C${R},${V} ${F},${z} ${s.x},${s.y}`}return D}i(lt,"generateHorizontalBoundary");function dt(t,e){const n=t/2,o=e*.5,c=e,m=t*.03;return[`M${n},${o}`,`C${n+m},${o+(c-o)*.2}`,`${n-m*1.5},${o+(c-o)*.55}`,`${n+m*.5},${o+(c-o)*.75}`,`C${n-m},${o+(c-o)*.85}`,`${n+m*.3},${o+(c-o)*.95}`,`${n},${c}`].join(" ")}i(dt,"generateCliffPath");function ft(t,e,n,o){return[`M${t-n},${e}`,`A${n},${o} 0 1,1 ${t+n},${e}`,`A${n},${o} 0 1,1 ${t-n},${e}`,"Z"].join(" ")}i(ft,"generateConfusionPath");var ot={complex:{model:"Probe → Sense → Respond",practice:"Emergent Practices"},complicated:{model:"Sense → Analyse → Respond",practice:"Good Practices"},clear:{model:"Sense → Categorise → Respond",practice:"Best Practices"},chaotic:{model:"Act → Sense → Respond",practice:"Novel Practices"},confusion:{model:"",practice:"Disorder"}},Rt=i((t,e)=>{const n=t/2,o=e/2;return{complex:{cx:n/2,cy:o/2,x:0,y:0,w:n,h:o},complicated:{cx:n+n/2,cy:o/2,x:n,y:0,w:n,h:o},chaotic:{cx:n/2,cy:o+o/2,x:0,y:o,w:n,h:o},clear:{cx:n+n/2,cy:o+o/2,x:n,y:o,w:n,h:o},confusion:{cx:n,cy:o,x:n*.7,y:o*.7,w:n*.6,h:o*.6}}},"getDomainLayouts"),Vt=i(()=>{const t=at(),e=U();return Q(t,e.themeVariables).cynefin},"getCynefinDomainColors"),q=3,Ft=i((t,e,n,o)=>{const c=o.db,m=c.getDomains(),v=c.getTransitions(),I=c.getDiagramTitle(),d=c.getAccTitle(),D=c.getAccDescription(),a=c.getConfig(),p=Vt();X.debug("Rendering Cynefin diagram");const s=a.width,f=a.height,b=a.padding,h=a.showDomainDescriptions,R=a.boundaryAmplitude,V=s+b*2,F=f+b*2,z={complex:p.complexBg,complicated:p.complicatedBg,clear:p.clearBg,chaotic:p.chaoticBg,confusion:p.confusionBg},k=Dt(e);kt(k,F,V,a.useMaxWidth??!0),k.attr("viewBox",`0 0 ${V} ${F}`),d&&k.append("title").text(d),D&&k.append("desc").text(D);const T=k.append("g").attr("transform",`translate(${b}, ${b})`),_=Rt(s,f),Z=st(a.seed,e),mt=T.append("g").attr("class","cynefin-backgrounds"),Y=["complex","complicated","chaotic","clear"];for(const l of Y){const r=_[l];mt.append("rect").attr("class","cynefinDomain").attr("x",r.x).attr("y",r.y).attr("width",r.w).attr("height",r.h).attr("fill",z[l]).attr("fill-opacity",.4).attr("stroke","none")}const j=T.append("g").attr("class","cynefin-boundaries");j.append("path").attr("class","cynefinBoundary").attr("d",ct(s,f,Z,R)).attr("fill","none"),j.append("path").attr("class","cynefinBoundary").attr("d",lt(s,f,Z+100,R)).attr("fill","none"),j.append("path").attr("class","cynefinCliff").attr("d",dt(s,f)).attr("fill","none");const pt=s*.15,yt=f*.15;T.append("path").attr("class","cynefinConfusion").attr("d",ft(s/2,f/2,pt,yt)).attr("fill",z.confusion).attr("fill-opacity",.5);const J=T.append("g").attr("class","cynefin-labels");for(const l of Y){const r=_[l];J.append("text").attr("class","cynefinDomainLabel").attr("x",r.cx).attr("y",h?r.cy-30:r.cy).attr("text-anchor","middle").attr("dominant-baseline","middle").text(l.charAt(0).toUpperCase()+l.slice(1))}if(J.append("text").attr("class","cynefinDomainLabel").attr("x",s/2).attr("y",h?f/2-10:f/2).attr("text-anchor","middle").attr("dominant-baseline","middle").text("Confusion"),h){const l=T.append("g").attr("class","cynefin-subtitles");for(const r of Y){const u=_[r],y=ot[r];l.append("text").attr("class","cynefinSubtitle").attr("x",u.cx).attr("y",u.cy-10).attr("text-anchor","middle").attr("dominant-baseline","middle").text(y.model),l.append("text").attr("class","cynefinSubtitle").attr("x",u.cx).attr("y",u.cy+5).attr("text-anchor","middle").attr("dominant-baseline","middle").text(y.practice)}l.append("text").attr("class","cynefinSubtitle").attr("x",s/2).attr("y",f/2+8).attr("text-anchor","middle").attr("dominant-baseline","middle").text(ot.confusion.practice)}const K=T.append("g").attr("class","cynefin-items"),A=26,tt=10,ut=["complex","complicated","chaotic","clear","confusion"];for(const l of ut){const r=m.get(l);if(!r||r.items.length===0)continue;const u=_[l],y=l==="confusion";let L=r.items,N=0;y&&r.items.length>q&&(N=r.items.length-q,L=r.items.slice(0,q));let B;if(y){const g=h?22:14;B=u.cy+g}else B=u.cy+(h?25:15);if([...L].forEach((g,S)=>{const w=B+S*(A+4),M=K.append("g"),P=M.append("text").attr("class","cynefinItemText").attr("x",0).attr("y",A/2).attr("text-anchor","middle").attr("dominant-baseline","central").text(g.label);let $=g.label.length*7;const x=P.node();if(x&&typeof x.getBBox=="function"){const G=x.getBBox();G.width>0&&($=G.width)}const C=$+tt*2,W=u.cx-C/2;M.attr("transform",`translate(${W}, ${w})`),M.insert("rect","text").attr("class","cynefinItem").attr("x",0).attr("y",0).attr("width",C).attr("height",A).attr("rx",4).attr("ry",4).attr("fill",z[l]).attr("fill-opacity",.95),P.attr("x",C/2).attr("y",A/2)}),N>0){const g=B+L.length*(A+4),S=`+${N} more`,w=K.append("g"),M=w.append("text").attr("class","cynefinItemText").attr("x",0).attr("y",A/2).attr("text-anchor","middle").attr("dominant-baseline","central").text(S);let P=S.length*7;const $=M.node();if($&&typeof $.getBBox=="function"){const W=$.getBBox();W.width>0&&(P=W.width)}const x=P+tt*2,C=u.cx-x/2;w.attr("transform",`translate(${C}, ${g})`),w.insert("rect","text").attr("class","cynefinItemOverflow").attr("x",0).attr("y",0).attr("width",x).attr("height",A).attr("rx",4).attr("ry",4).attr("fill",z[l]).attr("fill-opacity",.6),M.attr("x",x/2).attr("y",A/2)}}if(v.length>0){const l=k.select("defs").empty()?k.append("defs"):k.select("defs"),r=`cynefin-arrow-${e}`;l.append("marker").attr("id",r).attr("viewBox","0 0 10 10").attr("refX",9).attr("refY",5).attr("markerWidth",6).attr("markerHeight",6).attr("orient","auto-start-reverse").append("path").attr("d","M 0 0 L 10 5 L 0 10 z").attr("class","cynefinArrowHead");const u=T.append("g").attr("class","cynefin-arrows");v.forEach(y=>{const L=_[y.from],N=_[y.to];if(!L||!N)return;if(y.from===y.to){X.warn(`Cynefin renderer: skipping self-loop on domain "${y.from}"`);return}const B=L.cx,g=L.cy,S=N.cx,w=N.cy,M=(B+S)/2,P=(g+w)/2,$=S-B,x=w-g,C=Math.sqrt($*$+x*x),W=C*.15,G=-x/C,ht=$/C,et=M+G*W,nt=P+ht*W;u.append("path").attr("class","cynefinArrowLine").attr("d",`M${B},${g} Q${et},${nt} ${S},${w}`).attr("fill","none").attr("marker-end",`url(#${r})`),y.label&&u.append("text").attr("class","cynefinArrowLabel").attr("x",et).attr("y",nt-6).attr("text-anchor","middle").attr("dominant-baseline","auto").text(y.label)})}I&&T.append("text").attr("class","cynefinTitle").attr("x",s/2).attr("y",-b/2).attr("text-anchor","middle").attr("dominant-baseline","middle").text(I)},"draw"),_t={draw:Ft},Et=i(()=>{const t=at(),e=U();return Q(t,e.themeVariables).cynefin},"getCynefinTheme"),Ht=i(()=>{const t=Et();return`
+	.cynefinDomain {
+		stroke: none;
+	}
+	.cynefinDomainLabel {
+		font-size: ${t.domainFontSize}px;
+		font-weight: bold;
+		fill: ${t.labelColor};
+	}
+	.cynefinSubtitle {
+		font-size: ${t.itemFontSize-1}px;
+		fill: ${t.textColor};
+		font-style: italic;
+	}
+	.cynefinItem {
+		fill-opacity: 0.95;
+		stroke: ${t.boundaryColor};
+		stroke-width: 1;
+	}
+	.cynefinItemText {
+		font-size: ${t.itemFontSize}px;
+		fill: ${t.textColor};
+	}
+	.cynefinItemOverflow {
+		fill-opacity: 0.6;
+		stroke: ${t.boundaryColor};
+		stroke-width: 1;
+		stroke-dasharray: 3 2;
+	}
+	.cynefinBoundary {
+		stroke: ${t.boundaryColor};
+		stroke-width: ${t.boundaryWidth};
+		stroke-dasharray: 6 3;
+	}
+	.cynefinCliff {
+		stroke: ${t.cliffColor};
+		stroke-width: ${t.cliffWidth};
+	}
+	.cynefinConfusion {
+		stroke: ${t.boundaryColor};
+		stroke-width: 1.5;
+		stroke-dasharray: 4 2;
+	}
+	.cynefinArrowLine {
+		stroke: ${t.arrowColor};
+		stroke-width: ${t.arrowWidth};
+		fill: none;
+	}
+	.cynefinArrowHead {
+		fill: ${t.arrowColor};
+		stroke: none;
+	}
+	.cynefinArrowLabel {
+		font-size: ${t.itemFontSize-1}px;
+		fill: ${t.textColor};
+	}
+	.cynefinTitle {
+		font-size: ${t.domainFontSize+2}px;
+		font-weight: bold;
+		fill: ${t.labelColor};
+	}
+	`},"styles"),Gt=Ht,xe={parser:It,db:O,renderer:_t,styles:Gt};export{xe as diagram};

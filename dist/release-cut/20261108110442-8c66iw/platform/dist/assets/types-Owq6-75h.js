@@ -1,1 +1,0 @@
-var A=(L=>(L.POSTGRES="PostgreSQL",L.MYSQL="MySQL",L.SQLITE="SQLite",L.ORACLE="Oracle",L.SQL_SERVER="SQL Server",L.OLAP_BRIDGE="OLAP Bridge",L.MONGODB_ANALYTICS="MongoDB Analytics",L.ELASTICSEARCH_ANALYTICS="Elasticsearch Analytics",L))(A||{});export{A as D};

@@ -1,1 +1,0 @@
-const i=s=>{const r=s.trim();return r.includes("\\")&&!r.includes(",")},c=(s,r)=>{const t=s.trim();if(i(t))return{host:t,port:0};if(!t.includes(","))return{host:t||"localhost",port:r};const[o,n]=t.split(",",2),e=Number((n||"").trim());return{host:(o||"").trim()||"localhost",port:Number.isFinite(e)&&e>0?e:r}};export{i,c as p};

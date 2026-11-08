@@ -23,7 +23,11 @@ export type ReleaseCutCheckpoint = {
 };
 
 export function releaseCutRunRoot(repoRoot: string, runId: string): string {
-  return path.join(repoRoot, 'dist', 'release-cut', runId);
+  const legacy = path.join(repoRoot, 'dist', 'release-cut', runId);
+  if (fs.existsSync(path.join(legacy, 'checkpoint.json'))) {
+    return legacy;
+  }
+  return path.join(repoRoot, '.release-cut-runs', runId);
 }
 
 export function checkpointPath(runRoot: string): string {

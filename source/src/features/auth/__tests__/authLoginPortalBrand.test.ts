@@ -24,7 +24,7 @@ const verticalHomeConfig = {
       brand: {
         logoUrl: '/assets/workspace/portals/vertical/logo.png',
         title: 'Vertical identity',
-        windowTitle: 'هویتی',
+        windowTitle: 'هويتي',
       },
     },
   ],
@@ -40,7 +40,7 @@ describe('authLoginPortalBrand', () => {
     expect(brand.portalSegment).toBe('vertical');
     expect(brand.usesPortalLogo).toBe(true);
     expect(brand.logoUrl).toBe('/assets/workspace/portals/vertical/logo.png');
-    expect(brand.windowTitle).toBe('هویتی');
+    expect(brand.windowTitle).toBe('هويتي');
   });
 
   it('uses the Vertical portal logo when return URL targets vertical', () => {

@@ -1,0 +1,1 @@
+const a="ticket",o=t=>{var e;return((e=t.get(a))==null?void 0:e.trim())||null},i=(t,c)=>{const e=t.indexOf("?"),n=e>=0?t.slice(0,e):t,s=new URLSearchParams(e>=0?t.slice(e+1):"");s.set(a,c);const r=s.toString();return r?`${n}?${r}`:n};export{a as F,i as b,o as r};

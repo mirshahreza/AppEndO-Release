@@ -1496,6 +1496,19 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       ],
     },
     {
+      id: 'package.vertical.locale-policy',
+      title: 'Vertical — Arabic UI, English repo copy, no Persian',
+      value:
+        'Vertical end-user and iq overlay copy Arabic (e.g. هويتي not Persian هویتی); AppEndO-Vertical README/templates and non-UI Vertical metadata English only; no Persian in vertical shell seeds or vertical.* culture keys; shard package-vertical-locale-policy',
+      appliesTo: [
+        'src/core/packages/verticalPackage.ts',
+        'src/domain/vx/vxPlatformPortalBrandDefaults.ts',
+        'scripts/release-cut/templates/AppEndO-Vertical-README.md',
+        'src/core/system-extensions/culture-packs/overlays/vertical.iq.json',
+        'workspace/platform-registry/shells/vertical.json',
+      ],
+    },
+    {
       id: 'package.vertical.ui-vocab',
       value:
         'Vertical Studio UI copy: say region (منطقة) not eghtera/اقتراع; maktab (مكتب) not tamvin/تموين; electoral breadcrumb order province → ghavateh? → circle → maktab → region; grid column 3 rows (province|ghavateh / circle|maktab / region) via vxElectoralBreadcrumbStandard.ts — legacy SQL/route names stay; shard package-vertical-ui-vocab',
@@ -1724,7 +1737,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'platform.release-cut',
       title: 'Local Release Cut (no cloud CI)',
       value:
-        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default vertical), exports lean OSS to .appendo-release-staging and the separate public git repo AppEndO-Release (cms + remote-hubs only); see docs/standards/release-cut.md',
+        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default vertical) in P4 only when versions change; public AppEndO-Release (cms + remote-hubs) and private AppEndO-Vertical (full source + dist + promoted vertical zip, no pack on vertical export); see docs/standards/release-cut.md',
       appliesTo: ['release', 'packages', 'CI', 'vertical pack', 'open source bundle'],
     },
     {
@@ -2066,6 +2079,7 @@ export const shardForStandardId = (id: string): string => {
   if (id.startsWith('component-designer')) return 'component-designer';
   if (id.startsWith('package.records') || id.startsWith('package.home') || id.startsWith('package.studio') || id.startsWith('package.install')) return 'package-ui';
   if (id.startsWith('package.base-info')) return 'package-base-info-vocab';
+  if (id === 'package.vertical.locale-policy') return 'package-vertical-locale-policy';
   if (id === 'package.vertical.ui-vocab') return 'package-vertical-ui-vocab';
   if (id === 'package.vertical.member-face-caption') return 'package-vertical-member-face-caption';
   if (id === 'package.vertical.member-list-legacy-filters') return 'package-vertical-member-list-legacy-filters';

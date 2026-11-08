@@ -1,5 +1,9 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { PROJECT_STANDARDS } from '../config/projectStandards';
+import { useOptionalCultureT } from '../core/culture/CultureContext';
+import { VERTICAL_PACKAGE_VERSION } from '../core/packages/verticalPackage';
+import { isVerticalPublicPathname } from '../shared/packages/verticalRuntimeClient';
 import { AppEndLogo } from './AppEndLogo';
 import {
   AppDialogShell,
@@ -17,12 +21,44 @@ interface AboutAppModalProps {
   open: boolean;
   onClose: () => void;
   brand?: ResolvedPortalBrand | null;
+  /** When true, show Vertical package version (auto-detected from `/vertical/` URL when omitted). */
+  showVerticalPackageVersion?: boolean;
 }
 
-export const AboutAppModal = ({ open, onClose, brand = null }: AboutAppModalProps) => {
-  const headline = brand?.aboutTitle?.trim() || DEFAULT_PORTAL_ABOUT_TITLE;
-  const body = brand?.aboutBody?.trim() || DEFAULT_PORTAL_ABOUT_BODY;
+export const AboutAppModal = ({
+  open,
+  onClose,
+  brand = null,
+  showVerticalPackageVersion,
+}: AboutAppModalProps) => {
+  const t = useOptionalCultureT();
+  const { pathname } = useLocation();
+  const showVerticalPackage =
+    showVerticalPackageVersion ?? isVerticalPublicPathname(pathname);
 
+  const verticalAboutTitleKey = 'vx.selfReg.portal.aboutTitle';
+  const verticalAboutBodyKey = 'vx.selfReg.portal.aboutBody';
+  const cultureAboutTitle = t(verticalAboutTitleKey);
+  const cultureAboutBody = t(verticalAboutBodyKey);
+  const headline = showVerticalPackage && cultureAboutTitle !== verticalAboutTitleKey
+    ? cultureAboutTitle
+    : brand?.aboutTitle?.trim() || DEFAULT_PORTAL_ABOUT_TITLE;
+  const body = showVerticalPackage && cultureAboutBody !== verticalAboutBodyKey
+    ? cultureAboutBody
+    : brand?.aboutBody?.trim() || DEFAULT_PORTAL_ABOUT_BODY;
+
+  const verticalPackageVersionKey = 'vx.selfReg.portal.aboutVerticalPackageVersionLabel';
+  const standardsLabelKey = 'vx.selfReg.portal.aboutStandardsLabel';
+  const verticalPackageVersionLabelRaw = t(verticalPackageVersionKey);
+  const verticalPackageVersionLabel =
+    verticalPackageVersionLabelRaw === verticalPackageVersionKey
+      ? 'Vertical package'
+      : verticalPackageVersionLabelRaw;
+  const standardsLabelRaw = showVerticalPackage ? t(standardsLabelKey) : 'Standards';
+  const standardsLabel =
+    showVerticalPackage && standardsLabelRaw !== standardsLabelKey
+      ? standardsLabelRaw
+      : 'Standards';
   return (
     <AppDialogShell
       open={open}
@@ -51,22 +87,43 @@ export const AboutAppModal = ({ open, onClose, brand = null }: AboutAppModalProp
           </div>
         </div>
 
-        <div className="space-y-4 bg-surface-elevated p-8">
+        <div
+          className={cn('space-y-4 bg-surface-elevated p-8', showVerticalPackage && 'text-start')}
+          dir={showVerticalPackage ? 'rtl' : undefined}
+          lang={showVerticalPackage ? 'ar' : undefined}
+        >
           <div className="space-y-2">
             <h3 className="text-lg font-black tracking-tight text-slate-900">{headline}</h3>
             <p className="text-sm leading-relaxed text-slate-500 whitespace-pre-wrap">{body}</p>
           </div>
 
           <div className="space-y-3 pt-2 text-xs text-slate-500">
+            {showVerticalPackage ? (
+              <p>
+                <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.accent)}>
+                  {verticalPackageVersionLabel}
+                </span>
+                {' '}
+                <bdi dir="ltr" className="tabular-nums">
+                  v
+                  {VERTICAL_PACKAGE_VERSION}
+                </bdi>
+              </p>
+            ) : null}
             <p>
-              <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.accent)}>Version</span>
+              <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.complement)}>{standardsLabel}</span>
               {' '}
-              v2.4.0 Stable
-            </p>
-            <p>
-              <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.complement)}>Standards</span>
-              {' '}
-              v{PROJECT_STANDARDS.version}
+              {showVerticalPackage ? (
+                <bdi dir="ltr" className="tabular-nums">
+                  v
+                  {PROJECT_STANDARDS.version}
+                </bdi>
+              ) : (
+                <>
+                  v
+                  {PROJECT_STANDARDS.version}
+                </>
+              )}
             </p>
           </div>
         </div>

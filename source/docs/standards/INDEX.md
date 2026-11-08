@@ -84,6 +84,7 @@ Machine index of the same constraints: [`src/config/projectStandards.ts`](../../
 | Local release cut (`npm run release:cut`, OSS cms + remote-hubs only) | [`release-cut.md`](./release-cut.md) | `release-cut` |
 | Vertical multi-step SQL writes → procedures/functions | [`package-vertical-db.md`](./package-vertical-db.md) | `package-vertical-db` |
 | Vertical geo/nakhebin UI words (region vs eghtera, maktab vs tamvin) | [`package-vertical-ui-vocab.md`](./package-vertical-ui-vocab.md) | `package-vertical-ui-vocab` |
+| Vertical Arabic UI + English repo copy (no Persian in product / AppEndO-Vertical) | [`package-vertical-locale-policy.md`](./package-vertical-locale-policy.md) | `package-vertical-locale-policy` |
 | Vertical member list avatar code (blue username / red tracking; Waited queues) | [`package-vertical-member-face-caption.md`](./package-vertical-member-face-caption.md) | `package-vertical-member-face-caption` |
 | Vertical member-list field-by-field filter rows (mode 2 toolbar) | [`package-vertical-member-list-legacy-filters.md`](./package-vertical-member-list-legacy-filters.md) | `package-vertical-member-list-legacy-filters` |
 | Vertical domain invariants (electoral-tree single anchor per role) | [`package-vertical-domain-invariants.md`](./package-vertical-domain-invariants.md) | `package-vertical-domain-invariants` |

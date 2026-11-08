@@ -72,7 +72,7 @@ export const BASE_INFO_IQ_TITLES_BY_ENGLISH: Readonly<Record<string, string>> = 
   'Comment Policies': 'سياسات التعليقات',
   Automatic: 'تلقائي',
   Approve: 'موافقة',
-  Vertical: 'هویتی',
+  Vertical: 'هويتي',
   'Membership Status': 'حالة العضوية',
   'Pending Call Center': 'بانتظار مركز الاتصال',
   'Pending Local Verification': 'بانتظار التوثيق المحلي',

@@ -1,6 +1,6 @@
 # Local release cut
 
-Operator invokes **`@appendo-release-cut`** or `npm run release:cut` after normal work on `main`.
+Operator invokes **`@appendo-release-cut`** or `npm run release:cut` after normal work on `main`. Menu **انتشار → 1**: run full local cut (patch bump) when `main` has commits since the latest `release/v*` tag, then push private + **AppEndO-Release** + **AppEndO-Vertical**; re-export only when already tagged at `HEAD`.
 
 - Orchestrator: `scripts/release-cut/run-release-cut.ts`
 - Plan: `plans/core/todo/p-130-local-release-cut.md`
@@ -10,5 +10,7 @@ Operator invokes **`@appendo-release-cut`** or `npm run release:cut` after norma
 Dry run: `npm run release:cut:dry-run -- --allow-dirty` (or `npx tsx scripts/release-cut/run-release-cut.ts --dry-run --allow-dirty --no-main-guard`).
 
 **Public repo `AppEndO-Release`:** after `npm run build`, `npm run release:export-appendo-release` (or release-cut P8 when `dist/server.cjs` exists). Push with `npm run release:push-appendo-release` or `npm run release:cut -- --push-appendo-release` after cloning `../AppEndO-Release`. Do not use `releases/public/` in the private monorepo.
+
+**Private repo `AppEndO-Vertical`:** `npm run release:export-appendo-vertical` copies **full source** + `dist/` + promotes existing `vertical-*.zip` (no pack on export). Push: `npm run release:push-appendo-vertical` or `npm run release:cut -- --push-appendo-vertical` to sibling `../AppEndO-Vertical` (private GitHub). Tag: `vertical/vX.Y.Z`. Server upload (FTP/rsync) is RCUT-9. Locale: Vertical README/templates **English**; product UI **Arabic (iq)** — **no Persian** in Vertical seeds or repo-facing docs (`package-vertical-locale-policy`).
 
 P5 tests default to `test:release-cut` and `test:release-cut-packaging` (package pipelines run in P4). Optional: `--with-test-critical`, `--with-repo-lint`.

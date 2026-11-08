@@ -1,0 +1,105 @@
+{
+  "edgeModelId": "em_8c269ccdbe49a477",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "key"
+    },
+    {
+      "columnName": "label"
+    },
+    {
+      "columnName": "label_en"
+    },
+    {
+      "columnName": "label_fa"
+    },
+    {
+      "columnName": "label_ar"
+    },
+    {
+      "columnName": "scope"
+    },
+    {
+      "columnName": "source_type"
+    },
+    {
+      "columnName": "base_info_root_id"
+    },
+    {
+      "columnName": "profile_field"
+    },
+    {
+      "columnName": "data_type"
+    },
+    {
+      "columnName": "cardinality"
+    },
+    {
+      "columnName": "min_selections",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "max_selections",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "visibility"
+    },
+    {
+      "columnName": "is_required"
+    },
+    {
+      "columnName": "is_active"
+    },
+    {
+      "columnName": "view_order",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "user_editable"
+    },
+    {
+      "columnName": "user_edit_policy"
+    },
+    {
+      "columnName": "is_builtin"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_roles_attributes.definition_id->base_settings_attributes.id:base_roles_attributes_definition_id_fkey",
+      "displayLabel": "base_roles_attributes (Definition)"
+    },
+    {
+      "relationKey": "physical:base_settings_attributes.base_info_root_id->base_info.id:base_settings_attributes_base_info_root_id_fkey",
+      "displayLabel": "Base Info Root"
+    },
+    {
+      "relationKey": "physical:base_users_attributes.definition_id->base_settings_attributes.id:base_users_attributes_definition_id_fkey",
+      "displayLabel": "base_users_attributes (Definition)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nData-model attribute **definitions** — typed fields bound to users and/or roles. Drives extended profile UI, record-policy dimensions, and EAV value tables.\n\n## Rules\n\n- **UNIQUE** (`scope`, `key`) — scope namespaces platform vs package definitions.\n- `source_type` selects static, Base Info tree, or profile field binding.\n- `visibility` / `user_editable` / `user_edit_policy` gate self-service vs admin-only edit.\n- Deactivate with `is_active` rather than hard-delete when values exist."
+  },
+  "created_at": "2026-09-11T04:55:16.332Z",
+  "updated_at": "2026-09-17T15:29:39.801Z"
+}

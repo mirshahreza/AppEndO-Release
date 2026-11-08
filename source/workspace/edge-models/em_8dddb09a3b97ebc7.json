@@ -1,0 +1,81 @@
+{
+  "id": "em_8dddb09a3b97ebc7",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_work_item_comments",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkItemComments",
+    "tableName": "base_work_item_comments"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "work_item_id",
+      "field": "workItemId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_82d6bab459e414c1",
+        "column": "id"
+      }
+    },
+    {
+      "name": "author_user_id",
+      "field": "authorUserId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "text",
+      "field": "text",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "mentioned_user_ids_json",
+      "field": "mentionedUserIdsJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "f2ec4b8a09a645d7",
+  "readOnly": false,
+  "labels": {
+    "title": "base_work_item_comments"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:19.089Z",
+  "updated_at": "2026-09-11T04:55:19.089Z"
+}

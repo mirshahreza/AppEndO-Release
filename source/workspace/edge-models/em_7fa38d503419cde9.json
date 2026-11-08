@@ -1,0 +1,184 @@
+{
+  "id": "em_7fa38d503419cde9",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_idea_cards",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseIdeaCards",
+    "tableName": "base_idea_cards"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "title",
+      "field": "title",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "raw_description_md",
+      "field": "rawDescriptionMd",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "kind",
+      "field": "kind",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "package_origin",
+      "field": "packageOrigin",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "package_slug",
+      "field": "packageSlug",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status",
+      "field": "status",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "initiator_id",
+      "field": "initiatorId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "merged_into_idea_id",
+      "field": "mergedIntoIdeaId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_7fa38d503419cde9",
+        "column": "id"
+      }
+    },
+    {
+      "name": "park_or_kill_reason_md",
+      "field": "parkOrKillReasonMd",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "review_work_item_id",
+      "field": "reviewWorkItemId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_82d6bab459e414c1",
+        "column": "id"
+      }
+    },
+    {
+      "name": "package_ref",
+      "field": "packageRef",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "tags_json",
+      "field": "tagsJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "1c8816fb8568ce48",
+  "readOnly": false,
+  "labels": {
+    "title": "base_idea_cards"
+  },
+  "status": "ready",
+  "created_at": "2026-08-30T22:10:10.222Z",
+  "updated_at": "2026-09-11T04:55:11.448Z"
+}

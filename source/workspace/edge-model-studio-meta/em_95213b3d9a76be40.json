@@ -1,0 +1,91 @@
+{
+  "edgeModelId": "em_95213b3d9a76be40",
+  "tags": [
+    "cms",
+    "relation"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "hidden",
+      "group": "Identity",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "content_id_a",
+      "icon": "lucide:newspaper",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "content_id_b",
+      "icon": "lucide:newspaper",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "note",
+      "icon": "lucide:sticky-note",
+      "formWidget": "multiline",
+      "searchRole": "advanced",
+      "group": "Note",
+      "sortOrder": 40
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_27531ff7b4154bda",
+      "displayLabel": "Content A",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "title",
+          "as": "content_id_a_title"
+        },
+        {
+          "sourceColumn": "slug",
+          "as": "content_id_a_slug"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_4369956c8b62486b",
+      "displayLabel": "Content B",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "title",
+          "as": "content_id_b_title"
+        },
+        {
+          "sourceColumn": "slug",
+          "as": "content_id_b_slug"
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nUndirected “related content” edges. One row links two `cms_contents` ids. Reading related for X = rows where `content_id_a = X` OR `content_id_b = X`.\n\n## Rules\n\n- Surrogate `id` PK; **UNIQUE** (`content_id_a`, `content_id_b`).\n- Always normalize on write: `content_id_a < content_id_b`.\n- Forbid self-links (`a ≠ b`) — enforced by check + app logic.\n- Do **not** model two directional associations; edge model uses one self-M2M `relatedContents` on contents.\n- Optional `note` is operator-internal.\n- Deleting a content removes edges touching that id.",
+    "columnGroupOrder": [
+      "Identity",
+      "Note"
+    ],
+    "columnGroupPresentation": {
+      "Identity": {
+        "icon": "lucide:git-branch",
+        "color": "text-rose-600"
+      },
+      "Note": {
+        "icon": "lucide:sticky-note",
+        "color": "text-slate-600"
+      }
+    }
+  },
+  "created_at": "2026-11-06T20:29:02.311Z",
+  "updated_at": "2026-11-06T20:29:02.311Z"
+}

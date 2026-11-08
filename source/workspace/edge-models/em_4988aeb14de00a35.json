@@ -1,0 +1,125 @@
+{
+  "id": "em_4988aeb14de00a35",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_app_feedback_attachments",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseAppFeedbackAttachments",
+    "tableName": "base_app_feedback_attachments"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "feedback_id",
+      "field": "feedbackId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f186ade9fbfe1ad0",
+        "column": "id"
+      }
+    },
+    {
+      "name": "message_id",
+      "field": "messageId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_96968513d765cf95",
+        "column": "id"
+      }
+    },
+    {
+      "name": "file_name",
+      "field": "fileName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "mime_type",
+      "field": "mimeType",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "size_bytes",
+      "field": "sizeBytes",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "storage_key",
+      "field": "storageKey",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "uploaded_by_user_id",
+      "field": "uploadedByUserId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "staged_session_key",
+      "field": "stagedSessionKey",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "0ebfca3fa3895d75",
+  "readOnly": false,
+  "labels": {
+    "title": "base_app_feedback_attachments"
+  },
+  "status": "ready",
+  "created_at": "2026-08-28T14:59:10.061Z",
+  "updated_at": "2026-09-11T04:55:09.692Z"
+}

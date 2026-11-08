@@ -1,0 +1,83 @@
+{
+  "id": "em_70527d6dd3421100",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_username_repo",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyUsernameRepo",
+    "tableName": "hwy_username_repo"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "username",
+      "field": "username",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "member_id",
+      "field": "memberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b9b34df33282b49c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "reserved_at",
+      "field": "reservedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "released_at",
+      "field": "releasedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_1ae1accf7e9a4ddb",
+      "targetModelId": "em_b9b34df33282b49c",
+      "foreignKey": "member_id",
+      "as": "member",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "0d5611cb7da9fe8b",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Username Repo",
+    "icon": "lucide:at-sign",
+    "color": "text-neutral-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:06.656Z",
+  "updated_at": "2026-11-03T08:44:20.534Z"
+}

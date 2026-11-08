@@ -1,0 +1,54 @@
+{
+  "edgeModelId": "em_5282477fc36a2a52",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "key"
+    },
+    {
+      "columnName": "lifecycle_status"
+    },
+    {
+      "columnName": "created_at",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "last_published_at",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_definitions.current_published_revision_id->base_workflow_revisions.id:base_workflow_definitions_current_published_revision_id_fkey",
+      "displayLabel": "Current Published Revision"
+    },
+    {
+      "relationKey": "physical:base_workflow_designer_views.workflow_definition_id->base_workflow_definitions.id:base_workflow_designer_views_workflow_definition_id_fkey",
+      "displayLabel": "base_workflow_designer_views (Workflow Definition)"
+    },
+    {
+      "relationKey": "physical:base_workflow_revisions.workflow_definition_id->base_workflow_definitions.id:base_workflow_revisions_workflow_definition_id_fkey",
+      "displayLabel": "base_workflow_revisions (Workflow Definition)"
+    },
+    {
+      "relationKey": "physical:base_workflow_simulation_runs.workflow_definition_id->base_workflow_definitions.id:base_workflow_simulation_runs_workflow_definition_id_fkey",
+      "displayLabel": "base_workflow_simulation_runs (Workflow Definition)"
+    },
+    {
+      "relationKey": "physical:base_workflow_validation_reports.workflow_definition_id->base_workflow_definitions.id:base_workflow_validation_reports_workflow_definition_id_fkey",
+      "displayLabel": "base_workflow_validation_reports (Workflow Definition)"
+    },
+    {
+      "relationKey": "physical:base_workflow_webhook_bindings.workflow_definition_id->base_workflow_definitions.id:base_workflow_webhook_bindings_workflow_definition_id_fkey",
+      "displayLabel": "base_workflow_webhook_bindings (Workflow Definition)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nWorkflow **design-time** header — stable `(scope_key, key)`, draft JSON, lifecycle (DRAFT/PUBLISHED/…), pointer to current published revision. Designer and runtime both anchor here.\n\n## Lifecycle\n\n1. **Draft edit** — `draft_definition_json` + increment `draft_version` on save.\n2. **Validate / publish** — creates `base_workflow_revisions` row; may update `current_published_revision_id`.\n3. **Unpublish / archive** — lifecycle transition without deleting historical revisions.\n\n## Rules\n\n- **UNIQUE** (`scope_key`, `key`) — `scope_key` isolates tenant/package definitions (`global` default).\n- Published runtime always pins a **revision id**, never mutable draft JSON.\n- Fork/clone tracked via `created_from_*` + `creation_mode`."
+  },
+  "created_at": "2026-09-11T04:55:21.685Z",
+  "updated_at": "2026-09-17T15:29:39.911Z"
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html data-theme="blue">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>هويتي</title>
+
+    <link href="/.lib/site.min.css" rel="stylesheet" />
+
+    <script id="requirejsScriptTag" data-main="self-registration" src="/.lib/misc/require.min.js"></script>
+    <script>
+        (function () {
+            if (!sessionStorage.length) {
+                localStorage.setItem('getSessionStorage', Date.now());
+            };
+            window.addEventListener('storage', function (event) {
+                if (event.key == 'getSessionStorage') {
+                    localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+                    localStorage.removeItem('sessionStorage');
+                } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+                    var data = JSON.parse(event.newValue);
+                    for (key in data) {
+                        sessionStorage.setItem(key, data[key]);
+                    }
+                }
+            });
+        })();
+
+        //let fake = 'fake_' + (new Date()).getTime();
+        let fake = 'f_2163955';
+
+        let dataMain = document.getElementById("requirejsScriptTag").attributes["data-main"].value.split('/');
+        let appPath = '/' + dataMain[dataMain.length - 1] + '/';
+        let compsPath = '/components/';
+        function getCTP(templateName) { return 'text!' + compsPath + templateName + '.html'; }
+        function getCSP(scriptName) { return compsPath + scriptName + '.js'; }
+        let rjsConfig = {
+            shim: {
+                'invoke-all': {
+                    deps: [
+                        'jquery', 'vue', 'lodash', 'text', 'bootstrap', 'scrollbars',
+                        'ae-container', 'ae-wizard', 'ae-file-field', 'ae-files-list', 'ae-transcribe', 'ae-transcribe-minimal',
+                        'custom', 'ae-app'
+                    ]
+                },
+                'bootstrap': { deps: ['jquery'] },
+                'scrollbars': { deps: ['jquery'] },
+                'datetimepicker': { deps: ['jquery'] },
+                'custom': { deps: ['jquery', 'ae-miss'] },
+                'ae-app': { deps: ['jquery', 'ae-miss'] },
+                'ae-container': { deps: ['jquery'] },
+                'ae-wizard': { deps: ['jquery'] },
+                'ae-file-field': { deps: ['jquery'] },
+                'ae-files-list': { deps: ['jquery'] },
+                'ae-transcribe': { deps: ['jquery'] },
+                'ae-transcribe-minimal': { deps: ['jquery'] },
+                'ae-miss': { deps: ['jquery'] }
+            },
+            paths: {
+                'invoke-all': '/.lib/append/invoke-all',
+                'custom': '/.custom/custom',
+                'jquery': '/.lib/misc/jquery.min',
+                'ckeditor': '/.lib/ckeditor5/ckeditor',
+                'bootstrap': '/.lib/bootstrap-5.2.0/js/bootstrap.bundle.min',
+                'vue': '/.lib/misc/vue.min',
+                'lodash': '/.lib/misc/lodash.min',
+                'text': '/.lib/misc/text',
+                'datetimepicker': '/.lib/datetimepicker/build/jquery.datetimepicker.full',
+                'scrollbars': '/.lib/OverlayScrollbars/js/jquery.overlayScrollbars.min',
+                'ae-miss': '/.lib/append/ae-miss',
+                'ae-app': '/.lib/append/ae-app',
+                'ae-container': '/.lib/append/ae-container',
+                'ae-file-field': '/.lib/append/ae-file-field',
+                'ae-files-list': '/.lib/append/ae-files-list',
+
+                'ae-transcribe': '/.lib/append/ae-transcribe',
+                'ae-transcribe-minimal': '/.lib/append/ae-transcribe-minimal',
+
+                'ae-wizard': '/.lib/append/ae-wizard'
+            },
+            urlArgs: fake,
+            waitSeconds: 0
+        };
+        requirejs.config(rjsConfig);
+    </script></head>
+<body>
+    <div class="container-fluid my-0 py-0">
+        <div class="scrollable py-0 cover-parent">
+            <div style="height:15px;" class="d-none d-lg-block"></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-1 d-none d-md-block"></div>
+                    <div class="col-12 col-md-10">
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="col-12">
+                                    <div class="card bg-hawiety-blue shadow-sm border-0">
+                                        <div class="card-body">
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td>
+                                                        <img src="/.custom/images/logo.png" style="height:5em;" />
+                                                    </td>
+                                                    <td style="width:60px;">
+                                                        <a href="/login" class="btn btn-sm text-warning"><i class="fas fa-times fa-2x"></i> <span>الغاء</span></a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="appContainer">
+    <div style="position:fixed;top:0px;left:0px;bottom:0px;right:0px;z-index:2147483638;">
+        <div><div class="lds-eclipse"><div></div></div></div>
+        <div><img style="width:25px;height:25px;left:50%;top:50%;margin-top:-12px;margin-left:-12px;position:absolute;" src="/.custom/images/logo-only-header-blue.png" /></div>
+    </div>
+</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 d-none d-md-block"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

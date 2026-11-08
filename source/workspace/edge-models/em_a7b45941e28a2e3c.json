@@ -1,0 +1,117 @@
+{
+  "id": "em_a7b45941e28a2e3c",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_otp_challenges",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseOtpChallenges",
+    "tableName": "base_otp_challenges"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "user_id",
+      "field": "userId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "purpose",
+      "field": "purpose",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "channel",
+      "field": "channel",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "target",
+      "field": "target",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "otp_hash",
+      "field": "otpHash",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "expires_at",
+      "field": "expiresAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "used_at",
+      "field": "usedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "40cea1819d2d1b2e",
+  "readOnly": false,
+  "labels": {
+    "title": "base_otp_challenges"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:13.150Z",
+  "updated_at": "2026-09-11T04:55:13.150Z"
+}

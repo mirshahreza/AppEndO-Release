@@ -1,0 +1,122 @@
+{
+  "edgeModelId": "em_96b0567fa7383e26",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "code",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "subtitle"
+    },
+    {
+      "columnName": "website"
+    },
+    {
+      "columnName": "photo"
+    },
+    {
+      "columnName": "parent_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "status_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "owner_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "sort_order",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "locked"
+    },
+    {
+      "columnName": "active"
+    },
+    {
+      "columnName": "approved_at"
+    },
+    {
+      "columnName": "approved_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "locked_at"
+    },
+    {
+      "columnName": "locked_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "unlocked_at"
+    },
+    {
+      "columnName": "unlocked_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "latitude",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "longitude",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_sample_mock_comments.record_id->base_sample_mock_records.id:base_sample_mock_comments_record_id_fkey",
+      "displayLabel": "base_sample_mock_comments (Record)"
+    },
+    {
+      "relationKey": "physical:base_sample_mock_details.record_id->base_sample_mock_records.id:base_sample_mock_details_record_id_fkey",
+      "displayLabel": "base_sample_mock_details (Record)"
+    },
+    {
+      "relationKey": "physical:base_sample_mock_record_tags.record_id->base_sample_mock_records.id:base_sample_mock_record_tags_record_id_fkey",
+      "displayLabel": "base_sample_mock_record_tags (Record)"
+    },
+    {
+      "relationKey": "physical:base_sample_mock_records.owner_id->base_sample_mock_people.id:base_sample_mock_records_owner_id_fkey",
+      "displayLabel": "Owner"
+    },
+    {
+      "relationKey": "physical:base_sample_mock_records.parent_id->base_sample_mock_records.id:base_sample_mock_records_parent_id_fkey",
+      "displayLabel": "Parent"
+    },
+    {
+      "relationKey": "physical:base_sample_mock_records.status_id->base_sample_mock_statuses.id:base_sample_mock_records_status_id_fkey",
+      "displayLabel": "Status"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nLiving-sample **header** for Base Components → CRUD Set (`GET/POST/PATCH/DELETE /api/sample-mock/records`). Demo data only — every relation kind and cell kind the wizard must show. Not a business entity.\n\n## Lifecycle\n\n1. **Create** — unique `code`, title, required `status_id`; optional parent, owner, geo, detail city/note, tags, comments. Adjacent create + bulk create exist on the sample API.\n2. **Edit** — patch title/status/owner/parent/geo/active and nested detail/tags/comments through the same records API (not by editing child tables as the source of truth).\n3. **Approve** — `PATCH .../approve` stamps `approved_at` / `approved_by` and typically moves status to `approved`.\n4. **Lock / unlock** — `PATCH .../lock` toggles `locked` with audit timestamps (CRUD Set boolean-toggle cousin of Users Lock).\n5. **Delete** — cascades details, comments, and tag links; parent FK on children becomes SET NULL.\n\n## Rules\n\n- `parent_id` is a self-tree (ON DELETE SET NULL). `status_id` belongsTo `base_sample_mock_statuses`. `owner_id` belongsTo `base_sample_mock_people`.\n- `latitude` / `longitude` drive the map body in the living sample.\n- Seed only with control-plane reference data. Do not treat rows as production records."
+  },
+  "created_at": "2026-09-11T04:55:14.907Z",
+  "updated_at": "2026-09-17T15:29:39.772Z"
+}

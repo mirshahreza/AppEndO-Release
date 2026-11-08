@@ -1,0 +1,80 @@
+{
+  "id": "em_03a04f450d3f5165",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workflow_join_arrivals",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowJoinArrivals",
+    "tableName": "base_workflow_join_arrivals"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "workflow_instance_id",
+      "field": "workflowInstanceId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_35584ec12816b716",
+        "column": "id"
+      }
+    },
+    {
+      "name": "join_node_instance_id",
+      "field": "joinNodeInstanceId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_721274940a247189",
+        "column": "id"
+      }
+    },
+    {
+      "name": "branch_token_id",
+      "field": "branchTokenId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_e7872d2c91430387",
+        "column": "id"
+      }
+    },
+    {
+      "name": "arrived_at",
+      "field": "arrivedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "ae9923a42fb524bc",
+  "readOnly": false,
+  "labels": {
+    "title": "base_workflow_join_arrivals"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:23.205Z",
+  "updated_at": "2026-09-11T04:55:23.205Z"
+}

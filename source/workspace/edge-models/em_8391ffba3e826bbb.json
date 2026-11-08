@@ -1,0 +1,200 @@
+{
+  "id": "em_8391ffba3e826bbb",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_member_files",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyMemberFiles",
+    "tableName": "hwy_member_files"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "member_id",
+      "field": "memberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b9b34df33282b49c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "file_kind_code",
+      "field": "fileKindCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "original_file_name",
+      "field": "originalFileName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "mime",
+      "field": "mime",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "size_bytes",
+      "field": "sizeBytes",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "checksum",
+      "field": "checksum",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "content",
+      "field": "content",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "thumbnail_content",
+      "field": "thumbnailContent",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "is_approved",
+      "field": "isApproved",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_545b6a969fdd4c6b",
+      "targetModelId": "em_b9b34df33282b49c",
+      "foreignKey": "member_id",
+      "as": "member",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_bcc93c204268413a",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "file_kind_code",
+      "as": "file_kind",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_f74076d252654914",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_d93dd8fb1712460a",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "updated_by",
+      "as": "updatedByUser",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "892b12f1b69bdd3b",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Member Files",
+    "icon": "lucide:file-image",
+    "color": "text-violet-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:06.126Z",
+  "updated_at": "2026-11-03T08:44:20.515Z"
+}

@@ -1,0 +1,5455 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "$ref": "#/$defs/__schema0"
+    },
+    "registryVersion": {
+      "$ref": "#/$defs/__schema1"
+    },
+    "experienceMode": {
+      "$ref": "#/$defs/__schema2"
+    },
+    "recipeId": {
+      "$ref": "#/$defs/__schema3"
+    },
+    "identity": {
+      "$ref": "#/$defs/__schema4"
+    },
+    "capabilities": {
+      "$ref": "#/$defs/__schema5"
+    },
+    "regions": {
+      "$ref": "#/$defs/__schema6"
+    },
+    "navigation": {
+      "$ref": "#/$defs/__schema35"
+    },
+    "visual": {
+      "$ref": "#/$defs/__schema39"
+    },
+    "responsive": {
+      "$ref": "#/$defs/__schema92"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "registryVersion",
+    "experienceMode",
+    "recipeId",
+    "identity",
+    "capabilities",
+    "regions",
+    "navigation",
+    "visual",
+    "responsive"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "__schema0": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "__schema1": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "__schema2": {
+      "type": "string",
+      "enum": [
+        "app",
+        "site"
+      ]
+    },
+    "__schema3": {
+      "type": "string",
+      "enum": [
+        "app-classic",
+        "app-compact-rail",
+        "app-overlay-focus",
+        "app-command-center",
+        "app-dual-nav",
+        "app-mega-side",
+        "app-mega-top",
+        "app-minimal",
+        "app-topnav",
+        "app-focus",
+        "app-editorial",
+        "app-portal-home",
+        "app-floating-workspace",
+        "app-glass-hybrid",
+        "app-workbench",
+        "app-canvas",
+        "app-analytics",
+        "app-inbox",
+        "app-monitor",
+        "app-knowledge",
+        "app-mobile-first",
+        "app-split-command",
+        "app-footer-nav",
+        "app-hero-mega",
+        "site-marketing",
+        "site-content",
+        "site-docs",
+        "site-minimal",
+        "site-landing-clean",
+        "site-campaign",
+        "site-community",
+        "site-mega-commerce",
+        "site-docs-rail",
+        "site-dashboard",
+        "site-sidebar-commerce",
+        "site-focus",
+        "site-news",
+        "site-portfolio",
+        "site-saas",
+        "site-event",
+        "site-catalog",
+        "site-learning",
+        "site-support",
+        "site-member",
+        "site-app-like",
+        "site-floating-nav",
+        "site-no-nav",
+        "site-immersive"
+      ]
+    },
+    "__schema4": {
+      "type": "object",
+      "properties": {
+        "shellKey": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{2,63}$"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 240
+        }
+      },
+      "required": [
+        "shellKey",
+        "displayName"
+      ],
+      "additionalProperties": false
+    },
+    "__schema5": {
+      "type": "object",
+      "properties": {
+        "authentication": {
+          "type": "string",
+          "enum": [
+            "anonymous",
+            "authenticated"
+          ]
+        },
+        "portalIdentity": {
+          "type": "boolean"
+        },
+        "userPreferences": {
+          "type": "boolean"
+        },
+        "navigationDepth": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            },
+            {
+              "type": "number",
+              "const": 3
+            }
+          ]
+        }
+      },
+      "required": [
+        "authentication",
+        "portalIdentity",
+        "userPreferences",
+        "navigationDepth"
+      ],
+      "additionalProperties": false
+    },
+    "__schema6": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/__schema7"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "presence": {
+                  "$ref": "#/$defs/__schema8"
+                },
+                "span": {
+                  "$ref": "#/$defs/__schema9"
+                },
+                "placement": {
+                  "$ref": "#/$defs/__schema10"
+                },
+                "padding": {
+                  "$ref": "#/$defs/__schema11"
+                },
+                "gap": {
+                  "$ref": "#/$defs/__schema12"
+                },
+                "separator": {
+                  "$ref": "#/$defs/__schema13"
+                },
+                "visibility": {
+                  "$ref": "#/$defs/__schema14"
+                },
+                "surfaceTreatment": {
+                  "$ref": "#/$defs/__schema15"
+                },
+                "shapeDepth": {
+                  "$ref": "#/$defs/__schema29"
+                },
+                "readability": {
+                  "$ref": "#/$defs/__schema34"
+                },
+                "behavior": {
+                  "type": "string",
+                  "enum": [
+                    "static",
+                    "sticky",
+                    "sticky-shrink"
+                  ]
+                },
+                "height": {
+                  "type": "string",
+                  "enum": [
+                    "compact",
+                    "default",
+                    "tall"
+                  ]
+                },
+                "composition": {
+                  "type": "string",
+                  "enum": [
+                    "logo-nav-actions",
+                    "centered-nav",
+                    "stacked-brand-nav",
+                    "minimal"
+                  ]
+                },
+                "titleStyle": {
+                  "type": "string",
+                  "enum": [
+                    "breadcrumb",
+                    "page-title",
+                    "title-and-context",
+                    "hidden"
+                  ]
+                },
+                "contextLine": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "route-description",
+                    "portal-name"
+                  ]
+                },
+                "actionsMode": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "single-cta",
+                    "action-group",
+                    "workspace-actions"
+                  ]
+                },
+                "actionPlacement": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "center",
+                    "end"
+                  ]
+                },
+                "showProfile": {
+                  "type": "boolean"
+                },
+                "showNotifications": {
+                  "type": "boolean"
+                },
+                "brandPlacement": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "center",
+                    "nav-embedded"
+                  ]
+                },
+                "edgeStyle": {
+                  "type": "string",
+                  "enum": [
+                    "flush",
+                    "inset",
+                    "floating-bar"
+                  ]
+                },
+                "showPortalMenu": {
+                  "type": "boolean"
+                },
+                "showLogo": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "presence",
+                "span",
+                "placement",
+                "padding",
+                "gap",
+                "separator",
+                "visibility",
+                "surfaceTreatment",
+                "shapeDepth",
+                "readability",
+                "behavior",
+                "height",
+                "composition",
+                "titleStyle",
+                "contextLine",
+                "actionsMode",
+                "actionPlacement",
+                "showProfile",
+                "showNotifications",
+                "brandPlacement",
+                "edgeStyle",
+                "showPortalMenu",
+                "showLogo"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "sidebar": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/__schema7"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "presence": {
+                  "$ref": "#/$defs/__schema8"
+                },
+                "span": {
+                  "$ref": "#/$defs/__schema9"
+                },
+                "placement": {
+                  "$ref": "#/$defs/__schema10"
+                },
+                "padding": {
+                  "$ref": "#/$defs/__schema11"
+                },
+                "gap": {
+                  "$ref": "#/$defs/__schema12"
+                },
+                "separator": {
+                  "$ref": "#/$defs/__schema13"
+                },
+                "visibility": {
+                  "$ref": "#/$defs/__schema14"
+                },
+                "surfaceTreatment": {
+                  "$ref": "#/$defs/__schema15"
+                },
+                "shapeDepth": {
+                  "$ref": "#/$defs/__schema29"
+                },
+                "readability": {
+                  "$ref": "#/$defs/__schema34"
+                },
+                "layout": {
+                  "type": "string",
+                  "enum": [
+                    "fixed",
+                    "icon-rail",
+                    "overlay",
+                    "floating"
+                  ]
+                },
+                "position": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "end"
+                  ]
+                },
+                "width": {
+                  "type": "string",
+                  "enum": [
+                    "compact",
+                    "comfortable",
+                    "spacious"
+                  ]
+                },
+                "header": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "logo",
+                    "brand-and-title",
+                    "minimal"
+                  ]
+                },
+                "footer": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "utilities",
+                    "profile"
+                  ]
+                },
+                "edgeStyle": {
+                  "type": "string",
+                  "enum": [
+                    "flush",
+                    "rounded-inner",
+                    "floating-panel"
+                  ]
+                }
+              },
+              "required": [
+                "presence",
+                "span",
+                "placement",
+                "padding",
+                "gap",
+                "separator",
+                "visibility",
+                "surfaceTreatment",
+                "shapeDepth",
+                "readability",
+                "layout",
+                "position",
+                "width",
+                "header",
+                "footer",
+                "edgeStyle"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "hero": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/__schema7"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "presence": {
+                  "$ref": "#/$defs/__schema8"
+                },
+                "span": {
+                  "$ref": "#/$defs/__schema9"
+                },
+                "placement": {
+                  "$ref": "#/$defs/__schema10"
+                },
+                "padding": {
+                  "$ref": "#/$defs/__schema11"
+                },
+                "gap": {
+                  "$ref": "#/$defs/__schema12"
+                },
+                "separator": {
+                  "$ref": "#/$defs/__schema13"
+                },
+                "visibility": {
+                  "$ref": "#/$defs/__schema14"
+                },
+                "surfaceTreatment": {
+                  "$ref": "#/$defs/__schema15"
+                },
+                "shapeDepth": {
+                  "$ref": "#/$defs/__schema29"
+                },
+                "readability": {
+                  "$ref": "#/$defs/__schema34"
+                },
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "compact",
+                    "full-bleed"
+                  ]
+                }
+              },
+              "required": [
+                "presence",
+                "span",
+                "placement",
+                "padding",
+                "gap",
+                "separator",
+                "visibility",
+                "surfaceTreatment",
+                "shapeDepth",
+                "readability",
+                "mode"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "content": {
+          "type": "object",
+          "properties": {
+            "presence": {
+              "$ref": "#/$defs/__schema8"
+            },
+            "span": {
+              "$ref": "#/$defs/__schema9"
+            },
+            "placement": {
+              "$ref": "#/$defs/__schema10"
+            },
+            "padding": {
+              "$ref": "#/$defs/__schema11"
+            },
+            "gap": {
+              "$ref": "#/$defs/__schema12"
+            },
+            "separator": {
+              "$ref": "#/$defs/__schema13"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "surfaceTreatment": {
+              "$ref": "#/$defs/__schema15"
+            },
+            "shapeDepth": {
+              "$ref": "#/$defs/__schema29"
+            },
+            "readability": {
+              "$ref": "#/$defs/__schema34"
+            },
+            "composition": {
+              "type": "string",
+              "enum": [
+                "single-column",
+                "content-aside",
+                "aside-content"
+              ]
+            },
+            "contentWidth": {
+              "type": "string",
+              "enum": [
+                "fluid",
+                "boxed-sm",
+                "boxed-md",
+                "boxed-lg"
+              ]
+            },
+            "hostStyle": {
+              "type": "string",
+              "enum": [
+                "plain",
+                "card",
+                "inset-panel"
+              ]
+            },
+            "separation": {
+              "type": "string",
+              "enum": [
+                "spacing",
+                "hairline",
+                "surface-shift",
+                "shadow"
+              ]
+            },
+            "gutter": {
+              "type": "string",
+              "enum": [
+                "compact",
+                "comfortable",
+                "spacious"
+              ]
+            },
+            "dockPadding": {
+              "type": "boolean"
+            },
+            "scrollOwner": {
+              "type": "string",
+              "enum": [
+                "page",
+                "content-host"
+              ]
+            },
+            "scrollShadow": {
+              "type": "boolean"
+            },
+            "backToTop": {
+              "type": "string",
+              "enum": [
+                "hidden",
+                "after-viewport"
+              ]
+            },
+            "routeOutlet": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "const": 1
+                },
+                "region": {
+                  "type": "string",
+                  "const": "content"
+                }
+              },
+              "required": [
+                "count",
+                "region"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "presence",
+            "span",
+            "placement",
+            "padding",
+            "gap",
+            "separator",
+            "visibility",
+            "surfaceTreatment",
+            "shapeDepth",
+            "readability",
+            "composition",
+            "contentWidth",
+            "hostStyle",
+            "separation",
+            "gutter",
+            "dockPadding",
+            "scrollOwner",
+            "scrollShadow",
+            "backToTop",
+            "routeOutlet"
+          ],
+          "additionalProperties": false
+        },
+        "aside": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/__schema7"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "presence": {
+                  "$ref": "#/$defs/__schema8"
+                },
+                "span": {
+                  "$ref": "#/$defs/__schema9"
+                },
+                "placement": {
+                  "$ref": "#/$defs/__schema10"
+                },
+                "padding": {
+                  "$ref": "#/$defs/__schema11"
+                },
+                "gap": {
+                  "$ref": "#/$defs/__schema12"
+                },
+                "separator": {
+                  "$ref": "#/$defs/__schema13"
+                },
+                "visibility": {
+                  "$ref": "#/$defs/__schema14"
+                },
+                "surfaceTreatment": {
+                  "$ref": "#/$defs/__schema15"
+                },
+                "shapeDepth": {
+                  "$ref": "#/$defs/__schema29"
+                },
+                "readability": {
+                  "$ref": "#/$defs/__schema34"
+                },
+                "behavior": {
+                  "type": "string",
+                  "enum": [
+                    "static",
+                    "sticky",
+                    "collapsible"
+                  ]
+                },
+                "position": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "end"
+                  ]
+                },
+                "width": {
+                  "type": "string",
+                  "enum": [
+                    "sm",
+                    "md",
+                    "lg"
+                  ]
+                }
+              },
+              "required": [
+                "presence",
+                "span",
+                "placement",
+                "padding",
+                "gap",
+                "separator",
+                "visibility",
+                "surfaceTreatment",
+                "shapeDepth",
+                "readability",
+                "behavior",
+                "position",
+                "width"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "footer": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/__schema7"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "presence": {
+                  "$ref": "#/$defs/__schema8"
+                },
+                "span": {
+                  "$ref": "#/$defs/__schema9"
+                },
+                "placement": {
+                  "$ref": "#/$defs/__schema10"
+                },
+                "padding": {
+                  "$ref": "#/$defs/__schema11"
+                },
+                "gap": {
+                  "$ref": "#/$defs/__schema12"
+                },
+                "separator": {
+                  "$ref": "#/$defs/__schema13"
+                },
+                "visibility": {
+                  "$ref": "#/$defs/__schema14"
+                },
+                "surfaceTreatment": {
+                  "$ref": "#/$defs/__schema15"
+                },
+                "shapeDepth": {
+                  "$ref": "#/$defs/__schema29"
+                },
+                "readability": {
+                  "$ref": "#/$defs/__schema34"
+                },
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "simple",
+                    "multi-column",
+                    "action-bar"
+                  ]
+                },
+                "behavior": {
+                  "type": "string",
+                  "enum": [
+                    "static",
+                    "sticky"
+                  ]
+                }
+              },
+              "required": [
+                "presence",
+                "span",
+                "placement",
+                "padding",
+                "gap",
+                "separator",
+                "visibility",
+                "surfaceTreatment",
+                "shapeDepth",
+                "readability",
+                "mode",
+                "behavior"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "header",
+        "sidebar",
+        "hero",
+        "content",
+        "aside",
+        "footer"
+      ],
+      "additionalProperties": false
+    },
+    "__schema7": {
+      "type": "object",
+      "properties": {
+        "presence": {
+          "type": "string",
+          "const": "hidden"
+        }
+      },
+      "required": [
+        "presence"
+      ],
+      "additionalProperties": false
+    },
+    "__schema8": {
+      "type": "string",
+      "const": "visible"
+    },
+    "__schema9": {
+      "type": "string",
+      "enum": [
+        "full",
+        "contained",
+        "inset"
+      ]
+    },
+    "__schema10": {
+      "type": "string",
+      "enum": [
+        "start",
+        "center",
+        "end",
+        "space-between"
+      ]
+    },
+    "__schema11": {
+      "type": "string",
+      "enum": [
+        "none",
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    "__schema12": {
+      "type": "string",
+      "enum": [
+        "none",
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    "__schema13": {
+      "type": "string",
+      "enum": [
+        "none",
+        "hairline",
+        "surface-shift",
+        "shadow"
+      ]
+    },
+    "__schema14": {
+      "type": "object",
+      "properties": {
+        "desktop": {
+          "type": "boolean"
+        },
+        "tablet": {
+          "type": "boolean"
+        },
+        "phone": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "desktop",
+        "tablet",
+        "phone"
+      ],
+      "additionalProperties": false
+    },
+    "__schema15": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/__schema16"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "inherit"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema16": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "solid"
+            },
+            "baseColor": {
+              "$ref": "#/$defs/__schema17"
+            }
+          },
+          "required": [
+            "mode",
+            "baseColor"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "gradient"
+            },
+            "baseColor": {
+              "$ref": "#/$defs/__schema17"
+            },
+            "gradient": {
+              "$ref": "#/$defs/__schema22"
+            }
+          },
+          "required": [
+            "mode",
+            "baseColor",
+            "gradient"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "pattern"
+            },
+            "baseColor": {
+              "$ref": "#/$defs/__schema17"
+            },
+            "pattern": {
+              "$ref": "#/$defs/__schema28"
+            }
+          },
+          "required": [
+            "mode",
+            "baseColor",
+            "pattern"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "gradient-pattern"
+            },
+            "baseColor": {
+              "$ref": "#/$defs/__schema17"
+            },
+            "gradient": {
+              "$ref": "#/$defs/__schema22"
+            },
+            "pattern": {
+              "$ref": "#/$defs/__schema28"
+            }
+          },
+          "required": [
+            "mode",
+            "baseColor",
+            "gradient",
+            "pattern"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema17": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "const": "semantic"
+            },
+            "token": {
+              "type": "string",
+              "enum": [
+                "surface",
+                "surface-elevated",
+                "inverse-surface",
+                "surface-foreground",
+                "surface-muted",
+                "neutral",
+                "accent",
+                "success",
+                "warning",
+                "danger",
+                "info"
+              ]
+            }
+          },
+          "required": [
+            "source",
+            "token"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "const": "custom"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "colorSpace": {
+                  "$ref": "#/$defs/__schema18"
+                },
+                "components": {
+                  "$ref": "#/$defs/__schema19"
+                },
+                "alpha": {
+                  "$ref": "#/$defs/__schema20"
+                },
+                "hex": {
+                  "$ref": "#/$defs/__schema21"
+                }
+              },
+              "required": [
+                "colorSpace",
+                "components",
+                "alpha",
+                "hex"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "source",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema18": {
+      "type": "string",
+      "enum": [
+        "srgb",
+        "display-p3",
+        "oklch"
+      ]
+    },
+    "__schema19": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "__schema20": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "__schema21": {
+      "type": "string",
+      "pattern": "^#[0-9A-F]{6}$"
+    },
+    "__schema22": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/__schema23"
+        },
+        "direction": {
+          "$ref": "#/$defs/__schema24"
+        },
+        "stops": {
+          "$ref": "#/$defs/__schema25"
+        },
+        "intensity": {
+          "$ref": "#/$defs/__schema27"
+        }
+      },
+      "required": [
+        "type",
+        "direction",
+        "stops",
+        "intensity"
+      ],
+      "additionalProperties": false
+    },
+    "__schema23": {
+      "type": "string",
+      "enum": [
+        "linear",
+        "radial",
+        "conic"
+      ]
+    },
+    "__schema24": {
+      "type": "string",
+      "enum": [
+        "top",
+        "top-end",
+        "end",
+        "bottom-end",
+        "bottom",
+        "bottom-start",
+        "start",
+        "top-start"
+      ]
+    },
+    "__schema25": {
+      "minItems": 2,
+      "maxItems": 4,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema26"
+      }
+    },
+    "__schema26": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/__schema17"
+        },
+        "position": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 10
+            },
+            {
+              "type": "number",
+              "const": 20
+            },
+            {
+              "type": "number",
+              "const": 25
+            },
+            {
+              "type": "number",
+              "const": 40
+            },
+            {
+              "type": "number",
+              "const": 50
+            },
+            {
+              "type": "number",
+              "const": 60
+            },
+            {
+              "type": "number",
+              "const": 75
+            },
+            {
+              "type": "number",
+              "const": 80
+            },
+            {
+              "type": "number",
+              "const": 90
+            },
+            {
+              "type": "number",
+              "const": 100
+            }
+          ]
+        }
+      },
+      "required": [
+        "color",
+        "position"
+      ],
+      "additionalProperties": false
+    },
+    "__schema27": {
+      "type": "string",
+      "enum": [
+        "subtle",
+        "soft",
+        "medium",
+        "strong"
+      ]
+    },
+    "__schema28": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "dots",
+            "halftone",
+            "grid",
+            "lines",
+            "diagonal-lines",
+            "noise",
+            "waves"
+          ]
+        },
+        "scale": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
+        },
+        "density": {
+          "type": "string",
+          "enum": [
+            "sparse",
+            "normal",
+            "dense"
+          ]
+        },
+        "opacity": {
+          "type": "string",
+          "enum": [
+            "faint",
+            "subtle",
+            "visible",
+            "strong"
+          ]
+        },
+        "color": {
+          "$ref": "#/$defs/__schema17"
+        },
+        "blend": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "multiply",
+            "soft-light",
+            "overlay"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "scale",
+        "density",
+        "opacity",
+        "color",
+        "blend"
+      ],
+      "additionalProperties": false
+    },
+    "__schema29": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "inherit"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "radius": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "inherit"
+                },
+                {
+                  "$ref": "#/$defs/__schema30"
+                }
+              ]
+            },
+            "shadow": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "inherit"
+                },
+                {
+                  "$ref": "#/$defs/__schema31"
+                }
+              ]
+            },
+            "border": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "inherit"
+                },
+                {
+                  "$ref": "#/$defs/__schema32"
+                }
+              ]
+            },
+            "backdrop": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "inherit"
+                },
+                {
+                  "$ref": "#/$defs/__schema33"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema30": {
+      "type": "string",
+      "enum": [
+        "none",
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ]
+    },
+    "__schema31": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "$ref": "#/$defs/__schema30"
+        },
+        "softness": {
+          "type": "string",
+          "enum": [
+            "crisp",
+            "balanced",
+            "diffused"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "enum": [
+            "content-only",
+            "chrome-only",
+            "layered"
+          ]
+        }
+      },
+      "required": [
+        "level",
+        "softness",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "__schema32": {
+      "type": "object",
+      "properties": {
+        "strength": {
+          "type": "string",
+          "enum": [
+            "none",
+            "hairline",
+            "soft",
+            "defined"
+          ]
+        },
+        "contrast": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      },
+      "required": [
+        "strength",
+        "contrast"
+      ],
+      "additionalProperties": false
+    },
+    "__schema33": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "solid",
+            "translucent",
+            "glass"
+          ]
+        },
+        "blur": {
+          "type": "string",
+          "enum": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ]
+        }
+      },
+      "required": [
+        "style",
+        "blur"
+      ],
+      "additionalProperties": false
+    },
+    "__schema34": {
+      "type": "string",
+      "enum": [
+        "none",
+        "auto-scrim",
+        "solid-panel"
+      ]
+    },
+    "__schema35": {
+      "type": "object",
+      "properties": {
+        "topology": {
+          "type": "string",
+          "enum": [
+            "sidebar",
+            "topbar",
+            "hybrid",
+            "none"
+          ]
+        },
+        "primaryNavigationRef": {
+          "$ref": "#/$defs/__schema36"
+        },
+        "escapePath": {
+          "type": "string",
+          "enum": [
+            "header-breadcrumb",
+            "header-portal-menu"
+          ]
+        },
+        "presentation": {
+          "type": "object",
+          "properties": {
+            "showIcons": {
+              "type": "boolean"
+            },
+            "labelMode": {
+              "type": "string",
+              "enum": [
+                "label",
+                "icon-and-label",
+                "icon-only"
+              ]
+            },
+            "activeIndicator": {
+              "type": "string",
+              "enum": [
+                "bar",
+                "pill",
+                "underline",
+                "surface"
+              ]
+            },
+            "groupDefault": {
+              "type": "string",
+              "enum": [
+                "collapsed",
+                "expanded-active",
+                "expanded-all"
+              ]
+            },
+            "groupExpansion": {
+              "type": "string",
+              "enum": [
+                "accordion",
+                "multiple"
+              ]
+            },
+            "groupStyle": {
+              "type": "string",
+              "enum": [
+                "plain",
+                "divided",
+                "cards"
+              ]
+            },
+            "showBadges": {
+              "type": "boolean"
+            },
+            "utilities": {
+              "maxItems": 3,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/__schema37"
+              }
+            }
+          },
+          "required": [
+            "showIcons",
+            "labelMode",
+            "activeIndicator",
+            "groupDefault",
+            "groupExpansion",
+            "groupStyle",
+            "showBadges",
+            "utilities"
+          ],
+          "additionalProperties": false
+        },
+        "side": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "const": "standard"
+                },
+                "componentId": {
+                  "type": "string",
+                  "enum": [
+                    "core:TreeNavTwoLevel",
+                    "core:SidebarRailNavigation"
+                  ]
+                },
+                "navigationRef": {
+                  "$ref": "#/$defs/__schema36"
+                },
+                "density": {
+                  "type": "string",
+                  "enum": [
+                    "compact",
+                    "default",
+                    "relaxed"
+                  ]
+                }
+              },
+              "required": [
+                "mode",
+                "componentId",
+                "density"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "const": "mega"
+                },
+                "componentId": {
+                  "type": "string",
+                  "const": "core:MegaMenu"
+                },
+                "navigationRef": {
+                  "$ref": "#/$defs/__schema36"
+                },
+                "density": {
+                  "type": "string",
+                  "enum": [
+                    "compact",
+                    "default",
+                    "relaxed"
+                  ]
+                },
+                "mega": {
+                  "$ref": "#/$defs/__schema38"
+                }
+              },
+              "required": [
+                "mode",
+                "componentId",
+                "density",
+                "mega"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "top": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "const": "standard"
+                },
+                "componentId": {
+                  "type": "string",
+                  "enum": [
+                    "core:TopBarNav",
+                    "core:TopNavigationOverflow"
+                  ]
+                },
+                "navigationRef": {
+                  "$ref": "#/$defs/__schema36"
+                },
+                "density": {
+                  "type": "string",
+                  "enum": [
+                    "compact",
+                    "default",
+                    "relaxed"
+                  ]
+                },
+                "alignment": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "center",
+                    "end",
+                    "space-between"
+                  ]
+                }
+              },
+              "required": [
+                "mode",
+                "componentId",
+                "density",
+                "alignment"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "const": "mega"
+                },
+                "componentId": {
+                  "type": "string",
+                  "const": "core:TopMegaNavigation"
+                },
+                "navigationRef": {
+                  "$ref": "#/$defs/__schema36"
+                },
+                "density": {
+                  "type": "string",
+                  "enum": [
+                    "compact",
+                    "default",
+                    "relaxed"
+                  ]
+                },
+                "alignment": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "center",
+                    "end",
+                    "space-between"
+                  ]
+                },
+                "mega": {
+                  "$ref": "#/$defs/__schema38"
+                }
+              },
+              "required": [
+                "mode",
+                "componentId",
+                "density",
+                "alignment",
+                "mega"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "footer": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "standard"
+            },
+            "componentId": {
+              "type": "string",
+              "const": "core:FlatLinks"
+            },
+            "navigationRef": {
+              "$ref": "#/$defs/__schema36"
+            }
+          },
+          "required": [
+            "mode",
+            "componentId",
+            "navigationRef"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "topology",
+        "presentation"
+      ],
+      "additionalProperties": false
+    },
+    "__schema36": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "__schema37": {
+      "type": "string",
+      "enum": [
+        "search",
+        "profile",
+        "notifications"
+      ]
+    },
+    "__schema38": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 2
+            },
+            {
+              "type": "number",
+              "const": 3
+            },
+            {
+              "type": "number",
+              "const": 4
+            }
+          ]
+        },
+        "panelWidth": {
+          "type": "string",
+          "enum": [
+            "trigger",
+            "contained",
+            "wide",
+            "full"
+          ]
+        },
+        "groupStyle": {
+          "type": "string",
+          "enum": [
+            "plain",
+            "sectioned",
+            "cards"
+          ]
+        },
+        "openBehavior": {
+          "type": "string",
+          "enum": [
+            "click",
+            "hover-and-click"
+          ]
+        },
+        "featuredArea": {
+          "type": "string",
+          "enum": [
+            "none",
+            "start",
+            "end"
+          ]
+        },
+        "showGroupIcons": {
+          "type": "boolean"
+        },
+        "showDescriptions": {
+          "type": "boolean"
+        },
+        "surfaceTreatment": {
+          "$ref": "#/$defs/__schema15"
+        },
+        "shapeDepth": {
+          "$ref": "#/$defs/__schema29"
+        },
+        "readability": {
+          "type": "string",
+          "enum": [
+            "none",
+            "auto-scrim",
+            "solid-panel"
+          ]
+        }
+      },
+      "required": [
+        "columns",
+        "panelWidth",
+        "groupStyle",
+        "openBehavior",
+        "featuredArea",
+        "showGroupIcons",
+        "showDescriptions",
+        "surfaceTreatment",
+        "shapeDepth",
+        "readability"
+      ],
+      "additionalProperties": false
+    },
+    "__schema39": {
+      "type": "object",
+      "properties": {
+        "colorScheme": {
+          "type": "string",
+          "enum": [
+            "light",
+            "dark",
+            "mixed"
+          ]
+        },
+        "layoutWidth": {
+          "type": "string",
+          "enum": [
+            "fluid",
+            "bounded"
+          ]
+        },
+        "boundedEdge": {
+          "type": "string",
+          "enum": [
+            "hairline",
+            "shadow",
+            "outset"
+          ]
+        },
+        "boundedMaxWidth": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        "chromeDensity": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "default",
+            "comfortable",
+            "spacious"
+          ]
+        },
+        "contentDensity": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "default",
+            "comfortable",
+            "spacious"
+          ]
+        },
+        "motionLevel": {
+          "type": "string",
+          "enum": [
+            "none",
+            "subtle",
+            "expressive"
+          ]
+        },
+        "designTokens": {
+          "type": "object",
+          "properties": {
+            "profile": {
+              "type": "string",
+              "enum": [
+                "platform-default",
+                "neutral-soft",
+                "neutral-crisp",
+                "custom"
+              ]
+            },
+            "accent": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "const": "runtime-accent"
+                    }
+                  },
+                  "required": [
+                    "source"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "$ref": "#/$defs/__schema17"
+                }
+              ]
+            },
+            "neutralFamily": {
+              "type": "string",
+              "enum": [
+                "slate",
+                "gray",
+                "zinc"
+              ]
+            },
+            "surfaceBias": {
+              "type": "string",
+              "enum": [
+                "cool",
+                "neutral",
+                "warm"
+              ]
+            }
+          },
+          "required": [
+            "profile",
+            "accent",
+            "neutralFamily",
+            "surfaceBias"
+          ],
+          "additionalProperties": false
+        },
+        "shapeDepth": {
+          "type": "object",
+          "properties": {
+            "radius": {
+              "type": "object",
+              "properties": {
+                "global": {
+                  "$ref": "#/$defs/__schema30"
+                },
+                "header": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "inherit"
+                    },
+                    {
+                      "$ref": "#/$defs/__schema30"
+                    }
+                  ]
+                },
+                "sidebar": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "inherit"
+                    },
+                    {
+                      "$ref": "#/$defs/__schema30"
+                    }
+                  ]
+                },
+                "contentHost": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "inherit"
+                    },
+                    {
+                      "$ref": "#/$defs/__schema30"
+                    }
+                  ]
+                },
+                "panels": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "inherit"
+                    },
+                    {
+                      "$ref": "#/$defs/__schema30"
+                    }
+                  ]
+                },
+                "footer": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "inherit"
+                    },
+                    {
+                      "$ref": "#/$defs/__schema30"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "global"
+              ],
+              "additionalProperties": false
+            },
+            "shadow": {
+              "$ref": "#/$defs/__schema31"
+            },
+            "border": {
+              "$ref": "#/$defs/__schema32"
+            },
+            "backdrop": {
+              "$ref": "#/$defs/__schema33"
+            }
+          },
+          "required": [
+            "radius",
+            "shadow",
+            "border",
+            "backdrop"
+          ],
+          "additionalProperties": false
+        },
+        "typography": {
+          "type": "object",
+          "properties": {
+            "roles": {
+              "type": "object",
+              "properties": {
+                "display": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "page-title": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "section-title": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "subsection-title": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "card-title": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "body": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "body-strong": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "supporting": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "caption": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "overline": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "navigation": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "navigation-active": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "breadcrumb": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "label": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "link": {
+                  "$ref": "#/$defs/__schema40"
+                },
+                "code": {
+                  "$ref": "#/$defs/__schema40"
+                }
+              },
+              "required": [
+                "display",
+                "page-title",
+                "section-title",
+                "subsection-title",
+                "card-title",
+                "body",
+                "body-strong",
+                "supporting",
+                "caption",
+                "overline",
+                "navigation",
+                "navigation-active",
+                "breadcrumb",
+                "label",
+                "link",
+                "code"
+              ],
+              "additionalProperties": false
+            },
+            "inverseRoles": {
+              "type": "object",
+              "properties": {
+                "display": {
+                  "$ref": "#/$defs/__schema41"
+                },
+                "page-title": {
+                  "$ref": "#/$defs/__schema42"
+                },
+                "section-title": {
+                  "$ref": "#/$defs/__schema43"
+                },
+                "subsection-title": {
+                  "$ref": "#/$defs/__schema44"
+                },
+                "card-title": {
+                  "$ref": "#/$defs/__schema45"
+                },
+                "body": {
+                  "$ref": "#/$defs/__schema46"
+                },
+                "body-strong": {
+                  "$ref": "#/$defs/__schema47"
+                },
+                "supporting": {
+                  "$ref": "#/$defs/__schema48"
+                },
+                "caption": {
+                  "$ref": "#/$defs/__schema49"
+                },
+                "overline": {
+                  "$ref": "#/$defs/__schema50"
+                },
+                "navigation": {
+                  "$ref": "#/$defs/__schema51"
+                },
+                "navigation-active": {
+                  "$ref": "#/$defs/__schema52"
+                },
+                "breadcrumb": {
+                  "$ref": "#/$defs/__schema53"
+                },
+                "label": {
+                  "$ref": "#/$defs/__schema54"
+                },
+                "link": {
+                  "$ref": "#/$defs/__schema55"
+                },
+                "code": {
+                  "$ref": "#/$defs/__schema56"
+                }
+              },
+              "additionalProperties": false
+            },
+            "regionOverrides": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "properties": {
+                    "display": {
+                      "$ref": "#/$defs/__schema41"
+                    },
+                    "page-title": {
+                      "$ref": "#/$defs/__schema42"
+                    },
+                    "section-title": {
+                      "$ref": "#/$defs/__schema43"
+                    },
+                    "subsection-title": {
+                      "$ref": "#/$defs/__schema44"
+                    },
+                    "card-title": {
+                      "$ref": "#/$defs/__schema45"
+                    },
+                    "body": {
+                      "$ref": "#/$defs/__schema46"
+                    },
+                    "body-strong": {
+                      "$ref": "#/$defs/__schema47"
+                    },
+                    "supporting": {
+                      "$ref": "#/$defs/__schema48"
+                    },
+                    "caption": {
+                      "$ref": "#/$defs/__schema49"
+                    },
+                    "overline": {
+                      "$ref": "#/$defs/__schema50"
+                    },
+                    "navigation": {
+                      "$ref": "#/$defs/__schema51"
+                    },
+                    "navigation-active": {
+                      "$ref": "#/$defs/__schema52"
+                    },
+                    "breadcrumb": {
+                      "$ref": "#/$defs/__schema53"
+                    },
+                    "label": {
+                      "$ref": "#/$defs/__schema54"
+                    },
+                    "link": {
+                      "$ref": "#/$defs/__schema55"
+                    },
+                    "code": {
+                      "$ref": "#/$defs/__schema56"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "sidebar": {
+                  "type": "object",
+                  "properties": {
+                    "display": {
+                      "$ref": "#/$defs/__schema41"
+                    },
+                    "page-title": {
+                      "$ref": "#/$defs/__schema42"
+                    },
+                    "section-title": {
+                      "$ref": "#/$defs/__schema43"
+                    },
+                    "subsection-title": {
+                      "$ref": "#/$defs/__schema44"
+                    },
+                    "card-title": {
+                      "$ref": "#/$defs/__schema45"
+                    },
+                    "body": {
+                      "$ref": "#/$defs/__schema46"
+                    },
+                    "body-strong": {
+                      "$ref": "#/$defs/__schema47"
+                    },
+                    "supporting": {
+                      "$ref": "#/$defs/__schema48"
+                    },
+                    "caption": {
+                      "$ref": "#/$defs/__schema49"
+                    },
+                    "overline": {
+                      "$ref": "#/$defs/__schema50"
+                    },
+                    "navigation": {
+                      "$ref": "#/$defs/__schema51"
+                    },
+                    "navigation-active": {
+                      "$ref": "#/$defs/__schema52"
+                    },
+                    "breadcrumb": {
+                      "$ref": "#/$defs/__schema53"
+                    },
+                    "label": {
+                      "$ref": "#/$defs/__schema54"
+                    },
+                    "link": {
+                      "$ref": "#/$defs/__schema55"
+                    },
+                    "code": {
+                      "$ref": "#/$defs/__schema56"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "hero": {
+                  "type": "object",
+                  "properties": {
+                    "display": {
+                      "$ref": "#/$defs/__schema41"
+                    },
+                    "page-title": {
+                      "$ref": "#/$defs/__schema42"
+                    },
+                    "section-title": {
+                      "$ref": "#/$defs/__schema43"
+                    },
+                    "subsection-title": {
+                      "$ref": "#/$defs/__schema44"
+                    },
+                    "card-title": {
+                      "$ref": "#/$defs/__schema45"
+                    },
+                    "body": {
+                      "$ref": "#/$defs/__schema46"
+                    },
+                    "body-strong": {
+                      "$ref": "#/$defs/__schema47"
+                    },
+                    "supporting": {
+                      "$ref": "#/$defs/__schema48"
+                    },
+                    "caption": {
+                      "$ref": "#/$defs/__schema49"
+                    },
+                    "overline": {
+                      "$ref": "#/$defs/__schema50"
+                    },
+                    "navigation": {
+                      "$ref": "#/$defs/__schema51"
+                    },
+                    "navigation-active": {
+                      "$ref": "#/$defs/__schema52"
+                    },
+                    "breadcrumb": {
+                      "$ref": "#/$defs/__schema53"
+                    },
+                    "label": {
+                      "$ref": "#/$defs/__schema54"
+                    },
+                    "link": {
+                      "$ref": "#/$defs/__schema55"
+                    },
+                    "code": {
+                      "$ref": "#/$defs/__schema56"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "content": {
+                  "type": "object",
+                  "properties": {
+                    "display": {
+                      "$ref": "#/$defs/__schema41"
+                    },
+                    "page-title": {
+                      "$ref": "#/$defs/__schema42"
+                    },
+                    "section-title": {
+                      "$ref": "#/$defs/__schema43"
+                    },
+                    "subsection-title": {
+                      "$ref": "#/$defs/__schema44"
+                    },
+                    "card-title": {
+                      "$ref": "#/$defs/__schema45"
+                    },
+                    "body": {
+                      "$ref": "#/$defs/__schema46"
+                    },
+                    "body-strong": {
+                      "$ref": "#/$defs/__schema47"
+                    },
+                    "supporting": {
+                      "$ref": "#/$defs/__schema48"
+                    },
+                    "caption": {
+                      "$ref": "#/$defs/__schema49"
+                    },
+                    "overline": {
+                      "$ref": "#/$defs/__schema50"
+                    },
+                    "navigation": {
+                      "$ref": "#/$defs/__schema51"
+                    },
+                    "navigation-active": {
+                      "$ref": "#/$defs/__schema52"
+                    },
+                    "breadcrumb": {
+                      "$ref": "#/$defs/__schema53"
+                    },
+                    "label": {
+                      "$ref": "#/$defs/__schema54"
+                    },
+                    "link": {
+                      "$ref": "#/$defs/__schema55"
+                    },
+                    "code": {
+                      "$ref": "#/$defs/__schema56"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "footer": {
+                  "type": "object",
+                  "properties": {
+                    "display": {
+                      "$ref": "#/$defs/__schema41"
+                    },
+                    "page-title": {
+                      "$ref": "#/$defs/__schema42"
+                    },
+                    "section-title": {
+                      "$ref": "#/$defs/__schema43"
+                    },
+                    "subsection-title": {
+                      "$ref": "#/$defs/__schema44"
+                    },
+                    "card-title": {
+                      "$ref": "#/$defs/__schema45"
+                    },
+                    "body": {
+                      "$ref": "#/$defs/__schema46"
+                    },
+                    "body-strong": {
+                      "$ref": "#/$defs/__schema47"
+                    },
+                    "supporting": {
+                      "$ref": "#/$defs/__schema48"
+                    },
+                    "caption": {
+                      "$ref": "#/$defs/__schema49"
+                    },
+                    "overline": {
+                      "$ref": "#/$defs/__schema50"
+                    },
+                    "navigation": {
+                      "$ref": "#/$defs/__schema51"
+                    },
+                    "navigation-active": {
+                      "$ref": "#/$defs/__schema52"
+                    },
+                    "breadcrumb": {
+                      "$ref": "#/$defs/__schema53"
+                    },
+                    "label": {
+                      "$ref": "#/$defs/__schema54"
+                    },
+                    "link": {
+                      "$ref": "#/$defs/__schema55"
+                    },
+                    "code": {
+                      "$ref": "#/$defs/__schema56"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "mega-panel": {
+                  "type": "object",
+                  "properties": {
+                    "display": {
+                      "$ref": "#/$defs/__schema41"
+                    },
+                    "page-title": {
+                      "$ref": "#/$defs/__schema42"
+                    },
+                    "section-title": {
+                      "$ref": "#/$defs/__schema43"
+                    },
+                    "subsection-title": {
+                      "$ref": "#/$defs/__schema44"
+                    },
+                    "card-title": {
+                      "$ref": "#/$defs/__schema45"
+                    },
+                    "body": {
+                      "$ref": "#/$defs/__schema46"
+                    },
+                    "body-strong": {
+                      "$ref": "#/$defs/__schema47"
+                    },
+                    "supporting": {
+                      "$ref": "#/$defs/__schema48"
+                    },
+                    "caption": {
+                      "$ref": "#/$defs/__schema49"
+                    },
+                    "overline": {
+                      "$ref": "#/$defs/__schema50"
+                    },
+                    "navigation": {
+                      "$ref": "#/$defs/__schema51"
+                    },
+                    "navigation-active": {
+                      "$ref": "#/$defs/__schema52"
+                    },
+                    "breadcrumb": {
+                      "$ref": "#/$defs/__schema53"
+                    },
+                    "label": {
+                      "$ref": "#/$defs/__schema54"
+                    },
+                    "link": {
+                      "$ref": "#/$defs/__schema55"
+                    },
+                    "code": {
+                      "$ref": "#/$defs/__schema56"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "roles"
+          ],
+          "additionalProperties": false
+        },
+        "backdrop": {
+          "$ref": "#/$defs/__schema16"
+        },
+        "effects": {
+          "type": "object",
+          "properties": {
+            "layers": {
+              "maxItems": 4,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/__schema57"
+              }
+            },
+            "isolation": {
+              "type": "boolean"
+            },
+            "overflow": {
+              "type": "string",
+              "enum": [
+                "clip",
+                "visible"
+              ]
+            },
+            "reducedMotionFallback": {
+              "type": "string",
+              "enum": [
+                "static-frame",
+                "simplified",
+                "hidden"
+              ]
+            }
+          },
+          "required": [
+            "layers",
+            "isolation",
+            "overflow",
+            "reducedMotionFallback"
+          ],
+          "additionalProperties": false
+        },
+        "logo": {
+          "type": "object",
+          "properties": {
+            "main": {
+              "$ref": "#/$defs/__schema72"
+            },
+            "compact": {
+              "$ref": "#/$defs/__schema73"
+            },
+            "darkSurface": {
+              "$ref": "#/$defs/__schema74"
+            },
+            "favicon": {
+              "$ref": "#/$defs/__schema75"
+            },
+            "alt": {
+              "$ref": "#/$defs/__schema76"
+            },
+            "decorative": {
+              "$ref": "#/$defs/__schema77"
+            },
+            "href": {
+              "$ref": "#/$defs/__schema78"
+            },
+            "fit": {
+              "$ref": "#/$defs/__schema79"
+            },
+            "renderStyle": {
+              "$ref": "#/$defs/__schema80"
+            },
+            "placements": {
+              "$ref": "#/$defs/__schema81"
+            }
+          },
+          "required": [
+            "main",
+            "alt",
+            "decorative",
+            "fit",
+            "renderStyle",
+            "placements"
+          ],
+          "additionalProperties": false
+        },
+        "accentControl": {
+          "type": "string",
+          "enum": [
+            "hidden",
+            "header"
+          ]
+        },
+        "creative": {
+          "type": "object",
+          "properties": {
+            "widgets": {
+              "$ref": "#/$defs/__schema83"
+            },
+            "motions": {
+              "$ref": "#/$defs/__schema86"
+            },
+            "scenes": {
+              "$ref": "#/$defs/__schema88"
+            },
+            "engines": {
+              "$ref": "#/$defs/__schema90"
+            }
+          },
+          "required": [
+            "widgets",
+            "motions",
+            "scenes",
+            "engines"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "colorScheme",
+        "layoutWidth",
+        "boundedMaxWidth",
+        "boundedEdge",
+        "chromeDensity",
+        "contentDensity",
+        "motionLevel",
+        "designTokens",
+        "shapeDepth",
+        "typography",
+        "backdrop",
+        "effects",
+        "logo",
+        "accentControl",
+        "creative"
+      ],
+      "additionalProperties": false
+    },
+    "__schema40": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/__schema17"
+        },
+        "fontProfileId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "inherit"
+            },
+            {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,63}$"
+            }
+          ]
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl",
+            "3xl"
+          ]
+        },
+        "weight": {
+          "type": "string",
+          "enum": [
+            "regular",
+            "medium",
+            "semibold",
+            "bold"
+          ]
+        },
+        "lineHeight": {
+          "type": "string",
+          "enum": [
+            "tight",
+            "snug",
+            "normal",
+            "relaxed"
+          ]
+        },
+        "tracking": {
+          "type": "string",
+          "enum": [
+            "tight",
+            "normal",
+            "wide"
+          ]
+        },
+        "transform": {
+          "type": "string",
+          "enum": [
+            "none",
+            "uppercase"
+          ]
+        }
+      },
+      "required": [
+        "color",
+        "fontProfileId",
+        "size",
+        "weight",
+        "lineHeight",
+        "tracking",
+        "transform"
+      ],
+      "additionalProperties": false
+    },
+    "__schema41": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema42": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema43": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema44": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema45": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema46": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema47": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema48": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema49": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema50": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema51": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema52": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema53": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema54": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema55": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema56": {
+      "$ref": "#/$defs/__schema40"
+    },
+    "__schema57": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "animated-gradient"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "angle": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 345
+                },
+                "duration": {
+                  "type": "integer",
+                  "minimum": 8,
+                  "maximum": 60
+                },
+                "stops": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "const": 2
+                    },
+                    {
+                      "type": "number",
+                      "const": 3
+                    },
+                    {
+                      "type": "number",
+                      "const": 4
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "angle",
+                "duration",
+                "stops"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "mesh-gradient"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "points": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 8
+                },
+                "morph": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "blur": {
+                  "type": "integer",
+                  "minimum": 16,
+                  "maximum": 96
+                }
+              },
+              "required": [
+                "points",
+                "morph",
+                "blur"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "aurora"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "bands": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                },
+                "spread": {
+                  "type": "integer",
+                  "minimum": 20,
+                  "maximum": 100
+                },
+                "wave": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "bands",
+                "spread",
+                "wave"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "gradient-orbs"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "orbs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "blur": {
+                  "type": "integer",
+                  "minimum": 16,
+                  "maximum": 96
+                },
+                "drift": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "orbs",
+                "blur",
+                "drift"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "floating-blobs"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "blobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "complexity": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 8
+                },
+                "morph": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "blobs",
+                "complexity",
+                "morph"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "flowing-waves"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "waves": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "amplitude": {
+                  "type": "integer",
+                  "minimum": 4,
+                  "maximum": 80
+                },
+                "frequency": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                }
+              },
+              "required": [
+                "waves",
+                "amplitude",
+                "frequency"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "light-rays"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "rays": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 12
+                },
+                "spread": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 120
+                },
+                "rotation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 345
+                }
+              },
+              "required": [
+                "rays",
+                "spread",
+                "rotation"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "conic-rays"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "rays": {
+                  "type": "integer",
+                  "minimum": 4,
+                  "maximum": 24
+                },
+                "rotation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 345
+                },
+                "softness": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "rays",
+                "rotation",
+                "softness"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "shimmer-bands"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "bands": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 4,
+                  "maximum": 40
+                },
+                "angle": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 345
+                }
+              },
+              "required": [
+                "bands",
+                "width",
+                "angle"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "film-grain"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "grain": {
+                  "type": "integer",
+                  "minimum": 5,
+                  "maximum": 100
+                },
+                "monochrome": {
+                  "type": "boolean"
+                },
+                "frameRate": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "const": 6
+                    },
+                    {
+                      "type": "number",
+                      "const": 12
+                    },
+                    {
+                      "type": "number",
+                      "const": 24
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "grain",
+                "monochrome",
+                "frameRate"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "particle-field"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 120
+                },
+                "size": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "drift": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "connections": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "count",
+                "size",
+                "drift",
+                "connections"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "starfield"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 120
+                },
+                "twinkle": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "depth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                }
+              },
+              "required": [
+                "count",
+                "twinkle",
+                "depth"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "animated-dot-field"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 120
+                },
+                "size": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "pulse": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "count",
+                "size",
+                "pulse"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "perspective-grid"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "spacing": {
+                  "type": "integer",
+                  "minimum": 8,
+                  "maximum": 64
+                },
+                "perspective": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 1200
+                },
+                "horizon": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 90
+                }
+              },
+              "required": [
+                "spacing",
+                "perspective",
+                "horizon"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "floating-geometry"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "shapes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "rotation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "drift": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "shapes",
+                "rotation",
+                "drift"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "image-depth-pan"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "assetRef": {
+                  "$ref": "#/$defs/__schema71"
+                },
+                "zoom": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 130
+                },
+                "pan": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "focalX": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "focalY": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "assetRef",
+                "zoom",
+                "pan",
+                "focalX",
+                "focalY"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "scroll-parallax"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "layers": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 6
+                },
+                "depth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "both"
+                  ]
+                },
+                "range": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "layers",
+                "depth",
+                "axis",
+                "range"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "pointer-parallax"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "layers": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 6
+                },
+                "depth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                },
+                "lag": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "range": {
+                  "type": "integer",
+                  "minimum": 4,
+                  "maximum": 48
+                }
+              },
+              "required": [
+                "layers",
+                "depth",
+                "lag",
+                "range"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "cursor-spotlight"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "radius": {
+                  "type": "integer",
+                  "minimum": 40,
+                  "maximum": 400
+                },
+                "softness": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "lag": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "radius",
+                "softness",
+                "lag"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/__schema58"
+            },
+            "target": {
+              "$ref": "#/$defs/__schema59"
+            },
+            "plane": {
+              "$ref": "#/$defs/__schema60"
+            },
+            "palette": {
+              "$ref": "#/$defs/__schema61"
+            },
+            "intensity": {
+              "$ref": "#/$defs/__schema62"
+            },
+            "speed": {
+              "$ref": "#/$defs/__schema63"
+            },
+            "density": {
+              "$ref": "#/$defs/__schema64"
+            },
+            "scale": {
+              "$ref": "#/$defs/__schema65"
+            },
+            "direction": {
+              "$ref": "#/$defs/__schema66"
+            },
+            "opacity": {
+              "$ref": "#/$defs/__schema67"
+            },
+            "blend": {
+              "$ref": "#/$defs/__schema68"
+            },
+            "interaction": {
+              "$ref": "#/$defs/__schema69"
+            },
+            "seed": {
+              "$ref": "#/$defs/__schema70"
+            },
+            "visibility": {
+              "$ref": "#/$defs/__schema14"
+            },
+            "effectId": {
+              "type": "string",
+              "const": "section-reveal"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "style": {
+                  "type": "string",
+                  "enum": [
+                    "fade",
+                    "slide",
+                    "scale",
+                    "mask"
+                  ]
+                },
+                "distance": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 64
+                },
+                "stagger": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 300
+                },
+                "threshold": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "const": 0.1
+                    },
+                    {
+                      "type": "number",
+                      "const": 0.25
+                    },
+                    {
+                      "type": "number",
+                      "const": 0.5
+                    },
+                    {
+                      "type": "number",
+                      "const": 0.75
+                    }
+                  ]
+                },
+                "once": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "style",
+                "distance",
+                "stagger",
+                "threshold",
+                "once"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "plane",
+            "palette",
+            "intensity",
+            "speed",
+            "density",
+            "scale",
+            "direction",
+            "opacity",
+            "blend",
+            "interaction",
+            "seed",
+            "visibility",
+            "effectId",
+            "config"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema58": {
+      "type": "string",
+      "pattern": "^layer-[a-z0-9-]{1,48}$"
+    },
+    "__schema59": {
+      "type": "string",
+      "enum": [
+        "page",
+        "header",
+        "sidebar",
+        "hero",
+        "content-host",
+        "aside",
+        "footer",
+        "mega-panel"
+      ]
+    },
+    "__schema60": {
+      "type": "string",
+      "enum": [
+        "underlay",
+        "background",
+        "overlay"
+      ]
+    },
+    "__schema61": {
+      "minItems": 1,
+      "maxItems": 4,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema17"
+      }
+    },
+    "__schema62": {
+      "type": "string",
+      "enum": [
+        "subtle",
+        "soft",
+        "medium",
+        "strong"
+      ]
+    },
+    "__schema63": {
+      "type": "string",
+      "enum": [
+        "still",
+        "slow",
+        "medium",
+        "fast"
+      ]
+    },
+    "__schema64": {
+      "type": "string",
+      "enum": [
+        "sparse",
+        "normal",
+        "dense"
+      ]
+    },
+    "__schema65": {
+      "type": "string",
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ]
+    },
+    "__schema66": {
+      "type": "string",
+      "enum": [
+        "forward",
+        "reverse",
+        "alternate"
+      ]
+    },
+    "__schema67": {
+      "type": "string",
+      "enum": [
+        "faint",
+        "subtle",
+        "visible",
+        "strong"
+      ]
+    },
+    "__schema68": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "multiply",
+        "screen",
+        "soft-light",
+        "overlay"
+      ]
+    },
+    "__schema69": {
+      "type": "string",
+      "enum": [
+        "none",
+        "scroll",
+        "pointer"
+      ]
+    },
+    "__schema70": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "__schema71": {
+      "type": "string",
+      "pattern": "^\\/assets\\/workspace\\/[a-f0-9]{64}\\.(?:png|jpg|jpeg|webp|avif|svg|ico)$"
+    },
+    "__schema72": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "const": "platform-default"
+            }
+          },
+          "required": [
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "const": "local-asset"
+            },
+            "assetRef": {
+              "$ref": "#/$defs/__schema71"
+            }
+          },
+          "required": [
+            "source",
+            "assetRef"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema73": {
+      "$ref": "#/$defs/__schema72"
+    },
+    "__schema74": {
+      "$ref": "#/$defs/__schema72"
+    },
+    "__schema75": {
+      "$ref": "#/$defs/__schema72"
+    },
+    "__schema76": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "__schema77": {
+      "type": "boolean"
+    },
+    "__schema78": {
+      "type": "string",
+      "maxLength": 2048
+    },
+    "__schema79": {
+      "type": "string",
+      "enum": [
+        "contain",
+        "cover"
+      ]
+    },
+    "__schema80": {
+      "type": "string",
+      "enum": [
+        "original",
+        "monochrome",
+        "accent-tinted"
+      ]
+    },
+    "__schema81": {
+      "minItems": 1,
+      "maxItems": 3,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema82"
+      }
+    },
+    "__schema82": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string",
+          "enum": [
+            "header",
+            "sidebar",
+            "footer"
+          ]
+        },
+        "display": {
+          "type": "string",
+          "enum": [
+            "full",
+            "mark-only",
+            "text-and-mark"
+          ]
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
+        },
+        "placement": {
+          "type": "string",
+          "enum": [
+            "start",
+            "center",
+            "end"
+          ]
+        },
+        "visibility": {
+          "$ref": "#/$defs/__schema14"
+        }
+      },
+      "required": [
+        "region",
+        "display",
+        "size",
+        "placement",
+        "visibility"
+      ],
+      "additionalProperties": false
+    },
+    "__schema83": {
+      "maxItems": 24,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema84"
+      }
+    },
+    "__schema84": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "$ref": "#/$defs/__schema85"
+        },
+        "widgetId": {
+          "type": "string",
+          "enum": [
+            "landing-announcement",
+            "landing-hero-centered",
+            "landing-hero-split",
+            "landing-hero-product-stage",
+            "landing-logo-cloud",
+            "landing-stat-strip",
+            "landing-feature-grid",
+            "landing-bento-features",
+            "landing-feature-tabs",
+            "landing-process-steps",
+            "landing-comparison",
+            "landing-pricing",
+            "landing-testimonial-grid",
+            "landing-featured-quote",
+            "landing-case-study",
+            "landing-integration-grid",
+            "landing-media-gallery",
+            "landing-marquee",
+            "landing-newsletter",
+            "landing-cta-band",
+            "landing-faq",
+            "landing-team",
+            "landing-timeline",
+            "landing-contact"
+          ]
+        },
+        "host": {
+          "type": "string",
+          "enum": [
+            "header",
+            "hero",
+            "content",
+            "aside",
+            "footer"
+          ]
+        },
+        "assetRefs": {
+          "maxItems": 24,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema71"
+          }
+        }
+      },
+      "required": [
+        "instanceId",
+        "widgetId",
+        "host"
+      ],
+      "additionalProperties": false
+    },
+    "__schema85": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "__schema86": {
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema87"
+      }
+    },
+    "__schema87": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "$ref": "#/$defs/__schema85"
+        },
+        "motionId": {
+          "type": "string",
+          "enum": [
+            "reveal-fade",
+            "reveal-slide",
+            "reveal-scale",
+            "reveal-mask",
+            "reveal-stagger",
+            "metric-count-up",
+            "hover-lift",
+            "pointer-tilt",
+            "pointer-attract",
+            "track-marquee",
+            "scroll-progress",
+            "scroll-parallax-layers",
+            "sticky-chapter",
+            "scene-scrub",
+            "scene-camera-path",
+            "scene-orbit",
+            "scene-object-focus",
+            "route-crossfade"
+          ]
+        },
+        "targetId": {
+          "$ref": "#/$defs/__schema85"
+        },
+        "intensity": {
+          "type": "string",
+          "enum": [
+            "subtle",
+            "standard",
+            "expressive"
+          ]
+        },
+        "reducedMotion": {
+          "type": "string",
+          "enum": [
+            "reduce",
+            "replace",
+            "disable"
+          ]
+        }
+      },
+      "required": [
+        "instanceId",
+        "motionId",
+        "targetId",
+        "intensity",
+        "reducedMotion"
+      ],
+      "additionalProperties": false
+    },
+    "__schema88": {
+      "maxItems": 3,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema89"
+      }
+    },
+    "__schema89": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "$ref": "#/$defs/__schema85"
+        },
+        "sceneId": {
+          "type": "string",
+          "enum": [
+            "scene-layered-hero",
+            "scene-product-orbit",
+            "scene-product-explode",
+            "scene-editorial-chapters",
+            "scene-spatial-gallery",
+            "scene-data-constellation",
+            "scene-globe-network",
+            "scene-ambient-landscape",
+            "scene-image-reveal-story",
+            "scene-portal-tunnel",
+            "scene-kinetic-cards",
+            "scene-ambient-particles"
+          ]
+        },
+        "host": {
+          "type": "string",
+          "enum": [
+            "hero",
+            "content",
+            "aside",
+            "footer"
+          ]
+        },
+        "plane": {
+          "type": "string",
+          "enum": [
+            "background",
+            "foreground"
+          ]
+        },
+        "preset": {
+          "type": "string",
+          "enum": [
+            "calm",
+            "balanced",
+            "expressive"
+          ]
+        },
+        "fallbackAsset": {
+          "$ref": "#/$defs/__schema71"
+        }
+      },
+      "required": [
+        "instanceId",
+        "sceneId",
+        "host",
+        "plane",
+        "preset"
+      ],
+      "additionalProperties": false
+    },
+    "__schema90": {
+      "maxItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema91"
+      }
+    },
+    "__schema91": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "$ref": "#/$defs/__schema85"
+        },
+        "engineId": {
+          "type": "string",
+          "enum": [
+            "canvas-particle-system",
+            "canvas-vector-field",
+            "three-product-stage",
+            "three-model-orbit",
+            "three-spatial-gallery",
+            "three-data-constellation",
+            "shader-image-reveal",
+            "shader-ambient-field"
+          ]
+        },
+        "runtimeEngine": {
+          "type": "string",
+          "enum": [
+            "canvas-2d",
+            "webgl-three"
+          ]
+        },
+        "costTier": {
+          "type": "string",
+          "enum": [
+            "high",
+            "extreme"
+          ]
+        },
+        "authoringTier": {
+          "type": "string",
+          "enum": [
+            "enhanced",
+            "advanced"
+          ]
+        },
+        "fallback": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "static",
+                "css-svg",
+                "canvas-2d",
+                "semantic-dom"
+              ]
+            },
+            "catalogId": {
+              "$ref": "#/$defs/__schema36"
+            },
+            "assetRef": {
+              "$ref": "#/$defs/__schema71"
+            }
+          },
+          "required": [
+            "kind",
+            "catalogId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "instanceId",
+        "engineId",
+        "runtimeEngine",
+        "costTier",
+        "authoringTier",
+        "fallback"
+      ],
+      "additionalProperties": false
+    },
+    "__schema92": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "mobile-first",
+            "desktop-first",
+            "adaptive"
+          ]
+        },
+        "mobileNavigation": {
+          "type": "string",
+          "enum": [
+            "drawer",
+            "popover",
+            "stacked"
+          ]
+        },
+        "overrides": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "$ref": "#/$defs/__schema93"
+            },
+            "sidebar": {
+              "$ref": "#/$defs/__schema93"
+            },
+            "hero": {
+              "$ref": "#/$defs/__schema93"
+            },
+            "content": {
+              "$ref": "#/$defs/__schema93"
+            },
+            "aside": {
+              "$ref": "#/$defs/__schema93"
+            },
+            "footer": {
+              "$ref": "#/$defs/__schema93"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "strategy",
+        "mobileNavigation"
+      ],
+      "additionalProperties": false
+    },
+    "__schema93": {
+      "type": "object",
+      "properties": {
+        "desktop": {
+          "$ref": "#/$defs/__schema94"
+        },
+        "tablet": {
+          "$ref": "#/$defs/__schema94"
+        },
+        "phone": {
+          "$ref": "#/$defs/__schema94"
+        }
+      },
+      "additionalProperties": false
+    },
+    "__schema94": {
+      "type": "object",
+      "properties": {
+        "presence": {
+          "type": "string",
+          "enum": [
+            "visible",
+            "hidden"
+          ]
+        },
+        "order": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            },
+            {
+              "type": "number",
+              "const": 3
+            },
+            {
+              "type": "number",
+              "const": 4
+            },
+            {
+              "type": "number",
+              "const": 5
+            }
+          ]
+        },
+        "span": {
+          "type": "string",
+          "enum": [
+            "full",
+            "contained",
+            "inset"
+          ]
+        },
+        "collapse": {
+          "type": "string",
+          "enum": [
+            "none",
+            "rail",
+            "drawer",
+            "popover",
+            "stack"
+          ]
+        },
+        "sticky": {
+          "type": "boolean"
+        },
+        "safeArea": {
+          "type": "string",
+          "enum": [
+            "none",
+            "inline",
+            "block-start",
+            "all"
+          ]
+        },
+        "scrollOwner": {
+          "type": "string",
+          "enum": [
+            "page",
+            "content-host"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

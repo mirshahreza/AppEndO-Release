@@ -1,0 +1,82 @@
+{
+  "$schema": "appendo.hawiety.platform-leak-inventory/v1",
+  "updatedAt": "2026-10-21",
+  "exitTargetWave": "H",
+  "summary": "Extraction complete: Hawiety is package-gated (hawiety vertical-app). Host modules remain in repo for zip re-exports; uninstall disables portal/API/nav when package is off.",
+  "categories": [
+    {
+      "id": "core_page_resolvers",
+      "description": "core:Hwy* page loaders removed from platform resolvers",
+      "wave": "H",
+      "status": "done",
+      "anchorFiles": ["src/app/platform/resolvers.ts", "src/app/routes/lazyPages.tsx"]
+    },
+    {
+      "id": "core_http_routes",
+      "description": "mountHwyRoutes gated by isHawietyRuntimeEnabled",
+      "wave": "C",
+      "status": "gated",
+      "anchorFiles": ["src/server/bootstrapFullRuntime.ts", "src/server/routes/hwy.routes.ts"]
+    },
+    {
+      "id": "core_domain_services",
+      "description": "Domain/server hwy code ships in package zip; optional future physical move out of src/",
+      "wave": "H",
+      "status": "deferred",
+      "anchorFiles": ["src/domain/hwy", "src/server/domain/hwy"]
+    },
+    {
+      "id": "core_features",
+      "description": "hwy-* features loaded via hawiety:pageKey package loaders",
+      "wave": "D",
+      "status": "gated",
+      "anchorFiles": ["src/features/hwy-member-dossier", "src/features/hwy-etl-console"]
+    },
+    {
+      "id": "public_pages",
+      "description": "Public self-reg routes wrapped in HawietyPackagePublicGate",
+      "wave": "E",
+      "status": "gated",
+      "anchorFiles": ["src/pages/HwySelfRegistration.tsx", "src/pages/Login.tsx"]
+    },
+    {
+      "id": "portal_registry_scripts",
+      "description": "Phase3 install scripts use package loaders; prefer hawiety:install deployment",
+      "wave": "E",
+      "status": "done",
+      "anchorFiles": ["scripts/hwy-phase3/hwyPortal.ts"]
+    },
+    {
+      "id": "shell_loading_branding",
+      "description": "Hawiety loading chrome and shell brand when package enabled only",
+      "wave": "F",
+      "status": "gated",
+      "anchorFiles": [
+        "src/components/AppRouteLoading.tsx",
+        "src/server/domain/hwy/ensureHawietyPortalShellBrand.ts"
+      ]
+    },
+    {
+      "id": "culture_overlays",
+      "description": "Culture keys from package sidecar on install; core embedded Hawiety overlays removed",
+      "wave": "F",
+      "status": "done",
+      "anchorFiles": [
+        "src/core/system-extensions/culture-packs/overlays/hawiety.iq.json",
+        "settings.json"
+      ]
+    },
+    {
+      "id": "shared_hwy_ui",
+      "description": "Shared hwy UI re-exported in package zip",
+      "wave": "D",
+      "status": "gated",
+      "anchorFiles": ["src/shared/ui/hwy"]
+    }
+  ],
+  "qualityGate": {
+    "id": "p15-no-core-hawiety-boot",
+    "description": "bootstrapFullRuntime must not statically import mountHwyRoutes; p15 exit test enforces resolver + boot gates.",
+    "passWhen": "p15HawietyVerticalApp.exit.test.ts green"
+  }
+}

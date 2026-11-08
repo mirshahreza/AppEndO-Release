@@ -1,0 +1,32 @@
+{
+  "pageKey": "users",
+  "title": "Users",
+  "loaderKind": "core",
+  "loaderRef": "core:Users",
+  "defaultRoles": [
+    "ADMIN"
+  ],
+  "enabled": true,
+  "homeWidgets": [
+    {
+      "componentRef": "core:UsersHomeWidget",
+      "span": "narrow",
+      "defaultVisible": false,
+      "catalog": {
+        "labelKey": "homeWidget.users.title",
+        "descriptionKey": "homeWidget.users.description",
+        "icon": "Users",
+        "tone": "indigo"
+      },
+      "requiredRoles": ["ADMIN"],
+      "deepLink": { "pageKey": "users" }
+    }
+  ],
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-06-18T04:15:13.074Z",
+  "createdBy": null,
+  "updatedAt": "2026-06-18T04:15:13.074Z",
+  "updatedBy": null
+}

@@ -1,0 +1,44 @@
+{
+  "id": "em_b11fb7e19dc0c4e8",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_sample_mock_record_tags",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseSampleMockRecordTags",
+    "tableName": "base_sample_mock_record_tags"
+  },
+  "columns": [
+    {
+      "name": "record_id",
+      "field": "recordId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": true
+    },
+    {
+      "name": "tag_id",
+      "field": "tagId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": true
+    }
+  ],
+  "primaryKey": [
+    "record_id",
+    "tag_id"
+  ],
+  "associations": [],
+  "schemaFingerprint": "3e91767b1e1ca260",
+  "readOnly": false,
+  "labels": {
+    "title": "base_sample_mock_record_tags"
+  },
+  "status": "ready",
+  "created_at": "2026-08-26T09:37:04.175Z",
+  "updated_at": "2026-09-11T04:55:14.688Z"
+}

@@ -1,0 +1,64 @@
+# Dependencies 
+node_modules/
+vendor/
+.pnp/
+.pnp.js
+
+# Build Output & Artifacts
+dist/
+build/
+out/
+.next/
+.nuxt/
+bin/
+obj/
+*.dll
+*.exe
+
+# Cache & Logs
+.cache/
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Test & Coverage
+coverage/
+.nyc_output/
+
+# Media & Large Files 
+*.mp4
+*.zip
+*.tar.gz
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# Environment Files 
+.env
+.env.local
+*.key
+# AI token optimization (p-38 / cursor-ignore expansion) — designer noise + archived human docs (~650KB)
+runtime/designer/drafts/
+runtime/**
+!runtime/platform-registry/navigation/studio.json
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+runtime/designer/snapshots/
+runtime/designer/exports/shells/*-*.tsx
+runtime/designer/exports/shells/*.meta.json
+runtime/platform-registry/navigation/test*.json
+runtime/package-test-fixtures/
+packages-storage/
+plugins-storage/
+docs/archive/
+docs/ai/feature-graph.json
+docs/DESIGNER_ARCHITECTURE_SPEC.md
+docs/APPLICATION_COMPLETE_GUIDE_FA.md
+docs/component-designer/**
+docs/*AUDIT*.md
+docs/*REFACTOR*.md
+docs/DEVELOPER_GUIDE_FA.md
+docs/COMPONENT_DESIGNER_ONBOARDING_*.md
+document.md

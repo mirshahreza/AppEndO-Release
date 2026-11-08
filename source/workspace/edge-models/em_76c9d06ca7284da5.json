@@ -1,0 +1,68 @@
+{
+  "id": "em_76c9d06ca7284da5",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_work_item_saved_filters",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkItemSavedFilters",
+    "tableName": "base_work_item_saved_filters"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "user_id",
+      "field": "userId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "name",
+      "field": "name",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "filter_json",
+      "field": "filterJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "e3b927d37de33629",
+  "readOnly": false,
+  "labels": {
+    "title": "base_work_item_saved_filters"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:19.850Z",
+  "updated_at": "2026-09-11T04:55:19.850Z"
+}

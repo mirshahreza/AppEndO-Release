@@ -1,0 +1,239 @@
+{
+  "id": "ea_e742d03289342f6c",
+  "edgeModelId": "em_1a1c328e8c425ae3",
+  "key": "hwy-institutes",
+  "label": "HWY institutes",
+  "basePath": "/api/hwy/institutes",
+  "operations": [
+    {
+      "id": "op_list_pw1r4h",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/hwy/institutes",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "inviteExpiresAfterDays",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoUrl",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 1000,
+        "defaultPageSize": 1000
+      }
+    },
+    {
+      "id": "op_get_pw1r4h",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/hwy/institutes/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "inviteExpiresAfterDays",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoUrl",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_pw1r4h",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/hwy/institutes",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "inviteExpiresAfterDays",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoUrl",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "write": [
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "inviteExpiresAfterDays",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoUrl",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_pw1r4h",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/hwy/institutes/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "inviteExpiresAfterDays",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoUrl",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "write": [
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "inviteExpiresAfterDays",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoUrl",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_pw1r4h",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/hwy/institutes/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "inviteExpiresAfterDays",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoUrl",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-09-28T14:32:20.941Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "hwy-institutes.hwy-institutes-list"
+}

@@ -1,0 +1,279 @@
+:root {
+  color: #172033;
+  background: #f4f7fb;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-wrap: anywhere;
+}
+
+a,
+button,
+input,
+select {
+  font: inherit;
+}
+
+a,
+button,
+input,
+select {
+  min-height: 2.75rem;
+}
+
+button,
+input,
+select {
+  border: 1px solid #8b98aa;
+  border-radius: 0.45rem;
+  background: white;
+  color: inherit;
+  padding: 0.55rem 0.75rem;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 650;
+}
+
+:focus-visible {
+  outline: 3px solid #075fdb;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 20;
+  inset-block-start: 0.5rem;
+  inset-inline-start: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  background: white;
+  color: #063b86;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.app-header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem clamp(0.75rem, 3vw, 2rem);
+  border-block-end: 1px solid #cbd3df;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.brand {
+  min-height: auto;
+  margin-inline-end: auto;
+  color: #273a9b;
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+nav a {
+  display: inline-flex;
+  align-items: center;
+  color: #203252;
+}
+
+.menu {
+  position: absolute;
+  inset-block-start: calc(100% + 0.25rem);
+  inset-inline-end: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #8794a8;
+  border-radius: 0.5rem;
+  background: white;
+  box-shadow: 0 0.8rem 2rem rgb(31 41 55 / 18%);
+}
+
+main {
+  width: min(100%, 88rem);
+  margin-inline: auto;
+  padding: clamp(0.75rem, 3vw, 2rem);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-block-start: 0;
+}
+
+form,
+aside {
+  display: grid;
+  gap: 1rem;
+}
+
+form {
+  width: min(100%, 34rem);
+}
+
+label {
+  display: grid;
+  gap: 0.25rem;
+  font-weight: 650;
+}
+
+fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+  border: 1px solid #a9b4c3;
+}
+
+fieldset label {
+  display: flex;
+  align-items: center;
+}
+
+fieldset input {
+  min-height: auto;
+}
+
+.editor-header,
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.editor-header {
+  justify-content: space-between;
+}
+
+.actions {
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  color: #57657a;
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.editor-grid {
+  display: grid;
+  grid-template-columns: minmax(15rem, 19rem) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+aside,
+.preview {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #c2cad6;
+  border-radius: 0.65rem;
+  background: white;
+}
+
+.preview {
+  min-height: 28rem;
+  overflow: clip;
+}
+
+.preview-full {
+  min-height: 40rem;
+}
+
+[data-creative-scene-host] {
+  min-height: 12rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+[data-creative-scene-id] {
+  display: grid;
+  gap: 1rem;
+}
+
+[data-creative-semantic-callouts],
+[data-creative-semantic-overlay] {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 767px) {
+  .app-header,
+  .editor-header,
+  .editor-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .brand {
+    margin-inline-end: 0;
+  }
+
+  nav {
+    flex-wrap: wrap;
+  }
+
+  .menu {
+    position: static;
+  }
+
+  .preview {
+    min-height: 22rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .app-header,
+  .menu,
+  aside,
+  .preview {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    forced-color-adjust: auto;
+  }
+
+  [data-creative-scene-host],
+  [data-visual-engine-fallback] {
+    forced-color-adjust: none;
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "ea_ops_workflow_defs_pivot",
+  "edgeModelId": "em_5282477fc36a2a52",
+  "key": "ops-workflow-defs-pivot",
+  "label": "Workflow definitions pivot",
+  "basePath": "/api/ops/ops_workflow_defs",
+  "operations": [
+    {
+      "id": "ops_workflow_defs-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_workflow_defs/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "key",
+          "lifecycle_status",
+          "created_at",
+          "last_published_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Workflow definitions pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:19.259Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-workflow-definitions.ops-workflow-defs-pivot"
+}

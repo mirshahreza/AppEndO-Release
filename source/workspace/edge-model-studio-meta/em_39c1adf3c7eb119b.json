@@ -1,0 +1,43 @@
+{
+  "edgeModelId": "em_39c1adf3c7eb119b",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "role_name"
+    },
+    {
+      "columnName": "resource_kind"
+    },
+    {
+      "columnName": "resource_id"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_role_mcp_grants.role_name->base_roles.name:base_role_mcp_grants_role_name_fkey",
+      "displayLabel": "Role Name (base_roles)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nGrants MCP server/tool access to a role. Tuple (`role_name`, `resource_kind`, `resource_id`) — evaluated when AI agent assembles tool registry for a session.\n\n## Rules\n\n- **UNIQUE** triple per role — no duplicate grants.\n- `resource_kind` distinguishes server vs tool vs bundle ids — see AI settings / MCP registry.\n- Effective tools for a user = union of grants across all assigned roles (subject to session capability scope)."
+  },
+  "created_at": "2026-09-11T04:55:13.557Z",
+  "updated_at": "2026-09-17T15:29:39.736Z"
+}

@@ -1,0 +1,168 @@
+{
+  "edgeModelId": "em_82d6bab459e414c1",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "node_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "work_item_type"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "assignment_strategy"
+    },
+    {
+      "columnName": "assignment_evidence_json"
+    },
+    {
+      "columnName": "claimed_by_user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "priority",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "allowed_outcomes_json"
+    },
+    {
+      "columnName": "input_json"
+    },
+    {
+      "columnName": "output_schema_json"
+    },
+    {
+      "columnName": "output_json"
+    },
+    {
+      "columnName": "outcome"
+    },
+    {
+      "columnName": "title_text"
+    },
+    {
+      "columnName": "summary_text"
+    },
+    {
+      "columnName": "claimed_at"
+    },
+    {
+      "columnName": "completed_at"
+    },
+    {
+      "columnName": "state_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "approval_group_key"
+    },
+    {
+      "columnName": "due_at"
+    },
+    {
+      "columnName": "follow_up_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_work_item_attachments.work_item_id->base_work_items.id:base_work_item_attachments_work_item_id_fkey",
+      "displayLabel": "base_work_item_attachments (Work Item)"
+    },
+    {
+      "relationKey": "physical:base_work_item_comments.work_item_id->base_work_items.id:base_work_item_comments_work_item_id_fkey",
+      "displayLabel": "base_work_item_comments (Work Item)"
+    },
+    {
+      "relationKey": "physical:base_work_item_escalations.work_item_id->base_work_items.id:base_work_item_escalations_work_item_id_fkey",
+      "displayLabel": "base_work_item_escalations (Work Item)"
+    },
+    {
+      "relationKey": "physical:base_work_item_transitions.work_item_id->base_work_items.id:base_work_item_transitions_work_item_id_fkey",
+      "displayLabel": "base_work_item_transitions (Work Item)"
+    },
+    {
+      "relationKey": "physical:base_work_items.node_instance_id->base_workflow_node_instances.id:base_work_items_node_instance_id_fkey",
+      "displayLabel": "Node Instance"
+    },
+    {
+      "relationKey": "physical:base_work_items.workflow_instance_id->base_workflow_instances.id:base_work_items_workflow_instance_id_fkey",
+      "displayLabel": "Workflow Instance"
+    },
+    {
+      "relationKey": "physical:base_workflow_waits.work_item_id->base_work_items.id:base_workflow_waits_work_item_id_fkey",
+      "displayLabel": "base_workflow_waits (Work Item)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nHuman task inbox rows — 1:1 with a waiting node instance when assignment policy creates operator work. Claim, outcome, priority, allowed outcomes JSON for task UI.\n\n## Lifecycle\n\n1. **Open** — created by engine when node enters human task state.\n2. **Claim** — `claimed_by_user_id` + timestamp; may enforce role/scope.\n3. **Complete** — `outcome` + `output_json` satisfies wait and resumes workflow.\n\n## Rules\n\n- **UNIQUE** `node_instance_id` — preserves human-task invariant vs dead letters.\n- Inbox sort: status + priority + created_at (indexed).\n- Escalations tracked in `base_work_item_escalations`; history in `base_work_item_transitions`.",
+    "querySurfaces": {
+      "schemaVersion": "1.0.0",
+      "presets": [
+        {
+          "application": "optional",
+          "visibility": "public",
+          "id": "open-work",
+          "label": "Open",
+          "where": {
+            "kind": "group",
+            "id": "preset-root-status",
+            "op": "and",
+            "children": [
+              {
+                "kind": "condition",
+                "id": "preset-status",
+                "field": "status",
+                "operator": "eq",
+                "value": "OPEN",
+                "valueKind": "literal"
+              }
+            ]
+          },
+          "defaultSelected": true,
+          "sortOrder": 10
+        },
+        {
+          "application": "optional",
+          "visibility": "public",
+          "id": "completed-work",
+          "label": "Completed",
+          "where": {
+            "kind": "group",
+            "id": "preset-root-status",
+            "op": "and",
+            "children": [
+              {
+                "kind": "condition",
+                "id": "preset-status",
+                "field": "status",
+                "operator": "eq",
+                "value": "COMPLETED",
+                "valueKind": "literal"
+              }
+            ]
+          },
+          "sortOrder": 20
+        }
+      ]
+    }
+  },
+  "created_at": "2026-09-03T11:52:43.994Z",
+  "updated_at": "2026-09-17T15:29:39.575Z"
+}

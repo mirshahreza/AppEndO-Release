@@ -1,0 +1,23 @@
+{
+  "schema": "append-builtin-function-metadata",
+  "schemaVersion": "1.0.0",
+  "id": "fn-users-update",
+  "method": "PUT",
+  "path": "/api/users/:id",
+  "createdAt": "2026-07-06T22:31:32.525Z",
+  "createdBy": null,
+  "updatedAt": "2026-09-12T16:32:48.151Z",
+  "updatedBy": "seed-change-reason",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "DEVELOPER"
+    ],
+    "allowUsers": [
+      "mohsen.tehrani@append.os"
+    ],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "metadataJson": "{\"changeReason\":{\"reasonAsk\":\"optional\",\"reasonCapture\":\"both\",\"reasonVocabNodeId\":\"100.6.22\",\"reasonIncludeGeneral\":true}}"
+}

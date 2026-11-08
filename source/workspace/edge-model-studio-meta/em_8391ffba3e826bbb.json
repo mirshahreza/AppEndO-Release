@@ -1,0 +1,175 @@
+{
+  "edgeModelId": "em_8391ffba3e826bbb",
+  "tags": [
+    "hwy",
+    "file",
+    "attachment"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "formWidget": "hidden",
+      "group": "File",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "member_id",
+      "formWidget": "lookup",
+      "required": true,
+      "searchRole": "basic",
+      "group": "File",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "file_kind_code",
+      "formWidget": "lookup",
+      "required": true,
+      "searchRole": "basic",
+      "developerNotes": "Picker filter: parent_id=220.002 (Member File Kind).",
+      "group": "File",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "original_file_name",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "File",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "mime",
+      "formWidget": "text",
+      "group": "File",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "size_bytes",
+      "formWidget": "number",
+      "searchRole": "advanced",
+      "group": "File",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "checksum",
+      "formWidget": "text",
+      "group": "File",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "content",
+      "formWidget": "hidden",
+      "developerNotes": "Exclude from list/read default field sets in Phase 2 API projection.",
+      "group": "Binary",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "thumbnail_content",
+      "formWidget": "hidden",
+      "group": "Binary",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "is_approved",
+      "formWidget": "switch",
+      "interfaceNotes": "Not used for other_attachment.",
+      "group": "Approval",
+      "sortOrder": 100
+    },
+    {
+      "columnName": "created_by",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 110
+    },
+    {
+      "columnName": "created_at",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "updated_by",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 130
+    },
+    {
+      "columnName": "updated_at",
+      "formWidget": "datetime",
+      "group": "Audit",
+      "sortOrder": 140
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_7c749e72253f4349",
+      "displayLabel": "File kind",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.002"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_cf24a327c6cf452a",
+      "displayLabel": "Created by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_e2118e4003d14c18",
+      "displayLabel": "Member",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_f8be6a1db83e4b4f",
+      "displayLabel": "Updated by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nMember document blobs in SQL (`content` / `thumbnail_content`). Each row requires `file_kind_code`.\n\n## Scenarios\n\n- **S1** — minimum upload set on self-registration submit.\n- **S4** — approval `is_approved` except `other_attachment`.\n\n## Rules\n\n- Exclude `content` from default list API projections (large binary).\n- Kind vocabulary: Hawiety / Member File Kind.",
+    "scenarioIds": [
+      "S1",
+      "S4"
+    ],
+    "columnGroupOrder": [
+      "File",
+      "Binary",
+      "Approval",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "File": {
+        "icon": "lucide:file",
+        "color": "text-violet-600"
+      },
+      "Binary": {
+        "icon": "lucide:binary",
+        "color": "text-slate-500"
+      },
+      "Approval": {
+        "icon": "lucide:check-circle",
+        "color": "text-emerald-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock",
+        "color": "text-slate-400"
+      }
+    }
+  },
+  "created_at": "2026-09-16T13:15:04.936Z",
+  "updated_at": "2026-09-17T15:29:40.096Z"
+}

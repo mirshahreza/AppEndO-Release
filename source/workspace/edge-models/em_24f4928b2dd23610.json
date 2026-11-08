@@ -1,0 +1,59 @@
+{
+  "id": "em_24f4928b2dd23610",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_user_identities",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseUserIdentities",
+    "tableName": "base_user_identities"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "user_id",
+      "field": "user_id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "provider_kind",
+      "field": "provider_kind",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "linked_at",
+      "field": "linked_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "7d46dbba24558c75",
+  "readOnly": true,
+  "labels": {
+    "title": "Identities"
+  },
+  "status": "ready",
+  "created_at": "2026-08-28T15:28:38.008Z",
+  "updated_at": "2026-10-22T03:07:44.523Z"
+}

@@ -1,0 +1,116 @@
+{
+  "id": "em_6a3f598a6f19267d",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_member_notes",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyMemberNotes",
+    "tableName": "hwy_member_notes"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "member_id",
+      "field": "memberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b9b34df33282b49c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "body",
+      "field": "body",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "subject_code",
+      "field": "subjectCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_4b30f1ab2482469c",
+      "targetModelId": "em_b9b34df33282b49c",
+      "foreignKey": "member_id",
+      "as": "member",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_e6698d6fccd64a72",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "subject_code",
+      "as": "subject",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_2cd42d9fbaa24b33",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "author",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "9d742e8245db445e",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Member Notes",
+    "icon": "lucide:sticky-note",
+    "color": "text-orange-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:06.196Z",
+  "updated_at": "2026-11-03T08:44:20.520Z"
+}

@@ -1,0 +1,210 @@
+{
+  "id": "em_f21cc8dc0dd387fa",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workflow_waits",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowWaits",
+    "tableName": "base_workflow_waits"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "workflow_instance_id",
+      "field": "workflowInstanceId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_35584ec12816b716",
+        "column": "id"
+      }
+    },
+    {
+      "name": "owning_node_instance_id",
+      "field": "owningNodeInstanceId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_721274940a247189",
+        "column": "id"
+      }
+    },
+    {
+      "name": "wait_type",
+      "field": "waitType",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status",
+      "field": "status",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "due_at",
+      "field": "dueAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "timeout_at",
+      "field": "timeoutAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "event_name",
+      "field": "eventName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "correlation_key",
+      "field": "correlationKey",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "correlation_value_hash",
+      "field": "correlationValueHash",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "correlation_encoder_version",
+      "field": "correlationEncoderVersion",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "correlation_hash_algorithm",
+      "field": "correlationHashAlgorithm",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "child_instance_id",
+      "field": "childInstanceId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_35584ec12816b716",
+        "column": "id"
+      }
+    },
+    {
+      "name": "work_item_id",
+      "field": "workItemId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_82d6bab459e414c1",
+        "column": "id"
+      }
+    },
+    {
+      "name": "satisfied_at",
+      "field": "satisfiedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "result_payload_json",
+      "field": "resultPayloadJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "state_version",
+      "field": "stateVersion",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "e4cc06e0e832f5bf",
+  "readOnly": false,
+  "labels": {
+    "title": "base_workflow_waits"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:25.614Z",
+  "updated_at": "2026-09-11T04:55:25.614Z"
+}

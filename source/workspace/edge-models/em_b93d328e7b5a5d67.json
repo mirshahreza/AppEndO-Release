@@ -1,0 +1,216 @@
+{
+  "id": "em_b93d328e7b5a5d67",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_info",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseInfo",
+    "tableName": "base_info"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "parent_id",
+      "field": "parentId",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "title",
+      "field": "title",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "title_en",
+      "field": "titleEn",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "title_fa",
+      "field": "titleFa",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "title_ar",
+      "field": "titleAr",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "short_name",
+      "field": "shortName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "view_order",
+      "field": "viewOrder",
+      "dataType": "numeric",
+      "sequelizeType": "DOUBLE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note",
+      "field": "note",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note_en",
+      "field": "noteEn",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note_fa",
+      "field": "noteFa",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note_ar",
+      "field": "noteAr",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "metadata",
+      "field": "metadata",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "value",
+      "field": "value",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "is_active",
+      "field": "isActive",
+      "dataType": "boolean",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "ui_color",
+      "field": "uiColor",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "ui_html",
+      "field": "uiHtml",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "60f74e4b602336ef",
+  "readOnly": false,
+  "labels": {
+    "title": "base_info"
+  },
+  "status": "ready",
+  "created_at": "2026-08-26T08:04:27.325Z",
+  "updated_at": "2026-09-11T04:55:12.554Z"
+}

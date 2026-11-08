@@ -1,0 +1,363 @@
+{
+  "id": "em_de1dc90b9e9d7626",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "cms_contents",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "CmsContents",
+    "tableName": "cms_contents"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "content_type_code",
+      "field": "contentTypeCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "language_code",
+      "field": "languageCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "slug",
+      "field": "slug",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status_code",
+      "field": "statusCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "status_code_updated_at",
+      "field": "statusCodeUpdatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status_code_updated_by",
+      "field": "statusCodeUpdatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0aea59a2c83642ce",
+        "column": "id"
+      }
+    },
+    {
+      "name": "title",
+      "field": "title",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "summary",
+      "field": "summary",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "body",
+      "field": "body",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "body_format_code",
+      "field": "bodyFormatCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "seo_title",
+      "field": "seoTitle",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "seo_note",
+      "field": "seoNote",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "published_at",
+      "field": "publishedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "operator_note",
+      "field": "operatorNote",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "comments_enabled",
+      "field": "commentsEnabled",
+      "dataType": "boolean",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "comments_policy_code",
+      "field": "commentsPolicyCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "comments_body_format_code",
+      "field": "commentsBodyFormatCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "parent_content_id",
+      "field": "parentContentId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_de1dc90b9e9d7626",
+        "column": "id"
+      }
+    },
+    {
+      "name": "author_display_name",
+      "field": "authorDisplayName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "author_email",
+      "field": "authorEmail",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "moderated_by",
+      "field": "moderatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0aea59a2c83642ce",
+        "column": "id"
+      }
+    },
+    {
+      "name": "moderated_at",
+      "field": "moderatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0aea59a2c83642ce",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0aea59a2c83642ce",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "hasMany",
+      "id": "ea_3971d9993ab045e6",
+      "targetModelId": "em_0033c2db1f0bdc7f",
+      "foreignKey": "content_id",
+      "as": "revisions",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_b1d991ff2c5f47cb",
+      "targetModelId": "em_1cd186b841dd21d7",
+      "foreignKey": "content_id",
+      "as": "assets",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_376c412895444b69",
+      "targetModelId": "em_90b8b65918bfc15c",
+      "foreignKey": "content_id",
+      "as": "tags",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_678aee611a1e4d01",
+      "targetModelId": "em_de1dc90b9e9d7626",
+      "foreignKey": "parent_content_id",
+      "as": "childContents",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_7f411c3c1ef84f6e",
+      "targetModelId": "em_de1dc90b9e9d7626",
+      "foreignKey": "parent_content_id",
+      "as": "parentContent",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsToMany",
+      "id": "ea_32863b3d9a204f6c",
+      "targetModelId": "em_de1dc90b9e9d7626",
+      "foreignKey": "content_id_a",
+      "as": "relatedContents",
+      "source": "manual",
+      "throughModelId": "em_95213b3d9a76be40",
+      "otherKey": "content_id_b"
+    }
+  ],
+  "schemaFingerprint": "1456df23cb368d60",
+  "readOnly": false,
+  "labels": {
+    "title": "CMS Contents",
+    "icon": "lucide:newspaper",
+    "color": "text-sky-600"
+  },
+  "status": "ready",
+  "created_at": "2026-07-31T17:56:34.717Z",
+  "updated_at": "2026-08-25T08:22:26.875Z"
+}

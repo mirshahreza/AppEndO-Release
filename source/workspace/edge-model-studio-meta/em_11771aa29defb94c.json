@@ -1,0 +1,30 @@
+{
+  "edgeModelId": "em_11771aa29defb94c",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id"
+    },
+    {
+      "columnName": "dimension_key"
+    },
+    {
+      "columnName": "created_at",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_scope_memberships.user_id->base_users.id:base_scope_memberships_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nAssigns a user to a node in a **scope dimension** (org/geo/custom). `node_id` is a `base_info.id` string without FK — hierarchical renames remap in application code. Used by record policy / RPE row filters.\n\n## Rules\n\n- **UNIQUE** (`user_id`, `dimension_key`, `node_id`).\n- `dimension_key` names the axis (e.g. org tree vs geo tree) — must match policy AST refs.\n- Assign/remove writes append-only `base_scope_membership_events` for audit.\n- Not a replacement for roles — capability still required to call functions."
+  },
+  "created_at": "2026-09-11T04:55:15.666Z",
+  "updated_at": "2026-09-17T15:29:39.785Z"
+}

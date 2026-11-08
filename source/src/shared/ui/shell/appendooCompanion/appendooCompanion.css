@@ -1,0 +1,626 @@
+.appendoo-companion {
+	--appendoo-look-x: 0;
+	--appendoo-look-y: 0;
+	--appendoo-glass-hi: #fff8f3;
+	--appendoo-glass-mid: #ffdcc9;
+	--appendoo-glass-lo: #f0b396;
+	--appendoo-glass-glow: #ffc4b8;
+	--appendoo-glass-rim: #f3d4c6;
+	--appendoo-shadow: rgb(92 42 28);
+	--appendoo-blush: #ff9ea0;
+	--appendoo-ink: #2a221c;
+	--appendoo-spark: #ffd38a;
+	--appendoo-leaf: #6faf62;
+	--appendoo-stem: #6a4b32;
+	--appendoo-beak: #f0b45c;
+	--appendoo-accent-edge: color-mix(in srgb, var(--appendoo-ink) 28%, var(--appendoo-glass-lo));
+	position: fixed;
+	z-index: 105;
+	width: 72px;
+	height: 82px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: grab;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-drag: none;
+	outline: none;
+}
+
+.appendoo-companion:focus-visible {
+	border-radius: 999px;
+	box-shadow: 0 0 0 3px rgb(var(--app-accent-rgb, 0 162 138) / 0.28);
+}
+
+.appendoo-companion.is-dragging {
+	cursor: grabbing;
+	transition: none;
+}
+
+.appendoo-companion:not(.is-dragging):not(.is-reduced) {
+	transition: left 180ms cubic-bezier(0.22, 1, 0.36, 1), top 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.appendoo-companion.is-panel-open {
+	width: 54px;
+	height: 62px;
+}
+
+.appendoo-companion.is-tucked {
+	width: 22px;
+	height: 56px;
+	overflow: hidden;
+}
+
+.appendoo-companion.is-dropping:not(.is-reduced) {
+	animation: appendoo-companion-drop 560ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.appendoo-companion-stage {
+	--appendoo-look-x: 0;
+	--appendoo-look-y: 0;
+	--appendoo-glass-hi: #fff8f3;
+	--appendoo-glass-mid: #ffdcc9;
+	--appendoo-glass-lo: #f0b396;
+	--appendoo-glass-glow: #ffc4b8;
+	--appendoo-glass-rim: #f3d4c6;
+	--appendoo-shadow: rgb(92 42 28);
+	--appendoo-blush: #ff9ea0;
+	--appendoo-ink: #2a221c;
+	--appendoo-spark: #ffd38a;
+	--appendoo-leaf: #6faf62;
+	--appendoo-stem: #6a4b32;
+	--appendoo-beak: #f0b45c;
+	--appendoo-accent-edge: color-mix(in srgb, var(--appendoo-ink) 28%, var(--appendoo-glass-lo));
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	pointer-events: none;
+}
+
+.appendoo-companion-glass {
+	opacity: 0.9;
+}
+
+.appendoo-companion-cast {
+	pointer-events: none;
+}
+
+.appendoo-companion-schematic-stroke {
+	fill: var(--appendoo-schematic, #b7b0a8);
+	fill-rule: evenodd;
+	stroke: none;
+}
+
+.appendoo-companion-ink.is-schematic {
+	stroke: var(--appendoo-ink);
+	fill: var(--appendoo-ink);
+}
+
+.appendoo-companion-breathe {
+	transform-origin: 50px 96px;
+	transform-box: fill-box;
+}
+
+.appendoo-companion:not(.is-reduced):not(.is-dragging):not([data-face='sleepy']) .appendoo-companion-breathe {
+	animation: appendoo-companion-breathe 4.2s ease-in-out infinite;
+}
+
+.appendoo-companion[data-face='grabbed'] .appendoo-companion-breathe {
+	animation: none;
+	transform: scaleX(1.1) scaleY(0.84);
+	transform-origin: 50px 98px;
+}
+
+.appendoo-companion[data-face='curious']:not(.is-reduced) .appendoo-companion-breathe {
+	transform: rotate(-7deg) translate(1px, -1px);
+}
+
+.appendoo-companion[data-face='surprised']:not(.is-reduced) .appendoo-companion-breathe {
+	animation: appendoo-companion-pop 420ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.appendoo-companion[data-face='celebrate']:not(.is-reduced) .appendoo-companion-breathe {
+	animation: appendoo-companion-hop 760ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.appendoo-companion[data-face='oops']:not(.is-reduced) .appendoo-companion-breathe {
+	animation: appendoo-companion-shake 480ms ease-in-out;
+}
+
+.appendoo-companion-look {
+	transform: translate(
+		calc(var(--appendoo-look-x) * 3.4px),
+		calc(var(--appendoo-look-y) * 2.8px)
+	);
+}
+
+.appendoo-companion-stage {
+	--appendoo-trim-motion: 0.7;
+	--appendoo-rim-mood-x: 0;
+	--appendoo-rim-mood-y: 0;
+	--appendoo-rim-mood-rot: 0;
+}
+
+.appendoo-companion-trim-shine.is-live {
+	transform-origin: 34px 36px;
+	transform-box: fill-box;
+	animation: appendoo-trim-drift calc(9.2s - var(--appendoo-trim-motion) * 3.4s) ease-in-out infinite;
+}
+
+.appendoo-companion-trim-caustic.is-live {
+	transform-origin: 70px 72px;
+	transform-box: fill-box;
+	animation: appendoo-trim-drift-b calc(11.4s - var(--appendoo-trim-motion) * 4s) ease-in-out infinite;
+}
+
+.appendoo-companion-inner-trim.is-live {
+	transform-origin: 46px 54px;
+	transform-box: fill-box;
+	animation: appendoo-rim-sway calc(7.6s - var(--appendoo-trim-motion) * 2.2s) ease-in-out infinite;
+}
+
+.appendoo-companion-rim-spin.is-live {
+	transform-origin: 47px 56px;
+	transform-box: fill-box;
+	animation: appendoo-rim-sway calc(8.4s - var(--appendoo-trim-motion) * 2.6s) ease-in-out infinite;
+}
+
+.appendoo-companion-rim-travel {
+	stroke-dasharray: 8 46;
+	opacity: 0.55;
+	animation: appendoo-rim-travel calc(10s - var(--appendoo-trim-motion) * 4.2s) linear infinite;
+}
+
+.appendoo-companion-accent-leaf,
+.appendoo-companion-accent-sprout {
+	fill: var(--appendoo-leaf);
+	stroke: none;
+}
+
+.appendoo-companion-accent-stem {
+	fill: var(--appendoo-stem);
+	stroke: none;
+}
+
+.appendoo-companion-accent-beak {
+	fill: var(--appendoo-beak);
+}
+
+.appendoo-companion-pore {
+	fill: color-mix(in srgb, var(--appendoo-ink) 24%, var(--appendoo-glass-lo));
+	stroke: none;
+}
+
+.appendoo-companion-clothes-shirt {
+	fill: color-mix(in srgb, #fffaf0 82%, var(--appendoo-glass-hi));
+	stroke: none;
+}
+
+.appendoo-companion-clothes-pants {
+	fill: color-mix(in srgb, #7a3f1c 74%, var(--appendoo-glass-lo));
+	stroke: none;
+}
+
+.appendoo-companion-clothes-tie {
+	fill: #d4452e;
+	stroke: none;
+}
+
+.appendoo-companion-clothes-belt {
+	fill: color-mix(in srgb, var(--appendoo-ink) 62%, #5a3a22);
+	stroke: none;
+}
+
+.appendoo-companion-clothes-buckle {
+	fill: color-mix(in srgb, #e8c44a 72%, var(--appendoo-spark));
+	stroke: none;
+}
+
+.appendoo-companion-clothes-sock {
+	fill: color-mix(in srgb, #fffaf0 90%, var(--appendoo-glass-hi));
+	stroke: none;
+}
+
+.appendoo-companion-clothes-sock-stripe {
+	fill: #c43b2e;
+	stroke: none;
+}
+
+.appendoo-companion-shoe {
+	fill: color-mix(in srgb, var(--appendoo-ink) 86%, #3a2418);
+	stroke: none;
+}
+
+.appendoo-companion-trim-leaf.is-live {
+	transform-box: view-box;
+	animation: appendoo-leaf-sway 4.8s ease-in-out infinite;
+}
+
+.appendoo-companion-trim-sprout.is-live {
+	transform-origin: 50px 24px;
+	transform-box: fill-box;
+	animation: appendoo-leaf-sway 5.4s ease-in-out infinite;
+}
+
+.appendoo-companion-trim-wing.is-live {
+	transform-origin: 24px 66px;
+	transform-box: fill-box;
+	animation: appendoo-wing-flap 3.6s ease-in-out infinite;
+}
+
+.appendoo-companion-stage[data-emotion='thinking'] .appendoo-companion-spark,
+.appendoo-companion[data-face='thinking']:not(.is-reduced) .appendoo-companion-spark {
+	animation: appendoo-companion-spark 1.4s ease-in-out infinite;
+}
+
+.appendoo-companion-stage[data-emotion='celebrate'] .appendoo-companion-spark,
+.appendoo-companion[data-face='celebrate']:not(.is-reduced) .appendoo-companion-spark {
+	animation: appendoo-companion-spark-pop 700ms ease-out;
+}
+
+.appendoo-companion-stage[data-emotion='sleepy'] .appendoo-companion-zzz,
+.appendoo-companion[data-face='sleepy']:not(.is-reduced) .appendoo-companion-zzz {
+	animation: appendoo-companion-zzz 2.4s ease-in-out infinite;
+}
+
+.appendoo-companion-studio:not(.is-reduced) .appendoo-companion-breathe {
+	animation: appendoo-companion-breathe 4.2s ease-in-out infinite;
+}
+
+.appendoo-companion-studio[data-emotion='sleepy'] .appendoo-companion-breathe,
+.appendoo-companion-studio[data-emotion='grabbed'] .appendoo-companion-breathe {
+	animation: none;
+}
+
+.appendoo-companion-studio[data-emotion='grabbed'] .appendoo-companion-breathe {
+	transform: scaleX(1.1) scaleY(0.84);
+	transform-origin: 50px 98px;
+}
+
+.appendoo-companion-studio[data-emotion='curious'] .appendoo-companion-breathe {
+	transform: rotate(-7deg) translate(1px, -1px);
+}
+
+.appendoo-companion-studio[data-emotion='surprise'] .appendoo-companion-breathe {
+	animation: appendoo-companion-pop 420ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.appendoo-companion-studio[data-emotion='celebrate'] .appendoo-companion-breathe {
+	animation: appendoo-companion-hop 760ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.appendoo-companion-studio[data-emotion='worry'] .appendoo-companion-breathe,
+.appendoo-companion-studio[data-emotion='fear'] .appendoo-companion-breathe {
+	animation: appendoo-companion-shake 480ms ease-in-out;
+}
+
+.appendoo-companion-studio[data-emotion='anger'] .appendoo-companion-breathe {
+	transform: scale(1.04, 0.96);
+}
+
+.appendoo-accessory {
+	transform-box: fill-box;
+	transform:
+		translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+		rotate(calc(var(--acc-tilt, 0) * 1deg))
+		scale(var(--acc-scale, 1));
+}
+
+.appendoo-companion-stage[data-emotion='surprise'] .appendoo-accessory-hat,
+.appendoo-companion-stage[data-emotion='fear'] .appendoo-accessory-hat,
+.appendoo-companion-stage[data-emotion='celebrate'] .appendoo-accessory-hat {
+	animation: appendoo-hat-pop 560ms cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+.appendoo-companion-stage[data-emotion='curious'] .appendoo-accessory-hat,
+.appendoo-companion-stage[data-emotion='thinking'] .appendoo-accessory-hat,
+.appendoo-companion-stage[data-emotion='worry'] .appendoo-accessory-hat {
+	animation: appendoo-hat-search 1.7s ease-in-out infinite;
+}
+
+.appendoo-companion-stage[data-emotion='surprise'] .appendoo-accessory-glasses,
+.appendoo-companion-stage[data-emotion='fear'] .appendoo-accessory-glasses {
+	animation: appendoo-glasses-wide 480ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.appendoo-companion-stage[data-emotion='curious'] .appendoo-accessory-glasses,
+.appendoo-companion-stage[data-emotion='thinking'] .appendoo-accessory-glasses {
+	animation: appendoo-glasses-search 1.55s ease-in-out infinite;
+}
+
+.appendoo-companion-stage[data-emotion='thinking'] .appendoo-accessory-headphones {
+	animation: appendoo-headphones-think 2s ease-in-out infinite;
+}
+
+.appendoo-companion-stage[data-emotion='sleepy'] .appendoo-accessory-headphones,
+.appendoo-companion-stage[data-emotion='sleepy'] .appendoo-accessory-hat,
+.appendoo-companion-stage[data-emotion='sleepy'] .appendoo-accessory-glasses {
+	animation: appendoo-accessory-slip 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.appendoo-companion,
+	.appendoo-companion-breathe,
+	.appendoo-companion-spark,
+	.appendoo-companion-zzz,
+	.appendoo-companion-trim-shine,
+	.appendoo-companion-trim-caustic,
+	.appendoo-companion-inner-trim,
+	.appendoo-companion-rim-mood,
+	.appendoo-companion-rim-spin,
+	.appendoo-companion-rim-travel,
+	.appendoo-companion-trim-leaf,
+	.appendoo-companion-trim-sprout,
+	.appendoo-companion-trim-wing,
+	.appendoo-companion-trim-ring,
+	.appendoo-accessory,
+	.appendoo-accessory-hat,
+	.appendoo-accessory-glasses,
+	.appendoo-accessory-headphones {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+@keyframes appendoo-companion-breathe {
+	0%,
+	100% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(1.05, 1.035);
+	}
+}
+
+@keyframes appendoo-companion-drop {
+	0% {
+		transform: scale(1.1, 0.88);
+	}
+	55% {
+		transform: scale(0.95, 1.08);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+
+@keyframes appendoo-companion-pop {
+	0% {
+		transform: scale(1);
+	}
+	40% {
+		transform: scale(1.14);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes appendoo-companion-hop {
+	0% {
+		transform: translateY(0) rotate(0deg);
+	}
+	35% {
+		transform: translateY(-11px) rotate(-8deg);
+	}
+	70% {
+		transform: translateY(2px) rotate(6deg);
+	}
+	100% {
+		transform: translateY(0) rotate(0deg);
+	}
+}
+
+@keyframes appendoo-companion-shake {
+	0%,
+	100% {
+		transform: translateX(0) rotate(0deg);
+	}
+	25% {
+		transform: translateX(-3px) rotate(-7deg);
+	}
+	75% {
+		transform: translateX(3px) rotate(7deg);
+	}
+}
+
+@keyframes appendoo-companion-spark {
+	0%,
+	100% {
+		transform: translate(0, 0) rotate(0deg) scale(0.92);
+		opacity: 0.7;
+	}
+	50% {
+		transform: translate(1px, -2px) rotate(18deg) scale(1.08);
+		opacity: 1;
+	}
+}
+
+@keyframes appendoo-companion-spark-pop {
+	0% {
+		transform: scale(0.4) rotate(-20deg);
+		opacity: 0;
+	}
+	40% {
+		transform: scale(1.2) rotate(12deg);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1) rotate(0deg);
+		opacity: 1;
+	}
+}
+
+@keyframes appendoo-companion-zzz {
+	0%,
+	100% {
+		transform: translate(0, 0);
+		opacity: 0.35;
+	}
+	50% {
+		transform: translate(3px, -6px);
+		opacity: 0.9;
+	}
+}
+
+@keyframes appendoo-trim-drift {
+	0%,
+	100% {
+		transform: translate(0, 0) rotate(-2deg) scale(1);
+	}
+	50% {
+		transform: translate(calc(var(--appendoo-trim-motion) * 2.4px), calc(var(--appendoo-trim-motion) * -1.8px)) rotate(3deg) scale(1.04);
+	}
+}
+
+@keyframes appendoo-trim-drift-b {
+	0%,
+	100% {
+		transform: translate(0, 0) rotate(1.5deg);
+	}
+	50% {
+		transform: translate(calc(var(--appendoo-trim-motion) * -2.1px), calc(var(--appendoo-trim-motion) * 1.6px)) rotate(-2.4deg);
+	}
+}
+
+@keyframes appendoo-rim-sway {
+	0%,
+	100% {
+		transform:
+			translate(calc(var(--appendoo-rim-mood-x) * 1px), calc(var(--appendoo-rim-mood-y) * 1px))
+			rotate(calc(var(--appendoo-trim-motion) * -1.5deg + var(--appendoo-rim-mood-rot) * -0.45deg))
+			scale(1);
+	}
+	50% {
+		transform:
+			translate(calc(var(--appendoo-rim-mood-x) * -0.55px), calc(var(--appendoo-rim-mood-y) * -0.7px))
+			rotate(calc(var(--appendoo-trim-motion) * 1.9deg + var(--appendoo-rim-mood-rot) * 1deg))
+			scale(calc(1 + var(--appendoo-trim-motion) * 0.012));
+	}
+}
+
+@keyframes appendoo-rim-travel {
+	to {
+		stroke-dashoffset: -54;
+	}
+}
+
+@keyframes appendoo-leaf-sway {
+	0%,
+	100% {
+		transform: rotate(-8deg);
+	}
+	50% {
+		transform: rotate(11deg);
+	}
+}
+
+@keyframes appendoo-wing-flap {
+	0%,
+	100% {
+		transform: rotate(0deg) translate(0, 0);
+	}
+	50% {
+		transform: rotate(-9deg) translate(-1px, 1px);
+	}
+}
+
+@keyframes appendoo-hat-pop {
+	0%,
+	100% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+	42% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc((var(--acc-y, 0) - 7) * 1px))
+			rotate(calc((var(--acc-tilt, 0) - 6) * 1deg))
+			scale(calc(var(--acc-scale, 1) * 1.06));
+	}
+}
+
+@keyframes appendoo-hat-search {
+	0%,
+	100% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+	50% {
+		transform:
+			translate(calc((var(--acc-x, 0) + 1.4) * 1px), calc((var(--acc-y, 0) - 3.2) * 1px))
+			rotate(calc((var(--acc-tilt, 0) + 6) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+}
+
+@keyframes appendoo-glasses-wide {
+	0%,
+	100% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+	40% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(calc(var(--acc-scale, 1) * 1.12));
+	}
+}
+
+@keyframes appendoo-glasses-search {
+	0%,
+	100% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+	50% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc((var(--acc-y, 0) - 0.8) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(calc(var(--acc-scale, 1) * 1.06));
+	}
+}
+
+@keyframes appendoo-headphones-think {
+	0%,
+	100% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+	50% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc((var(--acc-y, 0) - 1.8) * 1px))
+			rotate(calc((var(--acc-tilt, 0) - 4) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+}
+
+@keyframes appendoo-accessory-slip {
+	0%,
+	100% {
+		transform:
+			translate(calc(var(--acc-x, 0) * 1px), calc(var(--acc-y, 0) * 1px))
+			rotate(calc(var(--acc-tilt, 0) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+	50% {
+		transform:
+			translate(calc((var(--acc-x, 0) + 1.2) * 1px), calc((var(--acc-y, 0) + 1.6) * 1px))
+			rotate(calc((var(--acc-tilt, 0) + 5) * 1deg))
+			scale(var(--acc-scale, 1));
+	}
+}

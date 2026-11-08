@@ -1,0 +1,50 @@
+{
+  "edgeModelId": "em_75e3b6b5457704cc",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "name",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "note",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "sheets_json"
+    },
+    {
+      "columnName": "owner_user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "access_control"
+    },
+    {
+      "columnName": "access_permission"
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nPersonal spreadsheet workbooks under Records → Workbooks. `sheets_json` is the UiSpreadsheet document. Owned by `owner_user_id`.\n\n## Lifecycle\n\n1. **Create** — UUID `id`, name required, empty or seeded sheet JSON, owner = session user.\n2. **Edit** — replace `sheets_json` on save; `note` is operator documentation only.\n3. **Delete** — hard-delete the workbook row; not shared across users in v1.\n\n## Rules\n\n- One owner per row — not a multi-user collab document.\n- Do not store connection strings, secrets, or control-plane credentials in sheets.\n- Legacy columns `kind` / `binding_json` were dropped — do not reintroduce."
+  },
+  "created_at": "2026-09-11T04:55:20.513Z",
+  "updated_at": "2026-09-17T15:29:39.886Z"
+}

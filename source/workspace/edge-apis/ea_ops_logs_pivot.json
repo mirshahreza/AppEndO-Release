@@ -1,0 +1,56 @@
+{
+  "id": "ea_ops_logs_pivot",
+  "edgeModelId": "em_a17944326b172489",
+  "key": "ops-logs-pivot",
+  "label": "Logs pivot",
+  "basePath": "/api/ops/ops_logs",
+  "operations": [
+    {
+      "id": "ops_logs-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_logs/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "level",
+          "context",
+          "actor",
+          "call_success",
+          "duration_ms",
+          "message_size",
+          "has_meta",
+          "created_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Logs pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:18.262Z",
+  "version": 79,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-logs-app.ops-logs-pivot"
+}

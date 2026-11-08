@@ -1,0 +1,31 @@
+{
+  "id": 34,
+  "mountId": "studio",
+  "routePattern": "data-studio/*",
+  "pageKey": "data-studio",
+  "enabled": true,
+  "auth": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "nav": {
+    "label": "Data Studio",
+    "icon": "tabler:IconDatabaseCog",
+    "group": "Development",
+    "order": 1,
+    "description": "Build EdgeModel-backed REST APIs with Sequelize runtime.",
+    "color": "text-sky-600"
+  },
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-07-22T00:00:00.000Z",
+  "createdBy": null,
+  "updatedAt": "2026-07-22T00:00:00.000Z",
+  "updatedBy": null
+}

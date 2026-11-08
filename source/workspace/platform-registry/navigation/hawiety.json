@@ -1,0 +1,1632 @@
+{
+  "id": "hawiety",
+  "version": "1",
+  "groups": [
+    {
+      "heading": null,
+      "order": 0,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "dashboard",
+          "routePattern": "",
+          "label": "Home",
+          "icon": "Home",
+          "description": "System overview and core metrics tracking.",
+          "iconColor": "text-indigo-500",
+          "auth": null
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "appearance",
+          "routePattern": "appearance/*",
+          "label": "Theme Designer",
+          "icon": "tabler:IconPalette",
+          "description": "Personalize shell atmosphere tokens for your accent color.",
+          "iconColor": "text-violet-500",
+          "auth": {
+            "accessMode": "authenticated",
+            "allowRoles": [],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Members management",
+      "icon": "Users",
+      "order": 1,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-all",
+          "routePattern": "hawiety/members-all",
+          "label": "All People",
+          "icon": "Contact",
+          "description": "All people in the member directory (vw_hwy_members).",
+          "iconColor": "text-slate-600",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000013",
+              "HWY_R_1000094",
+              "HWY_R_1000040",
+              "HWY_R_1000006",
+              "HWY_R_1000000"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-montadhemin",
+          "routePattern": "members-montadhemin",
+          "label": "Registered members",
+          "icon": "UserCheck",
+          "description": "Member list (HWY_Members_List_AlMontadhemin).",
+          "iconColor": "text-blue-600",
+          "order": 10,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000006",
+              "HWY_R_1000047",
+              "HWY_R_1000004",
+              "HWY_R_1000015",
+              "HWY_R_1000013",
+              "HWY_R_1000037",
+              "HWY_R_1000040",
+              "HWY_R_1000094",
+              "HWY_R_1000027",
+              "HWY_R_1000001",
+              "HWY_R_1000043",
+              "HWY_R_1000005",
+              "HWY_R_1000030",
+              "HWY_R_1000000",
+              "HWY_R_1000003"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-image-fix",
+          "routePattern": "members-image-fix",
+          "label": "Registration image review",
+          "icon": "Image",
+          "description": "Member list (HWY_Members_List_Imagefix).",
+          "iconColor": "text-indigo-600",
+          "order": 10.5,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000035"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-ammah",
+          "routePattern": "members-institute-ammah",
+          "label": "Registered — General Board",
+          "icon": "tabler:IconUsersGroup",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Ammah).",
+          "iconColor": "text-sky-600",
+          "order": 11,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000093"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-gov",
+          "routePattern": "members-institute-gov",
+          "label": "Registered — State Affairs",
+          "icon": "Landmark",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Gov).",
+          "iconColor": "text-slate-600",
+          "order": 12,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000017",
+              "HWY_R_1000013"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-hemam",
+          "routePattern": "members-institute-hemam",
+          "label": "Registered — Hemam",
+          "icon": "tabler:IconHeartHandshake",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Hemam).",
+          "iconColor": "text-rose-600",
+          "order": 13,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000091",
+              "HWY_R_1000016"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-mehani",
+          "routePattern": "members-institute-mehani",
+          "label": "Registered — Professional Office",
+          "icon": "Briefcase",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Mehani).",
+          "iconColor": "text-violet-600",
+          "order": 14,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000091",
+              "HWY_R_1000080"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-ashaaer",
+          "routePattern": "members-institute-ashaaer",
+          "label": "Registered — Tribal Office",
+          "icon": "tabler:IconFeather",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Ashaaer).",
+          "iconColor": "text-amber-700",
+          "order": 15,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000086",
+              "HWY_R_1000091"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-mithaaq",
+          "routePattern": "members-institute-mithaaq",
+          "label": "Registered — Mithaaq",
+          "icon": "ScrollText",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Mithaaq).",
+          "iconColor": "text-emerald-600",
+          "order": 16,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000013",
+              "HWY_R_1000126"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-shabab",
+          "routePattern": "members-institute-shabab",
+          "label": "Registered — Youth Office",
+          "icon": "GraduationCap",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Shabab).",
+          "iconColor": "text-cyan-600",
+          "order": 17,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000091",
+              "HWY_R_1000088"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-protectors",
+          "routePattern": "members-institute-protectors",
+          "label": "Registered — Protectors",
+          "icon": "Shield",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Protectors).",
+          "iconColor": "text-blue-600",
+          "order": 18,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-nokhab",
+          "routePattern": "members-institute-nokhab",
+          "label": "Registered — Elite & Competencies",
+          "icon": "Award",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Nokhab).",
+          "iconColor": "text-yellow-600",
+          "order": 19,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000123"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-institute-alforat",
+          "routePattern": "members-institute-alforat",
+          "label": "Registered — Al-Forat",
+          "icon": "Waves",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_AlForat).",
+          "iconColor": "text-teal-600",
+          "order": 20,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000128"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-kashafeh",
+          "routePattern": "members-kashafeh",
+          "label": "Registered — Scouts (under 18)",
+          "icon": "tabler:IconTent",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_Kashafeh).",
+          "iconColor": "text-green-600",
+          "order": 21,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000059",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000091"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-taleb-jameee",
+          "routePattern": "members-taleb-jameee",
+          "label": "Registered — University students outside Hemam",
+          "icon": "School",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_TalebJameee).",
+          "iconColor": "text-purple-600",
+          "order": 22,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000016",
+              "HWY_R_1000091",
+              "HWY_R_1000013"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-org-membership-transfer",
+          "routePattern": "members-org-membership-transfer",
+          "label": "Transfer members to institute",
+          "icon": "ArrowRightLeft",
+          "description": "Org-initiated institute transfer (HWY_Members_List_OrgMembership).",
+          "iconColor": "text-teal-600",
+          "order": 42,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000087",
+              "HWY_R_1000126",
+              "HWY_R_1000081",
+              "HWY_R_1000079",
+              "HWY_R_1000124",
+              "HWY_R_1000128"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-quick-search",
+          "routePattern": "members-quick-search",
+          "label": "Quick member search",
+          "icon": "Search",
+          "description": "Member list (HWY_Members_List_AlMontadhemin_SingleView).",
+          "iconColor": "text-slate-600",
+          "order": 899,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000013",
+              "HWY_R_1000006",
+              "HWY_R_1000047",
+              "HWY_R_1000004",
+              "HWY_R_1000015",
+              "HWY_R_1000037",
+              "HWY_R_1000040",
+              "HWY_R_1000094",
+              "HWY_R_1000027",
+              "HWY_R_1000001",
+              "HWY_R_1000043",
+              "HWY_R_1000005",
+              "HWY_R_1000030",
+              "HWY_R_1000000",
+              "HWY_R_1000003"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-nakhebin",
+          "routePattern": "hawiety/nakhebin",
+          "label": "Nakhebin",
+          "icon": "BookUser",
+          "description": "Read-only voter roll search.",
+          "iconColor": "text-violet-600",
+          "order": 900,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000006",
+              "HWY_R_1000064",
+              "HWY_R_1000035",
+              "HWY_R_1000013",
+              "HWY_R_1000047",
+              "HWY_R_1000001",
+              "HWY_R_1000040",
+              "HWY_R_1000045",
+              "HWY_R_1000062",
+              "HWY_R_1000037",
+              "HWY_R_1000000",
+              "HWY_R_1000043"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Member status workflows",
+      "icon": "GitBranch",
+      "order": 2,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-targhin-requests",
+          "routePattern": "targhin-requests",
+          "label": "Targhin request administration",
+          "icon": "UserMinus",
+          "description": "Review and decide targhin requests (legacy HWY_Members_TarghinHistory_List).",
+          "iconColor": "text-rose-700",
+          "order": 28,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-targhin",
+          "routePattern": "members-targhin",
+          "label": "Targhined members",
+          "icon": "UserMinus",
+          "description": "List members with targhin membership status (legacy HWY_Members_List_Targhin).",
+          "iconColor": "text-rose-700",
+          "order": 29,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-call-center",
+          "routePattern": "members-waited-call-center",
+          "label": "Pending call center",
+          "icon": "Headphones",
+          "description": "Member list (HWY_Members_List_Waited_1).",
+          "iconColor": "text-amber-600",
+          "order": 30,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000011",
+              "HWY_R_1000094",
+              "HWY_R_1000003",
+              "HWY_R_1000006",
+              "HWY_R_1000047",
+              "HWY_R_1000027",
+              "HWY_R_1000013",
+              "HWY_R_1000040"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local",
+          "routePattern": "members-waited-local",
+          "label": "Pending local verification",
+          "icon": "tabler:IconClockCheck",
+          "description": "Member list (HWY_Members_List_Waited_2).",
+          "iconColor": "text-amber-600",
+          "order": 31,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000040",
+              "HWY_R_1000003",
+              "HWY_R_1000047",
+              "HWY_R_1000000",
+              "HWY_R_1000127",
+              "HWY_R_1000001",
+              "HWY_R_1000005",
+              "HWY_R_1000006",
+              "HWY_R_1000094",
+              "HWY_R_1000027",
+              "HWY_R_1000013",
+              "HWY_R_1000037",
+              "HWY_R_1000004"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-hemam",
+          "routePattern": "members-waited-local-hemam",
+          "label": "Pending local — Hemam",
+          "icon": "tabler:IconHeartHandshake",
+          "description": "Member list (HWY_Members_List_Waited_2_Hemam).",
+          "iconColor": "text-orange-600",
+          "order": 32,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000016",
+              "HWY_R_1000091"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-mehani",
+          "routePattern": "members-waited-local-mehani",
+          "label": "Pending local — Professional Office",
+          "icon": "Briefcase",
+          "description": "Member list (HWY_Members_List_Waited_2_Mehani).",
+          "iconColor": "text-orange-600",
+          "order": 33,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000091",
+              "HWY_R_1000080"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-gov",
+          "routePattern": "members-waited-local-gov",
+          "label": "Pending local — State Affairs",
+          "icon": "Landmark",
+          "description": "Member list (HWY_Members_List_Waited_2_Gov).",
+          "iconColor": "text-orange-600",
+          "order": 34,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000017"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-shabab",
+          "routePattern": "members-waited-local-shabab",
+          "label": "Pending local — Youth Office",
+          "icon": "GraduationCap",
+          "description": "Member list (HWY_Members_List_Waited_2_Shabab).",
+          "iconColor": "text-orange-600",
+          "order": 35,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000091",
+              "HWY_R_1000088"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-protectors",
+          "routePattern": "members-waited-local-protectors",
+          "label": "Pending local — Protectors",
+          "icon": "Shield",
+          "description": "Member list (HWY_Members_List_Waited_2_Protectors).",
+          "iconColor": "text-orange-600",
+          "order": 36,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-nokhab",
+          "routePattern": "members-waited-local-nokhab",
+          "label": "Pending local — Elite & Competencies",
+          "icon": "Award",
+          "description": "Member list (HWY_Members_List_Waited_2_Nokhab).",
+          "iconColor": "text-orange-600",
+          "order": 37,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000123",
+              "HWY_R_1000125"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-alforat",
+          "routePattern": "members-waited-local-alforat",
+          "label": "Pending local — Al-Forat",
+          "icon": "Waves",
+          "description": "Member list (HWY_Members_List_Waited_2_AlForat).",
+          "iconColor": "text-orange-600",
+          "order": 38,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000128"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-waited-local-kashafeh",
+          "routePattern": "members-waited-local-kashafeh",
+          "label": "Pending local — Scouts",
+          "icon": "tabler:IconTent",
+          "description": "Member list (HWY_Members_List_Waited_2_Kashafeh).",
+          "iconColor": "text-orange-600",
+          "order": 39,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000059",
+              "HWY_R_1000091",
+              "HWY_R_1000013",
+              "HWY_R_1000040"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-rejected-local-manage",
+          "routePattern": "members-rejected-local-manage",
+          "label": "Local reject management",
+          "icon": "tabler:IconFileX",
+          "description": "Member list (HWY_Members_List_Waited_1_Rejected).",
+          "iconColor": "text-rose-600",
+          "order": 40,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000027",
+              "HWY_R_1000013",
+              "HWY_R_1000127",
+              "HWY_R_1000040",
+              "HWY_R_1000037",
+              "HWY_R_1000000",
+              "HWY_R_1000006",
+              "HWY_R_1000094"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-rejected-local",
+          "routePattern": "members-rejected-local",
+          "label": "Rejected — local verification",
+          "icon": "tabler:IconFileX",
+          "description": "Member list (HWY_Members_List_Marfoozeh_FromTosigh).",
+          "iconColor": "text-rose-600",
+          "order": 41,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000040"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-rejected-call-center",
+          "routePattern": "members-rejected-call-center",
+          "label": "Rejected — call center",
+          "icon": "PhoneOff",
+          "description": "Member list (HWY_Members_List_Marfoozeh).",
+          "iconColor": "text-rose-600",
+          "order": 42,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000094",
+              "HWY_R_1000047",
+              "HWY_R_1000013",
+              "HWY_R_1000000",
+              "HWY_R_1000006",
+              "HWY_R_1000037",
+              "HWY_R_1000040",
+              "HWY_R_1000027",
+              "HWY_R_1000003"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Member courses and activities",
+      "icon": "GraduationCap",
+      "order": 4,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-courses-list",
+          "routePattern": "courses-activities/courses/list",
+          "label": "Courses",
+          "icon": "GraduationCap",
+          "description": "All course sessions (legacy HWY_Dorat_List / Read_Draft).",
+          "iconColor": "text-cyan-600",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-courses-review",
+          "routePattern": "courses-activities/courses/review",
+          "label": "Courses pending documentation",
+          "icon": "ClipboardCheck",
+          "description": "Courses in documentation workflow (legacy HWY_Dorat_Review).",
+          "iconColor": "text-amber-700",
+          "order": 2,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-activities-register",
+          "routePattern": "courses-activities/activities/register",
+          "label": "Activity registration",
+          "icon": "PenLine",
+          "description": "Draft activities not yet sent for documentation (legacy HWY_Nashatat_Draft).",
+          "iconColor": "text-amber-600",
+          "order": 3,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-activities-waited-1",
+          "routePattern": "courses-activities/activities/waited-1",
+          "label": "Initial documentation",
+          "icon": "Clock",
+          "description": "Activities in first documentation queue (legacy HWY_Nashatat_Waited_1).",
+          "iconColor": "text-violet-600",
+          "order": 4,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-activities-final",
+          "routePattern": "courses-activities/activities/final",
+          "label": "Final documentation",
+          "icon": "BadgeCheck",
+          "description": "Activities in final documentation queue (legacy HWY_Nashatat_Final).",
+          "iconColor": "text-emerald-600",
+          "order": 5,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-activities-central",
+          "routePattern": "courses-activities/activities/central",
+          "label": "Central activities",
+          "icon": "Building2",
+          "description": "Central (Tajammoat) activities (legacy HWY_Nashatat_Tajammoat).",
+          "iconColor": "text-indigo-600",
+          "order": 6,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-meetings-management",
+          "routePattern": "meetings-management",
+          "label": "Regular meetings management",
+          "icon": "CalendarDays",
+          "description": "Manage regular meeting instances and attendance (HWY_Meetings_Management).",
+          "iconColor": "text-blue-600",
+          "order": 7,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Badge flow",
+      "icon": "Badge",
+      "order": 5,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-start",
+          "routePattern": "card-flow/start",
+          "label": "(1) طلب الباج",
+          "icon": "Badge",
+          "iconColor": "text-indigo-600",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-security",
+          "routePattern": "card-flow/security",
+          "label": "(2) التدقيق الأمني",
+          "icon": "Shield",
+          "iconColor": "text-amber-700",
+          "order": 2,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-central",
+          "routePattern": "card-flow/central",
+          "label": "(3) التدقيق المركزي",
+          "icon": "Building2",
+          "iconColor": "text-sky-600",
+          "order": 3,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-province",
+          "routePattern": "card-flow/province",
+          "label": "(4) تدقيق المحافظة",
+          "icon": "Landmark",
+          "iconColor": "text-violet-600",
+          "order": 4,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-print",
+          "routePattern": "card-flow/print",
+          "label": "(5) الطباعة",
+          "icon": "Printer",
+          "iconColor": "text-emerald-600",
+          "order": 5,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-province-delivery",
+          "routePattern": "card-flow/province-delivery",
+          "label": "(6) تسليم للمحافظة",
+          "icon": "Truck",
+          "iconColor": "text-orange-600",
+          "order": 6,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-member-delivery",
+          "routePattern": "card-flow/member-delivery",
+          "label": "(7) تسليم للمنتظم",
+          "icon": "UserCheck",
+          "iconColor": "text-blue-600",
+          "order": 7,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-card-flow-printed-history",
+          "routePattern": "card-flow/printed-history",
+          "label": "(8) الباجات المطبوعة",
+          "icon": "History",
+          "iconColor": "text-slate-600",
+          "order": 8,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Area officials management",
+      "icon": "tabler:IconMapPin",
+      "order": 6,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-candidate-security",
+          "routePattern": "geo-responsibility/candidate-pipeline/security",
+          "label": "(1) مراجعة الرأي الرقابي",
+          "icon": "Shield",
+          "description": "HWY_Employees_SecurityStatuses_Management",
+          "iconColor": "text-amber-700",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-candidate-interview",
+          "routePattern": "geo-responsibility/candidate-pipeline/interview",
+          "label": "(2) متابعة المقابلة",
+          "icon": "MessagesSquare",
+          "description": "HWY_Employees_InterviewManagement",
+          "iconColor": "text-sky-600",
+          "order": 2,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-candidate-courses",
+          "routePattern": "geo-responsibility/candidate-pipeline/courses",
+          "label": "(3) استكمال الدورات",
+          "icon": "GraduationCap",
+          "description": "HWY_Members_PassedNecessaryDoratManagement",
+          "iconColor": "text-emerald-600",
+          "order": 3,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-candidate-install",
+          "routePattern": "geo-responsibility/candidate-pipeline/install",
+          "label": "(4) اعتماد التنصيب",
+          "icon": "UserCheck",
+          "description": "HWY_Members_ToApproveResponsibility",
+          "iconColor": "text-indigo-600",
+          "order": 4,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-provinces",
+          "routePattern": "geo-responsibility/province",
+          "label": "Provinces",
+          "icon": "Landmark",
+          "description": "Province officials (legacy province / محافظة lists).",
+          "iconColor": "text-indigo-600",
+          "order": 5,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-ghavateh",
+          "routePattern": "geo-responsibility/ghavateh",
+          "label": "Ghavateh (sectors)",
+          "icon": "Layers",
+          "description": "Sector officials (HWY_H_Ghavateh / قواطع).",
+          "iconColor": "text-amber-700",
+          "order": 6,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-circles",
+          "routePattern": "geo-responsibility/circle",
+          "label": "Circles",
+          "icon": "Circle",
+          "description": "Circle officials list (HWY_H_Circles_List).",
+          "iconColor": "text-emerald-600",
+          "order": 7,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-maktab",
+          "routePattern": "geo-responsibility/maktab",
+          "label": "Maktab",
+          "icon": "Building2",
+          "description": "Maktab officials list.",
+          "iconColor": "text-sky-600",
+          "order": 8,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-regions",
+          "routePattern": "geo-responsibility/region",
+          "label": "Regions",
+          "icon": "MapPin",
+          "description": "Region officials list.",
+          "iconColor": "text-violet-600",
+          "order": 9,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-geo-responsibility-removal-requests",
+          "routePattern": "geo-responsibility/removal-requests",
+          "label": "Official removal requests",
+          "icon": "UserMinus",
+          "description": "Pending official removal requests (HWY_H_Masooliat_Removal_Requests_List).",
+          "iconColor": "text-amber-700",
+          "order": 10,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000000",
+              "HWY_R_1000001",
+              "HWY_R_1000047",
+              "HWY_R_1000040",
+              "HWY_R_1000013",
+              "HWY_R_1000027",
+              "HWY_R_1000004",
+              "HWY_R_1000005"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "System management",
+      "icon": "Settings",
+      "order": 100,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-employees-list",
+          "routePattern": "employees-list",
+          "label": "الموظفين",
+          "icon": "Users",
+          "description": "HWY_Employees_List",
+          "iconColor": "text-cyan-600",
+          "order": 0,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "roles",
+          "routePattern": "hawiety/roles",
+          "label": "Roles",
+          "icon": "tabler:IconUserShield",
+          "description": "Define and manage access roles and permission groups.",
+          "iconColor": "text-purple-500",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-institutes",
+          "routePattern": "hawiety/institutes",
+          "label": "Institutes",
+          "icon": "Building2",
+          "description": "Institute catalog and invite policy.",
+          "iconColor": "text-sky-600",
+          "order": 2,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "base-info",
+          "routePattern": "hawiety/base-info",
+          "label": "Base Info",
+          "icon": "tabler:IconListTree",
+          "description": "Manage shared hierarchical code/title dictionary.",
+          "iconColor": "text-cyan-500",
+          "order": 3,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          },
+          "children": [
+            {
+              "cultureId": "iq",
+              "portalSegment": "hawiety",
+              "pageKey": "geographic-divisions",
+              "routePattern": "geographic-divisions",
+              "label": "Geographic Divisions",
+              "icon": "tabler:IconMap",
+              "description": "Manage countries, provinces, and cities.",
+              "iconColor": "text-emerald-600",
+              "order": 1,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            },
+            {
+              "cultureId": "iq",
+              "portalSegment": "hawiety",
+              "pageKey": "organization-chart",
+              "routePattern": "hawiety/organization-chart",
+              "label": "Organization Chart",
+              "icon": "tabler:IconHierarchy2",
+              "description": "Manage the company organization tree.",
+              "iconColor": "text-sky-600",
+              "order": 2,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            }
+          ]
+        },
+        {
+          "pageKey": "hwy-business-rules-reference",
+          "routePattern": "business-rules/*",
+          "label": "Identity business rules",
+          "icon": "BookOpen",
+          "description": "Living reference for Hawiety membership logic, workflows, and field rules.",
+          "iconColor": "text-cyan-700",
+          "order": 4,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "hwy-etl-console",
+          "routePattern": "etl-console",
+          "label": "Legacy ETL console",
+          "icon": "Database",
+          "description": "Run Hawiety legacy import scripts from the browser.",
+          "iconColor": "text-sky-700",
+          "order": 5,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    }
+  ],
+  "portalSegment": "hawiety",
+  "ownerPackageId": "hawiety",
+  "source": "package:hawiety"
+}

@@ -1,0 +1,331 @@
+{
+  "schema": "component-designer-draft",
+  "id": "math-sum-two-numbers-calculator",
+  "name": "UI for sum-two-numbers",
+  "folder": "math",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "math-sum-two-numbers-calculator",
+    "name": "UI for sum-two-numbers",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {},
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1784240057003-vh0j9"
+        ]
+      },
+      "layout-flex-column-1784240057003-vh0j9": {
+        "id": "layout-flex-column-1784240057003-vh0j9",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex flex-col gap-3",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1784240057003-scaxy",
+          "html-form-1784240057004-gxs0e",
+          "html-text-1784240057008-byf1o"
+        ]
+      },
+      "html-text-1784240057003-scaxy": {
+        "id": "html-text-1784240057003-scaxy",
+        "type": "text",
+        "parentId": "layout-flex-column-1784240057003-vh0j9",
+        "order": 0,
+        "props": {
+          "text": "UI for sum-two-numbers",
+          "className": "text-sm text-default-700",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "html-form-1784240057004-gxs0e": {
+        "id": "html-form-1784240057004-gxs0e",
+        "type": "container",
+        "parentId": "layout-flex-column-1784240057003-vh0j9",
+        "order": 1,
+        "props": {
+          "className": "space-y-3 rounded-lg border border-default-200 bg-content1 p-4",
+          "_designerPaletteItemId": "html.form",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "math-sum-two-numbers",
+            "sourcePath": "math-sum-two-numbers"
+          }
+        },
+        "children": [
+          "heroui-number-input-1784240057004-bu41n",
+          "heroui-number-input-1784240057005-ohz23",
+          "heroui-button-solid-1784240057007-a9x4k"
+        ]
+      },
+      "heroui-number-input-1784240057004-bu41n": {
+        "id": "heroui-number-input-1784240057004-bu41n",
+        "type": "container",
+        "parentId": "html-form-1784240057004-gxs0e",
+        "order": 0,
+        "props": {
+          "size": "sm",
+          "className": "rounded-md border border-slate-300 bg-white px-2.5 py-px text-xs text-slate-700",
+          "_designerPaletteItemId": "heroui.number-input",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-2.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "",
+          "label": "First number"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "a",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "heroui-number-input-1784240057005-ohz23": {
+        "id": "heroui-number-input-1784240057005-ohz23",
+        "type": "container",
+        "parentId": "html-form-1784240057004-gxs0e",
+        "order": 1,
+        "props": {
+          "size": "sm",
+          "className": "rounded-md border border-slate-300 bg-white px-2.5 py-px text-xs text-slate-700",
+          "_designerPaletteItemId": "heroui.number-input",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-2.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "",
+          "label": "Second number"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "b",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "heroui-button-solid-1784240057007-a9x4k": {
+        "id": "heroui-button-solid-1784240057007-a9x4k",
+        "type": "link",
+        "parentId": "html-form-1784240057004-gxs0e",
+        "order": 2,
+        "props": {
+          "text": "Calculate",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "className": "inline-flex rounded-lg bg-cyan-600 px-3 py-2 text-sm font-medium text-white no-underline hover:bg-cyan-700",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-medium",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true
+          }
+        },
+        "children": []
+      },
+      "html-text-1784240057008-byf1o": {
+        "id": "html-text-1784240057008-byf1o",
+        "type": "text",
+        "parentId": "layout-flex-column-1784240057003-vh0j9",
+        "order": 2,
+        "props": {
+          "text": "Press Calculate to call the server function and view the response.",
+          "className": "text-sm text-default-700",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-07-16T22:14:17.003Z",
+      "updatedAt": "2026-07-16T22:14:17.009Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {},
+    "dataSources": {
+      "math-sum-two-numbers": {
+        "id": "math-sum-two-numbers",
+        "name": "sum-two-numbers",
+        "endpoint": "/api/math/sum-two-numbers",
+        "fields": [
+          "a",
+          "b",
+          "sum"
+        ],
+        "kind": "collection",
+        "operations": {
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/math/sum-two-numbers"
+          }
+        }
+      }
+    },
+    "lovs": {}
+  },
+  "metadata": {
+    "createdAt": "2026-07-16T22:14:17.010Z",
+    "updatedAt": "2026-07-16T22:14:17.010Z",
+    "createdBy": "appendoo-live-activation",
+    "updatedBy": "appendoo-live-activation"
+  }
+}

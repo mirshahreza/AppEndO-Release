@@ -1,0 +1,54 @@
+{
+  "edgeModelId": "em_e7872d2c91430387",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "split_node_key"
+    },
+    {
+      "columnName": "join_node_key"
+    },
+    {
+      "columnName": "branch_edge_key"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "state_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "terminal_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_branch_tokens.workflow_instance_id->base_workflow_instances.id:base_workflow_branch_tokens_workflow_instance_id_fkey",
+      "displayLabel": "Workflow Instance"
+    },
+    {
+      "relationKey": "physical:base_workflow_join_arrivals.branch_token_id->base_workflow_branch_tokens.id:base_workflow_join_arrivals_branch_token_id_fkey",
+      "displayLabel": "base_workflow_join_arrivals (Branch Token)"
+    },
+    {
+      "relationKey": "physical:base_workflow_node_instances.branch_token_id->base_workflow_branch_tokens.id:base_workflow_node_instances_branch_token_id_fkey",
+      "displayLabel": "base_workflow_node_instances (Branch Token)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nParallel branch fan-out token — groups sibling node instances spawned from a split gateway. Join logic counts arrivals per token/group.\n\n## Rules\n\n- Owned by `workflow_instance_id`.\n- Referenced from node instances via `branch_token_id`.\n- Deleted/archived with instance lifecycle — not reused across instances."
+  },
+  "created_at": "2026-09-11T04:55:20.812Z",
+  "updated_at": "2026-09-17T15:29:39.893Z"
+}

@@ -1,0 +1,52 @@
+{
+  "edgeModelId": "em_90b8b65918bfc15c",
+  "tags": [
+    "cms",
+    "tag"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "content_id",
+      "icon": "lucide:newspaper",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "tag_code",
+      "icon": "lucide:tag",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 20
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_9156d4e8f7704b4c",
+      "displayLabel": "Content",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "title",
+          "as": "content_id_title"
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nComposite junction between a content row and a Base Info tag item under **CMS / Content Tags**. There is no `cms_tags` table.\n\n## Rules\n\n- PK = (`content_id`, `tag_code`).\n- `tag_code` stores `base_info.id` of the tag item (not shortName alone).\n- Filtering “has all tags” = AND joins on this table.\n- Tag vocabulary is managed in Base Info; this table only attaches.",
+    "columnGroupOrder": [
+      "Identity"
+    ],
+    "columnGroupPresentation": {
+      "Identity": {
+        "icon": "lucide:link-2",
+        "color": "text-emerald-600"
+      }
+    }
+  },
+  "created_at": "2026-11-06T20:29:02.356Z",
+  "updated_at": "2026-11-06T20:29:02.356Z"
+}

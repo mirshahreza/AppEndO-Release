@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-workflow-dead-letters.ops-dead-letters-pivot",
+  "name": "ops-dead-letters-pivot",
+  "folder": "base-workflow-dead-letters",
+  "method": "POST",
+  "path": "/api/ops/ops_dead_letters/pivot",
+  "sourceFile": "base-workflow-dead-letters.ops-dead-letters-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"status\": \"\",\n    \"error_class\": \"\",\n    \"error_code\": \"\",\n    \"node_key\": \"\",\n    \"created_at\": \"\",\n    \"resolved_at\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_dead_letters_pivot\",\"edgeApiOperationId\":\"ops_dead_letters-pivot\",\"edgeModelId\":\"em_e6eb8be71ec07c48\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_dead_letters/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"status\",\"error_class\",\"error_code\",\"node_key\",\"created_at\",\"resolved_at\"]}},\"model\":{\"objectName\":\"base_workflow_dead_letters\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"status\",\"name\":\"status\"},{\"field\":\"error_class\",\"name\":\"error_class\"},{\"field\":\"error_code\",\"name\":\"error_code\"},{\"field\":\"node_key\",\"name\":\"node_key\"},{\"field\":\"created_at\",\"name\":\"created_at\"},{\"field\":\"resolved_at\",\"name\":\"resolved_at\"}]},\"openapi\":{\"summary\":\"Dead letters pivot\",\"description\":\"Dead letters pivot (POST /api/ops/ops_dead_letters/pivot) on base_workflow_dead_letters.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:73adbc36\",\"generatedAt\":\"2026-10-02T23:23:19.345Z\",\"requestExample\":{\"body\":{\"status\":\"\",\"error_class\":\"\",\"error_code\":\"\",\"node_key\":\"\",\"created_at\":\"\",\"resolved_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_dead_letters/pivot\",\"routeNote\":\"Data API pivot on base_workflow_dead_letters.\",\"validationFields\":[\"status\",\"error_class\",\"error_code\",\"node_key\",\"created_at\",\"resolved_at\"],\"outputFields\":[\"id\",\"status\",\"error_class\",\"error_code\",\"node_key\",\"created_at\",\"resolved_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:19.514Z",
+  "updatedAt": "2026-10-02T23:23:19.514Z",
+  "createdBy": null,
+  "updatedBy": null
+}

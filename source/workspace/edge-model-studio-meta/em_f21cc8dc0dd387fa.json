@@ -1,0 +1,93 @@
+{
+  "edgeModelId": "em_f21cc8dc0dd387fa",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "owning_node_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "wait_type"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "due_at"
+    },
+    {
+      "columnName": "timeout_at"
+    },
+    {
+      "columnName": "event_name"
+    },
+    {
+      "columnName": "correlation_key"
+    },
+    {
+      "columnName": "correlation_value_hash",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "correlation_encoder_version"
+    },
+    {
+      "columnName": "correlation_hash_algorithm",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "child_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "work_item_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "satisfied_at"
+    },
+    {
+      "columnName": "result_payload_json"
+    },
+    {
+      "columnName": "state_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_waits.child_instance_id->base_workflow_instances.id:base_workflow_waits_child_instance_id_fkey",
+      "displayLabel": "Child Instance"
+    },
+    {
+      "relationKey": "physical:base_workflow_waits.owning_node_instance_id->base_workflow_node_instances.id:base_workflow_waits_owning_node_instance_id_fkey",
+      "displayLabel": "Owning Node Instance"
+    },
+    {
+      "relationKey": "physical:base_workflow_waits.work_item_id->base_work_items.id:base_workflow_waits_work_item_id_fkey",
+      "displayLabel": "Work Item"
+    },
+    {
+      "relationKey": "physical:base_workflow_waits.workflow_instance_id->base_workflow_instances.id:base_workflow_waits_workflow_instance_id_fkey",
+      "displayLabel": "Workflow Instance"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nActive wait primitives owned 1:1 by a node instance — timer (`due_at`), correlation event, subflow child instance, or linked work item. Satisfying wait resumes node.\n\n## Rules\n\n- **UNIQUE** `owning_node_instance_id` — one wait row per waiting node.\n- Event waits index `event_name` + `correlation_value_hash` for inbox matcher.\n- `child_instance_id` for SUBFLOW; `work_item_id` for human task gates.\n- `status` ACTIVE until satisfied/cancelled/timeout."
+  },
+  "created_at": "2026-09-11T04:55:25.625Z",
+  "updated_at": "2026-09-17T15:29:39.981Z"
+}

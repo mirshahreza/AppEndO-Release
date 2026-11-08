@@ -1,0 +1,62 @@
+{
+  "edgeModelId": "em_d75859d6bf3d65f0",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "node_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "sequence_number",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "trace_type"
+    },
+    {
+      "columnName": "payload_schema_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "occurred_at"
+    },
+    {
+      "columnName": "actor_type"
+    },
+    {
+      "columnName": "actor_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "core_evidence_json"
+    },
+    {
+      "columnName": "diagnostic_payload_json"
+    },
+    {
+      "columnName": "data_classification"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_traces.node_instance_id->base_workflow_node_instances.id:base_workflow_traces_node_instance_id_fkey",
+      "displayLabel": "Node Instance"
+    },
+    {
+      "relationKey": "physical:base_workflow_traces.workflow_instance_id->base_workflow_instances.id:base_workflow_traces_workflow_instance_id_fkey",
+      "displayLabel": "Workflow Instance"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nAppend-only execution audit timeline per instance — ordered `sequence_number`, trace type, actor, core evidence JSON. Powers workflow run history / debug views.\n\n## Rules\n\n- **UNIQUE** (`workflow_instance_id`, `sequence_number`).\n- `data_classification` gates verbose diagnostic payload exposure.\n- Insert-only from engine — never rewrite history."
+  },
+  "created_at": "2026-09-11T04:55:24.644Z",
+  "updated_at": "2026-09-17T15:29:39.964Z"
+}

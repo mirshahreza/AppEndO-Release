@@ -1,0 +1,49 @@
+{
+  "edgeModelId": "em_7021cce52cecce06",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "topic_code"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "note",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_contact_messages.created_by->base_users.id:base_contact_messages_created_by_fkey",
+      "displayLabel": "Created by"
+    },
+    {
+      "relationKey": "physical:base_contact_messages.topic_code->base_info.id:base_contact_messages_topic_code_fkey",
+      "displayLabel": "Topic"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nInbound contact form submissions from public/designer surfaces — name, email, body, optional subject Base Info code. Operator triage only. Not a CRM lead and not a feedback ticket (`base_app_feedback`).\n\n## Lifecycle\n\n1. **Submit** — public/designer POST creates one row; audit timestamps set by the server.\n2. **Triage** — operators read in Studio / Logs-adjacent contact UI. There is no status machine and no assignee column in v1.\n3. **Close** — delete or ignore; there is no \"resolved\" flag. Prefer export/archive policy over rewriting the body.\n\n## Rules\n\n- `type` stores a Base Info subject id under the platform contact taxonomy (`100.3.*`), not free text.\n- No threading and no replies on this table — one row per submission.\n- PII (name, email, body) — restrict Data API projections and export accordingly.\n- Do not promote a row into CRM by copying identity here; create a real `base_users` + package extension if the person becomes a customer."
+  },
+  "created_at": "2026-08-26T07:50:50.436Z",
+  "updated_at": "2026-09-17T15:29:39.442Z"
+}

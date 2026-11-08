@@ -1,0 +1,237 @@
+{
+  "id": "ea_08ae025536ff8bf9",
+  "edgeModelId": "em_784d292c4bbcac55",
+  "key": "hwy-nakhebin",
+  "label": "HWY nakhebin",
+  "basePath": "/api/hwy/nakhebin",
+  "operations": [
+    {
+      "id": "op_list_4jawqh",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/hwy/nakhebin",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "regionId",
+          "maktabId",
+          "familyCode",
+          "firstName",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "birthYear",
+          "genderCode",
+          "memberId",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "createdAt",
+          "updatedAt",
+          "registeredCaseCode",
+          "phone1",
+          "phone2"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_4jawqh",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/hwy/nakhebin/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "regionId",
+          "maktabId",
+          "familyCode",
+          "firstName",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "birthYear",
+          "genderCode",
+          "memberId",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "createdAt",
+          "updatedAt",
+          "registeredCaseCode",
+          "phone1",
+          "phone2"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_4jawqh",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/hwy/nakhebin",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "regionId",
+          "maktabId",
+          "familyCode",
+          "firstName",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "birthYear",
+          "genderCode",
+          "memberId",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "createdAt",
+          "updatedAt",
+          "registeredCaseCode",
+          "phone1",
+          "phone2"
+        ],
+        "write": [
+          "regionId",
+          "maktabId",
+          "familyCode",
+          "firstName",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "birthYear",
+          "genderCode",
+          "memberId",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "createdAt",
+          "updatedAt",
+          "registeredCaseCode",
+          "phone1",
+          "phone2"
+        ],
+        "required": [
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_4jawqh",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/hwy/nakhebin/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "regionId",
+          "maktabId",
+          "familyCode",
+          "firstName",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "birthYear",
+          "genderCode",
+          "memberId",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "createdAt",
+          "updatedAt",
+          "registeredCaseCode",
+          "phone1",
+          "phone2"
+        ],
+        "write": [
+          "regionId",
+          "maktabId",
+          "familyCode",
+          "firstName",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "birthYear",
+          "genderCode",
+          "memberId",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "createdAt",
+          "updatedAt",
+          "registeredCaseCode",
+          "phone1",
+          "phone2"
+        ],
+        "required": [
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_4jawqh",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/hwy/nakhebin/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "regionId",
+          "maktabId",
+          "familyCode",
+          "firstName",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "birthYear",
+          "genderCode",
+          "memberId",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "createdAt",
+          "updatedAt",
+          "registeredCaseCode",
+          "phone1",
+          "phone2"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-09-28T14:32:21.589Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "hwy-nakhebin.hwy-nakhebin-list"
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "appendo-http-workshop-collections-index",
+  "schemaVersion": "1.0.0",
+  "updatedAt": "2026-09-27T16:57:44.902Z",
+  "collections": [
+    {
+      "id": "b447db5d-96db-433a-bb3f-d4176d566247",
+      "name": "JSONPlaceholder",
+      "description": "Migrated from legacy HTTP Connection (baseUrl: https://jsonplaceholder.typicode.com).",
+      "auth": {
+        "kind": "none",
+        "hasSecret": false
+      },
+      "migratedFromLegacyId": "6d2f4629-2ee0-41fc-9dc8-f97edd3d51f4",
+      "createdAt": "2026-08-26T05:35:50.865Z",
+      "updatedAt": "2026-08-26T05:35:50.865Z",
+      "createdByUserId": 100000
+    }
+  ],
+  "folders": [],
+  "requests": [
+    {
+      "id": "5aea674a-0358-44e5-9d7b-ed85017a89ab",
+      "collectionId": "b447db5d-96db-433a-bb3f-d4176d566247",
+      "folderId": null,
+      "name": "Get a todo by id",
+      "method": "GET",
+      "url": "https://jsonplaceholder.typicode.com/todos/{{id}}",
+      "queryParams": [],
+      "headers": [],
+      "bodyMode": "none",
+      "auth": {
+        "kind": "inherit",
+        "hasSecret": false
+      },
+      "assertions": [],
+      "variableExtracts": [],
+      "sortOrder": 0,
+      "createdAt": "2026-08-26T05:35:50.868Z",
+      "updatedAt": "2026-08-26T05:35:50.868Z"
+    },
+    {
+      "id": "8075e1e6-319b-439b-95f3-f219c979f336",
+      "collectionId": "b447db5d-96db-433a-bb3f-d4176d566247",
+      "folderId": null,
+      "name": "List posts",
+      "method": "GET",
+      "url": "https://jsonplaceholder.typicode.com/posts",
+      "queryParams": [],
+      "headers": [],
+      "bodyMode": "none",
+      "auth": {
+        "kind": "inherit",
+        "hasSecret": false
+      },
+      "assertions": [],
+      "variableExtracts": [],
+      "sortOrder": 1,
+      "createdAt": "2026-08-26T05:35:50.870Z",
+      "updatedAt": "2026-08-26T05:35:50.870Z"
+    },
+    {
+      "id": "00713292-f5dd-430e-9781-a677cb5441d2",
+      "collectionId": "b447db5d-96db-433a-bb3f-d4176d566247",
+      "folderId": null,
+      "name": "HWY-Test",
+      "method": "POST",
+      "url": "https://hawiety.com/talk-to-me/",
+      "queryParams": [],
+      "headers": [],
+      "bodyMode": "json",
+      "bodyRaw": "[{\n    \"Controller\": \"HWY_Members\",\n    \"Method\": \"Read_Inquiry\",\n    \"Inputs\": {\n        \"Master\": {\n            \"AND\": {\n                \"iid\": {\n                    \"InputParam\": \"iid\",\n                    \"CompareMethod\": \"Ignore\",\n                    \"Value\": \"00000000-0000-0000-0000-000000000000\"\n                },\n                \"UserName\": {\n                    \"InputParam\": \"UserName\",\n                    \"CompareMethod\": \"Ignore\",\n                    \"Value\": \"101001\"\n                }\n            }\n        }\n    }\n}]",
+      "auth": {
+        "kind": "none",
+        "hasSecret": false
+      },
+      "assertions": [],
+      "sortOrder": 2,
+      "createdAt": "2026-09-27T15:12:07.230Z",
+      "updatedAt": "2026-09-27T16:57:44.902Z"
+    }
+  ]
+}

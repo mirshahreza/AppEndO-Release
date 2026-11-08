@@ -1,0 +1,56 @@
+{
+  "id": "ea_ops_feedback_pivot",
+  "edgeModelId": "em_f186ade9fbfe1ad0",
+  "key": "ops-feedback-pivot",
+  "label": "Feedback pivot",
+  "basePath": "/api/ops/ops_feedback",
+  "operations": [
+    {
+      "id": "ops_feedback-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_feedback/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "type",
+          "status",
+          "priority",
+          "submitted_at",
+          "page_key",
+          "portal_slug",
+          "assignee_role_name",
+          "message_count"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Feedback pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:19.999Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-app-feedback.ops-feedback-pivot"
+}

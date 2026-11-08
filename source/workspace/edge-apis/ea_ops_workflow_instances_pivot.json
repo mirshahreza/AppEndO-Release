@@ -1,0 +1,53 @@
+{
+  "id": "ea_ops_workflow_instances_pivot",
+  "edgeModelId": "em_35584ec12816b716",
+  "key": "ops-workflow-instances-pivot",
+  "label": "Workflow instances pivot",
+  "basePath": "/api/ops/ops_workflow_instances",
+  "operations": [
+    {
+      "id": "ops_workflow_instances-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_workflow_instances/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "status",
+          "start_type",
+          "started_by_type",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Workflow instances pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:18.920Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-workflow-instances.ops-workflow-instances-pivot"
+}

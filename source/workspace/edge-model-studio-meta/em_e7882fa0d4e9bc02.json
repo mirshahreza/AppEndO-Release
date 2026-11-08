@@ -1,0 +1,214 @@
+{
+  "edgeModelId": "em_e7882fa0d4e9bc02",
+  "tags": [
+    "hwy",
+    "security"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "formWidget": "hidden",
+      "group": "Identity card",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "member_id",
+      "formWidget": "lookup",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Identity card",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "can_get_identity_card_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.008 (Security Clearance Answer).",
+      "group": "Identity card",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "can_get_identity_card_note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "group": "Identity card",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "can_get_responsibility_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.008 (Security Clearance Answer).",
+      "group": "Responsibility",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "can_get_responsibility_note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "group": "Responsibility",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "can_join_general_body_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.008 (Security Clearance Answer).",
+      "group": "General body",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "can_join_general_body_note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "group": "General body",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "allows_responsibility_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.008 (Security Clearance Answer).",
+      "group": "Responsibility",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "allows_responsibility_note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "group": "Responsibility",
+      "sortOrder": 100
+    },
+    {
+      "columnName": "created_by",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 110
+    },
+    {
+      "columnName": "created_at",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 120
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_037cfa4f6cad4d09",
+      "displayLabel": "General body clearance",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.008"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_0d7a198cbebe4a34",
+      "displayLabel": "Responsibility allowance",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.008"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_2828b4e435a34e96",
+      "displayLabel": "Responsibility clearance",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.008"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_3b73845150d84827",
+      "displayLabel": "Identity card clearance",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.008"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_645759d45ba94405",
+      "displayLabel": "Member",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_dadffcb6ef084736",
+      "displayLabel": "Created by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nAppend-only structured security clearance rows per member (rename of legacy SecurityProfile table).\n\n## Scenarios\n\n- **S4** — identity card / responsibility / general body permissions.\n\n## Rules\n\n- Multiple rows per member allowed (history).\n- Answer codes: Hawiety / Security Clearance Answer.",
+    "scenarioIds": [
+      "S4"
+    ],
+    "columnGroupOrder": [
+      "Identity card",
+      "Responsibility",
+      "General body",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Identity card": {
+        "icon": "lucide:id-card",
+        "color": "text-rose-600"
+      },
+      "Responsibility": {
+        "icon": "lucide:shield",
+        "color": "text-amber-600"
+      },
+      "General body": {
+        "icon": "lucide:users",
+        "color": "text-indigo-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock",
+        "color": "text-slate-500"
+      }
+    }
+  },
+  "created_at": "2026-09-16T13:15:04.963Z",
+  "updated_at": "2026-09-17T15:29:40.112Z"
+}

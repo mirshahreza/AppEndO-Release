@@ -1,0 +1,41 @@
+{
+  "schema": "component-designer-preview-log",
+  "schemaVersion": "1.0.0",
+  "createdAt": "2026-07-16T22:50:38.596Z",
+  "payload": {
+    "traceId": "component_designer_preview_okueig1v",
+    "createdAt": "2026-07-16T22:50:38.596Z",
+    "diagnosticsCount": 1,
+    "bindingCount": 2,
+    "entries": [
+      {
+        "traceId": "component_designer_preview_okueig1v",
+        "sequence": 1,
+        "bindingKey": "defaultVisibility",
+        "dependencies": [],
+        "startedAt": "2026-07-16T22:50:38.596Z",
+        "finishedAt": "2026-07-16T22:50:38.596Z",
+        "endpoint": "static",
+        "method": "STATIC",
+        "attempts": 0,
+        "ok": true,
+        "durationMs": 0
+      },
+      {
+        "traceId": "component_designer_preview_okueig1v",
+        "sequence": 2,
+        "bindingKey": "node:node-b5e4e3bd-91bf-4430-a461-6073404bab4f:event:onClick",
+        "dependencies": [],
+        "startedAt": "2026-07-16T22:50:38.596Z",
+        "finishedAt": "2026-07-16T22:50:38.596Z",
+        "endpoint": "unknown",
+        "method": "GET",
+        "attempts": 0,
+        "ok": false,
+        "durationMs": 0,
+        "errorCode": "binding-invalid",
+        "errorMessage": "API binding requires endpointRef or sourcePath."
+      }
+    ]
+  }
+}

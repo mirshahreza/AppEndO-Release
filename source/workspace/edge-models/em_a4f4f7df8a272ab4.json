@@ -1,0 +1,70 @@
+{
+  "id": "em_a4f4f7df8a272ab4",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_app_feedback_read_cursors",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseAppFeedbackReadCursors",
+    "tableName": "base_app_feedback_read_cursors"
+  },
+  "columns": [
+    {
+      "name": "feedback_id",
+      "field": "feedbackId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f186ade9fbfe1ad0",
+        "column": "id"
+      }
+    },
+    {
+      "name": "user_id",
+      "field": "userId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "last_read_message_id",
+      "field": "lastReadMessageId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": [
+    "feedback_id",
+    "user_id"
+  ],
+  "associations": [],
+  "schemaFingerprint": "0cf77b0456294f0d",
+  "readOnly": false,
+  "labels": {
+    "title": "base_app_feedback_read_cursors"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:09.897Z",
+  "updated_at": "2026-09-11T04:55:09.897Z"
+}

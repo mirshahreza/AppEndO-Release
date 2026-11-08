@@ -1,0 +1,32 @@
+{
+  "id": 2,
+  "mountId": "studio",
+  "routePattern": "server-functions/*",
+  "pageKey": "server-functions",
+  "enabled": true,
+  "auth": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "nav": {
+    "label": "Server Functions",
+    "icon": "tabler:IconFunction",
+    "group": "Development",
+    "order": 2,
+    "separatorBefore": true,
+    "description": "Write and execute server-side code dynamically in the Node.js sandbox.",
+    "color": "text-emerald-500"
+  },
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-06-18T04:15:13.061Z",
+  "createdBy": null,
+  "updatedAt": "2026-06-18T04:15:13.061Z",
+  "updatedBy": null
+}

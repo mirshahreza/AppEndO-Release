@@ -1,0 +1,77 @@
+{
+  "id": "em_35584ec12816b716",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workflow_instances",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowInstances",
+    "tableName": "base_workflow_instances"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "status",
+      "field": "status",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "start_type",
+      "field": "start_type",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "started_by_type",
+      "field": "started_by_type",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "created_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updated_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "87f6e6c480b687c7",
+  "readOnly": true,
+  "labels": {
+    "title": "Workflow instances"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:22.901Z",
+  "updated_at": "2026-10-22T03:07:44.271Z"
+}

@@ -1,0 +1,1257 @@
+{
+  "id": "em_b9b34df33282b49c",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_members",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyMembers",
+    "tableName": "hwy_members"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "user_id",
+      "field": "userId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "username",
+      "field": "username",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "first_name",
+      "field": "firstName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "father_name",
+      "field": "fatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "grandfather_name",
+      "field": "grandfatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "family_name",
+      "field": "familyName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "nickname",
+      "field": "nickname",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "gender_code",
+      "field": "genderCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "birth_year",
+      "field": "birthYear",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "birth_month",
+      "field": "birthMonth",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "birth_day",
+      "field": "birthDay",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "national_id",
+      "field": "nationalId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "phone1",
+      "field": "phone1",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "phone2",
+      "field": "phone2",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "email",
+      "field": "email",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "facebook_id",
+      "field": "facebookId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "twitter_id",
+      "field": "twitterId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "tiktok_id",
+      "field": "tiktokId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "great_grandfather_name",
+      "field": "greatGrandfatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "mother_first_name",
+      "field": "motherFirstName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "mother_father_name",
+      "field": "motherFatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "mother_grandfather_name",
+      "field": "motherGrandfatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_province_id",
+      "field": "addrProvinceId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_district_id",
+      "field": "addrDistrictId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_subdistrict_id",
+      "field": "addrSubdistrictId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_quarter_name",
+      "field": "addrQuarterName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_quarter_no",
+      "field": "addrQuarterNo",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_alley_no",
+      "field": "addrAlleyNo",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_house_no",
+      "field": "addrHouseNo",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_nearest_landmark",
+      "field": "addrNearestLandmark",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_most_important_place",
+      "field": "addrMostImportantPlace",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_maktab_id",
+      "field": "addrMaktabId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_region_id",
+      "field": "addrRegionId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "addr_circle_id",
+      "field": "addrCircleId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "nakhebin_id",
+      "field": "nakhebinId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_784d292c4bbcac55",
+        "column": "id"
+      }
+    },
+    {
+      "name": "nakhebin_link_type_code",
+      "field": "nakhebinLinkTypeCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "nakhebin_link_problem_reason_id",
+      "field": "nakhebinLinkProblemReasonId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "nakhebin_link_problem_note",
+      "field": "nakhebinLinkProblemNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "nakhebin_link_region_id",
+      "field": "nakhebinLinkRegionId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "family_code",
+      "field": "familyCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "voted_on_2021",
+      "field": "votedOn2021",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "voted_on_2023",
+      "field": "votedOn2023",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "voted_on_2025",
+      "field": "votedOn2025",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "membership_status_code",
+      "field": "membershipStatusCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "membership_status_updated_on",
+      "field": "membershipStatusUpdatedOn",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "membership_status_updated_by",
+      "field": "membershipStatusUpdatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "membership_on",
+      "field": "membershipOn",
+      "dataType": "date",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "referrer_username",
+      "field": "referrerUsername",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "referrer_relation_id",
+      "field": "referrerRelationId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "referrer_institute_id",
+      "field": "referrerInstituteId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "second_referrer_username",
+      "field": "secondReferrerUsername",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "education_level_code",
+      "field": "educationLevelCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "education_level_in_code",
+      "field": "educationLevelInCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "education_entry_year",
+      "field": "educationEntryYear",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "education_branch",
+      "field": "educationBranch",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "education_school",
+      "field": "educationSchool",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "education_end_year",
+      "field": "educationEndYear",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "education_university_code",
+      "field": "educationUniversityCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "education_university_faculty_code",
+      "field": "educationUniversityFacultyCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "job_type_code",
+      "field": "jobTypeCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "job_place",
+      "field": "jobPlace",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note",
+      "field": "note",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "nakhebin_join_tasjil_state_code",
+      "field": "nakhebinJoinTasjilStateCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "registration_channel_code",
+      "field": "registrationChannelCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "tosigh_confirm_code",
+      "field": "tosighConfirmCode",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "second_referrer_relation_id",
+      "field": "secondReferrerRelationId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "nakheb_card_front_check",
+      "field": "nakhebCardFrontCheck",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "nakheb_card_front_type_code",
+      "field": "nakhebCardFrontTypeCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "referrer_username_deleted",
+      "field": "referrerUsernameDeleted",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "referrer_relation_id_deleted",
+      "field": "referrerRelationIdDeleted",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "CardFlowLastStatusId",
+      "field": "cardFlowLastStatusId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "CardFlowVisibility",
+      "field": "cardFlowVisibility",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "CardFlowStartedBy",
+      "field": "cardFlowStartedBy",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "CardFlowStartedOn",
+      "field": "cardFlowStartedOn",
+      "dataType": "datetime",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "FirstName",
+      "field": "firstName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "FatherName",
+      "field": "fatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "LastName",
+      "field": "lastName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "NationalCode",
+      "field": "nationalCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "Picture_FileBody",
+      "field": "pictureFilebody",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "Picture_FileBody_xs",
+      "field": "pictureFilebodyXs",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "MembershipOn",
+      "field": "membershipOn",
+      "dataType": "datetime",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "CreatedOn",
+      "field": "createdOn",
+      "dataType": "datetime",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "UserId",
+      "field": "userId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "MembershipStatus",
+      "field": "membershipStatus",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "MoarrefUserName",
+      "field": "moarrefUserName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "GenderId",
+      "field": "genderId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "AreaLimitId",
+      "field": "areaLimitId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "NakhebJoinTamvinId",
+      "field": "nakhebJoinTamvinId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "NakhebJoinEghteraId",
+      "field": "nakhebJoinEghteraId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "NationalCard_Front_FileBody",
+      "field": "nationalcardFrontFilebody",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "NationalCard_Behind_FileBody",
+      "field": "nationalcardBehindFilebody",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "NakhebCard_Front_FileBody",
+      "field": "nakhebcardFrontFilebody",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "MaskanCard_Front_FileBody",
+      "field": "maskancardFrontFilebody",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_fields_completed",
+      "field": "statFieldsCompleted",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_dorat_count",
+      "field": "statDoratCount",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_kasb_count",
+      "field": "statKasbCount",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_nashatat_count",
+      "field": "statNashatatCount",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_interviews_2022_count",
+      "field": "statInterviews2022Count",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_cards_count",
+      "field": "statCardsCount",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_is_employee",
+      "field": "statIsEmployee",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_adam_tatbigh_count",
+      "field": "statAdamTatbighCount",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_days",
+      "field": "statDays",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_moassesat_count",
+      "field": "statMoassesatCount",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_vasaegh_count",
+      "field": "statVasaeghCount",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_points",
+      "field": "statPoints",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_has_passed_all",
+      "field": "statHasPassedAll",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stat_has_not_tosigh_older_than_x_days",
+      "field": "statHasNotTosighOlderThanXDays",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "mehani_union_code",
+      "field": "mehaniUnionCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "mehani_union_degree_code",
+      "field": "mehaniUnionDegreeCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "mehani_membership_expires_on",
+      "field": "mehaniMembershipExpiresOn",
+      "dataType": "date",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_3fbee8a236fa41b3",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "user_id",
+      "as": "user",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_4cd3a7ca8cb0452d",
+      "targetModelId": "em_784d292c4bbcac55",
+      "foreignKey": "nakhebin_id",
+      "as": "nakhebin",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_240d181a75e1458c",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "gender_code",
+      "as": "gender",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_746a264300264c92",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "membership_status_code",
+      "as": "membership_status",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_011523c8ba2d439a",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "nakhebin_link_type_code",
+      "as": "nakhebin_link_type",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_403db5f620714c61",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "membership_status_updated_by",
+      "as": "membershipStatusUpdatedByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_17f1d2d95c254c5c",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "education_level_code",
+      "as": "education_level",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_cb1dafe517f2463b",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "education_level_in_code",
+      "as": "education_stage",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_41bd0dc6105e433e",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "education_university_code",
+      "as": "education_university",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_69e7775175f34dc4",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "education_university_faculty_code",
+      "as": "education_faculty",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_d6cce7376abf4d65",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "job_type_code",
+      "as": "job_type",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_df74292789414187",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_ab97f45e391949e1",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "updated_by",
+      "as": "updatedByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_266e150f27fe45e5",
+      "targetModelId": "em_db5022f657b34e4f",
+      "foreignKey": "member_id",
+      "as": "institutes",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_ca2b4d3405c14d0a",
+      "targetModelId": "em_8391ffba3e826bbb",
+      "foreignKey": "member_id",
+      "as": "files",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_48b3ddb0988b445c",
+      "targetModelId": "em_6a3f598a6f19267d",
+      "foreignKey": "member_id",
+      "as": "notes",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_85fd13572bdd41ab",
+      "targetModelId": "em_e7882fa0d4e9bc02",
+      "foreignKey": "member_id",
+      "as": "securityProfiles",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "c532f9825769c63b",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Members",
+    "icon": "lucide:users",
+    "color": "text-indigo-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:05.889Z",
+  "updated_at": "2026-11-03T08:44:20.505Z"
+}

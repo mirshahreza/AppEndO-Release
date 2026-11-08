@@ -1,0 +1,36 @@
+{
+  "edgeModelId": "em_a4f4f7df8a272ab4",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "feedback_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "last_read_message_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_app_feedback_read_cursors.feedback_id->base_app_feedback.id:base_app_feedback_read_cursors_feedback_id_fkey",
+      "displayLabel": "Feedback"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_read_cursors.user_id->base_users.id:base_app_feedback_read_cursors_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nPer-user read position on a ticket — `last_read_message_id` for unread badges in operator inbox. Composite PK (`feedback_id`, `user_id`).\n\n## Rules\n\n- Upsert on view — monotonic advance of cursor only.\n- Cascade delete with ticket; user FK for assignee/subscriber views."
+  },
+  "created_at": "2026-09-11T04:55:09.912Z",
+  "updated_at": "2026-09-17T15:29:39.615Z"
+}

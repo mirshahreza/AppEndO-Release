@@ -1,0 +1,107 @@
+{
+  "edgeModelId": "em_c5cdc351bbdc094d",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "firstname"
+    },
+    {
+      "columnName": "lastname"
+    },
+    {
+      "columnName": "fathername"
+    },
+    {
+      "columnName": "grandfathername"
+    },
+    {
+      "columnName": "phone",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "nickname",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "national_code"
+    },
+    {
+      "columnName": "birth_year"
+    },
+    {
+      "columnName": "birth_month"
+    },
+    {
+      "columnName": "birth_day"
+    },
+    {
+      "columnName": "gender_code"
+    },
+    {
+      "columnName": "person_type_code"
+    },
+    {
+      "columnName": "profile_image_body"
+    },
+    {
+      "columnName": "profile_image_body_xs"
+    },
+    {
+      "columnName": "profile_image_mime"
+    },
+    {
+      "columnName": "profile_image_size",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "company_name"
+    },
+    {
+      "columnName": "registration_number"
+    },
+    {
+      "columnName": "website"
+    },
+    {
+      "columnName": "organization_user_id",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_user_profiles.gender_code->base_info.id:base_user_profiles_gender_code_fkey",
+      "displayLabel": "Gender"
+    },
+    {
+      "relationKey": "physical:base_user_profiles.person_type_code->base_info.id:base_user_profiles_person_type_code_fkey",
+      "displayLabel": "Person Type"
+    },
+    {
+      "relationKey": "physical:base_user_profiles.user_id->base_users.id:base_user_profiles_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\n1:1 identity profile for `base_users`. Holds natural-person vs company fields, optional avatar bytes, and `person_type_code` (Base Info `100.2.*`).\n\n## Lifecycle\n\n1. **Create with user** — profile row shares `user_id` PK. Person type picked at create (Add Individual / Add Company); never PATCH afterward.\n2. **Edit** — conditional fields only: Individual shows person-name/gender/birth; Company shows `company_name` / registration / website.\n3. **Avatar** — `profile_image_body` (+ optional `profile_image_body_xs`) stored in-row; mime/size tracked for UI.\n\n## Rules\n\n- PK = `user_id` — exactly one profile per user.\n- `gender_code` / `person_type_code` are Base Info ids, not free text.\n- Visibility helpers: `isProfileFieldVisibleForPersonType` — same matrix on Users modals and self-service profile.\n- Organization link (`organization_user_id` when present) points to a Company user; packages read, do not fork."
+  },
+  "created_at": "2026-08-28T16:53:51.692Z",
+  "updated_at": "2026-09-17T15:29:39.545Z"
+}

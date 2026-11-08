@@ -1,0 +1,55 @@
+{
+  "id": "ea_ops_people_roles_pivot",
+  "edgeModelId": "em_ops_people_roles",
+  "key": "ops-people-roles-pivot",
+  "label": "People roles pivot",
+  "basePath": "/api/ops/ops_people_roles",
+  "operations": [
+    {
+      "id": "ops_people_roles-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_people_roles/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "user_id",
+          "username",
+          "role_name",
+          "locked",
+          "is_builtin",
+          "person_type_code",
+          "never_logged_in",
+          "created_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "People roles pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:21.718Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-ops-people-roles.ops-people-roles-pivot"
+}

@@ -1,0 +1,1204 @@
+{
+  "schema": "component-designer-draft",
+  "id": "draft-hwy-institutes",
+  "name": "hwy-institutes",
+  "folder": "general",
+  "catalogKind": "custom",
+  "tags": [],
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-institutes",
+    "name": "hwy-institutes",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1789572717003-fdm1w",
+          "node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb",
+          "node-6d22b183-d043-4e69-a122-0ba52d16c18c"
+        ]
+      },
+      "heroui-app-table-grid-1789572717003-fdm1w": {
+        "id": "heroui-app-table-grid-1789572717003-fdm1w",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"id\",\"label\":\"Id\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"code\",\"label\":\"Code\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"title_ar\",\"label\":\"Title\",\"sort\":true,\"cardRole\":\"title\"},{\"key\":\"is_active\",\"label\":\"Active\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"meta\"},{\"key\":\"allows_invite\",\"label\":\"Invite\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\"},{\"key\":\"has_dedicated_list\",\"label\":\"List\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-6d22b183-d043-4e69-a122-0ba52d16c18c\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"width\":\"30px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "id",
+          "sortOptions": "[{\"value\":\"id\",\"label\":\"Id\"},{\"value\":\"code\",\"label\":\"Code\"},{\"value\":\"title_ar\",\"label\":\"Title\"},{\"value\":\"is_active\",\"label\":\"Active\"},{\"value\":\"allows_invite\",\"label\":\"Invite\"},{\"value\":\"has_dedicated_list\",\"label\":\"List\"}]",
+          "loadingMessage": "Loading institutes…",
+          "emptyContent": "No institutes found.",
+          "errorContent": "Could not load institutes.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search institutes…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"Create\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwyinstitutesList",
+            "sourcePath": "hwyinstitutesList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "where": "gridToolbar.listWhere"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb": {
+        "id": "node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb",
+        "type": "container",
+        "parentId": "root",
+        "order": 1,
+        "props": {
+          "title": "Create Institute",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb === true"
+        },
+        "binding": {},
+        "children": [
+          "node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6",
+          "node-22249570-20d8-46fe-b0ce-b43698074868"
+        ]
+      },
+      "node-ed94dafd-5fc5-4de8-b50a-d7626719017a": {
+        "id": "node-ed94dafd-5fc5-4de8-b50a-d7626719017a",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 0,
+        "props": {
+          "name": "id",
+          "label": "Institute id",
+          "isRequired": true,
+          "hint": "Required. Enter institute id.",
+          "_designerPaletteItemId": "heroui.input-number"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "id",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-015878fc-cdc2-4637-91ce-d42f07d1b957": {
+        "id": "node-015878fc-cdc2-4637-91ce-d42f07d1b957",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 1,
+        "props": {
+          "name": "code",
+          "label": "Code",
+          "size": "sm",
+          "placeholder": "Code",
+          "hint": "Enter code.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "code",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9": {
+        "id": "node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 2,
+        "props": {
+          "name": "title_ar",
+          "label": "Title (Arabic)",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Title (Arabic)",
+          "hint": "Required. Enter title (Arabic).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title_ar",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-e5248ab5-b635-453b-a1d8-53e056088001": {
+        "id": "node-e5248ab5-b635-453b-a1d8-53e056088001",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 3,
+        "props": {
+          "name": "is_active",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "is_active",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-3b8741db-b32b-4fa5-9abc-3181bef0763e": {
+        "id": "node-3b8741db-b32b-4fa5-9abc-3181bef0763e",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 4,
+        "props": {
+          "name": "allows_self_registration",
+          "label": "Self registration",
+          "ariaLabel": "Self registration",
+          "hint": "Turn self registration on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allows_self_registration",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-1f7172a1-c11e-4b6f-968e-031095270fb0": {
+        "id": "node-1f7172a1-c11e-4b6f-968e-031095270fb0",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 5,
+        "props": {
+          "name": "allows_invite",
+          "label": "Allows invite",
+          "ariaLabel": "Allows invite",
+          "hint": "Turn allows invite on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allows_invite",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-e7b6f038-45ca-4187-ace2-006a670677e3": {
+        "id": "node-e7b6f038-45ca-4187-ace2-006a670677e3",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 6,
+        "props": {
+          "name": "invite_expires_after_days",
+          "label": "Invite expires (days)",
+          "hint": "Enter invite expires (days).",
+          "_designerPaletteItemId": "heroui.input-number"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "invite_expires_after_days",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-68932348-af8b-4250-8401-5c5955bb9c98": {
+        "id": "node-68932348-af8b-4250-8401-5c5955bb9c98",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 7,
+        "props": {
+          "name": "hide_member_phones",
+          "label": "Hide member phones",
+          "ariaLabel": "Hide member phones",
+          "hint": "Turn hide member phones on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "hide_member_phones",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-5c7b84ff-1299-4ea3-beb8-2da28d88f3ed": {
+        "id": "node-5c7b84ff-1299-4ea3-beb8-2da28d88f3ed",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 8,
+        "props": {
+          "name": "has_dedicated_list",
+          "label": "Dedicated list",
+          "ariaLabel": "Dedicated list",
+          "hint": "Turn dedicated list on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "has_dedicated_list",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-a9203f7b-cfff-4ae1-b8c6-b7d08709b29d": {
+        "id": "node-a9203f7b-cfff-4ae1-b8c6-b7d08709b29d",
+        "type": "container",
+        "parentId": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "order": 9,
+        "props": {
+          "name": "note",
+          "label": "Note",
+          "size": "sm",
+          "placeholder": "Note",
+          "hint": "Enter note.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "note",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-e3199f93-373a-468d-b4be-c81d72a12cf4": {
+        "id": "node-e3199f93-373a-468d-b4be-c81d72a12cf4",
+        "type": "container",
+        "parentId": "node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-ed94dafd-5fc5-4de8-b50a-d7626719017a",
+          "node-015878fc-cdc2-4637-91ce-d42f07d1b957",
+          "node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9",
+          "node-e5248ab5-b635-453b-a1d8-53e056088001",
+          "node-3b8741db-b32b-4fa5-9abc-3181bef0763e",
+          "node-1f7172a1-c11e-4b6f-968e-031095270fb0",
+          "node-e7b6f038-45ca-4187-ace2-006a670677e3",
+          "node-68932348-af8b-4250-8401-5c5955bb9c98",
+          "node-5c7b84ff-1299-4ea3-beb8-2da28d88f3ed",
+          "node-a9203f7b-cfff-4ae1-b8c6-b7d08709b29d"
+        ]
+      },
+      "node-878571ad-dc52-4fe4-825a-fcf05a282947": {
+        "id": "node-878571ad-dc52-4fe4-825a-fcf05a282947",
+        "type": "link",
+        "parentId": "node-22249570-20d8-46fe-b0ce-b43698074868",
+        "order": 1,
+        "props": {
+          "text": "Create Institute",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6",
+          "icon": "Plus"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mu49e1u7_sw8mk",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb"
+              },
+              {
+                "id": "da_mu49e1u7_39wjw",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mu49e1u7_2s7hj",
+                "type": "refreshDataSource",
+                "dataSourceRef": "hwyinstitutesList"
+              },
+              {
+                "id": "da_mu49e1u7_y5z1a",
+                "type": "resetForm",
+                "targetNodeId": "node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6"
+              }
+            ],
+            "invalidateQueries": [
+              "region:hwyinstitutesList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6": {
+        "id": "node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6",
+        "type": "container",
+        "parentId": "node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwyinstitutesList",
+            "sourcePath": "hwyinstitutesList"
+          }
+        },
+        "children": [
+          "node-e3199f93-373a-468d-b4be-c81d72a12cf4"
+        ]
+      },
+      "node-6e9be4a9-4ec9-446c-ab8d-850dfe1aa17d": {
+        "id": "node-6e9be4a9-4ec9-446c-ab8d-850dfe1aa17d",
+        "type": "link",
+        "parentId": "node-22249570-20d8-46fe-b0ce-b43698074868",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mu49e1u8_coz0u",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-22249570-20d8-46fe-b0ce-b43698074868": {
+        "id": "node-22249570-20d8-46fe-b0ce-b43698074868",
+        "type": "container",
+        "parentId": "node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-6e9be4a9-4ec9-446c-ab8d-850dfe1aa17d",
+          "node-878571ad-dc52-4fe4-825a-fcf05a282947"
+        ]
+      },
+      "node-6d22b183-d043-4e69-a122-0ba52d16c18c": {
+        "id": "node-6d22b183-d043-4e69-a122-0ba52d16c18c",
+        "type": "container",
+        "parentId": "root",
+        "order": 2,
+        "props": {
+          "title": "Edit Institute",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c === true"
+        },
+        "binding": {},
+        "children": [
+          "node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56",
+          "node-5203f753-b571-4db6-a779-99298e2517dc"
+        ]
+      },
+      "node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf": {
+        "id": "node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 0,
+        "props": {
+          "name": "id",
+          "label": "Institute id",
+          "isRequired": true,
+          "hint": "Required. Enter institute id.",
+          "_designerPaletteItemId": "heroui.input-number"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "id",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-51101cee-f863-4e85-98da-0ecdece5e263": {
+        "id": "node-51101cee-f863-4e85-98da-0ecdece5e263",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 1,
+        "props": {
+          "name": "code",
+          "label": "Code",
+          "size": "sm",
+          "placeholder": "Code",
+          "hint": "Enter code.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "code",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-cc62162e-e14d-40eb-89fa-7f725a54d3b0": {
+        "id": "node-cc62162e-e14d-40eb-89fa-7f725a54d3b0",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 2,
+        "props": {
+          "name": "title_ar",
+          "label": "Title (Arabic)",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Title (Arabic)",
+          "hint": "Required. Enter title (Arabic).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title_ar",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-f5867541-e191-4db4-93b1-ea7f5a743497": {
+        "id": "node-f5867541-e191-4db4-93b1-ea7f5a743497",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 3,
+        "props": {
+          "name": "is_active",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "is_active",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-33207a18-6822-4f07-b71d-e098199e5461": {
+        "id": "node-33207a18-6822-4f07-b71d-e098199e5461",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 4,
+        "props": {
+          "name": "allows_self_registration",
+          "label": "Self registration",
+          "ariaLabel": "Self registration",
+          "hint": "Turn self registration on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allows_self_registration",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-5d36b5cf-cdd1-4257-92a6-0a0d1670e88d": {
+        "id": "node-5d36b5cf-cdd1-4257-92a6-0a0d1670e88d",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 5,
+        "props": {
+          "name": "allows_invite",
+          "label": "Allows invite",
+          "ariaLabel": "Allows invite",
+          "hint": "Turn allows invite on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allows_invite",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-cb9bae92-c472-4cd8-b0ad-4b1aa2d4dcf2": {
+        "id": "node-cb9bae92-c472-4cd8-b0ad-4b1aa2d4dcf2",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 6,
+        "props": {
+          "name": "invite_expires_after_days",
+          "label": "Invite expires (days)",
+          "hint": "Enter invite expires (days).",
+          "_designerPaletteItemId": "heroui.input-number"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "invite_expires_after_days",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-f18ea171-2a0e-4789-a201-c6dffdff4017": {
+        "id": "node-f18ea171-2a0e-4789-a201-c6dffdff4017",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 7,
+        "props": {
+          "name": "hide_member_phones",
+          "label": "Hide member phones",
+          "ariaLabel": "Hide member phones",
+          "hint": "Turn hide member phones on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "hide_member_phones",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-e8285223-9bff-4d7c-9644-a7682c1dda16": {
+        "id": "node-e8285223-9bff-4d7c-9644-a7682c1dda16",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 8,
+        "props": {
+          "name": "has_dedicated_list",
+          "label": "Dedicated list",
+          "ariaLabel": "Dedicated list",
+          "hint": "Turn dedicated list on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "has_dedicated_list",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-aa1b9111-8789-4dee-9584-5322112df075": {
+        "id": "node-aa1b9111-8789-4dee-9584-5322112df075",
+        "type": "container",
+        "parentId": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "order": 9,
+        "props": {
+          "name": "note",
+          "label": "Note",
+          "size": "sm",
+          "placeholder": "Note",
+          "hint": "Enter note.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "note",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75": {
+        "id": "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75",
+        "type": "container",
+        "parentId": "node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf",
+          "node-51101cee-f863-4e85-98da-0ecdece5e263",
+          "node-cc62162e-e14d-40eb-89fa-7f725a54d3b0",
+          "node-f5867541-e191-4db4-93b1-ea7f5a743497",
+          "node-33207a18-6822-4f07-b71d-e098199e5461",
+          "node-5d36b5cf-cdd1-4257-92a6-0a0d1670e88d",
+          "node-cb9bae92-c472-4cd8-b0ad-4b1aa2d4dcf2",
+          "node-f18ea171-2a0e-4789-a201-c6dffdff4017",
+          "node-e8285223-9bff-4d7c-9644-a7682c1dda16",
+          "node-aa1b9111-8789-4dee-9584-5322112df075"
+        ]
+      },
+      "node-d255ddf1-92bc-4d42-be8b-6bed7c38b8ef": {
+        "id": "node-d255ddf1-92bc-4d42-be8b-6bed7c38b8ef",
+        "type": "link",
+        "parentId": "node-5203f753-b571-4db6-a779-99298e2517dc",
+        "order": 1,
+        "props": {
+          "text": "Save",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56",
+          "icon": "Save"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mu49e1u9_ta6yz",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-6d22b183-d043-4e69-a122-0ba52d16c18c"
+              },
+              {
+                "id": "da_mu49e1u9_909p1",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mu49e1u9_tl9vn",
+                "type": "refreshDataSource",
+                "dataSourceRef": "hwyinstitutesList"
+              }
+            ],
+            "invalidateQueries": [
+              "region:hwyinstitutesList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56": {
+        "id": "node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56",
+        "type": "container",
+        "parentId": "node-6d22b183-d043-4e69-a122-0ba52d16c18c",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwyinstitutesList",
+            "sourcePath": "hwyinstitutesList",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "selection.id"
+            }
+          }
+        },
+        "children": [
+          "node-b1fa47df-04aa-4b6f-91cc-506bbeca4d75"
+        ]
+      },
+      "node-7f2ffa53-b8b1-4f5f-8331-ac5b82d709ec": {
+        "id": "node-7f2ffa53-b8b1-4f5f-8331-ac5b82d709ec",
+        "type": "link",
+        "parentId": "node-5203f753-b571-4db6-a779-99298e2517dc",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mu49e1u9_vqom2",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-6d22b183-d043-4e69-a122-0ba52d16c18c"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-5203f753-b571-4db6-a779-99298e2517dc": {
+        "id": "node-5203f753-b571-4db6-a779-99298e2517dc",
+        "type": "container",
+        "parentId": "node-6d22b183-d043-4e69-a122-0ba52d16c18c",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-7f2ffa53-b8b1-4f5f-8331-ac5b82d709ec",
+          "node-d255ddf1-92bc-4d42-be8b-6bed7c38b8ef"
+        ]
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-16T13:40:49.754Z",
+      "updatedAt": "2026-09-16T15:31:58.783Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "selection": {
+        "id": "selection",
+        "initialValue": {
+          "id": null
+        },
+        "persist": "none"
+      }
+    },
+    "dataSources": {
+      "hwyinstitutesList": {
+        "id": "hwyinstitutesList",
+        "name": "Institutes",
+        "endpoint": "/api/hwy/institutes",
+        "primaryKey": "id",
+        "kind": "collection",
+        "fields": [
+          "id",
+          "code",
+          "title_ar",
+          "is_active",
+          "allows_invite",
+          "has_dedicated_list"
+        ],
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/institutes"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/institutes/:id"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/hwy/institutes"
+          },
+          "update": {
+            "method": "PATCH",
+            "endpoint": "/api/hwy/institutes/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      }
+    },
+    "lovs": {}
+  },
+  "metadata": {
+    "createdAt": "2026-09-16T13:40:51.286Z",
+    "updatedAt": "2026-09-16T15:31:58.783Z",
+    "createdBy": "hwy-phase3",
+    "updatedBy": "hwy-phase3"
+  },
+  "companionTsx": "import React from 'react';\nimport { buildAppTableGridColumns } from '@/domain/component-designer/DesignerRuntimeAppTableGrid';\nimport { applyClientGridQuery, EMPTY_GRID_QUERY, type GridQueryState } from '@/shared/lib/appTableGridQuery';\nimport { resolveDataGridTotalCount, sliceDataGridRowsForDisplay, buildDataGridPageNumbers, applyGridAggregation } from '@/domain/component-designer/designerDataGridRuntime';\nimport { applyDesignerGridToolbarClientFilters } from '@/domain/component-designer/designerGridToolbarConfig';\nimport { createDefaultColumnLayout } from '@/shared/lib/appTableGridColumnLayout';\nimport { validateDesignerFieldNode } from '@/domain/component-designer/previewFieldValidation';\nimport { AppTableGrid, CreateEditModalShell, GridPagingFooter, ToolbarFilterSelect, UiCheckbox } from '@/shared/ui';\nimport { UiInput } from '@/shared/ui/HeroFieldControls';\nimport { Button, InputNumber, Switch, Toast, toast } from '@heroui/react';\nimport { Plus, Save, X } from 'lucide-react';\n\nconst parseApiErrorMessage = async (response: Response): Promise<string> => {\n  try {\n    const payload = await response.json();\n    if (payload && typeof payload === \"object\") {\n      const record = payload as Record<string, unknown>;\n      const message = record.message ?? record.error ?? record.detail;\n      if (typeof message === \"string\" && message.trim().length > 0) {\n        return message.trim();\n      }\n    }\n  } catch {\n    // fall through to status text\n  }\n  return response.statusText || `Request failed (${response.status})`;\n};\n\nconst readBindingParamValue = (\n  context: Record<string, unknown> | null | undefined,\n  dataPath: string,\n): unknown => {\n  const segments = dataPath.split(\".\").map((segment) => segment.trim()).filter(Boolean);\n  let cursor: unknown = context;\n  for (const segment of segments) {\n    if (cursor && typeof cursor === \"object\" && segment in (cursor as Record<string, unknown>)) {\n      cursor = (cursor as Record<string, unknown>)[segment];\n    } else {\n      return undefined;\n    }\n  }\n  return cursor;\n};\n\nconst resolveBindingTemplateValue = (\n  template: string,\n  context: Record<string, unknown> | null | undefined,\n  paramPaths: Record<string, string>,\n): string =>\n  template.replace(/\\{([a-zA-Z0-9_]+)\\}/g, (_match, paramName: string) => {\n    const dataPath = paramPaths[paramName];\n    if (!dataPath) {\n      return \"\";\n    }\n    const cursor = readBindingParamValue(context, dataPath);\n    return cursor === undefined || cursor === null ? \"\" : String(cursor);\n  });\n\nconst resolveBindingUrl = (\n  endpointTemplate: string,\n  context: Record<string, unknown> | null | undefined,\n  paramPaths: Record<string, string>,\n): string => {\n  const usedParamNames = new Set<string>();\n  let resolvedPath = endpointTemplate.replace(/\\{([a-zA-Z0-9_]+)\\}/g, (_match, paramName: string) => {\n    usedParamNames.add(paramName);\n    const dataPath = paramPaths[paramName];\n    if (!dataPath) {\n      return \"\";\n    }\n    const cursor = readBindingParamValue(context, dataPath);\n    return cursor === undefined || cursor === null ? \"\" : String(cursor);\n  });\n  for (const [paramName, dataPath] of Object.entries(paramPaths)) {\n    if (usedParamNames.has(paramName)) {\n      continue;\n    }\n    const colonParamPattern = new RegExp(`:${paramName}(?=/|$)`, \"g\");\n    if (!colonParamPattern.test(resolvedPath)) {\n      continue;\n    }\n    usedParamNames.add(paramName);\n    const cursor = readBindingParamValue(context, dataPath);\n    const text = cursor === undefined || cursor === null ? \"\" : String(cursor);\n    resolvedPath = resolvedPath.replace(new RegExp(`:${paramName}(?=/|$)`, \"g\"), text);\n  }\n  const leftoverParams: Record<string, string> = {};\n  for (const [paramName, dataPath] of Object.entries(paramPaths)) {\n    if (usedParamNames.has(paramName)) {\n      continue;\n    }\n    leftoverParams[paramName] = dataPath;\n  }\n  const searchParams = new URLSearchParams();\n  const eqFilterFields = new Set<string>();\n  for (const [paramName, dataPath] of Object.entries(leftoverParams)) {\n    const match = /^filter\\[([^\\]]+)\\]\\[([^\\]]+)\\]$/.exec(paramName);\n    if (!match || match[2] !== \"eq\" || dataPath.startsWith(\"static:\")) {\n      continue;\n    }\n    const cursor = readBindingParamValue(context, dataPath);\n    if (cursor === undefined || cursor === null) {\n      continue;\n    }\n    if (String(cursor).trim().length > 0) {\n      eqFilterFields.add(match[1]!);\n    }\n  }\n  for (const [paramName, dataPath] of Object.entries(leftoverParams)) {\n    const match = /^filter\\[([^\\]]+)\\]\\[([^\\]]+)\\]$/.exec(paramName);\n    if (match?.[2] === \"in\" && eqFilterFields.has(match[1]!)) {\n      continue;\n    }\n    const cursor = dataPath.startsWith(\"static:\")\n      ? dataPath.slice(\"static:\".length)\n      : readBindingParamValue(context, dataPath);\n    if (cursor === undefined || cursor === null) {\n      continue;\n    }\n    const text = String(cursor).trim();\n    if (text.length === 0) {\n      continue;\n    }\n    searchParams.set(paramName, text);\n  }\n  const queryString = searchParams.toString();\n  if (!queryString) {\n    return resolvedPath;\n  }\n  return resolvedPath.includes(\"?\") ? `${resolvedPath}&${queryString}` : `${resolvedPath}?${queryString}`;\n};\n\nconst resolveBindingHeaders = (\n  context: Record<string, unknown> | null | undefined,\n  headerTemplates: Record<string, string>,\n  paramPaths: Record<string, string>,\n): Record<string, string> =>\n  Object.fromEntries(\n    Object.entries(headerTemplates).map(([key, template]) => [\n      key,\n      resolveBindingTemplateValue(template, context, paramPaths),\n    ]),\n  );\n\nconst setNestedPayloadValue = (target: Record<string, unknown>, path: string, value: unknown): void => {\n  const segments = path.split(\".\").map((segment) => segment.trim()).filter(Boolean);\n  if (segments.length === 0) {\n    return;\n  }\n  let cursor: Record<string, unknown> = target;\n  for (let index = 0; index < segments.length - 1; index += 1) {\n    const segment = segments[index];\n    const next = cursor[segment];\n    if (!next || typeof next !== \"object\" || Array.isArray(next)) {\n      cursor[segment] = {};\n    }\n    cursor = cursor[segment] as Record<string, unknown>;\n  }\n  cursor[segments[segments.length - 1]] = value;\n};\n\nconst mapDesignerListBoxItems = (rawItems: unknown): Array<{ id: string; textValue: string }> => {\n  const items = Array.isArray(rawItems) ? rawItems : [];\n  return items\n    .map((entry) => {\n      if (!entry || typeof entry !== \"object\") {\n        return null;\n      }\n      const record = entry as Record<string, unknown>;\n      const id = String(record.id ?? \"\").trim();\n      if (!id || id === \"100\" || id === \"102\") {\n        return null;\n      }\n      const textValue = String(record.textValue ?? record.label ?? record.title ?? id).trim();\n      return { id, textValue: textValue || id };\n    })\n    .filter((entry): entry is { id: string; textValue: string } => entry !== null);\n};\n\nconst mapDesignerLovItems = (\n  rawItems: unknown,\n  returnColumn: string,\n  displayColumn: string,\n): Array<{ id: string; textValue: string }> => {\n  const items = Array.isArray(rawItems) ? rawItems : [];\n  return items\n    .map((entry) => {\n      if (!entry || typeof entry !== \"object\") {\n        return null;\n      }\n      const record = entry as Record<string, unknown>;\n      const id = String(record[returnColumn] ?? \"\").trim();\n      if (!id) {\n        return null;\n      }\n      const textValue = String(record[displayColumn] ?? id).trim();\n      return { id, textValue: textValue || id };\n    })\n    .filter((entry): entry is { id: string; textValue: string } => entry !== null);\n};\n\nconst collectRegionFormDataFromContainer = (\n  container: ParentNode,\n  formFieldNames: readonly string[],\n): FormData => {\n  const formData = new FormData();\n  for (const formFieldName of formFieldNames) {\n    const escapedName = formFieldName.replace(/\\\\/g, \"\\\\\\\\\").replace(/\"/g, '\\\\\"');\n    const field = container.querySelector(`[name=\"${escapedName}\"]`);\n    if (!field) {\n      continue;\n    }\n    if (field instanceof HTMLInputElement) {\n      if (field.type === \"checkbox\" || field.type === \"radio\") {\n        formData.set(formFieldName, field.checked ? \"true\" : \"false\");\n      } else {\n        formData.set(formFieldName, field.value);\n      }\n      continue;\n    }\n    if (field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {\n      formData.set(formFieldName, field.value);\n      continue;\n    }\n    formData.set(formFieldName, field.getAttribute(\"value\") ?? \"\");\n  }\n  return formData;\n};\n\nconst applyPayloadFieldTransform = (value: FormDataEntryValue | null, transform?: string): unknown => {\n  const raw = value === null ? \"\" : String(value);\n  switch (transform) {\n    case \"number\": {\n      const parsed = Number(raw);\n      return Number.isFinite(parsed) ? parsed : raw;\n    }\n    case \"boolean\":\n      return raw === \"true\" || raw === \"1\" || raw === \"on\";\n    case \"nullableString\":\n      return raw.trim().length > 0 ? raw : null;\n    case \"nullableBoolean\": {\n      const trimmed = raw.trim().toLowerCase();\n      if (!trimmed) return null;\n      if (trimmed === \"true\" || trimmed === \"1\" || trimmed === \"on\") return true;\n      if (trimmed === \"false\" || trimmed === \"0\" || trimmed === \"off\") return false;\n      return null;\n    }\n    case \"commaSeparatedArray\":\n      return raw.split(\",\").map((entry) => entry.trim()).filter(Boolean);\n    default:\n      return raw;\n  }\n};\n\n// --- AUTH / TOKEN LIFECYCLE INJECTION POINT ---\n// Register your application-wide 401 interceptor and token refresh handler here before production.\n// Example: const designerFetch = createAuthenticatedFetch({ getAccessToken, refreshTokens, onSessionExpired });\nconst designerFetch: typeof fetch = fetch;\n\nfunction useDataFetch<T>(url: string, options: { headers?: Record<string, string> } = {}) {\n  const [data, setData] = React.useState<T | null>(null);\n  const [isLoading, setIsLoading] = React.useState(Boolean(url));\n  const [error, setError] = React.useState<string | null>(null);\n  const [refreshNonce, setRefreshNonce] = React.useState(0);\n  const headersKey = JSON.stringify(options.headers ?? {});\n\n  const refresh = React.useCallback(async () => {\n    setRefreshNonce((previous) => previous + 1);\n  }, []);\n\n  React.useEffect(() => {\n    if (!url) {\n      setData(null);\n      setIsLoading(false);\n      setError(null);\n      return undefined;\n    }\n\n    let cancelled = false;\n    const load = async () => {\n      setIsLoading(true);\n      setError(null);\n      try {\n        const response = await designerFetch(url, {\n          method: \"GET\",\n          headers: options.headers,\n        });\n        if (!response.ok) {\n          throw new Error(await parseApiErrorMessage(response));\n        }\n        const payload = (await response.json()) as T;\n        if (!cancelled) {\n          setData(payload);\n        }\n      } catch (loadError) {\n        if (!cancelled) {\n          setData(null);\n          setError(loadError instanceof Error ? loadError.message : \"Request failed\");\n        }\n      } finally {\n        if (!cancelled) {\n          setIsLoading(false);\n        }\n      }\n    };\n\n    void load();\n    return () => {\n      cancelled = true;\n    };\n  }, [url, headersKey, refreshNonce]);\n\n  return { data, setData, isLoading, error, refresh };\n}\n\nconst readNestedContextValue = (\n  context: Record<string, unknown> | null | undefined,\n  path: string,\n): unknown => {\n  const segments = path.split(\".\").map((segment) => segment.trim()).filter(Boolean);\n  let cursor: unknown = context;\n  for (const segment of segments) {\n    if (cursor && typeof cursor === \"object\" && segment in (cursor as Record<string, unknown>)) {\n      cursor = (cursor as Record<string, unknown>)[segment];\n    } else {\n      return undefined;\n    }\n  }\n  return cursor;\n};\n\nconst applyResponseDataPath = (\n  payload: unknown,\n  responseMapping?: { dataPath?: string; arrayPath?: string },\n): unknown => {\n  if (!responseMapping) {\n    return payload;\n  }\n  const arrayPath = responseMapping.arrayPath?.trim();\n  if (arrayPath) {\n    const arrayValue = readNestedContextValue(\n      payload && typeof payload === \"object\" ? payload as Record<string, unknown> : {},\n      arrayPath,\n    );\n    if (Array.isArray(arrayValue)) {\n      return arrayValue;\n    }\n  }\n  const dataPath = responseMapping.dataPath?.trim();\n  if (!dataPath || !payload || typeof payload !== \"object\") {\n    return payload;\n  }\n  return readNestedContextValue(payload as Record<string, unknown>, dataPath);\n};\n\nconst coerceApiRecordValue = (value: unknown): Record<string, unknown> | undefined => {\n  if (value === undefined || value === null) {\n    return undefined;\n  }\n  if (Array.isArray(value)) {\n    return value.find(\n      (entry): entry is Record<string, unknown> =>\n        typeof entry === \"object\" && entry !== null && !Array.isArray(entry),\n    );\n  }\n  if (typeof value === \"object\") {\n    return value as Record<string, unknown>;\n  }\n  return undefined;\n};\n\nconst transformApiRowsToChartData = (\n  rows: Array<Record<string, unknown>>,\n  mapping: { categoryField: string; categoryAs?: string; series: Array<{ apiField: string; seriesKey: string; aggregation?: string }>; seriesGroupField?: string; sortBy?: { field: string; direction: \"asc\"|\"desc\" }; limitTopN?: { count: number; groupRestAsLabel: string } },\n): Array<Record<string, string | number>> => {\n  const categoryKey = mapping.categoryAs?.trim() || \"label\";\n  const parseNum = (raw: unknown): number => {\n    if (typeof raw === \"number\" && Number.isFinite(raw)) return raw;\n    if (typeof raw === \"string\") { const p = Number(raw); return Number.isFinite(p) ? p : 0; }\n    return 0;\n  };\n  const sourceRows = mapping.categoryField === \"__rowIndex\"\n    ? rows.map((row, index) => ({ ...row, __rowIndex: String(index + 1) }))\n    : rows;\n  const aggregate = (values: number[], agg: string): number => {\n    if (values.length === 0) return 0;\n    if (agg === \"count\") return values.length;\n    if (agg === \"avg\") return values.reduce((s, v) => s + v, 0) / values.length;\n    if (agg === \"min\") return Math.min(...values);\n    if (agg === \"max\") return Math.max(...values);\n    if (agg === \"sum\") return values.reduce((s, v) => s + v, 0);\n    return values[0] ?? 0;\n  };\n  let chartRows: Array<Record<string, string | number>> = [];\n  const groupField = mapping.seriesGroupField?.trim();\n  if (groupField) {\n    const valueField = mapping.series[0]?.apiField ?? \"value\";\n    const grouped = new Map<string, Map<string, number[]>>();\n    for (const row of sourceRows) {\n      const category = String(row[mapping.categoryField] ?? \"\");\n      const seriesName = String(row[groupField] ?? \"Series\");\n      let catBucket = grouped.get(category);\n      if (!catBucket) { catBucket = new Map(); grouped.set(category, catBucket); }\n      const values = catBucket.get(seriesName) ?? [];\n      values.push(parseNum(row[valueField]));\n      catBucket.set(seriesName, values);\n    }\n    chartRows = Array.from(grouped.entries()).map(([category, seriesMap]) => {\n      const chartRow: Record<string, string | number> = { [categoryKey]: category };\n      for (const [seriesName, values] of seriesMap.entries()) {\n        chartRow[seriesName] = aggregate(values, \"sum\");\n      }\n      return chartRow;\n    });\n  } else {\n    const needsGrouping = mapping.series.some((s) => s.aggregation && s.aggregation !== \"none\");\n    if (!needsGrouping) {\n      chartRows = sourceRows.map((row) => {\n        const chartRow: Record<string, string | number> = { [categoryKey]: String(row[mapping.categoryField] ?? \"\") };\n        for (const series of mapping.series) { chartRow[series.seriesKey] = parseNum(row[series.apiField]); }\n        return chartRow;\n      });\n    } else {\n      const grouped = new Map<string, Array<Record<string, unknown>>>();\n      for (const row of sourceRows) {\n        const cat = String(row[mapping.categoryField] ?? \"\");\n        const bucket = grouped.get(cat);\n        if (bucket) bucket.push(row); else grouped.set(cat, [row]);\n      }\n      chartRows = Array.from(grouped.entries()).map(([category, groupRows]) => {\n        const chartRow: Record<string, string | number> = { [categoryKey]: category };\n        for (const series of mapping.series) {\n          const values = groupRows.map((r) => parseNum(r[series.apiField]));\n          chartRow[series.seriesKey] = aggregate(values, series.aggregation ?? \"sum\");\n        }\n        return chartRow;\n      });\n    }\n  }\n  if (mapping.sortBy?.field) {\n    const field = mapping.sortBy.field;\n    const direction = mapping.sortBy.direction;\n    chartRows = [...chartRows].sort((a, b) => {\n      const an = parseNum(a[field]); const bn = parseNum(b[field]);\n      return direction === \"asc\" ? an - bn : bn - an;\n    });\n  }\n  if (mapping.limitTopN && mapping.limitTopN.count > 0 && chartRows.length > mapping.limitTopN.count) {\n    const top = chartRows.slice(0, mapping.limitTopN.count);\n    const rest = chartRows.slice(mapping.limitTopN.count);\n    const restRow: Record<string, string | number> = { [categoryKey]: mapping.limitTopN.groupRestAsLabel || \"Other\" };\n    for (const series of mapping.series) {\n      restRow[series.seriesKey] = rest.reduce((sum, row) => sum + parseNum(row[series.seriesKey]), 0);\n    }\n    chartRows = [...top, restRow];\n  }\n  return chartRows;\n};\n\nconst mergeMultiSourceChartData = (\n  datasets: Array<Array<Record<string, string | number>>>,\n  xAxisKey: string,\n): Array<Record<string, string | number>> => {\n  if (datasets.length === 0) return [];\n  if (datasets.length === 1) return datasets[0] ?? [];\n  const merged = new Map<string, Record<string, string | number>>();\n  for (const dataset of datasets) {\n    for (const row of dataset) {\n      const category = String(row[xAxisKey] ?? \"\");\n      const existing = merged.get(category);\n      merged.set(category, existing ? { ...existing, ...row } : { ...row });\n    }\n  }\n  return Array.from(merged.values());\n};\n\nconst readVizStringField = (row: Record<string, unknown>, field: string, fallback = \"\"): string => {\n  const value = row[field];\n  if (value === undefined || value === null) return fallback;\n  return String(value);\n};\n\nconst transformApiRowsToTreeNodes = (\n  rows: Array<Record<string, unknown>>,\n  mapping: { kind: \"tree\"; idField: string; labelField: string; parentIdField?: string },\n): Array<{ id: string; label: string; children?: unknown[] }> => {\n  const parentField = mapping.parentIdField?.trim();\n  if (!parentField) {\n    return rows.map((row, index) => ({\n      id: readVizStringField(row, mapping.idField, `node-${index + 1}`),\n      label: readVizStringField(row, mapping.labelField, `Item ${index + 1}`),\n    }));\n  }\n  const nodeMap = new Map<string, { id: string; label: string; children: unknown[] }>();\n  rows.forEach((row) => {\n    const id = readVizStringField(row, mapping.idField);\n    if (!id) return;\n    nodeMap.set(id, { id, label: readVizStringField(row, mapping.labelField, id), children: [] });\n  });\n  const roots: Array<{ id: string; label: string; children?: unknown[] }> = [];\n  rows.forEach((row) => {\n    const id = readVizStringField(row, mapping.idField);\n    if (!id) return;\n    const node = nodeMap.get(id);\n    if (!node) return;\n    const parentId = readVizStringField(row, parentField);\n    if (parentId && nodeMap.has(parentId)) {\n      nodeMap.get(parentId)!.children.push(node);\n    } else {\n      roots.push(node);\n    }\n  });\n  return roots;\n};\n\nconst readVizNumberField = (row: Record<string, unknown>, field: string): number | undefined => {\n  const value = row[field];\n  const parsed = typeof value === \"number\" ? value : typeof value === \"string\" ? Number(value) : NaN;\n  return Number.isFinite(parsed) ? parsed : undefined;\n};\n\nconst transformApiRowsToTimelineEvents = (\n  rows: Array<Record<string, unknown>>,\n  mapping: { kind: \"timeline\" | \"gantt\"; idField?: string; titleField: string; startField: string; endField?: string; descriptionField?: string; progressField?: string },\n): Array<{ id?: string; title: string; start: string; end?: string; description?: string; progress?: number }> =>\n  rows.map((row, index) => {\n    const progress = mapping.progressField ? readVizNumberField(row, mapping.progressField) : undefined;\n    return {\n      id: mapping.idField ? readVizStringField(row, mapping.idField, `evt-${index + 1}`) : `evt-${index + 1}`,\n      title: readVizStringField(row, mapping.titleField, `Event ${index + 1}`),\n      start: readVizStringField(row, mapping.startField),\n      ...(mapping.endField ? { end: readVizStringField(row, mapping.endField) } : {}),\n      ...(mapping.descriptionField ? { description: readVizStringField(row, mapping.descriptionField) } : {}),\n      ...(progress !== undefined ? { progress } : {}),\n    };\n  });\n\nconst transformApiRowsToKanbanBoard = (\n  rows: Array<Record<string, unknown>>,\n  mapping: { kind: \"kanban\"; cardIdField: string; cardTitleField: string; cardDescriptionField?: string; cardColumnField: string; columnOrder?: Array<{ id: string; title: string }> },\n): { columns: Array<{ id: string; title: string; cards: Array<{ id: string; title: string; description?: string }> }> } => {\n  const cardsByColumn = new Map<string, Array<{ id: string; title: string; description?: string }>>();\n  rows.forEach((row, index) => {\n    const columnKey = readVizStringField(row, mapping.cardColumnField, \"default\");\n    const card = {\n      id: readVizStringField(row, mapping.cardIdField, `card-${index + 1}`),\n      title: readVizStringField(row, mapping.cardTitleField, `Card ${index + 1}`),\n      ...(mapping.cardDescriptionField ? { description: readVizStringField(row, mapping.cardDescriptionField) } : {}),\n    };\n    cardsByColumn.set(columnKey, [...(cardsByColumn.get(columnKey) ?? []), card]);\n  });\n  const columnOrder = mapping.columnOrder && mapping.columnOrder.length > 0\n    ? mapping.columnOrder\n    : Array.from(cardsByColumn.keys()).map((key) => ({ id: key, title: key }));\n  const columns = columnOrder.map((columnDef) => ({\n    id: columnDef.id,\n    title: columnDef.title,\n    cards: cardsByColumn.get(columnDef.id) ?? cardsByColumn.get(columnDef.title) ?? [],\n  }));\n  cardsByColumn.forEach((cards, columnKey) => {\n    if (!columns.some((column) => column.id === columnKey || column.title === columnKey)) {\n      columns.push({ id: columnKey, title: columnKey, cards });\n    }\n  });\n  return { columns };\n};\n\nconst transformApiRowsToSheetData = (\n  rows: Array<Record<string, unknown>>,\n  mapping: { kind: \"sheet\"; columns: Array<{ header: string; field: string; type?: \"text\" | \"number\" | \"select\" | \"formula\"; options?: string[]; formula?: string; onCellChangeAction?: unknown[] }> },\n): { columns: Array<{ key: string; header: string; type?: \"text\" | \"number\" | \"select\" | \"formula\"; options?: string[]; formula?: string; onCellChangeAction?: unknown[] }>; rows: Array<Record<string, unknown>> } => ({\n  columns: mapping.columns.map((column) => ({\n    key: column.field,\n    header: column.header,\n    type: column.type ?? \"text\",\n    ...(Array.isArray(column.options) && column.options.length > 0 ? { options: [...column.options] } : {}),\n    ...(column.type === \"formula\" && column.formula ? { formula: column.formula } : {}),\n    ...(Array.isArray(column.onCellChangeAction) && column.onCellChangeAction.length > 0 ? { onCellChangeAction: [...column.onCellChangeAction] } : {}),\n  })),\n  rows: rows.map((row) => mapping.columns.reduce<Record<string, unknown>>((acc, column) => {\n    acc[column.field] = row[column.field];\n    return acc;\n  }, {})),\n});\n\ntype EntityPickerOption = { id: string; textValue: string };\ntype EntityPickerFieldMapping = { returnField: string; displayField: string };\n\nfunction normalizeEntityPickerItems(payload: unknown, mapping?: EntityPickerFieldMapping): EntityPickerOption[] {\n  const returnField = mapping?.returnField?.trim() || \"id\";\n  const displayField = mapping?.displayField?.trim() || \"label\";\n  if (Array.isArray(payload)) {\n    return payload\n      .map((entry) => {\n        if (!entry || typeof entry !== \"object\") {\n          return null;\n        }\n        const record = entry as Record<string, unknown>;\n        const mappedId = record[returnField];\n        const id = typeof mappedId === \"string\" && mappedId.trim()\n          ? mappedId.trim()\n          : typeof record.id === \"string\" && record.id.trim()\n            ? record.id.trim()\n            : typeof record.value === \"string\" && record.value.trim()\n              ? record.value.trim()\n              : \"\";\n        const mappedLabel = record[displayField];\n        const textValue = typeof mappedLabel === \"string\" && mappedLabel.trim()\n          ? mappedLabel.trim()\n          : typeof record.textValue === \"string\" && record.textValue.trim()\n            ? record.textValue.trim()\n            : typeof record.label === \"string\" && record.label.trim()\n              ? record.label.trim()\n              : typeof record.name === \"string\" && record.name.trim()\n                ? record.name.trim()\n                : id;\n        if (!id || !textValue) {\n          return null;\n        }\n        return { id, textValue };\n      })\n      .filter((entry): entry is EntityPickerOption => entry !== null);\n  }\n\n  if (payload && typeof payload === \"object\") {\n    const record = payload as Record<string, unknown>;\n    const items = record.items ?? record.results ?? record.data;\n    return normalizeEntityPickerItems(items, mapping);\n  }\n\n  return [];\n}\n\nfunction useEntityPickerOptions(entityRef: string, searchParam: string, mapping?: EntityPickerFieldMapping) {\n  const [items, setItems] = React.useState<EntityPickerOption[]>([]);\n  const [isLoading, setIsLoading] = React.useState(false);\n\n  const loadOptions = React.useCallback(async (query: string) => {\n    if (!entityRef) {\n      setItems([]);\n      return;\n    }\n\n    setIsLoading(true);\n    try {\n      const url = entityRef.startsWith(\"http\")\n        ? new URL(entityRef)\n        : new URL(entityRef, window.location.origin);\n      // Option A (parity audit items 31/32): Autocomplete is Select-based — no live typing.\n      // Still honour an explicit non-empty query if a caller passes one, but initial load uses \"\".\n      if (query.trim()) {\n        url.searchParams.set(searchParam, query);\n      }\n      const response = await fetch(url.toString());\n      if (!response.ok) {\n        throw new Error(await parseApiErrorMessage(response));\n      }\n      const payload = await response.json();\n      setItems(normalizeEntityPickerItems(payload, mapping));\n    } catch {\n      setItems([]);\n    } finally {\n      setIsLoading(false);\n    }\n  }, [entityRef, searchParam, mapping?.returnField, mapping?.displayField]);\n\n  React.useEffect(() => {\n    void loadOptions(\"\");\n  }, [loadOptions]);\n\n  return { items, isLoading, loadOptions };\n}\n\ntype DesignerLiveConnectionStatus = \"idle\" | \"connecting\" | \"open\" | \"error\" | \"closed\";\n\nconst parseLivePushPayload = (raw: string): { kind: \"snapshot\" | \"append\" | \"refresh\"; data?: unknown } | null => {\n  const text = raw.trim();\n  if (!text) { return null; }\n  try {\n    const parsed: unknown = JSON.parse(text);\n    if (parsed && typeof parsed === \"object\" && !Array.isArray(parsed)) {\n      const record = parsed as Record<string, unknown>;\n      const type = typeof record.type === \"string\" ? record.type.trim().toLowerCase() : \"\";\n      if (type === \"refresh\") { return { kind: \"refresh\" }; }\n      if (type === \"append\") { return { kind: \"append\", data: record.data ?? record.payload ?? record.row ?? record.rows }; }\n      if (type === \"snapshot\" || type === \"data\" || type === \"message\") {\n        return { kind: \"snapshot\", data: \"data\" in record ? record.data : (\"payload\" in record ? record.payload : parsed) };\n      }\n      if (\"data\" in record) { return { kind: \"snapshot\", data: record.data }; }\n    }\n    return { kind: \"snapshot\", data: parsed };\n  } catch {\n    return { kind: \"snapshot\", data: text };\n  }\n};\n\nconst applyLiveAppend = (current: unknown, incoming: unknown): unknown => {\n  const incomingRows = Array.isArray(incoming) ? incoming : [incoming];\n  if (Array.isArray(current)) { return [...current, ...incomingRows]; }\n  if (current && typeof current === \"object\") {\n    const record = current as Record<string, unknown>;\n    for (const key of [\"data\", \"rows\", \"items\", \"results\"] as const) {\n      const value = record[key];\n      if (Array.isArray(value)) { return { ...record, [key]: [...value, ...incomingRows] }; }\n    }\n  }\n  return incomingRows;\n};\n\nconst absolutizeLiveStreamUrl = (url: string, type: \"sse\" | \"websocket\"): string => {\n  if (!url) { return \"\"; }\n  if (type === \"websocket\") {\n    if (url.startsWith(\"ws://\") || url.startsWith(\"wss://\")) { return url; }\n    if (url.startsWith(\"http://\") || url.startsWith(\"https://\")) { return url.replace(/^http/, \"ws\"); }\n    const absoluteHttp = new URL(url, window.location.origin).href;\n    return absoluteHttp.replace(/^http/, \"ws\");\n  }\n  return url;\n};\n\nfunction useLiveDataSource(options: {\n  url: string;\n  type: \"sse\" | \"websocket\";\n  enabled?: boolean;\n  onSnapshot: (data: unknown) => void;\n  onAppend?: (data: unknown) => void;\n  onRefresh?: () => void;\n}) {\n  const { url, type, enabled = true, onSnapshot, onAppend, onRefresh } = options;\n  const [status, setStatus] = React.useState<DesignerLiveConnectionStatus>(\"idle\");\n  const onSnapshotRef = React.useRef(onSnapshot);\n  const onAppendRef = React.useRef(onAppend);\n  const onRefreshRef = React.useRef(onRefresh);\n  onSnapshotRef.current = onSnapshot;\n  onAppendRef.current = onAppend;\n  onRefreshRef.current = onRefresh;\n  React.useEffect(() => {\n    if (!enabled || !url.trim()) { setStatus(\"idle\"); return undefined; }\n    const absoluteUrl = absolutizeLiveStreamUrl(url, type);\n    let closed = false;\n    setStatus(\"connecting\");\n    const dispatchPayload = (raw: string) => {\n      const message = parseLivePushPayload(raw);\n      if (!message) { return; }\n      if (message.kind === \"refresh\") { onRefreshRef.current?.(); return; }\n      if (message.kind === \"append\") {\n        if (onAppendRef.current) { onAppendRef.current(message.data); }\n        else { onSnapshotRef.current(message.data); }\n        return;\n      }\n      onSnapshotRef.current(message.data);\n    };\n    if (type === \"sse\") {\n      const source = new EventSource(absoluteUrl, { withCredentials: true });\n      source.onopen = () => { if (!closed) { setStatus(\"open\"); } };\n      source.onmessage = (event) => { if (!closed) { dispatchPayload(String(event.data ?? \"\")); } };\n      source.onerror = () => { if (!closed) { setStatus(\"error\"); } };\n      return () => { closed = true; source.close(); setStatus(\"closed\"); };\n    }\n    const socket = new WebSocket(absoluteUrl);\n    socket.onopen = () => { if (!closed) { setStatus(\"open\"); } };\n    socket.onmessage = (event) => { if (!closed) { dispatchPayload(typeof event.data === \"string\" ? event.data : String(event.data)); } };\n    socket.onerror = () => { if (!closed) { setStatus(\"error\"); } };\n    socket.onclose = () => { if (!closed) { setStatus(\"closed\"); } };\n    return () => { closed = true; try { socket.close(); } catch {} setStatus(\"closed\"); };\n  }, [enabled, url, type]);\n  return { status };\n}\n\nfunction useDesignerStore<T extends Record<string, unknown>>(initial: T) {\n  const [store, setStore] = React.useState<T>(initial);\n  const patch = React.useCallback((path: string, value: unknown) => {\n    setStore((previous) => {\n      const next = { ...previous };\n      setNestedPayloadValue(next, path, value);\n      return next as T;\n    });\n  }, []);\n  return { store, patch };\n}\nfunction evaluateDesignerCondition(\n  designerStore: Record<string, unknown>,\n  dataContext: Record<string, unknown> | null,\n  scope: { item?: unknown; index?: number },\n  condition: string,\n): boolean {\n  const trimmed = condition.trim();\n  if (!trimmed) {\n    return true;\n  }\n  try {\n    const formatPathChain = (root: string, path: string): string => {\n      const chain = path\n        .split('.')\n        .filter(Boolean)\n        .map((segment) => {\n          if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(segment)) {\n            return `?.${segment}`;\n          }\n          return `?.[${JSON.stringify(segment)}]`;\n        })\n        .join('');\n      return `(${root}${chain})`;\n    };\n    let compiled = trimmed\n      .replace(/\\bstore\\.([A-Za-z0-9_.-]+)/g, (_, path: string) => formatPathChain('designerStore', path))\n      .replace(/\\bdata\\.([A-Za-z0-9_.-]+)/g, (_, path: string) => formatPathChain('dataContext', path))\n      .replace(/\\bdataContext\\.([A-Za-z0-9_.-]+)/g, (_, path: string) => formatPathChain('dataContext', path));\n    const evaluator = new Function('designerStore', 'dataContext', 'item', 'index', `return Boolean(${compiled});`);\n    return Boolean(evaluator(designerStore, dataContext, scope.item, scope.index));\n  } catch {\n    return false;\n  }\n}\n\nexport const GeneratedComponent: React.FC = () => {\n  const { store: designerStore, patch: patchDesignerStore } = useDesignerStore<Record<string, unknown>>({\"selection\":{\"id\":null}});\n  const { data: raw_regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56, isLoading: isLoading_regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56, error: error_regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56, refresh: refresh_regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56 } = useDataFetch<unknown>(resolveBindingUrl(\"/api/hwy/institutes/:id\", designerStore, { \"id\": \"selection.id\" }), {});\n  const regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56 = React.useMemo(() => coerceApiRecordValue(applyResponseDataPath(raw_regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56, {\"dataPath\":\"data\",\"arrayPath\":\"data\",\"totalPath\":\"count\"})), [raw_regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56]);\n  const handleGridRowAction_heroui_app_table_grid_1789572717003_fdm1w = React.useCallback((row: Record<string, unknown>, actionId: string) => {\n    switch (actionId) {\n      case \"edit\": {\n        patchDesignerStore(\"selection.id\", row[\"id\"] ?? null);\n        patchDesignerStore(\"ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c\", true);\n        return;\n      }\n      default:\n        return;\n    }\n  }, [patchDesignerStore]);\n  const { data: raw_gridData_heroui_app_table_grid_1789572717003_fdm1w, isLoading: isLoading_gridData_heroui_app_table_grid_1789572717003_fdm1w, error: error_gridData_heroui_app_table_grid_1789572717003_fdm1w, refresh: refresh_gridData_heroui_app_table_grid_1789572717003_fdm1w } = useDataFetch<unknown>(resolveBindingUrl(\"/api/hwy/institutes\", designerStore, { \"search\": \"gridToolbar.search\", \"sortBy\": \"gridQuery.sortBy\", \"sortDir\": \"gridQuery.sortDir\", \"page\": \"gridQuery.page\", \"pageSize\": \"gridQuery.pageSize\", \"where\": \"gridToolbar.listWhere\" }), {});\n  const gridData_heroui_app_table_grid_1789572717003_fdm1w = React.useMemo(() => applyResponseDataPath(raw_gridData_heroui_app_table_grid_1789572717003_fdm1w, {\"dataPath\":\"data\",\"arrayPath\":\"data\",\"totalPath\":\"count\"}), [raw_gridData_heroui_app_table_grid_1789572717003_fdm1w]);\n  const gridColumns_heroui_app_table_grid_1789572717003_fdm1w = React.useMemo(() => buildAppTableGridColumns([{\"key\":\"id\",\"label\":\"Id\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"code\",\"label\":\"Code\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"title_ar\",\"label\":\"Title\",\"sort\":true,\"cardRole\":\"title\"},{\"key\":\"is_active\",\"label\":\"Active\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"meta\"},{\"key\":\"allows_invite\",\"label\":\"Invite\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\"},{\"key\":\"has_dedicated_list\",\"label\":\"List\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-6d22b183-d043-4e69-a122-0ba52d16c18c\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"width\":\"30px\"}], \"server\", {\n    mode: 'runtime',\n    detailFlowRef: { current: null },\n    rowActionHandlerRef: { current: handleGridRowAction_heroui_app_table_grid_1789572717003_fdm1w },\n    cellClickHandlerRef: { current: undefined },\n    designerStoreRef: { current: designerStore },\n  }), [designerStore, handleGridRowAction_heroui_app_table_grid_1789572717003_fdm1w]);\n  const [gridQuery_heroui_app_table_grid_1789572717003_fdm1w, setGridQuery_heroui_app_table_grid_1789572717003_fdm1w] = React.useState<GridQueryState>(() => ({ ...EMPTY_GRID_QUERY, sort: { columnId: \"id\", direction: \"asc\" } }));\n  const [gridPage_heroui_app_table_grid_1789572717003_fdm1w, setGridPage_heroui_app_table_grid_1789572717003_fdm1w] = React.useState(1);\n  const [gridPageSize_heroui_app_table_grid_1789572717003_fdm1w, setGridPageSize_heroui_app_table_grid_1789572717003_fdm1w] = React.useState(50);\n  const [gridListMode_heroui_app_table_grid_1789572717003_fdm1w, setGridListMode_heroui_app_table_grid_1789572717003_fdm1w] = React.useState<'paging' | 'infinite'>(\"paging\");\n  const [gridColumnLayout_heroui_app_table_grid_1789572717003_fdm1w, setGridColumnLayout_heroui_app_table_grid_1789572717003_fdm1w] = React.useState(() => createDefaultColumnLayout(gridColumns_heroui_app_table_grid_1789572717003_fdm1w));\n  const [gridSearchInput_heroui_app_table_grid_1789572717003_fdm1w, setGridSearchInput_heroui_app_table_grid_1789572717003_fdm1w] = React.useState('');\n  const [gridDebouncedSearch_heroui_app_table_grid_1789572717003_fdm1w, setGridDebouncedSearch_heroui_app_table_grid_1789572717003_fdm1w] = React.useState('');\n  const [gridCheckboxSelections_heroui_app_table_grid_1789572717003_fdm1w, setGridCheckboxSelections_heroui_app_table_grid_1789572717003_fdm1w] = React.useState<Record<string, Record<string, boolean>>>({});\n  const [gridRadioSelections_heroui_app_table_grid_1789572717003_fdm1w, setGridRadioSelections_heroui_app_table_grid_1789572717003_fdm1w] = React.useState<Record<string, string>>({});\n  const [gridMatchLogic_heroui_app_table_grid_1789572717003_fdm1w, setGridMatchLogic_heroui_app_table_grid_1789572717003_fdm1w] = React.useState<Record<string, 'and' | 'or'>>({});\n  const gridRoleFilters_heroui_app_table_grid_1789572717003_fdm1w = {};\n  const gridFilteredRows_heroui_app_table_grid_1789572717003_fdm1w = React.useMemo(() => applyClientGridQuery(((Array.isArray(gridData_heroui_app_table_grid_1789572717003_fdm1w) ? gridData_heroui_app_table_grid_1789572717003_fdm1w : []) ?? []), gridQuery_heroui_app_table_grid_1789572717003_fdm1w, gridColumns_heroui_app_table_grid_1789572717003_fdm1w, \"server\"), [gridQuery_heroui_app_table_grid_1789572717003_fdm1w, gridColumns_heroui_app_table_grid_1789572717003_fdm1w]);\n  const gridAggregatedRows_heroui_app_table_grid_1789572717003_fdm1w = gridFilteredRows_heroui_app_table_grid_1789572717003_fdm1w;\n  const gridApiTotal_heroui_app_table_grid_1789572717003_fdm1w = React.useMemo(() => {\n    const raw = raw_gridData_heroui_app_table_grid_1789572717003_fdm1w;\n    const value = readNestedContextValue((raw && typeof raw === 'object' ? raw as Record<string, unknown> : {}), \"count\");\n    const parsed = typeof value === 'number' ? value : Number(value);\n    return Number.isFinite(parsed) && parsed >= 0 ? Math.floor(parsed) : 0;\n  }, [raw_gridData_heroui_app_table_grid_1789572717003_fdm1w]);\n  const gridTotalCount_heroui_app_table_grid_1789572717003_fdm1w = resolveDataGridTotalCount({ page: gridPage_heroui_app_table_grid_1789572717003_fdm1w, pageSize: gridPageSize_heroui_app_table_grid_1789572717003_fdm1w, total: gridApiTotal_heroui_app_table_grid_1789572717003_fdm1w, gridQueryMode: \"server\" }, gridAggregatedRows_heroui_app_table_grid_1789572717003_fdm1w.length);\n  const gridPaging_heroui_app_table_grid_1789572717003_fdm1w = sliceDataGridRowsForDisplay(gridAggregatedRows_heroui_app_table_grid_1789572717003_fdm1w, gridPage_heroui_app_table_grid_1789572717003_fdm1w, gridPageSize_heroui_app_table_grid_1789572717003_fdm1w, gridTotalCount_heroui_app_table_grid_1789572717003_fdm1w, \"server\");\n  const handleGridQueryChange_heroui_app_table_grid_1789572717003_fdm1w = React.useCallback((nextQuery: GridQueryState) => {\n    setGridQuery_heroui_app_table_grid_1789572717003_fdm1w(nextQuery);\n    setGridPage_heroui_app_table_grid_1789572717003_fdm1w(1);\n    patchDesignerStore(\"gridQuery.sortBy\", nextQuery.sort?.columnId ?? '');\n    patchDesignerStore(\"gridQuery.sortDir\", nextQuery.sort?.direction ?? '');\n  }, [patchDesignerStore]);\n  const handleGridPageChange_heroui_app_table_grid_1789572717003_fdm1w = React.useCallback((nextPage: number) => {\n    setGridPage_heroui_app_table_grid_1789572717003_fdm1w(nextPage);\n    patchDesignerStore(\"gridQuery.page\", nextPage);\n  }, [patchDesignerStore]);\n  const handleGridPageSizeChange_heroui_app_table_grid_1789572717003_fdm1w = React.useCallback((nextSize: number) => {\n    setGridPageSize_heroui_app_table_grid_1789572717003_fdm1w(nextSize);\n    setGridPage_heroui_app_table_grid_1789572717003_fdm1w(1);\n    patchDesignerStore(\"gridQuery.pageSize\", nextSize);\n  }, [patchDesignerStore]);\n  const handleGridSortByChange_heroui_app_table_grid_1789572717003_fdm1w = React.useCallback((nextSortBy: string) => {\n    setGridQuery_heroui_app_table_grid_1789572717003_fdm1w((current: GridQueryState) => ({ ...current, sort: nextSortBy ? { columnId: nextSortBy, direction: current.sort?.direction ?? 'asc' } : null }));\n  }, []);\n  const handleGridToggleSortDirection_heroui_app_table_grid_1789572717003_fdm1w = React.useCallback(() => {\n    setGridQuery_heroui_app_table_grid_1789572717003_fdm1w((current: GridQueryState) => (current.sort ? { ...current, sort: { ...current.sort, direction: current.sort.direction === 'asc' ? 'desc' : 'asc' } } : current));\n  }, []);\n  const searchDebounceTimer_heroui_app_table_grid_1789572717003_fdm1w = React.useRef<ReturnType<typeof setTimeout> | null>(null);\n  const handleGridSearchChange_heroui_app_table_grid_1789572717003_fdm1w = React.useCallback((nextValue: string) => {\n    setGridSearchInput_heroui_app_table_grid_1789572717003_fdm1w(nextValue);\n    if (searchDebounceTimer_heroui_app_table_grid_1789572717003_fdm1w.current) {\n      clearTimeout(searchDebounceTimer_heroui_app_table_grid_1789572717003_fdm1w.current);\n    }\n    searchDebounceTimer_heroui_app_table_grid_1789572717003_fdm1w.current = setTimeout(() => {\n      setGridDebouncedSearch_heroui_app_table_grid_1789572717003_fdm1w(nextValue);\n      setGridPage_heroui_app_table_grid_1789572717003_fdm1w(1);\n      patchDesignerStore(\"gridToolbar.search\", nextValue);\n    }, 300);\n  }, [patchDesignerStore]);\n\n  const dataContext: Record<string, unknown> | null = null;\n  const [isSubmitting, setIsSubmitting] = React.useState(false);\n  const handleonClick_node_878571ad_dc52_4fe4_825a_fcf05a282947 = React.useCallback(async (event: React.MouseEvent<HTMLButtonElement>) => {\n    event.preventDefault();\n    let formData: FormData;\n    const form = event.currentTarget instanceof HTMLFormElement ? event.currentTarget : event.currentTarget.closest('form');\n    if (form) {\n      formData = new FormData(form);\n    } else {\n      const regionRoot = document.querySelector(\"[data-designer-node-id=\\\"node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6\\\"]\");\n      if (!regionRoot) {\n        return;\n      }\n      formData = collectRegionFormDataFromContainer(regionRoot, [\"node-ed94dafd-5fc5-4de8-b50a-d7626719017a\",\"node-015878fc-cdc2-4637-91ce-d42f07d1b957\",\"node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9\",\"node-e5248ab5-b635-453b-a1d8-53e056088001\",\"node-3b8741db-b32b-4fa5-9abc-3181bef0763e\",\"node-1f7172a1-c11e-4b6f-968e-031095270fb0\",\"node-e7b6f038-45ca-4187-ace2-006a670677e3\",\"node-68932348-af8b-4250-8401-5c5955bb9c98\",\"node-5c7b84ff-1299-4ea3-beb8-2da28d88f3ed\",\"node-a9203f7b-cfff-4ae1-b8c6-b7d08709b29d\"]);\n    }\n    const fieldValidationEntries = [{\"nodeId\":\"node-ed94dafd-5fc5-4de8-b50a-d7626719017a\",\"formFieldName\":\"node-ed94dafd-5fc5-4de8-b50a-d7626719017a\",\"props\":{\"_designerPaletteItemId\":\"heroui.input-number\",\"isRequired\":true}},{\"nodeId\":\"node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9\",\"formFieldName\":\"node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9\",\"props\":{\"_designerPaletteItemId\":\"heroui.input-text\",\"isRequired\":true}}] as Array<{ nodeId: string; formFieldName: string; props: Record<string, unknown> }>;\n    const fieldValidationErrors: Record<string, string> = {};\n    for (const entry of fieldValidationEntries) {\n      const rawValue = formData.get(entry.formFieldName);\n      const validationMessage = validateDesignerFieldNode(entry.props, typeof rawValue === 'string' ? rawValue : '');\n      if (validationMessage) {\n        fieldValidationErrors[entry.nodeId] = validationMessage;\n      }\n    }\n    if (Object.keys(fieldValidationErrors).length > 0) {\n      toast(Object.values(fieldValidationErrors).join(' '), { variant: 'danger' });\n      return;\n    }\n    setIsSubmitting(true);\n    try {\n      const payload: Record<string, unknown> = {};\n      payload[\"id\"] = formData.get(\"node-ed94dafd-5fc5-4de8-b50a-d7626719017a\") ?? '';\n      payload[\"code\"] = formData.get(\"node-015878fc-cdc2-4637-91ce-d42f07d1b957\") ?? '';\n      payload[\"title_ar\"] = formData.get(\"node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9\") ?? '';\n      payload[\"is_active\"] = applyPayloadFieldTransform(formData.get(\"node-e5248ab5-b635-453b-a1d8-53e056088001\"), \"boolean\");\n      payload[\"allows_self_registration\"] = applyPayloadFieldTransform(formData.get(\"node-3b8741db-b32b-4fa5-9abc-3181bef0763e\"), \"boolean\");\n      payload[\"allows_invite\"] = applyPayloadFieldTransform(formData.get(\"node-1f7172a1-c11e-4b6f-968e-031095270fb0\"), \"boolean\");\n      payload[\"invite_expires_after_days\"] = formData.get(\"node-e7b6f038-45ca-4187-ace2-006a670677e3\") ?? '';\n      payload[\"hide_member_phones\"] = applyPayloadFieldTransform(formData.get(\"node-68932348-af8b-4250-8401-5c5955bb9c98\"), \"boolean\");\n      payload[\"has_dedicated_list\"] = applyPayloadFieldTransform(formData.get(\"node-5c7b84ff-1299-4ea3-beb8-2da28d88f3ed\"), \"boolean\");\n      payload[\"note\"] = formData.get(\"node-a9203f7b-cfff-4ae1-b8c6-b7d08709b29d\") ?? '';\n      const method = regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id != null && String(regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id).length > 0 ? \"PATCH\" : 'POST';\n      const url = (regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id != null && String(regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id).length > 0 ? (regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id != null && String(regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id).length > 0 ? (\"/api/hwy/institutes/\" + encodeURIComponent(String(regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id)) + \"\") : \"/api/hwy/institutes/:id\") : \"/api/hwy/institutes\");\n      const response = await designerFetch(url, {\n        method: method,\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify(payload),\n      });\n      if (!response.ok) {\n        throw new Error(await parseApiErrorMessage(response));\n      }\n      patchDesignerStore(\"ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb\", false);\n      toast(\"Saved successfully\", { variant: \"success\", timeout: 4000 });\n      await refresh_gridData_heroui_app_table_grid_1789572717003_fdm1w();\n      (document.querySelector(\"[data-designer-node-id=\\\"node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6\\\"]\") as HTMLFormElement | null)?.reset?.();\n    } catch (mutationFailure) {\n      toast(mutationFailure instanceof Error ? mutationFailure.message : 'Request failed', { variant: 'danger' });\n    }\n    finally {\n      setIsSubmitting(false);\n    }\n  }, [regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6]);\n  const handleonClick_node_6e9be4a9_4ec9_446c_ab8d_850dfe1aa17d = React.useCallback(async (event: React.MouseEvent<HTMLElement>) => {\n    patchDesignerStore(\"ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb\", false);\n  }, [patchDesignerStore]);\n  const handleonClick_node_d255ddf1_92bc_4d42_be8b_6bed7c38b8ef = React.useCallback(async (event: React.MouseEvent<HTMLButtonElement>) => {\n    event.preventDefault();\n    let formData: FormData;\n    const form = event.currentTarget instanceof HTMLFormElement ? event.currentTarget : event.currentTarget.closest('form');\n    if (form) {\n      formData = new FormData(form);\n    } else {\n      const regionRoot = document.querySelector(\"[data-designer-node-id=\\\"node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56\\\"]\");\n      if (!regionRoot) {\n        return;\n      }\n      formData = collectRegionFormDataFromContainer(regionRoot, [\"node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf\",\"node-51101cee-f863-4e85-98da-0ecdece5e263\",\"node-cc62162e-e14d-40eb-89fa-7f725a54d3b0\",\"node-f5867541-e191-4db4-93b1-ea7f5a743497\",\"node-33207a18-6822-4f07-b71d-e098199e5461\",\"node-5d36b5cf-cdd1-4257-92a6-0a0d1670e88d\",\"node-cb9bae92-c472-4cd8-b0ad-4b1aa2d4dcf2\",\"node-f18ea171-2a0e-4789-a201-c6dffdff4017\",\"node-e8285223-9bff-4d7c-9644-a7682c1dda16\",\"node-aa1b9111-8789-4dee-9584-5322112df075\"]);\n    }\n    const fieldValidationEntries = [{\"nodeId\":\"node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf\",\"formFieldName\":\"node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf\",\"props\":{\"_designerPaletteItemId\":\"heroui.input-number\",\"isRequired\":true}},{\"nodeId\":\"node-cc62162e-e14d-40eb-89fa-7f725a54d3b0\",\"formFieldName\":\"node-cc62162e-e14d-40eb-89fa-7f725a54d3b0\",\"props\":{\"_designerPaletteItemId\":\"heroui.input-text\",\"isRequired\":true}}] as Array<{ nodeId: string; formFieldName: string; props: Record<string, unknown> }>;\n    const fieldValidationErrors: Record<string, string> = {};\n    for (const entry of fieldValidationEntries) {\n      const rawValue = formData.get(entry.formFieldName);\n      const validationMessage = validateDesignerFieldNode(entry.props, typeof rawValue === 'string' ? rawValue : '');\n      if (validationMessage) {\n        fieldValidationErrors[entry.nodeId] = validationMessage;\n      }\n    }\n    if (Object.keys(fieldValidationErrors).length > 0) {\n      toast(Object.values(fieldValidationErrors).join(' '), { variant: 'danger' });\n      return;\n    }\n    setIsSubmitting(true);\n    try {\n      const payload: Record<string, unknown> = {};\n      payload[\"id\"] = formData.get(\"node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf\") ?? '';\n      payload[\"code\"] = formData.get(\"node-51101cee-f863-4e85-98da-0ecdece5e263\") ?? '';\n      payload[\"title_ar\"] = formData.get(\"node-cc62162e-e14d-40eb-89fa-7f725a54d3b0\") ?? '';\n      payload[\"is_active\"] = applyPayloadFieldTransform(formData.get(\"node-f5867541-e191-4db4-93b1-ea7f5a743497\"), \"boolean\");\n      payload[\"allows_self_registration\"] = applyPayloadFieldTransform(formData.get(\"node-33207a18-6822-4f07-b71d-e098199e5461\"), \"boolean\");\n      payload[\"allows_invite\"] = applyPayloadFieldTransform(formData.get(\"node-5d36b5cf-cdd1-4257-92a6-0a0d1670e88d\"), \"boolean\");\n      payload[\"invite_expires_after_days\"] = formData.get(\"node-cb9bae92-c472-4cd8-b0ad-4b1aa2d4dcf2\") ?? '';\n      payload[\"hide_member_phones\"] = applyPayloadFieldTransform(formData.get(\"node-f18ea171-2a0e-4789-a201-c6dffdff4017\"), \"boolean\");\n      payload[\"has_dedicated_list\"] = applyPayloadFieldTransform(formData.get(\"node-e8285223-9bff-4d7c-9644-a7682c1dda16\"), \"boolean\");\n      payload[\"note\"] = formData.get(\"node-aa1b9111-8789-4dee-9584-5322112df075\") ?? '';\n      const method = regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id != null && String(regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id).length > 0 ? \"PATCH\" : 'POST';\n      const url = (regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id != null && String(regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id).length > 0 ? (regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id != null && String(regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id).length > 0 ? (\"/api/hwy/institutes/\" + encodeURIComponent(String(regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id)) + \"\") : \"/api/hwy/institutes/:id\") : \"/api/hwy/institutes\");\n      const response = await designerFetch(url, {\n        method: method,\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify(payload),\n      });\n      if (!response.ok) {\n        throw new Error(await parseApiErrorMessage(response));\n      }\n      patchDesignerStore(\"ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c\", false);\n      toast(\"Saved successfully\", { variant: \"success\", timeout: 4000 });\n      await refresh_gridData_heroui_app_table_grid_1789572717003_fdm1w();\n    } catch (mutationFailure) {\n      toast(mutationFailure instanceof Error ? mutationFailure.message : 'Request failed', { variant: 'danger' });\n    }\n    finally {\n      setIsSubmitting(false);\n    }\n  }, [regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56]);\n  const handleonClick_node_7f2ffa53_b8b1_4f5f_8331_ac5b82d709ec = React.useCallback(async (event: React.MouseEvent<HTMLElement>) => {\n    patchDesignerStore(\"ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c\", false);\n  }, [patchDesignerStore]);\n  return (\n    <>\n      <Toast.Provider />\n      <div className=\"h-full min-h-0 w-full min-w-0 space-y-3\">\n        <div className=\"flex w-full flex-col gap-2\"><div className=\"flex items-center justify-between gap-2 border-b border-slate-200 bg-white px-2 py-1.5\"><div className=\"flex items-center gap-2\"><input type=\"text\" value={gridSearchInput_heroui_app_table_grid_1789572717003_fdm1w} onChange={(event) => handleGridSearchChange_heroui_app_table_grid_1789572717003_fdm1w(event.target.value)} placeholder={\"Search institutes…\"} className=\"h-8 rounded-md border border-slate-200 px-2 text-sm\" /></div><div className=\"flex items-center gap-2\"><button type=\"button\" onClick={() => { patchDesignerStore(\"selection.id\", null); patchDesignerStore(\"ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb\", true); }} className=\"inline-flex h-8 items-center gap-1.5 rounded-md bg-indigo-600 px-3 text-xs font-semibold text-white hover:bg-indigo-700\">Create</button><button type=\"button\" onClick={() => { void refresh_gridData_heroui_app_table_grid_1789572717003_fdm1w(); }} className=\"inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-200 px-3 text-xs font-medium text-slate-700 hover:bg-slate-50\">Refresh</button></div></div><AppTableGrid className=\"flex !h-full !min-h-0 !w-full flex-1 flex-col\" showPagingFooter presentation=\"auto\" cardBelow=\"tablet\" columns={gridColumns_heroui_app_table_grid_1789572717003_fdm1w} rows={gridPaging_heroui_app_table_grid_1789572717003_fdm1w.displayRows} getRowKey={(row) => String((row as Record<string, unknown>)[\"id\"] ?? '')} enableColumnLayout={false} columnLayout={gridColumnLayout_heroui_app_table_grid_1789572717003_fdm1w} onColumnLayoutChange={setGridColumnLayout_heroui_app_table_grid_1789572717003_fdm1w} isLoading={false} loadingMessage={\"Loading institutes…\"} emptyMessage={\"No institutes found.\"} isEmpty={gridAggregatedRows_heroui_app_table_grid_1789572717003_fdm1w.length === 0} errorContent={gridAggregatedRows_heroui_app_table_grid_1789572717003_fdm1w.length === 0 ? undefined : \"Could not load institutes.\"} gridQueryMode={\"server\"} query={gridQuery_heroui_app_table_grid_1789572717003_fdm1w} onQueryChange={handleGridQueryChange_heroui_app_table_grid_1789572717003_fdm1w} onGridRowAction={handleGridRowAction_heroui_app_table_grid_1789572717003_fdm1w} footer={<GridPagingFooter totalCount={gridTotalCount_heroui_app_table_grid_1789572717003_fdm1w} safePage={gridPaging_heroui_app_table_grid_1789572717003_fdm1w.safePage} pageSize={gridPageSize_heroui_app_table_grid_1789572717003_fdm1w} onPageSizeChange={handleGridPageSizeChange_heroui_app_table_grid_1789572717003_fdm1w} sortBy={gridQuery_heroui_app_table_grid_1789572717003_fdm1w.sort?.columnId ?? ''} sortOptions={[{\"value\":\"id\",\"label\":\"Id\"},{\"value\":\"code\",\"label\":\"Code\"},{\"value\":\"title_ar\",\"label\":\"Title\"},{\"value\":\"is_active\",\"label\":\"Active\"},{\"value\":\"allows_invite\",\"label\":\"Invite\"},{\"value\":\"has_dedicated_list\",\"label\":\"List\"}]} onSortByChange={handleGridSortByChange_heroui_app_table_grid_1789572717003_fdm1w} sortDirection={gridQuery_heroui_app_table_grid_1789572717003_fdm1w.sort?.direction ?? 'asc'} onToggleSortDirection={handleGridToggleSortDirection_heroui_app_table_grid_1789572717003_fdm1w} showSortControls={true} totalPages={gridPaging_heroui_app_table_grid_1789572717003_fdm1w.totalPages} pageNumbers={buildDataGridPageNumbers(gridPaging_heroui_app_table_grid_1789572717003_fdm1w.safePage, gridPaging_heroui_app_table_grid_1789572717003_fdm1w.totalPages)} onPageChange={handleGridPageChange_heroui_app_table_grid_1789572717003_fdm1w} visibleInfiniteCount={gridListMode_heroui_app_table_grid_1789572717003_fdm1w === 'infinite' ? gridPaging_heroui_app_table_grid_1789572717003_fdm1w.displayRows.length : undefined} />} /></div>\n        {evaluateDesignerCondition(designerStore, dataContext, ({}), \"(store.ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb === true) && (store.ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb !== false)\") && (\n          <CreateEditModalShell title={\"Create Institute\"} size=\"lg\" onClose={() => { patchDesignerStore(\"ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb\", false); }} onBackdropClick={() => { patchDesignerStore(\"ui.visibility.node-6f2b7fe3-7c85-4630-8d82-312c02d05dfb\", false); }} gradient={false} bodyOuterClassName=\"-mb-[15px]\" bodyClassName=\"!p-0\" footerClassName=\"!mt-0\">\n            <form className=\"flex !min-h-0 flex-col gap-0 bg-white\" method=\"post\" id=\"node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6\" data-designer-node-id=\"node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6\">\n              <div className=\"flex !min-w-0 flex-col gap-2 bg-white p-[15px]\">\n                <InputNumber isRequired data-page-guide=\"\" data-page-guide-title=\"Institute id\" data-page-guide-hint=\"Required. Enter institute id.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.id} name=\"node-ed94dafd-5fc5-4de8-b50a-d7626719017a\" />\n                <UiInput type=\"text\" placeholder=\"Code\" label=\"Code\" size=\"sm\" data-page-guide=\"\" data-page-guide-title=\"Code\" data-page-guide-hint=\"Enter code.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.code} name=\"node-015878fc-cdc2-4637-91ce-d42f07d1b957\" />\n                <UiInput isRequired type=\"text\" placeholder=\"Title (Arabic)\" label=\"Title (Arabic)\" size=\"sm\" data-page-guide=\"\" data-page-guide-title=\"Title (Arabic)\" data-page-guide-hint=\"Required. Enter title (Arabic).\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.title_ar} name=\"node-2ebcadaa-f3da-4a48-af35-c74a9e1884d9\" />\n                <Switch aria-label=\"Active\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Active\" data-page-guide-hint=\"Turn active on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.is_active} name=\"node-e5248ab5-b635-453b-a1d8-53e056088001\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Active</span></Switch.Content></Switch>\n                <Switch aria-label=\"Self registration\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Self registration\" data-page-guide-hint=\"Turn self registration on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.allows_self_registration} name=\"node-3b8741db-b32b-4fa5-9abc-3181bef0763e\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Self registration</span></Switch.Content></Switch>\n                <Switch aria-label=\"Allows invite\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Allows invite\" data-page-guide-hint=\"Turn allows invite on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.allows_invite} name=\"node-1f7172a1-c11e-4b6f-968e-031095270fb0\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Allows invite</span></Switch.Content></Switch>\n                <InputNumber data-page-guide=\"\" data-page-guide-title=\"Invite expires (days)\" data-page-guide-hint=\"Enter invite expires (days).\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.invite_expires_after_days} name=\"node-e7b6f038-45ca-4187-ace2-006a670677e3\" />\n                <Switch aria-label=\"Hide member phones\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Hide member phones\" data-page-guide-hint=\"Turn hide member phones on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.hide_member_phones} name=\"node-68932348-af8b-4250-8401-5c5955bb9c98\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Hide member phones</span></Switch.Content></Switch>\n                <Switch aria-label=\"Dedicated list\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Dedicated list\" data-page-guide-hint=\"Turn dedicated list on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.has_dedicated_list} name=\"node-5c7b84ff-1299-4ea3-beb8-2da28d88f3ed\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Dedicated list</span></Switch.Content></Switch>\n                <UiInput type=\"text\" placeholder=\"Note\" label=\"Note\" size=\"sm\" data-page-guide=\"\" data-page-guide-title=\"Note\" data-page-guide-hint=\"Enter note.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_d68d3e2f_3d01_4b89_b263_4fbcc46590e6?.note} name=\"node-a9203f7b-cfff-4ae1-b8c6-b7d08709b29d\" />\n              </div>\n            </form>\n            <div className=\"flex !w-full shrink-0 !items-center !justify-end gap-2\">\n              <Button type=\"button\" className=\"inline-flex !items-center !justify-center gap-1.5 !h-8 !px-3 !rounded-md !text-xs !font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:!opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100\" variant=\"outline\" size=\"md\" onClick={handleonClick_node_6e9be4a9_4ec9_446c_ab8d_850dfe1aa17d}><X className=\"h-3.5 w-3.5\" /> Cancel</Button>\n              <Button type=\"submit\" className=\"inline-flex !items-center !justify-center gap-1.5 !h-8 !px-3 !rounded-md !text-xs !font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:!opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white\" form=\"node-d68d3e2f-3d01-4b89-b263-4fbcc46590e6\" variant=\"primary\" size=\"md\" href=\"#\" target=\"_self\" isDisabled={isSubmitting} onClick={handleonClick_node_878571ad_dc52_4fe4_825a_fcf05a282947}><Plus className=\"h-3.5 w-3.5\" /> Create Institute</Button>\n            </div>\n          </CreateEditModalShell>\n        )}\n        {evaluateDesignerCondition(designerStore, dataContext, ({}), \"(store.ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c === true) && (store.ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c !== false)\") && (\n          <CreateEditModalShell title={\"Edit Institute\"} size=\"lg\" onClose={() => { patchDesignerStore(\"ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c\", false); }} onBackdropClick={() => { patchDesignerStore(\"ui.visibility.node-6d22b183-d043-4e69-a122-0ba52d16c18c\", false); }} gradient={false} bodyOuterClassName=\"-mb-[15px]\" bodyClassName=\"!p-0\" footerClassName=\"!mt-0\">\n            <form className=\"flex !min-h-0 flex-col gap-0 bg-white\" method=\"post\" id=\"node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56\" data-designer-node-id=\"node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56\">\n              <div className=\"flex !min-w-0 flex-col gap-2 bg-white p-[15px]\">\n                <InputNumber isRequired data-page-guide=\"\" data-page-guide-title=\"Institute id\" data-page-guide-hint=\"Required. Enter institute id.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.id} name=\"node-7d158cd1-762d-42ec-b269-ccc89bb9fcaf\" />\n                <UiInput type=\"text\" placeholder=\"Code\" label=\"Code\" size=\"sm\" data-page-guide=\"\" data-page-guide-title=\"Code\" data-page-guide-hint=\"Enter code.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.code} name=\"node-51101cee-f863-4e85-98da-0ecdece5e263\" />\n                <UiInput isRequired type=\"text\" placeholder=\"Title (Arabic)\" label=\"Title (Arabic)\" size=\"sm\" data-page-guide=\"\" data-page-guide-title=\"Title (Arabic)\" data-page-guide-hint=\"Required. Enter title (Arabic).\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.title_ar} name=\"node-cc62162e-e14d-40eb-89fa-7f725a54d3b0\" />\n                <Switch aria-label=\"Active\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Active\" data-page-guide-hint=\"Turn active on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.is_active} name=\"node-f5867541-e191-4db4-93b1-ea7f5a743497\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Active</span></Switch.Content></Switch>\n                <Switch aria-label=\"Self registration\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Self registration\" data-page-guide-hint=\"Turn self registration on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.allows_self_registration} name=\"node-33207a18-6822-4f07-b71d-e098199e5461\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Self registration</span></Switch.Content></Switch>\n                <Switch aria-label=\"Allows invite\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Allows invite\" data-page-guide-hint=\"Turn allows invite on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.allows_invite} name=\"node-5d36b5cf-cdd1-4257-92a6-0a0d1670e88d\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Allows invite</span></Switch.Content></Switch>\n                <InputNumber data-page-guide=\"\" data-page-guide-title=\"Invite expires (days)\" data-page-guide-hint=\"Enter invite expires (days).\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.invite_expires_after_days} name=\"node-cb9bae92-c472-4cd8-b0ad-4b1aa2d4dcf2\" />\n                <Switch aria-label=\"Hide member phones\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Hide member phones\" data-page-guide-hint=\"Turn hide member phones on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.hide_member_phones} name=\"node-f18ea171-2a0e-4789-a201-c6dffdff4017\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Hide member phones</span></Switch.Content></Switch>\n                <Switch aria-label=\"Dedicated list\" size=\"md\" data-page-guide=\"\" data-page-guide-title=\"Dedicated list\" data-page-guide-hint=\"Turn dedicated list on or off.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" isSelected={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.has_dedicated_list} name=\"node-e8285223-9bff-4d7c-9644-a7682c1dda16\"><Switch.Content className=\"flex items-center gap-2\"><Switch.Control><Switch.Thumb /></Switch.Control><span className=\"text-xs font-semibold text-slate-700\">Dedicated list</span></Switch.Content></Switch>\n                <UiInput type=\"text\" placeholder=\"Note\" label=\"Note\" size=\"sm\" data-page-guide=\"\" data-page-guide-title=\"Note\" data-page-guide-hint=\"Enter note.\" data-page-guide-priority=\"50\" data-page-guide-scope=\"local\" data-page-guide-topic=\"page\" data-page-guide-surface=\"\" value={regionData_hwyinstitutesList_node_9e62baa6_2e83_4eab_9678_6cbd4e7eff56?.note} name=\"node-aa1b9111-8789-4dee-9584-5322112df075\" />\n              </div>\n            </form>\n            <div className=\"flex !w-full shrink-0 !items-center !justify-end gap-2\">\n              <Button type=\"button\" className=\"inline-flex !items-center !justify-center gap-1.5 !h-8 !px-3 !rounded-md !text-xs !font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:!opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100\" variant=\"outline\" size=\"md\" onClick={handleonClick_node_7f2ffa53_b8b1_4f5f_8331_ac5b82d709ec}><X className=\"h-3.5 w-3.5\" /> Cancel</Button>\n              <Button type=\"submit\" className=\"inline-flex !items-center !justify-center gap-1.5 !h-8 !px-3 !rounded-md !text-xs !font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:!opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white\" form=\"node-9e62baa6-2e83-4eab-9678-6cbd4e7eff56\" variant=\"primary\" size=\"md\" href=\"#\" target=\"_self\" isDisabled={isSubmitting} onClick={handleonClick_node_d255ddf1_92bc_4d42_be8b_6bed7c38b8ef}><Save className=\"h-3.5 w-3.5\" /> Save</Button>\n            </div>\n          </CreateEditModalShell>\n        )}\n      </div>\n    </>\n  );\n};\n",
+  "hydratedFromTsx": false,
+  "companionTsxPath": "workspace\\designer\\drafts\\general\\hwy-institutes.tsx"
+}

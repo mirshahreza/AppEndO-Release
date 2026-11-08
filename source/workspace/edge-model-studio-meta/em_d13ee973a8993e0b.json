@@ -1,0 +1,169 @@
+{
+  "edgeModelId": "em_d13ee973a8993e0b",
+  "tags": [
+    "hwy",
+    "list",
+    "segmentation"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "formWidget": "hidden",
+      "group": "Definition",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "code",
+      "formWidget": "text",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Definition",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "title_ar",
+      "formWidget": "text",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Definition",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "list_logic_code",
+      "formWidget": "lookup",
+      "required": true,
+      "developerNotes": "Picker filter: parent_id=220.005 (Member List Logic).",
+      "group": "Definition",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "institute_id",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "interfaceNotes": "Set when list_logic=institute.",
+      "group": "Binding",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "predicate_ref",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "interfaceNotes": "Legacy HWY_Members_List_* code for predicate lists.",
+      "group": "Binding",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "is_active",
+      "formWidget": "switch",
+      "searchRole": "basic",
+      "group": "Definition",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "sort_order",
+      "formWidget": "number",
+      "searchRole": "advanced",
+      "group": "Definition",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "searchRole": "advanced",
+      "group": "Definition",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "created_by",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 100
+    },
+    {
+      "columnName": "created_at",
+      "formWidget": "datetime",
+      "group": "Audit",
+      "sortOrder": 110
+    },
+    {
+      "columnName": "updated_by",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "updated_at",
+      "formWidget": "datetime",
+      "group": "Audit",
+      "sortOrder": 130
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_6e1da47718a7460c",
+      "displayLabel": "Created by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_73ee313e87154264",
+      "displayLabel": "List logic",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.005"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_dc225df7c0b84ddd",
+      "displayLabel": "Institute",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_f175adfc2bb8452f",
+      "displayLabel": "Updated by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nDefines each legacy `HWY_Members_List_*` screen separately — institute-scoped or predicate-scoped.\n\n## Scenarios\n\n- **S6** — never merge institute lists with predicate lists in one grid.\n\n## Rules\n\n- `list_logic_code` = institute | predicate.\n- Predicate lists reference `predicate_ref` (legacy list code) until replaced by Server Functions.",
+    "scenarioIds": [
+      "S6"
+    ],
+    "columnGroupOrder": [
+      "Definition",
+      "Binding",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Definition": {
+        "icon": "lucide:list",
+        "color": "text-cyan-600"
+      },
+      "Binding": {
+        "icon": "lucide:plug",
+        "color": "text-violet-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock",
+        "color": "text-slate-500"
+      }
+    }
+  },
+  "created_at": "2026-09-16T13:15:04.980Z",
+  "updated_at": "2026-09-17T15:29:40.120Z"
+}

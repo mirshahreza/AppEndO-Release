@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-user-identities.ops-identities-pivot",
+  "name": "ops-identities-pivot",
+  "folder": "base-user-identities",
+  "method": "POST",
+  "path": "/api/ops/ops_identities/pivot",
+  "sourceFile": "base-user-identities.ops-identities-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"user_id\": \"\",\n    \"provider_kind\": \"\",\n    \"linked_at\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_identities_pivot\",\"edgeApiOperationId\":\"ops_identities-pivot\",\"edgeModelId\":\"em_24f4928b2dd23610\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_identities/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"]}},\"model\":{\"objectName\":\"base_user_identities\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"user_id\",\"name\":\"user_id\"},{\"field\":\"provider_kind\",\"name\":\"provider_kind\"},{\"field\":\"linked_at\",\"name\":\"linked_at\"}]},\"openapi\":{\"summary\":\"Identities pivot\",\"description\":\"Identities pivot (POST /api/ops/ops_identities/pivot) on base_user_identities.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:9b574067\",\"generatedAt\":\"2026-10-02T23:23:20.092Z\",\"requestExample\":{\"body\":{\"user_id\":\"\",\"provider_kind\":\"\",\"linked_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_identities/pivot\",\"routeNote\":\"Data API pivot on base_user_identities.\",\"validationFields\":[\"user_id\",\"provider_kind\",\"linked_at\"],\"outputFields\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:20.246Z",
+  "updatedAt": "2026-10-02T23:23:20.246Z",
+  "createdBy": null,
+  "updatedBy": null
+}

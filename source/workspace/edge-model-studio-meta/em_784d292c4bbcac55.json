@@ -1,0 +1,181 @@
+{
+  "edgeModelId": "em_784d292c4bbcac55",
+  "tags": [
+    "hwy",
+    "nakhebin",
+    "read-only"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "number",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "family_code",
+      "icon": "lucide:users",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "first_name",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "father_name",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Identity",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "grandfather_name",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Identity",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "family_name",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "birth_year",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "gender_code",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Identity",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "region_id",
+      "formWidget": "number",
+      "developerNotes": "Electoral area; title from geo.",
+      "group": "Geo",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "maktab_id",
+      "formWidget": "number",
+      "developerNotes": "Maktab id from geo.",
+      "group": "Geo",
+      "sortOrder": 100
+    },
+    {
+      "columnName": "member_id",
+      "icon": "lucide:link",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Link",
+      "sortOrder": 110
+    },
+    {
+      "columnName": "voted_on_2021",
+      "formWidget": "text",
+      "group": "Election",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "voted_on_2023",
+      "formWidget": "text",
+      "group": "Election",
+      "sortOrder": 130
+    },
+    {
+      "columnName": "voted_on_2025",
+      "formWidget": "text",
+      "group": "Election",
+      "sortOrder": 140
+    },
+    {
+      "columnName": "created_at",
+      "formWidget": "datetime",
+      "group": "Audit",
+      "sortOrder": 150
+    },
+    {
+      "columnName": "updated_at",
+      "formWidget": "datetime",
+      "group": "Audit",
+      "sortOrder": 160
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_02948ad693a2426d",
+      "displayLabel": "Gender",
+      "formWidget": "lookup",
+      "developerNotes": "Shared platform gender vocab when available."
+    },
+    {
+      "relationKey": "ea_342cfb4bb4c4412c",
+      "displayLabel": "Linked member",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "physical:hwy_members.nakhebin_id->hwy_nakhebin.id:FK_hwy_members_nakhebin_id",
+      "displayLabel": "Members (nakhebin link)"
+    },
+    {
+      "relationKey": "physical:hwy_nakhebin.member_id->hwy_members.id:FK_hwy_nakhebin_member_id",
+      "displayLabel": "Nakhebin rows"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nRead-only national voter roll (~29M rows). Search with pagination only — never full grid load.\n\n## Scenarios\n\n- **S7** — search + link from call-center wizard (**S2** step 2).\n- **S2** — mandatory link for approved members; temporary area link type.\n\n## Rules\n\n- PK = legacy PerId.\n- `member_id` back-link when linked; geo titles from Geographic Divisions.",
+    "scenarioIds": [
+      "S2",
+      "S7"
+    ],
+    "columnGroupOrder": [
+      "Identity",
+      "Geo",
+      "Link",
+      "Election",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Identity": {
+        "icon": "lucide:user",
+        "color": "text-amber-600"
+      },
+      "Geo": {
+        "icon": "lucide:map",
+        "color": "text-emerald-600"
+      },
+      "Link": {
+        "icon": "lucide:link",
+        "color": "text-sky-600"
+      },
+      "Election": {
+        "icon": "lucide:vote",
+        "color": "text-indigo-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock",
+        "color": "text-slate-500"
+      }
+    }
+  },
+  "created_at": "2026-09-16T13:15:04.897Z",
+  "updated_at": "2026-09-17T15:29:40.072Z"
+}

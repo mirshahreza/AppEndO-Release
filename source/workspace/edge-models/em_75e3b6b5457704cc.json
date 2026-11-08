@@ -1,0 +1,122 @@
+{
+  "id": "em_75e3b6b5457704cc",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workbooks",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkbooks",
+    "tableName": "base_workbooks"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "name",
+      "field": "name",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note",
+      "field": "note",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "sheets_json",
+      "field": "sheetsJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "owner_user_id",
+      "field": "ownerUserId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "access_control",
+      "field": "accessControl",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "access_permission",
+      "field": "accessPermission",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "e2dcac82a6bd975d",
+  "readOnly": false,
+  "labels": {
+    "title": "base_workbooks"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:20.500Z",
+  "updated_at": "2026-09-11T04:55:20.500Z"
+}

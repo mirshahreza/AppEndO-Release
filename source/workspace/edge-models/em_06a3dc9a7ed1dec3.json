@@ -1,0 +1,77 @@
+{
+  "id": "em_06a3dc9a7ed1dec3",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_settings_sections",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseSettingsSections",
+    "tableName": "base_settings_sections"
+  },
+  "columns": [
+    {
+      "name": "section_key",
+      "field": "sectionKey",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "value",
+      "field": "value",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "section_key",
+  "associations": [],
+  "schemaFingerprint": "ca5dbe31ecd77878",
+  "readOnly": false,
+  "labels": {
+    "title": "base_settings_sections"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:16.758Z",
+  "updated_at": "2026-09-11T04:55:16.758Z"
+}

@@ -1,0 +1,32 @@
+{
+  "edgeModelId": "em_06a3dc9a7ed1dec3",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "section_key"
+    },
+    {
+      "columnName": "value"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nPlatform-wide settings blobs keyed by `section_key` (JSON in `value`). Shared across all nodes on the same control-plane DB — AI providers, cache, security/JWT, cultures, scheduler, git, etc.\n\n## Rules\n\n- One row per `section_key` — upsert only, never duplicate keys.\n- Node-local settings stay in `settings.json` (`runtime.*`) — not this table.\n- Import/export via `/api/settings/transfer/*` and install wizard seed from `settings.example.json`.\n- Structured field definitions use `base_settings_attributes`, not arbitrary keys here."
+  },
+  "created_at": "2026-09-11T04:55:16.776Z",
+  "updated_at": "2026-09-17T15:29:39.817Z"
+}

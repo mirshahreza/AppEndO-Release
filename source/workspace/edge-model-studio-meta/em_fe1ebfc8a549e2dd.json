@@ -1,0 +1,51 @@
+{
+  "edgeModelId": "em_fe1ebfc8a549e2dd",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "session_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "proposal_id"
+    },
+    {
+      "columnName": "change_sets_json"
+    },
+    {
+      "columnName": "snapshots_json"
+    },
+    {
+      "columnName": "summary",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "applied_at"
+    },
+    {
+      "columnName": "rolled_back_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_ai_agent_apply_snapshots.session_id->base_ai_chat_sessions.id:base_ai_agent_apply_snapshots_session_id_fkey",
+      "displayLabel": "Session"
+    },
+    {
+      "relationKey": "physical:base_ai_agent_apply_snapshots.user_id->base_users.id:base_ai_agent_apply_snapshots_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nPoint-in-time snapshots when user **applies** an agent code-change proposal — stores change sets + file snapshots for rollback. Tied to `proposal_id` from agent runtime.\n\n## Rules\n\n- `rolled_back_at` set when operator undo succeeds — both states kept for audit.\n- Large JSON in `change_sets_json` / `snapshots_json` — not for grid listing unbounded.\n- Cascade with session when session deleted."
+  },
+  "created_at": "2026-08-26T07:50:50.446Z",
+  "updated_at": "2026-09-17T15:29:39.449Z"
+}

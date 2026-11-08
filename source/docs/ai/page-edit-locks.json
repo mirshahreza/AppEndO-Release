@@ -1,0 +1,1092 @@
+{
+  "version": "1",
+  "generatedAt": "2026-11-04T16:54:02.776Z",
+  "policy": "all-locked",
+  "pageCount": 98,
+  "pages": [
+    {
+      "pageKey": "api-talk",
+      "label": "api-talk",
+      "routePattern": "api-talk",
+      "searchRoots": [
+        "src/features/api-talk",
+        "src/server/routes",
+        "src/server/services/http-connections/collectionsStore.ts"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "appearance",
+      "label": "Appearance",
+      "routePattern": "appearance/*",
+      "searchRoots": [
+        "src/features/appearance"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "base-components",
+      "label": "Base Components",
+      "routePattern": "base-components/*",
+      "searchRoots": [
+        "src/features/base-components"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "base-info",
+      "label": "Base Info",
+      "routePattern": "base-info",
+      "searchRoots": [
+        "src/features/base-info",
+        "src/server/routes",
+        "src/shared/api/contracts/base-info"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "cache",
+      "label": "Cache Control",
+      "routePattern": "cache",
+      "searchRoots": [
+        "src/features/cache",
+        "src/server/routes",
+        "src/shared/api/contracts/cache"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "chat-history",
+      "label": "Chat History",
+      "routePattern": "chat-history",
+      "searchRoots": [
+        "src/features/chat-history",
+        "src/server/routes",
+        "src/shared/api/contracts/ai"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "client-components",
+      "label": "Client Components",
+      "routePattern": "client-components",
+      "searchRoots": [
+        "src/features/component-designer",
+        "src/domain/component-designer",
+        "src/server/routes",
+        "src/shared/api/contracts/component-designer",
+        "src/server/services/component-designer.service.ts"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "cms-contents-editor",
+      "label": "cms-contents-editor",
+      "routePattern": "cms/contents/edit/*",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "cms-contents-list",
+      "label": "cms-contents-list",
+      "routePattern": "cms/contents",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "cms-settings",
+      "label": "cms-settings",
+      "routePattern": "cms/settings/*",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "cms-vocab-content-tags",
+      "label": "cms-vocab-content-tags",
+      "routePattern": "cms/settings/content-tags",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "cms-vocab-content-types",
+      "label": "cms-vocab-content-types",
+      "routePattern": "cms/settings/content-types",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "cms-vocab-languages",
+      "label": "cms-vocab-languages",
+      "routePattern": "cms/settings/languages",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "cms-vocab-statuses",
+      "label": "cms-vocab-statuses",
+      "routePattern": "cms/settings/statuses",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "dashboard",
+      "label": "Home",
+      "routePattern": "",
+      "searchRoots": [
+        "src/features/dashboard",
+        "src/server/routes"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "data-studio",
+      "label": "Data Studio",
+      "routePattern": "data-studio",
+      "searchRoots": [
+        "src/features/data-studio",
+        "src/server/routes",
+        "src/shared/api/contracts/data-sources",
+        "src/server/services/data-api"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "dev-reference",
+      "label": "dev-reference",
+      "routePattern": "dev-reference",
+      "searchRoots": [
+        "src/features/dev-reference"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "feedback-inbox",
+      "label": "feedback-inbox",
+      "routePattern": "feedback-inbox",
+      "searchRoots": [],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "file-manager",
+      "label": "File Manager",
+      "routePattern": "file-manager",
+      "searchRoots": [
+        "src/features/file-manager",
+        "src/server/routes",
+        "src/shared/api/contracts/file-manager",
+        "src/server/services/file-manager.service.ts"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "geographic-divisions",
+      "label": "geographic-divisions",
+      "routePattern": "geographic-divisions",
+      "searchRoots": [
+        "src/features/org-geo",
+        "src/server/routes",
+        "src/shared/api/contracts/org-geo"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "git",
+      "label": "Git",
+      "routePattern": "git",
+      "searchRoots": [
+        "src/features/git",
+        "src/server/routes",
+        "src/shared/api/contracts/git",
+        "src/server/services/git"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "hwy-business-rules-reference",
+      "label": "Business rules reference",
+      "routePattern": "hawiety/business-rules/*",
+      "searchRoots": [
+        "src/features/hwy-business-rules-reference"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-card-flow",
+      "label": "Badge management",
+      "routePattern": "hawiety/card-flow/*",
+      "searchRoots": [
+        "src/features/hwy-card-flow"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-courses-activities",
+      "label": "Courses & activities",
+      "routePattern": "hawiety/courses-activities/*",
+      "searchRoots": [
+        "src/features/hwy-courses-activities"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-employees-list",
+      "label": "Employees list",
+      "routePattern": "hawiety/employees-list",
+      "searchRoots": [
+        "src/features/hwy-employees-list"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-etl-console",
+      "label": "ETL Console",
+      "routePattern": "hawiety/etl-console",
+      "searchRoots": [
+        "src/features/hwy-etl-console"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-geo-responsibility",
+      "label": "Geo responsibility",
+      "routePattern": "hawiety/geo-responsibility/*",
+      "searchRoots": [
+        "src/features/hwy-geo-responsibility"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-geo-responsibility-candidate-courses",
+      "label": "(3) استكمال الدورات",
+      "routePattern": "candidate-pipeline/courses",
+      "searchRoots": [
+        "src/features/hwy-geo-responsibility"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-geo-responsibility-candidate-install",
+      "label": "(4) اعتماد التنصيب",
+      "routePattern": "candidate-pipeline/install",
+      "searchRoots": [
+        "src/features/hwy-geo-responsibility"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-geo-responsibility-candidate-interview",
+      "label": "(2) متابعة المقابلة",
+      "routePattern": "candidate-pipeline/interview",
+      "searchRoots": [
+        "src/features/hwy-geo-responsibility"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-geo-responsibility-candidate-security",
+      "label": "(1) مراجعة الرأي الرقابي",
+      "routePattern": "candidate-pipeline/security",
+      "searchRoots": [
+        "src/features/hwy-geo-responsibility"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-institutes",
+      "label": "hwy-institutes",
+      "routePattern": "hawiety/institutes",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-meetings-management",
+      "label": "Meetings management",
+      "routePattern": "hawiety/meetings-management",
+      "searchRoots": [
+        "src/features/hwy-meetings"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-member-dossier",
+      "label": "Member dossier",
+      "routePattern": null,
+      "searchRoots": [
+        "src/features/hwy-member-dossier"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-member-dossier-edit",
+      "label": "Member dossier (edit)",
+      "routePattern": "hawiety/members-all/edit/*",
+      "searchRoots": [
+        "src/features/hwy-member-dossier"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-member-dossier-view",
+      "label": "Member dossier (view)",
+      "routePattern": "hawiety/members-all/view/*",
+      "searchRoots": [
+        "src/features/hwy-member-dossier"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-members-all",
+      "label": "hwy-members-all",
+      "routePattern": "hawiety/members-all",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-image-fix",
+      "label": "hwy-members-image-fix",
+      "routePattern": "hawiety/members-image-fix",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-alforat",
+      "label": "hwy-members-institute-alforat",
+      "routePattern": "hawiety/members-institute-alforat",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-ammah",
+      "label": "hwy-members-institute-ammah",
+      "routePattern": "hawiety/members-institute-ammah",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-ashaaer",
+      "label": "hwy-members-institute-ashaaer",
+      "routePattern": "hawiety/members-institute-ashaaer",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-gov",
+      "label": "hwy-members-institute-gov",
+      "routePattern": "hawiety/members-institute-gov",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-hemam",
+      "label": "hwy-members-institute-hemam",
+      "routePattern": "hawiety/members-institute-hemam",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-mehani",
+      "label": "hwy-members-institute-mehani",
+      "routePattern": "hawiety/members-institute-mehani",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-mithaaq",
+      "label": "hwy-members-institute-mithaaq",
+      "routePattern": "hawiety/members-institute-mithaaq",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-nokhab",
+      "label": "hwy-members-institute-nokhab",
+      "routePattern": "hawiety/members-institute-nokhab",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-protectors",
+      "label": "hwy-members-institute-protectors",
+      "routePattern": "hawiety/members-institute-protectors",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-institute-shabab",
+      "label": "hwy-members-institute-shabab",
+      "routePattern": "hawiety/members-institute-shabab",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-kashafeh",
+      "label": "hwy-members-kashafeh",
+      "routePattern": "hawiety/members-kashafeh",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-montadhemin",
+      "label": "hwy-members-montadhemin",
+      "routePattern": "hawiety/members-montadhemin",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-quick-search",
+      "label": "hwy-members-quick-search",
+      "routePattern": "hawiety/members-quick-search",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-rejected-call-center",
+      "label": "hwy-members-rejected-call-center",
+      "routePattern": "hawiety/members-rejected-call-center",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-rejected-local",
+      "label": "hwy-members-rejected-local",
+      "routePattern": "hawiety/members-rejected-local",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-rejected-local-manage",
+      "label": "hwy-members-rejected-local-manage",
+      "routePattern": "hawiety/members-rejected-local-manage",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-taleb-jameee",
+      "label": "hwy-members-taleb-jameee",
+      "routePattern": "hawiety/members-taleb-jameee",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-targhin",
+      "label": "Targhin members",
+      "routePattern": "hawiety/members-targhin",
+      "searchRoots": [
+        "src/features/hwy-members-targhin"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-members-waited-call-center",
+      "label": "hwy-members-waited-call-center",
+      "routePattern": "hawiety/members-waited-call-center",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local",
+      "label": "hwy-members-waited-local",
+      "routePattern": "hawiety/members-waited-local",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-alforat",
+      "label": "hwy-members-waited-local-alforat",
+      "routePattern": "hawiety/members-waited-local-alforat",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-gov",
+      "label": "hwy-members-waited-local-gov",
+      "routePattern": "hawiety/members-waited-local-gov",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-hemam",
+      "label": "hwy-members-waited-local-hemam",
+      "routePattern": "hawiety/members-waited-local-hemam",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-kashafeh",
+      "label": "hwy-members-waited-local-kashafeh",
+      "routePattern": "hawiety/members-waited-local-kashafeh",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-mehani",
+      "label": "hwy-members-waited-local-mehani",
+      "routePattern": "hawiety/members-waited-local-mehani",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-nokhab",
+      "label": "hwy-members-waited-local-nokhab",
+      "routePattern": "hawiety/members-waited-local-nokhab",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-protectors",
+      "label": "hwy-members-waited-local-protectors",
+      "routePattern": "hawiety/members-waited-local-protectors",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-members-waited-local-shabab",
+      "label": "hwy-members-waited-local-shabab",
+      "routePattern": "hawiety/members-waited-local-shabab",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-nakhebin",
+      "label": "hwy-nakhebin",
+      "routePattern": "hawiety/nakhebin",
+      "searchRoots": [
+        "src/server/domain/hwy",
+        "src/domain/hwy",
+        "src/server/routes/hwy.routes.ts",
+        "scripts/hwy-phase1",
+        "scripts/hwy-etl",
+        "scripts/hwy-phase3"
+      ],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-org-membership-transfer",
+      "label": "Org membership transfer",
+      "routePattern": "hawiety/members-org-membership-transfer",
+      "searchRoots": [
+        "src/features/hwy-org-membership-transfer"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-phone-requests",
+      "label": "Phone requests",
+      "routePattern": null,
+      "searchRoots": [
+        "src/features/hwy-phone-requests-admin"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-targhin-requests",
+      "label": "Targhin admin",
+      "routePattern": "hawiety/targhin-requests",
+      "searchRoots": [
+        "src/features/hwy-targhin-admin"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "idea-foundry",
+      "label": "Idea Foundry",
+      "routePattern": "idea-foundry",
+      "searchRoots": [
+        "src/features/idea-foundry",
+        "src/server/routes",
+        "src/shared/api/contracts/idea-foundry",
+        "src/server/services/idea-foundry"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "in-app-notifications",
+      "label": "In-app notifications",
+      "routePattern": "in-app-notifications",
+      "searchRoots": [
+        "src/features/in-app-notifications"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "jobs",
+      "label": "Jobs",
+      "routePattern": "jobs",
+      "searchRoots": [
+        "src/features/jobs",
+        "src/server/routes",
+        "src/shared/api/contracts/jobs"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "libraries",
+      "label": "Libraries",
+      "routePattern": "libraries",
+      "searchRoots": [
+        "src/features/libraries",
+        "src/server/routes",
+        "src/shared/api/contracts/libraries",
+        "src/server/services/libraries"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "logs",
+      "label": "Logs",
+      "routePattern": "logs",
+      "searchRoots": [
+        "src/features/logs",
+        "src/server/routes",
+        "src/shared/api/contracts/logs",
+        "src/server/services/logs.service.ts"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "my-apis",
+      "label": "my-apis",
+      "routePattern": "my-apis",
+      "searchRoots": [
+        "src/features/my-apis",
+        "src/server/routes",
+        "src/shared/api/contracts/my-apis"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "my-feedback",
+      "label": "my-feedback",
+      "routePattern": "my-feedback",
+      "searchRoots": [],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "my-inbox",
+      "label": "my-inbox",
+      "routePattern": "my-inbox",
+      "searchRoots": [],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "my-workbooks",
+      "label": "my-workbooks",
+      "routePattern": "my-workbooks",
+      "searchRoots": [
+        "src/features/workbooks",
+        "src/server/routes",
+        "src/shared/api/contracts/workbooks",
+        "src/server/services/workbooks"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "organization-chart",
+      "label": "organization-chart",
+      "routePattern": "organization-chart",
+      "searchRoots": [
+        "src/features/org-geo",
+        "src/server/routes",
+        "src/shared/api/contracts/org-geo"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "package-manager",
+      "label": "Package Manager",
+      "routePattern": "package-manager",
+      "searchRoots": [
+        "src/features/packages",
+        "src/server/routes",
+        "src/shared/api/contracts/package",
+        "src/server/services/package",
+        "src/server/services/package-runtime"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "platform-navigations",
+      "label": "platform-navigations",
+      "routePattern": "platform-navigations",
+      "searchRoots": [
+        "src/features/platform-navigations",
+        "src/server/routes",
+        "src/shared/api/contracts/platform/navigation.ts",
+        "src/server/services/platform/navigationManifest.service.ts"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "platform-portals",
+      "label": "Portals",
+      "routePattern": "portals",
+      "searchRoots": [
+        "src/features/platform-portals",
+        "src/server/routes",
+        "src/shared/api/contracts/platform",
+        "src/server/services/platform"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "platform-transfer",
+      "label": "platform-transfer",
+      "routePattern": "platform-transfer",
+      "searchRoots": [
+        "src/features/platform-transfer"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "record-events",
+      "label": "Record events",
+      "routePattern": "record-events",
+      "searchRoots": [
+        "src/features/record-events"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "roles",
+      "label": "Roles",
+      "routePattern": "roles",
+      "searchRoots": [
+        "src/features/roles",
+        "src/server/routes",
+        "src/shared/api/contracts/roles"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "scheduled-tasks",
+      "label": "Scheduled Tasks",
+      "routePattern": "scheduled-tasks",
+      "searchRoots": [
+        "src/features/scheduled-tasks",
+        "src/server/routes",
+        "src/shared/api/contracts/scheduler"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "server-functions",
+      "label": "Server Functions",
+      "routePattern": "server-functions",
+      "searchRoots": [
+        "src/features/server-functions",
+        "src/server/routes",
+        "src/shared/api/contracts/server-functions",
+        "src/server/services/functions.service.ts"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "settings",
+      "label": "Settings",
+      "routePattern": "settings/*",
+      "searchRoots": [
+        "src/features/settings",
+        "src/server/routes",
+        "src/shared/api/contracts/settings",
+        "src/server/services/settings",
+        "src/server/services/ai"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "sources",
+      "label": "sources",
+      "routePattern": "sources",
+      "searchRoots": [
+        "src/features/data-sources",
+        "src/server/routes",
+        "src/shared/api/contracts/data-sources"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "sql-console",
+      "label": "sql-console",
+      "routePattern": "sql-console",
+      "searchRoots": [
+        "src/features/sql-console",
+        "src/server/routes",
+        "src/server/services/sql-console"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "studio-insights-ops",
+      "label": "studio-insights-ops",
+      "routePattern": "studio-insights-ops",
+      "searchRoots": [],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "studio-insights-people",
+      "label": "studio-insights-people",
+      "routePattern": "studio-insights-people",
+      "searchRoots": [],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "studio-insights-work",
+      "label": "studio-insights-work",
+      "routePattern": "studio-insights-work",
+      "searchRoots": [],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "users",
+      "label": "Users",
+      "routePattern": "users",
+      "searchRoots": [
+        "src/features/users",
+        "src/server/routes",
+        "src/shared/api/contracts/users",
+        "src/server/services/users"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "workbooks",
+      "label": "Workbooks",
+      "routePattern": "workbooks",
+      "searchRoots": [
+        "src/features/workbooks",
+        "src/server/routes",
+        "src/shared/api/contracts/workbooks",
+        "src/server/services/workbooks"
+      ],
+      "source": "feature-graph"
+    },
+    {
+      "pageKey": "workflow-operations",
+      "label": "workflow-operations",
+      "routePattern": "workflow-operations",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "workflows",
+      "label": "Workflows",
+      "routePattern": "workflows",
+      "searchRoots": [
+        "src/features/workflows",
+        "src/server/routes",
+        "src/server/domain/workflow/designer"
+      ],
+      "source": "feature-graph"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "ea_ops_scope_memberships_pivot",
+  "edgeModelId": "em_11771aa29defb94c",
+  "key": "ops-scope-memberships-pivot",
+  "label": "Scope memberships pivot",
+  "basePath": "/api/ops/ops_scope_memberships",
+  "operations": [
+    {
+      "id": "ops_scope_memberships-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_scope_memberships/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "user_id",
+          "dimension_key",
+          "created_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Scope memberships pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:20.711Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-scope-memberships.ops-scope-memberships-pivot"
+}

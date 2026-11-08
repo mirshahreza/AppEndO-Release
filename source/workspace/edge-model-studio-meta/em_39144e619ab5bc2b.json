@@ -1,0 +1,49 @@
+{
+  "edgeModelId": "em_39144e619ab5bc2b",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "definition_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "value_text"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_users_attributes.definition_id->base_settings_attributes.id:base_users_attributes_definition_id_fkey",
+      "displayLabel": "Definition"
+    },
+    {
+      "relationKey": "physical:base_users_attributes.user_id->base_users.id:base_users_attributes_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nPer-user values for **Settings → Data model** attribute definitions (`base_settings_attributes`). EAV storage for extended metadata configured by operators (tags, org units, custom fields).\n\n## Rules\n\n- **UNIQUE** (`definition_id`, `user_id`).\n- Value shape follows definition `data_type` / `cardinality` — validated server-side, not free SQL.\n- `source_type` on definition may bind to Base Info tree — store selected item id(s) in `value_text`.\n- User self-edit obeys definition `user_editable` + `user_edit_policy`."
+  },
+  "created_at": "2026-09-03T11:52:38.542Z",
+  "updated_at": "2026-09-17T15:29:39.568Z"
+}

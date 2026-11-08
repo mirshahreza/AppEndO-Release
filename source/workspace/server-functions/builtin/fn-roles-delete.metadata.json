@@ -1,0 +1,24 @@
+{
+  "schema": "append-builtin-function-metadata",
+  "schemaVersion": "1.0.0",
+  "id": "fn-roles-delete",
+  "method": "DELETE",
+  "path": "/api/roles/:id",
+  "createdAt": "2026-07-06T22:08:26.012Z",
+  "createdBy": null,
+  "updatedAt": "2026-07-06T22:25:12.273Z",
+  "updatedBy": "m.mirshahreza@son.ir",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "DEVELOPER"
+    ],
+    "allowUsers": [],
+    "denyRoles": [
+      "USER"
+    ],
+    "denyUsers": [
+      "jahan.mining@append.os"
+    ]
+  }
+}

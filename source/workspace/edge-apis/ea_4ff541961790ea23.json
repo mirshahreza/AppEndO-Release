@@ -1,0 +1,205 @@
+{
+  "id": "ea_4ff541961790ea23",
+  "edgeModelId": "em_d13ee973a8993e0b",
+  "key": "hwy-member-list-defs",
+  "label": "HWY member list defs",
+  "basePath": "/api/hwy/member-list-defs",
+  "operations": [
+    {
+      "id": "op_list_p0jfzl",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/hwy/member-list-defs",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "instituteId",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_p0jfzl",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/hwy/member-list-defs/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "instituteId",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_p0jfzl",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/hwy/member-list-defs",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "instituteId",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "write": [
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "instituteId",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "isActive",
+          "sortOrder",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_p0jfzl",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/hwy/member-list-defs/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "instituteId",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "write": [
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "instituteId",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "isActive",
+          "sortOrder",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_p0jfzl",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/hwy/member-list-defs/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "instituteId",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-09-28T14:32:29.905Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "hwy-member-list-defs.hwy-member-list-defs-list"
+}

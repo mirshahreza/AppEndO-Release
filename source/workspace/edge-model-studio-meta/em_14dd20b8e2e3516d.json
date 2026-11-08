@@ -1,0 +1,83 @@
+{
+  "edgeModelId": "em_14dd20b8e2e3516d",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "description",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "importance"
+    },
+    {
+      "columnName": "scale"
+    },
+    {
+      "columnName": "maturity"
+    },
+    {
+      "columnName": "note",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "target_kind"
+    },
+    {
+      "columnName": "package_id"
+    },
+    {
+      "columnName": "package_title"
+    },
+    {
+      "columnName": "section_key"
+    },
+    {
+      "columnName": "section_title"
+    },
+    {
+      "columnName": "front_office"
+    },
+    {
+      "columnName": "back_office"
+    },
+    {
+      "columnName": "decision_maker"
+    },
+    {
+      "columnName": "collaborators"
+    },
+    {
+      "columnName": "team_models"
+    },
+    {
+      "columnName": "icon"
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nCurrent Idea Foundry persistence. One row is a product idea on the board: title, description, icon, importance, scale, maturity, target (new vs existing package), optional package/section home, front/back office notes, and team JSON. Edited at `idea-foundry/edit/{id}`.\n\n## Lifecycle\n\n1. **Create** — UUID `id`; maturity usually `defining`. English operator copy only.\n2. **Shape** — move maturity `defining` → `cooking-idea` → `in-production` → `ready-to-use`. Importance/scale are priority and size, not status.\n3. **Place** — `target_kind` `new-package` | `existing-package`; existing package uses `package_id` plus `section_key` (or whole-package sentinel).\n4. **Staff** — `decision_maker`, `collaborators`, and `team_models` are JSON text parsed by idea-foundry contracts.\n\n## Rules\n\n- `note` is operator remark (data-model note vs description). `description` is the idea brief.\n- Not a project tracker, CRM opportunity, or work item — Tasks/CRM/Workflow own execution.\n- Do not write this table through Prisma; Sequelize `base_product_ideas` is the contract."
+  },
+  "created_at": "2026-09-11T04:55:13.360Z",
+  "updated_at": "2026-09-17T15:29:39.730Z"
+}

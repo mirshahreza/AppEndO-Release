@@ -1,0 +1,77 @@
+{
+  "id": "em_dfb8305c7a50056e",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_dashboard_widget_comments",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseDashboardWidgetComments",
+    "tableName": "base_dashboard_widget_comments"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "page_id",
+      "field": "pageId",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "widget_node_id",
+      "field": "widgetNodeId",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "author_id",
+      "field": "authorId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "body",
+      "field": "body",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "c895a8d62aa2e978",
+  "readOnly": false,
+  "labels": {
+    "title": "base_dashboard_widget_comments"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:10.641Z",
+  "updated_at": "2026-09-11T04:55:10.641Z"
+}

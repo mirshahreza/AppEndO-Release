@@ -1,0 +1,65 @@
+{
+  "id": "ea_ops_user_directory_pivot",
+  "edgeModelId": "em_ops_user_directory",
+  "key": "ops-user-directory-pivot",
+  "label": "User directory pivot",
+  "basePath": "/api/ops/ops_user_directory",
+  "operations": [
+    {
+      "id": "ops_user_directory-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_user_directory/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "username",
+          "locked",
+          "is_builtin",
+          "login_fail_count",
+          "last_login_at",
+          "created_at",
+          "person_type_code",
+          "role_count",
+          "has_profile",
+          "has_role",
+          "has_identity",
+          "has_scope",
+          "has_email",
+          "email_verified",
+          "never_logged_in",
+          "is_dormant",
+          "has_fail_streak"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "User directory pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:21.385Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-ops-user-directory.ops-user-directory-pivot"
+}

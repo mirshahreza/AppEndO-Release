@@ -1,0 +1,50 @@
+{
+  "edgeModelId": "em_a7b45941e28a2e3c",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "purpose"
+    },
+    {
+      "columnName": "channel"
+    },
+    {
+      "columnName": "target"
+    },
+    {
+      "columnName": "otp_hash",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "expires_at"
+    },
+    {
+      "columnName": "used_at"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_otp_challenges.user_id->base_users.id:base_otp_challenges_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nShort-lived OTP verification rows for login/register/reset flows. Stores hashed OTP, channel, target address, expiry — never plaintext OTP.\n\n## Rules\n\n- `used_at` set on successful verify — row is spent.\n- Expired rows ignored by auth service; periodic cleanup job may purge.\n- `user_id` optional for pre-account flows (register by email/mobile).\n- One active challenge policy enforced in service layer per purpose+target."
+  },
+  "created_at": "2026-09-11T04:55:13.163Z",
+  "updated_at": "2026-09-17T15:29:39.723Z"
+}

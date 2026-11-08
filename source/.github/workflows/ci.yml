@@ -1,0 +1,70 @@
+name: CI
+
+# Temporarily disabled — restore push/pull_request triggers and remove `if: false` to re-enable.
+on:
+  workflow_dispatch:
+
+jobs:
+  lint-and-critical-tests:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run lint
+
+      - name: Knip unused files
+        run: npm run hygiene:knip
+
+      - name: English-only production source
+        run: npm run hygiene:english-copy
+
+      - name: Critical tests
+        run: npm run test:critical
+
+  prisma-control-plane-smoke:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prisma generate
+        run: npm run prisma:generate
+
+      - name: SQLite smoke
+        run: npm run prisma:smoke -- sqlite
+
+      - name: MySQL smoke
+        continue-on-error: true
+        run: |
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "Skipping MySQL smoke — DATABASE_URL not configured."
+            exit 0
+          fi
+          npm run prisma:smoke -- mysql
+
+      - name: SQL Server smoke
+        continue-on-error: true
+        run: |
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "Skipping SQL Server smoke — DATABASE_URL not configured."
+            exit 0
+          fi
+          npm run prisma:smoke -- sqlserver

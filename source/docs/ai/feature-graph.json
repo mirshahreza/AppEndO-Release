@@ -1,0 +1,1124 @@
+{
+  "version": "1",
+  "generatedAt": "2026-11-04T16:54:02.736Z",
+  "source": {
+    "navigation": "src/config/platform-registry/navigation/studio.json",
+    "pageModulesDir": "src/config/platform-registry/page-modules"
+  },
+  "nodes": [
+    {
+      "pageKey": "api-talk",
+      "label": "api-talk",
+      "menuGroup": null,
+      "routePattern": "api-talk",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/api-talk.json",
+        "loaderRef": "core:ApiTalk",
+        "page": "src/features/api-talk/ApiTalkPage.tsx",
+        "feature": "src/features/api-talk/",
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/api-talk.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/api-talk"
+        ],
+        "contracts": null,
+        "services": [
+          "src/server/services/http-connections/collectionsStore.ts"
+        ]
+      },
+      "tests": "src/features/api-talk/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "appearance",
+      "label": "Appearance",
+      "menuGroup": "Development",
+      "routePattern": "appearance/*",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/appearance.json",
+        "loaderRef": "core:Appearance",
+        "page": "src/features/appearance/AppearancePage.tsx",
+        "feature": "src/features/appearance/",
+        "domain": null,
+        "workspace": "AppearanceWorkspace"
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": "src/features/appearance/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "base-components",
+      "label": "Base Components",
+      "menuGroup": "Development",
+      "routePattern": "base-components/*",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/base-components.json",
+        "loaderRef": "core:BaseComponents",
+        "page": "src/features/base-components/BaseComponentsPage.tsx",
+        "feature": "src/features/base-components/",
+        "domain": null,
+        "workspace": "BaseComponentsWorkspace"
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": "src/features/base-components/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "base-info",
+      "label": "Base Info",
+      "menuGroup": "Records",
+      "routePattern": "base-info",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/base-info.json",
+        "loaderRef": "core:BaseInfo",
+        "page": "src/features/base-info/BaseInfoPage.tsx",
+        "feature": "src/features/base-info/",
+        "domain": null,
+        "workspace": "BaseInfoWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/base-info.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/base-info"
+        ],
+        "contracts": "src/shared/api/contracts/base-info/",
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "cache",
+      "label": "Cache Control",
+      "menuGroup": "Development",
+      "routePattern": "cache",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/cache.json",
+        "loaderRef": "core:Cache",
+        "page": "src/features/cache/CachePage.tsx",
+        "feature": "src/features/cache/",
+        "domain": null,
+        "workspace": "CacheWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/cache.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/cache"
+        ],
+        "contracts": "src/shared/api/contracts/cache/",
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "chat-history",
+      "label": "Chat History",
+      "menuGroup": "Records",
+      "routePattern": "chat-history",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/chat-history.json",
+        "loaderRef": "core:ChatHistory",
+        "page": "src/features/chat-history/ChatHistoryPage.tsx",
+        "feature": "src/features/chat-history/",
+        "domain": null,
+        "workspace": "ChatHistoryWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/ai.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/ai"
+        ],
+        "contracts": "src/shared/api/contracts/ai/",
+        "services": []
+      },
+      "tests": "src/features/chat-history/__tests__/",
+      "notes": "Chat history UI — AI session APIs"
+    },
+    {
+      "pageKey": "client-components",
+      "label": "Client Components",
+      "menuGroup": "Development",
+      "routePattern": "client-components",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/client-components.json",
+        "loaderRef": "core:ComponentDesigner",
+        "page": "src/features/component-designer/ComponentDesignerPage.tsx",
+        "feature": "src/features/component-designer/",
+        "domain": "src/domain/component-designer/",
+        "workspace": "ComponentDesignerWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/component-designer.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/component-designer"
+        ],
+        "contracts": "src/shared/api/contracts/component-designer/",
+        "services": [
+          "src/server/services/component-designer.service.ts"
+        ]
+      },
+      "tests": "src/features/component-designer/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "dashboard",
+      "label": "Home",
+      "menuGroup": null,
+      "routePattern": "",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/dashboard.json",
+        "loaderRef": "core:Dashboard",
+        "page": "src/features/dashboard/DashboardPage.tsx",
+        "feature": "src/features/dashboard/",
+        "domain": null,
+        "workspace": "DashboardWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/dashboard.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/dashboard"
+        ],
+        "contracts": null,
+        "services": []
+      },
+      "tests": "src/features/dashboard/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "data-studio",
+      "label": "Data Studio",
+      "menuGroup": "Development",
+      "routePattern": "data-studio",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/data-studio.json",
+        "loaderRef": "core:DataStudio",
+        "page": "src/features/data-studio/DataStudioPage.tsx",
+        "feature": "src/features/data-studio/",
+        "domain": null,
+        "workspace": "EdgeModelModelerWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/data-api.routes.ts",
+          "src/server/routes/data-sources.routes.ts",
+          "src/server/routes/data-source-schema.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/data-api",
+          "/api/data-sources"
+        ],
+        "contracts": "src/shared/api/contracts/data-sources/",
+        "services": [
+          "src/server/services/data-api/"
+        ]
+      },
+      "tests": "src/features/data-studio/__tests__/",
+      "notes": "Schema explorer and EdgeModel APIs; connection create/edit UI also in Data Sources page"
+    },
+    {
+      "pageKey": "dev-reference",
+      "label": "dev-reference",
+      "menuGroup": null,
+      "routePattern": "dev-reference",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/dev-reference.json",
+        "loaderRef": "core:DevReference",
+        "page": "src/features/dev-reference/DevReferencePage.tsx",
+        "feature": "src/features/dev-reference/",
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": "src/features/dev-reference/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "feedback-inbox",
+      "label": "feedback-inbox",
+      "menuGroup": null,
+      "routePattern": "feedback-inbox",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/feedback-inbox.json",
+        "loaderRef": "core:FeedbackInbox",
+        "page": null,
+        "feature": null,
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "file-manager",
+      "label": "File Manager",
+      "menuGroup": "Development",
+      "routePattern": "file-manager",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/file-manager.json",
+        "loaderRef": "core:FileManager",
+        "page": "src/features/file-manager/FileManagerPage.tsx",
+        "feature": "src/features/file-manager/",
+        "domain": null,
+        "workspace": "FileManagerPageView"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/file-manager.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/file-manager"
+        ],
+        "contracts": "src/shared/api/contracts/file-manager/",
+        "services": [
+          "src/server/services/file-manager.service.ts"
+        ]
+      },
+      "tests": "src/features/file-manager/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "geographic-divisions",
+      "label": "geographic-divisions",
+      "menuGroup": null,
+      "routePattern": "geographic-divisions",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/geographic-divisions.json",
+        "loaderRef": "core:GeographicDivisions",
+        "page": "src/features/org-geo/GeographicDivisionsPage.tsx",
+        "feature": "src/features/org-geo/",
+        "domain": null,
+        "workspace": "OrgGeoWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/base-info.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/base-info"
+        ],
+        "contracts": "src/shared/api/contracts/org-geo/",
+        "services": []
+      },
+      "tests": null,
+      "notes": "Scoped Geographic Divisions tree UI over base_info root 100.5 (under Base)"
+    },
+    {
+      "pageKey": "git",
+      "label": "Git",
+      "menuGroup": "Development",
+      "routePattern": "git",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/git.json",
+        "loaderRef": "core:Git",
+        "page": "src/features/git/GitPage.tsx",
+        "feature": "src/features/git/",
+        "domain": null,
+        "workspace": "GitPageView"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/git.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/git"
+        ],
+        "contracts": "src/shared/api/contracts/git/",
+        "services": [
+          "src/server/services/git/"
+        ]
+      },
+      "tests": "src/features/git/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "idea-foundry",
+      "label": "Idea Foundry",
+      "menuGroup": "Development",
+      "routePattern": "idea-foundry",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/idea-foundry.json",
+        "loaderRef": "core:IdeaFoundry",
+        "page": "src/features/idea-foundry/IdeaFoundryPage.tsx",
+        "feature": "src/features/idea-foundry/",
+        "domain": null,
+        "workspace": "IdeaFoundryWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/idea-foundry.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/idea-foundry"
+        ],
+        "contracts": "src/shared/api/contracts/idea-foundry/",
+        "services": [
+          "src/server/services/idea-foundry/"
+        ]
+      },
+      "tests": "src/features/idea-foundry/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "in-app-notifications",
+      "label": "In-app notifications",
+      "menuGroup": "Records",
+      "routePattern": "in-app-notifications",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/in-app-notifications.json",
+        "loaderRef": "core:InAppNotifications",
+        "page": "src/features/in-app-notifications/InAppNotificationsPage.tsx",
+        "feature": "src/features/in-app-notifications/",
+        "domain": null,
+        "workspace": "InAppNotificationsWorkspace"
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "jobs",
+      "label": "Jobs",
+      "menuGroup": "Development",
+      "routePattern": "jobs",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/jobs.json",
+        "loaderRef": "core:Jobs",
+        "page": "src/features/jobs/JobsPage.tsx",
+        "feature": "src/features/jobs/",
+        "domain": null,
+        "workspace": "JobsWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/jobs.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/jobs"
+        ],
+        "contracts": "src/shared/api/contracts/jobs/",
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "libraries",
+      "label": "Libraries",
+      "menuGroup": "Extensions",
+      "routePattern": "libraries",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/libraries.json",
+        "loaderRef": "core:Libraries",
+        "page": "src/features/libraries/LibrariesPage.tsx",
+        "feature": "src/features/libraries/",
+        "domain": null,
+        "workspace": "LibrariesWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/libraries.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/libraries"
+        ],
+        "contracts": "src/shared/api/contracts/libraries/",
+        "services": [
+          "src/server/services/libraries/"
+        ]
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "logs",
+      "label": "Logs",
+      "menuGroup": "Records",
+      "routePattern": "logs",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/logs.json",
+        "loaderRef": "core:Logs",
+        "page": "src/features/logs/LogsPage.tsx",
+        "feature": "src/features/logs/",
+        "domain": null,
+        "workspace": "LogsWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/logs.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/logs"
+        ],
+        "contracts": "src/shared/api/contracts/logs/",
+        "services": [
+          "src/server/services/logs.service.ts"
+        ]
+      },
+      "tests": "src/features/logs/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "my-apis",
+      "label": "my-apis",
+      "menuGroup": null,
+      "routePattern": "my-apis",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/my-apis.json",
+        "loaderRef": "core:MyApis",
+        "page": "src/features/my-apis/MyApisPage.tsx",
+        "feature": "src/features/my-apis/",
+        "domain": null,
+        "workspace": "MyApisPageView"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/docs.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/docs"
+        ],
+        "contracts": "src/shared/api/contracts/my-apis/",
+        "services": []
+      },
+      "tests": null,
+      "notes": "Hidden from studio menu — opened from Profile drawer"
+    },
+    {
+      "pageKey": "my-feedback",
+      "label": "my-feedback",
+      "menuGroup": null,
+      "routePattern": "my-feedback",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/my-feedback.json",
+        "loaderRef": "core:MyFeedback",
+        "page": null,
+        "feature": null,
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "my-inbox",
+      "label": "my-inbox",
+      "menuGroup": null,
+      "routePattern": "my-inbox",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/my-inbox.json",
+        "loaderRef": "core:MyInbox",
+        "page": null,
+        "feature": null,
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "my-workbooks",
+      "label": "my-workbooks",
+      "menuGroup": null,
+      "routePattern": "my-workbooks",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/my-workbooks.json",
+        "loaderRef": "core:MyWorkbooks",
+        "page": "src/features/workbooks/MyWorkbooksPage.tsx",
+        "feature": "src/features/workbooks/",
+        "domain": null,
+        "workspace": "WorkbooksWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/workbooks.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/workbooks"
+        ],
+        "contracts": "src/shared/api/contracts/workbooks/",
+        "services": [
+          "src/server/services/workbooks/"
+        ]
+      },
+      "tests": "src/features/workbooks/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "organization-chart",
+      "label": "organization-chart",
+      "menuGroup": null,
+      "routePattern": "organization-chart",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/organization-chart.json",
+        "loaderRef": "core:OrganizationChart",
+        "page": "src/features/org-geo/OrganizationChartPage.tsx",
+        "feature": "src/features/org-geo/",
+        "domain": null,
+        "workspace": "OrgGeoWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/base-info.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/base-info"
+        ],
+        "contracts": "src/shared/api/contracts/org-geo/",
+        "services": []
+      },
+      "tests": null,
+      "notes": "Scoped Organization tree UI over base_info root 100.4 (under Base)"
+    },
+    {
+      "pageKey": "package-manager",
+      "label": "Package Manager",
+      "menuGroup": "Extensions",
+      "routePattern": "package-manager",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/package-manager.json",
+        "loaderRef": "core:PackageManager",
+        "page": "src/features/packages/PackageManagerPage.tsx",
+        "feature": "src/features/packages/",
+        "domain": null,
+        "workspace": "PackagesWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/packages.routes.ts",
+          "src/server/routes/package.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/packages",
+          "/api/package"
+        ],
+        "contracts": "src/shared/api/contracts/package/",
+        "services": [
+          "src/server/services/package/",
+          "src/server/services/package-runtime/"
+        ]
+      },
+      "tests": "src/features/packages/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "platform-navigations",
+      "label": "platform-navigations",
+      "menuGroup": null,
+      "routePattern": "platform-navigations",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/platform-navigations.json",
+        "loaderRef": "core:PlatformNavigations",
+        "page": "src/features/platform-navigations/PlatformNavigationsPage.tsx",
+        "feature": "src/features/platform-navigations/",
+        "domain": null,
+        "workspace": "NavigationsPageView"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/platform.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/platform/navigations"
+        ],
+        "contracts": "src/shared/api/contracts/platform/navigation.ts",
+        "services": [
+          "src/server/services/platform/navigationManifest.service.ts"
+        ]
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "platform-portals",
+      "label": "Portals",
+      "menuGroup": "Development",
+      "routePattern": "portals",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/platform-portals.json",
+        "loaderRef": "core:PlatformPortals",
+        "page": "src/features/platform-portals/PlatformPortalsPage.tsx",
+        "feature": "src/features/platform-portals/",
+        "domain": null,
+        "workspace": "PortalsPageView"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/platform.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/platform"
+        ],
+        "contracts": "src/shared/api/contracts/platform/",
+        "services": [
+          "src/server/services/platform/"
+        ]
+      },
+      "tests": "src/features/platform-portals/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "platform-transfer",
+      "label": "platform-transfer",
+      "menuGroup": null,
+      "routePattern": "platform-transfer",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/platform-transfer.json",
+        "loaderRef": "core:PlatformTransfer",
+        "page": "src/features/platform-transfer/PlatformTransferPage.tsx",
+        "feature": "src/features/platform-transfer/",
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": "src/features/platform-transfer/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "record-events",
+      "label": "Record events",
+      "menuGroup": "Records",
+      "routePattern": "record-events",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/record-events.json",
+        "loaderRef": "core:RecordEvents",
+        "page": null,
+        "feature": "src/features/record-events/",
+        "domain": null,
+        "workspace": "RecordEventsWorkspace"
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": "src/features/record-events/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "roles",
+      "label": "Roles",
+      "menuGroup": "Records",
+      "routePattern": "roles",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/roles.json",
+        "loaderRef": "core:Roles",
+        "page": "src/features/roles/RolesPage.tsx",
+        "feature": "src/features/roles/",
+        "domain": null,
+        "workspace": "RolesWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/users.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/roles"
+        ],
+        "contracts": "src/shared/api/contracts/roles/",
+        "services": []
+      },
+      "tests": "src/features/roles/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "scheduled-tasks",
+      "label": "Scheduled Tasks",
+      "menuGroup": "Development",
+      "routePattern": "scheduled-tasks",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/scheduled-tasks.json",
+        "loaderRef": "core:ScheduledTasks",
+        "page": "src/features/scheduled-tasks/ScheduledTasksPage.tsx",
+        "feature": "src/features/scheduled-tasks/",
+        "domain": null,
+        "workspace": "ScheduledTasksWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/scheduler.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/scheduler"
+        ],
+        "contracts": "src/shared/api/contracts/scheduler/",
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "server-functions",
+      "label": "Server Functions",
+      "menuGroup": "Development",
+      "routePattern": "server-functions",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/server-functions.json",
+        "loaderRef": "core:ServerFunctions",
+        "page": "src/features/server-functions/ServerFunctionsPage.tsx",
+        "feature": "src/features/server-functions/",
+        "domain": null,
+        "workspace": "ServerFunctionsWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/server-functions.routes.ts",
+          "src/server/routes/functions.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/core/server-functions",
+          "/api/functions"
+        ],
+        "contracts": "src/shared/api/contracts/server-functions/",
+        "services": [
+          "src/server/services/functions.service.ts"
+        ]
+      },
+      "tests": "src/features/server-functions/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "settings",
+      "label": "Settings",
+      "menuGroup": "Development",
+      "routePattern": "settings/*",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/settings.json",
+        "loaderRef": "core:Settings",
+        "page": "src/features/settings/SettingsPage.tsx",
+        "feature": "src/features/settings/",
+        "domain": null,
+        "workspace": "SettingsWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/settings.routes.ts",
+          "src/server/routes/settings-attributes.routes.ts",
+          "src/server/routes/ai.routes.ts",
+          "src/server/routes/mcp.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/settings",
+          "/api/ai",
+          "/api/mcp"
+        ],
+        "contracts": "src/shared/api/contracts/settings/",
+        "services": [
+          "src/server/services/settings/",
+          "src/server/services/ai/"
+        ]
+      },
+      "tests": "src/features/settings/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "sources",
+      "label": "sources",
+      "menuGroup": null,
+      "routePattern": "sources",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/sources.json",
+        "loaderRef": "core:DataSources",
+        "page": "src/features/data-sources/DataSourcesPage.tsx",
+        "feature": "src/features/data-sources/",
+        "domain": null,
+        "workspace": "DataSourcesWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/data-sources.routes.ts",
+          "src/server/routes/data-source-schema.routes.ts",
+          "src/server/routes/db-enrichment.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/data-sources",
+          "/api/db-enrichment"
+        ],
+        "contracts": "src/shared/api/contracts/data-sources/",
+        "services": []
+      },
+      "tests": "src/features/data-sources/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "sql-console",
+      "label": "sql-console",
+      "menuGroup": null,
+      "routePattern": "sql-console",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/sql-console.json",
+        "loaderRef": "core:SqlConsole",
+        "page": "src/features/sql-console/SqlConsolePage.tsx",
+        "feature": "src/features/sql-console/",
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/sql-console.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/sql-console"
+        ],
+        "contracts": null,
+        "services": [
+          "src/server/services/sql-console/"
+        ]
+      },
+      "tests": "src/features/sql-console/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "studio-insights-ops",
+      "label": "studio-insights-ops",
+      "menuGroup": null,
+      "routePattern": "studio-insights-ops",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/studio-insights-ops.json",
+        "loaderRef": "general/studio-insights-ops@v1",
+        "page": null,
+        "feature": null,
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "studio-insights-people",
+      "label": "studio-insights-people",
+      "menuGroup": null,
+      "routePattern": "studio-insights-people",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/studio-insights-people.json",
+        "loaderRef": "general/studio-insights-people@v1",
+        "page": null,
+        "feature": null,
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "studio-insights-work",
+      "label": "studio-insights-work",
+      "menuGroup": null,
+      "routePattern": "studio-insights-work",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/studio-insights-work.json",
+        "loaderRef": "general/studio-insights-work@v1",
+        "page": null,
+        "feature": null,
+        "domain": null,
+        "workspace": null
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
+      "notes": null
+    },
+    {
+      "pageKey": "users",
+      "label": "Users",
+      "menuGroup": "Records",
+      "routePattern": "users",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/users.json",
+        "loaderRef": "core:Users",
+        "page": "src/features/users/UsersPage.tsx",
+        "feature": "src/features/users/",
+        "domain": null,
+        "workspace": "UsersWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/users.routes.ts",
+          "src/server/routes/profile.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/users",
+          "/api/profile"
+        ],
+        "contracts": "src/shared/api/contracts/users/",
+        "services": [
+          "src/server/services/users/"
+        ]
+      },
+      "tests": "src/features/users/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "workbooks",
+      "label": "Workbooks",
+      "menuGroup": "Records",
+      "routePattern": "workbooks",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/workbooks.json",
+        "loaderRef": "core:Workbooks",
+        "page": "src/features/workbooks/WorkbooksPage.tsx",
+        "feature": "src/features/workbooks/",
+        "domain": null,
+        "workspace": "WorkbooksWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/workbooks.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/workbooks"
+        ],
+        "contracts": "src/shared/api/contracts/workbooks/",
+        "services": [
+          "src/server/services/workbooks/"
+        ]
+      },
+      "tests": "src/features/workbooks/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "workflows",
+      "label": "Workflows",
+      "menuGroup": "Development",
+      "routePattern": "workflows",
+      "inStudioMenu": true,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/workflows.json",
+        "loaderRef": "core:Workflows",
+        "page": "src/features/workflows/WorkflowsPage.tsx",
+        "feature": "src/features/workflows/",
+        "domain": null,
+        "workspace": "WorkflowEditorWorkspace"
+      },
+      "api": {
+        "routes": [
+          "src/server/routes/workflows.routes.ts"
+        ],
+        "apiPrefixes": [
+          "/api/workflows"
+        ],
+        "contracts": null,
+        "services": [
+          "src/server/domain/workflow/designer/"
+        ]
+      },
+      "tests": "src/features/workflows/__tests__/",
+      "notes": null
+    }
+  ]
+}

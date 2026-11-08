@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-ops-auth-events.ops-auth-events-pivot",
+  "name": "ops-auth-events-pivot",
+  "folder": "base-ops-auth-events",
+  "method": "POST",
+  "path": "/api/ops/ops_auth_events/pivot",
+  "sourceFile": "base-ops-auth-events.ops-auth-events-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"event_type\": \"\",\n    \"success\": \"\",\n    \"created_at\": \"\",\n    \"user_id\": \"\",\n    \"username\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_auth_events_pivot\",\"edgeApiOperationId\":\"ops_auth_events-pivot\",\"edgeModelId\":\"em_ops_auth_events\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_auth_events/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"event_type\",\"success\",\"created_at\",\"user_id\",\"username\"]}},\"model\":{\"objectName\":\"base_ops_auth_events\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"event_type\",\"name\":\"event_type\"},{\"field\":\"success\",\"name\":\"success\"},{\"field\":\"created_at\",\"name\":\"created_at\"},{\"field\":\"user_id\",\"name\":\"user_id\"},{\"field\":\"username\",\"name\":\"username\"}]},\"openapi\":{\"summary\":\"Auth events pivot\",\"description\":\"Auth events pivot (POST /api/ops/ops_auth_events/pivot) on base_ops_auth_events.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:66973782\",\"generatedAt\":\"2026-10-02T23:23:21.795Z\",\"requestExample\":{\"body\":{\"event_type\":\"\",\"success\":\"\",\"created_at\":\"\",\"user_id\":\"\",\"username\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_auth_events/pivot\",\"routeNote\":\"Data API pivot on base_ops_auth_events.\",\"validationFields\":[\"event_type\",\"success\",\"created_at\",\"user_id\",\"username\"],\"outputFields\":[\"id\",\"event_type\",\"success\",\"created_at\",\"user_id\",\"username\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:22.003Z",
+  "updatedAt": "2026-10-02T23:23:22.003Z",
+  "createdBy": null,
+  "updatedBy": null
+}

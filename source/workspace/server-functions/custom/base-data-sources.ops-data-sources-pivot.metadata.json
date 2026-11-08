@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-data-sources.ops-data-sources-pivot",
+  "name": "ops-data-sources-pivot",
+  "folder": "base-data-sources",
+  "method": "POST",
+  "path": "/api/ops/ops_data_sources/pivot",
+  "sourceFile": "base-data-sources.ops-data-sources-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"name\": \"\",\n    \"type\": \"\",\n    \"status\": \"\",\n    \"created_at\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_data_sources_pivot\",\"edgeApiOperationId\":\"ops_data_sources-pivot\",\"edgeModelId\":\"em_77a1864205985a4f\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_data_sources/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"name\",\"type\",\"status\",\"created_at\"]}},\"model\":{\"objectName\":\"base_data_sources\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"name\",\"name\":\"name\"},{\"field\":\"type\",\"name\":\"type\"},{\"field\":\"status\",\"name\":\"status\"},{\"field\":\"created_at\",\"name\":\"created_at\"}]},\"openapi\":{\"summary\":\"Data sources pivot\",\"description\":\"Data sources pivot (POST /api/ops/ops_data_sources/pivot) on base_data_sources.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:2d737244\",\"generatedAt\":\"2026-10-02T23:23:18.345Z\",\"requestExample\":{\"body\":{\"name\":\"\",\"type\":\"\",\"status\":\"\",\"created_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_data_sources/pivot\",\"routeNote\":\"Data API pivot on base_data_sources.\",\"validationFields\":[\"name\",\"type\",\"status\",\"created_at\"],\"outputFields\":[\"id\",\"name\",\"type\",\"status\",\"created_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:18.492Z",
+  "updatedAt": "2026-10-02T23:23:18.492Z",
+  "createdBy": null,
+  "updatedBy": null
+}

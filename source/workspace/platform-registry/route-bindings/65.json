@@ -1,0 +1,32 @@
+{
+  "id": 65,
+  "mountId": "studio",
+  "routePattern": "workbooks/*",
+  "pageKey": "workbooks",
+  "enabled": true,
+  "auth": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "nav": {
+    "label": "Workbooks",
+    "icon": "tabler:IconTable",
+    "group": "Records",
+    "order": 6,
+    "description": "Private spreadsheets for each signed-in user.",
+    "color": "text-emerald-600",
+    "separatorBefore": true
+  },
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-08-28T00:00:00.000Z",
+  "createdBy": null,
+  "updatedAt": "2026-08-28T16:50:00.000Z",
+  "updatedBy": null
+}

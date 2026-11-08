@@ -1,0 +1,335 @@
+{
+  "id": "em_db5022f657b34e4f",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_member_institutes",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyMemberInstitutes",
+    "tableName": "hwy_member_institutes"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "member_id",
+      "field": "memberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b9b34df33282b49c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "institute_id",
+      "field": "instituteId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_1a1c328e8c425ae3",
+        "column": "id"
+      }
+    },
+    {
+      "name": "status_code",
+      "field": "statusCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "join_path_code",
+      "field": "joinPathCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "invited_by",
+      "field": "invitedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "invited_at",
+      "field": "invitedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "member_responded_at",
+      "field": "memberRespondedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "member_accepted",
+      "field": "memberAccepted",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "activated_at",
+      "field": "activatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "character_code",
+      "field": "characterCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "institute_state_code",
+      "field": "instituteStateCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "institute_state_note",
+      "field": "instituteStateNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "institute_state_updated_on",
+      "field": "instituteStateUpdatedOn",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "institute_state_updated_by",
+      "field": "instituteStateUpdatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "current_org_employment_id",
+      "field": "currentOrgEmploymentId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "current_org_employment_note",
+      "field": "currentOrgEmploymentNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_57deb2ec8cd34ca6",
+      "targetModelId": "em_b9b34df33282b49c",
+      "foreignKey": "member_id",
+      "as": "member",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_77047be2795e43c4",
+      "targetModelId": "em_1a1c328e8c425ae3",
+      "foreignKey": "institute_id",
+      "as": "institute",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_37176359bb114713",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "status_code",
+      "as": "status",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_a034f507f5584ad2",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "join_path_code",
+      "as": "join_path",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_25d18c2326ac4ac4",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "character_code",
+      "as": "character",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_f61b12c16601444a",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "institute_state_code",
+      "as": "institute_state",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_0e61fb29e5ed4280",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "invited_by",
+      "as": "invitedByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_d74f0d71dcba4b80",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "institute_state_updated_by",
+      "as": "instituteStateUpdatedByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_dbdff95647c9498f",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_407976117f624d00",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "updated_by",
+      "as": "updatedByUser",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "e4c53bfb71e3115c",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Member Institutes",
+    "icon": "lucide:link",
+    "color": "text-emerald-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:06.013Z",
+  "updated_at": "2026-11-03T08:44:20.510Z"
+}

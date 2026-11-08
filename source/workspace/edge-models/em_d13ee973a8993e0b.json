@@ -1,0 +1,191 @@
+{
+  "id": "em_d13ee973a8993e0b",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_member_list_defs",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyMemberListDefs",
+    "tableName": "hwy_member_list_defs"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "code",
+      "field": "code",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "title_ar",
+      "field": "titleAr",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "list_logic_code",
+      "field": "listLogicCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "institute_id",
+      "field": "instituteId",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_1a1c328e8c425ae3",
+        "column": "id"
+      }
+    },
+    {
+      "name": "predicate_ref",
+      "field": "predicateRef",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "is_active",
+      "field": "isActive",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "sort_order",
+      "field": "sortOrder",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note",
+      "field": "note",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_ee647b0d95044b18",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "list_logic_code",
+      "as": "list_logic",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_7bc04b2132084cb6",
+      "targetModelId": "em_1a1c328e8c425ae3",
+      "foreignKey": "institute_id",
+      "as": "institute",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_7f54aff8940f43d4",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_dcb2c4daf1f04285",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "updated_by",
+      "as": "updatedByUser",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "569f6304bc491b4f",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Member List Defs",
+    "icon": "lucide:list",
+    "color": "text-cyan-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:06.419Z",
+  "updated_at": "2026-11-03T08:44:20.530Z"
+}

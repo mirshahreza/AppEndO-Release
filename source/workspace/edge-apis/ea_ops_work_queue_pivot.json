@@ -1,0 +1,62 @@
+{
+  "id": "ea_ops_work_queue_pivot",
+  "edgeModelId": "em_ops_work_queue",
+  "key": "ops-work-queue-pivot",
+  "label": "Work queue pivot",
+  "basePath": "/api/ops/ops_work_queue",
+  "operations": [
+    {
+      "id": "ops_work_queue-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_work_queue/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "status",
+          "work_item_type",
+          "priority",
+          "claimed_by_user_id",
+          "claimed_by_username",
+          "due_at",
+          "created_at",
+          "completed_at",
+          "claimed_at",
+          "workflow_instance_id",
+          "workflow_instance_status",
+          "workflow_key",
+          "workflow_lifecycle_status",
+          "is_overdue"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Work queue pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:21.047Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-ops-work-item-queue.ops-work-queue-pivot"
+}

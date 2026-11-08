@@ -1,0 +1,76 @@
+{
+  "edgeModelId": "em_70527d6dd3421100",
+  "tags": [
+    "hwy",
+    "username"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "formWidget": "hidden",
+      "group": "Reservation",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "username",
+      "formWidget": "text",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Reservation",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "member_id",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Reservation",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "reserved_at",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Reservation",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "released_at",
+      "formWidget": "datetime",
+      "group": "Reservation",
+      "sortOrder": 50
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_97bcda1cd5c04c08",
+      "displayLabel": "Member",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "physical:hwy_username_repo.member_id->hwy_members.id:FK_hwy_username_repo_member_id",
+      "displayLabel": "Username reservations"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nReserved usernames (الرقم التياري display id) before member activation.\n\n## Scenarios\n\n- **S1** / activation — reserve on submit, release on abandon.",
+    "scenarioIds": [
+      "S1"
+    ],
+    "columnGroupOrder": [
+      "Reservation",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Reservation": {
+        "icon": "lucide:at-sign",
+        "color": "text-neutral-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock",
+        "color": "text-slate-400"
+      }
+    }
+  },
+  "created_at": "2026-09-16T13:15:05.011Z",
+  "updated_at": "2026-09-17T15:29:40.136Z"
+}

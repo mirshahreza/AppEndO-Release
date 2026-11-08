@@ -1,0 +1,184 @@
+{
+  "edgeModelId": "em_b93d328e7b5a5d67",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "parent_id"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "title_en"
+    },
+    {
+      "columnName": "title_fa"
+    },
+    {
+      "columnName": "title_ar"
+    },
+    {
+      "columnName": "short_name"
+    },
+    {
+      "columnName": "view_order",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "note",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "note_en"
+    },
+    {
+      "columnName": "note_fa"
+    },
+    {
+      "columnName": "note_ar"
+    },
+    {
+      "columnName": "metadata",
+      "searchRole": "advanced",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "value",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "is_active"
+    },
+    {
+      "columnName": "ui_color"
+    },
+    {
+      "columnName": "ui_html"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_contact_messages.topic_code->base_info.id:base_contact_messages_topic_code_fkey",
+      "displayLabel": "base_contact_messages (Topic)"
+    },
+    {
+      "relationKey": "physical:base_info.parent_id->base_info.id:base_info_parent_id_fkey",
+      "displayLabel": "Parent"
+    },
+    {
+      "relationKey": "physical:base_settings_attributes.base_info_root_id->base_info.id:base_settings_attributes_base_info_root_id_fkey",
+      "displayLabel": "base_settings_attributes (Base Info Root)"
+    },
+    {
+      "relationKey": "physical:base_user_profiles.gender_code->base_info.id:base_user_profiles_gender_code_fkey",
+      "displayLabel": "base_user_profiles (Gender)"
+    },
+    {
+      "relationKey": "physical:base_user_profiles.person_type_code->base_info.id:base_user_profiles_person_type_code_fkey",
+      "displayLabel": "base_user_profiles (Person Type)"
+    },
+    {
+      "relationKey": "physical:hwy_member_files.file_kind_code->base_info.id:FK_hwy_member_files_file_kind_code",
+      "displayLabel": "HWY Member Files (File Kind)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.character_code->base_info.id:FK_hwy_member_institutes_character_code",
+      "displayLabel": "HWY Member Institutes (Character)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.institute_state_code->base_info.id:FK_hwy_member_institutes_institute_state_code",
+      "displayLabel": "HWY Member Institutes (Institute State)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.join_path_code->base_info.id:FK_hwy_member_institutes_join_path_code",
+      "displayLabel": "HWY Member Institutes (Join Path)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.status_code->base_info.id:FK_hwy_member_institutes_status_code",
+      "displayLabel": "HWY Member Institutes (Status)"
+    },
+    {
+      "relationKey": "physical:hwy_member_list_defs.list_logic_code->base_info.id:FK_hwy_member_list_defs_list_logic_code",
+      "displayLabel": "HWY Member List Defs (List Logic)"
+    },
+    {
+      "relationKey": "physical:hwy_member_notes.subject_code->base_info.id:FK_hwy_member_notes_subject_code",
+      "displayLabel": "HWY Member Notes (Subject)"
+    },
+    {
+      "relationKey": "physical:hwy_member_security_profile.allows_responsibility_code->base_info.id:FK_hwy_member_security_profile_allows_responsibility_code",
+      "displayLabel": "HWY Security Profile (Allows Responsibility)"
+    },
+    {
+      "relationKey": "physical:hwy_member_security_profile.can_get_identity_card_code->base_info.id:FK_hwy_member_security_profile_can_get_identity_card_code",
+      "displayLabel": "HWY Security Profile (Can Get Identity Card)"
+    },
+    {
+      "relationKey": "physical:hwy_member_security_profile.can_get_responsibility_code->base_info.id:FK_hwy_member_security_profile_can_get_responsibility_code",
+      "displayLabel": "HWY Security Profile (Can Get Responsibility)"
+    },
+    {
+      "relationKey": "physical:hwy_member_security_profile.can_join_general_body_code->base_info.id:FK_hwy_member_security_profile_can_join_general_body_code",
+      "displayLabel": "HWY Security Profile (Can Join General Body)"
+    },
+    {
+      "relationKey": "physical:hwy_members.education_level_code->base_info.id:FK_hwy_members_education_level_code",
+      "displayLabel": "HWY Members (Education Level)"
+    },
+    {
+      "relationKey": "physical:hwy_members.education_level_in_code->base_info.id:FK_hwy_members_education_level_in_code",
+      "displayLabel": "HWY Members (Education Level In)"
+    },
+    {
+      "relationKey": "physical:hwy_members.education_university_code->base_info.id:FK_hwy_members_education_university_code",
+      "displayLabel": "HWY Members (Education University)"
+    },
+    {
+      "relationKey": "physical:hwy_members.education_university_faculty_code->base_info.id:FK_hwy_members_education_university_faculty_code",
+      "displayLabel": "HWY Members (Education University Faculty)"
+    },
+    {
+      "relationKey": "physical:hwy_members.gender_code->base_info.id:FK_hwy_members_gender_code",
+      "displayLabel": "HWY Members (Gender)"
+    },
+    {
+      "relationKey": "physical:hwy_members.job_type_code->base_info.id:FK_hwy_members_job_type_code",
+      "displayLabel": "HWY Members (Job Type)"
+    },
+    {
+      "relationKey": "physical:hwy_members.membership_status_code->base_info.id:FK_hwy_members_membership_status_code",
+      "displayLabel": "HWY Members (Membership Status)"
+    },
+    {
+      "relationKey": "physical:hwy_members.nakhebin_link_type_code->base_info.id:FK_hwy_members_nakhebin_link_type_code",
+      "displayLabel": "HWY Members (Nakhebin Link Type)"
+    },
+    {
+      "relationKey": "physical:hwy_nakhebin.gender_code->base_info.id:FK_hwy_nakhebin_gender_code",
+      "displayLabel": "HWY Nakhebin (Gender)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nHierarchical reference-data tree (LOV catalog). Package vocabularies (CMS tags, CRM stages, person types, …) and platform roots (`100` Base, `100.2` person type, …) live here — not in ad-hoc enum columns.\n\n## Lifecycle\n\n1. **Category node** — folder under a root; may have `short_name` for stable codes in APIs.\n2. **Item node** — leaf selectable in forms; `id` is hierarchical string (e.g. `101.005.003`).\n3. **Deactivate** — `is_active = false` hides from pickers; historical FKs keep id.\n\n## Rules\n\n- `id` assigned by HID algorithm (`baseInfoHid.ts`) — do not hand-edit ids in production.\n- LOV FK columns store **item id**, not `short_name` alone.\n- `ui_color` / localized titles are presentation; business logic keys off `id`.\n- Edge models wire `belongsTo base_info` on LOV columns for Studio/Data API includes."
+  },
+  "created_at": "2026-08-26T08:04:27.362Z",
+  "updated_at": "2026-09-17T15:29:39.478Z"
+}

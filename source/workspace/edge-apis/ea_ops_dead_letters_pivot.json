@@ -1,0 +1,54 @@
+{
+  "id": "ea_ops_dead_letters_pivot",
+  "edgeModelId": "em_e6eb8be71ec07c48",
+  "key": "ops-dead-letters-pivot",
+  "label": "Dead letters pivot",
+  "basePath": "/api/ops/ops_dead_letters",
+  "operations": [
+    {
+      "id": "ops_dead_letters-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_dead_letters/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "status",
+          "error_class",
+          "error_code",
+          "node_key",
+          "created_at",
+          "resolved_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Dead letters pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:19.627Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-workflow-dead-letters.ops-dead-letters-pivot"
+}

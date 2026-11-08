@@ -1,0 +1,206 @@
+{
+  "id": "ea_e659dcd57b82a6c3",
+  "edgeModelId": "em_1cd186b841dd21d7",
+  "key": "cms-assets",
+  "label": "CMS Content Assets",
+  "basePath": "/api/cms/assets",
+  "operations": [
+    {
+      "id": "op_list_pr4zqo",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/cms/assets",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentId",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      },
+      "binaryPreview": {
+        "mimeField": "fileMime",
+        "xsField": "fileXs",
+        "outputField": "filePreviewUrl",
+        "stripFields": [
+          "file",
+          "fileXs"
+        ]
+      }
+    },
+    {
+      "id": "op_get_pr4zqo",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/cms/assets/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentId",
+          "file",
+          "fileXs",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_pr4zqo",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/cms/assets",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentId",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "contentId",
+          "file",
+          "fileXs",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "contentId",
+          "file",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_pr4zqo",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/cms/assets/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentId",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "contentId",
+          "file",
+          "fileXs",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "contentId",
+          "file",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_pr4zqo",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/cms/assets/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentId",
+          "file",
+          "fileXs",
+          "fileSize",
+          "fileName",
+          "fileMime",
+          "sortOrder",
+          "sha256",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-06T20:29:00.458Z",
+  "version": 13,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "cms-content-assets.cms-assets-list"
+}

@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "src/server/domain/workflow/**/*.ts",
+    "src/server/controllers/workflows.controller.ts",
+    "src/server/controllers/workflowRuntime.controller.ts",
+    "src/server/controllers/workflowWorkItems.controller.ts",
+    "src/server/controllers/workflowProof.controller.ts",
+    "src/server/controllers/workflowTransportSupport.ts",
+    "src/server/routes/workflows.routes.ts",
+    "src/server/routes/workflow-runtime.routes.ts",
+    "src/server/routes/workflow-work-items.routes.ts",
+    "src/server/routes/workflow-proof.routes.ts",
+    "src/server/types/express.d.ts",
+    "src/features/workflows/**/*.ts",
+    "src/features/workflows/**/*.tsx",
+    "src/features/work-items/**/*.ts",
+    "src/features/work-items/**/*.tsx",
+    "scripts/seed-example-workflows.ts",
+    "src/server/bootstrapFullRuntime.ts"
+  ],
+  "exclude": [
+    "src/server/domain/workflow/**/__tests__/**"
+  ]
+}

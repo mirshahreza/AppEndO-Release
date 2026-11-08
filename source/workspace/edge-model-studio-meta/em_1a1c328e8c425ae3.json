@@ -1,0 +1,194 @@
+{
+  "edgeModelId": "em_1a1c328e8c425ae3",
+  "tags": [
+    "hwy",
+    "institute",
+    "catalog"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "number",
+      "required": true,
+      "developerNotes": "Legacy OrganizationId PK.",
+      "group": "Identity",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "code",
+      "icon": "lucide:tag",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "title_ar",
+      "icon": "lucide:type",
+      "formWidget": "text",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "is_active",
+      "icon": "lucide:toggle-right",
+      "formWidget": "switch",
+      "searchRole": "basic",
+      "group": "Policy",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "allows_self_registration",
+      "icon": "lucide:user-plus",
+      "formWidget": "switch",
+      "group": "Policy",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "allows_invite",
+      "icon": "lucide:send",
+      "formWidget": "switch",
+      "group": "Policy",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "invite_expires_after_days",
+      "icon": "lucide:calendar-clock",
+      "formWidget": "number",
+      "interfaceNotes": "e.g. 7 days for Hemam, Mehani, Ashaaer.",
+      "group": "Policy",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "hide_member_phones",
+      "icon": "lucide:phone-off",
+      "formWidget": "switch",
+      "developerNotes": "V2 explicit policy; legacy used gender mask + click-to-reveal.",
+      "group": "Policy",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "has_dedicated_list",
+      "icon": "lucide:list",
+      "formWidget": "switch",
+      "group": "Presentation",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "allows_list_scoped_edit",
+      "icon": "lucide:pencil-line",
+      "formWidget": "switch",
+      "developerNotes": "When on, institute registered member lists expose list-scoped character/employment edit (legacy Update_By*).",
+      "group": "Policy",
+      "sortOrder": 85
+    },
+    {
+      "columnName": "show_institute_character_in_dossier",
+      "icon": "lucide:notebook-tabs",
+      "formWidget": "switch",
+      "developerNotes": "When on, member dossier shows institute-specific character block for this institute.",
+      "group": "Presentation",
+      "sortOrder": 95
+    },
+    {
+      "columnName": "note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 3
+      },
+      "group": "Presentation",
+      "sortOrder": 100
+    },
+    {
+      "columnName": "created_by",
+      "icon": "lucide:user",
+      "formWidget": "lookup",
+      "searchRole": "none",
+      "group": "Audit",
+      "sortOrder": 110
+    },
+    {
+      "columnName": "created_at",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "updated_by",
+      "formWidget": "lookup",
+      "searchRole": "none",
+      "group": "Audit",
+      "sortOrder": 130
+    },
+    {
+      "columnName": "updated_at",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 140
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_262fdcc621104225",
+      "displayLabel": "Updated by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_53321a3e17814e25",
+      "displayLabel": "Member links",
+      "icon": "lucide:link",
+      "formWidget": "relatedGrid"
+    },
+    {
+      "relationKey": "ea_8664d577735d4c51",
+      "displayLabel": "Created by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_ef4c259bbb9f4031",
+      "displayLabel": "List definitions",
+      "icon": "lucide:list",
+      "formWidget": "relatedGrid"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nCatalog of Hawiety institutes (legacy OrganizationId). Drives dedicated member lists, invite policy, and optional phone masking policy.\n\n## Scenarios\n\n- **S5** — `allows_self_registration`, `allows_invite`, `invite_expires_after_days`, `hide_member_phones`.\n- **S6** — `has_dedicated_list` pairs with `hwy_member_list_defs` (institute logic).\n\n## Rules\n\n- PK is legacy id (not identity).\n- General Assembly employment fields live on `hwy_member_institutes`, not here.",
+    "scenarioIds": [
+      "S5",
+      "S6"
+    ],
+    "columnGroupOrder": [
+      "Identity",
+      "Policy",
+      "Presentation",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Identity": {
+        "icon": "lucide:building-2",
+        "color": "text-sky-600"
+      },
+      "Policy": {
+        "icon": "lucide:shield",
+        "color": "text-amber-600"
+      },
+      "Presentation": {
+        "icon": "lucide:layout-list",
+        "color": "text-violet-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock",
+        "color": "text-slate-500"
+      }
+    }
+  },
+  "created_at": "2026-09-16T13:15:04.879Z",
+  "updated_at": "2026-11-03T08:44:20.572Z"
+}

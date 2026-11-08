@@ -1,0 +1,57 @@
+{
+  "id": "ea_ops_jobs_pivot",
+  "edgeModelId": "em_7adfdb41e3b051b0",
+  "key": "ops-jobs-pivot",
+  "label": "Jobs pivot",
+  "basePath": "/api/ops/ops_jobs",
+  "operations": [
+    {
+      "id": "ops_jobs-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_jobs/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "job_type",
+          "status",
+          "progress",
+          "attempt_count",
+          "max_attempts",
+          "queued_at",
+          "started_at",
+          "finished_at",
+          "created_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Jobs pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:17.894Z",
+  "version": 79,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-jobs.ops-jobs-pivot"
+}

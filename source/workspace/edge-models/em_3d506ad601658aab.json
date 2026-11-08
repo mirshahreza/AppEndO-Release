@@ -1,0 +1,100 @@
+{
+  "id": "em_3d506ad601658aab",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "cms_settings",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "CmsSettings",
+    "tableName": "cms_settings"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "comments_enabled",
+      "field": "commentsEnabled",
+      "dataType": "boolean",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "comments_policy_code",
+      "field": "commentsPolicyCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "comments_body_format_code",
+      "field": "commentsBodyFormatCode",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_edebceff9b7a7b31",
+        "column": "id"
+      }
+    },
+    {
+      "name": "public_cache_ttl_seconds",
+      "field": "publicCacheTtlSeconds",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0aea59a2c83642ce",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "981697fe866ef811",
+  "readOnly": false,
+  "labels": {
+    "title": "CMS Settings",
+    "icon": "lucide:settings",
+    "color": "text-slate-600"
+  },
+  "status": "ready",
+  "created_at": "2026-07-31T17:56:35.730Z",
+  "updated_at": "2026-08-25T08:22:26.875Z"
+}

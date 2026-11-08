@@ -1,0 +1,45 @@
+{
+  "edgeModelId": "em_e74d547e2028382d",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_definition_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "workflow_revision_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "secret_hash",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "enabled"
+    },
+    {
+      "columnName": "rotated_at"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_webhook_bindings.workflow_definition_id->base_workflow_definitions.id:base_workflow_webhook_bindings_workflow_definition_id_fkey",
+      "displayLabel": "Workflow Definition"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nOne active webhook entry endpoint per workflow definition — `secret_hash` (sha256 of raw token) is lookup key for `POST /api/workflow-hooks/:token`. Rotating regenerates hash in place.\n\n## Rules\n\n- **UNIQUE** `workflow_definition_id` — at most one binding row.\n- `workflow_revision_id` pins which revision starts on hook fire.\n- `enabled` toggle without deleting binding.\n- Old hash stops matching immediately after rotate."
+  },
+  "created_at": "2026-09-11T04:55:25.938Z",
+  "updated_at": "2026-09-17T15:29:39.987Z"
+}

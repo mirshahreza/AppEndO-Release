@@ -1,0 +1,65 @@
+{
+  "edgeModelId": "em_c319178dfbabc4e3",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "data_source_id"
+    },
+    {
+      "columnName": "run_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "object_type"
+    },
+    {
+      "columnName": "object_name"
+    },
+    {
+      "columnName": "column_name"
+    },
+    {
+      "columnName": "kind"
+    },
+    {
+      "columnName": "question"
+    },
+    {
+      "columnName": "reason_json"
+    },
+    {
+      "columnName": "candidates_json"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "answer"
+    },
+    {
+      "columnName": "answered_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "answered_at"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_db_enrichment_questions.run_id->base_db_enrichment_runs.id:base_db_enrichment_questions_run_id_fkey",
+      "displayLabel": "Run"
+    }
+  ],
+  "extensions": {},
+  "created_at": "2026-09-16T14:03:51.611Z",
+  "updated_at": "2026-09-17T15:29:39.664Z"
+}

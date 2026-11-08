@@ -1,0 +1,31 @@
+{
+  "pageKey": "server-functions",
+  "title": "Server Functions",
+  "loaderKind": "core",
+  "loaderRef": "core:ServerFunctions",
+  "defaultRoles": [
+    "ADMIN"
+  ],
+  "enabled": true,
+  "homeWidgets": [
+    {
+      "componentRef": "core:ServerFunctionsHomeWidget",
+      "span": "narrow",
+      "catalog": {
+        "labelKey": "homeWidget.serverFunctions.title",
+        "descriptionKey": "homeWidget.serverFunctions.description",
+        "icon": "Code2",
+        "tone": "slate"
+      },
+      "requiredRoles": ["ADMIN"],
+      "deepLink": { "pageKey": "server-functions" }
+    }
+  ],
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-06-18T04:15:13.060Z",
+  "createdBy": null,
+  "updatedAt": "2026-06-18T04:15:13.060Z",
+  "updatedBy": null
+}

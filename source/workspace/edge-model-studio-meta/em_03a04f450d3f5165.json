@@ -1,0 +1,43 @@
+{
+  "edgeModelId": "em_03a04f450d3f5165",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "join_node_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "branch_token_id",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "arrived_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_join_arrivals.branch_token_id->base_workflow_branch_tokens.id:base_workflow_join_arrivals_branch_token_id_fkey",
+      "displayLabel": "Branch Token"
+    },
+    {
+      "relationKey": "physical:base_workflow_join_arrivals.join_node_instance_id->base_workflow_node_instances.id:base_workflow_join_arrivals_join_node_instance_id_fkey",
+      "displayLabel": "Join Node Instance"
+    },
+    {
+      "relationKey": "physical:base_workflow_join_arrivals.workflow_instance_id->base_workflow_instances.id:base_workflow_join_arrivals_workflow_instance_id_fkey",
+      "displayLabel": "Workflow Instance"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nRecords arrival of a branch at a join gateway — one row per (join node, branch token, upstream node) combination. Join fires when policy threshold met.\n\n## Rules\n\n- Tied to instance + node instance + branch token.\n- Append-only during parallel execution — engine dedupes replays.\n- Incorrect arrivals surface as stuck join — use simulation/dead-letter tools."
+  },
+  "created_at": "2026-09-11T04:55:23.218Z",
+  "updated_at": "2026-09-17T15:29:39.941Z"
+}

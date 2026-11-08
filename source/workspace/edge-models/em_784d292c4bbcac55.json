@@ -1,0 +1,221 @@
+{
+  "id": "em_784d292c4bbcac55",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_nakhebin",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyNakhebin",
+    "tableName": "hwy_nakhebin"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "region_id",
+      "field": "regionId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "maktab_id",
+      "field": "maktabId",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "family_code",
+      "field": "familyCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "first_name",
+      "field": "firstName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "father_name",
+      "field": "fatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "grandfather_name",
+      "field": "grandfatherName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "family_name",
+      "field": "familyName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "birth_year",
+      "field": "birthYear",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "gender_code",
+      "field": "genderCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "member_id",
+      "field": "memberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b9b34df33282b49c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "voted_on_2021",
+      "field": "votedOn2021",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "voted_on_2023",
+      "field": "votedOn2023",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "voted_on_2025",
+      "field": "votedOn2025",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "registered_case_code",
+      "field": "registeredCaseCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "phone1",
+      "field": "phone1",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "phone2",
+      "field": "phone2",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_2bf8b29dbd344a4d",
+      "targetModelId": "em_b9b34df33282b49c",
+      "foreignKey": "member_id",
+      "as": "member",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_e8cf8576d5314974",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "gender_code",
+      "as": "gender",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "c7a74692f7d3c422",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Nakhebin",
+    "icon": "lucide:book-user",
+    "color": "text-amber-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:05.521Z",
+  "updated_at": "2026-11-03T08:44:20.578Z"
+}

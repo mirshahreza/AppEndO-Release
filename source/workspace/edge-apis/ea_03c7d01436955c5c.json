@@ -1,0 +1,188 @@
+{
+  "id": "ea_03c7d01436955c5c",
+  "edgeModelId": "em_e7882fa0d4e9bc02",
+  "key": "hwy-member-security-profile",
+  "label": "HWY member security profile",
+  "basePath": "/api/hwy/member-security-profile",
+  "operations": [
+    {
+      "id": "op_list_k4vx4g",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/hwy/member-security-profile",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "canGetIdentityCardCode",
+          "canGetIdentityCardNote",
+          "canGetResponsibilityCode",
+          "canGetResponsibilityNote",
+          "canJoinGeneralBodyCode",
+          "canJoinGeneralBodyNote",
+          "allowsResponsibilityCode",
+          "allowsResponsibilityNote",
+          "createdBy",
+          "createdAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_k4vx4g",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/hwy/member-security-profile/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "canGetIdentityCardCode",
+          "canGetIdentityCardNote",
+          "canGetResponsibilityCode",
+          "canGetResponsibilityNote",
+          "canJoinGeneralBodyCode",
+          "canJoinGeneralBodyNote",
+          "allowsResponsibilityCode",
+          "allowsResponsibilityNote",
+          "createdBy",
+          "createdAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_k4vx4g",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/hwy/member-security-profile",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "canGetIdentityCardCode",
+          "canGetIdentityCardNote",
+          "canGetResponsibilityCode",
+          "canGetResponsibilityNote",
+          "canJoinGeneralBodyCode",
+          "canJoinGeneralBodyNote",
+          "allowsResponsibilityCode",
+          "allowsResponsibilityNote",
+          "createdBy",
+          "createdAt"
+        ],
+        "write": [
+          "memberId",
+          "canGetIdentityCardCode",
+          "canGetIdentityCardNote",
+          "canGetResponsibilityCode",
+          "canGetResponsibilityNote",
+          "canJoinGeneralBodyCode",
+          "canJoinGeneralBodyNote",
+          "allowsResponsibilityCode",
+          "allowsResponsibilityNote",
+          "createdBy",
+          "createdAt"
+        ],
+        "required": [
+          "memberId",
+          "createdAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_k4vx4g",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/hwy/member-security-profile/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "canGetIdentityCardCode",
+          "canGetIdentityCardNote",
+          "canGetResponsibilityCode",
+          "canGetResponsibilityNote",
+          "canJoinGeneralBodyCode",
+          "canJoinGeneralBodyNote",
+          "allowsResponsibilityCode",
+          "allowsResponsibilityNote",
+          "createdBy",
+          "createdAt"
+        ],
+        "write": [
+          "memberId",
+          "canGetIdentityCardCode",
+          "canGetIdentityCardNote",
+          "canGetResponsibilityCode",
+          "canGetResponsibilityNote",
+          "canJoinGeneralBodyCode",
+          "canJoinGeneralBodyNote",
+          "allowsResponsibilityCode",
+          "allowsResponsibilityNote",
+          "createdBy",
+          "createdAt"
+        ],
+        "required": [
+          "memberId",
+          "createdAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_k4vx4g",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/hwy/member-security-profile/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "canGetIdentityCardCode",
+          "canGetIdentityCardNote",
+          "canGetResponsibilityCode",
+          "canGetResponsibilityNote",
+          "canJoinGeneralBodyCode",
+          "canJoinGeneralBodyNote",
+          "allowsResponsibilityCode",
+          "allowsResponsibilityNote",
+          "createdBy",
+          "createdAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-09-28T14:32:27.927Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "hwy-member-security-profile.hwy-member-security-profile-list"
+}

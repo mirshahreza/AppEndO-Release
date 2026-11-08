@@ -1,0 +1,70 @@
+{
+  "edgeModelId": "em_7d25dbc30a75ee54",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_definition_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "source_draft_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "source_revision_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "simulation_resolved_snapshot_fingerprint"
+    },
+    {
+      "columnName": "mode"
+    },
+    {
+      "columnName": "start_node_key"
+    },
+    {
+      "columnName": "scenario_key"
+    },
+    {
+      "columnName": "fixture_set_fingerprint"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "result_summary_json"
+    },
+    {
+      "columnName": "created_by_type"
+    },
+    {
+      "columnName": "created_by_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "completed_at"
+    },
+    {
+      "columnName": "state_version",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_simulation_runs.workflow_definition_id->base_workflow_definitions.id:base_workflow_simulation_runs_workflow_definition_id_fkey",
+      "displayLabel": "Workflow Definition"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nDesigner **simulation** executions against draft or revision snapshot — fixture-driven dry run without creating production side effects. Tracks mode, scenario, fingerprint, result summary.\n\n## Rules\n\n- Source XOR: exactly one of `source_draft_version` or `source_revision_id` populated (repository enforced).\n- `fixture_set_fingerprint` + `simulation_resolved_snapshot_fingerprint` identify reproducible runs.\n- Terminal `status` + `completed_at` — result in `result_summary_json`.\n- Does not replace live `base_workflow_instances` metrics."
+  },
+  "created_at": "2026-09-11T04:55:24.331Z",
+  "updated_at": "2026-09-17T15:29:39.958Z"
+}

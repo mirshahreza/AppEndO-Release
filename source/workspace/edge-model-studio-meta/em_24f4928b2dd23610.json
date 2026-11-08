@@ -1,0 +1,30 @@
+{
+  "edgeModelId": "em_24f4928b2dd23610",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id"
+    },
+    {
+      "columnName": "provider_kind"
+    },
+    {
+      "columnName": "linked_at",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_user_identities.user_id->base_users.id:base_user_identities_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nExternal identity provider links for a user — OAuth/OIDC `(provider_id, subject)` ↔ `base_users.id`. Enables passwordless and federated login without duplicating core user rows.\n\n## Lifecycle\n\n1. **Start OAuth** — `GET /api/auth/oauth/:providerId/start` creates a pending challenge; callback upserts this row.\n2. **Link** — same subject on a new provider attaches another row to the same user.\n3. **Unlink** — delete this row only; the platform user stays. Merge of two users is `IdentityLinkService`, not a Studio edit.\n4. **User delete** — identities cascade with `base_users`.\n\n## Rules\n\n- **UNIQUE** (`provider_id`, `subject`) globally — one link per provider subject.\n- Multiple providers may attach to the same user; merge policy lives in `IdentityLinkService`.\n- `profile_json` is provider snapshot only — not authoritative over `base_user_profiles`.\n- Cascade delete with user; unlink API removes row without deleting the user unless policy says merge."
+  },
+  "created_at": "2026-08-28T15:28:38.027Z",
+  "updated_at": "2026-09-17T15:29:39.538Z"
+}

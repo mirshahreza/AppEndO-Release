@@ -1,0 +1,77 @@
+{
+  "id": "em_ae35c3f60c7b486e",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_work_item_delegation_rules",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkItemDelegationRules",
+    "tableName": "base_work_item_delegation_rules"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "user_id",
+      "field": "userId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "delegate_user_id",
+      "field": "delegateUserId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "start_at",
+      "field": "startAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "end_at",
+      "field": "endAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "bd5ff476b78d9c21",
+  "readOnly": false,
+  "labels": {
+    "title": "base_work_item_delegation_rules"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:19.344Z",
+  "updated_at": "2026-09-11T04:55:19.344Z"
+}

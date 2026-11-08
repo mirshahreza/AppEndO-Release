@@ -1,0 +1,206 @@
+{
+  "id": "em_e7882fa0d4e9bc02",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_member_security_profile",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyMemberSecurityProfile",
+    "tableName": "hwy_member_security_profile"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "member_id",
+      "field": "memberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b9b34df33282b49c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "can_get_identity_card_code",
+      "field": "canGetIdentityCardCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "can_get_identity_card_note",
+      "field": "canGetIdentityCardNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "can_get_responsibility_code",
+      "field": "canGetResponsibilityCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "can_get_responsibility_note",
+      "field": "canGetResponsibilityNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "can_join_general_body_code",
+      "field": "canJoinGeneralBodyCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "can_join_general_body_note",
+      "field": "canJoinGeneralBodyNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "allows_responsibility_code",
+      "field": "allowsResponsibilityCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "allows_responsibility_note",
+      "field": "allowsResponsibilityNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_b42893d8bfea45bb",
+      "targetModelId": "em_b9b34df33282b49c",
+      "foreignKey": "member_id",
+      "as": "member",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_2e29fc64cc774a86",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "can_get_identity_card_code",
+      "as": "identity_card_clearance",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_e9ca8c5a0e0b4512",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "can_get_responsibility_code",
+      "as": "responsibility_clearance",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_1c9b8066263b43b2",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "can_join_general_body_code",
+      "as": "general_body_clearance",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_1aafaa50c7d042b3",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "allows_responsibility_code",
+      "as": "responsibility_allowance",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_2b431b3775304ab9",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "4425e6584464ff43",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Security Profile",
+    "icon": "lucide:shield",
+    "color": "text-rose-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:06.307Z",
+  "updated_at": "2026-11-03T08:44:20.525Z"
+}

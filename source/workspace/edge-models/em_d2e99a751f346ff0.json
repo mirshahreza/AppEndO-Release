@@ -1,0 +1,140 @@
+{
+  "id": "em_d2e99a751f346ff0",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_db_enrichment_knowledge",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseDbEnrichmentKnowledge",
+    "tableName": "base_db_enrichment_knowledge"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "data_source_id",
+      "field": "dataSourceId",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "object_type",
+      "field": "objectType",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "object_name",
+      "field": "objectName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "table_purpose",
+      "field": "tablePurpose",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "table_confidence",
+      "field": "tableConfidence",
+      "dataType": "double precision",
+      "sequelizeType": "DOUBLE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "columns_json",
+      "field": "columnsJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "relations_json",
+      "field": "relationsJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "source_of_truth",
+      "field": "sourceOfTruth",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "last_enriched_run_id",
+      "field": "lastEnrichedRunId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "stale_since",
+      "field": "staleSince",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "748dd1c28c02e3ca",
+  "readOnly": false,
+  "labels": {
+    "title": "base_db_enrichment_knowledge"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:10.886Z",
+  "updated_at": "2026-09-11T04:55:10.886Z"
+}

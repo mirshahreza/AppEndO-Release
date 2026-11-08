@@ -1,0 +1,676 @@
+{
+  "id": "studio",
+  "version": "1",
+  "portalSegment": "studio",
+  "groups": [
+    {
+      "heading": null,
+      "order": 0,
+      "items": [
+        {
+          "pageKey": "dashboard",
+          "routePattern": "",
+          "label": "Home",
+          "icon": "Home",
+          "description": "System overview and core metrics tracking.",
+          "iconColor": "text-indigo-500",
+          "auth": null
+        }
+      ]
+    },
+    {
+      "heading": "Development",
+      "icon": "tabler:IconBraces",
+      "order": 1,
+      "items": [
+        {
+          "pageKey": "idea-foundry",
+          "routePattern": "idea-foundry",
+          "label": "Idea Foundry",
+          "icon": "Sparkles",
+          "description": "Register ideas and watch them grow from spark to product.",
+          "iconColor": "text-amber-500",
+          "order": 0,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "data-studio",
+          "routePattern": "data-studio",
+          "label": "Data Studio",
+          "icon": "tabler:IconDatabaseCog",
+          "description": "Build EdgeModel-backed REST APIs with Sequelize runtime.",
+          "iconColor": "text-sky-600",
+          "order": 1,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          },
+          "children": [
+            {
+              "pageKey": "sql-console",
+              "routePattern": "sql-console",
+              "label": "SQL Console",
+              "icon": "tabler:IconSql",
+              "description": "Run read-only SELECT queries in a multi-document SQL console.",
+              "iconColor": "text-sky-600",
+              "order": 1,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            },
+            {
+              "pageKey": "sources",
+              "routePattern": "data-sources",
+              "label": "Data Sources",
+              "icon": "Database",
+              "description": "Configure SQLite, Postgres, and external database connections.",
+              "iconColor": "text-blue-500",
+              "order": 2,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            }
+          ]
+        },
+        {
+          "pageKey": "server-functions",
+          "routePattern": "server-functions",
+          "label": "Server Functions",
+          "icon": "tabler:IconFunction",
+          "description": "Write and execute server-side code dynamically in the Node.js sandbox.",
+          "iconColor": "text-emerald-500",
+          "order": 2,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          },
+          "children": [
+            {
+              "pageKey": "api-talk",
+              "routePattern": "api-talk",
+              "label": "API Talk",
+              "icon": "tabler:IconPlugConnected",
+              "description": "Send HTTP requests, organize collections, and inspect responses from Studio.",
+              "iconColor": "text-teal-600",
+              "order": 1,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            },
+            {
+              "pageKey": "dev-reference",
+              "routePattern": "dev-reference",
+              "label": "Developer Reference",
+              "icon": "Terminal",
+              "description": "Server Function sandbox reference — globals, util.*, req/res, db, auth, and runnable examples.",
+              "iconColor": "text-emerald-500",
+              "order": 2,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            }
+          ]
+        },
+        {
+          "pageKey": "client-components",
+          "routePattern": "client-components",
+          "label": "Client Components",
+          "icon": "Component",
+          "description": "Design and manage reusable UI components.",
+          "iconColor": "text-indigo-500",
+          "order": 3,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "base-components",
+          "routePattern": "base-components/*",
+          "label": "Base Components",
+          "icon": "tabler:IconComponents",
+          "description": "Interactive catalog of shared UI components and standards previews.",
+          "iconColor": "text-violet-500",
+          "order": 4,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "platform-portals",
+          "routePattern": "portals",
+          "label": "Portals",
+          "icon": "tabler:IconBrowser",
+          "description": "Manage URL portals, shells, and in-app pages.",
+          "iconColor": "text-indigo-500",
+          "order": 5,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "workflows",
+          "routePattern": "workflows",
+          "label": "Workflows",
+          "icon": "Workflow",
+          "description": "Author, validate, publish and simulate workflow definitions.",
+          "iconColor": "text-emerald-500",
+          "order": 6,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "scheduled-tasks",
+          "routePattern": "scheduled-tasks",
+          "label": "Scheduled Tasks",
+          "icon": "CalendarClock",
+          "description": "Manage cron-based Server Function schedules stored in platform settings.",
+          "iconColor": "text-cyan-500",
+          "order": 7,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "jobs",
+          "routePattern": "jobs",
+          "label": "Jobs",
+          "icon": "tabler:IconProgressBolt",
+          "description": "Monitor and manage long-running background jobs with live progress.",
+          "iconColor": "text-indigo-500",
+          "order": 8,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "cache",
+          "routePattern": "cache",
+          "label": "Cache Control",
+          "icon": "DatabaseZap",
+          "description": "Manage system cache, Redis, and high-speed data layers.",
+          "iconColor": "text-amber-500",
+          "order": 9,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "git",
+          "routePattern": "git",
+          "label": "Git",
+          "icon": "GitBranch",
+          "description": "Review local changes, stage files, and manage repository sync.",
+          "iconColor": "text-cyan-600",
+          "order": 10,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "file-manager",
+          "routePattern": "file-manager",
+          "label": "File Manager",
+          "icon": "tabler:IconFolderOpen",
+          "description": "Browse, preview, and manage files in workspace/ with optional project-root access.",
+          "iconColor": "text-sky-600",
+          "order": 11,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "appearance",
+          "routePattern": "appearance/*",
+          "label": "Appearance",
+          "icon": "tabler:IconPalette",
+          "description": "Colors, shell layout, sidebar behavior, and atmosphere tokens.",
+          "iconColor": "text-violet-500",
+          "region": "sidebar-footer",
+          "order": 12,
+          "auth": {
+            "accessMode": "authenticated",
+            "allowRoles": [],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "settings",
+          "routePattern": "settings/*",
+          "label": "Settings",
+          "icon": "Settings",
+          "description": "Global platform settings and administrative configurations.",
+          "iconColor": "text-slate-500",
+          "region": "sidebar-footer",
+          "order": 13,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Extensions",
+      "icon": "tabler:IconPuzzle",
+      "order": 2,
+      "items": [
+        {
+          "pageKey": "package-manager",
+          "routePattern": "package-manager",
+          "label": "Package Manager",
+          "icon": "Package",
+          "description": "Install, configure, and manage platform extension ZIP packages.",
+          "iconColor": "text-purple-500",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "libraries",
+          "routePattern": "libraries",
+          "label": "Libraries",
+          "icon": "tabler:IconPackages",
+          "description": "Install and upgrade npm libraries for this node. Core libraries are provided by the platform.",
+          "iconColor": "text-violet-600",
+          "order": 2,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Records",
+      "icon": "tabler:IconArchive",
+      "order": 5,
+      "items": [
+        {
+          "pageKey": "users",
+          "routePattern": "users",
+          "label": "Users",
+          "icon": "Users",
+          "description": "Create, update and manage user accounts and credentials.",
+          "iconColor": "text-indigo-500",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "roles",
+          "routePattern": "roles",
+          "label": "Roles",
+          "icon": "tabler:IconUserShield",
+          "description": "Define and manage access roles and permission groups.",
+          "iconColor": "text-purple-500",
+          "order": 2,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "base-info",
+          "routePattern": "base-info",
+          "label": "Base Info",
+          "icon": "tabler:IconListTree",
+          "description": "Manage shared hierarchical code/title dictionary.",
+          "iconColor": "text-cyan-500",
+          "order": 3,
+          "separatorBefore": true,
+          "auth": null,
+          "children": [
+            {
+              "pageKey": "organization-chart",
+              "routePattern": "organization-chart",
+              "label": "Organization Chart",
+              "icon": "tabler:IconHierarchy2",
+              "description": "Manage the company organization tree.",
+              "iconColor": "text-sky-600",
+              "order": 1,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            },
+            {
+              "pageKey": "geographic-divisions",
+              "routePattern": "geographic-divisions",
+              "label": "Geographic Divisions",
+              "icon": "tabler:IconMap",
+              "description": "Manage countries, provinces, and cities.",
+              "iconColor": "text-emerald-600",
+              "order": 2,
+              "auth": {
+                "accessMode": "specific",
+                "allowRoles": [
+                  "ADMIN"
+                ],
+                "allowUsers": [],
+                "denyRoles": [],
+                "denyUsers": []
+              }
+            }
+          ]
+        },
+        {
+          "pageKey": "workbooks",
+          "routePattern": "workbooks",
+          "label": "Workbooks",
+          "icon": "tabler:IconTable",
+          "description": "Private spreadsheets for each signed-in user.",
+          "iconColor": "text-emerald-600",
+          "order": 4,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "record-events",
+          "routePattern": "record-events",
+          "label": "Record events",
+          "icon": "History",
+          "description": "Search append-only record history across models.",
+          "iconColor": "text-indigo-500",
+          "order": 5,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "in-app-notifications",
+          "routePattern": "in-app-notifications",
+          "label": "In-app notifications",
+          "icon": "Bell",
+          "description": "Browse live in-app bell notifications across all users.",
+          "iconColor": "text-amber-600",
+          "order": 6,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "logs",
+          "routePattern": "logs",
+          "label": "Logs",
+          "icon": "Footprints",
+          "description": "Inspect runtime logs and configure per-method logging behavior.",
+          "iconColor": "text-rose-500",
+          "order": 7,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "chat-history",
+          "routePattern": "chat-history",
+          "label": "Chat History",
+          "icon": "MessagesSquare",
+          "description": "Browse and search AI chat sessions across all users.",
+          "iconColor": "text-violet-500",
+          "order": 8,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Remote Hubs",
+      "icon": "tabler:IconNetwork",
+      "order": 6,
+      "items": [
+        {
+          "pageKey": "ssh-hub",
+          "routePattern": "ssh/*",
+          "label": "SSH",
+          "icon": "tabler:IconTerminal2",
+          "description": "Saved SSH connections and an in-browser multi-document terminal.",
+          "iconColor": "text-emerald-600",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "file-hub",
+          "routePattern": "sftp/*",
+          "label": "Sftp",
+          "icon": "tabler:IconFolders",
+          "description": "Saved SFTP and FTP connections with a multi-document file manager.",
+          "iconColor": "text-cyan-600",
+          "order": 2,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "pageKey": "rdp-hub",
+          "routePattern": "rdp/*",
+          "label": "RDP",
+          "icon": "tabler:IconDeviceDesktop",
+          "description": "Saved RDP connections and an in-browser multi-document remote desktop.",
+          "iconColor": "text-sky-600",
+          "order": 3,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "CMS",
+      "order": 7,
+      "items": [
+        {
+          "pageKey": "cms-contents-list",
+          "routePattern": "cms/contents",
+          "label": "Contents",
+          "icon": "Newspaper",
+          "order": 0
+        },
+        {
+          "pageKey": "cms-settings",
+          "routePattern": "cms/settings/*",
+          "label": "Settings",
+          "icon": "Settings",
+          "order": 1
+        }
+      ]
+    }
+  ]
+}

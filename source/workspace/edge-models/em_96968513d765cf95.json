@@ -1,0 +1,85 @@
+{
+  "id": "em_96968513d765cf95",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_app_feedback_messages",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseAppFeedbackMessages",
+    "tableName": "base_app_feedback_messages"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "feedback_id",
+      "field": "feedbackId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f186ade9fbfe1ad0",
+        "column": "id"
+      }
+    },
+    {
+      "name": "kind",
+      "field": "kind",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "body",
+      "field": "body",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "author_user_id",
+      "field": "authorUserId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "725647e6486538a7",
+  "readOnly": false,
+  "labels": {
+    "title": "base_app_feedback_messages"
+  },
+  "status": "ready",
+  "created_at": "2026-08-26T07:36:24.280Z",
+  "updated_at": "2026-09-11T04:55:09.787Z"
+}

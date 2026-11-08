@@ -1,0 +1,42 @@
+{
+  "edgeModelId": "em_5162181452c806b1",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "slug",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_sample_mock_record_tags.tag_id->base_sample_mock_tags.id:base_sample_mock_record_tags_tag_id_fkey",
+      "displayLabel": "base_sample_mock_record_tags (Tag)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nDemo tag vocabulary for the sample-mock belongsToMany. `slug` unique; `title` is the chip label.\n\n## Rules\n\n- Junction rows live in `base_sample_mock_record_tags`.\n- Deleting a tag cascades its junction rows, not the records.\n- Not a Base Info tree."
+  },
+  "created_at": "2026-09-11T04:55:15.292Z",
+  "updated_at": "2026-09-17T15:29:39.779Z"
+}

@@ -1,0 +1,140 @@
+{
+  "id": "em_8523d4f335b9c09d",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_credential_vault_secrets",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseCredentialVaultSecrets",
+    "tableName": "base_credential_vault_secrets"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "owner_type",
+      "field": "ownerType",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "owner_id",
+      "field": "ownerId",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "purpose",
+      "field": "purpose",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "key_version",
+      "field": "keyVersion",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "iv",
+      "field": "iv",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "auth_tag",
+      "field": "authTag",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "ciphertext",
+      "field": "ciphertext",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "rotated_at",
+      "field": "rotatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "a3a2d961704b6ef7",
+  "readOnly": false,
+  "labels": {
+    "title": "base_credential_vault_secrets"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:10.284Z",
+  "updated_at": "2026-09-11T04:55:10.284Z"
+}

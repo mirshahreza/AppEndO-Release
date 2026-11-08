@@ -1,0 +1,237 @@
+{
+  "id": "em_1a1c328e8c425ae3",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "hwy_institutes",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "HwyInstitutes",
+    "tableName": "hwy_institutes"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "code",
+      "field": "code",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "title_ar",
+      "field": "titleAr",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "is_active",
+      "field": "isActive",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "allows_self_registration",
+      "field": "allowsSelfRegistration",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "allows_invite",
+      "field": "allowsInvite",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "invite_expires_after_days",
+      "field": "inviteExpiresAfterDays",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "hide_member_phones",
+      "field": "hideMemberPhones",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "has_dedicated_list",
+      "field": "hasDedicatedList",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "note",
+      "field": "note",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "logo_url",
+      "field": "logoUrl",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "logo_content",
+      "field": "logoContent",
+      "dataType": "varbinary",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "logo_content_type",
+      "field": "logoContentType",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "allows_list_scoped_edit",
+      "field": "allowsListScopedEdit",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "show_institute_character_in_dossier",
+      "field": "showInstituteCharacterInDossier",
+      "dataType": "bit",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_8664d577735d4c51",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_262fdcc621104225",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "updated_by",
+      "as": "updatedByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_53321a3e17814e25",
+      "targetModelId": "em_db5022f657b34e4f",
+      "foreignKey": "institute_id",
+      "as": "memberLinks",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_ef4c259bbb9f4031",
+      "targetModelId": "em_d13ee973a8993e0b",
+      "foreignKey": "institute_id",
+      "as": "listDefs",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "ad7f119b75cd47da",
+  "readOnly": false,
+  "labels": {
+    "title": "HWY Institutes",
+    "icon": "lucide:building-2",
+    "color": "text-sky-600"
+  },
+  "status": "ready",
+  "created_at": "2026-09-16T13:14:05.387Z",
+  "updated_at": "2026-11-03T08:44:20.551Z"
+}

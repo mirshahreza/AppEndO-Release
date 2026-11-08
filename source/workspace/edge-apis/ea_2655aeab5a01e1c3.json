@@ -1,0 +1,255 @@
+{
+  "id": "ea_2655aeab5a01e1c3",
+  "edgeModelId": "em_db5022f657b34e4f",
+  "key": "hwy-member-institutes",
+  "label": "HWY member institutes",
+  "basePath": "/api/hwy/member-institutes",
+  "operations": [
+    {
+      "id": "op_list_ul62ov",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/hwy/member-institutes",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "instituteId",
+          "statusCode",
+          "joinPathCode",
+          "invitedBy",
+          "invitedAt",
+          "memberRespondedAt",
+          "memberAccepted",
+          "activatedAt",
+          "characterCode",
+          "instituteStateCode",
+          "instituteStateNote",
+          "instituteStateUpdatedOn",
+          "instituteStateUpdatedBy",
+          "currentOrgEmploymentId",
+          "currentOrgEmploymentNote",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_ul62ov",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/hwy/member-institutes/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "instituteId",
+          "statusCode",
+          "joinPathCode",
+          "invitedBy",
+          "invitedAt",
+          "memberRespondedAt",
+          "memberAccepted",
+          "activatedAt",
+          "characterCode",
+          "instituteStateCode",
+          "instituteStateNote",
+          "instituteStateUpdatedOn",
+          "instituteStateUpdatedBy",
+          "currentOrgEmploymentId",
+          "currentOrgEmploymentNote",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_ul62ov",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/hwy/member-institutes",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "instituteId",
+          "statusCode",
+          "joinPathCode",
+          "invitedBy",
+          "invitedAt",
+          "memberRespondedAt",
+          "memberAccepted",
+          "activatedAt",
+          "characterCode",
+          "instituteStateCode",
+          "instituteStateNote",
+          "instituteStateUpdatedOn",
+          "instituteStateUpdatedBy",
+          "currentOrgEmploymentId",
+          "currentOrgEmploymentNote",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "write": [
+          "memberId",
+          "instituteId",
+          "statusCode",
+          "joinPathCode",
+          "invitedBy",
+          "invitedAt",
+          "memberRespondedAt",
+          "memberAccepted",
+          "activatedAt",
+          "characterCode",
+          "instituteStateCode",
+          "instituteStateNote",
+          "instituteStateUpdatedOn",
+          "instituteStateUpdatedBy",
+          "currentOrgEmploymentId",
+          "currentOrgEmploymentNote",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "memberId",
+          "instituteId",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_ul62ov",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/hwy/member-institutes/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "instituteId",
+          "statusCode",
+          "joinPathCode",
+          "invitedBy",
+          "invitedAt",
+          "memberRespondedAt",
+          "memberAccepted",
+          "activatedAt",
+          "characterCode",
+          "instituteStateCode",
+          "instituteStateNote",
+          "instituteStateUpdatedOn",
+          "instituteStateUpdatedBy",
+          "currentOrgEmploymentId",
+          "currentOrgEmploymentNote",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "write": [
+          "memberId",
+          "instituteId",
+          "statusCode",
+          "joinPathCode",
+          "invitedBy",
+          "invitedAt",
+          "memberRespondedAt",
+          "memberAccepted",
+          "activatedAt",
+          "characterCode",
+          "instituteStateCode",
+          "instituteStateNote",
+          "instituteStateUpdatedOn",
+          "instituteStateUpdatedBy",
+          "currentOrgEmploymentId",
+          "currentOrgEmploymentNote",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "required": [
+          "memberId",
+          "instituteId",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_ul62ov",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/hwy/member-institutes/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "memberId",
+          "instituteId",
+          "statusCode",
+          "joinPathCode",
+          "invitedBy",
+          "invitedAt",
+          "memberRespondedAt",
+          "memberAccepted",
+          "activatedAt",
+          "characterCode",
+          "instituteStateCode",
+          "instituteStateNote",
+          "instituteStateUpdatedOn",
+          "instituteStateUpdatedBy",
+          "currentOrgEmploymentId",
+          "currentOrgEmploymentNote",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-09-28T14:32:23.523Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "hwy-member-institutes.hwy-member-institutes-list"
+}

@@ -1,0 +1,342 @@
+{
+  "edgeModelId": "em_f289f276eac5b468",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "username",
+      "searchRole": "basic",
+      "history": {
+        "track": true
+      }
+    },
+    {
+      "columnName": "email",
+      "searchRole": "basic",
+      "history": {
+        "track": true,
+        "redact": true
+      }
+    },
+    {
+      "columnName": "mobile",
+      "history": {
+        "track": true,
+        "redact": true
+      }
+    },
+    {
+      "columnName": "locked",
+      "searchRole": "advanced",
+      "history": {
+        "track": true
+      }
+    },
+    {
+      "columnName": "email_verified_at",
+      "history": {
+        "track": true
+      }
+    },
+    {
+      "columnName": "mobile_verified_at",
+      "history": {
+        "track": true
+      }
+    },
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "password_hash",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "is_builtin"
+    },
+    {
+      "columnName": "locked_at"
+    },
+    {
+      "columnName": "locked_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "unlocked_at"
+    },
+    {
+      "columnName": "unlocked_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "login_fail_count",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "login_fail_last_at"
+    },
+    {
+      "columnName": "last_login_at"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "identities",
+      "history": {
+        "trackAssignRemove": true
+      }
+    },
+    {
+      "relationKey": "physical:base_ai_agent_apply_snapshots.user_id->base_users.id:base_ai_agent_apply_snapshots_user_id_fkey",
+      "displayLabel": "base_ai_agent_apply_snapshots"
+    },
+    {
+      "relationKey": "physical:base_ai_agent_traces.user_id->base_users.id:base_ai_agent_traces_user_id_fkey",
+      "displayLabel": "base_ai_agent_traces"
+    },
+    {
+      "relationKey": "physical:base_ai_chat_sessions.user_id->base_users.id:base_ai_chat_sessions_user_id_fkey",
+      "displayLabel": "base_ai_chat_sessions"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_attachments.uploaded_by_user_id->base_users.id:base_app_feedback_attachments_uploaded_by_user_id_fkey",
+      "displayLabel": "base_app_feedback_attachments (Uploaded By)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_messages.author_user_id->base_users.id:base_app_feedback_messages_author_user_id_fkey",
+      "displayLabel": "base_app_feedback_messages (Author)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_read_cursors.user_id->base_users.id:base_app_feedback_read_cursors_user_id_fkey",
+      "displayLabel": "base_app_feedback_read_cursors"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.assignee_user_id->base_users.id:base_app_feedback_assignee_user_id_fkey",
+      "displayLabel": "Feedback (Assignee)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.claimed_by_user_id->base_users.id:base_app_feedback_claimed_by_user_id_fkey",
+      "displayLabel": "Feedback (Claimed By)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.manually_assigned_by_user_id->base_users.id:base_app_feedback_manually_assigned_by_user_id_fkey",
+      "displayLabel": "Feedback (Manually Assigned By)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.resolved_by_user_id->base_users.id:base_app_feedback_resolved_by_user_id_fkey",
+      "displayLabel": "Feedback (Resolved By)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.submitter_user_id->base_users.id:base_app_feedback_submitter_user_id_fkey",
+      "displayLabel": "Feedback (Submitter)"
+    },
+    {
+      "relationKey": "physical:base_auth_refresh_tokens.user_id->base_users.id:base_auth_refresh_tokens_user_id_fkey",
+      "displayLabel": "base_auth_refresh_tokens"
+    },
+    {
+      "relationKey": "physical:base_contact_messages.created_by->base_users.id:base_contact_messages_created_by_fkey",
+      "displayLabel": "base_contact_messages (created by)"
+    },
+    {
+      "relationKey": "physical:base_logs_auth_audit.user_id->base_users.id:base_logs_auth_audit_user_id_fkey",
+      "displayLabel": "base_logs_auth_audit"
+    },
+    {
+      "relationKey": "physical:base_otp_challenges.user_id->base_users.id:base_otp_challenges_user_id_fkey",
+      "displayLabel": "base_otp_challenges"
+    },
+    {
+      "relationKey": "physical:base_scope_membership_events.actor_user_id->base_users.id:base_scope_membership_events_actor_user_id_fkey",
+      "displayLabel": "base_scope_membership_events (Actor)"
+    },
+    {
+      "relationKey": "physical:base_scope_membership_events.user_id->base_users.id:base_scope_membership_events_user_id_fkey",
+      "displayLabel": "base_scope_membership_events"
+    },
+    {
+      "relationKey": "physical:base_scope_memberships.user_id->base_users.id:base_scope_memberships_user_id_fkey",
+      "displayLabel": "Scope memberships"
+    },
+    {
+      "relationKey": "physical:base_scope_role_membership_events.actor_user_id->base_users.id:base_scope_role_membership_events_actor_user_id_fkey",
+      "displayLabel": "base_scope_role_membership_events (Actor)"
+    },
+    {
+      "relationKey": "physical:base_user_identities.user_id->base_users.id:base_user_identities_user_id_fkey",
+      "displayLabel": "Identities"
+    },
+    {
+      "relationKey": "physical:base_user_notification_digest_items.user_id->base_users.id:base_user_notification_digest_items_user_id_fkey",
+      "displayLabel": "base_user_notification_digest_items"
+    },
+    {
+      "relationKey": "physical:base_user_notification_preferences.user_id->base_users.id:base_user_notification_preferences_user_id_fkey",
+      "displayLabel": "base_user_notification_preferences"
+    },
+    {
+      "relationKey": "physical:base_user_notifications.user_id->base_users.id:base_user_notifications_user_id_fkey",
+      "displayLabel": "base_user_notifications"
+    },
+    {
+      "relationKey": "physical:base_user_profiles.user_id->base_users.id:base_user_profiles_user_id_fkey",
+      "displayLabel": "base_user_profiles"
+    },
+    {
+      "relationKey": "physical:base_user_roles.user_id->base_users.id:base_user_roles_user_id_fkey",
+      "displayLabel": "base_user_roles"
+    },
+    {
+      "relationKey": "physical:base_users_attributes.user_id->base_users.id:base_users_attributes_user_id_fkey",
+      "displayLabel": "base_users_attributes"
+    },
+    {
+      "relationKey": "physical:hwy_institutes.created_by->base_users.id:FK_hwy_institutes_created_by",
+      "displayLabel": "HWY Institutes (created by)"
+    },
+    {
+      "relationKey": "physical:hwy_institutes.updated_by->base_users.id:FK_hwy_institutes_updated_by",
+      "displayLabel": "HWY Institutes (updated by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_files.created_by->base_users.id:FK_hwy_member_files_created_by",
+      "displayLabel": "HWY Member Files (created by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_files.updated_by->base_users.id:FK_hwy_member_files_updated_by",
+      "displayLabel": "HWY Member Files (updated by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.created_by->base_users.id:FK_hwy_member_institutes_created_by",
+      "displayLabel": "HWY Member Institutes (created by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.institute_state_updated_by->base_users.id:FK_hwy_member_institutes_institute_state_updated_by",
+      "displayLabel": "HWY Member Institutes (Institute State Updated By)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.invited_by->base_users.id:FK_hwy_member_institutes_invited_by",
+      "displayLabel": "HWY Member Institutes (invited by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_institutes.updated_by->base_users.id:FK_hwy_member_institutes_updated_by",
+      "displayLabel": "HWY Member Institutes (updated by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_list_defs.created_by->base_users.id:FK_hwy_member_list_defs_created_by",
+      "displayLabel": "HWY Member List Defs (created by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_list_defs.updated_by->base_users.id:FK_hwy_member_list_defs_updated_by",
+      "displayLabel": "HWY Member List Defs (updated by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_notes.created_by->base_users.id:FK_hwy_member_notes_created_by",
+      "displayLabel": "HWY Member Notes (created by)"
+    },
+    {
+      "relationKey": "physical:hwy_member_security_profile.created_by->base_users.id:FK_hwy_member_security_profile_created_by",
+      "displayLabel": "HWY Security Profile (created by)"
+    },
+    {
+      "relationKey": "physical:hwy_members.created_by->base_users.id:FK_hwy_members_created_by",
+      "displayLabel": "HWY Members (created by)"
+    },
+    {
+      "relationKey": "physical:hwy_members.membership_status_updated_by->base_users.id:FK_hwy_members_membership_status_updated_by",
+      "displayLabel": "HWY Members (Membership Status Updated By)"
+    },
+    {
+      "relationKey": "physical:hwy_members.updated_by->base_users.id:FK_hwy_members_updated_by",
+      "displayLabel": "HWY Members (updated by)"
+    },
+    {
+      "relationKey": "physical:hwy_members.user_id->base_users.id:FK_hwy_members_user_id",
+      "displayLabel": "HWY Members"
+    },
+    {
+      "relationKey": "roles",
+      "history": {
+        "trackAssignRemove": true
+      }
+    },
+    {
+      "relationKey": "scope",
+      "history": {
+        "trackAssignRemove": true
+      }
+    }
+  ],
+  "history": {
+    "enabled": true,
+    "lifecycleField": "locked"
+  },
+  "extensions": {
+    "story": "## Purpose\n\nPlatform login account. Every authenticated person — staff, portal user, or future package customer — is one row here. Credentials and lock state live on this table; display identity lives on `base_user_profiles`.\n\n## Lifecycle\n\n1. **Create** — username required (unique). Email/mobile optional but unique when set. `person_type_code` is chosen at create on the paired profile (Individual vs Company) and is locked afterward.\n2. **Assign roles** — via `base_user_roles` junction; effective permissions come from role names + MCP grants + record policies.\n3. **Lock / unlock** — `locked` flag with audit (`locked_at` / `locked_by`, `unlocked_*`). Failed login counters reset on success.\n4. **Delete** — cascades profile, identities, tokens, and package-visible FKs; prefer disable/lock for operators.\n\n## Rules\n\n- `is_builtin` rows are seeded system accounts — do not delete from Studio.\n- Password hash only — never store plaintext; auth APIs hash at the boundary.\n- Do not duplicate name/phone on package tables when the person can log in; extend with 1:1 tables on `user_id`.\n- Audit `created_by` / `updated_by` from session actor; `NULL` for system/bootstrap rows.",
+    "querySurfaces": {
+      "schemaVersion": "1.0.0",
+      "presets": [
+        {
+          "application": "optional",
+          "visibility": "public",
+          "id": "active-users",
+          "label": "Active",
+          "where": {
+            "kind": "group",
+            "id": "preset-root-locked",
+            "op": "and",
+            "children": [
+              {
+                "kind": "condition",
+                "id": "preset-locked",
+                "field": "locked",
+                "operator": "eq",
+                "value": "0",
+                "valueKind": "literal"
+              }
+            ]
+          },
+          "defaultSelected": true,
+          "sortOrder": 10
+        },
+        {
+          "application": "optional",
+          "visibility": "restricted",
+          "id": "locked-users",
+          "label": "Locked",
+          "where": {
+            "kind": "group",
+            "id": "preset-root-locked",
+            "op": "and",
+            "children": [
+              {
+                "kind": "condition",
+                "id": "preset-locked",
+                "field": "locked",
+                "operator": "eq",
+                "value": "1",
+                "valueKind": "literal"
+              }
+            ]
+          },
+          "sortOrder": 20
+        }
+      ]
+    }
+  },
+  "created_at": "2026-08-29T07:14:59.158Z",
+  "updated_at": "2026-09-17T15:29:39.553Z"
+}

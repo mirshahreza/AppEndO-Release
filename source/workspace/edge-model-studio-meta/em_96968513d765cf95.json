@@ -1,0 +1,47 @@
+{
+  "edgeModelId": "em_96968513d765cf95",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "feedback_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "kind"
+    },
+    {
+      "columnName": "body",
+      "searchRole": "advanced",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "author_user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_app_feedback_attachments.message_id->base_app_feedback_messages.id:base_app_feedback_attachments_message_id_fkey",
+      "displayLabel": "base_app_feedback_attachments (Message)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_messages.author_user_id->base_users.id:base_app_feedback_messages_author_user_id_fkey",
+      "displayLabel": "Author"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_messages.feedback_id->base_app_feedback.id:base_app_feedback_messages_feedback_id_fkey",
+      "displayLabel": "Feedback"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nIndividual messages on a feedback ticket — user or operator replies. `kind` distinguishes public reply vs internal note.\n\n## Rules\n\n- Always tied to `feedback_id`; cascade delete with ticket.\n- Attachments optional via `base_app_feedback_attachments.message_id`.\n- Append-only — edits rare; prefer new message row."
+  },
+  "created_at": "2026-08-26T07:50:50.470Z",
+  "updated_at": "2026-09-17T15:29:39.471Z"
+}

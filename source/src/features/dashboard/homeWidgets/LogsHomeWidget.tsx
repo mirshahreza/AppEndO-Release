@@ -1,0 +1,1 @@
+export { LogsHomeWidget } from './JobsHomeWidget';

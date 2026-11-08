@@ -1,0 +1,91 @@
+{
+  "edgeModelId": "em_eca564ae0bff8fdc",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_definition_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "revision_number",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "source_draft_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "definition_json"
+    },
+    {
+      "columnName": "action_bindings_json"
+    },
+    {
+      "columnName": "schema_projections_json"
+    },
+    {
+      "columnName": "semantic_fingerprint"
+    },
+    {
+      "columnName": "publication_status"
+    },
+    {
+      "columnName": "binding_status"
+    },
+    {
+      "columnName": "validation_report_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "state_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "published_at"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_definitions.current_published_revision_id->base_workflow_revisions.id:base_workflow_definitions_current_published_revision_id_fkey",
+      "displayLabel": "Workflow definitions (Current Published Revision)"
+    },
+    {
+      "relationKey": "physical:base_workflow_designer_views.workflow_revision_id->base_workflow_revisions.id:base_workflow_designer_views_workflow_revision_id_fkey",
+      "displayLabel": "base_workflow_designer_views (Workflow Revision)"
+    },
+    {
+      "relationKey": "physical:base_workflow_instances.workflow_revision_id->base_workflow_revisions.id:base_workflow_instances_workflow_revision_id_fkey",
+      "displayLabel": "Workflow instances (Workflow Revision)"
+    },
+    {
+      "relationKey": "physical:base_workflow_revisions.workflow_definition_id->base_workflow_definitions.id:base_workflow_revisions_workflow_definition_id_fkey",
+      "displayLabel": "Workflow Definition"
+    },
+    {
+      "relationKey": "physical:base_workflow_validation_reports.revision_id->base_workflow_revisions.id:base_workflow_validation_reports_revision_id_fkey",
+      "displayLabel": "base_workflow_validation_reports (Revision)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nImmutable published snapshot of a workflow — frozen `definition_json`, action bindings, semantic fingerprint, validation report link. Instances execute against a revision row, not live draft.\n\n## Rules\n\n- **UNIQUE** (`workflow_definition_id`, `revision_number`) monotonic per definition.\n- `publication_status` / `binding_status` gate whether instances may start.\n- Do not mutate JSON in place after publish — new revision for changes.\n- `schema_projections_json` optional Data API hints — derived at publish."
+  },
+  "created_at": "2026-09-11T04:55:23.714Z",
+  "updated_at": "2026-09-17T15:29:39.947Z"
+}

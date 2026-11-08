@@ -1,0 +1,475 @@
+{
+  "edgeModelId": "em_de1dc90b9e9d7626",
+  "tags": [
+    "cms",
+    "content"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "hidden",
+      "group": "Identity",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "content_type_code",
+      "icon": "lucide:shapes",
+      "formWidget": "lookup",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "language_code",
+      "icon": "lucide:languages",
+      "formWidget": "lookup",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "slug",
+      "icon": "lucide:link",
+      "formWidget": "text",
+      "formWidgetProps": {
+        "maxLength": 180
+      },
+      "required": true,
+      "searchRole": "basic",
+      "developerNotes": "Latin slug; unique with language_code (LATIN_SLUG_RE).",
+      "group": "Identity",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "title",
+      "icon": "lucide:type",
+      "formWidget": "text",
+      "formWidgetProps": {
+        "maxLength": 300
+      },
+      "required": true,
+      "searchRole": "basic",
+      "group": "Editorial",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "summary",
+      "icon": "lucide:align-left",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 3
+      },
+      "searchRole": "advanced",
+      "group": "Editorial",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "body_format_code",
+      "icon": "lucide:file-code",
+      "formWidget": "lookup",
+      "required": true,
+      "searchRole": "basic",
+      "interfaceNotes": "plain / markdown / html",
+      "group": "Editorial",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "body",
+      "icon": "lucide:file-text",
+      "formWidget": "markdown",
+      "formWidgetProps": {
+        "rows": 12
+      },
+      "searchRole": "advanced",
+      "filterRole": "none",
+      "group": "Editorial",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "operator_note",
+      "icon": "lucide:sticky-note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "interfaceNotes": "Internal operator note — never shown publicly.",
+      "group": "Editorial",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "seo_title",
+      "icon": "lucide:heading",
+      "formWidget": "text",
+      "formWidgetProps": {
+        "maxLength": 200
+      },
+      "searchRole": "advanced",
+      "group": "SEO",
+      "sortOrder": 100
+    },
+    {
+      "columnName": "seo_note",
+      "icon": "lucide:text",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 3
+      },
+      "group": "SEO",
+      "sortOrder": 110
+    },
+    {
+      "columnName": "comments_enabled",
+      "icon": "lucide:messages-square",
+      "formWidget": "checkbox",
+      "interfaceNotes": "NULL = inherit global default from cms_settings.",
+      "group": "Comments",
+      "sortOrder": 112
+    },
+    {
+      "columnName": "comments_policy_code",
+      "icon": "lucide:shield-check",
+      "formWidget": "lookup",
+      "interfaceNotes": "NULL = inherit global default.",
+      "group": "Comments",
+      "sortOrder": 114
+    },
+    {
+      "columnName": "comments_body_format_code",
+      "icon": "lucide:file-code-2",
+      "formWidget": "lookup",
+      "interfaceNotes": "plain / html only; NULL = inherit global default.",
+      "group": "Comments",
+      "sortOrder": 116
+    },
+    {
+      "columnName": "parent_content_id",
+      "icon": "lucide:corner-down-right",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "interfaceNotes": "Set for content_type=comment rows — parent editorial content.",
+      "group": "Comments",
+      "sortOrder": 118
+    },
+    {
+      "columnName": "author_display_name",
+      "icon": "lucide:user",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "interfaceNotes": "Guest author display name on comment rows.",
+      "group": "Comments",
+      "sortOrder": 119
+    },
+    {
+      "columnName": "author_email",
+      "icon": "lucide:mail",
+      "formWidget": "text",
+      "interfaceNotes": "Guest author email on comment rows.",
+      "group": "Comments",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "moderated_by",
+      "icon": "lucide:user-cog",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Comments",
+      "sortOrder": 122
+    },
+    {
+      "columnName": "moderated_at",
+      "icon": "lucide:calendar-clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Comments",
+      "sortOrder": 124
+    },
+    {
+      "columnName": "status_code",
+      "icon": "lucide:circle-dot",
+      "formWidget": "lookup",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Status & publish",
+      "sortOrder": 130
+    },
+    {
+      "columnName": "published_at",
+      "icon": "lucide:calendar-check",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Status & publish",
+      "sortOrder": 140
+    },
+    {
+      "columnName": "status_code_updated_at",
+      "icon": "lucide:calendar-clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Status & publish",
+      "sortOrder": 150
+    },
+    {
+      "columnName": "status_code_updated_by",
+      "icon": "lucide:user-cog",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Status & publish",
+      "sortOrder": 160
+    },
+    {
+      "columnName": "created_by",
+      "icon": "lucide:user",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 170
+    },
+    {
+      "columnName": "created_at",
+      "icon": "lucide:clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 180
+    },
+    {
+      "columnName": "updated_by",
+      "icon": "lucide:user-pen",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 190
+    },
+    {
+      "columnName": "updated_at",
+      "icon": "lucide:clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 200
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_3971d9993ab045e6",
+      "displayLabel": "Revisions",
+      "icon": "lucide:history",
+      "formWidget": "relatedGrid"
+    },
+    {
+      "relationKey": "ea_b1d991ff2c5f47cb",
+      "displayLabel": "Assets",
+      "icon": "lucide:paperclip",
+      "formWidget": "relatedGrid"
+    },
+    {
+      "relationKey": "ea_376c412895444b69",
+      "displayLabel": "Tags",
+      "icon": "lucide:tags",
+      "formWidget": "relatedGrid"
+    },
+    {
+      "relationKey": "ea_32863b3d9a204f6c",
+      "displayLabel": "Related contents",
+      "icon": "lucide:git-branch",
+      "formWidget": "tagsList",
+      "attachedFields": [
+        {
+          "sourceColumn": "title",
+          "as": "related_title"
+        },
+        {
+          "sourceColumn": "slug",
+          "as": "related_slug"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_678aee611a1e4d01",
+      "displayLabel": "Child comments",
+      "icon": "lucide:message-square",
+      "formWidget": "relatedGrid"
+    },
+    {
+      "relationKey": "ea_7f411c3c1ef84f6e",
+      "displayLabel": "Parent content",
+      "icon": "lucide:corner-down-right",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "title",
+          "as": "parent_content_id_title"
+        },
+        {
+          "sourceColumn": "slug",
+          "as": "parent_content_id_slug"
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\n`cms_contents` is the single editorial unit of the CMS package: one row holds the **current** title, summary, body, SEO, type, language, format, slug, and status. Public readers always read from this row when status is Published — never from revisions.\n\n## Lifecycle\n\n1. **Create** — usually `status = Draft`. Set `content_type`, `language`, `slug`, `body_format`, and editorial fields. Audit (`created_*`) is set by the server.\n2. **Edit** — writers always mutate current columns on this row. Before replacing `title` / `summary` / `body` on a meaningful save (or explicit checkpoint), the previous triple is snapshotted into `cms_content_revisions` with the next `revision_no`.\n3. **Publish** — set `status = Published`, stamp `published_at`, and update `status_code_updated_at` / `status_code_updated_by`. SEO and `body_format` stay on this row (not copied into revisions).\n4. **Archive / unpublish** — change status only (+ status audit fields). History and assets remain.\n5. **Restore** — copy `title` / `summary` / `body` from a revision back onto this row; optionally snapshot the pre-restore text first. Do not overwrite SEO or `body_format` from revision (revisions do not store them).\n\n## Identity & language\n\n- `(language_code, slug)` is unique. Slug is a Latin URL segment (`LATIN_SLUG_RE`).\n- Another language is **another content row** (optional duplicate), not an i18n overlay on the same id.\n- `content_type` is an intent label (Article / News / Announcement / Gallery / Comment / **Page** / **Fragment**) — it does **not** change schema or open a different form. Comment rows set `parent_content_id` to the parent editorial content. Page rows are public site routes. Fragment rows are reusable chrome/home pieces (`site-brand`, `slide-*`, …).\n\n## Tags, assets, related, comments\n\n- Tags attach via `cms_content_tags` to Base Info items under **CMS / Content Tags**.\n- Files live only in `cms_content_assets` (bytes in DB); not as content types.\n- Related contents are an undirected self-M2M through `cms_content_relations` (`relatedContents`). Persist normalized `content_id_a < content_id_b`.\n- `comments_enabled` / `comments_policy_code` / `comments_body_format_code` are **nullable overrides** on editorial rows; `NULL` means inherit from the singleton `cms_settings` row. Effective value = `content.override ?? settings.default`.\n- Submitted comments are **child rows** in this same table (`content_type = Comment`, `parent_content_id` set). Moderation uses shared Statuses (`in_review` awaiting / `published` approved / `rejected`).\n\n## Rules of thumb\n\n- Prefer Archive over hard-delete.\n- No per-type custom fields / EAV / shortcodes.\n- Operator-only notes use `operator_note` (never shown publicly).",
+    "columnGroupOrder": [
+      "Identity",
+      "Editorial",
+      "SEO",
+      "Comments",
+      "Status & publish",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Identity": {
+        "icon": "lucide:fingerprint",
+        "color": "text-sky-600"
+      },
+      "Editorial": {
+        "icon": "lucide:pen-line",
+        "color": "text-indigo-600"
+      },
+      "SEO": {
+        "icon": "lucide:search",
+        "color": "text-emerald-600"
+      },
+      "Comments": {
+        "icon": "lucide:message-square",
+        "color": "text-violet-600"
+      },
+      "Status & publish": {
+        "icon": "lucide:badge-check",
+        "color": "text-amber-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock-3",
+        "color": "text-slate-600"
+      }
+    },
+    "schemaRelationsDiagramLayout": {
+      "algorithmVersion": 3,
+      "nodes": {
+        "cms_content_assets": {
+          "x": 12.6,
+          "y": 0,
+          "width": 228,
+          "height": 144
+        },
+        "cms_content_relations": {
+          "x": -12.6,
+          "y": 204,
+          "width": 228,
+          "height": 108
+        },
+        "cms_content_revisions": {
+          "x": 12.6,
+          "y": 372,
+          "width": 228,
+          "height": 144
+        },
+        "cms_content_tags": {
+          "x": -12.6,
+          "y": 576,
+          "width": 228,
+          "height": 72
+        },
+        "cms_contents": {
+          "x": 468,
+          "y": 252,
+          "width": 228,
+          "height": 144
+        },
+        "base_info": {
+          "x": 932.9238095238094,
+          "y": -118.57142857142857,
+          "width": 228,
+          "height": 144
+        },
+        "base_users": {
+          "x": 948.6,
+          "y": 354,
+          "width": 228,
+          "height": 144
+        }
+      }
+    },
+    "querySurfaces": {
+      "schemaVersion": "1.0.0",
+      "presets": [
+        {
+          "application": "optional",
+          "visibility": "public",
+          "id": "published",
+          "label": "Published",
+          "description": "Editorial status is published.",
+          "where": {
+            "kind": "group",
+            "id": "preset-root-statusCode",
+            "op": "and",
+            "children": [
+              {
+                "kind": "condition",
+                "id": "preset-statusCode",
+                "field": "statusCode",
+                "operator": "eq",
+                "value": "published",
+                "valueKind": "literal"
+              }
+            ]
+          },
+          "sortOrder": 10,
+          "icon": "lucide:check-circle"
+        },
+        {
+          "application": "optional",
+          "visibility": "public",
+          "id": "drafts",
+          "label": "Drafts",
+          "description": "Work in progress — not public.",
+          "where": {
+            "kind": "group",
+            "id": "preset-root-statusCode",
+            "op": "and",
+            "children": [
+              {
+                "kind": "condition",
+                "id": "preset-statusCode",
+                "field": "statusCode",
+                "operator": "eq",
+                "value": "draft",
+                "valueKind": "literal"
+              }
+            ]
+          },
+          "sortOrder": 20,
+          "icon": "lucide:file-pen-line"
+        },
+        {
+          "application": "optional",
+          "visibility": "public",
+          "id": "in-review",
+          "label": "In review",
+          "where": {
+            "kind": "group",
+            "id": "preset-root-statusCode",
+            "op": "and",
+            "children": [
+              {
+                "kind": "condition",
+                "id": "preset-statusCode",
+                "field": "statusCode",
+                "operator": "eq",
+                "value": "in_review",
+                "valueKind": "literal"
+              }
+            ]
+          },
+          "sortOrder": 30,
+          "icon": "lucide:eye"
+        }
+      ]
+    }
+  },
+  "created_at": "2026-11-06T20:29:02.379Z",
+  "updated_at": "2026-11-06T20:29:02.379Z"
+}

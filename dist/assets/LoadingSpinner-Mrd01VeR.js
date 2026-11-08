@@ -1,0 +1,1 @@
+import{j as o}from"./react-vendor-CsZD9bLw.js";import{L as r}from"./loader-circle-Dj1cdodG.js";const i=({className:a="h-4 w-4 animate-spin text-slate-500",label:t="Loading"})=>o.jsx(r,{className:a,"aria-label":t,role:"status"});export{i as L};

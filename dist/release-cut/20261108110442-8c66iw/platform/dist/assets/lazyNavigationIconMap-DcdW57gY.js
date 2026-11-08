@@ -1,1 +1,0 @@
-function r(n,t){const c=new Set(n),a=Object.create(null);return new Proxy(Object.create(null),{get(i,e){if(!(typeof e!="string"||!c.has(e)))return a[e]||(a[e]=t(e)),a[e]}})}function s(n){return n.iconNames?n.iconNames:n.entries.map(([t])=>t)}export{r as c,s as g};

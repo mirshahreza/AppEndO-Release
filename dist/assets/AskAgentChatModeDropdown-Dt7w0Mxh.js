@@ -1,0 +1,1 @@
+import{j as e}from"./react-vendor-CsZD9bLw.js";import{C as n}from"./aiAgentStream-POocdaj8.js";const r=["ask","agent"],m=({mode:s,onChange:a,compact:t=!1})=>e.jsx(n,{mode:s,onChange:o=>{(o==="ask"||o==="agent")&&a(o)},compact:t,allowedIds:r});export{m as A};

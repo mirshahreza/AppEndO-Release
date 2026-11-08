@@ -15916,6 +15916,18 @@ var init_projectStandards = __esm({
           ]
         },
         {
+          id: "package.vertical.locale-policy",
+          title: "Vertical \u2014 Arabic UI, English repo copy, no Persian",
+          value: "Vertical end-user and iq overlay copy Arabic (e.g. \u0647\u0648\u064A\u062A\u064A not Persian \u0647\u0648\u06CC\u062A\u06CC); AppEndO-Vertical README/templates and non-UI Vertical metadata English only; no Persian in vertical shell seeds or vertical.* culture keys; shard package-vertical-locale-policy",
+          appliesTo: [
+            "src/core/packages/verticalPackage.ts",
+            "src/domain/vx/vxPlatformPortalBrandDefaults.ts",
+            "scripts/release-cut/templates/AppEndO-Vertical-README.md",
+            "src/core/system-extensions/culture-packs/overlays/vertical.iq.json",
+            "workspace/platform-registry/shells/vertical.json"
+          ]
+        },
+        {
           id: "package.vertical.ui-vocab",
           value: "Vertical Studio UI copy: say region (\u0645\u0646\u0637\u0642\u0629) not eghtera/\u0627\u0642\u062A\u0631\u0627\u0639; maktab (\u0645\u0643\u062A\u0628) not tamvin/\u062A\u0645\u0648\u064A\u0646; electoral breadcrumb order province \u2192 ghavateh? \u2192 circle \u2192 maktab \u2192 region; grid column 3 rows (province|ghavateh / circle|maktab / region) via vxElectoralBreadcrumbStandard.ts \u2014 legacy SQL/route names stay; shard package-vertical-ui-vocab",
           appliesTo: [
@@ -16134,7 +16146,7 @@ var init_projectStandards = __esm({
         {
           id: "platform.release-cut",
           title: "Local Release Cut (no cloud CI)",
-          value: "platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine \u2014 never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z, packs publish packages (default vertical), builds public-oss with cms and remote-hubs only; see docs/standards/release-cut.md",
+          value: "platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine \u2014 never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default vertical) in P4 only when versions change; public AppEndO-Release (cms + remote-hubs) and private AppEndO-Vertical (full source + dist + promoted vertical zip, no pack on vertical export); see docs/standards/release-cut.md",
           appliesTo: ["release", "packages", "CI", "vertical pack", "open source bundle"]
         },
         {
@@ -16421,6 +16433,7 @@ var init_projectStandards = __esm({
       if (id.startsWith("component-designer")) return "component-designer";
       if (id.startsWith("package.records") || id.startsWith("package.home") || id.startsWith("package.studio") || id.startsWith("package.install")) return "package-ui";
       if (id.startsWith("package.base-info")) return "package-base-info-vocab";
+      if (id === "package.vertical.locale-policy") return "package-vertical-locale-policy";
       if (id === "package.vertical.ui-vocab") return "package-vertical-ui-vocab";
       if (id === "package.vertical.member-face-caption") return "package-vertical-member-face-caption";
       if (id === "package.vertical.member-list-legacy-filters") return "package-vertical-member-list-legacy-filters";
@@ -44959,7 +44972,7 @@ var init_vertical_iq = __esm({
       "nav.base-info.description": "\u0625\u062F\u0627\u0631\u0629 \u0642\u0627\u0645\u0648\u0633 \u0627\u0644\u0631\u0645\u0648\u0632 \u0648\u0627\u0644\u0639\u0646\u0627\u0648\u064A\u0646 \u0627\u0644\u0647\u0631\u0645\u064A \u0627\u0644\u0645\u0634\u062A\u0631\u0643.",
       "nav.geographic-divisions": "\u0627\u0644\u062A\u0642\u0633\u064A\u0645\u0627\u062A \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0629",
       "nav.geographic-divisions.description": "\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u062F\u0648\u0644 \u0648\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0627\u062A \u0648\u0627\u0644\u0645\u062F\u0646.",
-      "nav.group.vertical": "\u0647\u0648\u06CC\u062A\u06CC",
+      "nav.group.vertical": "\u0647\u0648\u064A\u062A\u064A",
       "nav.group.member status workflows": "\u0627\u062F\u0627\u0631\u0629 \u0627\u0644\u0639\u0636\u0648\u064A\u0629",
       "nav.group.members management": "\u0627\u062F\u0627\u0631\u0629 \u0627\u0644\u0627\u0639\u0636\u0627\u0621",
       "nav.group.system management": "\u0627\u062F\u0627\u0631\u0629 \u0627\u0644\u0646\u0638\u0627\u0645",
@@ -45044,9 +45057,11 @@ var init_vertical_iq = __esm({
       "vx.membership.wizard.nakhebin.eghteraRegionPicker.column.region": "\u0627\u0644\u0645\u0646\u0637\u0642\u0629",
       "vx.selfReg.portal.tagline": "\u0646\u0638\u0627\u0645 \u0647\u0648\u064A\u062A\u064A \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A",
       "vx.selfReg.portal.brand": "\u0647\u0648\u064A\u062A\u064A",
-      "vx.selfReg.portal.aboutTitle": "\u0639\u0646 \u0627\u0644\u0646\u0638\u0627\u0645",
-      "vx.selfReg.portal.aboutBody": "\u0646\u0638\u0627\u0645 \u0647\u0648\u064A\u062A\u064A \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u064A\u0633\u0627\u0639\u062F \u0627\u0644\u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0627\u0644\u062A\u0633\u062C\u064A\u0644 \u0648\u0645\u062A\u0627\u0628\u0639\u0629 \u0627\u0644\u0637\u0644\u0628\u0627\u062A \u0648\u0627\u0644\u062A\u0648\u0627\u0635\u0644 \u0645\u0639 \u0645\u0624\u0633\u0633\u0627\u062A\u0647\u0645.",
+      "vx.selfReg.portal.aboutTitle": "\u0647\u0648\u064A\u062A\u064A",
+      "vx.selfReg.portal.aboutBody": "\u0647\u0648\u064A\u062A\u064A \u0645\u0646\u0638\u0648\u0645\u0629 \u0645\u062A\u0643\u0627\u0645\u0644\u0629 \u0644\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0639\u0644\u0627\u0642\u0627\u062A.",
       "vx.selfReg.portal.aboutAction": "\u0639\u0646 \u0627\u0644\u0646\u0638\u0627\u0645",
+      "vx.selfReg.portal.aboutVerticalPackageVersionLabel": "\u0625\u0635\u062F\u0627\u0631 \u062D\u0632\u0645\u0629 \u0647\u0648\u064A\u062A\u064A",
+      "vx.selfReg.portal.aboutStandardsLabel": "\u0625\u0635\u062F\u0627\u0631 \u0627\u0644\u0645\u0639\u0627\u064A\u064A\u0631",
       "vx.selfReg.action.backToLogin": "\u0627\u0644\u0639\u0648\u062F\u0629 \u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644",
       "vx.selfReg.action.submit": "\u0625\u0631\u0633\u0627\u0644 \u0627\u0644\u0637\u0644\u0628",
       "vx.selfReg.action.submitting": "\u062C\u0627\u0631\u064A \u0627\u0644\u0625\u0631\u0633\u0627\u0644\u2026",
@@ -46787,7 +46802,7 @@ var init_vertical_ir = __esm({
       "vx.targhin.direct.remove": "\u062D\u0630\u0641 \u062A\u0631\u0642\u06CC\u0646",
       "vx.targhin.direct.removeTitle": "\u062D\u0630\u0641 \u062A\u0631\u0642\u06CC\u0646 \u0645\u0633\u062A\u0642\u06CC\u0645",
       "vx.targhin.direct.save": "\u0630\u062E\u06CC\u0631\u0647",
-      "nav.group.vertical": "\u0647\u0648\u06CC\u062A\u06CC",
+      "nav.group.vertical": "\u0647\u0648\u064A\u062A\u064A",
       "nav.group.member status workflows": "\u0627\u062F\u0627\u0631\u0647 \u0639\u0636\u0648\u06CC\u062A",
       "nav.group.members management": "\u0628\u062E\u0634 \u0627\u0639\u0636\u0627",
       "nav.group.system management": "\u0645\u062F\u06CC\u0631\u06CC\u062A \u0633\u0627\u0645\u0627\u0646\u0647",
@@ -48409,11 +48424,13 @@ var init_vertical_us = __esm({
       "vx.institutes.field.titleAr.placeholder": "Title (Arabic)",
       "vx.institutes.field.logoUrl.placeholder": "Logo URL",
       "vx.institutes.field.inviteExpiresAfterDays.placeholder": "Invite expires (days)",
-      "vx.selfReg.portal.tagline": "Vertical electronic identity system",
+      "vx.selfReg.portal.tagline": "Vertical",
       "vx.selfReg.portal.brand": "Vertical",
-      "vx.selfReg.portal.aboutTitle": "About the system",
-      "vx.selfReg.portal.aboutBody": "The Vertical electronic identity system helps members register, track applications, and stay connected with their institute.",
+      "vx.selfReg.portal.aboutTitle": "Vertical",
+      "vx.selfReg.portal.aboutBody": "Vertical is a relationship management ecosystem.",
       "vx.selfReg.portal.aboutAction": "About",
+      "vx.selfReg.portal.aboutVerticalPackageVersionLabel": "Vertical package",
+      "vx.selfReg.portal.aboutStandardsLabel": "Standards",
       "vx.selfReg.action.backToLogin": "Back to login",
       "vx.selfReg.action.submit": "Submit application",
       "vx.selfReg.action.submitting": "Submitting\u2026",
@@ -101917,7 +101934,7 @@ var init_baseInfoIqTitlesByEnglish = __esm({
       "Comment Policies": "\u0633\u064A\u0627\u0633\u0627\u062A \u0627\u0644\u062A\u0639\u0644\u064A\u0642\u0627\u062A",
       Automatic: "\u062A\u0644\u0642\u0627\u0626\u064A",
       Approve: "\u0645\u0648\u0627\u0641\u0642\u0629",
-      Vertical: "\u0647\u0648\u06CC\u062A\u06CC",
+      Vertical: "\u0647\u0648\u064A\u062A\u064A",
       "Membership Status": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0639\u0636\u0648\u064A\u0629",
       "Pending Call Center": "\u0628\u0627\u0646\u062A\u0638\u0627\u0631 \u0645\u0631\u0643\u0632 \u0627\u0644\u0627\u062A\u0635\u0627\u0644",
       "Pending Local Verification": "\u0628\u0627\u0646\u062A\u0638\u0627\u0631 \u0627\u0644\u062A\u0648\u062B\u064A\u0642 \u0627\u0644\u0645\u062D\u0644\u064A",
@@ -120119,7 +120136,7 @@ var init_verticalPackage = __esm({
     init_verticalApp();
     VERTICAL_PACKAGE_ID = "vertical";
     VERTICAL_PACKAGE_NAME = "Vertical";
-    VERTICAL_PACKAGE_VERSION = "0.3.6";
+    VERTICAL_PACKAGE_VERSION = "0.3.8";
     VERTICAL_PORTAL_SEGMENT = "vertical";
     VERTICAL_MOUNT_PATH_PREFIX = "/vertical";
     VERTICAL_HOST_PAGE_KEYS = [
@@ -240485,20 +240502,21 @@ var init_ensurePlatformRegistrySeed = __esm({
 });
 
 // src/domain/vx/vxPlatformPortalBrandDefaults.ts
-var VX_PLATFORM_PORTAL_BRAND_LOGO_URL, VX_PLATFORM_PORTAL_SHELL_KEY, VX_PLATFORM_PORTAL_BRAND_TITLE_EN, VX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE, defaultHwyPlatformPortalBrand, isAppEndPlaceholderPortalTitle, isAppEndPlaceholderPortalAboutTitle, isPlaceholderAppEndPortalBrand;
+var VX_PLATFORM_PORTAL_BRAND_LOGO_URL, VX_PLATFORM_PORTAL_SHELL_KEY, VX_PLATFORM_PORTAL_BRAND_TITLE_EN, VX_PLATFORM_PORTAL_BRAND_ABOUT_BODY_EN, VX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE, defaultHwyPlatformPortalBrand, isAppEndPlaceholderPortalTitle, isAppEndPlaceholderPortalAboutTitle, isPlaceholderAppEndPortalBrand;
 var init_vxPlatformPortalBrandDefaults = __esm({
   "src/domain/vx/vxPlatformPortalBrandDefaults.ts"() {
     init_portalBrand();
     VX_PLATFORM_PORTAL_BRAND_LOGO_URL = "/assets/vertical/mark-blue.png";
     VX_PLATFORM_PORTAL_SHELL_KEY = "vertical";
-    VX_PLATFORM_PORTAL_BRAND_TITLE_EN = "Vertical electronic identity system";
-    VX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE = "\u0647\u0648\u06CC\u062A\u06CC";
+    VX_PLATFORM_PORTAL_BRAND_TITLE_EN = "Vertical";
+    VX_PLATFORM_PORTAL_BRAND_ABOUT_BODY_EN = "Vertical is a relationship management ecosystem.";
+    VX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE = "\u0647\u0648\u064A\u062A\u064A";
     defaultHwyPlatformPortalBrand = () => ({
       logoUrl: VX_PLATFORM_PORTAL_BRAND_LOGO_URL,
       title: VX_PLATFORM_PORTAL_BRAND_TITLE_EN,
       windowTitle: VX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE,
       aboutTitle: VX_PLATFORM_PORTAL_BRAND_TITLE_EN,
-      aboutBody: "Official Vertical membership registration and public identity flows for the National Wisdom Movement."
+      aboutBody: VX_PLATFORM_PORTAL_BRAND_ABOUT_BODY_EN
     });
     isAppEndPlaceholderPortalTitle = (title) => {
       const trimmed = title?.trim();

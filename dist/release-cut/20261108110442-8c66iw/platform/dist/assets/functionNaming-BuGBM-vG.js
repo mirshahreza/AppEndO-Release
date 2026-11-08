@@ -1,1 +1,0 @@
-const a=/[^a-z0-9._-]+/g;function t(n){return String(n||"unnamed").trim().toLowerCase().replace(/\s+/g,"-").replace(a,"-").replace(/-+/g,"-").replace(/^[-_.]+|[-_.]+$/g,"")||"unnamed"}function r(n,e){return`${t(n)}.${t(e)}`}function u(n,e){return r(n,e)}export{u as b,t as s};

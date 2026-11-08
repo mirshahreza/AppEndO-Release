@@ -1,0 +1,1 @@
+const d="Edit";function r(e){var l,o;const i=e.listLabel.trim()||"Untitled",t=e.modeLabel===void 0?d:((l=e.modeLabel)==null?void 0:l.trim())??"";return{icon:e.icon,label:i,description:((o=e.description)==null?void 0:o.trim())||void 0,titleTrail:t?[i,t]:[i]}}export{r as b};

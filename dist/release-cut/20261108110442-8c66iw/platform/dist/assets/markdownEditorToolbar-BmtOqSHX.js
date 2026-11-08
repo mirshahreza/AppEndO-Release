@@ -1,0 +1,1 @@
+const n=e=>({showToolbar:e!=="minimal",enableHeading:e!=="minimal",enableLink:e!=="minimal",enableCodeBlock:e!=="minimal",enableImage:e==="full",enableTable:e==="full",enableTextDirection:e!=="minimal"});export{n as m};

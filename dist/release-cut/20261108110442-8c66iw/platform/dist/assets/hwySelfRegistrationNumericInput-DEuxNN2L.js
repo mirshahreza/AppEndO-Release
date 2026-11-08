@@ -1,0 +1,1 @@
+const r="۰۱۲۳۴۵۶۷۸۹",u="٠١٢٣٤٥٦٧٨٩";function s(t){return t.replace(/[\u06F0-\u06F9\u0660-\u0669]/g,n=>{const i=r.indexOf(n);if(i>=0)return String(i);const e=u.indexOf(n);return e>=0?String(e):n})}function I(t,n){const i=s(t).replace(/\D/g,"");return n==null||n<=0?i:i.slice(0,n)}export{I as s};

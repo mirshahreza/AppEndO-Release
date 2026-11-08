@@ -1,0 +1,1 @@
+import{x4 as o,uS as i}from"./AiFieldAssistSectionContext-BWucvttU.js";const n="image/*",e={full:{maxDimension:1280,quality:.82},thumb:{maxDimension:220,quality:.72}},s=async m=>{const a=await o(m);return{profileImageBody:i(a,e.full.maxDimension,e.full.quality),profileImageBodyXs:i(a,e.thumb.maxDimension,e.thumb.quality),profileImageMime:"image/jpeg"}};export{n as P,s as e};

@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Extensible admin platform for building and managing applications." />
+    <meta name="theme-color" content="#00a28a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="AppEndO" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/pwa-source.svg" sizes="any" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>AppEndO</title>
+    <style>
+      /* First paint before JS/CSS modules — must not be a blank white page.
+         Colors follow the active accent theme (CSS vars + localStorage cache). */
+      :root {
+        --app-accent-500: #00a28a;
+        --app-accent-rgb: 0 162 138;
+        --app-accent-secondary-rgb: 0 130 120;
+        --app-accent-tertiary-rgb: 0 110 150;
+        --app-accent-wash: #e9efee;
+        --app-accent-muted: #f4f6f6;
+        --app-shell-bg: #fafbfb;
+        --app-logo-from: #00a28a;
+        --app-logo-via: #0d9f8f;
+        --app-logo-to: #1a7fa8;
+        --gradient-app-logo: linear-gradient(105deg, var(--app-logo-from) 0%, var(--app-logo-via) 48%, var(--app-logo-to) 100%);
+        --gradient-shell-atmosphere:
+          radial-gradient(ellipse 100% 68% at -6% -10%, rgb(var(--app-accent-rgb) / 0.028) 0%, transparent 50%),
+          radial-gradient(ellipse 78% 56% at 106% 104%, rgb(var(--app-accent-secondary-rgb) / 0.02) 0%, transparent 46%),
+          radial-gradient(ellipse 62% 36% at 76% 2%, rgb(var(--app-accent-tertiary-rgb) / 0.014) 0%, transparent 42%),
+          linear-gradient(155deg, var(--app-accent-wash) 0%, var(--app-shell-bg) 48%, var(--app-accent-muted) 100%);
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--app-shell-bg, #f6f8fb);
+      }
+      #app-boot-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 6vh;
+        background: var(--gradient-shell-atmosphere);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      html[data-loading-identity='hawiety'] #app-boot-splash {
+        background:
+          radial-gradient(ellipse 68% 48% at 50% 38%, rgb(2 63 136 / 0.05) 0%, transparent 58%),
+          var(--gradient-shell-atmosphere);
+      }
+      #app-boot-splash.app-boot-splash--exit {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #app-boot-splash[hidden] {
+        display: none !important;
+      }
+      #app-boot-splash .app-boot-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+        min-height: 8.75rem;
+      }
+      html[data-loading-identity='hawiety'] #app-boot-splash {
+        --app-route-loading-accent: #023f88;
+        /* Darker gold for contrast on the light boot field (brand #ffcb05 stays on bar sweep). */
+        --app-route-loading-accent-secondary: #b8890a;
+        --app-route-loading-accent-gold: #ffcb05;
+      }
+      #app-boot-splash {
+        --loading-logo-h: clamp(2.375rem, 5.5vw, 3rem);
+        --loading-logo-max-w: min(12rem, 55vw);
+      }
+      #app-boot-splash .app-boot-logo-stage {
+        position: relative;
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        box-sizing: content-box;
+        padding: 0.625rem 0.875rem;
+      }
+      #app-boot-splash .app-boot-logo-stage--appendo {
+        padding: 0.6875rem 0.9375rem;
+      }
+      #app-boot-splash .app-boot-logo-frame {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        block-size: var(--loading-logo-h);
+        max-block-size: var(--loading-logo-h);
+        max-inline-size: var(--loading-logo-max-w);
+      }
+      #app-boot-splash .app-boot-logo-stage--appendo .app-boot-logo-frame {
+        inline-size: min(calc(var(--loading-logo-h) * 852 / 600), var(--loading-logo-max-w));
+      }
+      #app-boot-splash .app-boot-logo-stage--square .app-boot-logo-frame {
+        inline-size: var(--loading-logo-h);
+      }
+      #app-boot-splash .app-boot-logo-stage--wide .app-boot-logo-frame {
+        inline-size: auto;
+        max-inline-size: var(--loading-logo-max-w);
+        min-inline-size: calc(var(--loading-logo-h) * 1.15);
+      }
+      #app-boot-splash .app-boot-logo-stage::before,
+      #app-boot-splash .app-boot-logo-stage::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: 1.125rem;
+      }
+      #app-boot-splash .app-boot-logo-stage::before {
+        z-index: 0;
+        animation: none;
+      }
+      #app-boot-splash .app-boot-logo-stage::after {
+        z-index: 0;
+        animation: app-boot-logo-glow-pulse 2.4s ease-in-out infinite;
+      }
+      #app-boot-splash .app-boot-logo-stage--appendo::before {
+        opacity: 0.75;
+        border: none;
+        background:
+          radial-gradient(ellipse 85% 70% at 28% 22%, rgb(var(--app-accent-rgb, 0 162 138) / 0.16) 0%, transparent 58%),
+          radial-gradient(ellipse 75% 65% at 72% 78%, rgb(var(--app-accent-secondary-rgb, var(--app-accent-rgb, 0 162 138)) / 0.1) 0%, transparent 55%),
+          radial-gradient(ellipse 55% 45% at 88% 88%, rgb(var(--app-accent-tertiary-rgb, var(--app-accent-rgb, 0 162 138)) / 0.12) 0%, transparent 62%);
+        box-shadow:
+          0 0 0 1px rgb(var(--app-accent-rgb, 0 162 138) / 0.12),
+          0 14px 40px -12px rgb(var(--app-accent-rgb, 0 162 138) / 0.22),
+          inset 0 1px 0 rgb(255 255 255 / 0.42);
+      }
+      #app-boot-splash .app-boot-logo-stage--appendo::after {
+        opacity: 0.35;
+        inset: 0.4rem;
+        border-radius: 0.875rem;
+        background: linear-gradient(145deg, rgb(255 255 255 / 0.65) 0%, rgb(255 255 255 / 0) 48%, transparent 100%);
+      }
+      html[data-boot-splash-logo-locked='1'] #app-boot-splash .app-boot-logo-stage {
+        min-inline-size: calc(var(--loading-logo-h) + 1.25rem);
+        min-block-size: calc(var(--loading-logo-h) + 0.875rem);
+      }
+      html[data-loading-identity='hawiety'][data-boot-splash-logo-locked='1']
+        #app-boot-splash
+        .app-boot-logo-stage--square {
+        min-inline-size: calc(var(--loading-logo-h) + 1rem);
+        min-block-size: calc(var(--loading-logo-h) + 0.75rem);
+      }
+      #app-boot-splash .app-boot-logo-stage--wide::before {
+        opacity: 0.58;
+        border-radius: 0.875rem;
+        inset: 0.25rem 0.4rem;
+        border: none;
+        background: radial-gradient(ellipse 90% 80% at 50% 50%, color-mix(in srgb, var(--app-route-loading-accent, var(--app-accent-500, #00a28a)) 12%, transparent) 0%, transparent 68%);
+        box-shadow:
+          0 0 0 1px rgb(var(--app-accent-rgb, 0 162 138) / 0.08),
+          0 12px 36px -14px rgb(var(--app-accent-rgb, 0 162 138) / 0.16),
+          inset 0 1px 0 rgb(255 255 255 / 0.35);
+      }
+      html:not([data-loading-identity='hawiety']) #app-boot-splash .app-boot-logo-stage--square::before {
+        opacity: 0.55;
+        border: none;
+        border-radius: 1rem;
+        background: radial-gradient(ellipse 88% 78% at 50% 45%, color-mix(in srgb, var(--app-route-loading-accent, var(--app-accent-500, #00a28a)) 14%, transparent) 0%, transparent 65%);
+        box-shadow:
+          0 0 0 1px rgb(var(--app-accent-rgb, 0 162 138) / 0.08),
+          0 12px 34px -14px rgb(var(--app-accent-rgb, 0 162 138) / 0.18);
+      }
+      html[data-loading-identity='hawiety'] #app-boot-splash .app-boot-logo-stage--square {
+        padding: 0.375rem 0.5rem;
+      }
+      html[data-loading-identity='hawiety'] #app-boot-splash .app-boot-logo-stage--square::before {
+        opacity: 0.72;
+        border: none;
+        background:
+          radial-gradient(ellipse 80% 62% at 50% 28%, rgb(255 203 5 / 0.08) 0%, transparent 58%),
+          radial-gradient(ellipse 88% 72% at 50% 68%, rgb(2 63 136 / 0.1) 0%, transparent 62%);
+        box-shadow: 0 10px 28px -14px rgb(2 63 136 / 0.14);
+      }
+      html[data-loading-identity='hawiety'] #app-boot-splash .app-boot-logo-stage--square::after {
+        opacity: 0.28;
+        inset: 0.45rem;
+        border-radius: 0.875rem;
+        background: linear-gradient(145deg, rgb(255 255 255 / 0.4) 0%, transparent 52%);
+      }
+      #app-boot-splash .app-boot-logo {
+        block-size: 100%;
+        inline-size: 100%;
+        max-block-size: 100%;
+        max-inline-size: 100%;
+        object-fit: contain;
+        animation: app-boot-logo 2.4s ease-in-out infinite;
+      }
+      #app-boot-splash .app-boot-logo:not(.app-boot-logo--custom) {
+        aspect-ratio: 852 / 600;
+        background-image: var(--gradient-app-logo);
+        -webkit-mask-image: url('/assets/appendo-logo.png');
+        mask-image: url('/assets/appendo-logo.png');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+      }
+      #app-boot-splash .app-boot-logo--custom {
+        background: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+      html[data-loading-identity='hawiety'] #app-boot-splash .app-boot-logo-stage--square .app-boot-logo--custom {
+        filter: drop-shadow(0 4px 14px rgb(2 63 136 / 0.1));
+      }
+      html[data-loading-identity='hawiety'] #app-boot-splash .app-boot-activity {
+        width: min(13rem, 58vw);
+      }
+      /* Portal routes: never flash AppEnd before Settings → Portals logo is applied. */
+      html[data-portal-route]:not([data-portal-logo-ready]) #app-boot-splash .app-boot-logo:not(.app-boot-logo--custom) {
+        visibility: hidden;
+      }
+      #app-boot-splash .app-boot-activity {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.625rem;
+        width: min(12rem, 56vw);
+        min-height: 1.125rem;
+      }
+      #app-boot-splash .app-boot-bar {
+        position: relative;
+        width: 100%;
+        height: clamp(4.5rem, 17vw, 7rem);
+        overflow: hidden;
+        background: transparent;
+      }
+      #app-boot-splash .app-loading-ecg-live {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      @keyframes app-boot-logo {
+        0%,
+        100% {
+          opacity: 0.88;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes app-boot-logo-glow-pulse {
+        0%,
+        100% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 0.85;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #app-boot-splash .app-boot-logo,
+        #app-boot-splash .app-boot-logo--custom,
+        #app-boot-splash .app-boot-logo-stage::before {
+          animation: none;
+        }
+        #app-boot-splash .app-boot-logo-stage::before {
+          opacity: 0.45;
+          transform: none;
+        }
+      }
+    </style>
+    <script>
+      /* Hydrate cached accent CSS vars before the splash paints. Key: appendo-accent-css-v3 */
+      (function () {
+        try {
+          if (location.pathname === '/login') return;
+          var raw = localStorage.getItem('appendo-accent-css-v3');
+          if (!raw) return;
+          var vars = JSON.parse(raw);
+          if (!vars || typeof vars !== 'object') return;
+          var root = document.documentElement;
+          var keyPattern = /^--[a-z0-9-]+$/i;
+          for (var key in vars) {
+            if (!Object.prototype.hasOwnProperty.call(vars, key)) continue;
+            var value = vars[key];
+            if (!keyPattern.test(key) || typeof value !== 'string' || value.indexOf('<') !== -1) continue;
+            root.style.setProperty(key, value);
+          }
+          var accent = root.style.getPropertyValue('--app-accent-500').trim();
+          if (accent) {
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', accent);
+          }
+          var geometry = String(vars['--app-atmosphere-geometry'] || 'on').trim().toLowerCase();
+          if (geometry === 'off' || geometry === '0') {
+            root.setAttribute('data-atmosphere-geometry', 'off');
+          } else {
+            root.removeAttribute('data-atmosphere-geometry');
+          }
+        } catch (e) {}
+      })();
+      /* Mark portal routes before first paint so splash can skip the AppEnd flash. */
+      (function () {
+        try {
+          var path = location.pathname;
+          if (path === '/login' || path === '/install') return;
+          var parts = path.split('/').filter(Boolean);
+          var firstSegment = parts[0] || '';
+          if (firstSegment === 'iq') {
+            document.documentElement.setAttribute('lang', 'ar');
+            document.documentElement.setAttribute('dir', 'rtl');
+          } else if (firstSegment === 'ir') {
+            document.documentElement.setAttribute('lang', 'fa');
+            document.documentElement.setAttribute('dir', 'rtl');
+          }
+          var hawietyIdx = parts.indexOf('hawiety');
+          var segment = hawietyIdx !== -1 ? 'hawiety' : (parts.length >= 2 ? parts[1] : '');
+          if (!segment || segment === 'home') return;
+          document.documentElement.setAttribute('data-portal-route', segment);
+          if (segment === 'hawiety') {
+            document.documentElement.setAttribute('data-loading-identity', 'hawiety');
+            var culture = hawietyIdx > 0 ? parts[hawietyIdx - 1] : 'iq';
+            if (culture === 'iq') {
+              document.documentElement.setAttribute('lang', 'ar');
+              document.documentElement.setAttribute('dir', 'rtl');
+              function isHawietyPublicBootPathEarly(p) {
+                var rest = p.replace(/^\/[^/]+\/hawiety/, '') || '/';
+                if (rest === '/' || !rest) return false;
+                var exact = ['/login', '/track-registration', '/registration-portal-dev', '/other-registration'];
+                for (var ei = 0; ei < exact.length; ei += 1) {
+                  if (rest === exact[ei] || rest.indexOf(exact[ei] + '/') === 0) return true;
+                }
+                if (rest.indexOf('/self-registration') === 0) return true;
+                if (rest.indexOf('/join') === 0) return true;
+                return false;
+              }
+              if (isHawietyPublicBootPathEarly(path)) {
+                var portalAr = 'نظام هويتي الإلكتروني';
+                var pageAr = 'انضم الينا';
+                if (path.indexOf('/track-registration') !== -1) pageAr = 'متابعة التسجيل';
+                else if (path.indexOf('/registration-portal-dev') !== -1) pageAr = 'بوابة تجريب — مسارات التسجيل';
+                else if (path.indexOf('/login') !== -1) pageAr = 'تسجيل الدخول';
+                else if (path.indexOf('/self-registration-gov') !== -1) pageAr = 'التسجيل — الشؤون الحكومية';
+                else if (path.indexOf('/self-registration-hemam') !== -1) pageAr = 'التسجيل — همام';
+                else if (path.indexOf('/self-registration-mehani') !== -1) pageAr = 'التسجيل — المكتب المهني';
+                else if (path.indexOf('/self-registration-shabab') !== -1) pageAr = 'التسجيل — مكتب الشباب المركزي';
+                else if (path.indexOf('/self-registration-nokhab') !== -1) pageAr = 'التسجيل — نخبة النساء';
+                else if (path.indexOf('/self-registration-protectors') !== -1) pageAr = 'التسجيل — حماة';
+                else if (path.indexOf('/self-registration-alforat') !== -1) pageAr = 'التسجيل — الفرات';
+                else if (path.indexOf('/other-registration') !== -1) pageAr = 'التسجيل — بوابة أخرى';
+                document.title = pageAr + ' / ' + portalAr;
+              } else {
+                document.title = 'هويتي ...';
+              }
+            }
+            var defaultFavicon = '/assets/hawiety/mark-blue.png';
+            document.head.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach(function (node) {
+              node.remove();
+            });
+            var faviconLink = document.createElement('link');
+            faviconLink.rel = 'icon';
+            faviconLink.href = defaultFavicon;
+            faviconLink.type = 'image/png';
+            document.head.appendChild(faviconLink);
+            var touchLink = document.createElement('link');
+            touchLink.rel = 'apple-touch-icon';
+            touchLink.href = defaultFavicon;
+            document.head.appendChild(touchLink);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-Ckx4PcXr.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-CsZD9bLw.js">
+    <link rel="modulepreload" crossorigin href="/assets/tanstack-query-BjZ08O4H.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-DGFKKImv.css">
+  </head>
+  <body>
+    <script>
+      document.documentElement.setAttribute('data-app-boot-phase', 'loading');
+    </script>
+    <div id="app-boot-splash" role="status" aria-live="polite" aria-busy="true" aria-label="Loading">
+      <div class="app-boot-stack">
+        <div class="app-boot-logo-stage app-boot-logo-stage--appendo" aria-hidden="true">
+          <div class="app-boot-logo-frame">
+            <span class="app-boot-logo"></span>
+          </div>
+        </div>
+        <div class="app-boot-activity" aria-hidden="true">
+          <div class="app-boot-bar">
+            <canvas class="app-loading-ecg-live" aria-hidden="true"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      /* Portal splash logo — DOM must exist; sync cache then sync /api/boot (Settings → Portals). */
+      (function () {
+        try {
+          var path = location.pathname;
+          if (path === '/login' || path === '/install') return;
+
+          function guessSegment() {
+            var parts = path.split('/').filter(Boolean);
+            var hawietyIdx = parts.indexOf('hawiety');
+            if (hawietyIdx !== -1) return 'hawiety';
+            return parts.length >= 2 ? parts[1] : '';
+          }
+
+          function isAllowedLogo(pathOnly) {
+            if (!pathOnly || pathOnly.indexOf('..') !== -1 || pathOnly.indexOf('<') !== -1) return false;
+            if (pathOnly.indexOf('/assets/workspace/portals/') === 0) return true;
+            if (pathOnly.indexOf('/assets/hawiety/') === 0) return true;
+            if (pathOnly.indexOf('/assets/hawiety/institutes/') === 0) return true;
+            if (/^\/api\/hwy\/institutes\/\d+\/logo$/i.test(pathOnly)) return true;
+            return false;
+          }
+
+          function markReady() {
+            document.documentElement.setAttribute('data-portal-logo-ready', '1');
+          }
+
+          function resolveHawietyPortalTitle(registryTitle) {
+            var ar = 'نظام هويتي الإلكتروني';
+            var trimmed = registryTitle ? String(registryTitle).trim() : '';
+            if (
+              !trimmed
+              || trimmed === 'AppEnd'
+              || trimmed === 'AppEndO'
+              || trimmed === 'Hawiety electronic identity system'
+              || trimmed === 'Hawiety'
+            ) {
+              return ar;
+            }
+            return trimmed;
+          }
+
+          function resolveHawietyPageTitle(path) {
+            if (path.indexOf('/track-registration') !== -1) return 'متابعة التسجيل';
+            if (path.indexOf('/registration-portal-dev') !== -1) return 'بوابة تجريب — مسارات التسجيل';
+            if (path.indexOf('/login') !== -1) return 'تسجيل الدخول';
+            if (path.indexOf('/self-registration-gov') !== -1) return 'التسجيل — الشؤون الحكومية';
+            if (path.indexOf('/self-registration-hemam') !== -1) return 'التسجيل — همام';
+            if (path.indexOf('/self-registration-mehani') !== -1) return 'التسجيل — المكتب المهني';
+            if (path.indexOf('/self-registration-shabab') !== -1) return 'التسجيل — مكتب الشباب المركزي';
+            if (path.indexOf('/self-registration-nokhab') !== -1) return 'التسجيل — نخبة النساء';
+            if (path.indexOf('/self-registration-protectors') !== -1) return 'التسجيل — حماة';
+            if (path.indexOf('/self-registration-alforat') !== -1) return 'التسجيل — الفرات';
+            if (path.indexOf('/other-registration') !== -1) return 'التسجيل — بوابة أخرى';
+            return 'انضم الينا';
+          }
+
+          function isHawietyPublicBootPath(p) {
+            var rest = p.replace(/^\/[^/]+\/hawiety/, '') || '/';
+            if (rest === '/' || !rest) return false;
+            var exact = ['/login', '/track-registration', '/registration-portal-dev', '/other-registration'];
+            for (var ei = 0; ei < exact.length; ei += 1) {
+              if (rest === exact[ei] || rest.indexOf(exact[ei] + '/') === 0) return true;
+            }
+            if (rest.indexOf('/self-registration') === 0) return true;
+            if (rest.indexOf('/join') === 0) return true;
+            return false;
+          }
+
+          function resolveHawietyAdminBootTitle(registryWindowTitle) {
+            var w = registryWindowTitle ? String(registryWindowTitle).trim() : 'هويتي';
+            return w + ' ...';
+          }
+
+          function resolveHawietyDocumentTitle(registryTitle, registryWindowTitle) {
+            if (segment === 'hawiety' && !isHawietyPublicBootPath(path)) {
+              return resolveHawietyAdminBootTitle(registryWindowTitle);
+            }
+            var portal = resolveHawietyPortalTitle(registryTitle);
+            var page = resolveHawietyPageTitle(path);
+            return page + ' / ' + portal;
+          }
+
+          function applyPortalFavicon(pathOnly) {
+            if (!isAllowedLogo(pathOnly)) return;
+            document.head.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach(function (node) {
+              node.remove();
+            });
+            var faviconLink = document.createElement('link');
+            faviconLink.rel = 'icon';
+            faviconLink.href = pathOnly;
+            faviconLink.type = pathOnly.indexOf('.svg') !== -1 ? 'image/svg+xml' : 'image/png';
+            document.head.appendChild(faviconLink);
+            var touchLink = document.createElement('link');
+            touchLink.rel = 'apple-touch-icon';
+            touchLink.href = pathOnly;
+            document.head.appendChild(touchLink);
+          }
+
+          var HWY_DEFAULT_MARK = '/assets/hawiety/mark-blue.png';
+
+          function applyDefaultHawietySplashLogo() {
+            if (segment !== 'hawiety') return false;
+            return applySplashLogo(HWY_DEFAULT_MARK, '');
+          }
+
+          function classifyLogoShape(pathOnly) {
+            var p = String(pathOnly).toLowerCase();
+            if (p.indexOf('/mark-blue') !== -1 || p.indexOf('/mark-white') !== -1) {
+              return 'square';
+            }
+            if (p.indexOf('/assets/hawiety/') !== -1 && p.indexOf('/mark-') !== -1) {
+              return 'square';
+            }
+            return 'wide';
+          }
+
+          function setLogoStageShape(pathOnly) {
+            if (document.documentElement.hasAttribute('data-boot-splash-logo-locked')) {
+              return document.querySelector('#app-boot-splash .app-boot-logo-frame');
+            }
+            var stage = document.querySelector('#app-boot-splash .app-boot-logo-stage');
+            if (!stage) return null;
+            var shape = classifyLogoShape(pathOnly);
+            stage.className = 'app-boot-logo-stage app-boot-logo-stage--' + shape;
+            var frame = stage.querySelector('.app-boot-logo-frame');
+            if (!frame) {
+              frame = document.createElement('div');
+              frame.className = 'app-boot-logo-frame';
+              stage.appendChild(frame);
+            }
+            return frame;
+          }
+
+          function applySplashLogo(pathOnly, title, windowTitle) {
+            if (pathOnly.indexOf('/assets/appendo-logo') === 0) {
+              markReady();
+              return true;
+            }
+            if (!isAllowedLogo(pathOnly)) return false;
+            var frame = setLogoStageShape(pathOnly);
+            if (!frame) return false;
+            var logo = frame.querySelector('.app-boot-logo');
+            var img = document.createElement('img');
+            img.className = 'app-boot-logo app-boot-logo--custom';
+            img.src = pathOnly;
+            img.alt = '';
+            img.setAttribute('aria-hidden', 'true');
+            if (logo) {
+              logo.replaceWith(img);
+            } else {
+              frame.appendChild(img);
+            }
+            applyPortalFavicon(pathOnly);
+            var resolvedTitle = segment === 'hawiety'
+              ? resolveHawietyDocumentTitle(title, windowTitle)
+              : title;
+            if (resolvedTitle && resolvedTitle !== 'AppEnd' && resolvedTitle !== 'AppEndO' && resolvedTitle.indexOf('<') === -1) {
+              document.title = resolvedTitle;
+            }
+            markReady();
+            document.documentElement.setAttribute('data-boot-splash-logo-locked', '1');
+            return true;
+          }
+
+          function cacheBrand(segment) {
+            try {
+              var raw = localStorage.getItem('appendo-portal-brand-v1');
+              var map = raw ? JSON.parse(raw) : {};
+              if (!map || typeof map !== 'object') map = {};
+              return map[segment] || null;
+            } catch (e) {
+              return null;
+            }
+          }
+
+          function writeCache(segment, logoUrl, title, windowTitle) {
+            try {
+              var raw = localStorage.getItem('appendo-portal-brand-v1');
+              var map = raw ? JSON.parse(raw) : {};
+              if (!map || typeof map !== 'object') map = {};
+              map[segment] = {
+                logoUrl: logoUrl,
+                title: title || '',
+                windowTitle: windowTitle || '',
+              };
+              localStorage.setItem('appendo-portal-brand-v1', JSON.stringify(map));
+            } catch (e) {}
+          }
+
+          var segment = guessSegment();
+          if (!segment || segment === 'home') return;
+
+          var cached = cacheBrand(segment);
+          if (cached && cached.logoUrl) {
+            var cachedPath = String(cached.logoUrl).trim().split('?')[0];
+            if (applySplashLogo(cachedPath, cached.title, cached.windowTitle)) return;
+          }
+
+          function resolveSelfRegistrationChannelFromPath(p) {
+            var rest = p.replace(/^\/[^/]+\/hawiety/, '') || p;
+            var suffixToChannel = {
+              '/self-registration-gov': 'gov',
+              '/self-registration-hemam': 'hemam',
+              '/self-registration-mehani': 'mehani',
+              '/self-registration-shabab': 'shabab',
+              '/self-registration-nokhab': 'nokhab',
+              '/self-registration-protectors': 'protectors',
+              '/self-registration-alforat': 'alforat',
+            };
+            var key;
+            for (key in suffixToChannel) {
+              if (Object.prototype.hasOwnProperty.call(suffixToChannel, key)) {
+                if (rest === key || rest.indexOf(key + '/') === 0) {
+                  return suffixToChannel[key];
+                }
+              }
+            }
+            return null;
+          }
+
+          function tryApplyInstituteBrandSplashFromDb() {
+            if (segment !== 'hawiety' || !isHawietyPublicBootPath(path)) return false;
+            var channel = resolveSelfRegistrationChannelFromPath(path);
+            if (!channel) return false;
+            try {
+              var brandXhr = new XMLHttpRequest();
+              brandXhr.open(
+                'GET',
+                '/api/hwy/public/self-registration/institute-brand?channel=' + encodeURIComponent(channel),
+                false,
+              );
+              brandXhr.withCredentials = true;
+              brandXhr.send(null);
+              if (brandXhr.status < 200 || brandXhr.status >= 300) return false;
+              var brandJson = JSON.parse(brandXhr.responseText);
+              var brand = brandJson && brandJson.data;
+              var logoPath = brand && typeof brand.logoUrl === 'string' ? brand.logoUrl.trim().split('?')[0] : '';
+              if (!logoPath || !/^\/api\/hwy\/institutes\/\d+\/logo$/i.test(logoPath)) return false;
+              var title = brand.titleAr && String(brand.titleAr).trim()
+                ? String(brand.titleAr).trim()
+                : resolveHawietyPageTitle(path);
+              return applySplashLogo(logoPath, title, '');
+            } catch (brandErr) {
+              return false;
+            }
+          }
+
+          if (tryApplyInstituteBrandSplashFromDb()) return;
+
+          if (applyDefaultHawietySplashLogo()) return;
+
+          try {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/boot', false);
+            xhr.withCredentials = true;
+            xhr.send(null);
+            if (xhr.status < 200 || xhr.status >= 300) {
+              if (!applyDefaultHawietySplashLogo()) markReady();
+              return;
+            }
+            var data = JSON.parse(xhr.responseText);
+            if (!data || !data.runtimeConfig || !Array.isArray(data.runtimeConfig.shells)) {
+              if (!applyDefaultHawietySplashLogo()) markReady();
+              return;
+            }
+            var shell = data.runtimeConfig.shells.find(function (s) {
+              return s && s.shellKey === segment;
+            });
+            if (!shell || !shell.brand) {
+              if (!applyDefaultHawietySplashLogo()) markReady();
+              return;
+            }
+            var logoUrl = typeof shell.brand.logoUrl === 'string' ? shell.brand.logoUrl.trim().split('?')[0] : '';
+            var shellTitle = typeof shell.brand.title === 'string' ? shell.brand.title.trim() : '';
+            var shellWindowTitle = typeof shell.brand.windowTitle === 'string' ? shell.brand.windowTitle.trim() : '';
+            if (!logoUrl) {
+              if (!applyDefaultHawietySplashLogo()) markReady();
+              return;
+            }
+            var bootTitle = segment === 'hawiety'
+              ? resolveHawietyDocumentTitle(shellTitle, shellWindowTitle)
+              : shellTitle;
+            writeCache(segment, logoUrl, bootTitle, shellWindowTitle);
+            applySplashLogo(logoUrl, shellTitle, shellWindowTitle);
+          } catch (e) {
+            if (!applyDefaultHawietySplashLogo()) markReady();
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div id="root"></div>
+    <!-- Static loader: do NOT point at /src/main.tsx directly (stampedes Vite on restart). -->
+  </body>
+</html>

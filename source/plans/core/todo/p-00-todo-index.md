@@ -41,7 +41,7 @@
 
 <table dir="rtl">
 <thead><tr><th>اولویت</th><th>سند</th><th>وضعیت</th><th>وابستگی</th><th>یادداشت</th></tr></thead>
-<tbody><tr><td><strong>Release</strong></td><td><a href="p-130-local-release-cut.md">p-130-local-release-cut</a></td><td>🟡 <strong>AppEndO-Release</strong></td><td>—</td><td>ریپوی public جدا · <code dir="ltr" style="unicode-bidi: embed;">release:push-appendo-release</code></td></tr>
+<tbody><tr><td><strong>Release</strong></td><td><a href="p-130-local-release-cut.md">p-130-local-release-cut</a></td><td>🟡 RCUT-8 <strong>Deploy</strong></td><td>RCUT-9 آپلود</td><td><code dir="ltr" style="unicode-bidi: embed;">AppEndO-Hawiety</code> خصوصی · promote هویتی</td></tr>
 <tr><td><strong>Package</strong></td><td><a href="../../packages/todo/tsk-package/p-packages-task-management.md">tsk-package</a></td><td>⬜ design only</td><td>—</td><td>پروژه · تسک · کانبان · کنترل: <a href="../../packages/todo/p-00-packages-index.md"><code dir="ltr" style="unicode-bidi: embed;">p-00-packages-index</code></a></td></tr>
 <tr><td><strong>—</strong></td><td><a href="p-127-data-model-query-surfaces.md">p-127-data-model-query-surfaces</a></td><td>🟢 <strong>پیاده‌سازی اصلی</strong></td><td>Data Studio · Where Builder · List filter</td><td>قرارداد + Data API + seed ۱۰۳ مدل · Modeler filterRole + Query surfaces access · Designer grid presets/runtime · export/install پکیج</td></tr>
 <tr><td><strong>—</strong></td><td><a href="p-128-workbook-database-connections.md">p-128-workbook-database-connections</a></td><td>⬜ <strong>خام — تحلیل اپراتور</strong></td><td>Workbooks · Data Studio / Edge · Data API</td><td>اتصال شیت به منبع داده · import/refresh سرور · امنیت و share · write-back موکول</td></tr>

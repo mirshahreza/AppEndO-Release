@@ -16,7 +16,7 @@ import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 const REPO_ROOT = releaseCutRepoRoot();
 
 function git(cwd: string, args: string[]): void {
-  const child = spawnSync('git', args, { cwd, encoding: 'utf8', shell: process.platform === 'win32' });
+  const child = spawnSync('git', args, { cwd, encoding: 'utf8', shell: false });
   if (child.status !== 0) {
     throw new Error(`git ${args.join(' ')} failed: ${child.stderr || child.stdout}`);
   }
@@ -24,9 +24,7 @@ function git(cwd: string, args: string[]): void {
 
 export function syncStagingToClone(stagingDir: string, clonePath: string): void {
   if (!fs.existsSync(path.join(clonePath, '.git'))) {
-    throw new Error(
-      `Missing git clone at ${clonePath}. Create public repo ${APPENDO_RELEASE_REPO_NAME} and: git clone <url> "${clonePath}"`,
-    );
+    throw new Error(`Missing git clone at ${clonePath}. git clone <remote-url> "${clonePath}"`);
   }
 
   const sourceDir = path.join(stagingDir, 'source');
@@ -81,7 +79,19 @@ export function pushAppEndOReleaseTree(options?: { repoRoot?: string; pushRemote
   git(clonePath, ['tag', '-a', tagName, '-m', `AppEndO v${version}`]);
 
   if (pushRemote) {
-    git(clonePath, ['push']);
+    const branch =
+      spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: clonePath, encoding: 'utf8' }).stdout?.trim() ||
+      'main';
+    const pushMain = spawnSync('git', ['push', '-u', 'origin', branch], { cwd: clonePath, encoding: 'utf8' });
+    if (pushMain.status !== 0) {
+      const err = `${pushMain.stderr || pushMain.stdout}`;
+      if (err.includes('Repository not found')) {
+        throw new Error(
+          `GitHub repo missing for origin. Run: gh auth login && gh repo create mirshahreza/${APPENDO_RELEASE_REPO_NAME} --public && npm run release:push-appendo-release`,
+        );
+      }
+      throw new Error(`git push -u origin ${branch} failed: ${err}`);
+    }
     git(clonePath, ['push', 'origin', tagName]);
   }
 

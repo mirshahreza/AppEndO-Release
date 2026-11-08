@@ -1,0 +1,1 @@
+import{eV as c,eW as B,eX as n,eU as o}from"./index-Ckx4PcXr.js";const S={[o]:"feedback.subject.bug",[n]:"feedback.subject.suggestion",[B]:"feedback.subject.question",[c]:"feedback.subject.praise"};function C(r,E,e){const t=S[E];if(t){const s=r(t);if(s.trim())return s}return(e==null?void 0:e.trim())||E}export{C as r};

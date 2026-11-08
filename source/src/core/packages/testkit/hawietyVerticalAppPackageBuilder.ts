@@ -11,7 +11,7 @@ export const HAWIETY_VERTICAL_APP_SPEC: VerticalAppPackageSpec = {
   version: '0.1.0',
   pathPrefix: '/hawiety',
   description:
-    'Hawiety (هویتی) membership portal — installable vertical-app stub (p-15). Data via ETL only.',
+    'Hawiety membership portal — installable vertical-app stub (p-15). Data via ETL only.',
   createdBy: 'AppEndO',
   applyPolicy: 'propose',
   defaultRoute: 'members-all',

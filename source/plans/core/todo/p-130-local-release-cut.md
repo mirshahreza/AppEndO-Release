@@ -15,7 +15,7 @@
 
 # p-130 — Local release cut (اسکیل + orchestrator لوکال)
 
-> **وضعیت:** 🟡 RCUT-0..6 + export/push — مدل <strong>AppEndO-Release</strong> جایگزین <code dir="ltr">releases/public/</code> شد (پلن + اسکریپت)؛ push به clone عمومی با <code dir="ltr">release:push-appendo-release</code>  
+> **وضعیت:** 🟡 RCUT-8 <strong>AppEndO-Hawiety</strong> (خصوصی + هویتی) shipped در اسکریپت؛ آپلود سرور (FTP/rsync) = فاز بعد (آپلود)  
 > **ورود operatore:** <code dir="ltr">@appendo-release-cut</code> یا <code dir="ltr">npm run release:cut</code> (پس از پیاده‌سازی)  
 > **ایندکس:** <a href="p-00-todo-index.md">p-00-todo-index.md</a>  
 > **GitHub Actions:** عمداً <strong>غیرفعال</strong> بماند — <code dir="ltr">.github/workflows/ci.yml</code> بدون trigger روی push/tag
@@ -37,6 +37,9 @@
 <tr><td>8</td><td>خود-ترمیمی</td><td>فقط repairهای <strong>whitelist</strong> (جدول §۲.۵) + یک retry per phase؛ شکست نهایی = بدون publish آرتیفکت عمومی و حذف تگ لوکال اگر commit انتشار push نشده.</td></tr>
 <tr><td>9</td><td>ریپوی عمومی</td><td><strong><code dir="ltr">AppEndO-Release</code></strong> — ریپوی git public جدا؛ <strong>ممنوع</strong>: <code dir="ltr">releases/public/</code> داخل AppEndO خصوصی. staging: <code dir="ltr">.appendo-release-staging/</code> (gitignore).</td></tr>
 <tr><td>10</td><td>فورک</td><td>فورک GitHub از کل monorepo خصوصی <strong>نه</strong> — push فیلترشده از staging به <code dir="ltr">AppEndO-Release</code> (بدون تاریخ هویتی).</td></tr>
+<tr><td>11</td><td>دیپلوی خصوصی</td><td><strong><code dir="ltr">AppEndO-Hawiety</code></strong> — ریپوی git <strong>private</strong> جدا؛ staging <code dir="ltr">.appendo-hawiety-staging/vX.Y.Z/</code>؛ شامل سورس کامل + <code dir="ltr">dist</code> + ZIP هویتی <strong>promote</strong> (بدون pack مجدد در export).</td></tr>
+<tr><td>12</td><td>هویتی golden</td><td>ZIP هویتی فقط از <code dir="ltr">runtime/package-artifacts/hawiety/</code> کپی می‌شود؛ <code dir="ltr">hawiety:pack</code> فقط در <code dir="ltr">release:cut</code> P4 وقتی ورژن هویتی عوض شد — نه در هر export دیپلوی.</td></tr>
+<tr><td>13</td><td>CI</td><td><strong>بدون</strong> GitHub Actions برای build/pack؛ push لوکال با <code dir="ltr">gh</code> / git؛ runner روی سرور فقط برای extract/restart (بعداً).</td></tr>
 </tbody>
 </table>
 
@@ -81,8 +84,27 @@
 <tr><td>Export</td><td><code dir="ltr">npm run release:export-appendo-release</code> · <code dir="ltr">assemblePublicReleaseTree.ts</code></td></tr>
 <tr><td>Push عمومی</td><td><code dir="ltr">npm run release:push-appendo-release</code> · clone <code dir="ltr">../AppEndO-Release</code> یا <code dir="ltr">APPENDO_RELEASE_REPO_PATH</code></td></tr>
 <tr><td>نام ریپو</td><td><strong>AppEndO-Release</strong> (ثابت — <code dir="ltr">appendoReleaseRepo.ts</code>)</td></tr>
+<tr><td>Staging دیپلوی</td><td><code dir="ltr">.appendo-hawiety-staging/vX.Y.Z/</code></td></tr>
+<tr><td>Export دیپلوی</td><td><code dir="ltr">npm run release:export-appendo-hawiety</code></td></tr>
+<tr><td>Push دیپلوی</td><td><code dir="ltr">npm run release:push-appendo-hawiety</code> · <code dir="ltr">../AppEndO-Hawiety</code> · <code dir="ltr">APPENDO_HAWIETY_REPO_PATH</code></td></tr>
+<tr><td>نام ریپوی خصوصی</td><td><strong>AppEndO-Hawiety</strong> — <code dir="ltr">appendoHawietyRepo.ts</code></td></tr>
 </tbody>
 </table>
+
+### §۲.۹ — AppEndO-Hawiety (ریپوی private + هویتی)
+
+<table dir="rtl">
+<thead><tr><th>گام</th><th>operatore</th><th>خروجی</th></tr></thead>
+<tbody>
+<tr><td>۱</td><td><code dir="ltr">release:cut</code> (فقط وقتی ورژن هویتی تغییر کرد: P4 <code dir="ltr">hawiety:pack</code>)</td><td>ZIP golden در <code dir="ltr">runtime/package-artifacts/hawiety/</code></td></tr>
+<tr><td>۲</td><td><code dir="ltr">npm run build</code></td><td><code dir="ltr">dist/server.cjs</code></td></tr>
+<tr><td>۳</td><td><code dir="ltr">npm run release:export-appendo-hawiety</code></td><td>staging با سورس <strong>کامل</strong> + <code dir="ltr">dist</code> + cms + remote-hubs + <strong>هویتی promote</strong></td></tr>
+<tr><td>۴</td><td>یک‌بار: <code dir="ltr">gh repo create mirshahreza/AppEndO-Hawiety --private</code> و clone <code dir="ltr">../AppEndO-Hawiety</code></td><td>ریپوی خصوصی</td></tr>
+<tr><td>۵</td><td><code dir="ltr">npm run release:push-appendo-hawiety</code> یا <code dir="ltr">release:cut -- --push-appendo-hawiety</code></td><td>تگ <code dir="ltr">hawiety/vX.Y.Z</code> روی <strong>AppEndO-Hawiety</strong></td></tr>
+</tbody>
+</table>
+
+<p><strong>تفاوت با Release:</strong> Release = OSS بدون هویتی · public. Deploy = دیپلوی سرور · private · هویتی بدون pack تکراری در export.</p>
 
 ### §۲.۸ — AppEndO-Release (ریپوی public / «فورک ریلیز»)
 
@@ -173,6 +195,8 @@ npm run release:cut -- --push
 npm run release:cut -- --resume &lt;runId&gt;
 npm run release:export-appendo-release
 npm run release:push-appendo-release
+npm run release:export-appendo-hawiety
+npm run release:push-appendo-hawiety
 </pre>
 
 ---
@@ -189,7 +213,9 @@ npm run release:push-appendo-release
 <tr><td><strong>RCUT-4</strong></td><td>بیلد platform + gate OSS</td><td><code dir="ltr">assertPublicOssReleaseScope</code> سبز</td></tr>
 <tr><td><strong>RCUT-5</strong></td><td>Skill <code dir="ltr">appendo-release-cut</code></td><td>agent با @skill همان npm را صدا می‌زند</td></tr>
 <tr><td><strong>RCUT-6</strong></td><td>تست پذیرش end-to-end (§۳.۲) + repair path</td><td>دو run پشت‌سرهم: یکی dry-run کامل، یکی cut واقعی در sandbox git</td></tr>
-<tr><td><strong>RCUT-7</strong></td><td><strong>AppEndO-Release</strong> — حذف <code dir="ltr">releases/public</code> · export staging · push به clone عمومی</td><td>ریپوی public به‌روز؛ بدون پوشه <code dir="ltr">releases/</code> در monorepo خصوصی</td></tr>
+<tr><td><strong>RCUT-7</strong></td><td><strong>AppEndO-Release</strong> — export/push عمومی</td><td>ریپوی <code dir="ltr">AppEndO-Release</code> public</td></tr>
+<tr><td><strong>RCUT-8</strong></td><td><strong>AppEndO-Hawiety</strong> — export promote هویتی · push private</td><td>ریپوی <code dir="ltr">AppEndO-Hawiety</code> + تگ <code dir="ltr">hawiety/vX.Y.Z</code></td></tr>
+<tr><td><strong>RCUT-9</strong></td><td>آپلود سرور (FTP/rsync/self-hosted)</td><td>خارج از این سند — «داستان آپلود»</td></tr>
 </tbody>
 </table>
 
@@ -225,7 +251,7 @@ npm run release:push-appendo-release
 ## §۴ — پرامپت agent (شروع پیاده‌سازی)
 
 <blockquote>
-<code dir="ltr">@plans/core/todo/p-130-local-release-cut.md</code> — RCUT-0..7 (مدل <strong>AppEndO-Release</strong>، نه <code dir="ltr">releases/public</code>). scope فقط release-cut scripts، export/push، skill، npm. بدون GitHub Actions. operatore: <code dir="ltr">@appendo-release-cut</code> + <code dir="ltr">release:push-appendo-release</code>.
+<code dir="ltr">@plans/core/todo/p-130-local-release-cut.md</code> — RCUT-0..8: <strong>AppEndO-Release</strong> (public) + <strong>AppEndO-Hawiety</strong> (private + hawiety promote). بدون GitHub Actions build. operatore: <code dir="ltr">release:push-appendo-hawiety</code> برای سرور؛ آپلود فیزیکی = RCUT-9.
 </blockquote>
 
 ---

@@ -3,7 +3,9 @@ src/generated/prisma/client.runtime.mjs
 build/
 release/
 dist/
+.release-cut-runs/
 .appendo-release-staging/
+.appendo-hawiety-staging/
 releases/public/
 dev-dist/
 coverage/
@@ -12,6 +14,8 @@ scripts/liveModelEval/results/
 tmp-prof/
 .DS_Store
 *.log
+.hwy-etl-*.log
+.tmp-*
 .env*
 !.env.example
 settings.json

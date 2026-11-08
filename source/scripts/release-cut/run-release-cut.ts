@@ -36,6 +36,7 @@ import { runNpmScript } from './npmRunner';
 import { attemptRepairForLog } from './repair';
 import type { SemverBump } from './semver';
 import { pushAppEndOReleaseTree } from './pushAppEndORelease';
+import { pushAppEndOHawietyTree } from './pushAppEndOHawiety';
 
 type CliOptions = {
   dryRun: boolean;
@@ -50,6 +51,7 @@ type CliOptions = {
   withTestCritical: boolean;
   allowPlatformBuildFail: boolean;
   pushAppEndORelease: boolean;
+  pushAppEndOHawiety: boolean;
   resumeRunId?: string;
   mainBranchOnly: boolean;
 };
@@ -68,6 +70,7 @@ function parseArgs(argv: string[]): CliOptions {
   let withTestCritical = false;
   let allowPlatformBuildFail = false;
   let pushAppEndORelease = false;
+  let pushAppEndOHawiety = false;
   let resumeRunId: string | undefined;
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -82,6 +85,7 @@ function parseArgs(argv: string[]): CliOptions {
     else if (arg === '--with-test-critical') withTestCritical = true;
     else if (arg === '--allow-platform-build-fail') allowPlatformBuildFail = true;
     else if (arg === '--push-appendo-release') pushAppEndORelease = true;
+    else if (arg === '--push-appendo-hawiety') pushAppEndOHawiety = true;
     else if (arg === '--bump') bump = (argv[++i] as SemverBump) ?? 'patch';
     else if (arg === '--publish-packages') {
       publishPackageIds = (argv[++i] ?? '').split(',').map((s) => s.trim()).filter(Boolean);
@@ -104,6 +108,7 @@ function parseArgs(argv: string[]): CliOptions {
     withTestCritical,
     allowPlatformBuildFail,
     pushAppEndORelease,
+    pushAppEndOHawiety,
     resumeRunId,
     mainBranchOnly: !argv.includes('--no-main-guard'),
   };
@@ -420,7 +425,15 @@ async function main(): Promise<void> {
             runWithOptionalRepair('build', repoRoot, buildLog, false, {
               nodeOldSpaceMb: 8192,
             });
-            fs.cpSync(path.join(repoRoot, 'dist'), path.join(platformDir, 'dist'), { recursive: true });
+            const srcDist = path.join(repoRoot, 'dist');
+            const destDist = path.join(platformDir, 'dist');
+            fs.mkdirSync(destDist, { recursive: true });
+            for (const entry of fs.readdirSync(srcDist, { withFileTypes: true })) {
+              if (entry.name === 'release-cut') {
+                continue;
+              }
+              fs.cpSync(path.join(srcDist, entry.name), path.join(destDist, entry.name), { recursive: true });
+            }
             const pkg = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8')) as {
               version: string;
             };
@@ -463,14 +476,31 @@ async function main(): Promise<void> {
         ) {
           runPublicAssembleScript(repoRoot, runRoot, options.dryRun);
         }
-        if (!options.dryRun && options.pushAppEndORelease && !options.skipOss) {
-          try {
-            const pushSummary = pushAppEndOReleaseTree({ repoRoot });
-            appendReportLine(runRoot, `- AppEndO-Release: ${pushSummary}`);
-          } catch (pushError) {
-            const pushMessage = pushError instanceof Error ? pushError.message : String(pushError);
-            appendReportLine(runRoot, `- AppEndO-Release push skipped/failed: ${pushMessage}`);
-            throw pushError;
+        if (!options.dryRun && !options.skipOss && fs.existsSync(path.join(repoRoot, 'dist', 'server.cjs'))) {
+          if (options.pushAppEndORelease) {
+            try {
+              runNpmScript('release:export-appendo-release', { cwd: repoRoot, logPath: path.join(runRoot, 'logs', 'export-release.log') });
+              const pushSummary = pushAppEndOReleaseTree({ repoRoot });
+              appendReportLine(runRoot, `- AppEndO-Release: ${pushSummary}`);
+            } catch (pushError) {
+              const pushMessage = pushError instanceof Error ? pushError.message : String(pushError);
+              appendReportLine(runRoot, `- AppEndO-Release push failed: ${pushMessage}`);
+              throw pushError;
+            }
+          }
+          if (options.pushAppEndOHawiety) {
+            try {
+              runNpmScript('release:export-appendo-hawiety', {
+                cwd: repoRoot,
+                logPath: path.join(runRoot, 'logs', 'export-hawiety.log'),
+              });
+              const hawietySummary = pushAppEndOHawietyTree({ repoRoot });
+              appendReportLine(runRoot, `- AppEndO-Hawiety: ${hawietySummary}`);
+            } catch (hawietyError) {
+              const hawietyMessage = hawietyError instanceof Error ? hawietyError.message : String(hawietyError);
+              appendReportLine(runRoot, `- AppEndO-Hawiety push failed: ${hawietyMessage}`);
+              throw hawietyError;
+            }
           }
         }
         appendReportLine(runRoot, `- P8 complete — artifacts: \`${runRoot}\``);

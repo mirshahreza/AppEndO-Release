@@ -4,7 +4,7 @@
 
 ## Intent
 
-Hawiety (هویتی) reads and writes SQL Server through `src/server/domain/hwy/*` and install scripts under `scripts/hwy-phase1/db/install/`. **Multi-step writes**, **guarded writes** (allocate id + insert), and **complex reads** (multi-join lists, scope subqueries, inbox grids) belong in **first-class database objects** (procedures / table-valued functions / views) so:
+Hawiety reads and writes SQL Server through `src/server/domain/hwy/*` and install scripts under `scripts/hwy-phase1/db/install/`. **Multi-step writes**, **guarded writes** (allocate id + insert), and **complex reads** (multi-join lists, scope subqueries, inbox grids) belong in **first-class database objects** (procedures / table-valued functions / views) so:
 
 1. **Atomicity** is enforced in one `BEGIN TRAN` / `COMMIT` batch (not split across Node awaits).
 2. **Operators and ETL** can run the same logic from SSMS, legacy parity scripts, or batch jobs without duplicating rules in TypeScript.

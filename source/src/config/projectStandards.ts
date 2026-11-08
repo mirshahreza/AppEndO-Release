@@ -1496,6 +1496,19 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       ],
     },
     {
+      id: 'package.hawiety.locale-policy',
+      title: 'Hawiety — Arabic UI, English repo copy, no Persian',
+      value:
+        'Hawiety end-user and iq overlay copy Arabic (e.g. هويتي not Persian هویتی); AppEndO-Hawiety README/templates and non-UI Hawiety metadata English only; no Persian in hawiety shell seeds or hawiety.* culture keys; shard package-hawiety-locale-policy',
+      appliesTo: [
+        'src/core/packages/hawietyPackage.ts',
+        'src/domain/hwy/hwyPlatformPortalBrandDefaults.ts',
+        'scripts/release-cut/templates/AppEndO-Hawiety-README.md',
+        'src/core/system-extensions/culture-packs/overlays/hawiety.iq.json',
+        'workspace/platform-registry/shells/hawiety.json',
+      ],
+    },
+    {
       id: 'package.hawiety.ui-vocab',
       value:
         'Hawiety Studio UI copy: say region (منطقة) not eghtera/اقتراع; maktab (مكتب) not tamvin/تموين; electoral breadcrumb order province → ghavateh? → circle → maktab → region; grid column 3 rows (province|ghavateh / circle|maktab / region) via hwyElectoralBreadcrumbStandard.ts — legacy SQL/route names stay; shard package-hawiety-ui-vocab',
@@ -1724,7 +1737,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'platform.release-cut',
       title: 'Local Release Cut (no cloud CI)',
       value:
-        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default hawiety), exports lean OSS to .appendo-release-staging and the separate public git repo AppEndO-Release (cms + remote-hubs only); see docs/standards/release-cut.md',
+        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default hawiety) in P4 only when versions change; public AppEndO-Release (cms + remote-hubs) and private AppEndO-Hawiety (full source + dist + promoted hawiety zip, no pack on hawiety export); see docs/standards/release-cut.md',
       appliesTo: ['release', 'packages', 'CI', 'hawiety pack', 'open source bundle'],
     },
     {
@@ -2066,6 +2079,7 @@ export const shardForStandardId = (id: string): string => {
   if (id.startsWith('component-designer')) return 'component-designer';
   if (id.startsWith('package.records') || id.startsWith('package.home') || id.startsWith('package.studio') || id.startsWith('package.install')) return 'package-ui';
   if (id.startsWith('package.base-info')) return 'package-base-info-vocab';
+  if (id === 'package.hawiety.locale-policy') return 'package-hawiety-locale-policy';
   if (id === 'package.hawiety.ui-vocab') return 'package-hawiety-ui-vocab';
   if (id === 'package.hawiety.member-face-caption') return 'package-hawiety-member-face-caption';
   if (id === 'package.hawiety.member-list-legacy-filters') return 'package-hawiety-member-list-legacy-filters';

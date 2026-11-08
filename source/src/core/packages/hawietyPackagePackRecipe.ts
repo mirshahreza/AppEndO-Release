@@ -343,7 +343,7 @@ export function buildHawietyVerticalAppPackageSpec(options?: {
     name: HAWIETY_PACKAGE_NAME,
     version: HAWIETY_PACKAGE_VERSION,
     pathPrefix: HAWIETY_MOUNT_PATH_PREFIX,
-    description: 'Hawiety (هویتی) membership portal — schema via install; member data via ETL only.',
+    description: 'Hawiety membership portal — schema via install; member data via ETL only.',
     createdBy: 'AppEndO',
     applyPolicy: 'propose',
     defaultRoute: routes.find((r) => r.pageKey === 'hwy-members-all')?.routePattern ?? 'members-all',

@@ -24,7 +24,7 @@ const hawietyHomeConfig = {
       brand: {
         logoUrl: '/assets/workspace/portals/hawiety/logo.png',
         title: 'Hawiety identity',
-        windowTitle: 'هویتی',
+        windowTitle: 'هويتي',
       },
     },
   ],
@@ -40,7 +40,7 @@ describe('authLoginPortalBrand', () => {
     expect(brand.portalSegment).toBe('hawiety');
     expect(brand.usesPortalLogo).toBe(true);
     expect(brand.logoUrl).toBe('/assets/workspace/portals/hawiety/logo.png');
-    expect(brand.windowTitle).toBe('هویتی');
+    expect(brand.windowTitle).toBe('هويتي');
   });
 
   it('uses the Hawiety portal logo when return URL targets hawiety', () => {

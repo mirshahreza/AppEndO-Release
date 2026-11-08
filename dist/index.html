@@ -364,7 +364,7 @@
                 else if (path.indexOf('/other-registration') !== -1) pageAr = 'التسجيل — بوابة أخرى';
                 document.title = pageAr + ' / ' + portalAr;
               } else {
-                document.title = 'هویتی ...';
+                document.title = 'هويتي ...';
               }
             }
             var defaultFavicon = '/assets/hawiety/mark-blue.png';
@@ -384,7 +384,7 @@
         } catch (e) {}
       })();
     </script>
-    <script type="module" crossorigin src="/assets/index-Bmmp2R2I.js"></script>
+    <script type="module" crossorigin src="/assets/index-Ckx4PcXr.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/react-vendor-CsZD9bLw.js">
     <link rel="modulepreload" crossorigin href="/assets/tanstack-query-BjZ08O4H.js">
     <link rel="stylesheet" crossorigin href="/assets/index-DGFKKImv.css">
@@ -442,6 +442,7 @@
               || trimmed === 'AppEnd'
               || trimmed === 'AppEndO'
               || trimmed === 'Hawiety electronic identity system'
+              || trimmed === 'Hawiety'
             ) {
               return ar;
             }
@@ -476,7 +477,7 @@
           }
 
           function resolveHawietyAdminBootTitle(registryWindowTitle) {
-            var w = registryWindowTitle ? String(registryWindowTitle).trim() : 'هویتی';
+            var w = registryWindowTitle ? String(registryWindowTitle).trim() : 'هويتي';
             return w + ' ...';
           }
 

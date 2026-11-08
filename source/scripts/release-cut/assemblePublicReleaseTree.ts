@@ -7,6 +7,7 @@ import path from 'node:path';
 import { assertPublicOssReleaseScope } from './assertPublicOssReleaseScope';
 import { copyFileEnsured, sha256File } from './artifacts';
 import { appendoReleaseStagingDir, APPENDO_RELEASE_REPO_NAME } from './appendoReleaseRepo';
+import { renderPublicReleaseReadme } from './renderPublicReleaseReadme';
 import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
@@ -21,7 +22,9 @@ const SOURCE_SKIP_DIR_NAMES = new Set([
   '.claude',
   'terminals',
   'releases',
+  'release',
   '.appendo-release-staging',
+  '.appendo-hawiety-staging',
 ]);
 
 const SOURCE_EXCLUDE_SEGMENTS = [
@@ -127,7 +130,8 @@ function resolveOssZips(): Array<{ packageId: string; abs: string; fileName: str
 }
 
 function main(): void {
-  const version = readReleaseCutVersions().platform;
+  const cutVersions = readReleaseCutVersions();
+  const version = cutVersions.platform;
   const outDir = appendoReleaseStagingDir(REPO_ROOT, version);
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
@@ -160,19 +164,16 @@ function main(): void {
   fs.writeFileSync(path.join(outDir, 'MANIFEST.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   assertPublicOssReleaseScope(outDir);
 
+  const readme = renderPublicReleaseReadme(version, cutVersions.publicOssPackageIds);
+  fs.writeFileSync(path.join(outDir, 'README.md'), readme, 'utf8');
   fs.writeFileSync(
     path.join(outDir, 'README-PUBLISH.md'),
     [
       `# AppEndO public release v${version}`,
       '',
-      '- `source/` — platform source (Hawiety paths excluded)',
-      '- `dist/` — production build (`server.cjs` + client assets)',
-      '- `packages/` — CMS and Remote Hubs ZIPs only',
-      '- Root `cms-*.zip` / `remote-hubs-*.zip` — duplicates for simple hosting',
+      'See **README.md** for the full public distribution guide.',
       '',
-      'Do not redistribute Hawiety artifacts from the private monorepo.',
-      '',
-      `Next: npm run release:push-appendo-release (clone **${APPENDO_RELEASE_REPO_NAME}** public repo first).`,
+      `Push target: **${APPENDO_RELEASE_REPO_NAME}** on GitHub.`,
       '',
     ].join('\n'),
     'utf8',

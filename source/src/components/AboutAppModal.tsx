@@ -1,5 +1,9 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { PROJECT_STANDARDS } from '../config/projectStandards';
+import { useOptionalCultureT } from '../core/culture/CultureContext';
+import { HAWIETY_PACKAGE_VERSION } from '../core/packages/hawietyPackage';
+import { isHawietyPublicPathname } from '../shared/packages/hawietyRuntimeClient';
 import { AppEndLogo } from './AppEndLogo';
 import {
   AppDialogShell,
@@ -17,12 +21,44 @@ interface AboutAppModalProps {
   open: boolean;
   onClose: () => void;
   brand?: ResolvedPortalBrand | null;
+  /** When true, show Hawiety package version (auto-detected from `/hawiety/` URL when omitted). */
+  showHawietyPackageVersion?: boolean;
 }
 
-export const AboutAppModal = ({ open, onClose, brand = null }: AboutAppModalProps) => {
-  const headline = brand?.aboutTitle?.trim() || DEFAULT_PORTAL_ABOUT_TITLE;
-  const body = brand?.aboutBody?.trim() || DEFAULT_PORTAL_ABOUT_BODY;
+export const AboutAppModal = ({
+  open,
+  onClose,
+  brand = null,
+  showHawietyPackageVersion,
+}: AboutAppModalProps) => {
+  const t = useOptionalCultureT();
+  const { pathname } = useLocation();
+  const showHawietyPackage =
+    showHawietyPackageVersion ?? isHawietyPublicPathname(pathname);
 
+  const hawietyAboutTitleKey = 'hwy.selfReg.portal.aboutTitle';
+  const hawietyAboutBodyKey = 'hwy.selfReg.portal.aboutBody';
+  const cultureAboutTitle = t(hawietyAboutTitleKey);
+  const cultureAboutBody = t(hawietyAboutBodyKey);
+  const headline = showHawietyPackage && cultureAboutTitle !== hawietyAboutTitleKey
+    ? cultureAboutTitle
+    : brand?.aboutTitle?.trim() || DEFAULT_PORTAL_ABOUT_TITLE;
+  const body = showHawietyPackage && cultureAboutBody !== hawietyAboutBodyKey
+    ? cultureAboutBody
+    : brand?.aboutBody?.trim() || DEFAULT_PORTAL_ABOUT_BODY;
+
+  const hawietyPackageVersionKey = 'hwy.selfReg.portal.aboutHawietyPackageVersionLabel';
+  const standardsLabelKey = 'hwy.selfReg.portal.aboutStandardsLabel';
+  const hawietyPackageVersionLabelRaw = t(hawietyPackageVersionKey);
+  const hawietyPackageVersionLabel =
+    hawietyPackageVersionLabelRaw === hawietyPackageVersionKey
+      ? 'Hawiety package'
+      : hawietyPackageVersionLabelRaw;
+  const standardsLabelRaw = showHawietyPackage ? t(standardsLabelKey) : 'Standards';
+  const standardsLabel =
+    showHawietyPackage && standardsLabelRaw !== standardsLabelKey
+      ? standardsLabelRaw
+      : 'Standards';
   return (
     <AppDialogShell
       open={open}
@@ -51,22 +87,43 @@ export const AboutAppModal = ({ open, onClose, brand = null }: AboutAppModalProp
           </div>
         </div>
 
-        <div className="space-y-4 bg-surface-elevated p-8">
+        <div
+          className={cn('space-y-4 bg-surface-elevated p-8', showHawietyPackage && 'text-start')}
+          dir={showHawietyPackage ? 'rtl' : undefined}
+          lang={showHawietyPackage ? 'ar' : undefined}
+        >
           <div className="space-y-2">
             <h3 className="text-lg font-black tracking-tight text-slate-900">{headline}</h3>
             <p className="text-sm leading-relaxed text-slate-500 whitespace-pre-wrap">{body}</p>
           </div>
 
           <div className="space-y-3 pt-2 text-xs text-slate-500">
+            {showHawietyPackage ? (
+              <p>
+                <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.accent)}>
+                  {hawietyPackageVersionLabel}
+                </span>
+                {' '}
+                <bdi dir="ltr" className="tabular-nums">
+                  v
+                  {HAWIETY_PACKAGE_VERSION}
+                </bdi>
+              </p>
+            ) : null}
             <p>
-              <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.accent)}>Version</span>
+              <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.complement)}>{standardsLabel}</span>
               {' '}
-              v2.4.0 Stable
-            </p>
-            <p>
-              <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.complement)}>Standards</span>
-              {' '}
-              v{PROJECT_STANDARDS.version}
+              {showHawietyPackage ? (
+                <bdi dir="ltr" className="tabular-nums">
+                  v
+                  {PROJECT_STANDARDS.version}
+                </bdi>
+              ) : (
+                <>
+                  v
+                  {PROJECT_STANDARDS.version}
+                </>
+              )}
             </p>
           </div>
         </div>

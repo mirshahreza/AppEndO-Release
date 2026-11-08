@@ -84,6 +84,7 @@ Machine index of the same constraints: [`src/config/projectStandards.ts`](../../
 | Local release cut (`npm run release:cut`, OSS cms + remote-hubs only) | [`release-cut.md`](./release-cut.md) | `release-cut` |
 | Hawiety multi-step SQL writes → procedures/functions | [`package-hawiety-db.md`](./package-hawiety-db.md) | `package-hawiety-db` |
 | Hawiety geo/nakhebin UI words (region vs eghtera, maktab vs tamvin) | [`package-hawiety-ui-vocab.md`](./package-hawiety-ui-vocab.md) | `package-hawiety-ui-vocab` |
+| Hawiety Arabic UI + English repo copy (no Persian in product / AppEndO-Hawiety) | [`package-hawiety-locale-policy.md`](./package-hawiety-locale-policy.md) | `package-hawiety-locale-policy` |
 | Hawiety member list avatar code (blue username / red tracking; Waited queues) | [`package-hawiety-member-face-caption.md`](./package-hawiety-member-face-caption.md) | `package-hawiety-member-face-caption` |
 | Hawiety member-list field-by-field filter rows (mode 2 toolbar) | [`package-hawiety-member-list-legacy-filters.md`](./package-hawiety-member-list-legacy-filters.md) | `package-hawiety-member-list-legacy-filters` |
 | Hawiety domain invariants (electoral-tree single anchor per role) | [`package-hawiety-domain-invariants.md`](./package-hawiety-domain-invariants.md) | `package-hawiety-domain-invariants` |

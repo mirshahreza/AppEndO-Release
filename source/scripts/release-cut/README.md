@@ -8,4 +8,16 @@ Operator entry: `npm run release:cut` or `@appendo-release-cut`.
 
 Plan: `plans/core/todo/p-130-local-release-cut.md`.
 
-Public OSS lives in git repo **`AppEndO-Release`** (sibling clone `../AppEndO-Release`), not under `releases/` in the private monorepo. Export → push via `release:export-appendo-release` and `release:push-appendo-release`.
+Public OSS lives in git repo **`AppEndO-Release`** (sibling clone `../AppEndO-Release`), not under `releases/` in the private monorepo.
+
+```bash
+npm run release:export-appendo-release
+npm run release:push-appendo-release
+# or: npm run release:cut -- --push-appendo-release
+```
+
+**One-time:** create public repo `AppEndO-Release` on GitHub (`gh auth login`, then `gh repo create <owner>/AppEndO-Release --public`), clone to `../AppEndO-Release`, then push. Override clone path with `APPENDO_RELEASE_REPO_PATH`.
+
+Staging (gitignored in private repo): `.appendo-release-staging/vX.Y.Z/`.
+
+**Hawiety (private):** `npm run release:export-appendo-hawiety` · `npm run release:push-appendo-hawiety` → **`AppEndO-Hawiety`**. ZIP **promoted**, not re-packed on export.

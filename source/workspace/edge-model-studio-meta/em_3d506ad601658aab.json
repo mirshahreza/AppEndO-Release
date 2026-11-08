@@ -1,0 +1,94 @@
+{
+  "edgeModelId": "em_3d506ad601658aab",
+  "tags": [
+    "cms",
+    "settings"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "hidden",
+      "group": "Comments defaults",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "comments_enabled",
+      "icon": "lucide:messages-square",
+      "formWidget": "checkbox",
+      "required": true,
+      "group": "Comments defaults",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "comments_policy_code",
+      "icon": "lucide:shield-check",
+      "formWidget": "lookup",
+      "required": true,
+      "group": "Comments defaults",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "comments_body_format_code",
+      "icon": "lucide:file-code-2",
+      "formWidget": "lookup",
+      "required": true,
+      "group": "Comments defaults",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "public_cache_ttl_seconds",
+      "icon": "lucide:timer",
+      "formWidget": "number",
+      "formWidgetProps": {
+        "min": 0
+      },
+      "required": true,
+      "searchRole": "advanced",
+      "interfaceNotes": "TTL (seconds) for public read Server Functions.",
+      "group": "Cache",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "updated_by",
+      "icon": "lucide:user-pen",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "updated_at",
+      "icon": "lucide:clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 70
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nSingleton domain settings row (`id` is always `1`) — global defaults for comment policy and public read cache TTL. The **Settings** page in the CMS portal edits this row; it is not a Base Info vocabulary and not a platform Settings Attribute.\n\n## Rules\n\n- Exactly one row (`id = 1`); API/UI must get-or-create only `id=1`, never insert a second row.\n- `comments_enabled` / `comments_policy_code` / `comments_body_format_code` are the **global defaults** that `cms_contents`'s nullable override columns fall back to.\n- `public_cache_ttl_seconds` is the TTL used by public read Server Functions (`cms_contents` list/getOne).",
+    "columnGroupOrder": [
+      "Comments defaults",
+      "Cache",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Comments defaults": {
+        "icon": "lucide:message-square",
+        "color": "text-violet-600"
+      },
+      "Cache": {
+        "icon": "lucide:zap",
+        "color": "text-amber-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock-3",
+        "color": "text-slate-600"
+      }
+    }
+  },
+  "created_at": "2026-11-06T20:29:02.293Z",
+  "updated_at": "2026-11-06T20:29:02.293Z"
+}

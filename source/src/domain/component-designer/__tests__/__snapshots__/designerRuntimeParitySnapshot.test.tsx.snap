@@ -1,0 +1,662 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`designer runtime parity snapshots > matches the layout grid preview snapshot 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    class="w-full grid w-full grid-cols-2 gap-4"
+  >
+    <div
+      class="w-full flex min-h-[50px] flex-col gap-2 rounded-md border border-dashed border-default-300 p-2"
+    />
+    <div
+      class="w-full flex min-h-[50px] flex-col gap-2 rounded-md border border-dashed border-default-300 p-2"
+    />
+    <p
+      class="text-sm text-default-700"
+    >
+      Sample text
+    </p>
+    <p
+      class="text-sm text-default-700"
+    >
+      Sample text
+    </p>
+  </div>
+</div>
+`;
+
+exports[`designer runtime parity snapshots > matches the shell chrome preview placeholder snapshot 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    class="box-border rounded-md border-2 border-dashed border-amber-300/90 bg-amber-50/60 inline-flex min-w-[96px] max-w-full min-h-[40px] min-h-10 rounded-md border border-dashed border-slate-200 px-3 py-2"
+    data-designer-node-type="system-slot"
+    data-designer-preview-placeholder="true"
+  >
+    <div
+      class="flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 text-center"
+    >
+      <span
+        class="text-[10px] font-bold uppercase tracking-wider text-amber-600/90"
+      >
+        Preview
+      </span>
+      <span
+        class="text-[11px] font-semibold text-amber-900"
+      >
+        core.shell.header
+      </span>
+      <span
+        class="text-[10px] font-medium text-amber-700/90"
+      >
+        Available at application runtime
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`designer runtime parity snapshots > renders HeroUI preview markup for heroui.breadcrumbs 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    class="min-w-0 flex list-none items-center gap-2 text-sm text-slate-600"
+    data-designer-component="heroui.breadcrumbs"
+  >
+    <template />
+    <ol
+      aria-label="Breadcrumbs"
+      class="breadcrumbs flex list-none items-center gap-2 text-sm text-slate-600"
+      data-slot="breadcrumbs"
+    >
+      <li
+        class="breadcrumbs__item"
+        data-rac=""
+        data-slot="breadcrumbs-item"
+      >
+        <a
+          class="link breadcrumbs__link"
+          data-rac=""
+          data-react-aria-pressable="true"
+          href="#"
+          tabindex="0"
+        >
+          Home
+        </a>
+        <svg
+          aria-hidden="true"
+          aria-label="Chevron right icon"
+          class="breadcrumbs__separator"
+          data-slot="breadcrumbs-separator"
+          fill="none"
+          height="16"
+          role="presentation"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M5.47 2.97a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06L9.44 8 5.47 4.03a.75.75 0 0 1 0-1.06Z"
+            fill="currentColor"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </li>
+      <li
+        class="breadcrumbs__item"
+        data-rac=""
+        data-slot="breadcrumbs-item"
+      >
+        <a
+          class="link breadcrumbs__link"
+          data-rac=""
+          data-react-aria-pressable="true"
+          href="#"
+          tabindex="0"
+        >
+          Section
+        </a>
+        <svg
+          aria-hidden="true"
+          aria-label="Chevron right icon"
+          class="breadcrumbs__separator"
+          data-slot="breadcrumbs-separator"
+          fill="none"
+          height="16"
+          role="presentation"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M5.47 2.97a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06L9.44 8 5.47 4.03a.75.75 0 0 1 0-1.06Z"
+            fill="currentColor"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </li>
+      <li
+        class="breadcrumbs__item"
+        data-current="true"
+        data-disabled="true"
+        data-rac=""
+        data-slot="breadcrumbs-item"
+      >
+        <span
+          aria-current="page"
+          aria-disabled="true"
+          class="link breadcrumbs__link"
+          data-current="true"
+          data-disabled="true"
+          data-rac=""
+          data-react-aria-pressable="true"
+          role="link"
+        >
+          Current
+        </span>
+      </li>
+    </ol>
+  </div>
+</div>
+`;
+
+exports[`designer runtime parity snapshots > renders HeroUI preview markup for heroui.checkbox-group 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    class="min-w-0 space-y-2 rounded-md border border-slate-200 bg-white p-3"
+    data-designer-component="heroui.checkbox-group"
+  >
+    <div
+      aria-label="Checkbox group"
+      class="checkbox-group checkbox-group--primary space-y-2 rounded-md border border-slate-200 bg-white p-3"
+      data-rac=""
+      data-slot="checkbox-group"
+      id="react-aria-_r_6_"
+      role="group"
+    >
+      <label
+        class="checkbox checkbox--primary"
+        data-rac=""
+        data-react-aria-pressable="true"
+        data-selected="true"
+        data-slot="checkbox"
+      >
+        <span
+          style="border: 0px; clip: rect(0px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            checked=""
+            data-react-aria-pressable="true"
+            tabindex="0"
+            title=""
+            type="checkbox"
+            value="option-1"
+          />
+        </span>
+        <span
+          class="checkbox__control"
+          data-slot="checkbox-control"
+        >
+          <span
+            aria-hidden="true"
+            class="checkbox__indicator"
+            data-slot="checkbox-indicator"
+          >
+            <svg
+              aria-hidden="true"
+              data-slot="checkbox-default-indicator--checkmark"
+              fill="none"
+              role="presentation"
+              stroke="currentColor"
+              stroke-dasharray="22"
+              stroke-dashoffset="44"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 17 18"
+            >
+              <polyline
+                points="1 9 7 14 15 4"
+              />
+            </svg>
+          </span>
+        </span>
+        <div
+          class="checkbox__content text-xs text-slate-700"
+          data-slot="checkbox-content"
+        >
+          Option 1
+        </div>
+      </label>
+      <label
+        class="checkbox checkbox--primary"
+        data-rac=""
+        data-react-aria-pressable="true"
+        data-slot="checkbox"
+      >
+        <span
+          style="border: 0px; clip: rect(0px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            data-react-aria-pressable="true"
+            tabindex="0"
+            title=""
+            type="checkbox"
+            value="option-2"
+          />
+        </span>
+        <span
+          class="checkbox__control"
+          data-slot="checkbox-control"
+        >
+          <span
+            aria-hidden="true"
+            class="checkbox__indicator"
+            data-slot="checkbox-indicator"
+          >
+            <svg
+              aria-hidden="true"
+              data-slot="checkbox-default-indicator--checkmark"
+              fill="none"
+              role="presentation"
+              stroke="currentColor"
+              stroke-dasharray="22"
+              stroke-dashoffset="66"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 17 18"
+            >
+              <polyline
+                points="1 9 7 14 15 4"
+              />
+            </svg>
+          </span>
+        </span>
+        <div
+          class="checkbox__content text-xs text-slate-700"
+          data-slot="checkbox-content"
+        >
+          Option 2
+        </div>
+      </label>
+      <label
+        class="checkbox checkbox--primary"
+        data-rac=""
+        data-react-aria-pressable="true"
+        data-slot="checkbox"
+      >
+        <span
+          style="border: 0px; clip: rect(0px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            data-react-aria-pressable="true"
+            tabindex="0"
+            title=""
+            type="checkbox"
+            value="option-3"
+          />
+        </span>
+        <span
+          class="checkbox__control"
+          data-slot="checkbox-control"
+        >
+          <span
+            aria-hidden="true"
+            class="checkbox__indicator"
+            data-slot="checkbox-indicator"
+          >
+            <svg
+              aria-hidden="true"
+              data-slot="checkbox-default-indicator--checkmark"
+              fill="none"
+              role="presentation"
+              stroke="currentColor"
+              stroke-dasharray="22"
+              stroke-dashoffset="66"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 17 18"
+            >
+              <polyline
+                points="1 9 7 14 15 4"
+              />
+            </svg>
+          </span>
+        </span>
+        <div
+          class="checkbox__content text-xs text-slate-700"
+          data-slot="checkbox-content"
+        >
+          Option 3
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`designer runtime parity snapshots > renders HeroUI preview markup for heroui.pagination 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    class="min-w-0 inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-2 py-1"
+    data-designer-component="heroui.pagination"
+  >
+    <nav
+      aria-label="pagination"
+      class="pagination pagination--md inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-2 py-1"
+      data-slot="pagination"
+      role="navigation"
+    >
+      <div
+        class="pagination__summary"
+        data-slot="pagination-summary"
+      >
+        Page 
+        2
+         · 
+        42
+         total
+      </div>
+      <ul
+        class="pagination__content"
+        data-slot="pagination-content"
+      >
+        <li
+          class="pagination__item"
+          data-slot="pagination-item"
+        >
+          <button
+            class="pagination__link pagination__link--nav"
+            data-rac=""
+            data-react-aria-pressable="true"
+            data-slot="pagination-previous"
+            id="react-aria-_r_0_"
+            tabindex="0"
+            type="button"
+          />
+        </li>
+        <li
+          class="pagination__item"
+          data-slot="pagination-item"
+        >
+          <button
+            aria-current="page"
+            class="pagination__link"
+            data-active="true"
+            data-rac=""
+            data-react-aria-pressable="true"
+            data-slot="pagination-link"
+            id="react-aria-_r_2_"
+            tabindex="0"
+            type="button"
+          >
+            2
+          </button>
+        </li>
+        <li
+          class="pagination__item"
+          data-slot="pagination-item"
+        >
+          <button
+            class="pagination__link pagination__link--nav"
+            data-rac=""
+            data-react-aria-pressable="true"
+            data-slot="pagination-next"
+            id="react-aria-_r_4_"
+            tabindex="0"
+            type="button"
+          />
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+`;
+
+exports[`designer runtime parity snapshots > renders HeroUI preview markup for heroui.radio-group 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    class="min-w-0 space-y-2 rounded-md border border-slate-200 bg-white p-3"
+    data-designer-component="heroui.radio-group"
+  >
+    <div
+      aria-label="Radio group"
+      aria-orientation="vertical"
+      class="radio-group radio-group--primary space-y-2 rounded-md border border-slate-200 bg-white p-3"
+      data-orientation="vertical"
+      data-rac=""
+      data-slot="radio-group"
+      id="react-aria-_r_b_"
+      role="radiogroup"
+    >
+      <label
+        class="radio"
+        data-rac=""
+        data-react-aria-pressable="true"
+        data-selected="true"
+        data-slot="radio"
+      >
+        <span
+          style="border: 0px; clip: rect(0px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            checked=""
+            data-react-aria-pressable="true"
+            name="react-aria-_r_g_"
+            tabindex="0"
+            title=""
+            type="radio"
+            value="option-1"
+          />
+        </span>
+        <span
+          class="radio__control"
+          data-slot="radio-control"
+        >
+          <span
+            aria-hidden="true"
+            class="radio__indicator"
+            data-slot="radio-indicator"
+          />
+        </span>
+        <div
+          class="radio__content text-xs text-slate-700"
+          data-slot="radio-content"
+        >
+          Option 1
+        </div>
+      </label>
+      <label
+        class="radio"
+        data-rac=""
+        data-react-aria-pressable="true"
+        data-slot="radio"
+      >
+        <span
+          style="border: 0px; clip: rect(0px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            data-react-aria-pressable="true"
+            name="react-aria-_r_g_"
+            tabindex="-1"
+            title=""
+            type="radio"
+            value="option-2"
+          />
+        </span>
+        <span
+          class="radio__control"
+          data-slot="radio-control"
+        >
+          <span
+            aria-hidden="true"
+            class="radio__indicator"
+            data-slot="radio-indicator"
+          />
+        </span>
+        <div
+          class="radio__content text-xs text-slate-700"
+          data-slot="radio-content"
+        >
+          Option 2
+        </div>
+      </label>
+      <label
+        class="radio"
+        data-rac=""
+        data-react-aria-pressable="true"
+        data-slot="radio"
+      >
+        <span
+          style="border: 0px; clip: rect(0px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            data-react-aria-pressable="true"
+            name="react-aria-_r_g_"
+            tabindex="-1"
+            title=""
+            type="radio"
+            value="option-3"
+          />
+        </span>
+        <span
+          class="radio__control"
+          data-slot="radio-control"
+        >
+          <span
+            aria-hidden="true"
+            class="radio__indicator"
+            data-slot="radio-indicator"
+          />
+        </span>
+        <div
+          class="radio__content text-xs text-slate-700"
+          data-slot="radio-content"
+        >
+          Option 3
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`designer runtime parity snapshots > renders HeroUI preview markup for heroui.tags-input 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    class="min-w-0 flex flex-wrap items-center gap-2 rounded-md border border-slate-300 bg-white p-2 text-xs text-slate-700"
+    data-designer-component="heroui.tags-input"
+  >
+    <div
+      class="flex w-full flex-col gap-[2px]"
+    >
+      <div
+        class="flex flex-wrap items-center gap-1 rounded-md border border-slate-300 bg-white px-2 py-1"
+      >
+        <template />
+        <div
+          class="tag-group"
+          data-slot="tag-group"
+        >
+          <div
+            aria-atomic="false"
+            aria-label="Tags"
+            aria-live="off"
+            aria-relevant="additions"
+            class="tag-group__list"
+            data-collection="react-aria-_r_m_"
+            data-rac=""
+            data-slot="tag-group-list"
+            id="react-aria-_r_h_"
+            role="grid"
+            tabindex="0"
+          >
+            <div
+              aria-label="alpha"
+              class="tag tag--md tag--default"
+              data-collection="react-aria-_r_m_"
+              data-key="react-aria-1"
+              data-rac=""
+              data-slot="tag"
+              id="react-aria-_r_h_-react-aria-1"
+              role="row"
+              tabindex="0"
+            >
+              <div
+                aria-colindex="1"
+                role="gridcell"
+                style="display: contents;"
+              >
+                alpha
+              </div>
+            </div>
+            <div
+              aria-label="beta"
+              class="tag tag--md tag--default"
+              data-collection="react-aria-_r_m_"
+              data-key="react-aria-2"
+              data-rac=""
+              data-slot="tag"
+              id="react-aria-_r_h_-react-aria-2"
+              role="row"
+              tabindex="0"
+            >
+              <div
+                aria-colindex="1"
+                role="gridcell"
+                style="display: contents;"
+              >
+                beta
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`designer runtime parity snapshots > renders HeroUI preview markup for heroui.tooltip-trigger 1`] = `
+<div
+  class="min-h-0 space-y-3 overflow-y-auto"
+>
+  <div
+    data-designer-component="heroui.tooltip-trigger"
+  >
+    <div
+      class="tooltip__trigger"
+      data-slot="tooltip-trigger"
+      role="button"
+      tabindex="0"
+    >
+      <a
+        class="link inline-flex rounded-md border border-dashed border-slate-300 px-2 py-1 text-xs text-slate-700 no-underline"
+        data-rac=""
+        data-react-aria-pressable="true"
+        href="#"
+        tabindex="0"
+        target="_self"
+      >
+        Hover target
+      </a>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-ops-people-roles.ops-people-roles-pivot",
+  "name": "ops-people-roles-pivot",
+  "folder": "base-ops-people-roles",
+  "method": "POST",
+  "path": "/api/ops/ops_people_roles/pivot",
+  "sourceFile": "base-ops-people-roles.ops-people-roles-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"username\": \"\",\n    \"locked\": \"\",\n    \"is_builtin\": \"\",\n    \"person_type_code\": \"\",\n    \"never_logged_in\": \"\",\n    \"created_at\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_people_roles_pivot\",\"edgeApiOperationId\":\"ops_people_roles-pivot\",\"edgeModelId\":\"em_ops_people_roles\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_people_roles/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"user_id\",\"username\",\"role_name\",\"locked\",\"is_builtin\",\"person_type_code\",\"never_logged_in\",\"created_at\"]}},\"model\":{\"objectName\":\"base_ops_people_roles\",\"primaryKey\":[\"user_id\",\"role_name\"],\"columns\":[{\"field\":\"user_id\",\"name\":\"user_id\"},{\"field\":\"username\",\"name\":\"username\"},{\"field\":\"role_name\",\"name\":\"role_name\"},{\"field\":\"locked\",\"name\":\"locked\"},{\"field\":\"is_builtin\",\"name\":\"is_builtin\"},{\"field\":\"person_type_code\",\"name\":\"person_type_code\"},{\"field\":\"never_logged_in\",\"name\":\"never_logged_in\"},{\"field\":\"created_at\",\"name\":\"created_at\"}]},\"openapi\":{\"summary\":\"People roles pivot\",\"description\":\"People roles pivot (POST /api/ops/ops_people_roles/pivot) on base_ops_people_roles.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:f7c96f9c\",\"generatedAt\":\"2026-10-02T23:23:21.454Z\",\"requestExample\":{\"body\":{\"username\":\"\",\"locked\":\"\",\"is_builtin\":\"\",\"person_type_code\":\"\",\"never_logged_in\":\"\",\"created_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_people_roles/pivot\",\"routeNote\":\"Data API pivot on base_ops_people_roles.\",\"validationFields\":[\"username\",\"locked\",\"is_builtin\",\"person_type_code\",\"never_logged_in\",\"created_at\"],\"outputFields\":[\"user_id\",\"username\",\"role_name\",\"locked\",\"is_builtin\",\"person_type_code\",\"never_logged_in\",\"created_at\"],\"queryFields\":[],\"paramFields\":[\"user_id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:21.618Z",
+  "updatedAt": "2026-10-02T23:23:21.618Z",
+  "createdBy": null,
+  "updatedBy": null
+}

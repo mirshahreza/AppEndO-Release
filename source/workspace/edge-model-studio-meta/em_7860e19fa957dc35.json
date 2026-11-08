@@ -1,0 +1,48 @@
+{
+  "edgeModelId": "em_7860e19fa957dc35",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "body",
+      "searchRole": "advanced",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "href"
+    },
+    {
+      "columnName": "source"
+    },
+    {
+      "columnName": "metadata_json"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "sent_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_user_notification_digest_items.user_id->base_users.id:base_user_notification_digest_items_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nEMAIL+digest queue. When preference is `channel: EMAIL` and `digest: true`, `dispatchNotification` inserts here instead of sending immediately or writing the in-app inbox. The workflow engine worker tick runs `scanAndSendDueNotificationDigests`.\n\n## Lifecycle\n\n1. **Queue** — insert with `sent_at` null. `source` is the event type; `metadata_json` is producer evidence.\n2. **Clock** — a user's digest window starts at their **oldest** pending `created_at` (no separate last-sent column). Default interval is 24 hours.\n3. **Send** — when due, every currently-pending item for that user is batched into one summary email; those rows get `sent_at`.\n4. **Retry** — send failure (no email, SMTP error) leaves rows pending for the next scan.\n\n## Rules\n\n- Not the in-app inbox (`base_user_notifications`) and not a preference row.\n- Requires `base_users.email`; missing address fails the send and keeps items pending.\n- Do not hand-edit `sent_at` in Studio — the scanner owns that stamp.\n- Cascade delete with the user. Safe to purge old sent rows under retention policy."
+  },
+  "created_at": "2026-09-11T04:55:17.126Z",
+  "updated_at": "2026-09-17T15:29:39.590Z"
+}

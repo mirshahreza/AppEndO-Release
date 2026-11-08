@@ -1,0 +1,77 @@
+{
+  "id": "em_4b3200771f2e39f5",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_dashboard_snapshots",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseDashboardSnapshots",
+    "tableName": "base_dashboard_snapshots"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "page_id",
+      "field": "pageId",
+      "dataType": "character varying",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "rendered_payload",
+      "field": "renderedPayload",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "expires_at",
+      "field": "expiresAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "8b91a99bfe3979c5",
+  "readOnly": false,
+  "labels": {
+    "title": "base_dashboard_snapshots"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:54:54.037Z",
+  "updated_at": "2026-09-11T04:55:10.526Z"
+}

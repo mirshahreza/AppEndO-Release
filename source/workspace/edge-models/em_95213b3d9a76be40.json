@@ -1,0 +1,86 @@
+{
+  "id": "em_95213b3d9a76be40",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "cms_content_relations",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "CmsContentRelations",
+    "tableName": "cms_content_relations"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "content_id_a",
+      "field": "contentIdA",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_de1dc90b9e9d7626",
+        "column": "id"
+      }
+    },
+    {
+      "name": "content_id_b",
+      "field": "contentIdB",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_de1dc90b9e9d7626",
+        "column": "id"
+      }
+    },
+    {
+      "name": "note",
+      "field": "note",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_27531ff7b4154bda",
+      "targetModelId": "em_de1dc90b9e9d7626",
+      "foreignKey": "content_id_a",
+      "as": "contentA",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_4369956c8b62486b",
+      "targetModelId": "em_de1dc90b9e9d7626",
+      "foreignKey": "content_id_b",
+      "as": "contentB",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "14576947d99b40be",
+  "readOnly": false,
+  "labels": {
+    "title": "CMS Content Relations",
+    "icon": "lucide:git-branch",
+    "color": "text-rose-600"
+  },
+  "status": "ready",
+  "created_at": "2026-07-31T17:56:35.612Z",
+  "updated_at": "2026-08-23T12:40:14.242Z"
+}

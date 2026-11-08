@@ -1,0 +1,34 @@
+{
+  "schema": "appendo-http-connections-index",
+  "schemaVersion": "1.0.0",
+  "updatedAt": "2026-08-26T02:53:51.362Z",
+  "entries": [
+    {
+      "id": "6d2f4629-2ee0-41fc-9dc8-f97edd3d51f4",
+      "name": "JSONPlaceholder",
+      "baseUrl": "https://jsonplaceholder.typicode.com",
+      "authKind": "none",
+      "openApiSpec": {
+        "title": "JSONPlaceholder",
+        "baseUrl": "https://jsonplaceholder.typicode.com",
+        "operations": [
+          {
+            "operationId": "getTodo",
+            "method": "GET",
+            "path": "/todos/{id}",
+            "summary": "Get a todo by id"
+          },
+          {
+            "operationId": "listPosts",
+            "method": "GET",
+            "path": "/posts",
+            "summary": "List posts"
+          }
+        ]
+      },
+      "createdAt": "2026-08-26T02:53:51.362Z",
+      "updatedAt": "2026-08-26T02:53:51.362Z",
+      "createdByUserId": 100000
+    }
+  ]
+}

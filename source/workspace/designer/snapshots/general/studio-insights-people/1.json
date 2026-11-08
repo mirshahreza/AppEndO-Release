@@ -1,0 +1,994 @@
+{
+  "schema": "component-designer-draft",
+  "id": "studio-insights-people",
+  "name": "studio-insights-people",
+  "folder": "general",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "studio-insights-people",
+    "name": "studio-insights-people",
+    "rootNodeId": "root",
+    "pageAccess": {
+      "accessMode": "specific",
+      "allowRoles": [
+        "ADMIN"
+      ],
+      "allowUsers": [],
+      "denyRoles": [],
+      "denyUsers": []
+    },
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "dashboardCanvasConfig": "{\"personalizable\":true,\"domain\":[{\"id\":\"ops_user_directory\",\"label\":\"User directory\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_user_directory\"},\"exposedFields\":[\"id\",\"username\",\"locked\",\"is_builtin\",\"login_fail_count\",\"last_login_at\",\"created_at\",\"person_type_code\",\"role_count\",\"has_profile\",\"has_role\",\"has_identity\",\"has_scope\",\"has_email\",\"email_verified\",\"never_logged_in\",\"is_dormant\",\"has_fail_streak\"]},{\"id\":\"ops_people_roles\",\"label\":\"People roles\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_people_roles\"},\"exposedFields\":[\"user_id\",\"username\",\"role_name\",\"locked\",\"is_builtin\",\"person_type_code\",\"never_logged_in\",\"created_at\"]},{\"id\":\"ops_identities\",\"label\":\"Identities\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_24f4928b2dd23610\"},\"exposedFields\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"]},{\"id\":\"ops_scope_memberships\",\"label\":\"Scope memberships\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_11771aa29defb94c\"},\"exposedFields\":[\"id\",\"user_id\",\"dimension_key\",\"created_at\"]},{\"id\":\"ops_auth_events\",\"label\":\"Auth events\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_auth_events\"},\"exposedFields\":[\"id\",\"event_type\",\"success\",\"created_at\",\"user_id\",\"username\"]}],\"filters\":[{\"id\":\"ppl-role\",\"label\":\"Role\",\"domainEntryId\":\"ops_people_roles\",\"field\":\"role_name\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"pp-p-chart-role\",\"pp-p-table-role-type\",\"pp-p-table-role-locked\"]},{\"id\":\"ppl-type\",\"label\":\"Person type\",\"domainEntryId\":\"ops_user_directory\",\"field\":\"person_type_code\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"pp-p-chart-type\",\"pp-p-chart-created\"]},{\"id\":\"ppl-created\",\"label\":\"Date range\",\"domainEntryId\":\"ops_user_directory\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"pp-p-chart-created\"]},{\"id\":\"hyg-role-flag\",\"label\":\"Has a role\",\"domainEntryId\":\"ops_user_directory\",\"field\":\"has_role\",\"controlType\":\"select\",\"appliesToWidgetIds\":[\"pp-h-chart-signin\",\"pp-h-chart-role\",\"pp-h-chart-sso\",\"pp-h-chart-scope\",\"pp-h-chart-provider\",\"pp-h-chart-dim\"]},{\"id\":\"auth-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_auth_events\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"pp-s-kpi-ok\",\"pp-s-kpi-fail\",\"pp-s-kpi-blocked\",\"pp-s-kpi-rate\",\"pp-s-chart-type\",\"pp-s-chart-success-day\",\"pp-s-chart-fail-user\",\"pp-s-chart-day\"],\"defaultValue\":\"last:7d\"}],\"tabs\":[{\"id\":\"people\",\"label\":\"People\"},{\"id\":\"hygiene\",\"label\":\"Hygiene\"},{\"id\":\"sign-in\",\"label\":\"Sign-in\"}],\"dashboardLinks\":[{\"label\":\"Users\",\"target\":{\"url\":\"/studio/users\"}},{\"label\":\"Roles\",\"target\":{\"url\":\"/studio/roles\"}},{\"label\":\"Logs\",\"target\":{\"url\":\"/studio/logs\"}}]}",
+          "dashboardPersonalizable": true
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "canvas"
+        ]
+      },
+      "canvas": {
+        "id": "canvas",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "_designerPaletteItemId": "viz.dashboard-canvas",
+          "dashboardCanvasConfig": "{\"personalizable\":true,\"domain\":[{\"id\":\"ops_user_directory\",\"label\":\"User directory\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_user_directory\"},\"exposedFields\":[\"id\",\"username\",\"locked\",\"is_builtin\",\"login_fail_count\",\"last_login_at\",\"created_at\",\"person_type_code\",\"role_count\",\"has_profile\",\"has_role\",\"has_identity\",\"has_scope\",\"has_email\",\"email_verified\",\"never_logged_in\",\"is_dormant\",\"has_fail_streak\"]},{\"id\":\"ops_people_roles\",\"label\":\"People roles\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_people_roles\"},\"exposedFields\":[\"user_id\",\"username\",\"role_name\",\"locked\",\"is_builtin\",\"person_type_code\",\"never_logged_in\",\"created_at\"]},{\"id\":\"ops_identities\",\"label\":\"Identities\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_24f4928b2dd23610\"},\"exposedFields\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"]},{\"id\":\"ops_scope_memberships\",\"label\":\"Scope memberships\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_11771aa29defb94c\"},\"exposedFields\":[\"id\",\"user_id\",\"dimension_key\",\"created_at\"]},{\"id\":\"ops_auth_events\",\"label\":\"Auth events\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_auth_events\"},\"exposedFields\":[\"id\",\"event_type\",\"success\",\"created_at\",\"user_id\",\"username\"]}],\"filters\":[{\"id\":\"ppl-role\",\"label\":\"Role\",\"domainEntryId\":\"ops_people_roles\",\"field\":\"role_name\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"pp-p-chart-role\",\"pp-p-table-role-type\",\"pp-p-table-role-locked\"]},{\"id\":\"ppl-type\",\"label\":\"Person type\",\"domainEntryId\":\"ops_user_directory\",\"field\":\"person_type_code\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"pp-p-chart-type\",\"pp-p-chart-created\"]},{\"id\":\"ppl-created\",\"label\":\"Date range\",\"domainEntryId\":\"ops_user_directory\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"pp-p-chart-created\"]},{\"id\":\"hyg-role-flag\",\"label\":\"Has a role\",\"domainEntryId\":\"ops_user_directory\",\"field\":\"has_role\",\"controlType\":\"select\",\"appliesToWidgetIds\":[\"pp-h-chart-signin\",\"pp-h-chart-role\",\"pp-h-chart-sso\",\"pp-h-chart-scope\",\"pp-h-chart-provider\",\"pp-h-chart-dim\"]},{\"id\":\"auth-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_auth_events\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"pp-s-kpi-ok\",\"pp-s-kpi-fail\",\"pp-s-kpi-blocked\",\"pp-s-kpi-rate\",\"pp-s-chart-type\",\"pp-s-chart-success-day\",\"pp-s-chart-fail-user\",\"pp-s-chart-day\"],\"defaultValue\":\"last:7d\"}],\"tabs\":[{\"id\":\"people\",\"label\":\"People\"},{\"id\":\"hygiene\",\"label\":\"Hygiene\"},{\"id\":\"sign-in\",\"label\":\"Sign-in\"}],\"dashboardLinks\":[{\"label\":\"Users\",\"target\":{\"url\":\"/studio/users\"}},{\"label\":\"Roles\",\"target\":{\"url\":\"/studio/roles\"}},{\"label\":\"Logs\",\"target\":{\"url\":\"/studio/logs\"}}]}",
+          "dashboardPersonalizable": true
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "pp-p-kpi-people",
+          "pp-p-kpi-no-role",
+          "pp-p-kpi-locked",
+          "pp-p-kpi-never",
+          "pp-p-chart-role",
+          "pp-p-chart-type",
+          "pp-p-table-role-type",
+          "pp-p-chart-locked",
+          "pp-p-table-role-locked",
+          "pp-p-chart-created",
+          "pp-p-chart-builtin",
+          "pp-h-kpi-profile",
+          "pp-h-kpi-unverified",
+          "pp-h-kpi-dormant",
+          "pp-h-kpi-fail",
+          "pp-h-chart-signin",
+          "pp-h-chart-role",
+          "pp-h-chart-sso",
+          "pp-h-chart-scope",
+          "pp-h-chart-provider",
+          "pp-h-chart-dim",
+          "pp-s-kpi-ok",
+          "pp-s-kpi-fail",
+          "pp-s-kpi-blocked",
+          "pp-s-kpi-rate",
+          "pp-s-chart-type",
+          "pp-s-chart-success-day",
+          "pp-s-chart-fail-user",
+          "pp-s-chart-day"
+        ]
+      },
+      "pp-p-kpi-people": {
+        "id": "pp-p-kpi-people",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 0,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "People",
+          "chartFieldMapping": {
+            "title": "People",
+            "metric": "id",
+            "aggregation": "count"
+          },
+          "vizConfig": {
+            "emptyText": "No users."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-kpi-no-role": {
+        "id": "pp-p-kpi-no-role",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 1,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Without a role",
+          "chartFieldMapping": {
+            "title": "Without a role",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "has_role": {
+                "eq": 0
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-kpi-locked": {
+        "id": "pp-p-kpi-locked",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 2,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Locked",
+          "chartFieldMapping": {
+            "title": "Locked",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "locked": {
+                "eq": 1
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-kpi-never": {
+        "id": "pp-p-kpi-never",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 3,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Never signed in",
+          "chartFieldMapping": {
+            "title": "Never signed in",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "never_logged_in": {
+                "eq": 1
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-chart-role": {
+        "id": "pp-p-chart-role",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 4,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_people_roles",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "People by role",
+          "chartFieldMapping": {
+            "title": "People by role",
+            "metric": "user_id",
+            "aggregation": "count",
+            "dimension": "role_name",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No role assignments yet."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-chart-type": {
+        "id": "pp-p-chart-type",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 5,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "People by person type",
+          "chartFieldMapping": {
+            "title": "People by person type",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "person_type_code",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-table-role-type": {
+        "id": "pp-p-table-role-type",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 6,
+        "props": {
+          "_designerPaletteItemId": "viz.sheet",
+          "dashboardDomainEntryId": "ops_people_roles",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "People by role and type",
+          "chartFieldMapping": {
+            "title": "People by role and type",
+            "metric": "user_id",
+            "aggregation": "count",
+            "dimension": "role_name",
+            "dimensionB": "person_type_code"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-chart-locked": {
+        "id": "pp-p-chart-locked",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 7,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Locked vs open",
+          "chartFieldMapping": {
+            "title": "Locked vs open",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "locked",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-table-role-locked": {
+        "id": "pp-p-table-role-locked",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 8,
+        "props": {
+          "_designerPaletteItemId": "viz.sheet",
+          "dashboardDomainEntryId": "ops_people_roles",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 19,
+            "w": 12,
+            "h": 8
+          },
+          "title": "People by role and lock",
+          "chartFieldMapping": {
+            "title": "People by role and lock",
+            "metric": "user_id",
+            "aggregation": "count",
+            "dimension": "role_name",
+            "dimensionB": "locked"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-chart-created": {
+        "id": "pp-p-chart-created",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 9,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 27,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Accounts created per day",
+          "chartFieldMapping": {
+            "title": "Accounts created per day",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "created_at",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-p-chart-builtin": {
+        "id": "pp-p-chart-builtin",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 10,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "people",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 27,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Built-in vs regular",
+          "chartFieldMapping": {
+            "title": "Built-in vs regular",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "is_builtin",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-kpi-profile": {
+        "id": "pp-h-kpi-profile",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 11,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "No profile",
+          "chartFieldMapping": {
+            "title": "No profile",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "has_profile": {
+                "eq": 0
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No people match this view."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-kpi-unverified": {
+        "id": "pp-h-kpi-unverified",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 12,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Unverified email",
+          "chartFieldMapping": {
+            "title": "Unverified email",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "has_email": {
+                "eq": 1
+              },
+              "email_verified": {
+                "eq": 0
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-kpi-dormant": {
+        "id": "pp-h-kpi-dormant",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 13,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Dormant (30d)",
+          "chartFieldMapping": {
+            "title": "Dormant (30d)",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "is_dormant": {
+                "eq": 1
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-kpi-fail": {
+        "id": "pp-h-kpi-fail",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 14,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Fail streak",
+          "chartFieldMapping": {
+            "title": "Fail streak",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "has_fail_streak": {
+                "eq": 1
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-chart-signin": {
+        "id": "pp-h-chart-signin",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 15,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Never signed in vs has",
+          "chartFieldMapping": {
+            "title": "Never signed in vs has",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "never_logged_in",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-chart-role": {
+        "id": "pp-h-chart-role",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 16,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Has a role vs none",
+          "chartFieldMapping": {
+            "title": "Has a role vs none",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "has_role",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-chart-sso": {
+        "id": "pp-h-chart-sso",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 17,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "SSO linked vs local only",
+          "chartFieldMapping": {
+            "title": "SSO linked vs local only",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "has_identity",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-chart-scope": {
+        "id": "pp-h-chart-scope",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 18,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_user_directory",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Has scope vs none",
+          "chartFieldMapping": {
+            "title": "Has scope vs none",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "has_scope",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-chart-provider": {
+        "id": "pp-h-chart-provider",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 19,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_identities",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 19,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Linked identities by provider",
+          "chartFieldMapping": {
+            "title": "Linked identities by provider",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "provider_kind",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No linked sign-in providers."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-h-chart-dim": {
+        "id": "pp-h-chart-dim",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 20,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_scope_memberships",
+          "dashboardTabId": "hygiene",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 19,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Scope memberships by dimension",
+          "chartFieldMapping": {
+            "title": "Scope memberships by dimension",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "dimension_key",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No scope memberships."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-kpi-ok": {
+        "id": "pp-s-kpi-ok",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 21,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Login success",
+          "chartFieldMapping": {
+            "title": "Login success",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "event_type": {
+                "eq": "LOGIN_SUCCESS"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No sign-in events in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-kpi-fail": {
+        "id": "pp-s-kpi-fail",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 22,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Login failed",
+          "chartFieldMapping": {
+            "title": "Login failed",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "event_type": {
+                "eq": "LOGIN_FAILED"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-kpi-blocked": {
+        "id": "pp-s-kpi-blocked",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 23,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Blocked",
+          "chartFieldMapping": {
+            "title": "Blocked",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "event_type": {
+                "eq": "LOGIN_BLOCKED"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-kpi-rate": {
+        "id": "pp-s-kpi-rate",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 24,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Rate limited",
+          "chartFieldMapping": {
+            "title": "Rate limited",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "event_type": {
+                "eq": "LOGIN_RATE_LIMITED"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-chart-type": {
+        "id": "pp-s-chart-type",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 25,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Auth events by type",
+          "chartFieldMapping": {
+            "title": "Auth events by type",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "event_type",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No sign-in events in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-chart-success-day": {
+        "id": "pp-s-chart-success-day",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 26,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Success vs fail per day",
+          "chartFieldMapping": {
+            "title": "Success vs fail per day",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "created_at",
+            "dimensionB": "success",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-chart-fail-user": {
+        "id": "pp-s-chart-fail-user",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 27,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Failed sign-ins by username",
+          "chartFieldMapping": {
+            "title": "Failed sign-ins by username",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "username",
+            "chartKind": "bar",
+            "filters": {
+              "event_type": {
+                "eq": "LOGIN_FAILED"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No failed sign-ins in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "pp-s-chart-day": {
+        "id": "pp-s-chart-day",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 28,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_auth_events",
+          "dashboardTabId": "sign-in",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Auth events per day",
+          "chartFieldMapping": {
+            "title": "Auth events per day",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "created_at",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-14T03:26:55.417Z",
+      "updatedAt": "2026-09-14T03:26:55.678Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {},
+  "metadata": {
+    "createdAt": "2026-09-14T03:26:55.678Z",
+    "updatedAt": "2026-09-14T03:26:55.678Z",
+    "createdBy": "platform-ops-dashboards",
+    "updatedBy": "platform-ops-dashboards"
+  }
+}

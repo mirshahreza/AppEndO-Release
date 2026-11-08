@@ -1,0 +1,51 @@
+{
+  "edgeModelId": "em_0d44dcac603d941a",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "body",
+      "searchRole": "advanced",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "severity"
+    },
+    {
+      "columnName": "href"
+    },
+    {
+      "columnName": "read_at"
+    },
+    {
+      "columnName": "source"
+    },
+    {
+      "columnName": "metadata_json"
+    },
+    {
+      "columnName": "created_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_user_notifications.user_id->base_users.id:base_user_notifications_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nIn-app notification inbox per user — title, body, severity, optional deep-link `href`, read cursor. `dispatchNotification` writes here when the user's preference for that `eventType` is `IN_APP` (the default) or when EMAIL send fails and falls back. The shell bell reads unread rows via `/api/notifications`.\n\n## Lifecycle\n\n1. **Dispatch** — producers (workflow notify, escalation, comment mention) call `dispatchNotification`. No preference row ⇒ `IN_APP` + immediate.\n2. **Read** — `read_at` stamped by mark-one / mark-all. `read_at` null = unread.\n3. **EMAIL path** — immediate EMAIL does **not** insert here (unless fallback). `EMAIL` + `digest: true` queues `base_user_notification_digest_items` instead.\n\n## Rules\n\n- Owned by `user_id` — cascade delete with the user.\n- `source` is the event-type key (`workflow`, `workflow.escalation`, `workflow.comment`, …) — same key as `base_user_notification_preferences.event_type`.\n- `metadata_json` is producer-private evidence, not operator-edited.\n- Do not use this table as a chat transcript, digest queue, or feedback ticket thread."
+  },
+  "created_at": "2026-09-11T04:55:17.594Z",
+  "updated_at": "2026-09-17T15:29:39.832Z"
+}

@@ -1,0 +1,122 @@
+{
+  "id": "em_cdd79045dc09ba42",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_settings_profile_fields",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseSettingsProfileFields",
+    "tableName": "base_settings_profile_fields"
+  },
+  "columns": [
+    {
+      "name": "profile_field",
+      "field": "profileField",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "context_key",
+      "field": "contextKey",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "label_en",
+      "field": "labelEn",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "is_active",
+      "field": "isActive",
+      "dataType": "boolean",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "user_edit_policy",
+      "field": "userEditPolicy",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "visibility",
+      "field": "visibility",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "view_order",
+      "field": "viewOrder",
+      "dataType": "numeric",
+      "sequelizeType": "DOUBLE",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "profile_field",
+  "associations": [],
+  "schemaFingerprint": "ecf8cb39f6d5a375",
+  "readOnly": false,
+  "labels": {
+    "title": "base_settings_profile_fields"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:16.538Z",
+  "updated_at": "2026-09-11T04:55:16.538Z"
+}

@@ -1,0 +1,83 @@
+{
+  "edgeModelId": "em_a075974987ca4a9d",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "data_source_id"
+    },
+    {
+      "columnName": "scope"
+    },
+    {
+      "columnName": "scope_tables_json"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "job_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "model_id"
+    },
+    {
+      "columnName": "tables_total",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "tables_processed",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "columns_resolved",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "columns_ambiguous",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "questions_created",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "overall_confidence",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "error_message"
+    },
+    {
+      "columnName": "started_at"
+    },
+    {
+      "columnName": "finished_at"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "progress_log_json"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_db_enrichment_questions.run_id->base_db_enrichment_runs.id:base_db_enrichment_questions_run_id_fkey",
+      "displayLabel": "base_db_enrichment_questions (Run)"
+    }
+  ],
+  "extensions": {},
+  "created_at": "2026-09-16T14:03:51.677Z",
+  "updated_at": "2026-09-17T15:29:39.671Z"
+}

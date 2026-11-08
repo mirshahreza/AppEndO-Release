@@ -1,0 +1,72 @@
+{
+  "edgeModelId": "em_5ad18e718da17462",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "event_name"
+    },
+    {
+      "columnName": "provider_event_id"
+    },
+    {
+      "columnName": "event_source_identity"
+    },
+    {
+      "columnName": "correlation_encoder_version"
+    },
+    {
+      "columnName": "correlation_hash_algorithm",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "correlation_value_hash",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "payload_json"
+    },
+    {
+      "columnName": "source"
+    },
+    {
+      "columnName": "received_at"
+    },
+    {
+      "columnName": "processed_at"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "deduplication_key"
+    },
+    {
+      "columnName": "recheck_until"
+    },
+    {
+      "columnName": "lease_owner_id"
+    },
+    {
+      "columnName": "lease_expires_at"
+    },
+    {
+      "columnName": "state_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nDurable ingress for external/async events — webhooks, bus messages, manual inject. Deduped by (`event_source_identity`, `deduplication_key`); correlation hash matches waiting nodes.\n\n## Rules\n\n- Processed inbox rows set `processed_at` + terminal `status`.\n- Lease fields for worker claim during fan-out to waits.\n- Payload JSON may be redacted in traces — classify appropriately."
+  },
+  "created_at": "2026-09-11T04:55:22.336Z",
+  "updated_at": "2026-09-17T15:29:39.923Z"
+}

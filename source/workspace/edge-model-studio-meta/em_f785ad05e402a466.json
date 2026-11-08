@@ -1,0 +1,38 @@
+{
+  "edgeModelId": "em_f785ad05e402a466",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "role_name"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "created_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_user_roles.role_name->base_roles.name:base_user_roles_role_name_fkey",
+      "displayLabel": "Role Name (base_roles)"
+    },
+    {
+      "relationKey": "physical:base_user_roles.user_id->base_users.id:base_user_roles_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nMany-to-many assignment of named roles to users. Composite PK (`user_id`, `role_name`). Effective access = union of all assigned roles' function grants, MCP grants, and scope defaults.\n\n## Rules\n\n- FK to `base_roles.name` and `base_users.id` — both cascade on delete.\n- Assign/remove via Users/Roles admin APIs; audit optional on junction (`created_by`).\n- Removing a role from a user does not delete the role definition."
+  },
+  "created_at": "2026-09-11T04:55:17.995Z",
+  "updated_at": "2026-09-17T15:29:39.839Z"
+}

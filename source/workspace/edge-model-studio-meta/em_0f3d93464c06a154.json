@@ -1,0 +1,43 @@
+{
+  "edgeModelId": "em_0f3d93464c06a154",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "name",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "label"
+    },
+    {
+      "columnName": "description",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "encrypted_value_json"
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nNamed secret **references** for workflow actions — stores vault key/handle, not plaintext secret. Resolved at action runtime via secret provider.\n\n## Rules\n\n- Scoped to workflow definition scope — rotate secrets in vault, update reference row.\n- Never store raw secret material in `definition_json` or this table.\n- Audit `created_by` on reference creation."
+  },
+  "created_at": "2026-09-11T04:55:24.023Z",
+  "updated_at": "2026-09-17T15:29:39.953Z"
+}

@@ -1,0 +1,32 @@
+{
+  "pageKey": "jobs",
+  "title": "Jobs",
+  "loaderKind": "core",
+  "loaderRef": "core:Jobs",
+  "defaultRoles": [
+    "ADMIN"
+  ],
+  "enabled": true,
+  "homeWidgets": [
+    {
+      "componentRef": "core:JobsHomeWidget",
+      "span": "half",
+      "defaultVisible": false,
+      "catalog": {
+        "labelKey": "homeWidget.jobs.title",
+        "descriptionKey": "homeWidget.jobs.description",
+        "icon": "Activity",
+        "tone": "amber"
+      },
+      "requiredRoles": ["ADMIN"],
+      "deepLink": { "pageKey": "jobs" }
+    }
+  ],
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-06-18T04:15:13.069Z",
+  "createdBy": null,
+  "updatedAt": "2026-06-18T04:15:13.069Z",
+  "updatedBy": null
+}

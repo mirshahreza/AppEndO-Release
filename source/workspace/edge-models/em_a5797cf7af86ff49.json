@@ -1,0 +1,99 @@
+{
+  "id": "em_a5797cf7af86ff49",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_roles_attributes",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseRolesAttributes",
+    "tableName": "base_roles_attributes"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "definition_id",
+      "field": "definitionId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true
+    },
+    {
+      "name": "role_name",
+      "field": "roleName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_5e1806c2b02f8da5",
+        "column": "name"
+      }
+    },
+    {
+      "name": "value_text",
+      "field": "valueText",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "42f52c642d0146a4",
+  "readOnly": false,
+  "labels": {
+    "title": "base_roles_attributes"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:13.965Z",
+  "updated_at": "2026-09-11T04:55:13.965Z"
+}

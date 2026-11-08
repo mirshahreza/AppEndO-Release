@@ -1,0 +1,152 @@
+{
+  "edgeModelId": "em_1cd186b841dd21d7",
+  "tags": [
+    "cms",
+    "asset"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "hidden",
+      "group": "Identity",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "content_id",
+      "icon": "lucide:newspaper",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "sort_order",
+      "icon": "lucide:arrow-up-down",
+      "formWidget": "number",
+      "formWidgetProps": {
+        "min": 0
+      },
+      "searchRole": "advanced",
+      "group": "Identity",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "file_name",
+      "icon": "lucide:file",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "File",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "file_mime",
+      "icon": "lucide:badge-info",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "File",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "file_size",
+      "icon": "lucide:gauge",
+      "formWidget": "number",
+      "formWidgetProps": {
+        "min": 0
+      },
+      "searchRole": "advanced",
+      "group": "File",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "sha256",
+      "icon": "lucide:fingerprint",
+      "formWidget": "text",
+      "group": "File",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "file",
+      "icon": "lucide:paperclip",
+      "formWidget": "file",
+      "group": "File",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "file_xs",
+      "icon": "lucide:image",
+      "formWidget": "image",
+      "group": "File",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "created_by",
+      "icon": "lucide:user",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 100
+    },
+    {
+      "columnName": "created_at",
+      "icon": "lucide:clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 110
+    },
+    {
+      "columnName": "updated_by",
+      "icon": "lucide:user-pen",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "updated_at",
+      "icon": "lucide:clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 130
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_4fa0881d8ac84b54",
+      "displayLabel": "Content",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "title",
+          "as": "content_id_title"
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nBinary attachments for a single content row. **Database bytes are the source of truth** (`file`, optional `file_xs`). Disk cache is a disposable runtime hydrate on first use (key ≈ `asset_id` + `sha256`).\n\n## Rules\n\n- Always tied to `content_id`. No global media library and no “Media” content type.\n- `sort_order` defines gallery / attachment order.\n- `sha256` detects change and invalidates cache.\n- No `kind` discriminator — all files for a content are peers ordered by `sort_order`.\n- Upload / replace recomputes size, mime, name, hash, and timestamps.",
+    "columnGroupOrder": [
+      "Identity",
+      "File",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Identity": {
+        "icon": "lucide:fingerprint",
+        "color": "text-violet-600"
+      },
+      "File": {
+        "icon": "lucide:file",
+        "color": "text-indigo-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock-3",
+        "color": "text-slate-600"
+      }
+    }
+  },
+  "created_at": "2026-11-06T20:29:02.330Z",
+  "updated_at": "2026-11-06T20:29:02.330Z"
+}

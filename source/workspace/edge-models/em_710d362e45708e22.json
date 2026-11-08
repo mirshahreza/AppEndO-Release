@@ -1,0 +1,95 @@
+{
+  "id": "em_710d362e45708e22",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workflow_vector_documents",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowVectorDocuments",
+    "tableName": "base_workflow_vector_documents"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "collection",
+      "field": "collection",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "document_key",
+      "field": "documentKey",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "text",
+      "field": "text",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "embedding_json",
+      "field": "embeddingJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "metadata_json",
+      "field": "metadataJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "68a5a2dd4129f295",
+  "readOnly": false,
+  "labels": {
+    "title": "base_workflow_vector_documents"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:25.303Z",
+  "updated_at": "2026-09-11T04:55:25.303Z"
+}

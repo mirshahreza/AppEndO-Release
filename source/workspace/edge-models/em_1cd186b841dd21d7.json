@@ -1,0 +1,163 @@
+{
+  "id": "em_1cd186b841dd21d7",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "cms_content_assets",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "CmsContentAssets",
+    "tableName": "cms_content_assets"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "content_id",
+      "field": "contentId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_de1dc90b9e9d7626",
+        "column": "id"
+      }
+    },
+    {
+      "name": "file",
+      "field": "file",
+      "dataType": "bytea",
+      "sequelizeType": "BLOB",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "file_xs",
+      "field": "fileXs",
+      "dataType": "bytea",
+      "sequelizeType": "BLOB",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "file_size",
+      "field": "fileSize",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "file_name",
+      "field": "fileName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "file_mime",
+      "field": "fileMime",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "sort_order",
+      "field": "sortOrder",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "sha256",
+      "field": "sha256",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0aea59a2c83642ce",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0aea59a2c83642ce",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "DATE",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_4fa0881d8ac84b54",
+      "targetModelId": "em_de1dc90b9e9d7626",
+      "foreignKey": "content_id",
+      "as": "content",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "e26a3dc5a713a024",
+  "readOnly": false,
+  "labels": {
+    "title": "CMS Content Assets",
+    "icon": "lucide:paperclip",
+    "color": "text-violet-600"
+  },
+  "status": "ready",
+  "created_at": "2026-07-31T17:56:35.281Z",
+  "updated_at": "2026-08-25T08:22:26.552Z"
+}

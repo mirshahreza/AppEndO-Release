@@ -1,0 +1,27 @@
+{
+  "schema": "append-builtin-function-metadata",
+  "schemaVersion": "1.0.0",
+  "id": "fn-users-list",
+  "method": "GET",
+  "path": "/api/users",
+  "createdAt": "2026-06-30T23:33:06.164Z",
+  "createdBy": null,
+  "updatedAt": "2026-11-02T04:43:43.832Z",
+  "updatedBy": "editor@append.os",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "USER"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "enableLogs": true,
+  "testPayload": "{\"query\":{\"limit\":5}}",
+  "timeoutMs": 5000,
+  "cacheEnabled": true,
+  "cacheTtlMs": 120000,
+  "cacheByParam": true,
+  "cacheByUser": false
+}

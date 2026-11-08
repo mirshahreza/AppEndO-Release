@@ -1,0 +1,43 @@
+{
+  "pageKey": "users",
+  "root": {
+    "surfaceId": "users-list",
+    "title": "Users list",
+    "functionIds": [
+      "fn-users-list"
+    ]
+  },
+  "linkedSurfaces": [
+    {
+      "surfaceId": "users-create",
+      "title": "Create user",
+      "functionIds": [
+        "fn-users-create"
+      ]
+    },
+    {
+      "surfaceId": "users-edit-profile",
+      "title": "Edit profile",
+      "functionIds": [
+        "fn-users-update-profile",
+        "fn-users-update"
+      ]
+    },
+    {
+      "surfaceId": "users-roles",
+      "title": "User roles",
+      "functionIds": [
+        "fn-users-update-roles"
+      ]
+    },
+    {
+      "surfaceId": "users-lock",
+      "title": "Lock and unlock",
+      "functionIds": [
+        "fn-users-lock",
+        "fn-users-unlock",
+        "fn-users-set-locked"
+      ]
+    }
+  ]
+}

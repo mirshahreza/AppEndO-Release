@@ -1,0 +1,53 @@
+{
+  "edgeModelId": "em_bb101c506f502589",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "work_item_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "from_status"
+    },
+    {
+      "columnName": "to_status"
+    },
+    {
+      "columnName": "transition_type"
+    },
+    {
+      "columnName": "actor_type"
+    },
+    {
+      "columnName": "actor_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "reason_code"
+    },
+    {
+      "columnName": "evidence_json"
+    },
+    {
+      "columnName": "occurred_at"
+    },
+    {
+      "columnName": "work_item_state_version_after",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_work_item_transitions.work_item_id->base_work_items.id:base_work_item_transitions_work_item_id_fkey",
+      "displayLabel": "Work Item"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nAppend-only state change log for a work item — from/to status, transition type, actor, reason, evidence JSON, post-transition state version.\n\n## Rules\n\n- Insert-only on claim/release/complete/escalate events.\n- `work_item_state_version_after` matches optimistic lock on parent row.\n- Indexed by work item + time for ticket timeline UI."
+  },
+  "created_at": "2026-09-11T04:55:20.102Z",
+  "updated_at": "2026-09-17T15:29:39.880Z"
+}

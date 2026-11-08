@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-jobs.ops-jobs-pivot",
+  "name": "ops-jobs-pivot",
+  "folder": "base-jobs",
+  "method": "POST",
+  "path": "/api/ops/ops_jobs/pivot",
+  "sourceFile": "base-jobs.ops-jobs-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"job_type\": \"\",\n    \"status\": \"\",\n    \"progress\": \"\",\n    \"attempt_count\": \"\",\n    \"max_attempts\": \"\",\n    \"queued_at\": \"\",\n    \"started_at\": \"\",\n    \"finished_at\": \"\",\n    \"created_at\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_jobs_pivot\",\"edgeApiOperationId\":\"ops_jobs-pivot\",\"edgeModelId\":\"em_7adfdb41e3b051b0\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_jobs/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"job_type\",\"status\",\"progress\",\"attempt_count\",\"max_attempts\",\"queued_at\",\"started_at\",\"finished_at\",\"created_at\"]}},\"model\":{\"objectName\":\"base_jobs\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"job_type\",\"name\":\"job_type\"},{\"field\":\"status\",\"name\":\"status\"},{\"field\":\"progress\",\"name\":\"progress\"},{\"field\":\"attempt_count\",\"name\":\"attempt_count\"},{\"field\":\"max_attempts\",\"name\":\"max_attempts\"},{\"field\":\"queued_at\",\"name\":\"queued_at\"},{\"field\":\"started_at\",\"name\":\"started_at\"},{\"field\":\"finished_at\",\"name\":\"finished_at\"},{\"field\":\"created_at\",\"name\":\"created_at\"}]},\"openapi\":{\"summary\":\"Jobs pivot\",\"description\":\"Jobs pivot (POST /api/ops/ops_jobs/pivot) on base_jobs.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:efd728a1\",\"generatedAt\":\"2026-10-02T23:23:17.654Z\",\"requestExample\":{\"body\":{\"job_type\":\"\",\"status\":\"\",\"progress\":\"\",\"attempt_count\":\"\",\"max_attempts\":\"\",\"queued_at\":\"\",\"started_at\":\"\",\"finished_at\":\"\",\"created_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_jobs/pivot\",\"routeNote\":\"Data API pivot on base_jobs.\",\"validationFields\":[\"job_type\",\"status\",\"progress\",\"attempt_count\",\"max_attempts\",\"queued_at\",\"started_at\",\"finished_at\",\"created_at\"],\"outputFields\":[\"id\",\"job_type\",\"status\",\"progress\",\"attempt_count\",\"max_attempts\",\"queued_at\",\"started_at\",\"finished_at\",\"created_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:17.803Z",
+  "updatedAt": "2026-10-02T23:23:17.803Z",
+  "createdBy": null,
+  "updatedBy": null
+}

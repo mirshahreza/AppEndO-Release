@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Creative Shell browser gate</title>
+    <script>
+      window.__creativeGateMetrics = { longTasks: 0, layoutShift: 0 };
+      if ('PerformanceObserver' in window) {
+        try {
+          new PerformanceObserver((entries) => {
+            window.__creativeGateMetrics.longTasks += entries.getEntries().length;
+          }).observe({ type: 'longtask', buffered: true });
+        } catch {}
+        try {
+          new PerformanceObserver((entries) => {
+            for (const entry of entries.getEntries()) {
+              if (!entry.hadRecentInput) window.__creativeGateMetrics.layoutShift += entry.value;
+            }
+          }).observe({ type: 'layout-shift', buffered: true });
+        } catch {}
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/main.tsx"></script>
+  </body>
+</html>

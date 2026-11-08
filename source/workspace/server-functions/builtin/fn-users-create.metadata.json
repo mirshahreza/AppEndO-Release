@@ -1,0 +1,24 @@
+{
+  "schema": "append-builtin-function-metadata",
+  "schemaVersion": "1.0.0",
+  "id": "fn-users-create",
+  "method": "POST",
+  "path": "/api/users",
+  "createdAt": "2026-09-12T16:32:48.155Z",
+  "createdBy": null,
+  "updatedAt": "2026-09-12T16:32:48.155Z",
+  "updatedBy": "seed-change-reason",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "DEVELOPER",
+      "USER"
+    ],
+    "allowUsers": [
+      "mohsen.tehrani@append.os"
+    ],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "metadataJson": "{\"changeReason\":{\"reasonAsk\":\"optional\",\"reasonCapture\":\"both\",\"reasonVocabNodeId\":\"100.6.22\",\"reasonIncludeGeneral\":true}}"
+}

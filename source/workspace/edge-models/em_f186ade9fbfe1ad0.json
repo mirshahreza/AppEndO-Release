@@ -1,0 +1,104 @@
+{
+  "id": "em_f186ade9fbfe1ad0",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_app_feedback",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseAppFeedback",
+    "tableName": "base_app_feedback"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "type",
+      "field": "type",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status",
+      "field": "status",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "priority",
+      "field": "priority",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "submitted_at",
+      "field": "submitted_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "page_key",
+      "field": "page_key",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "portal_slug",
+      "field": "portal_slug",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "assignee_role_name",
+      "field": "assignee_role_name",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "message_count",
+      "field": "message_count",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "aeadcfa0d4c491b0",
+  "readOnly": true,
+  "labels": {
+    "title": "Feedback"
+  },
+  "status": "ready",
+  "created_at": "2026-08-26T07:34:02.094Z",
+  "updated_at": "2026-10-22T03:07:44.464Z"
+}

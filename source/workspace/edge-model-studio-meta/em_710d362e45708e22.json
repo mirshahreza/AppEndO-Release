@@ -1,0 +1,36 @@
+{
+  "edgeModelId": "em_710d362e45708e22",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "collection"
+    },
+    {
+      "columnName": "document_key"
+    },
+    {
+      "columnName": "text"
+    },
+    {
+      "columnName": "embedding_json"
+    },
+    {
+      "columnName": "metadata_json"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nEmbedding index for workflow designer/runtime retrieval — one row per `(collection, document_key)` with text, embedding JSON, and optional metadata. Not a workflow instance; used by vector search over definitions/docs.\n\n## Rules\n\n- **UNIQUE** (`collection`, `document_key`).\n- `embedding_json` is the stored vector — regenerate on text change, do not hand-edit.\n- Safe to rebuild the collection from source documents; rows are a cache, not the contract.\n- Keep package/domain documents out of this table unless the workflow engine owns them."
+  },
+  "created_at": "2026-09-11T04:55:25.319Z",
+  "updated_at": "2026-09-17T15:29:39.975Z"
+}

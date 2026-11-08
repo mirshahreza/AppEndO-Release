@@ -1,0 +1,49 @@
+{
+  "edgeModelId": "em_7adfdb41e3b051b0",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "job_type"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "progress",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "attempt_count",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "max_attempts",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "queued_at",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "started_at",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "finished_at",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nBackground job queue — scheduled and ad-hoc work claimed by the Jobs worker. Studio **Jobs**, MCP jobs tools, and workflow `jobs.*` actions all write here.\n\n## Lifecycle\n\n1. **Enqueue** — insert `pending` with `job_type`, payload, `max_attempts`, and optional not-before window.\n2. **Claim** — worker leases the row; only the lease holder may complete or fail it.\n3. **Run** — dispatch by `job_type`: `edge_function` (managed Server Function), `agent_task`, or `db_enrichment`. Unknown types fail with a clear error.\n4. **Complete / fail** — success is terminal; failure retries until `max_attempts`, then stays failed for operator review.\n\n## Rules\n\n- Do not edit `status` manually in Studio during an active run — you will race the worker lease.\n- Idempotent handlers key off job type + payload fingerprint where required.\n- Cancel own agent tasks through the Jobs API, not by deleting the row mid-flight."
+  },
+  "created_at": "2026-08-28T14:59:57.513Z",
+  "updated_at": "2026-09-17T15:29:39.518Z"
+}

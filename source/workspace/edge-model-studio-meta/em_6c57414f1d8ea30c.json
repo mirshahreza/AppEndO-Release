@@ -1,0 +1,11 @@
+{
+  "edgeModelId": "em_6c57414f1d8ea30c",
+  "tags": [],
+  "columnMeta": [],
+  "associationMeta": [],
+  "extensions": {
+    "story": "## Purpose\n\nApplication/runtime log index persisted to control plane — structured app log entries mirrored from Winston/telemetry pipeline for Studio Logs grid.\n\n## Rules\n\n- Append-only operational log — not a business entity.\n- Level/status filters in UI map to stored severity columns.\n- Large payloads may truncate — detail lives in message/text fields."
+  },
+  "created_at": "2026-09-03T11:29:50.743Z",
+  "updated_at": "2026-09-03T11:29:50.743Z"
+}

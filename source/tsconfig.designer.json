@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "src/domain/component-designer/**/*.ts",
+    "src/domain/component-designer/**/*.tsx",
+    "src/features/component-designer/**/*.ts",
+    "src/features/component-designer/**/*.tsx"
+  ]
+}

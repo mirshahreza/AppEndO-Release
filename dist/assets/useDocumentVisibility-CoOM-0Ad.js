@@ -1,0 +1,1 @@
+import{h as n}from"./react-vendor-CsZD9bLw.js";function s(){const[e,i]=n.useState(()=>typeof document>"u"?!0:document.visibilityState==="visible");return n.useEffect(()=>{const t=()=>{i(document.visibilityState==="visible")};return document.addEventListener("visibilitychange",t),()=>document.removeEventListener("visibilitychange",t)},[]),e}function u(e){return s()?e:!1}export{u};

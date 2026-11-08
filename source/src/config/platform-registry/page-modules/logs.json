@@ -1,0 +1,31 @@
+{
+  "pageKey": "logs",
+  "title": "Logs",
+  "loaderKind": "core",
+  "loaderRef": "core:Logs",
+  "defaultRoles": [
+    "ADMIN"
+  ],
+  "enabled": true,
+  "homeWidgets": [
+    {
+      "componentRef": "core:LogsHomeWidget",
+      "span": "wide",
+      "catalog": {
+        "labelKey": "homeWidget.logs.title",
+        "descriptionKey": "homeWidget.logs.description",
+        "icon": "TriangleAlert",
+        "tone": "rose"
+      },
+      "requiredRoles": ["ADMIN"],
+      "deepLink": { "pageKey": "logs" }
+    }
+  ],
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-06-18T04:15:13.079Z",
+  "createdBy": null,
+  "updatedAt": "2026-06-18T04:15:13.079Z",
+  "updatedBy": null
+}

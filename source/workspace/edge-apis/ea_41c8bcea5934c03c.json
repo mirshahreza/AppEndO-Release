@@ -1,0 +1,501 @@
+{
+  "id": "ea_41c8bcea5934c03c",
+  "edgeModelId": "em_de1dc90b9e9d7626",
+  "key": "cms-contents",
+  "label": "CMS Contents",
+  "basePath": "/api/cms/contents",
+  "operations": [
+    {
+      "id": "op_list_wcezaa",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/cms/contents",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "title",
+          "slug",
+          "contentTypeCode",
+          "languageCode",
+          "statusCode",
+          "publishedAt",
+          "updatedAt",
+          "parentContentId",
+          "body",
+          "authorDisplayName",
+          "createdAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20,
+        "views": {
+          "summary": [
+            "id",
+            "title",
+            "slug",
+            "contentTypeCode",
+            "languageCode",
+            "statusCode",
+            "publishedAt",
+            "updatedAt",
+            "parentContentId",
+            "body",
+            "authorDisplayName",
+            "createdAt"
+          ],
+          "detail": [
+            "id",
+            "title",
+            "slug",
+            "contentTypeCode",
+            "languageCode",
+            "statusCode",
+            "publishedAt",
+            "updatedAt",
+            "parentContentId",
+            "body",
+            "authorDisplayName",
+            "createdAt"
+          ]
+        }
+      },
+      "enrichments": [
+        {
+          "id": "cms_enrich_content_type",
+          "sourceField": "contentTypeCode",
+          "kind": "base_info_title",
+          "joinTableSource": "base_info",
+          "attachedFields": [
+            {
+              "sourceColumn": "title",
+              "outputField": "contentTypeCodeTitle"
+            },
+            {
+              "sourceColumn": "ui_html",
+              "outputField": "contentTypeCodeUiHtml"
+            }
+          ],
+          "langSource": "fixed:en"
+        },
+        {
+          "id": "cms_enrich_language",
+          "sourceField": "languageCode",
+          "kind": "base_info_title",
+          "joinTableSource": "base_info",
+          "attachedFields": [
+            {
+              "sourceColumn": "title",
+              "outputField": "languageCodeTitle"
+            }
+          ],
+          "langSource": "fixed:en"
+        },
+        {
+          "id": "cms_enrich_status",
+          "sourceField": "statusCode",
+          "kind": "base_info_title",
+          "joinTableSource": "base_info",
+          "attachedFields": [
+            {
+              "sourceColumn": "title",
+              "outputField": "statusCodeTitle"
+            },
+            {
+              "sourceColumn": "ui_html",
+              "outputField": "statusCodeUiHtml"
+            },
+            {
+              "sourceColumn": "ui_color",
+              "outputField": "statusCodeUiColor"
+            }
+          ],
+          "langSource": "fixed:en"
+        }
+      ],
+      "computedFields": [
+        {
+          "id": "cms_content_comment_count",
+          "outputField": "commentCount",
+          "kind": "scalar_subquery",
+          "expression": "(SELECT COUNT(*)::int FROM cms_contents AS child WHERE child.parent_content_id = \"{{parent}}\".\"{{pk}}\")"
+        },
+        {
+          "id": "cms_content_tag_summary",
+          "outputField": "tagSummary",
+          "kind": "scalar_subquery",
+          "expression": "(\n    SELECT COALESCE(\n      STRING_AGG(tag.title_en, ', ' ORDER BY tag.view_order, tag.title_en),\n      ''\n    )\n    FROM cms_content_tags AS content_tag\n    INNER JOIN base_info AS tag ON tag.id = content_tag.tag_code\n    WHERE content_tag.content_id = \"{{parent}}\".\"{{pk}}\"\n  )"
+        }
+      ]
+    },
+    {
+      "id": "op_get_wcezaa",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/cms/contents/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentTypeCode",
+          "languageCode",
+          "slug",
+          "statusCode",
+          "statusCodeUpdatedAt",
+          "statusCodeUpdatedBy",
+          "title",
+          "summary",
+          "body",
+          "bodyFormatCode",
+          "seoTitle",
+          "seoNote",
+          "publishedAt",
+          "operatorNote",
+          "commentsEnabled",
+          "commentsPolicyCode",
+          "commentsBodyFormatCode",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt",
+          "parentContentId",
+          "authorDisplayName",
+          "authorEmail",
+          "moderatedBy",
+          "moderatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      },
+      "enrichments": [
+        {
+          "id": "cms_enrich_content_type",
+          "sourceField": "contentTypeCode",
+          "kind": "base_info_title",
+          "joinTableSource": "base_info",
+          "attachedFields": [
+            {
+              "sourceColumn": "title",
+              "outputField": "contentTypeCodeTitle"
+            },
+            {
+              "sourceColumn": "ui_html",
+              "outputField": "contentTypeCodeUiHtml"
+            }
+          ],
+          "langSource": "fixed:en"
+        },
+        {
+          "id": "cms_enrich_language",
+          "sourceField": "languageCode",
+          "kind": "base_info_title",
+          "joinTableSource": "base_info",
+          "attachedFields": [
+            {
+              "sourceColumn": "title",
+              "outputField": "languageCodeTitle"
+            }
+          ],
+          "langSource": "fixed:en"
+        },
+        {
+          "id": "cms_enrich_status",
+          "sourceField": "statusCode",
+          "kind": "base_info_title",
+          "joinTableSource": "base_info",
+          "attachedFields": [
+            {
+              "sourceColumn": "title",
+              "outputField": "statusCodeTitle"
+            },
+            {
+              "sourceColumn": "ui_html",
+              "outputField": "statusCodeUiHtml"
+            },
+            {
+              "sourceColumn": "ui_color",
+              "outputField": "statusCodeUiColor"
+            }
+          ],
+          "langSource": "fixed:en"
+        },
+        {
+          "id": "cms_enrich_body_format",
+          "sourceField": "bodyFormatCode",
+          "kind": "base_info_title",
+          "joinTableSource": "base_info",
+          "attachedFields": [
+            {
+              "sourceColumn": "title",
+              "outputField": "bodyFormatCodeTitle"
+            }
+          ],
+          "langSource": "fixed:en"
+        },
+        {
+          "id": "cms_enrich_status_updated_by",
+          "sourceField": "statusCodeUpdatedBy",
+          "kind": "join_lookup",
+          "joinTableSource": "edge_model",
+          "targetModelId": "em_0aea59a2c83642ce",
+          "targetMatchColumn": "id",
+          "attachedFields": [
+            {
+              "sourceColumn": "username",
+              "outputField": "statusCodeUpdatedByUsername"
+            }
+          ]
+        },
+        {
+          "id": "cms_enrich_created_by",
+          "sourceField": "createdBy",
+          "kind": "join_lookup",
+          "joinTableSource": "edge_model",
+          "targetModelId": "em_0aea59a2c83642ce",
+          "targetMatchColumn": "id",
+          "attachedFields": [
+            {
+              "sourceColumn": "username",
+              "outputField": "createdByUsername"
+            }
+          ]
+        },
+        {
+          "id": "cms_enrich_updated_by",
+          "sourceField": "updatedBy",
+          "kind": "join_lookup",
+          "joinTableSource": "edge_model",
+          "targetModelId": "em_0aea59a2c83642ce",
+          "targetMatchColumn": "id",
+          "attachedFields": [
+            {
+              "sourceColumn": "username",
+              "outputField": "updatedByUsername"
+            }
+          ]
+        }
+      ],
+      "computedFields": [
+        {
+          "id": "cms_content_comment_count",
+          "outputField": "commentCount",
+          "kind": "scalar_subquery",
+          "expression": "(SELECT COUNT(*)::int FROM cms_contents AS child WHERE child.parent_content_id = \"{{parent}}\".\"{{pk}}\")"
+        },
+        {
+          "id": "cms_content_tag_summary",
+          "outputField": "tagSummary",
+          "kind": "scalar_subquery",
+          "expression": "(\n    SELECT COALESCE(\n      STRING_AGG(tag.title_en, ', ' ORDER BY tag.view_order, tag.title_en),\n      ''\n    )\n    FROM cms_content_tags AS content_tag\n    INNER JOIN base_info AS tag ON tag.id = content_tag.tag_code\n    WHERE content_tag.content_id = \"{{parent}}\".\"{{pk}}\"\n  )"
+        },
+        {
+          "id": "cms_content_revision_count",
+          "outputField": "revisionCount",
+          "kind": "scalar_subquery",
+          "expression": "(SELECT COUNT(*)::int FROM cms_content_revisions AS revision WHERE revision.content_id = \"{{parent}}\".\"{{pk}}\")"
+        }
+      ]
+    },
+    {
+      "id": "op_create_wcezaa",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/cms/contents",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentTypeCode",
+          "languageCode",
+          "slug",
+          "statusCode",
+          "statusCodeUpdatedAt",
+          "statusCodeUpdatedBy",
+          "title",
+          "summary",
+          "body",
+          "bodyFormatCode",
+          "seoTitle",
+          "seoNote",
+          "publishedAt",
+          "operatorNote",
+          "commentsEnabled",
+          "commentsPolicyCode",
+          "commentsBodyFormatCode",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt",
+          "parentContentId",
+          "authorDisplayName",
+          "authorEmail",
+          "moderatedBy",
+          "moderatedAt"
+        ],
+        "write": [
+          "contentTypeCode",
+          "languageCode",
+          "slug",
+          "statusCode",
+          "statusCodeUpdatedAt",
+          "statusCodeUpdatedBy",
+          "title",
+          "summary",
+          "body",
+          "bodyFormatCode",
+          "seoTitle",
+          "seoNote",
+          "publishedAt",
+          "operatorNote",
+          "commentsEnabled",
+          "commentsPolicyCode",
+          "commentsBodyFormatCode",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt",
+          "parentContentId",
+          "authorDisplayName",
+          "authorEmail",
+          "moderatedBy",
+          "moderatedAt"
+        ],
+        "required": []
+      }
+    },
+    {
+      "id": "op_update_wcezaa",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/cms/contents/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentTypeCode",
+          "languageCode",
+          "slug",
+          "statusCode",
+          "statusCodeUpdatedAt",
+          "statusCodeUpdatedBy",
+          "title",
+          "summary",
+          "body",
+          "bodyFormatCode",
+          "seoTitle",
+          "seoNote",
+          "publishedAt",
+          "operatorNote",
+          "commentsEnabled",
+          "commentsPolicyCode",
+          "commentsBodyFormatCode",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt",
+          "parentContentId",
+          "authorDisplayName",
+          "authorEmail",
+          "moderatedBy",
+          "moderatedAt"
+        ],
+        "write": [
+          "contentTypeCode",
+          "languageCode",
+          "slug",
+          "statusCode",
+          "statusCodeUpdatedAt",
+          "statusCodeUpdatedBy",
+          "title",
+          "summary",
+          "body",
+          "bodyFormatCode",
+          "seoTitle",
+          "seoNote",
+          "publishedAt",
+          "operatorNote",
+          "commentsEnabled",
+          "commentsPolicyCode",
+          "commentsBodyFormatCode",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt",
+          "parentContentId",
+          "authorDisplayName",
+          "authorEmail",
+          "moderatedBy",
+          "moderatedAt"
+        ],
+        "required": []
+      }
+    },
+    {
+      "id": "op_delete_wcezaa",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/cms/contents/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "contentTypeCode",
+          "languageCode",
+          "slug",
+          "statusCode",
+          "statusCodeUpdatedAt",
+          "statusCodeUpdatedBy",
+          "title",
+          "summary",
+          "body",
+          "bodyFormatCode",
+          "seoTitle",
+          "seoNote",
+          "publishedAt",
+          "operatorNote",
+          "commentsEnabled",
+          "commentsPolicyCode",
+          "commentsBodyFormatCode",
+          "createdBy",
+          "createdAt",
+          "updatedBy",
+          "updatedAt",
+          "parentContentId",
+          "authorDisplayName",
+          "authorEmail",
+          "moderatedBy",
+          "moderatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-06T20:28:59.594Z",
+  "version": 13,
+  "runtime": {
+    "useGlobalConfig": true,
+    "cacheEnabled": true,
+    "cacheTtlMs": 300000,
+    "cacheByParam": true,
+    "cacheByUser": false
+  },
+  "managedFunctionId": "cms-contents.cms-contents-list"
+}

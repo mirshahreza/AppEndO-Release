@@ -1,0 +1,1576 @@
+// Control plane schema — cross-provider naming via @@map / @map (p-45 PRM-1).
+// schema.prisma stays on postgresql for client generate. Recommended runtime provider is SQL Server.
+// Switch `provider` + DATABASE_URL for PostgreSQL / MySQL / SQLite smoke.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model BaseUser {
+  id                BigInt    @id @default(autoincrement())
+  username          String    @unique
+  email             String?   @unique
+  passwordHash      String    @map("password_hash")
+  isBuiltin         Boolean   @default(false) @map("is_builtin")
+  locked            Int       @default(0)
+  lockedAt          DateTime? @map("locked_at")
+  lockedBy          BigInt?   @map("locked_by")
+  unlockedAt        DateTime? @map("unlocked_at")
+  unlockedBy        BigInt?   @map("unlocked_by")
+  loginFailCount    Int       @default(0) @map("login_fail_count")
+  loginFailLastAt   DateTime? @map("login_fail_last_at")
+  lastLoginAt       DateTime? @map("last_login_at")
+  emailVerifiedAt   DateTime? @map("email_verified_at")
+  mobile            String?
+  mobileVerifiedAt  DateTime? @map("mobile_verified_at")
+  createdAt         DateTime? @default(now()) @map("created_at")
+  createdBy         BigInt?   @map("created_by")
+  updatedAt         DateTime? @default(now()) @map("updated_at")
+  updatedBy         BigInt?   @map("updated_by")
+
+  otpChallenges       BaseOtpChallenge[]
+  profile             BaseUserProfile?
+  identities          BaseUserIdentity[]
+  userRoles           BaseUserRole[]
+  refreshTokens       BaseAuthRefreshToken[]
+  attributeValues     BaseUserAttribute[]
+  authAuditLogs       BaseAuthAuditLog[]
+  chatSessions        BaseAiChatSession[]
+  agentTraces         BaseAiAgentTrace[]
+  agentApplySnapshots BaseAiAgentApplySnapshot[]
+  contactMessages     BaseContactMessage[]
+  feedbackTicketsSubmitted BaseAppFeedback[] @relation("FeedbackSubmitter")
+  feedbackTicketsAssigned  BaseAppFeedback[] @relation("FeedbackAssignee")
+  feedbackTicketsClaimed   BaseAppFeedback[] @relation("FeedbackClaimedBy")
+  feedbackTicketsResolved  BaseAppFeedback[] @relation("FeedbackResolvedBy")
+  feedbackTicketsManualAssign BaseAppFeedback[] @relation("FeedbackManualAssign")
+  feedbackMessages         BaseAppFeedbackMessage[]
+  feedbackAttachments      BaseAppFeedbackAttachment[]
+  feedbackReadCursors      BaseAppFeedbackReadCursor[]
+  scopeMemberships         BaseScopeMembership[]
+  scopeMembershipEventsAsSubject BaseScopeMembershipEvent[] @relation("ScopeMembershipEventSubject")
+  scopeMembershipEventsAsActor   BaseScopeMembershipEvent[] @relation("ScopeMembershipEventActor")
+  scopeRoleMembershipEventsAsActor BaseScopeRoleMembershipEvent[] @relation("ScopeRoleMembershipEventActor")
+  notifications                    BaseUserNotification[]
+  notificationPreferences         UserNotificationPreference[]
+  notificationDigestItems         UserNotificationDigestItem[]
+
+  @@index([createdAt], map: "idx_base_users_created_at")
+  @@index([updatedAt], map: "idx_base_users_updated_at")
+  @@index([locked], map: "idx_base_users_locked")
+  @@map("base_users")
+}
+
+model BaseOtpChallenge {
+  id        BigInt    @id @default(autoincrement())
+  userId    BigInt?   @map("user_id")
+  purpose   String
+  channel   String
+  target    String
+  otpHash   String    @map("otp_hash")
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?   @map("created_by")
+
+  user BaseUser? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_otp_challenges_user_id")
+  @@index([expiresAt], map: "idx_otp_challenges_expires_at")
+  @@map("base_otp_challenges")
+}
+
+model BaseInfo {
+  id        String   @id
+  parentId  String?  @map("parent_id")
+  title     String?
+  shortName String?  @map("short_name")
+  viewOrder Decimal? @map("view_order")
+  note      String?  @db.Text
+  metadata  String?  @db.Text
+  value     Int?
+  isActive  Boolean  @default(true) @map("is_active")
+  uiColor   String?  @map("ui_color")
+  uiHtml    String?  @map("ui_html") @db.Text
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?  @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  updatedBy BigInt?  @map("updated_by")
+
+  parent   BaseInfo?  @relation("BaseInfoTree", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children BaseInfo[] @relation("BaseInfoTree")
+
+  profileGenderRefs     BaseUserProfile[]        @relation("ProfileGender")
+  profilePersonTypeRefs BaseUserProfile[]        @relation("ProfilePersonType")
+  settingsAttributes    BaseSettingsAttribute[]
+  contactMessages       BaseContactMessage[]
+
+  @@index([parentId], map: "idx_base_info_parent_id")
+  @@index([isActive], map: "idx_base_info_is_active")
+  @@index([parentId, viewOrder, id], map: "idx_base_info_parent_order")
+  @@map("base_info")
+}
+
+/// User ↔ Base Info node membership for org/geo (and future RPE dimensions).
+/// nodeId is a Base Info id string without FK — hierarchical renames remap in app code.
+model BaseScopeMembership {
+  id           BigInt    @id @default(autoincrement())
+  userId       BigInt    @map("user_id")
+  dimensionKey String    @map("dimension_key")
+  nodeId       String    @map("node_id")
+  createdAt    DateTime? @default(now()) @map("created_at")
+  createdBy    BigInt?   @map("created_by")
+  updatedAt    DateTime? @default(now()) @map("updated_at")
+  updatedBy    BigInt?   @map("updated_by")
+
+  user BaseUser @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([userId, dimensionKey, nodeId], map: "uq_scope_memberships_user_dim_node")
+  @@index([nodeId, dimensionKey], map: "idx_scope_memberships_node_dim")
+  @@index([userId, dimensionKey], map: "idx_scope_memberships_user_dim")
+  @@map("base_scope_memberships")
+}
+
+/// Append-only audit of scope membership assign / remove.
+model BaseScopeMembershipEvent {
+  id             BigInt    @id @default(autoincrement())
+  dimensionKey   String    @map("dimension_key")
+  nodeId         String    @map("node_id")
+  userId         BigInt    @map("user_id")
+  eventType      String    @map("event_type")
+  actorUserId    BigInt?   @map("actor_user_id")
+  createdAt      DateTime? @default(now()) @map("created_at")
+
+  user  BaseUser  @relation("ScopeMembershipEventSubject", fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  actor BaseUser? @relation("ScopeMembershipEventActor", fields: [actorUserId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  @@index([dimensionKey, nodeId, createdAt], map: "idx_scope_membership_events_node")
+  @@index([userId, createdAt], map: "idx_scope_membership_events_user")
+  @@index([createdAt], map: "idx_scope_membership_events_created")
+  @@map("base_scope_membership_events")
+}
+
+/// Role ↔ Base Info node membership (default scope granted by role). Binary only.
+model BaseScopeRoleMembership {
+  id           BigInt    @id @default(autoincrement())
+  roleName     String    @map("role_name")
+  dimensionKey String    @map("dimension_key")
+  nodeId       String    @map("node_id")
+  createdAt    DateTime? @default(now()) @map("created_at")
+  createdBy    BigInt?   @map("created_by")
+  updatedAt    DateTime? @default(now()) @map("updated_at")
+  updatedBy    BigInt?   @map("updated_by")
+
+  role BaseRole @relation(fields: [roleName], references: [name], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([roleName, dimensionKey, nodeId], map: "uq_scope_role_memberships_role_dim_node")
+  @@index([nodeId, dimensionKey], map: "idx_scope_role_memberships_node_dim")
+  @@index([roleName, dimensionKey], map: "idx_scope_role_memberships_role_dim")
+  @@map("base_scope_role_memberships")
+}
+
+/// Append-only audit of role scope membership assign / remove.
+model BaseScopeRoleMembershipEvent {
+  id           BigInt    @id @default(autoincrement())
+  dimensionKey String    @map("dimension_key")
+  nodeId       String    @map("node_id")
+  roleName     String    @map("role_name")
+  eventType    String    @map("event_type")
+  actorUserId  BigInt?   @map("actor_user_id")
+  createdAt    DateTime? @default(now()) @map("created_at")
+
+  actor BaseUser? @relation("ScopeRoleMembershipEventActor", fields: [actorUserId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  @@index([dimensionKey, nodeId, createdAt], map: "idx_scope_role_membership_events_node")
+  @@index([roleName, createdAt], map: "idx_scope_role_membership_events_role")
+  @@index([createdAt], map: "idx_scope_role_membership_events_created")
+  @@map("base_scope_role_membership_events")
+}
+
+model BaseUserProfile {
+  userId              BigInt  @id @map("user_id")
+  firstname           String?
+  lastname            String?
+  fathername          String?
+  grandfathername     String?
+  phone               String?
+  nickname            String?
+  nationalCode        String? @map("national_code")
+  birthYear           String? @map("birth_year")
+  birthMonth          String? @map("birth_month")
+  birthDay            String? @map("birth_day")
+  genderCode          String? @map("gender_code")
+  personTypeCode      String? @map("person_type_code")
+  companyName         String? @map("company_name")
+  registrationNumber  String? @map("registration_number")
+  website             String? @map("website")
+  profileImageBody    Bytes?  @map("profile_image_body")
+  profileImageBodyXs  Bytes?  @map("profile_image_body_xs")
+  profileImageMime    String? @map("profile_image_mime")
+  profileImageSize    Int?    @map("profile_image_size")
+  createdAt           DateTime? @default(now()) @map("created_at")
+  createdBy           BigInt? @map("created_by")
+  updatedAt           DateTime? @default(now()) @map("updated_at")
+  updatedBy           BigInt? @map("updated_by")
+
+  user       BaseUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gender     BaseInfo? @relation("ProfileGender", fields: [genderCode], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  personType BaseInfo? @relation("ProfilePersonType", fields: [personTypeCode], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([firstname], map: "idx_base_user_profiles_firstname")
+  @@index([lastname], map: "idx_base_user_profiles_lastname")
+  @@map("base_user_profiles")
+}
+
+model BaseUserIdentity {
+  id            BigInt    @id @default(autoincrement())
+  userId        BigInt    @map("user_id")
+  providerId    String    @map("provider_id")
+  providerKind  String    @map("provider_kind")
+  subject       String
+  email         String?
+  emailVerified Boolean   @default(false) @map("email_verified")
+  profileJson   String?   @map("profile_json") @db.Text
+  linkedAt      DateTime? @default(now()) @map("linked_at")
+  lastLoginAt   DateTime? @map("last_login_at")
+  createdAt     DateTime? @default(now()) @map("created_at")
+  createdBy     BigInt?   @map("created_by")
+  updatedAt     DateTime? @default(now()) @map("updated_at")
+  updatedBy     BigInt?   @map("updated_by")
+
+  user BaseUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, subject])
+  @@index([userId], map: "idx_base_user_identities_user_id")
+  @@map("base_user_identities")
+}
+
+model BaseRole {
+  id        BigInt    @id @default(autoincrement())
+  name      String    @unique
+  note      String?   @db.Text
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?   @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  updatedBy BigInt?   @map("updated_by")
+
+  userRoles           BaseUserRole[]
+  mcpGrants           BaseRoleMcpGrant[]
+  attributeValues     BaseRoleAttribute[]
+  scopeRoleMemberships BaseScopeRoleMembership[]
+
+  @@map("base_roles")
+}
+
+model BaseUserRole {
+  userId    BigInt    @map("user_id")
+  roleName  String    @map("role_name")
+  createdBy BigInt?   @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  user BaseUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role BaseRole @relation(fields: [roleName], references: [name], onDelete: Cascade)
+
+  @@id([userId, roleName])
+  @@map("base_user_roles")
+}
+
+model BaseRoleMcpGrant {
+  id           BigInt    @id @default(autoincrement())
+  roleName     String    @map("role_name")
+  resourceKind String    @map("resource_kind")
+  resourceId   String    @map("resource_id")
+  createdAt    DateTime? @default(now()) @map("created_at")
+  createdBy    BigInt?   @map("created_by")
+  updatedAt    DateTime? @default(now()) @map("updated_at")
+  updatedBy    BigInt?   @map("updated_by")
+
+  role BaseRole @relation(fields: [roleName], references: [name], onDelete: Cascade)
+
+  @@unique([roleName, resourceKind, resourceId])
+  @@index([roleName], map: "idx_role_mcp_grants_role")
+  @@map("base_role_mcp_grants")
+}
+
+model BaseSettingsAttribute {
+  id              BigInt    @id @default(autoincrement())
+  key             String
+  label           String?
+  scope           String
+  sourceType      String    @map("source_type")
+  baseInfoRootId  String?   @map("base_info_root_id")
+  profileField    String?   @map("profile_field")
+  dataType        String?   @map("data_type")
+  cardinality     String    @default("single")
+  minSelections   Int?      @map("min_selections")
+  maxSelections   Int?      @map("max_selections")
+  visibility      String    @default("BOTH")
+  isRequired      Boolean   @default(false) @map("is_required")
+  isActive        Boolean   @default(true) @map("is_active")
+  viewOrder       Decimal   @default(0) @map("view_order")
+  userEditable    Boolean   @default(false) @map("user_editable")
+  userEditPolicy  String    @default("WHEN_EMPTY") @map("user_edit_policy")
+  isBuiltin       Boolean   @default(false) @map("is_builtin")
+  createdAt       DateTime? @default(now()) @map("created_at")
+  createdBy       BigInt?   @map("created_by")
+  updatedAt       DateTime? @default(now()) @map("updated_at")
+  updatedBy       BigInt?   @map("updated_by")
+
+  baseInfoRoot BaseInfo? @relation(fields: [baseInfoRootId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userValues   BaseUserAttribute[]
+  roleValues   BaseRoleAttribute[]
+
+  @@unique([scope, key], map: "uq_settings_attributes_scope_key")
+  @@index([scope, isActive, viewOrder, id], map: "idx_settings_attributes_scope_active")
+  @@map("base_settings_attributes")
+}
+
+model BaseSettingsProfileField {
+  profileField   String    @id @map("profile_field")
+  contextKey     String    @map("context_key")
+  labelEn        String?   @map("label_en")
+  isActive       Boolean   @default(false) @map("is_active")
+  userEditPolicy String    @default("WHEN_EMPTY") @map("user_edit_policy")
+  visibility     String    @default("BOTH")
+  viewOrder      Decimal   @default(0) @map("view_order")
+  createdAt      DateTime? @default(now()) @map("created_at")
+  createdBy      BigInt?   @map("created_by")
+  updatedAt      DateTime? @default(now()) @map("updated_at")
+  updatedBy      BigInt?   @map("updated_by")
+
+  @@index([isActive, viewOrder, profileField], map: "idx_settings_profile_fields_active")
+  @@map("base_settings_profile_fields")
+}
+
+model BaseUserAttribute {
+  id           BigInt    @id @default(autoincrement())
+  definitionId BigInt    @map("definition_id")
+  userId       BigInt    @map("user_id")
+  valueText    String?   @map("value_text") @db.Text
+  createdAt    DateTime? @default(now()) @map("created_at")
+  createdBy    BigInt?   @map("created_by")
+  updatedAt    DateTime? @default(now()) @map("updated_at")
+  updatedBy    BigInt?   @map("updated_by")
+
+  definition BaseSettingsAttribute @relation(fields: [definitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user       BaseUser              @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([definitionId, userId], map: "uq_user_attributes_definition_user")
+  @@index([userId, definitionId], map: "idx_user_attributes_user")
+  @@map("base_users_attributes")
+}
+
+model BaseSettingsSection {
+  sectionKey String    @id @map("section_key")
+  value      String    @default("{}") @db.Text
+  createdAt  DateTime? @default(now()) @map("created_at")
+  createdBy  BigInt?   @map("created_by")
+  updatedAt  DateTime? @default(now()) @map("updated_at")
+  updatedBy  BigInt?   @map("updated_by")
+
+  @@map("base_settings_sections")
+}
+
+model BaseRoleAttribute {
+  id           BigInt    @id @default(autoincrement())
+  definitionId BigInt    @map("definition_id")
+  roleName     String    @map("role_name")
+  valueText    String?   @map("value_text") @db.Text
+  createdAt    DateTime? @default(now()) @map("created_at")
+  createdBy    BigInt?   @map("created_by")
+  updatedAt    DateTime? @default(now()) @map("updated_at")
+  updatedBy    BigInt?   @map("updated_by")
+
+  definition BaseSettingsAttribute @relation(fields: [definitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  role       BaseRole              @relation(fields: [roleName], references: [name], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([definitionId, roleName], map: "uq_role_attributes_definition_role")
+  @@index([roleName, definitionId], map: "idx_role_attributes_role")
+  @@map("base_roles_attributes")
+}
+
+model BaseAuthRefreshToken {
+  id            BigInt    @id @default(autoincrement())
+  tokenJti      String    @unique @map("token_jti")
+  userId        BigInt    @map("user_id")
+  tokenHash     String    @unique @map("token_hash")
+  expiresAt     BigInt    @map("expires_at")
+  createdAt     DateTime? @default(now()) @map("created_at")
+  createdBy     BigInt?   @map("created_by")
+  revokedAt     DateTime? @map("revoked_at")
+  updatedAt     DateTime? @default(now()) @map("updated_at")
+  updatedBy     BigInt?   @map("updated_by")
+  replacedByJti String?   @map("replaced_by_jti")
+  userAgent     String?   @map("user_agent") @db.Text
+  ipAddress     String?   @map("ip_address")
+
+  user BaseUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_base_auth_refresh_tokens_user_id")
+  @@map("base_auth_refresh_tokens")
+}
+
+model BaseAuthAuditLog {
+  id           BigInt    @id @default(autoincrement())
+  userId       BigInt?   @map("user_id")
+  email        String?
+  eventType    String    @map("event_type")
+  success      Int       @default(0)
+  reason       String?  @db.Text
+  ipAddress    String?   @map("ip_address")
+  userAgent    String?   @map("user_agent")
+  metadataJson String?   @map("metadata_json") @db.Text
+  createdAt    DateTime? @default(now()) @map("created_at")
+  createdBy    BigInt?   @map("created_by")
+  updatedAt    DateTime? @default(now()) @map("updated_at")
+  updatedBy    BigInt?   @map("updated_by")
+
+  user BaseUser? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt], map: "idx_base_logs_auth_audit_created_at")
+  @@index([userId, createdAt], map: "idx_base_logs_auth_audit_user_created")
+  @@index([eventType, createdAt], map: "idx_base_logs_auth_audit_event_created")
+  @@map("base_logs_auth_audit")
+}
+
+model BaseAppLog {
+  id            BigInt    @id @default(autoincrement())
+  actor         String    @default("SYSTEM")
+  callSuccess   Int?      @map("call_success")
+  failureReason String?   @map("failure_reason") @db.Text
+  durationMs    Int?      @map("duration_ms")
+  level         String
+  context       String
+  message       String    @db.Text
+  messageSize   Int       @default(0) @map("message_size")
+  hasMeta       Int       @default(0) @map("has_meta")
+  metaJson      String?   @map("meta_json") @db.Text
+  metaSize      Int       @default(0) @map("meta_size")
+  createdAt     DateTime? @default(now()) @map("created_at")
+  createdBy     BigInt?   @map("created_by")
+  updatedAt     DateTime? @default(now()) @map("updated_at")
+  updatedBy     BigInt?   @map("updated_by")
+
+  @@index([createdAt(sort: Desc)], map: "idx_app_logs_created_at")
+  @@index([level], map: "idx_app_logs_level")
+  @@index([context], map: "idx_app_logs_context")
+  @@index([actor], map: "idx_app_logs_actor")
+  @@map("base_logs_app")
+}
+
+model BaseJob {
+  id               BigInt    @id @default(autoincrement())
+  jobType          String    @map("job_type")
+  status           String    @default("pending")
+  progress         Int       @default(0)
+  progressMessage  String?   @map("progress_message") @db.Text
+  payloadJson      String?   @map("payload_json") @db.Text
+  resultJson       String?   @map("result_json") @db.Text
+  errorMessage     String?   @map("error_message") @db.Text
+  cancelRequested  Int       @default(0) @map("cancel_requested")
+  attemptCount     Int       @default(0) @map("attempt_count")
+  maxAttempts      Int       @default(3) @map("max_attempts")
+  queuedAt         DateTime? @default(now()) @map("queued_at")
+  startedAt        DateTime? @map("started_at")
+  finishedAt       DateTime? @map("finished_at")
+  createdAt        DateTime? @default(now()) @map("created_at")
+  createdBy        BigInt?   @map("created_by")
+  updatedAt        DateTime? @default(now()) @map("updated_at")
+  updatedBy        BigInt?   @map("updated_by")
+
+  @@index([status, createdAt(sort: Desc)], map: "idx_jobs_status_created")
+  @@index([createdAt(sort: Desc)], map: "idx_jobs_created_at")
+  @@map("base_jobs")
+}
+
+// ---------------------------------------------------------------------------
+// DB Enricher — per-data-source schema/data understanding, built by an async
+// job (job_type 'db_enrichment' on BaseJob) and consumed by SQL Console AI (and
+// future NL surfaces) in place of pure live introspection. dataSourceId is a
+// StoredDataSource id string with no FK — connections live in settings.json,
+// not this DB — same no-FK pattern as BaseScopeMembership.nodeId above.
+// ---------------------------------------------------------------------------
+
+model DbEnrichmentRun {
+  id                BigInt    @id @default(autoincrement())
+  dataSourceId      String    @map("data_source_id")
+  scope             String    @default("FULL")
+  scopeTablesJson   String?   @map("scope_tables_json") @db.Text
+  status            String    @default("pending")
+  jobId             BigInt?   @map("job_id")
+  modelId           String?   @map("model_id")
+  tablesTotal       Int       @default(0) @map("tables_total")
+  tablesProcessed   Int       @default(0) @map("tables_processed")
+  columnsResolved   Int       @default(0) @map("columns_resolved")
+  columnsAmbiguous  Int       @default(0) @map("columns_ambiguous")
+  questionsCreated  Int       @default(0) @map("questions_created")
+  overallConfidence Float?    @map("overall_confidence")
+  progressLogJson   String?   @map("progress_log_json") @db.Text
+  errorMessage      String?   @map("error_message") @db.Text
+  startedAt         DateTime? @map("started_at")
+  finishedAt        DateTime? @map("finished_at")
+  createdAt         DateTime? @default(now()) @map("created_at")
+  createdBy         BigInt?   @map("created_by")
+  updatedAt         DateTime? @default(now()) @map("updated_at")
+
+  questions DbEnrichmentQuestion[]
+
+  @@index([dataSourceId, createdAt(sort: Desc)], map: "idx_db_enrichment_runs_source_created")
+  @@index([status], map: "idx_db_enrichment_runs_status")
+  @@map("base_db_enrichment_runs")
+}
+
+model DbEnrichmentQuestion {
+  id             BigInt    @id @default(autoincrement())
+  dataSourceId   String    @map("data_source_id")
+  runId          BigInt?   @map("run_id")
+  objectType     String    @map("object_type")
+  objectName     String    @map("object_name")
+  columnName     String?   @map("column_name")
+  kind           String
+  question       String    @db.Text
+  reasonJson     String    @map("reason_json") @db.Text
+  candidatesJson String?   @map("candidates_json") @db.Text
+  status         String    @default("open")
+  answer         String?   @db.Text
+  answeredBy     BigInt?   @map("answered_by")
+  answeredAt     DateTime? @map("answered_at")
+  createdAt      DateTime? @default(now()) @map("created_at")
+  updatedAt      DateTime? @default(now()) @map("updated_at")
+
+  run DbEnrichmentRun? @relation(fields: [runId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  @@index([dataSourceId, status, createdAt(sort: Desc)], map: "idx_db_enrichment_questions_source_status")
+  @@index([runId], map: "idx_db_enrichment_questions_run")
+  @@map("base_db_enrichment_questions")
+}
+
+model DbEnrichmentKnowledge {
+  id                BigInt    @id @default(autoincrement())
+  dataSourceId      String    @map("data_source_id")
+  objectType        String    @map("object_type")
+  objectName        String    @map("object_name")
+  tablePurpose      String?   @map("table_purpose") @db.Text
+  tableConfidence   Float?    @map("table_confidence")
+  columnsJson       String    @default("[]") @map("columns_json") @db.Text
+  relationsJson     String    @default("[]") @map("relations_json") @db.Text
+  sourceOfTruth     String    @default("INFERRED") @map("source_of_truth")
+  lastEnrichedRunId BigInt?   @map("last_enriched_run_id")
+  staleSince        DateTime? @map("stale_since")
+  createdAt         DateTime? @default(now()) @map("created_at")
+  updatedAt         DateTime? @default(now()) @map("updated_at")
+
+  @@unique([dataSourceId, objectType, objectName], map: "uq_db_enrichment_knowledge_object")
+  @@index([dataSourceId], map: "idx_db_enrichment_knowledge_source")
+  @@map("base_db_enrichment_knowledge")
+}
+
+model BaseContactMessage {
+  id        BigInt    @id @default(autoincrement())
+  topicCode String    @map("topic_code")
+  title     String
+  note      String
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?   @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  updatedBy BigInt?   @map("updated_by")
+
+  topic BaseInfo  @relation(fields: [topicCode], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user  BaseUser? @relation(fields: [createdBy], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  @@index([createdAt(sort: Desc)], map: "idx_contact_messages_created_at")
+  @@index([topicCode], map: "idx_contact_messages_topic")
+  @@index([createdBy], map: "idx_contact_messages_created_by")
+  @@map("base_contact_messages")
+}
+
+model BaseAiChatSession {
+  id                        BigInt    @id @default(autoincrement())
+  userId                    BigInt    @map("user_id")
+  title                     String
+  modelId                   String?   @map("model_id")
+  messagesJson              String    @default("[]") @map("messages_json") @db.Text
+  messageCount              Int       @default(0) @map("message_count")
+  totalInputTokens          Int       @default(0) @map("total_input_tokens")
+  totalOutputTokens         Int       @default(0) @map("total_output_tokens")
+  agentCapabilityScopeJson  String?   @map("agent_capability_scope_json") @db.Text
+  contextHistorySummary     String?   @map("context_history_summary") @db.Text
+  deletedAt                 DateTime? @map("deleted_at")
+  createdAt                 DateTime? @default(now()) @map("created_at")
+  createdBy                 BigInt?   @map("created_by")
+  updatedAt                 DateTime? @default(now()) @map("updated_at")
+  updatedBy                 BigInt?   @map("updated_by")
+
+  user            BaseUser                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agentTraces     BaseAiAgentTrace[]
+  applySnapshots  BaseAiAgentApplySnapshot[]
+
+  @@index([userId, updatedAt(sort: Desc)], map: "idx_ai_chat_sessions_user_updated")
+  @@map("base_ai_chat_sessions")
+}
+
+model BaseAiAgentTrace {
+  id             BigInt    @id @default(autoincrement())
+  sessionId      BigInt?   @map("session_id")
+  userId         BigInt    @map("user_id")
+  iteration      Int
+  modelId        String?   @map("model_id")
+  mode           String
+  policyAction   String?   @map("policy_action")
+  toolName       String?   @map("tool_name")
+  argsHash       String?   @map("args_hash")
+  durationMs     Int?      @map("duration_ms")
+  tokensEstimate Int?      @map("tokens_estimate")
+  ok             Boolean?
+  error          String?   @db.Text
+  summary        String?   @db.Text
+  createdAt      DateTime? @default(now()) @map("created_at")
+
+  session BaseAiChatSession? @relation(fields: [sessionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user    BaseUser           @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([sessionId, iteration], map: "idx_ai_agent_traces_session")
+  @@index([userId, createdAt(sort: Desc)], map: "idx_ai_agent_traces_user_created")
+  @@map("base_ai_agent_traces")
+}
+
+model BaseAiAgentApplySnapshot {
+  id             BigInt    @id @default(autoincrement())
+  sessionId      BigInt?   @map("session_id")
+  userId         BigInt    @map("user_id")
+  proposalId     String    @map("proposal_id")
+  changeSetsJson String    @map("change_sets_json") @db.Text
+  snapshotsJson  String    @map("snapshots_json") @db.Text
+  summary        String?   @db.Text
+  appliedAt      DateTime? @default(now()) @map("applied_at")
+  rolledBackAt   DateTime? @map("rolled_back_at")
+
+  session BaseAiChatSession? @relation(fields: [sessionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user    BaseUser           @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([sessionId, appliedAt(sort: Desc)], map: "idx_ai_agent_apply_snapshots_session")
+  @@index([userId, appliedAt(sort: Desc)], map: "idx_ai_agent_apply_snapshots_user")
+  @@map("base_ai_agent_apply_snapshots")
+}
+
+// ---------------------------------------------------------------------------
+// Workflow Engine — Slice 1 (domain types, state machines, error registry,
+// storage invariants). Normative source: docs/standards/workflow-engine-testing.md
+// 03-DOMAIN-MODEL-AND-STORAGE.md. No native Prisma enum/Json — status/type
+// columns are plain String (TS union + Zod is sole enum authority); JSON
+// columns are String @db.Text, matching every existing model in this file.
+// ---------------------------------------------------------------------------
+
+model WorkflowDefinition {
+  id                         BigInt    @id @default(autoincrement())
+  scopeKey                   String    @default("global") @map("scope_key")
+  key                        String
+  lifecycleStatus            String    @default("DRAFT") @map("lifecycle_status")
+  draftDefinitionJson        String    @db.Text @map("draft_definition_json")
+  draftVersion               Int       @default(1) @map("draft_version")
+  currentPublishedRevisionId BigInt?   @map("current_published_revision_id")
+  nextRevisionNumber         Int       @default(1) @map("next_revision_number")
+  createdFromDefinitionId    BigInt?   @map("created_from_definition_id")
+  createdFromRevisionId      BigInt?   @map("created_from_revision_id")
+  creationMode               String    @default("NEW") @map("creation_mode")
+  stateVersion               Int       @default(0) @map("state_version")
+  createdAt                  DateTime? @default(now()) @map("created_at")
+  createdBy                  BigInt?   @map("created_by")
+  updatedAt                  DateTime? @default(now()) @map("updated_at")
+  updatedBy                  BigInt?   @map("updated_by")
+  lastPublishedAt            DateTime? @map("last_published_at")
+  lastPublishedBy            BigInt?   @map("last_published_by")
+  lastUnpublishedAt          DateTime? @map("last_unpublished_at")
+  lastUnpublishedBy          BigInt?   @map("last_unpublished_by")
+
+  currentPublishedRevision WorkflowRevision?         @relation("DefinitionCurrentRevision", fields: [currentPublishedRevisionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  revisions                WorkflowRevision[]        @relation("DefinitionRevisions")
+  simulationRuns           WorkflowSimulationRun[]
+  validationReports        WorkflowValidationReport[]
+  designerViews            WorkflowDesignerView[]
+  webhookBinding           WorkflowWebhookBinding?
+
+  @@unique([scopeKey, key], map: "uq_base_workflow_definitions_scope_key")
+  @@index([lifecycleStatus], map: "idx_base_workflow_definitions_lifecycle")
+  @@index([currentPublishedRevisionId], map: "idx_base_workflow_definitions_current_revision")
+  @@map("base_workflow_definitions")
+}
+
+// p-68 WHOOK: one active webhook secret per workflow definition. `secretHash` (sha256 of the raw
+// secret, never stored in plaintext) is the lookup key for POST /api/workflow-hooks/:token — see
+// workflowHooks.controller.ts. Regenerating rotates this row in place (old hash stops matching).
+model WorkflowWebhookBinding {
+  id                   BigInt    @id @default(autoincrement())
+  workflowDefinitionId BigInt    @unique @map("workflow_definition_id")
+  workflowRevisionId   BigInt    @map("workflow_revision_id")
+  secretHash           String    @unique @map("secret_hash")
+  enabled              Boolean   @default(true)
+  rotatedAt            DateTime? @map("rotated_at")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  createdBy            BigInt?   @map("created_by")
+
+  definition WorkflowDefinition @relation(fields: [workflowDefinitionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("base_workflow_webhook_bindings")
+}
+
+model WorkflowRevision {
+  id                    BigInt    @id @default(autoincrement())
+  workflowDefinitionId  BigInt    @map("workflow_definition_id")
+  revisionNumber        Int       @map("revision_number")
+  sourceDraftVersion    Int       @map("source_draft_version")
+  definitionJson        String    @db.Text @map("definition_json")
+  actionBindingsJson    String    @db.Text @map("action_bindings_json")
+  schemaProjectionsJson String?   @db.Text @map("schema_projections_json")
+  semanticFingerprint   String    @map("semantic_fingerprint")
+  publicationStatus     String    @map("publication_status")
+  bindingStatus         String    @map("binding_status")
+  validationReportId    BigInt?   @map("validation_report_id")
+  stateVersion          Int       @default(0) @map("state_version")
+  publishedAt           DateTime? @map("published_at")
+  createdAt             DateTime? @default(now()) @map("created_at")
+  createdBy             BigInt?   @map("created_by")
+  updatedAt             DateTime? @default(now()) @map("updated_at")
+  updatedBy             BigInt?   @map("updated_by")
+
+  definition           WorkflowDefinition         @relation("DefinitionRevisions", fields: [workflowDefinitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  currentForDefinitions WorkflowDefinition[]      @relation("DefinitionCurrentRevision")
+  instances            WorkflowInstance[]
+  validationReports     WorkflowValidationReport[] @relation("RevisionValidationReports")
+  designerViews         WorkflowDesignerView[]     @relation("RevisionDesignerViews")
+
+  @@unique([workflowDefinitionId, revisionNumber], map: "uq_base_workflow_revisions_definition_number")
+  @@index([workflowDefinitionId, publicationStatus], map: "idx_base_workflow_revisions_definition_pub_status")
+  @@map("base_workflow_revisions")
+}
+
+model WorkflowInstance {
+  id                      BigInt    @id @default(autoincrement())
+  workflowRevisionId      BigInt    @map("workflow_revision_id")
+  status                  String    @default("CREATED")
+  inputJson               String?   @db.Text @map("input_json")
+  contextJson             String?   @db.Text @map("context_json")
+  outputJson              String?   @db.Text @map("output_json")
+  startedByType           String    @map("started_by_type")
+  startedById             BigInt?   @map("started_by_id")
+  startType               String?   @map("start_type")
+  nextTraceSequenceNumber Int       @default(1) @map("next_trace_sequence_number")
+  stateVersion            Int       @default(0) @map("state_version")
+  createdAt               DateTime? @default(now()) @map("created_at")
+  updatedAt               DateTime? @default(now()) @map("updated_at")
+
+  revision           WorkflowRevision      @relation(fields: [workflowRevisionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodeInstances      WorkflowNodeInstance[]
+  executionAttempts  WorkflowExecutionAttempt[]
+  waits              WorkflowWait[]        @relation("InstanceWaits")
+  childSubflowWaits  WorkflowWait[]        @relation("SubflowChildInstance")
+  workItems          WorkItem[]
+  deadLetters        WorkflowDeadLetter[]
+  traces             WorkflowTrace[]
+  branchTokens       WorkflowBranchToken[]
+  joinArrivals       WorkflowJoinArrival[]
+
+  @@index([workflowRevisionId], map: "idx_base_workflow_instances_revision")
+  @@index([status], map: "idx_base_workflow_instances_status")
+  @@map("base_workflow_instances")
+}
+
+model WorkflowNodeInstance {
+  id                      BigInt    @id @default(autoincrement())
+  workflowInstanceId      BigInt    @map("workflow_instance_id")
+  semanticNodeKey         String    @map("semantic_node_key")
+  status                  String    @default("PENDING")
+  selectedIncomingEdgeKey String?   @map("selected_incoming_edge_key")
+  branchTokenId           BigInt?   @map("branch_token_id")
+  joinGroupKey            String?   @map("join_group_key")
+  inputJson               String?   @db.Text @map("input_json")
+  outputJson              String?   @db.Text @map("output_json")
+  nextEligibleAt          DateTime? @map("next_eligible_at")
+  leaseOwnerId            String?   @map("lease_owner_id")
+  leaseExpiresAt          DateTime? @map("lease_expires_at")
+  nextAttemptNumber       Int       @default(1) @map("next_attempt_number")
+  stateVersion            Int       @default(0) @map("state_version")
+  createdAt               DateTime? @default(now()) @map("created_at")
+  updatedAt               DateTime? @default(now()) @map("updated_at")
+
+  instance          WorkflowInstance            @relation(fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  branchToken       WorkflowBranchToken?        @relation(fields: [branchTokenId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  executionAttempts WorkflowExecutionAttempt[]
+  wait              WorkflowWait?
+  workItem          WorkItem?
+  deadLetters       WorkflowDeadLetter[]
+  joinArrivals      WorkflowJoinArrival[]
+  traces            WorkflowTrace[]
+
+  @@unique([workflowInstanceId, semanticNodeKey], map: "uq_base_workflow_node_instances_occurrence")
+  @@index([status, nextEligibleAt], map: "idx_base_workflow_node_instances_claim_scan")
+  @@index([workflowInstanceId, status], map: "idx_base_workflow_node_instances_instance_status")
+  @@map("base_workflow_node_instances")
+}
+
+model WorkflowExecutionAttempt {
+  id                        BigInt    @id @default(autoincrement())
+  workflowInstanceId        BigInt    @map("workflow_instance_id")
+  nodeInstanceId            BigInt    @map("node_instance_id")
+  attemptNumber             Int       @map("attempt_number")
+  actionKey                 String?   @map("action_key")
+  actionVersion             String?   @map("action_version")
+  logicalInvocationId       String    @map("logical_invocation_id")
+  idempotencyKey            String    @map("idempotency_key")
+  status                    String    @default("STARTED")
+  selectedProviderId        String?   @map("selected_provider_id")
+  selectedProviderVersion   String?   @map("selected_provider_version")
+  selectedProviderFingerprint String? @map("selected_provider_fingerprint")
+  deadlineAt                DateTime? @map("deadline_at")
+  logicalInvocationWindowMs Int?      @map("logical_invocation_window_ms")
+  startedAt                 DateTime? @map("started_at")
+  completedAt               DateTime? @map("completed_at")
+  errorClass                String?   @map("error_class")
+  errorCode                 String?   @map("error_code")
+  errorMessage              String?   @db.Text @map("error_message")
+  resultMetadataJson        String?   @db.Text @map("result_metadata_json")
+  stateVersion              Int       @default(0) @map("state_version")
+  createdAt                 DateTime? @default(now()) @map("created_at")
+  updatedAt                 DateTime? @default(now()) @map("updated_at")
+
+  instance     WorkflowInstance     @relation(fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodeInstance WorkflowNodeInstance @relation(fields: [nodeInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([nodeInstanceId, attemptNumber], map: "uq_base_workflow_execution_attempts_node_seq")
+  @@index([nodeInstanceId, logicalInvocationId], map: "idx_base_workflow_execution_attempts_logical_invocation")
+  @@index([workflowInstanceId], map: "idx_base_workflow_execution_attempts_instance")
+  @@map("base_workflow_execution_attempts")
+}
+
+model WorkflowWait {
+  id                        BigInt    @id @default(autoincrement())
+  workflowInstanceId        BigInt    @map("workflow_instance_id")
+  owningNodeInstanceId      BigInt    @unique @map("owning_node_instance_id")
+  waitType                  String    @map("wait_type")
+  status                    String    @default("ACTIVE")
+  dueAt                     DateTime? @map("due_at")
+  timeoutAt                 DateTime? @map("timeout_at")
+  eventName                 String?   @map("event_name")
+  correlationKey            String?   @map("correlation_key")
+  correlationValueHash      String?   @map("correlation_value_hash")
+  correlationEncoderVersion String?   @map("correlation_encoder_version")
+  correlationHashAlgorithm  String?   @map("correlation_hash_algorithm")
+  childInstanceId           BigInt?   @map("child_instance_id")
+  workItemId                BigInt?   @unique @map("work_item_id")
+  satisfiedAt               DateTime? @map("satisfied_at")
+  resultPayloadJson         String?   @db.Text @map("result_payload_json")
+  stateVersion              Int       @default(0) @map("state_version")
+  createdAt                 DateTime? @default(now()) @map("created_at")
+  updatedAt                 DateTime? @default(now()) @map("updated_at")
+
+  instance           WorkflowInstance     @relation("InstanceWaits", fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  owningNodeInstance WorkflowNodeInstance @relation(fields: [owningNodeInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childInstance      WorkflowInstance?    @relation("SubflowChildInstance", fields: [childInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  workItem           WorkItem?            @relation(fields: [workItemId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([status, dueAt], map: "idx_base_workflow_waits_status_due")
+  @@index([eventName, correlationValueHash, status], map: "idx_base_workflow_waits_event_correlation")
+  @@index([workflowInstanceId], map: "idx_base_workflow_waits_instance")
+  @@map("base_workflow_waits")
+}
+
+model WorkflowEventInbox {
+  id                        BigInt    @id @default(autoincrement())
+  eventName                 String    @map("event_name")
+  providerEventId           String?   @map("provider_event_id")
+  eventSourceIdentity       String    @map("event_source_identity")
+  correlationEncoderVersion String?   @map("correlation_encoder_version")
+  correlationHashAlgorithm  String?   @map("correlation_hash_algorithm")
+  correlationValueHash      String?   @map("correlation_value_hash")
+  payloadJson               String?   @db.Text @map("payload_json")
+  source                    String?
+  receivedAt                DateTime  @default(now()) @map("received_at")
+  processedAt               DateTime? @map("processed_at")
+  status                    String    @default("RECEIVED")
+  deduplicationKey          String    @map("deduplication_key")
+  recheckUntil              DateTime? @map("recheck_until")
+  leaseOwnerId              String?   @map("lease_owner_id")
+  leaseExpiresAt            DateTime? @map("lease_expires_at")
+  stateVersion              Int       @default(0) @map("state_version")
+  createdAt                 DateTime? @default(now()) @map("created_at")
+  updatedAt                 DateTime? @default(now()) @map("updated_at")
+
+  @@unique([eventSourceIdentity, deduplicationKey], map: "uq_base_workflow_event_inbox_dedup")
+  @@index([status, recheckUntil], map: "idx_base_workflow_event_inbox_recheck_scan")
+  @@index([eventName, correlationValueHash, status], map: "idx_base_workflow_event_inbox_correlation_lookup")
+  @@map("base_workflow_event_inbox")
+}
+
+model WorkItem {
+  id                     BigInt    @id @default(autoincrement())
+  workflowInstanceId     BigInt    @map("workflow_instance_id")
+  nodeInstanceId         BigInt    @unique @map("node_instance_id")
+  workItemType           String    @map("work_item_type")
+  status                 String    @default("OPEN")
+  assignmentStrategy     String?   @map("assignment_strategy")
+  assignmentEvidenceJson String?   @db.Text @map("assignment_evidence_json")
+  claimedByUserId        BigInt?   @map("claimed_by_user_id")
+  priority               Int       @default(0)
+  allowedOutcomesJson    String    @db.Text @default("[]") @map("allowed_outcomes_json")
+  inputJson              String    @db.Text @map("input_json")
+  outputSchemaJson       String?   @db.Text @map("output_schema_json")
+  outputJson             String?   @db.Text @map("output_json")
+  outcome                String?
+  titleText              String    @map("title_text")
+  summaryText            String?   @db.Text @map("summary_text")
+  claimedAt              DateTime? @map("claimed_at")
+  completedAt            DateTime? @map("completed_at")
+  stateVersion           Int       @default(0) @map("state_version")
+  createdAt              DateTime? @default(now()) @map("created_at")
+  updatedAt              DateTime? @default(now()) @map("updated_at")
+  /// HWF-2.1 — pure metadata (sort/filter only, no automatic behavior), evaluated once at creation
+  /// from the node's `dueAt`/`followUpAt` `CanonicalExpression` (same timing as `titleText`).
+  dueAt      DateTime? @map("due_at")
+  followUpAt DateTime? @map("follow_up_at")
+  /// HWF-3.1 — set only on WorkItems created by the Multi-Approver Policy macro-expansion (a shared
+  /// value across every ballot WorkItem of the same logical approval decision); UI grouping only,
+  /// no effect on engine dispatch. Null for every ordinary WORK_ITEM node.
+  approvalGroupKey String? @map("approval_group_key")
+
+  instance     WorkflowInstance     @relation(fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodeInstance WorkflowNodeInstance @relation(fields: [nodeInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  wait         WorkflowWait?
+  transitions  WorkItemTransition[]
+  escalations  WorkItemEscalation[]
+  attachments  WorkItemAttachment[]
+  comments     WorkItemComment[]
+
+  @@index([status, priority(sort: Desc), createdAt, id], map: "idx_base_work_items_inbox_default_order")
+  @@index([status, createdAt], map: "idx_base_work_items_status_created_escalation_scan")
+  @@index([claimedByUserId, status], map: "idx_base_work_items_claimed_by_status")
+  @@index([workflowInstanceId], map: "idx_base_work_items_instance")
+  @@index([approvalGroupKey], map: "idx_base_work_items_approval_group")
+  @@map("base_work_items")
+}
+
+/// HWF-1.7 — file attachment bytes stored in-DB (deliberately NOT the disk-based `file-manager`/
+/// `file-hub` pattern — different philosophy, per user decision 2026-08-30): any authenticated
+/// candidate/claimant of a Work Item can attach a file; size/count caps enforced in the service
+/// layer, not the schema, so the limits can be tuned without a migration.
+model WorkItemAttachment {
+  id               BigInt   @id @default(autoincrement())
+  workItemId       BigInt   @map("work_item_id")
+  filename         String
+  mimeType         String   @map("mime_type")
+  sizeBytes        Int      @map("size_bytes")
+  data             Bytes
+  uploadedByUserId BigInt   @map("uploaded_by_user_id")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  workItem WorkItem @relation(fields: [workItemId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([workItemId], map: "idx_base_work_item_attachments_work_item")
+  @@map("base_work_item_attachments")
+}
+
+/// HWF-4.1 — comment thread on a Work Item. Access (both read and write) = current
+/// `isActorEligibleForWorkItem` eligibility OR "has already posted at least one comment here"
+/// (per user decision 2026-08-30 — avoids the access circle shrinking the moment someone claims).
+model WorkItemComment {
+  id                   BigInt   @id @default(autoincrement())
+  workItemId           BigInt   @map("work_item_id")
+  authorUserId         BigInt   @map("author_user_id")
+  text                 String   @db.Text
+  mentionedUserIdsJson String?  @db.Text @map("mentioned_user_ids_json")
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  workItem WorkItem @relation(fields: [workItemId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([workItemId, createdAt], map: "idx_base_work_item_comments_work_item_created")
+  @@map("base_work_item_comments")
+}
+
+/// HWF-2.4 — Out-of-Office self-service delegation. Applies ONLY to assignment resolution for
+/// NEW Work Items created while `now()` falls in `[startAt, endAt]` (per user decision — no sweep
+/// of already-open items; those go through the existing manual ADMIN-reassign / self-service
+/// Forward paths). Only meaningful for strategies that resolve to a specific user (USER/
+/// EXPRESSION/SAME_AS_WORK_ITEM/ROUND_ROBIN/SHORTEST_QUEUE) — a plain ROLE pool assignment already
+/// tolerates absence via its other members.
+model WorkItemDelegationRule {
+  id             BigInt   @id @default(autoincrement())
+  userId         BigInt   @map("user_id")
+  delegateUserId BigInt   @map("delegate_user_id")
+  startAt        DateTime @map("start_at")
+  endAt          DateTime @map("end_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@index([userId, startAt, endAt], map: "idx_base_work_item_delegation_rules_user_window")
+  @@map("base_work_item_delegation_rules")
+}
+
+/// HWF-4.3 — server-side saved Inbox filter (per user decision 2026-08-30: explicitly NOT
+/// localStorage-only, to actually beat the Camunda Tasklist limitation the benchmark flagged).
+model WorkItemSavedFilter {
+  id         BigInt   @id @default(autoincrement())
+  userId     BigInt   @map("user_id")
+  name       String
+  filterJson String   @db.Text @map("filter_json")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([userId], map: "idx_base_work_item_saved_filters_user")
+  @@map("base_work_item_saved_filters")
+}
+
+/// HWF-2.2 — single global Business Hours Calendar (per user decision 2026-08-30: one calendar,
+/// not per-role/per-type; a dedicated table, not the shared/fragile platform-settings blob system,
+/// same precedent as `WorkflowSecretReference`). A singleton row (id always 1); escalation/due-date
+/// timers only respect it when explicitly opted in (default off — no existing workflow's behavior
+/// changes silently).
+model WorkflowBusinessHoursCalendar {
+  id              Int      @id @default(1)
+  timezone        String   @default("UTC")
+  workingDaysJson String   @db.Text @default("[1,2,3,4,5]") @map("working_days_json")
+  startTime       String   @default("09:00") @map("start_time")
+  endTime         String   @default("17:00") @map("end_time")
+  holidaysJson    String   @db.Text @default("[]") @map("holidays_json")
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("base_workflow_business_hours_calendar")
+}
+
+model WorkItemTransition {
+  id                        BigInt   @id @default(autoincrement())
+  workItemId                BigInt   @map("work_item_id")
+  fromStatus                String   @map("from_status")
+  toStatus                  String   @map("to_status")
+  transitionType             String  @map("transition_type")
+  actorType                  String  @map("actor_type")
+  actorId                    BigInt? @map("actor_id")
+  reasonCode                 String? @map("reason_code")
+  evidenceJson               String? @db.Text @map("evidence_json")
+  occurredAt                 DateTime @default(now()) @map("occurred_at")
+  workItemStateVersionAfter  Int     @map("work_item_state_version_after")
+
+  workItem WorkItem @relation(fields: [workItemId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([workItemId, occurredAt], map: "idx_base_work_item_transitions_item_time")
+  @@map("base_work_item_transitions")
+}
+
+model WorkItemEscalation {
+  id              BigInt    @id @default(autoincrement())
+  workItemId      BigInt    @map("work_item_id")
+  policyStepKey   String    @map("policy_step_key")
+  executionNumber Int       @map("execution_number")
+  status          String    @default("STARTED")
+  actionType      String    @map("action_type")
+  actorType       String    @default("SYSTEM_ESCALATION") @map("actor_type")
+  startedAt       DateTime  @default(now()) @map("started_at")
+  completedAt     DateTime? @map("completed_at")
+  errorCode       String?   @map("error_code")
+  evidenceJson    String?   @db.Text @map("evidence_json")
+  createdAt       DateTime? @default(now()) @map("created_at")
+
+  workItem WorkItem @relation(fields: [workItemId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([workItemId, policyStepKey, executionNumber], map: "uq_base_work_item_escalations_replay_fence")
+  @@map("base_work_item_escalations")
+}
+
+/**
+ * WFV2-12 — operator recovery park for unhandled ACTION/instance failures.
+ * Separate from WorkItem (which keeps a 1:1 unique nodeInstanceId invariant for human tasks).
+ * One OPEN dead letter per failing node occurrence; resolve/discard is operator-driven.
+ */
+model WorkflowDeadLetter {
+  id                 BigInt    @id @default(autoincrement())
+  workflowInstanceId BigInt    @map("workflow_instance_id")
+  nodeInstanceId     BigInt    @map("node_instance_id")
+  attemptId          BigInt?   @map("attempt_id")
+  nodeKey            String    @map("node_key")
+  status             String    @default("OPEN")
+  errorCode          String?   @map("error_code")
+  errorClass         String?   @map("error_class")
+  errorMessage       String?   @db.Text @map("error_message")
+  evidenceJson       String?   @db.Text @map("evidence_json")
+  resolvedByUserId   BigInt?   @map("resolved_by_user_id")
+  resolvedAt         DateTime? @map("resolved_at")
+  resolutionNote     String?   @db.Text @map("resolution_note")
+  stateVersion       Int       @default(0) @map("state_version")
+  createdAt          DateTime? @default(now()) @map("created_at")
+  updatedAt          DateTime? @default(now()) @map("updated_at")
+
+  instance     WorkflowInstance     @relation(fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodeInstance WorkflowNodeInstance @relation(fields: [nodeInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([nodeInstanceId], map: "uq_base_workflow_dead_letters_node")
+  @@index([status, createdAt], map: "idx_base_workflow_dead_letters_status_created")
+  @@index([workflowInstanceId], map: "idx_base_workflow_dead_letters_instance")
+  @@map("base_workflow_dead_letters")
+}
+
+model WorkflowTrace {
+  id                    BigInt    @id @default(autoincrement())
+  workflowInstanceId    BigInt    @map("workflow_instance_id")
+  nodeInstanceId        BigInt?   @map("node_instance_id")
+  sequenceNumber        Int       @map("sequence_number")
+  traceType             String    @map("trace_type")
+  payloadSchemaVersion  Int       @default(1) @map("payload_schema_version")
+  occurredAt            DateTime  @default(now()) @map("occurred_at")
+  actorType             String    @map("actor_type")
+  actorId               BigInt?   @map("actor_id")
+  coreEvidenceJson      String    @db.Text @map("core_evidence_json")
+  diagnosticPayloadJson String?   @db.Text @map("diagnostic_payload_json")
+  dataClassification    String    @default("INTERNAL") @map("data_classification")
+
+  instance     WorkflowInstance      @relation(fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodeInstance WorkflowNodeInstance? @relation(fields: [nodeInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([workflowInstanceId, sequenceNumber], map: "uq_base_workflow_traces_instance_sequence")
+  @@index([workflowInstanceId, traceType], map: "idx_base_workflow_traces_instance_type")
+  @@map("base_workflow_traces")
+}
+
+model WorkflowSimulationRun {
+  id                                    BigInt    @id @default(autoincrement())
+  workflowDefinitionId                  BigInt    @map("workflow_definition_id")
+  sourceDraftVersion                    Int?      @map("source_draft_version")
+  sourceRevisionId                      BigInt?   @map("source_revision_id")
+  simulationResolvedSnapshotFingerprint String    @map("simulation_resolved_snapshot_fingerprint")
+  mode                                   String
+  startNodeKey                          String?   @map("start_node_key")
+  scenarioKey                           String?   @map("scenario_key")
+  fixtureSetFingerprint                 String    @map("fixture_set_fingerprint")
+  status                                String    @default("RUNNING")
+  resultSummaryJson                     String?   @db.Text @map("result_summary_json")
+  createdByType                         String    @map("created_by_type")
+  createdById                           BigInt?   @map("created_by_id")
+  createdAt                             DateTime  @default(now()) @map("created_at")
+  completedAt                           DateTime? @map("completed_at")
+  stateVersion                          Int       @default(0) @map("state_version")
+
+  definition WorkflowDefinition @relation(fields: [workflowDefinitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  // sourceDraftVersion/sourceRevisionId XOR is enforced at the repository layer (no portable
+  // cross-provider CHECK constraint in this schema) — see p-workflow-engine-archive.md Slice 1.
+  @@index([workflowDefinitionId, status, createdAt], map: "idx_base_workflow_simulation_runs_def_status_created")
+  @@map("base_workflow_simulation_runs")
+}
+
+model WorkflowValidationReport {
+  id                   BigInt    @id @default(autoincrement())
+  workflowDefinitionId BigInt    @map("workflow_definition_id")
+  revisionId           BigInt?   @map("revision_id")
+  draftVersion         Int       @map("draft_version")
+  status               String    @default("PASSED")
+  validatorVersion     String    @map("validator_version")
+  issuesJson           String    @db.Text @map("issues_json")
+  coverageSummaryJson  String?   @db.Text @map("coverage_summary_json")
+  createdAt            DateTime  @default(now()) @map("created_at")
+
+  definition WorkflowDefinition @relation(fields: [workflowDefinitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  revision   WorkflowRevision?  @relation("RevisionValidationReports", fields: [revisionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([workflowDefinitionId, draftVersion], map: "idx_base_workflow_validation_reports_def_draft")
+  @@index([revisionId], map: "idx_base_workflow_validation_reports_revision")
+  @@map("base_workflow_validation_reports")
+}
+
+model WorkflowDesignerView {
+  id                   BigInt    @id @default(autoincrement())
+  workflowDefinitionId BigInt    @map("workflow_definition_id")
+  workflowRevisionId   BigInt?   @map("workflow_revision_id")
+  draftVersion         Int?      @map("draft_version")
+  viewSchemaVersion    Int       @default(1) @map("view_schema_version")
+  viewJson             String    @db.Text @map("view_json")
+  draftIdentityKey     String    @map("draft_identity_key")
+  revisionIdentityKey  String    @map("revision_identity_key")
+  updatedBy            BigInt?   @map("updated_by")
+  createdAt            DateTime? @default(now()) @map("created_at")
+  updatedAt            DateTime? @default(now()) @map("updated_at")
+
+  definition WorkflowDefinition @relation(fields: [workflowDefinitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  revision   WorkflowRevision?  @relation("RevisionDesignerViews", fields: [workflowRevisionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  // XOR of (workflowRevisionId, draftVersion) enforced at the repository layer; the two
+  // identity-key columns above carry the portable, always-non-null half of the invariant
+  // as real unique indexes — see p-workflow-engine-archive.md Slice 1 plan D5.
+  @@unique([draftIdentityKey], map: "uq_base_workflow_designer_views_draft_identity")
+  @@unique([revisionIdentityKey], map: "uq_base_workflow_designer_views_revision_identity")
+  @@map("base_workflow_designer_views")
+}
+
+/**
+ * A friendly-named pointer to a server environment variable an Action's `secretReferenceFields`
+ * may hold — NEVER the secret value itself (no credential vault exists in this platform; see
+ * `secretResolution.ts`'s `resolveWorkflowSecretFromEnv`, unchanged by this model). This table lets
+ * an admin register "SLACK_WEBHOOK_URL" once with a human label/description so the Designer can
+ * offer it as a one-click pick instead of an author having to already know/type the exact env var
+ * name. Deliberately NOT a credential store — adding a real vault (encrypted values, access
+ * control) is a separate, larger platform decision.
+ */
+model WorkflowSecretReference {
+  id                 BigInt    @id @default(autoincrement())
+  name               String    @map("name")
+  label              String    @map("label")
+  description        String?   @db.Text @map("description")
+  /// p-99/WFT-3 — AES-256-GCM JSON blob (`WorkflowCredentialEncryptedBlob`), never a plaintext
+  /// value; null means this reference is still name-only (Option 1 env-var indirection, unchanged
+  /// backward-compatible behavior). See `workflowCredentialCrypto.ts`.
+  encryptedValueJson String?   @db.Text @map("encrypted_value_json")
+  createdAt          DateTime? @default(now()) @map("created_at")
+  createdBy          BigInt?   @map("created_by")
+  updatedAt          DateTime? @default(now()) @map("updated_at")
+  updatedBy          BigInt?   @map("updated_by")
+
+  @@unique([name], map: "uq_base_workflow_secret_references_name")
+  @@map("base_workflow_secret_references")
+}
+
+model WorkflowBranchToken {
+  id                 BigInt    @id @default(autoincrement())
+  workflowInstanceId BigInt    @map("workflow_instance_id")
+  splitNodeKey       String    @map("split_node_key")
+  joinNodeKey        String    @map("join_node_key")
+  branchEdgeKey      String    @map("branch_edge_key")
+  status             String    @default("ACTIVE")
+  stateVersion       Int       @default(0) @map("state_version")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  terminalAt         DateTime? @map("terminal_at")
+
+  instance      WorkflowInstance       @relation(fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodeInstances WorkflowNodeInstance[]
+  joinArrivals  WorkflowJoinArrival[]
+
+  @@unique([workflowInstanceId, splitNodeKey, branchEdgeKey], map: "uq_base_workflow_branch_tokens_split_edge")
+  @@map("base_workflow_branch_tokens")
+}
+
+model WorkflowJoinArrival {
+  id                 BigInt   @id @default(autoincrement())
+  workflowInstanceId BigInt   @map("workflow_instance_id")
+  joinNodeInstanceId BigInt   @map("join_node_instance_id")
+  branchTokenId      BigInt   @map("branch_token_id")
+  arrivedAt          DateTime @default(now()) @map("arrived_at")
+
+  instance      WorkflowInstance     @relation(fields: [workflowInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  joinNodeInstance WorkflowNodeInstance @relation(fields: [joinNodeInstanceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  branchToken   WorkflowBranchToken  @relation(fields: [branchTokenId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([joinNodeInstanceId, branchTokenId], map: "uq_base_workflow_join_arrivals_join_token")
+  @@map("base_workflow_join_arrivals")
+}
+
+// ---------------------------------------------------------------------------
+// Embedded Feedback (p-65 EFB)
+// ---------------------------------------------------------------------------
+
+model BaseAppFeedback {
+  id                       BigInt    @id @default(autoincrement())
+  /** Base Info Subject code under `100.3.*` (column name kept as `type`). */
+  type                     String
+  status                   String    @default("NEW")
+  priority                 String    @default("NORMAL")
+  title                    String
+  submittedAt              DateTime  @default(now()) @map("submitted_at")
+  submitterUserId          BigInt?   @map("submitter_user_id")
+  anonymousContactJson     String?   @map("anonymous_contact_json") @db.Text
+  assigneeUserId           BigInt?   @map("assignee_user_id")
+  assigneeRoleName         String?   @map("assignee_role_name")
+  routingRuleId            String?   @map("routing_rule_id")
+  routedAt                 DateTime? @map("routed_at")
+  manuallyAssignedByUserId BigInt?   @map("manually_assigned_by_user_id")
+  claimedAt                DateTime? @map("claimed_at")
+  claimedByUserId          BigInt?   @map("claimed_by_user_id")
+  portalSlug               String?   @map("portal_slug")
+  pageKey                  String?   @map("page_key")
+  route                    String?
+  metadataJson             String?   @map("metadata_json") @db.Text
+  messageCount             Int       @default(0) @map("message_count")
+  lastMessageAt            DateTime? @map("last_message_at")
+  duplicateOfId            BigInt?   @map("duplicate_of_id")
+  resolvedAt               DateTime? @map("resolved_at")
+  resolvedByUserId         BigInt?   @map("resolved_by_user_id")
+  createdAt                DateTime? @default(now()) @map("created_at")
+  updatedAt                DateTime? @default(now()) @map("updated_at")
+
+  submitterUser          BaseUser? @relation("FeedbackSubmitter", fields: [submitterUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  assigneeUser           BaseUser? @relation("FeedbackAssignee", fields: [assigneeUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  claimedByUser          BaseUser? @relation("FeedbackClaimedBy", fields: [claimedByUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  resolvedByUser         BaseUser? @relation("FeedbackResolvedBy", fields: [resolvedByUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  manuallyAssignedByUser BaseUser? @relation("FeedbackManualAssign", fields: [manuallyAssignedByUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  duplicateOf            BaseAppFeedback?  @relation("FeedbackDuplicate", fields: [duplicateOfId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  duplicates             BaseAppFeedback[] @relation("FeedbackDuplicate")
+  messages               BaseAppFeedbackMessage[]
+  attachments            BaseAppFeedbackAttachment[]
+  readCursors            BaseAppFeedbackReadCursor[]
+
+  @@index([status, submittedAt(sort: Desc)], map: "idx_app_feedback_status_submitted")
+  @@index([submitterUserId], map: "idx_app_feedback_submitter")
+  @@index([assigneeUserId], map: "idx_app_feedback_assignee_user")
+  @@index([assigneeRoleName], map: "idx_app_feedback_assignee_role")
+  @@index([type], map: "idx_app_feedback_subject")
+  @@index([lastMessageAt(sort: Desc)], map: "idx_app_feedback_last_message")
+  @@map("base_app_feedback")
+}
+
+model BaseAppFeedbackMessage {
+  id           BigInt    @id @default(autoincrement())
+  feedbackId   BigInt    @map("feedback_id")
+  kind         String
+  body         String    @db.Text
+  authorUserId BigInt?   @map("author_user_id")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  feedback   BaseAppFeedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  authorUser BaseUser?       @relation(fields: [authorUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  attachments BaseAppFeedbackAttachment[]
+
+  @@index([feedbackId, createdAt], map: "idx_app_feedback_messages_feedback_created")
+  @@index([authorUserId, createdAt(sort: Desc)], map: "idx_app_feedback_messages_author")
+  @@map("base_app_feedback_messages")
+}
+
+model BaseAppFeedbackAttachment {
+  id               BigInt    @id @default(autoincrement())
+  feedbackId       BigInt?   @map("feedback_id")
+  messageId        BigInt?   @map("message_id")
+  fileName         String    @map("file_name")
+  mimeType         String    @map("mime_type")
+  sizeBytes        Int       @map("size_bytes")
+  storageKey       String    @map("storage_key")
+  uploadedByUserId BigInt?   @map("uploaded_by_user_id")
+  stagedSessionKey String?   @map("staged_session_key")
+  createdAt        DateTime  @default(now()) @map("created_at")
+
+  feedback       BaseAppFeedback?        @relation(fields: [feedbackId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  message        BaseAppFeedbackMessage? @relation(fields: [messageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  uploadedByUser BaseUser?               @relation(fields: [uploadedByUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([messageId], map: "idx_app_feedback_attachments_message")
+  @@index([feedbackId], map: "idx_app_feedback_attachments_feedback")
+  @@index([stagedSessionKey], map: "idx_app_feedback_attachments_staged")
+  @@map("base_app_feedback_attachments")
+}
+
+model BaseAppFeedbackReadCursor {
+  feedbackId        BigInt   @map("feedback_id")
+  userId            BigInt   @map("user_id")
+  lastReadMessageId BigInt?  @map("last_read_message_id")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+
+  feedback BaseAppFeedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user     BaseUser        @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([feedbackId, userId])
+  @@map("base_app_feedback_read_cursors")
+}
+
+model BaseUserNotification {
+  id           BigInt    @id @default(autoincrement())
+  userId       BigInt    @map("user_id")
+  title        String
+  body         String    @db.Text
+  severity     String    @default("info")
+  href         String?
+  readAt       DateTime? @map("read_at")
+  seenAt       DateTime? @map("seen_at")
+  source       String    @default("workflow")
+  metadataJson String?   @db.Text @map("metadata_json")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  user BaseUser @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId, createdAt], map: "idx_base_user_notifications_user_created")
+  @@index([userId, readAt], map: "idx_base_user_notifications_user_read")
+  @@index([userId, seenAt], map: "idx_base_user_notifications_user_seen")
+  @@map("base_user_notifications")
+}
+
+/** HWF-4.2 — per-user, per-event-type notification channel preference. Absence of a row for
+ * (userId, eventType) means the untouched default (IN_APP, immediate) — opt-in only, so no existing
+ * user's notification behavior changes until they explicitly set a preference. */
+model UserNotificationPreference {
+  id        BigInt    @id @default(autoincrement())
+  userId    BigInt    @map("user_id")
+  eventType String    @map("event_type")
+  channel   String
+  digest    Boolean   @default(false)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+
+  user BaseUser @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([userId, eventType], map: "uq_user_notification_preferences_user_event")
+  @@map("base_user_notification_preferences")
+}
+
+/** HWF-4.2 — EMAIL+digest queue: an item lands here instead of an immediate send when the user's
+ * preference for its eventType is `channel: 'EMAIL', digest: true`; the digest scanner
+ * (`workflowEngineWorker.ts`) periodically batches a user's pending items into one summary email and
+ * stamps `sentAt`. */
+model UserNotificationDigestItem {
+  id           BigInt    @id @default(autoincrement())
+  userId       BigInt    @map("user_id")
+  title        String
+  body         String    @db.Text
+  href         String?
+  source       String
+  metadataJson String?   @db.Text @map("metadata_json")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  sentAt       DateTime? @map("sent_at")
+
+  user BaseUser @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId, sentAt], map: "idx_user_notification_digest_items_user_pending")
+  @@map("base_user_notification_digest_items")
+}
+
+model WorkflowVectorDocument {
+  id            BigInt   @id @default(autoincrement())
+  collection    String
+  documentKey   String   @map("document_key")
+  text          String   @db.Text
+  embeddingJson String   @db.Text @map("embedding_json")
+  metadataJson  String?  @db.Text @map("metadata_json")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @map("updated_at")
+
+  @@unique([collection, documentKey], map: "uq_base_workflow_vector_documents_collection_key")
+  @@index([collection], map: "idx_base_workflow_vector_documents_collection")
+  @@map("base_workflow_vector_documents")
+}
+
+// Living-sample + designer fixture: every relation kind on one mock graph.
+// Prefix base_sample_mock_* — reused by Base Components CRUD Set and later tests.
+
+model BaseSampleMockStatus {
+  id        BigInt    @id @default(autoincrement())
+  code      String    @unique
+  title     String
+  sortOrder Int       @default(0) @map("sort_order")
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?   @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  updatedBy BigInt?   @map("updated_by")
+
+  records BaseSampleMockRecord[]
+
+  @@map("base_sample_mock_statuses")
+}
+
+model BaseSampleMockPerson {
+  id          BigInt    @id @default(autoincrement())
+  username    String    @unique
+  displayName String    @map("display_name")
+  email       String?
+  createdAt   DateTime? @default(now()) @map("created_at")
+  createdBy   BigInt?   @map("created_by")
+  updatedAt   DateTime? @default(now()) @map("updated_at")
+  updatedBy   BigInt?   @map("updated_by")
+
+  ownedRecords BaseSampleMockRecord[]  @relation("SampleMockOwner")
+  comments     BaseSampleMockComment[] @relation("SampleMockCommentAuthor")
+
+  @@map("base_sample_mock_people")
+}
+
+model BaseSampleMockTag {
+  id        BigInt    @id @default(autoincrement())
+  slug      String    @unique
+  title     String
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?   @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  updatedBy BigInt?   @map("updated_by")
+
+  recordTags BaseSampleMockRecordTag[]
+
+  @@map("base_sample_mock_tags")
+}
+
+model BaseSampleMockRecord {
+  id          BigInt    @id @default(autoincrement())
+  code        String    @unique
+  title       String
+  subtitle    String?
+  website     String?
+  photo       String?   @db.Text
+  parentId    BigInt?   @map("parent_id")
+  statusId    BigInt    @map("status_id")
+  ownerId     BigInt?   @map("owner_id")
+  sortOrder   Int       @default(0) @map("sort_order")
+  locked      Boolean   @default(false)
+  active      Boolean   @default(true)
+  latitude    Float?
+  longitude   Float?
+  approvedAt  DateTime? @map("approved_at")
+  approvedBy  BigInt?   @map("approved_by")
+  lockedAt    DateTime? @map("locked_at")
+  lockedBy    BigInt?   @map("locked_by")
+  unlockedAt  DateTime? @map("unlocked_at")
+  unlockedBy  BigInt?   @map("unlocked_by")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  createdBy   BigInt?   @map("created_by")
+  updatedAt   DateTime? @default(now()) @map("updated_at")
+  updatedBy   BigInt?   @map("updated_by")
+
+  parent     BaseSampleMockRecord?  @relation("SampleMockTree", fields: [parentId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  children   BaseSampleMockRecord[] @relation("SampleMockTree")
+  status     BaseSampleMockStatus   @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  owner      BaseSampleMockPerson?  @relation("SampleMockOwner", fields: [ownerId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  detail     BaseSampleMockDetail?
+  comments   BaseSampleMockComment[]
+  recordTags BaseSampleMockRecordTag[]
+
+  @@index([parentId], map: "idx_base_sample_mock_records_parent")
+  @@index([statusId], map: "idx_base_sample_mock_records_status")
+  @@index([ownerId], map: "idx_base_sample_mock_records_owner")
+  @@index([sortOrder], map: "idx_base_sample_mock_records_sort")
+  @@map("base_sample_mock_records")
+}
+
+model BaseSampleMockDetail {
+  id        BigInt    @id @default(autoincrement())
+  recordId  BigInt    @unique @map("record_id")
+  city      String
+  note      String?
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?   @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  updatedBy BigInt?   @map("updated_by")
+
+  record BaseSampleMockRecord @relation(fields: [recordId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("base_sample_mock_details")
+}
+
+model BaseSampleMockComment {
+  id        BigInt    @id @default(autoincrement())
+  recordId  BigInt    @map("record_id")
+  authorId  BigInt?   @map("author_id")
+  body      String
+  createdAt DateTime? @default(now()) @map("created_at")
+  createdBy BigInt?   @map("created_by")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  updatedBy BigInt?   @map("updated_by")
+
+  record BaseSampleMockRecord  @relation(fields: [recordId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  author BaseSampleMockPerson? @relation("SampleMockCommentAuthor", fields: [authorId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  @@index([recordId], map: "idx_base_sample_mock_comments_record")
+  @@map("base_sample_mock_comments")
+}
+
+model BaseSampleMockRecordTag {
+  recordId BigInt @map("record_id")
+  tagId    BigInt @map("tag_id")
+
+  record BaseSampleMockRecord @relation(fields: [recordId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tag    BaseSampleMockTag    @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([recordId, tagId])
+  @@map("base_sample_mock_record_tags")
+}
+

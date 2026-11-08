@@ -1,0 +1,112 @@
+{
+  "id": "em_fe1ebfc8a549e2dd",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_ai_agent_apply_snapshots",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseAiAgentApplySnapshots",
+    "tableName": "base_ai_agent_apply_snapshots"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "session_id",
+      "field": "sessionId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_4b87c75dd130553c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "user_id",
+      "field": "userId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "proposal_id",
+      "field": "proposalId",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "change_sets_json",
+      "field": "changeSetsJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "snapshots_json",
+      "field": "snapshotsJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "summary",
+      "field": "summary",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "applied_at",
+      "field": "appliedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "rolled_back_at",
+      "field": "rolledBackAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "35c2bf38771382c2",
+  "readOnly": false,
+  "labels": {
+    "title": "base_ai_agent_apply_snapshots"
+  },
+  "status": "ready",
+  "created_at": "2026-08-26T07:28:20.054Z",
+  "updated_at": "2026-09-11T04:55:09.154Z"
+}

@@ -1,0 +1,42 @@
+{
+  "edgeModelId": "em_c3574c4c8e78b903",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "work_item_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "filename"
+    },
+    {
+      "columnName": "mime_type"
+    },
+    {
+      "columnName": "size_bytes",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "data"
+    },
+    {
+      "columnName": "uploaded_by_user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_work_item_attachments.work_item_id->base_work_items.id:base_work_item_attachments_work_item_id_fkey",
+      "displayLabel": "Work Item"
+    }
+  ],
+  "extensions": {},
+  "created_at": "2026-09-16T14:03:52.288Z",
+  "updated_at": "2026-09-17T15:29:39.846Z"
+}

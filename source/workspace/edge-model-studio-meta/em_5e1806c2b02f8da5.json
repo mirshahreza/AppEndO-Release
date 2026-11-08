@@ -1,0 +1,75 @@
+{
+  "edgeModelId": "em_5e1806c2b02f8da5",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "name",
+      "searchRole": "basic",
+      "history": {
+        "track": true
+      }
+    },
+    {
+      "columnName": "note",
+      "searchRole": "advanced",
+      "history": {
+        "track": true
+      }
+    },
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "mcp_grants",
+      "history": {
+        "trackAssignRemove": true
+      }
+    },
+    {
+      "relationKey": "physical:base_role_mcp_grants.role_name->base_roles.name:base_role_mcp_grants_role_name_fkey",
+      "displayLabel": "base_role_mcp_grants (Role Name)"
+    },
+    {
+      "relationKey": "physical:base_roles_attributes.role_name->base_roles.name:base_roles_attributes_role_name_fkey",
+      "displayLabel": "base_roles_attributes (Role Name)"
+    },
+    {
+      "relationKey": "physical:base_scope_role_memberships.role_name->base_roles.name:base_scope_role_memberships_role_name_fkey",
+      "displayLabel": "base_scope_role_memberships (Role Name)"
+    },
+    {
+      "relationKey": "physical:base_user_roles.role_name->base_roles.name:base_user_roles_role_name_fkey",
+      "displayLabel": "base_user_roles (Role Name)"
+    },
+    {
+      "relationKey": "scope",
+      "history": {
+        "trackAssignRemove": true
+      }
+    }
+  ],
+  "history": {
+    "enabled": true
+  },
+  "extensions": {
+    "story": "## Purpose\n\nNamed role catalog for RBAC. Roles aggregate function access, optional MCP tool grants, scope defaults, and attribute values. Referenced by `role_name` string (stable key).\n\n## Rules\n\n- `name` is unique and used as FK target — rename carefully (cascade updates junction tables).\n- `note` is operator documentation only.\n- Builtin/system roles may be seeded — protect from accidental delete in production flows."
+  },
+  "created_at": "2026-09-11T04:55:13.753Z",
+  "updated_at": "2026-09-17T15:29:39.742Z"
+}

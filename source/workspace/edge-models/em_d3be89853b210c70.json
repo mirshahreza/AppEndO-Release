@@ -1,0 +1,99 @@
+{
+  "id": "em_d3be89853b210c70",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_scope_role_memberships",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseScopeRoleMemberships",
+    "tableName": "base_scope_role_memberships"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "role_name",
+      "field": "roleName",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_5e1806c2b02f8da5",
+        "column": "name"
+      }
+    },
+    {
+      "name": "dimension_key",
+      "field": "dimensionKey",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "node_id",
+      "field": "nodeId",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "a08e383aa450ef6a",
+  "readOnly": false,
+  "labels": {
+    "title": "base_scope_role_memberships"
+  },
+  "status": "ready",
+  "created_at": "2026-08-26T07:10:28.072Z",
+  "updated_at": "2026-09-11T04:55:16.080Z"
+}

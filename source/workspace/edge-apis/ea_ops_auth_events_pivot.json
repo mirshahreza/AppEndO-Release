@@ -1,0 +1,53 @@
+{
+  "id": "ea_ops_auth_events_pivot",
+  "edgeModelId": "em_ops_auth_events",
+  "key": "ops-auth-events-pivot",
+  "label": "Auth events pivot",
+  "basePath": "/api/ops/ops_auth_events",
+  "operations": [
+    {
+      "id": "ops_auth_events-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_auth_events/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "event_type",
+          "success",
+          "created_at",
+          "user_id",
+          "username"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Auth events pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:22.128Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-ops-auth-events.ops-auth-events-pivot"
+}

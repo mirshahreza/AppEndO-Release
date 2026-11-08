@@ -1,0 +1,43 @@
+{
+  "edgeModelId": "em_d3be89853b210c70",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "role_name"
+    },
+    {
+      "columnName": "dimension_key"
+    },
+    {
+      "columnName": "node_id"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_scope_role_memberships.role_name->base_roles.name:base_scope_role_memberships_role_name_fkey",
+      "displayLabel": "Role Name (base_roles)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nAssigns a **role** to a node in a scope dimension (org/geo). Binary membership only — the role is in-scope for that node, not a per-user grant. Complements `base_scope_memberships` (user↔node). Record Policy Engine projects both into server session as `scope.*`.\n\n## Rules\n\n- **UNIQUE** (`role_name`, `dimension_key`, `node_id`).\n- `role_name` FK to `base_roles.name` (cascade).\n- `node_id` is a `base_info.id` string without FK — same remap rules as user memberships.\n- Assign/remove writes append-only `base_scope_role_membership_events`.\n- Does not grant the function call; Access Control still decides whether the role may invoke the API."
+  },
+  "created_at": "2026-08-26T07:50:50.425Z",
+  "updated_at": "2026-09-17T15:29:39.433Z"
+}

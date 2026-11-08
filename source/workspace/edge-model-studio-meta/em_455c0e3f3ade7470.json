@@ -1,0 +1,45 @@
+{
+  "edgeModelId": "em_455c0e3f3ade7470",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "record_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "city"
+    },
+    {
+      "columnName": "note",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_sample_mock_details.record_id->base_sample_mock_records.id:base_sample_mock_details_record_id_fkey",
+      "displayLabel": "Record"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\n1:1 extension of a sample-mock record — `city` + `note`. Demonstrates CRUD Set **hasOne** include (toggling the include hides the column and the create/edit fields).\n\n## Rules\n\n- **UNIQUE** `record_id`. Cascade delete with the record.\n- Written through `/api/sample-mock/records` (`city`, `detailNote`), not as a standalone business API.\n- `note` is the sample remark field (data-model note vs description)."
+  },
+  "created_at": "2026-09-11T04:55:14.329Z",
+  "updated_at": "2026-09-17T15:29:39.512Z"
+}

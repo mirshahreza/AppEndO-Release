@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-workflow-instances.ops-workflow-instances-pivot",
+  "name": "ops-workflow-instances-pivot",
+  "folder": "base-workflow-instances",
+  "method": "POST",
+  "path": "/api/ops/ops_workflow_instances/pivot",
+  "sourceFile": "base-workflow-instances.ops-workflow-instances-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"status\": \"\",\n    \"start_type\": \"\",\n    \"started_by_type\": \"\",\n    \"created_at\": \"\",\n    \"updated_at\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_workflow_instances_pivot\",\"edgeApiOperationId\":\"ops_workflow_instances-pivot\",\"edgeModelId\":\"em_35584ec12816b716\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_workflow_instances/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"status\",\"start_type\",\"started_by_type\",\"created_at\",\"updated_at\"]}},\"model\":{\"objectName\":\"base_workflow_instances\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"status\",\"name\":\"status\"},{\"field\":\"start_type\",\"name\":\"start_type\"},{\"field\":\"started_by_type\",\"name\":\"started_by_type\"},{\"field\":\"created_at\",\"name\":\"created_at\"},{\"field\":\"updated_at\",\"name\":\"updated_at\"}]},\"openapi\":{\"summary\":\"Workflow instances pivot\",\"description\":\"Workflow instances pivot (POST /api/ops/ops_workflow_instances/pivot) on base_workflow_instances.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:8bb25d6a\",\"generatedAt\":\"2026-10-02T23:23:18.674Z\",\"requestExample\":{\"body\":{\"status\":\"\",\"start_type\":\"\",\"started_by_type\":\"\",\"created_at\":\"\",\"updated_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_workflow_instances/pivot\",\"routeNote\":\"Data API pivot on base_workflow_instances.\",\"validationFields\":[\"status\",\"start_type\",\"started_by_type\",\"created_at\",\"updated_at\"],\"outputFields\":[\"id\",\"status\",\"start_type\",\"started_by_type\",\"created_at\",\"updated_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:18.829Z",
+  "updatedAt": "2026-10-02T23:23:18.829Z",
+  "createdBy": null,
+  "updatedBy": null
+}

@@ -1,0 +1,97 @@
+{
+  "edgeModelId": "em_721274940a247189",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_instance_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "semantic_node_key"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "selected_incoming_edge_key"
+    },
+    {
+      "columnName": "branch_token_id",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "join_group_key"
+    },
+    {
+      "columnName": "input_json"
+    },
+    {
+      "columnName": "output_json"
+    },
+    {
+      "columnName": "next_eligible_at"
+    },
+    {
+      "columnName": "lease_owner_id"
+    },
+    {
+      "columnName": "lease_expires_at"
+    },
+    {
+      "columnName": "next_attempt_number",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "state_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_work_items.node_instance_id->base_workflow_node_instances.id:base_work_items_node_instance_id_fkey",
+      "displayLabel": "base_work_items (Node Instance)"
+    },
+    {
+      "relationKey": "physical:base_workflow_dead_letters.node_instance_id->base_workflow_node_instances.id:base_workflow_dead_letters_node_instance_id_fkey",
+      "displayLabel": "Dead letters (Node Instance)"
+    },
+    {
+      "relationKey": "physical:base_workflow_execution_attempts.node_instance_id->base_workflow_node_instances.id:base_workflow_execution_attempts_node_instance_id_fkey",
+      "displayLabel": "base_workflow_execution_attempts (Node Instance)"
+    },
+    {
+      "relationKey": "physical:base_workflow_join_arrivals.join_node_instance_id->base_workflow_node_instances.id:base_workflow_join_arrivals_join_node_instance_id_fkey",
+      "displayLabel": "base_workflow_join_arrivals (Join Node Instance)"
+    },
+    {
+      "relationKey": "physical:base_workflow_node_instances.branch_token_id->base_workflow_branch_tokens.id:base_workflow_node_instances_branch_token_id_fkey",
+      "displayLabel": "Branch Token"
+    },
+    {
+      "relationKey": "physical:base_workflow_node_instances.workflow_instance_id->base_workflow_instances.id:base_workflow_node_instances_workflow_instance_id_fkey",
+      "displayLabel": "Workflow Instance"
+    },
+    {
+      "relationKey": "physical:base_workflow_traces.node_instance_id->base_workflow_node_instances.id:base_workflow_traces_node_instance_id_fkey",
+      "displayLabel": "base_workflow_traces (Node Instance)"
+    },
+    {
+      "relationKey": "physical:base_workflow_waits.owning_node_instance_id->base_workflow_node_instances.id:base_workflow_waits_owning_node_instance_id_fkey",
+      "displayLabel": "base_workflow_waits (Owning Node Instance)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nOne row per **semantic node occurrence** inside an instance — execution state, branch/join metadata, lease fields for worker claim, next eligible time for retries/delays.\n\n## Rules\n\n- **UNIQUE** (`workflow_instance_id`, `semantic_node_key`) — one occurrence key per instance.\n- Status drives scheduler scans (`PENDING`, `RUNNING`, `WAITING`, …).\n- `lease_owner_id` / `lease_expires_at` — only holder may complete attempt.\n- Parallel/join: `branch_token_id`, `join_group_key`, `selected_incoming_edge_key`."
+  },
+  "created_at": "2026-08-28T15:13:41.588Z",
+  "updated_at": "2026-09-17T15:29:39.524Z"
+}

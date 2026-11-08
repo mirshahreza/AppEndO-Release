@@ -1,0 +1,99 @@
+{
+  "id": "em_e74d547e2028382d",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workflow_webhook_bindings",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowWebhookBindings",
+    "tableName": "base_workflow_webhook_bindings"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "workflow_definition_id",
+      "field": "workflowDefinitionId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_5282477fc36a2a52",
+        "column": "id"
+      }
+    },
+    {
+      "name": "workflow_revision_id",
+      "field": "workflowRevisionId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "secret_hash",
+      "field": "secretHash",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "enabled",
+      "field": "enabled",
+      "dataType": "boolean",
+      "sequelizeType": "BOOLEAN",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "rotated_at",
+      "field": "rotatedAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "0f7853a29f3a48b7",
+  "readOnly": false,
+  "labels": {
+    "title": "base_workflow_webhook_bindings"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:25.924Z",
+  "updated_at": "2026-09-11T04:55:25.924Z"
+}

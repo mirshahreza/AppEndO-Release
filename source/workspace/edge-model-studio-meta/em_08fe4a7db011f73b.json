@@ -1,0 +1,51 @@
+{
+  "edgeModelId": "em_08fe4a7db011f73b",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_definition_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "revision_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "draft_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "validator_version"
+    },
+    {
+      "columnName": "issues_json"
+    },
+    {
+      "columnName": "coverage_summary_json"
+    },
+    {
+      "columnName": "created_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_validation_reports.revision_id->base_workflow_revisions.id:base_workflow_validation_reports_revision_id_fkey",
+      "displayLabel": "Revision"
+    },
+    {
+      "relationKey": "physical:base_workflow_validation_reports.workflow_definition_id->base_workflow_definitions.id:base_workflow_validation_reports_workflow_definition_id_fkey",
+      "displayLabel": "Workflow Definition"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nStructured validation output from publish/simulate pipeline — errors/warnings against draft or revision. Linked from revision row when publish blocked or advisory.\n\n## Rules\n\n- Immutable after creation — new validation → new report row.\n- Referenced by `base_workflow_revisions.validation_report_id`.\n- JSON payload interpreted by designer UI — schema version in engine."
+  },
+  "created_at": "2026-09-11T04:55:24.956Z",
+  "updated_at": "2026-09-17T15:29:39.970Z"
+}

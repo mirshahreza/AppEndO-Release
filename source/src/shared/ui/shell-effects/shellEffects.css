@@ -1,0 +1,267 @@
+.shell-effect-stack {
+  position: relative;
+  isolation: isolate;
+}
+
+.shell-effect-stack__content {
+  position: relative;
+  z-index: 1;
+}
+
+.shell-effect-layer,
+.shell-effect-renderer {
+  pointer-events: none !important;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.shell-effect-layer {
+  z-index: 0;
+  opacity: var(--shell-effect-opacity, 0.18);
+  mix-blend-mode: var(--shell-effect-blend, normal);
+}
+
+.shell-effect-layer[data-plane='underlay'] {
+  z-index: -1;
+}
+
+.shell-effect-layer[data-plane='overlay'] {
+  z-index: 2;
+}
+
+.shell-effect-renderer[data-effect-paused],
+.shell-effect-renderer[data-effect-fallback='static'],
+.shell-effect-renderer[data-effect-fallback='simplified'] {
+  animation-play-state: paused !important;
+}
+
+.shell-effect-renderer[data-effect-paused] *,
+.shell-effect-renderer[data-effect-fallback='static'] *,
+.shell-effect-renderer[data-effect-fallback='simplified'] * {
+  animation-play-state: paused !important;
+}
+
+.shell-effect-renderer[data-effect-fallback='simplified'] {
+  filter: none !important;
+}
+
+.shell-effect-renderer[data-effect-fallback='simplified'] > :nth-child(n + 5),
+.shell-effect-renderer[data-effect-fallback='simplified'] svg > :nth-child(n + 25) {
+  display: none;
+}
+
+.shell-effect-renderer[data-effect-renderer='animated-gradient'] {
+  animation: shell-effect-gradient-pan 20s ease-in-out infinite alternate;
+}
+
+.shell-effect-renderer[data-effect-renderer='mesh-gradient'] {
+  animation: shell-effect-mesh-drift 18s ease-in-out infinite alternate;
+}
+
+.shell-effect-aurora-band {
+  position: absolute;
+  top: -45%;
+  bottom: -45%;
+  left: calc(var(--se-index) * 18% - 10%);
+  border-radius: 50%;
+  background: linear-gradient(180deg, transparent, var(--se-band-color), transparent);
+  filter: blur(32px);
+  opacity: 0.65;
+  transform: rotate(calc(-18deg + var(--se-index) * 7deg));
+  animation: shell-effect-aurora-sway 12s ease-in-out infinite alternate;
+}
+
+.shell-effect-orb {
+  position: absolute;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+  animation: shell-effect-float 16s ease-in-out infinite alternate;
+}
+
+.shell-effect-renderer > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shell-effect-blob {
+  animation: shell-effect-blob-morph 12s ease-in-out infinite alternate;
+}
+
+.shell-effect-wave {
+  animation: shell-effect-wave-shift 12s linear infinite;
+}
+
+.shell-effect-renderer[data-effect-renderer='light-rays'],
+.shell-effect-renderer[data-effect-renderer='conic-rays'] {
+  animation: shell-effect-spin 48s linear infinite;
+}
+
+.shell-effect-shimmer-band {
+  position: absolute;
+  top: -50%;
+  bottom: -50%;
+  transform: translateX(-250%);
+  animation: shell-effect-shimmer 8s ease-in-out infinite;
+}
+
+.shell-effect-renderer[data-effect-renderer='film-grain'] {
+  animation: shell-effect-grain-step 0.16s steps(2, end) infinite;
+}
+
+.shell-effect-particle {
+  animation: shell-effect-particle-drift 10s ease-in-out infinite alternate;
+}
+
+.shell-effect-star,
+.shell-effect-dot {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+  animation: shell-effect-twinkle 5s ease-in-out infinite alternate;
+}
+
+.shell-effect-perspective-grid {
+  position: absolute;
+  inset: -30% -10%;
+  opacity: 0.45;
+  transform: perspective(500px) rotateX(58deg) translateY(20%);
+  animation: shell-effect-grid-move 12s linear infinite;
+}
+
+.shell-effect-geometry {
+  position: absolute;
+  display: block;
+  border: 1.5px solid;
+  animation: shell-effect-float 14s ease-in-out infinite alternate;
+}
+
+.shell-effect-geometry--0 {
+  border-radius: 9999px;
+}
+
+.shell-effect-geometry--1 {
+  border-radius: 3px;
+}
+
+.shell-effect-geometry--2 {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.shell-effect-renderer[data-effect-renderer='image-depth-pan'] {
+  background-repeat: no-repeat;
+  transition: background-position 120ms linear;
+}
+
+.shell-effect-parallax-layer {
+  position: absolute;
+  border: 1px solid;
+  border-radius: 24%;
+  transition: transform inherit ease-out;
+}
+
+.shell-effect-renderer[data-effect-renderer='cursor-spotlight'] {
+  transition-property: background-image;
+  transition-timing-function: ease-out;
+}
+
+.shell-effect-reveal {
+  position: absolute;
+  inset: 0;
+  transform: translateY(var(--se-reveal-distance));
+  animation: shell-effect-reveal 800ms var(--se-reveal-stagger) both ease-out;
+}
+
+.shell-effect-reveal--scale {
+  transform: scale(1.08);
+}
+
+.shell-effect-reveal--mask {
+  clip-path: inset(0 0 100% 0);
+  animation-name: shell-effect-reveal-mask;
+}
+
+@keyframes shell-effect-gradient-pan {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@keyframes shell-effect-mesh-drift {
+  from { transform: scale(1.12) translate3d(-2%, -2%, 0); }
+  to { transform: scale(1.2) translate3d(2%, 2%, 0); }
+}
+
+@keyframes shell-effect-aurora-sway {
+  from { translate: -5% 0; }
+  to { translate: 12% 4%; }
+}
+
+@keyframes shell-effect-float {
+  from { translate: -5% -4%; rotate: -5deg; }
+  to { translate: 6% 7%; rotate: 8deg; }
+}
+
+@keyframes shell-effect-blob-morph {
+  from { scale: 0.94 1.06; rotate: -4deg; }
+  to { scale: 1.08 0.92; rotate: 7deg; }
+}
+
+@keyframes shell-effect-wave-shift {
+  from { translate: -6% 0; }
+  to { translate: 6% 0; }
+}
+
+@keyframes shell-effect-spin {
+  to { rotate: 360deg; }
+}
+
+@keyframes shell-effect-shimmer {
+  0%, 12% { transform: translateX(-250%); }
+  70%, 100% { transform: translateX(600%); }
+}
+
+@keyframes shell-effect-grain-step {
+  from { translate: -0.5% -0.5%; }
+  to { translate: 0.5% 0.5%; }
+}
+
+@keyframes shell-effect-particle-drift {
+  from { translate: -0.5px -0.5px; }
+  to { translate: 0.8px 0.8px; }
+}
+
+@keyframes shell-effect-twinkle {
+  from { opacity: 0.25; scale: 0.65; }
+  to { opacity: 1; scale: 1.2; }
+}
+
+@keyframes shell-effect-grid-move {
+  to { background-position: 0 64px, 64px 0; }
+}
+
+@keyframes shell-effect-reveal {
+  from { opacity: 0.35; }
+  to { opacity: 0; transform: none; }
+}
+
+@keyframes shell-effect-reveal-mask {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 0 100% 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell-effect-renderer,
+  .shell-effect-renderer * {
+    animation-play-state: paused !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .shell-effect-layer {
+    display: none;
+  }
+}
+

@@ -1,0 +1,37 @@
+{
+  "schema": "append-server-function-metadata",
+  "schemaVersion": "2.0.0",
+  "id": "base-ops-work-item-queue.ops-work-queue-pivot",
+  "name": "ops-work-queue-pivot",
+  "folder": "base-ops-work-item-queue",
+  "method": "POST",
+  "path": "/api/ops/ops_work_queue/pivot",
+  "sourceFile": "base-ops-work-item-queue.ops-work-queue-pivot.ts",
+  "language": "ts",
+  "testPayload": "{\n  \"body\": {\n    \"status\": \"\",\n    \"work_item_type\": \"\",\n    \"priority\": \"\",\n    \"claimed_by_user_id\": \"\",\n    \"claimed_by_username\": \"\",\n    \"due_at\": \"\",\n    \"created_at\": \"\",\n    \"completed_at\": \"\",\n    \"claimed_at\": \"\",\n    \"workflow_instance_id\": \"\",\n    \"workflow_instance_status\": \"\",\n    \"workflow_key\": \"\",\n    \"workflow_lifecycle_status\": \"\",\n    \"is_overdue\": \"\"\n  }\n}",
+  "runtimeVersion": "v1",
+  "memoryLimit": 128,
+  "timeoutMs": 30000,
+  "useGlobalConfig": true,
+  "enableLogs": true,
+  "cacheEnabled": false,
+  "cacheTtlMs": 60000,
+  "cacheByParam": false,
+  "cacheByUser": false,
+  "engineType": "DATA_API",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_work_queue_pivot\",\"edgeApiOperationId\":\"ops_work_queue-pivot\",\"edgeModelId\":\"em_ops_work_queue\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_work_queue/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"status\",\"work_item_type\",\"priority\",\"claimed_by_user_id\",\"claimed_by_username\",\"due_at\",\"created_at\",\"completed_at\",\"claimed_at\",\"workflow_instance_id\",\"workflow_instance_status\",\"workflow_key\",\"workflow_lifecycle_status\",\"is_overdue\"]}},\"model\":{\"objectName\":\"base_ops_work_item_queue\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"status\",\"name\":\"status\"},{\"field\":\"work_item_type\",\"name\":\"work_item_type\"},{\"field\":\"priority\",\"name\":\"priority\"},{\"field\":\"claimed_by_user_id\",\"name\":\"claimed_by_user_id\"},{\"field\":\"claimed_by_username\",\"name\":\"claimed_by_username\"},{\"field\":\"due_at\",\"name\":\"due_at\"},{\"field\":\"created_at\",\"name\":\"created_at\"},{\"field\":\"completed_at\",\"name\":\"completed_at\"},{\"field\":\"claimed_at\",\"name\":\"claimed_at\"},{\"field\":\"workflow_instance_id\",\"name\":\"workflow_instance_id\"},{\"field\":\"workflow_instance_status\",\"name\":\"workflow_instance_status\"},{\"field\":\"workflow_key\",\"name\":\"workflow_key\"},{\"field\":\"workflow_lifecycle_status\",\"name\":\"workflow_lifecycle_status\"},{\"field\":\"is_overdue\",\"name\":\"is_overdue\"}]},\"openapi\":{\"summary\":\"Work queue pivot\",\"description\":\"Work queue pivot (POST /api/ops/ops_work_queue/pivot) on base_ops_work_item_queue.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:26561e06\",\"generatedAt\":\"2026-10-02T23:23:20.778Z\",\"requestExample\":{\"body\":{\"status\":\"\",\"work_item_type\":\"\",\"priority\":\"\",\"claimed_by_user_id\":\"\",\"claimed_by_username\":\"\",\"due_at\":\"\",\"created_at\":\"\",\"completed_at\":\"\",\"claimed_at\":\"\",\"workflow_instance_id\":\"\",\"workflow_instance_status\":\"\",\"workflow_key\":\"\",\"workflow_lifecycle_status\":\"\",\"is_overdue\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_work_queue/pivot\",\"routeNote\":\"Data API pivot on base_ops_work_item_queue.\",\"validationFields\":[\"status\",\"work_item_type\",\"priority\",\"claimed_by_user_id\",\"claimed_by_username\",\"due_at\",\"created_at\",\"completed_at\",\"claimed_at\",\"workflow_instance_id\",\"workflow_instance_status\",\"workflow_key\",\"workflow_lifecycle_status\",\"is_overdue\"],\"outputFields\":[\"id\",\"status\",\"work_item_type\",\"priority\",\"claimed_by_user_id\",\"claimed_by_username\",\"due_at\",\"created_at\",\"completed_at\",\"claimed_at\",\"workflow_instance_id\",\"workflow_instance_status\",\"workflow_key\",\"workflow_lifecycle_status\",\"is_overdue\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "hooks": {},
+  "createdAt": "2026-10-02T23:23:20.944Z",
+  "updatedAt": "2026-10-02T23:23:20.944Z",
+  "createdBy": null,
+  "updatedBy": null
+}

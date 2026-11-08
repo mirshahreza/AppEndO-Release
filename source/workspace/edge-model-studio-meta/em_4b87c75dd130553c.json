@@ -1,0 +1,77 @@
+{
+  "edgeModelId": "em_4b87c75dd130553c",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "title",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "model_id"
+    },
+    {
+      "columnName": "messages_json"
+    },
+    {
+      "columnName": "agent_capability_scope_json"
+    },
+    {
+      "columnName": "context_history_summary"
+    },
+    {
+      "columnName": "deleted_at"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "message_count",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "total_input_tokens",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "total_output_tokens",
+      "filterRole": "none"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_ai_agent_apply_snapshots.session_id->base_ai_chat_sessions.id:base_ai_agent_apply_snapshots_session_id_fkey",
+      "displayLabel": "base_ai_agent_apply_snapshots (Session)"
+    },
+    {
+      "relationKey": "physical:base_ai_agent_traces.session_id->base_ai_chat_sessions.id:base_ai_agent_traces_session_id_fkey",
+      "displayLabel": "base_ai_agent_traces (Session)"
+    },
+    {
+      "relationKey": "physical:base_ai_chat_sessions.user_id->base_users.id:base_ai_chat_sessions_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nPersisted AI chat sessions per user — title, model, serialized messages JSON, token totals, optional agent capability scope. Powers Chat History panel and session resume.\n\n## Lifecycle\n\n1. **Start** — empty `messages_json`, counters zero.\n2. **Append turns** — server updates `messages_json`, `message_count`, token totals, `updated_at`.\n3. **Soft delete** — `deleted_at` set; hidden from user history, retained for admin audit.\n\n## Rules\n\n- Owned by `user_id` — users see only their sessions unless admin Chat History function.\n- `agent_capability_scope_json` snapshots tool/page scope at session start.\n- Traces and apply snapshots hang off session id optionally."
+  },
+  "created_at": "2026-08-26T07:50:50.462Z",
+  "updated_at": "2026-09-17T15:29:39.464Z"
+}

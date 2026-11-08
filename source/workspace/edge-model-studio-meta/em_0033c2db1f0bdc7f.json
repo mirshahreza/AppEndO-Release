@@ -1,0 +1,114 @@
+{
+  "edgeModelId": "em_0033c2db1f0bdc7f",
+  "tags": [
+    "cms",
+    "revision"
+  ],
+  "columnMeta": [
+    {
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "hidden",
+      "group": "Identity",
+      "sortOrder": 10
+    },
+    {
+      "columnName": "content_id",
+      "icon": "lucide:newspaper",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 20
+    },
+    {
+      "columnName": "revision_no",
+      "icon": "lucide:list-ordered",
+      "formWidget": "number",
+      "searchRole": "basic",
+      "group": "Identity",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "title",
+      "icon": "lucide:type",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Snapshot",
+      "sortOrder": 40
+    },
+    {
+      "columnName": "summary",
+      "icon": "lucide:align-left",
+      "formWidget": "multiline",
+      "searchRole": "advanced",
+      "group": "Snapshot",
+      "sortOrder": 50
+    },
+    {
+      "columnName": "body",
+      "icon": "lucide:file-text",
+      "formWidget": "markdown",
+      "searchRole": "advanced",
+      "filterRole": "none",
+      "group": "Snapshot",
+      "sortOrder": 60
+    },
+    {
+      "columnName": "created_by",
+      "icon": "lucide:user",
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 70
+    },
+    {
+      "columnName": "created_at",
+      "icon": "lucide:clock",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 80
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "ea_9019672d0f5a4e80",
+      "displayLabel": "Content",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "title",
+          "as": "content_id_title"
+        },
+        {
+          "sourceColumn": "slug",
+          "as": "content_id_slug"
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nAppend-only **history** of editorial text. Each row is a snapshot of `title` / `summary` / `body` taken immediately before those fields change on `cms_contents` (meaningful save or checkpoint). Not an autosave stream.\n\n## Rules\n\n- `revision_no` increases per `content_id` (unique pair).\n- Do **not** store SEO, `body_format_code`, status, slug, or assets here.\n- Restore copies snapshot fields back to `cms_contents` current columns; optionally snapshot the live text first.\n- Rows are not edited in place; new edits create new revision rows.\n- Deleting a content cascades revisions.",
+    "columnGroupOrder": [
+      "Identity",
+      "Snapshot",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Identity": {
+        "icon": "lucide:fingerprint",
+        "color": "text-amber-600"
+      },
+      "Snapshot": {
+        "icon": "lucide:file-stack",
+        "color": "text-indigo-600"
+      },
+      "Audit": {
+        "icon": "lucide:clock-3",
+        "color": "text-slate-600"
+      }
+    }
+  },
+  "created_at": "2026-11-06T20:29:02.367Z",
+  "updated_at": "2026-11-06T20:29:02.367Z"
+}

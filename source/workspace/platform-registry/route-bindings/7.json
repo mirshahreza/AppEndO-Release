@@ -1,0 +1,32 @@
+{
+  "id": 7,
+  "mountId": "studio",
+  "routePattern": "settings/*",
+  "pageKey": "settings",
+  "enabled": true,
+  "auth": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "nav": {
+    "label": "Settings",
+    "icon": "Settings",
+    "group": "Development",
+    "order": 6,
+    "separatorBefore": true,
+    "description": "Global platform settings and administrative configurations.",
+    "color": "text-slate-500"
+  },
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-06-18T04:15:13.067Z",
+  "createdBy": null,
+  "updatedAt": "2026-06-18T04:15:13.067Z",
+  "updatedBy": null
+}

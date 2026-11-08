@@ -1,0 +1,140 @@
+/* FortuneSheet column: workarea (toolbar + formula) + sheet (canvas) + tabs.
+   Stretch only the container. height:100% on .fortune-workarea fills the host
+   with chrome and leaves a blank canvas (no row/column headers). */
+[data-ui-spreadsheet] .fortune-container {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+}
+
+[data-ui-spreadsheet] .fortune-sheet-container,
+[data-ui-spreadsheet] .fortune-col-body,
+[data-ui-spreadsheet] .fortune-sheet-area {
+  min-height: 0;
+  flex: 1 1 0%;
+}
+
+[data-ui-spreadsheet][data-spreadsheet-height="full"] .fortune-container {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+}
+
+[data-spreadsheet-add-rows="0"] .luckysheet-bottom-controll-row {
+  display: none !important;
+}
+
+[data-ui-spreadsheet] .luckysheet-sheet-area {
+  flex: 0 0 31px;
+}
+
+/* FortuneSheet always renders Count/Sum as a second row; Settings has no toggle.
+   Overlay it onto the sheet-tab bar (left of zoom) so the extra strip is gone. */
+[data-spreadsheet-stat="tabs"] .fortune-stat-area {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  height: 31px;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 126px;
+  background: transparent;
+  pointer-events: none;
+}
+
+[data-spreadsheet-stat="tabs"] .luckysheet-sheet-selection-calInfo {
+  max-width: 38%;
+  height: 31px;
+  overflow: hidden;
+  padding: 0;
+  pointer-events: auto;
+  font-size: 12px;
+  color: #64748b;
+}
+
+[data-spreadsheet-stat="tabs"] .fortune-sheettab-container {
+  max-width: 40%;
+}
+
+[data-spreadsheet-stat="hidden"] .fortune-stat-area {
+  display: none !important;
+}
+
+/* Sheet chrome RTL: canvas stays LTR. Toolbar + formula stay LTR.
+   Row numbers are painted on canvas at x=0, so a host gutter draws them on the right. */
+[data-spreadsheet-direction="rtl"] .fortune-workarea {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+[data-spreadsheet-direction="rtl"] .fortune-sheet-container {
+  position: relative;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+[data-spreadsheet-direction="rtl"] .luckysheet-scrollbar-y {
+  right: 46px;
+}
+
+[data-spreadsheet-direction="rtl"] .luckysheet-scrollbar-x {
+  right: 46px;
+}
+
+[data-spreadsheet-direction="rtl"] .luckysheet-sheet-area {
+  padding-inline: 44px 30px;
+}
+
+[data-spreadsheet-direction="rtl"][data-spreadsheet-stat="tabs"] .fortune-stat-area {
+  padding-right: 0;
+  padding-inline-end: 126px;
+}
+
+[data-spreadsheet-direction="rtl"] .luckysheet-input-box,
+[data-spreadsheet-direction="rtl"] .luckysheet-cell-input {
+  direction: rtl;
+  unicode-bidi: plaintext;
+}
+
+.ui-spreadsheet-rtl-row-gutter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-left: 1px solid #d4d4d4;
+  color: #5e5e5e;
+  pointer-events: none;
+  direction: ltr;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+}
+
+.ui-spreadsheet-rtl-row-gutter-corner {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.ui-spreadsheet-rtl-row-gutter-body {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ui-spreadsheet-rtl-row-gutter-row {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ececec;
+}

@@ -1,0 +1,85 @@
+import type { NextFunction, Request, Response } from 'express';
+import { Router, type Express } from 'express';
+import { AiController } from '../controllers/ai.controller';
+import { requireRole } from '../middleware/auth.middleware';
+import { AiSettingsService } from '../services/ai/aiSettings.service';
+import { requireRemoteHubsPackage } from '../services/remote-hubs/remoteHubsRuntime';
+import { DataSourcesService } from '../services/data-sources.service';
+import type { EdgeDbQueryFn } from '../services/server-function.service';
+import { SqlConsoleAiService } from '../services/ai/sqlConsoleAi.service';
+
+export type AiRoutesDeps = {
+  settingsPath: string;
+  aiChatRateLimiter: (req: Request, res: Response, next: NextFunction) => void;
+  edgeDbQuery?: EdgeDbQueryFn;
+};
+
+export const mountAiRoutes = (app: Express, deps: AiRoutesDeps): void => {
+  const settingsService = new AiSettingsService({ settingsPath: deps.settingsPath });
+  const dataSourcesService = new DataSourcesService({ settingsPath: deps.settingsPath, edgeDbQuery: deps.edgeDbQuery });
+  const sqlConsoleAiService = new SqlConsoleAiService(dataSourcesService);
+  const controller = new AiController(undefined, settingsService, undefined, undefined, undefined, sqlConsoleAiService);
+  const adminOnly = requireRole('ADMIN');
+  const router = Router();
+
+  router.get('/settings', controller.getSettings);
+  router.put('/settings', controller.updateGlobalSettings);
+  router.get('/models/available', controller.listAvailableModels);
+  router.get('/local-embeddings/status', controller.getLocalEmbeddingsModelStatus);
+  router.get('/workspace-embeddings/status', controller.getWorkspaceEmbeddingsIndexStatus);
+  router.get('/models', controller.listModels);
+  router.post('/providers/:provider', controller.addProvider);
+  router.put('/providers/:provider', controller.updateProvider);
+  router.delete('/providers/:provider', controller.deleteProvider);
+  router.post('/providers/:provider/test', controller.testProvider);
+  router.get('/providers/:provider/remote-models', controller.listProviderRemoteModels);
+  router.post('/models', controller.addModel);
+  router.put('/models/:id', controller.updateModel);
+  router.delete('/models/:id', controller.deleteModel);
+  router.post('/models/:id/test', controller.testModel);
+  router.get('/mcp-servers', controller.listMcpServers);
+  router.get('/mcp-access/catalog', controller.getMcpAccessCatalog);
+  router.get('/mcp-access/roles/:roleName', controller.getRoleMcpAccess);
+  router.put('/mcp-access/roles/:roleName', controller.replaceRoleMcpAccess);
+  router.put('/mcp-access/resources/:resourceId/access-control', controller.replaceMcpResourceAccessControl);
+  router.get('/mcp-access/me', controller.getMcpAccessMe);
+  router.post('/mcp-servers', controller.addMcpServer);
+  router.put('/mcp-servers/:id', controller.updateMcpServer);
+  router.delete('/mcp-servers/:id', controller.deleteMcpServer);
+  router.post('/mcp-servers/:id/test', controller.testMcpServer);
+  router.put('/web-search', controller.updateWebSearchSettings);
+  router.put('/agent-settings', controller.updateAgentSettings);
+  router.put('/http', controller.updateHttpSettings);
+  router.put('/inbound-mcp', controller.updateInboundHostSettings);
+  router.put('/default-capability-packs', controller.updateDefaultCapabilityPacks);
+  router.post('/chat', deps.aiChatRateLimiter, controller.chat);
+  router.post('/image/edit', deps.aiChatRateLimiter, controller.imageEdit);
+  router.post('/ssh/assist', requireRemoteHubsPackage, deps.aiChatRateLimiter, controller.sshAssist);
+  router.post('/file-hub/assist', requireRemoteHubsPackage, deps.aiChatRateLimiter, controller.fileHubAssist);
+  router.post('/sql-console/assist', deps.aiChatRateLimiter, controller.sqlConsoleAssist);
+  router.post('/workflow-designer/assist', deps.aiChatRateLimiter, controller.workflowDesignerAssist);
+  router.post('/server-functions/assist', deps.aiChatRateLimiter, controller.serverFunctionAssist);
+  router.post('/client-components/assist', deps.aiChatRateLimiter, controller.clientComponentAssist);
+  router.post('/chat/stream', deps.aiChatRateLimiter, controller.chatStream);
+  router.post('/agent/run', deps.aiChatRateLimiter, controller.agentRun);
+  router.post('/agent/apply', deps.aiChatRateLimiter, controller.agentApply);
+  router.post('/agent/proposal-feedback', deps.aiChatRateLimiter, controller.agentProposalFeedback);
+  router.post('/agent/chat-latency', deps.aiChatRateLimiter, controller.agentChatLatency);
+  router.post('/agent/rollback', deps.aiChatRateLimiter, controller.agentRollback);
+  router.post('/agent/plan-approval', deps.aiChatRateLimiter, controller.agentPlanApproval);
+  router.post('/agent/plan-repair-execute', deps.aiChatRateLimiter, controller.agentPlanRepairExecute);
+  router.get('/agent/latest-apply', deps.aiChatRateLimiter, controller.getLatestAgentApply);
+  router.get('/agent/traces/:sessionId', controller.getAgentTraces);
+  router.get('/chats', controller.listChatSessions);
+  router.post('/chats', controller.createChatSession);
+  router.get('/chats/:id', controller.getChatSession);
+  router.put('/chats/:id', controller.updateChatSession);
+  router.delete('/chats/:id', controller.deleteChatSession);
+  router.get('/admin/chat-sessions', controller.listAllChatSessions);
+  router.get('/admin/chat-sessions/:id', controller.getAdminChatSession);
+  router.delete('/admin/chat-sessions/:id', controller.deleteAdminChatSession);
+
+  app.use('/api/ai', adminOnly, router);
+};
+
+export type { AiSettingsService };

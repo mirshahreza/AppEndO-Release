@@ -1,0 +1,112 @@
+{
+  "id": "em_08fe4a7db011f73b",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workflow_validation_reports",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowValidationReports",
+    "tableName": "base_workflow_validation_reports"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "workflow_definition_id",
+      "field": "workflowDefinitionId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_5282477fc36a2a52",
+        "column": "id"
+      }
+    },
+    {
+      "name": "revision_id",
+      "field": "revisionId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_eca564ae0bff8fdc",
+        "column": "id"
+      }
+    },
+    {
+      "name": "draft_version",
+      "field": "draftVersion",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status",
+      "field": "status",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "validator_version",
+      "field": "validatorVersion",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "issues_json",
+      "field": "issuesJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "coverage_summary_json",
+      "field": "coverageSummaryJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "1e4dc701f26ad8f3",
+  "readOnly": false,
+  "labels": {
+    "title": "base_workflow_validation_reports"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:24.947Z",
+  "updated_at": "2026-09-11T04:55:24.947Z"
+}

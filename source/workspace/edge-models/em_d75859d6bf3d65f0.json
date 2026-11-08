@@ -1,0 +1,139 @@
+{
+  "id": "em_d75859d6bf3d65f0",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_workflow_traces",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowTraces",
+    "tableName": "base_workflow_traces"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "workflow_instance_id",
+      "field": "workflowInstanceId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_35584ec12816b716",
+        "column": "id"
+      }
+    },
+    {
+      "name": "node_instance_id",
+      "field": "nodeInstanceId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_721274940a247189",
+        "column": "id"
+      }
+    },
+    {
+      "name": "sequence_number",
+      "field": "sequenceNumber",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "trace_type",
+      "field": "traceType",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "payload_schema_version",
+      "field": "payloadSchemaVersion",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "occurred_at",
+      "field": "occurredAt",
+      "dataType": "timestamp without time zone",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "actor_type",
+      "field": "actorType",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "actor_id",
+      "field": "actorId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "core_evidence_json",
+      "field": "coreEvidenceJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "diagnostic_payload_json",
+      "field": "diagnosticPayloadJson",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "data_classification",
+      "field": "dataClassification",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "a750318b36261d4d",
+  "readOnly": false,
+  "labels": {
+    "title": "base_workflow_traces"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:55:24.631Z",
+  "updated_at": "2026-09-11T04:55:24.631Z"
+}

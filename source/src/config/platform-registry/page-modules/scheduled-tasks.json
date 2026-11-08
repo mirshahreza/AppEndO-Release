@@ -1,0 +1,32 @@
+{
+  "pageKey": "scheduled-tasks",
+  "title": "Scheduled Tasks",
+  "loaderKind": "core",
+  "loaderRef": "core:ScheduledTasks",
+  "defaultRoles": [
+    "ADMIN"
+  ],
+  "enabled": true,
+  "homeWidgets": [
+    {
+      "componentRef": "core:ScheduledTasksHomeWidget",
+      "span": "half",
+      "defaultVisible": false,
+      "catalog": {
+        "labelKey": "homeWidget.scheduledTasks.title",
+        "descriptionKey": "homeWidget.scheduledTasks.description",
+        "icon": "CalendarClock",
+        "tone": "cyan"
+      },
+      "requiredRoles": ["ADMIN"],
+      "deepLink": { "pageKey": "scheduled-tasks" }
+    }
+  ],
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-06-18T04:15:13.068Z",
+  "createdBy": null,
+  "updatedAt": "2026-06-18T04:15:13.068Z",
+  "updatedBy": null
+}

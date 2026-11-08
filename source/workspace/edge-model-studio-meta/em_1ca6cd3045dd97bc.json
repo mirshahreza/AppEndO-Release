@@ -1,0 +1,59 @@
+{
+  "edgeModelId": "em_1ca6cd3045dd97bc",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "workflow_definition_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "workflow_revision_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "draft_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "view_schema_version",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "view_json"
+    },
+    {
+      "columnName": "draft_identity_key"
+    },
+    {
+      "columnName": "revision_identity_key"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_workflow_designer_views.workflow_definition_id->base_workflow_definitions.id:base_workflow_designer_views_workflow_definition_id_fkey",
+      "displayLabel": "Workflow Definition"
+    },
+    {
+      "relationKey": "physical:base_workflow_designer_views.workflow_revision_id->base_workflow_revisions.id:base_workflow_designer_views_workflow_revision_id_fkey",
+      "displayLabel": "Workflow Revision"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nPersisted canvas layout per definition/revision — node positions, zoom, lane grouping for Workflow Designer. Cosmetic only; does not affect runtime semantics.\n\n## Rules\n\n- Scoped to definition + optional revision — designer picks active view.\n- Safe to delete/regenerate — runtime unaffected.\n- JSON blob — not queried by execution engine."
+  },
+  "created_at": "2026-09-11T04:55:21.997Z",
+  "updated_at": "2026-09-17T15:29:39.917Z"
+}

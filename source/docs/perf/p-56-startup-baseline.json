@@ -1,0 +1,265 @@
+{
+  "generatedAt": "2026-09-27T15:41:15.629Z",
+  "baseUrl": "http://127.0.0.1:3000",
+  "runCount": 3,
+  "summary": [
+    {
+      "name": "boot",
+      "path": "/api/boot",
+      "runs": 3,
+      "status": 200,
+      "avgElapsedMs": 128,
+      "maxBytes": 79226
+    },
+    {
+      "name": "health",
+      "path": "/api/health",
+      "runs": 3,
+      "status": 200,
+      "avgElapsedMs": 5,
+      "maxBytes": 86
+    },
+    {
+      "name": "dashboard-summary",
+      "path": "/api/dashboard/summary",
+      "runs": 3,
+      "status": 401,
+      "avgElapsedMs": 8,
+      "maxBytes": 49
+    },
+    {
+      "name": "chat-history-p10",
+      "path": "/api/admin/chat-history?page=1&pageSize=10",
+      "runs": 3,
+      "status": 401,
+      "avgElapsedMs": 4,
+      "maxBytes": 49
+    },
+    {
+      "name": "chat-history-p50",
+      "path": "/api/admin/chat-history?page=1&pageSize=50",
+      "runs": 3,
+      "status": 401,
+      "avgElapsedMs": 4,
+      "maxBytes": 49
+    },
+    {
+      "name": "chat-history-p100",
+      "path": "/api/admin/chat-history?page=1&pageSize=100",
+      "runs": 3,
+      "status": 401,
+      "avgElapsedMs": 5,
+      "maxBytes": 49
+    },
+    {
+      "name": "profile-me",
+      "path": "/api/profile/me",
+      "runs": 3,
+      "status": 401,
+      "avgElapsedMs": 8,
+      "maxBytes": 49
+    },
+    {
+      "name": "install-status",
+      "path": "/api/install/status",
+      "runs": 3,
+      "status": 200,
+      "avgElapsedMs": 8,
+      "maxBytes": 484
+    }
+  ],
+  "results": [
+    {
+      "name": "boot",
+      "path": "/api/boot",
+      "status": 200,
+      "run": 1,
+      "elapsedMs": 114,
+      "bytes": 79226
+    },
+    {
+      "name": "health",
+      "path": "/api/health",
+      "status": 200,
+      "run": 1,
+      "elapsedMs": 3,
+      "bytes": 86
+    },
+    {
+      "name": "dashboard-summary",
+      "path": "/api/dashboard/summary",
+      "status": 401,
+      "run": 1,
+      "elapsedMs": 3,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p10",
+      "path": "/api/admin/chat-history?page=1&pageSize=10",
+      "status": 401,
+      "run": 1,
+      "elapsedMs": 6,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p50",
+      "path": "/api/admin/chat-history?page=1&pageSize=50",
+      "status": 401,
+      "run": 1,
+      "elapsedMs": 5,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p100",
+      "path": "/api/admin/chat-history?page=1&pageSize=100",
+      "status": 401,
+      "run": 1,
+      "elapsedMs": 7,
+      "bytes": 49
+    },
+    {
+      "name": "profile-me",
+      "path": "/api/profile/me",
+      "status": 401,
+      "run": 1,
+      "elapsedMs": 15,
+      "bytes": 49
+    },
+    {
+      "name": "install-status",
+      "path": "/api/install/status",
+      "status": 200,
+      "run": 1,
+      "elapsedMs": 6,
+      "bytes": 484
+    },
+    {
+      "name": "boot",
+      "path": "/api/boot",
+      "status": 200,
+      "run": 2,
+      "elapsedMs": 85,
+      "bytes": 79226
+    },
+    {
+      "name": "health",
+      "path": "/api/health",
+      "status": 200,
+      "run": 2,
+      "elapsedMs": 2,
+      "bytes": 86
+    },
+    {
+      "name": "dashboard-summary",
+      "path": "/api/dashboard/summary",
+      "status": 401,
+      "run": 2,
+      "elapsedMs": 2,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p10",
+      "path": "/api/admin/chat-history?page=1&pageSize=10",
+      "status": 401,
+      "run": 2,
+      "elapsedMs": 2,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p50",
+      "path": "/api/admin/chat-history?page=1&pageSize=50",
+      "status": 401,
+      "run": 2,
+      "elapsedMs": 2,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p100",
+      "path": "/api/admin/chat-history?page=1&pageSize=100",
+      "status": 401,
+      "run": 2,
+      "elapsedMs": 3,
+      "bytes": 49
+    },
+    {
+      "name": "profile-me",
+      "path": "/api/profile/me",
+      "status": 401,
+      "run": 2,
+      "elapsedMs": 5,
+      "bytes": 49
+    },
+    {
+      "name": "install-status",
+      "path": "/api/install/status",
+      "status": 200,
+      "run": 2,
+      "elapsedMs": 8,
+      "bytes": 484
+    },
+    {
+      "name": "boot",
+      "path": "/api/boot",
+      "status": 200,
+      "run": 3,
+      "elapsedMs": 184,
+      "bytes": 79226
+    },
+    {
+      "name": "health",
+      "path": "/api/health",
+      "status": 200,
+      "run": 3,
+      "elapsedMs": 9,
+      "bytes": 86
+    },
+    {
+      "name": "dashboard-summary",
+      "path": "/api/dashboard/summary",
+      "status": 401,
+      "run": 3,
+      "elapsedMs": 19,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p10",
+      "path": "/api/admin/chat-history?page=1&pageSize=10",
+      "status": 401,
+      "run": 3,
+      "elapsedMs": 5,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p50",
+      "path": "/api/admin/chat-history?page=1&pageSize=50",
+      "status": 401,
+      "run": 3,
+      "elapsedMs": 4,
+      "bytes": 49
+    },
+    {
+      "name": "chat-history-p100",
+      "path": "/api/admin/chat-history?page=1&pageSize=100",
+      "status": 401,
+      "run": 3,
+      "elapsedMs": 5,
+      "bytes": 49
+    },
+    {
+      "name": "profile-me",
+      "path": "/api/profile/me",
+      "status": 401,
+      "run": 3,
+      "elapsedMs": 3,
+      "bytes": 49
+    },
+    {
+      "name": "install-status",
+      "path": "/api/install/status",
+      "status": 200,
+      "run": 3,
+      "elapsedMs": 11,
+      "bytes": 484
+    }
+  ]
+}

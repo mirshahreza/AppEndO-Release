@@ -1,0 +1,62 @@
+export type NewLayoutPresetId =
+  | 'blank'
+  | 'hero-cta'
+  | 'feature-grid'
+  | 'split-media'
+  | 'dashboard-kpi'
+  | 'dashboard-viz-kit'
+  | 'pricing-cards'
+  | 'faq-accordion'
+  | 'contact-form'
+  | 'timeline'
+  | 'blog-list'
+  | 'testimonial-wall'
+  | 'stats-strip'
+  | 'team-grid'
+  | 'sidebar-layout'
+  | 'app-shell'
+  | 'site-shell'
+  | 'gallery-grid'
+  | 'changelog'
+  | 'cta-banner'
+  | 'bento-hero'
+  | 'comparison-table'
+  | 'roadmap-board'
+  | 'newsletter-signup'
+  | 'support-center'
+  | 'event-agenda'
+  | 'empty-state'
+  | 'product-showcase'
+  | 'analytics-detail'
+  | 'command-center'
+  | 'feature-tabs'
+  | 'case-study'
+  | 'onboarding-steps'
+  | 'kanban-board'
+  | 'release-notes-grid'
+  | 'social-proof-strip'
+  | 'integrations-grid'
+  | 'settings-form'
+  | 'profile-overview'
+  | 'mobile-app-promo'
+  | 'docs-detail'
+  | 'metrics-sidebar'
+  | 'auth-login'
+  | 'auth-signup'
+  | 'kpi-metrics-grid'
+  | 'pricing-tier-featured'
+  | 'master-detail-header'
+  | 'user-account-settings'
+  | 'billing-subscription'
+  | 'crud-collection-page'
+  | 'not-found-error-pages'
+  | 'advanced-search-results';
+
+/** Built-in portal skins. Catalog folder is `general`, not copy-template `templates`. */
+export const BUILT_IN_SHELL_PRESET_IDS = ['app-shell', 'site-shell'] as const satisfies readonly NewLayoutPresetId[];
+
+export type BuiltInShellPresetId = (typeof BUILT_IN_SHELL_PRESET_IDS)[number];
+
+export function isBuiltInShellPresetId(value: string): boolean {
+  return (BUILT_IN_SHELL_PRESET_IDS as readonly string[]).includes(value.trim());
+}

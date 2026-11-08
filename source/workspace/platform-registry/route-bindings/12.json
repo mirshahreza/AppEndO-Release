@@ -1,0 +1,32 @@
+{
+  "id": 12,
+  "mountId": "studio",
+  "routePattern": "data-sources/*",
+  "pageKey": "sources",
+  "enabled": true,
+  "auth": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "nav": {
+    "label": "Data Sources",
+    "icon": "Database",
+    "group": "Development",
+    "order": 6,
+    "description": "Configure SQL Server, Postgres, and other database connections.",
+    "color": "text-blue-500"
+  },
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "experience-manifest",
+  "createdAt": "2026-06-18T04:15:13.073Z",
+  "createdBy": null,
+  "updatedAt": "2026-08-28T04:20:00.000Z",
+  "updatedBy": 100000,
+  "createdByUsername": null
+}

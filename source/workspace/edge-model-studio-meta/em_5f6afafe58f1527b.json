@@ -1,0 +1,39 @@
+{
+  "edgeModelId": "em_5f6afafe58f1527b",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "event_type"
+    },
+    {
+      "columnName": "channel"
+    },
+    {
+      "columnName": "digest"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "updated_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_user_notification_preferences.user_id->base_users.id:base_user_notification_preferences_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nPer-user, per-event-type channel preference for `dispatchNotification`. Absence of a row means the untouched default: `IN_APP` + immediate. Opt-in only — existing users do not change behavior until they set a preference.\n\n## Lifecycle\n\n1. **Default** — no row. Inbox write to `base_user_notifications`.\n2. **Set** — upsert `(user_id, event_type)` with `channel` `IN_APP` | `EMAIL` and `digest` boolean (self-service `/api/notifications` preference APIs).\n3. **EMAIL immediate** — send now; on SMTP/address failure fall back to IN_APP.\n4. **EMAIL + digest** — queue `base_user_notification_digest_items`; do not send now and do not write the inbox.\n5. **Delete preference** — revert to IN_APP / immediate.\n\n## Rules\n\n- **UNIQUE** (`user_id`, `event_type`). `event_type` matches notification `source` (`workflow`, `workflow.escalation`, …).\n- `digest` is meaningful only with `EMAIL`. IN_APP + digest is not a supported combination.\n- Not an inbox and not a send log — do not store titles/bodies here."
+  },
+  "created_at": "2026-09-11T04:55:17.366Z",
+  "updated_at": "2026-09-17T15:29:39.824Z"
+}

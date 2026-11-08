@@ -1,0 +1,77 @@
+{
+  "id": "em_e1b7ff865389730f",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_idea_settings",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseIdeaSettings",
+    "tableName": "base_idea_settings"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "strategy_md",
+      "field": "strategyMd",
+      "dataType": "text",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "timestamp with time zone",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "b040ab00f220a17c",
+  "readOnly": false,
+  "labels": {
+    "title": "base_idea_settings"
+  },
+  "status": "ready",
+  "created_at": "2026-09-11T04:36:46.804Z",
+  "updated_at": "2026-09-11T04:55:12.224Z"
+}

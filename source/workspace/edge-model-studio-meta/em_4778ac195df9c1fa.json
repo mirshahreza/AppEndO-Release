@@ -1,0 +1,51 @@
+{
+  "edgeModelId": "em_4778ac195df9c1fa",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "record_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "author_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "body",
+      "searchRole": "advanced",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_sample_mock_comments.author_id->base_sample_mock_people.id:base_sample_mock_comments_author_id_fkey",
+      "displayLabel": "Author"
+    },
+    {
+      "relationKey": "physical:base_sample_mock_comments.record_id->base_sample_mock_records.id:base_sample_mock_comments_record_id_fkey",
+      "displayLabel": "Record"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nDemo **hasMany** comments on a sample-mock record — body + optional `author_id` (a sample person). Shows a related list on the living sample, not a CMS/CRM thread.\n\n## Rules\n\n- Cascade delete with the record. Author SET NULL if the person is removed.\n- Written through the records API `comments` payload when the include is on.\n- Not moderation, not public comments."
+  },
+  "created_at": "2026-09-11T04:55:14.177Z",
+  "updated_at": "2026-09-17T15:29:39.757Z"
+}

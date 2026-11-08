@@ -1,0 +1,22 @@
+{
+  "schema": "append-builtin-function-metadata",
+  "schemaVersion": "1.0.0",
+  "id": "fn-profile-save",
+  "method": "PUT",
+  "path": "/api/profile",
+  "createdAt": "2026-07-06T22:04:04.248Z",
+  "createdBy": null,
+  "updatedAt": "2026-09-12T16:32:48.160Z",
+  "updatedBy": "seed-change-reason",
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "DEVELOPER",
+      "USER"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "metadataJson": "{\"changeReason\":{\"reasonAsk\":\"optional\",\"reasonCapture\":\"both\",\"reasonVocabNodeId\":\"100.6.22\",\"reasonIncludeGeneral\":true}}"
+}

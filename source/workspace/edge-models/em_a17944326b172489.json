@@ -1,0 +1,104 @@
+{
+  "id": "em_a17944326b172489",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "base_logs_app",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseLogsApp",
+    "tableName": "base_logs_app"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "level",
+      "field": "level",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "context",
+      "field": "context",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "actor",
+      "field": "actor",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "call_success",
+      "field": "call_success",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "duration_ms",
+      "field": "duration_ms",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "message_size",
+      "field": "message_size",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "has_meta",
+      "field": "has_meta",
+      "dataType": "integer",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "created_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "de07df2fb657400b",
+  "readOnly": true,
+  "labels": {
+    "title": "Logs"
+  },
+  "status": "ready",
+  "created_at": "2026-09-04T04:33:56.344Z",
+  "updated_at": "2026-10-22T03:07:44.180Z"
+}

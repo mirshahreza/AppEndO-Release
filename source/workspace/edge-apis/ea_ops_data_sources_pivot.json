@@ -1,0 +1,52 @@
+{
+  "id": "ea_ops_data_sources_pivot",
+  "edgeModelId": "em_77a1864205985a4f",
+  "key": "ops-data-sources-pivot",
+  "label": "Data sources pivot",
+  "basePath": "/api/ops/ops_data_sources",
+  "operations": [
+    {
+      "id": "ops_data_sources-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_data_sources/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "name",
+          "type",
+          "status",
+          "created_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Data sources pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:18.592Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-data-sources.ops-data-sources-pivot"
+}

@@ -1,0 +1,49 @@
+{
+  "edgeModelId": "em_bb57931a4121bf73",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "username",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "display_name"
+    },
+    {
+      "columnName": "email",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_sample_mock_comments.author_id->base_sample_mock_people.id:base_sample_mock_comments_author_id_fkey",
+      "displayLabel": "base_sample_mock_comments (Author)"
+    },
+    {
+      "relationKey": "physical:base_sample_mock_records.owner_id->base_sample_mock_people.id:base_sample_mock_records_owner_id_fkey",
+      "displayLabel": "base_sample_mock_records (Owner)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nDemo people lookup for sample-mock `owner_id` and comment `author_id`. Not `base_users` — the living sample must not depend on real login accounts.\n\n## Rules\n\n- `username` unique. `display_name` is the picker title.\n- Owner FK on records is ON DELETE SET NULL; comment author is the same.\n- Seeded reference data only."
+  },
+  "created_at": "2026-09-11T04:55:14.527Z",
+  "updated_at": "2026-09-17T15:29:39.765Z"
+}

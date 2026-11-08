@@ -1,0 +1,318 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for Chart (chart-bar-resource) 1`] = `
+{
+  "capability": "Chart",
+  "codegenData": [
+    {
+      "cost": 40,
+      "label": "Jan",
+      "revenue": 100,
+    },
+    {
+      "cost": 55,
+      "label": "Feb",
+      "revenue": 150,
+    },
+  ],
+  "codegenLabel": "transformApiRowsToChartData (codegen data prop expression)",
+  "engineData": [
+    {
+      "cost": 40,
+      "label": "Jan",
+      "revenue": 100,
+    },
+    {
+      "cost": 55,
+      "label": "Feb",
+      "revenue": 150,
+    },
+  ],
+  "engineLabel": "resolveChartDataFromRows().data",
+  "fixtureId": "chart-bar-resource",
+  "matches": true,
+  "notes": undefined,
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for Content (content-stepper-csv) 1`] = `
+{
+  "capability": "Content",
+  "codegenData": "Plan,Build,Ship",
+  "codegenLabel": "resolveContentCsvExpression (codegen)",
+  "engineData": "Plan,Build,Ship",
+  "engineLabel": "resolveContentCsvFromRows (preview)",
+  "fixtureId": "content-stepper-csv",
+  "matches": true,
+  "notes": undefined,
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for DynamicActions (dynamic-actions-click) 1`] = `
+{
+  "capability": "DynamicActions",
+  "codegenData": {
+    "refreshHookPresent": true,
+    "setValueLiteralPresent": true,
+    "setValuePath": "dynamic.<button-node>",
+    "visibilityPatchPresent": true,
+    "visibilityPath": "ui.visibility.<panel-node>",
+  },
+  "codegenLabel": "generateDesignerTsx dynamic action preamble",
+  "engineData": {
+    "patchCount": 2,
+    "setValue": "clicked",
+    "setValuePath": "dynamic.<button-node>",
+    "visibility": true,
+    "visibilityPath": "ui.visibility.<panel-node>",
+  },
+  "engineLabel": "executeDynamicActions store patches",
+  "fixtureId": "dynamic-actions-click",
+  "matches": true,
+  "notes": "refreshDataSource side-effect not compared — only setValue/showHide store outcomes.",
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for EntityPicker (entity-picker-search) 1`] = `
+{
+  "capability": "EntityPicker",
+  "codegenData": [
+    {
+      "id": "u1",
+      "textValue": "Alice",
+    },
+    {
+      "id": "u2",
+      "textValue": "Bob",
+    },
+    {
+      "id": "u3",
+      "textValue": "Carol",
+    },
+  ],
+  "codegenLabel": "compiled export normalizeEntityPickerItems execution",
+  "engineData": [
+    {
+      "id": "u1",
+      "textValue": "Alice",
+    },
+    {
+      "id": "u2",
+      "textValue": "Bob",
+    },
+    {
+      "id": "u3",
+      "textValue": "Carol",
+    },
+  ],
+  "engineLabel": "bindingEntityPickerCodegen normalizeEntityPickerItems (engine source)",
+  "fixtureId": "entity-picker-search",
+  "matches": true,
+  "notes": undefined,
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for Grid (grid-list-resource) 1`] = `
+{
+  "capability": "Grid",
+  "codegenData": [
+    {
+      "id": 1,
+      "name": "Widget A",
+      "qty": 10,
+    },
+    {
+      "id": 2,
+      "name": "Widget B",
+      "qty": 5,
+    },
+  ],
+  "codegenLabel": "resolveNodePropertyBindingExpression(rows)",
+  "engineData": [
+    {
+      "id": 1,
+      "name": "Widget A",
+      "qty": 10,
+    },
+    {
+      "id": 2,
+      "name": "Widget B",
+      "qty": 5,
+    },
+  ],
+  "engineLabel": "hydrated gridList dataVar rows",
+  "fixtureId": "grid-list-resource",
+  "matches": true,
+  "notes": undefined,
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for GridDetail (grid-detail-row-action) 1`] = `
+{
+  "capability": "GridDetail",
+  "codegenData": {
+    "handlerPresent": true,
+    "selectionStorePathPresent": true,
+    "visibilityStorePatchPresent": true,
+  },
+  "codegenLabel": "generateDesignerTsx grid detail handler + store paths",
+  "engineData": {
+    "modalVisible": true,
+    "selectionUserId": 7,
+  },
+  "engineLabel": "buildGridDetailRowActionPreview store patches",
+  "fixtureId": "grid-detail-row-action",
+  "matches": true,
+  "notes": "Structural/codegen presence check — runtime row-action execution differs between preview handlers and export hooks.",
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for LOV (lov-select-items) 1`] = `
+{
+  "capability": "LOV",
+  "codegenData": [
+    {
+      "id": "alpha",
+      "textValue": "Alpha",
+    },
+    {
+      "id": "beta",
+      "textValue": "Beta",
+    },
+  ],
+  "codegenLabel": "mapDesignerLovItems (export — expects pre-unwrapped rows from fetch hook)",
+  "engineData": [
+    {
+      "id": "alpha",
+      "textValue": "Alpha",
+    },
+    {
+      "id": "beta",
+      "textValue": "Beta",
+    },
+  ],
+  "engineLabel": "mapLovApiItemsToSelectOptions (preview — unwraps {items:[]} from API)",
+  "fixtureId": "lov-select-items",
+  "matches": true,
+  "notes": "Row mapping matches when both receive equivalent row arrays. Parity risk remains in fetch/unwrap layer before mapping.",
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for Mutation (form-submit-mutation) 1`] = `
+{
+  "capability": "Mutation",
+  "codegenData": {
+    "actionType": "POST",
+    "endpoint": "/api/users",
+    "payloadMappingKeys": [
+      "email",
+      "name",
+    ],
+    "usesBuildPayload": true,
+    "usesDesignerFetch": true,
+  },
+  "codegenLabel": "compiled mutation handler structure",
+  "engineData": {
+    "email": "user@example.com",
+    "name": "user@example.com",
+  },
+  "engineLabel": "buildPayloadFromFormData (preview mutation runtime)",
+  "fixtureId": "form-submit-mutation",
+  "matches": true,
+  "notes": "Export uses DOM-scoped FormData collection; preview uses bindingMutationRuntime directly.",
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for Region (region-form-column) 1`] = `
+{
+  "capability": "Region",
+  "codegenData": "Elena",
+  "codegenLabel": "resolveNodePropertyBindingExpression",
+  "engineData": "Elena",
+  "engineLabel": "regionColumnToExpression + hydrated regionData",
+  "fixtureId": "region-form-column",
+  "matches": true,
+  "notes": undefined,
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for Store (store-read-write) 1`] = `
+{
+  "capability": "Store",
+  "codegenData": "de",
+  "codegenLabel": "codegen store read expression",
+  "engineData": "de",
+  "engineLabel": "resolveStorePathExpression",
+  "fixtureId": "store-read-write",
+  "matches": true,
+  "notes": undefined,
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > runs engine vs codegen parity harness for Viz (viz-kanban-resource) 1`] = `
+{
+  "capability": "Viz",
+  "codegenData": {
+    "columns": [
+      {
+        "cards": [
+          {
+            "id": "1",
+            "title": "Draft spec",
+          },
+        ],
+        "id": "todo",
+        "title": "todo",
+      },
+      {
+        "cards": [
+          {
+            "id": "2",
+            "title": "Ship feature",
+          },
+        ],
+        "id": "done",
+        "title": "done",
+      },
+    ],
+  },
+  "codegenLabel": "viz transform helper (codegen data prop expression)",
+  "engineData": {
+    "columns": [
+      {
+        "cards": [
+          {
+            "id": "1",
+            "title": "Draft spec",
+          },
+        ],
+        "id": "todo",
+        "title": "todo",
+      },
+      {
+        "cards": [
+          {
+            "id": "2",
+            "title": "Ship feature",
+          },
+        ],
+        "id": "done",
+        "title": "done",
+      },
+    ],
+  },
+  "engineLabel": "resolveVizDataFromRows",
+  "fixtureId": "viz-kanban-resource",
+  "matches": true,
+  "notes": undefined,
+}
+`;
+
+exports[`binding parity snapshot suite (Phase T1-18) > snapshots aggregate parity summary for BINDING-PARITY-FINDINGS 1`] = `
+{
+  "matched": 11,
+  "mismatched": 0,
+  "mismatches": [],
+  "total": 11,
+}
+`;

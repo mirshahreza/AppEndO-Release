@@ -1,0 +1,193 @@
+{
+  "database": {
+    "provider": "sqlserver",
+    "url": "sqlserver://localhost;database=AppEnd;user=sa;encrypt=true;trustServerCertificate=true",
+    "engine": "prisma"
+  },
+  "runtime": {
+    "nodeEnv": "development",
+    "port": 3000,
+    "appUrl": "http://localhost:3000",
+    "accessTokenSecret": "dev_access_token_secret_change_me",
+    "refreshTokenSecret": "dev_refresh_token_secret_change_me",
+    "databaseProvider": "sqlserver",
+    "disableHmr": false,
+    "hmrPort": 0,
+    "logLevel": "debug",
+    "pluginScriptPolicyTimeoutMs": 3000,
+    "pluginScriptAllowedPathPrefixes": "db/install/,db/uninstall/,db/seed/,sql/",
+    "pluginEventRetentionMonths": 6,
+    "pluginEventRetentionMaxTotalBytes": 104857600,
+    "nodeName": "node-1",
+    "capabilities": [
+      "service",
+      "platform",
+      "worker"
+    ]
+  },
+  "install": {
+    "pending": true
+  },
+  "dataSources": [
+    {
+      "id": "ds_default",
+      "name": "default-db",
+      "type": "SQL Server",
+      "host": "localhost",
+      "port": 1433,
+      "database": "AppEnd",
+      "username": "sa",
+      "encrypt": true,
+      "trustServerCertificate": true,
+      "pooling": false,
+      "status": "connected",
+      "isDefault": true,
+      "created_at": "2026-05-29T00:00:00.000Z",
+      "updated_at": "2026-05-29T04:48:09.124Z"
+    }
+  ],
+  "plugins": [],
+  "ai": {
+    "enabled": true,
+    "defaultModelId": "",
+    "chatRateLimitPerMinute": 20,
+    "models": [],
+    "providers": [],
+    "agent": {
+      "defaultMode": "ask",
+      "maxIterations": 10,
+      "maxIterationsVibe": 40,
+      "maxIterationsAsk": 8,
+      "maxToolCallsPerTurn": 40,
+      "maxTokensPerRun": 200000,
+      "orchestrationPolicy": "react",
+      "tokenBudgetHardStop": true,
+      "allowedNativeToolGroups": [
+        "standards",
+        "search",
+        "read",
+        "data",
+        "git",
+        "openapi",
+        "delegate"
+      ],
+      "writeRequiresConfirm": true,
+      "contextWorkingTurns": 8,
+      "contextSummarizeAfterTurns": 12,
+      "contextSummarizeWithLlm": true,
+      "contextToolObservationMaxTurns": 12,
+      "traceRetentionDays": 30,
+      "vibeMaxFilesPerProposal": 8,
+      "vibeMaxLinesPerProposal": 400
+    },
+    "mcp": {
+      "stdioAllowlist": [],
+      "inboundHost": {
+        "enabled": false,
+        "serviceRoleName": "DEVELOPER"
+      }
+    },
+    "mcpServers": [],
+    "webSearch": {
+      "provider": "disabled",
+      "maxResults": 5
+    },
+    "http": {
+      "allowedHostnames": []
+    }
+  },
+  "scheduler": {
+    "enabled": true,
+    "tickIntervalSec": 60,
+    "defaultTimezone": "UTC",
+    "missedRunPolicy": "skip",
+    "tasks": []
+  },
+  "auth": {
+    "identityProviders": [
+      {
+        "id": "google-dev",
+        "kind": "google-oauth",
+        "label": "Google",
+        "enabled": false,
+        "autoProvision": true,
+        "defaultRoleId": "role_user",
+        "clientId": "",
+        "hasClientSecret": false,
+        "redirectUri": "http://localhost:3000/api/auth/oauth/google-dev/callback",
+        "note": "P4a — enable after OAuth runtime ships"
+      },
+      {
+        "id": "github-dev",
+        "kind": "github-oauth",
+        "label": "GitHub",
+        "enabled": false,
+        "autoProvision": true,
+        "clientId": "",
+        "hasClientSecret": false,
+        "redirectUri": "http://localhost:3000/api/auth/oauth/github-dev/callback"
+      },
+      {
+        "id": "microsoft-dev",
+        "kind": "microsoft-oauth",
+        "label": "Microsoft",
+        "enabled": false,
+        "autoProvision": true,
+        "defaultRoleId": "role_user",
+        "clientId": "",
+        "hasClientSecret": false,
+        "redirectUri": "http://localhost:3000/api/auth/oauth/microsoft-dev/callback",
+        "issuerUrl": "https://login.microsoftonline.com/common/v2.0",
+        "note": "p-55 — Entra ID / Azure AD OIDC"
+      },
+      {
+        "id": "oidc-dev",
+        "kind": "oidc-generic",
+        "label": "OIDC (Generic)",
+        "enabled": false,
+        "autoProvision": true,
+        "defaultRoleId": "role_user",
+        "clientId": "",
+        "hasClientSecret": false,
+        "redirectUri": "http://localhost:3000/api/auth/oauth/oidc-dev/callback",
+        "issuerUrl": "http://localhost:8080/realms/appendo",
+        "note": "p-55 — Keycloak / Auth0 / Okta OIDC example (replace issuerUrl)"
+      }
+    ]
+  },
+  "cache": {
+    "isEnabled": true,
+    "driver": "memory",
+    "defaultTtl": 60,
+    "storeSettings": {
+      "memory": {
+        "maxItems": 10000
+      },
+      "redis": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "dbIndex": 0,
+        "retryStrategy": {
+          "maxRetries": 20,
+          "baseDelayMs": 100,
+          "maxDelayMs": 3000
+        }
+      }
+    }
+  },
+  "git": {
+    "enabled": false,
+    "remoteUrl": "",
+    "defaultBranch": "main",
+    "auth": {
+      "kind": "none"
+    },
+    "commitMessage": {
+      "autoGenerateEnabled": true,
+      "template": ""
+    },
+    "pr": {
+      "provider": "github"
+    }
+  }
+}

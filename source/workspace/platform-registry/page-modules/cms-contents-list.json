@@ -1,0 +1,34 @@
+{
+  "pageKey": "cms-contents-list",
+  "title": "Contents",
+  "loaderKind": "designer",
+  "loaderRef": "general/cms-contents-list@v13",
+  "defaultRoles": null,
+  "enabled": true,
+  "homeWidgets": [
+    {
+      "id": "review-queue",
+      "componentRef": "core:CmsReviewQueueHomeWidget",
+      "span": "half",
+      "defaultVisible": false,
+      "catalog": {
+        "labelKey": "homeWidget.cmsContentsList.reviewQueue.title",
+        "descriptionKey": "homeWidget.cmsContentsList.reviewQueue.description",
+        "icon": "Newspaper",
+        "tone": "violet"
+      },
+      "deepLink": {
+        "pageKey": "cms-contents-list"
+      }
+    }
+  ],
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "auto",
+  "createdAt": "2026-08-01T10:48:14.529Z",
+  "createdBy": null,
+  "createdByUsername": "cms-phase3",
+  "updatedAt": "2026-09-17T16:35:48.421Z",
+  "updatedBy": null,
+  "updatedByUsername": "cms-phase3"
+}

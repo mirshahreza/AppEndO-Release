@@ -1,0 +1,61 @@
+{
+  "edgeModelId": "em_e6e846044145b073",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "email",
+      "searchRole": "basic"
+    },
+    {
+      "columnName": "event_type"
+    },
+    {
+      "columnName": "success",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "reason"
+    },
+    {
+      "columnName": "ip_address"
+    },
+    {
+      "columnName": "user_agent"
+    },
+    {
+      "columnName": "metadata_json"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_logs_auth_audit.user_id->base_users.id:base_logs_auth_audit_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nSecurity audit trail for authentication events — login success/failure, lockout, token revoke, OAuth link, etc. Operator-facing via Logs workspace.\n\n## Rules\n\n- Append-only — no UPDATE of historical rows.\n- May include IP/user-agent metadata in payload columns — classify as sensitive.\n- Retention/cleanup via platform log policy — not user-editable rows."
+  },
+  "created_at": "2026-08-28T15:19:43.996Z",
+  "updated_at": "2026-09-17T15:29:39.532Z"
+}

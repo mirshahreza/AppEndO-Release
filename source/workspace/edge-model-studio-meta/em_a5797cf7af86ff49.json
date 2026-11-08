@@ -1,0 +1,48 @@
+{
+  "edgeModelId": "em_a5797cf7af86ff49",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "definition_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "role_name"
+    },
+    {
+      "columnName": "value_text"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_roles_attributes.definition_id->base_settings_attributes.id:base_roles_attributes_definition_id_fkey",
+      "displayLabel": "Definition"
+    },
+    {
+      "relationKey": "physical:base_roles_attributes.role_name->base_roles.name:base_roles_attributes_role_name_fkey",
+      "displayLabel": "Role Name (base_roles)"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nPer-role default values for settings attribute definitions — e.g. default department tag applied to every user with that role until overridden on the user row.\n\n## Rules\n\n- **UNIQUE** (`definition_id`, `role_name`).\n- Role-level value is a default, not a substitute for `base_users_attributes` when user-specific value exists.\n- Cascade delete when role removed."
+  },
+  "created_at": "2026-09-11T04:55:13.979Z",
+  "updated_at": "2026-09-17T15:29:39.749Z"
+}

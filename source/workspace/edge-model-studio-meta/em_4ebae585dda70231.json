@@ -1,0 +1,73 @@
+{
+  "edgeModelId": "em_4ebae585dda70231",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "session_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "iteration",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "model_id"
+    },
+    {
+      "columnName": "mode"
+    },
+    {
+      "columnName": "policy_action"
+    },
+    {
+      "columnName": "tool_name"
+    },
+    {
+      "columnName": "args_hash",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "duration_ms",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "tokens_estimate",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "ok"
+    },
+    {
+      "columnName": "error"
+    },
+    {
+      "columnName": "summary",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_ai_agent_traces.session_id->base_ai_chat_sessions.id:base_ai_agent_traces_session_id_fkey",
+      "displayLabel": "Session"
+    },
+    {
+      "relationKey": "physical:base_ai_agent_traces.user_id->base_users.id:base_ai_agent_traces_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nFine-grained agent iteration log — tool calls, policy decisions, durations, errors per chat turn. Diagnostic complement to `messages_json` in sessions.\n\n## Rules\n\n- Ordered by `session_id` + `iteration` when session linked.\n- Append-only during agent run — no operator edit.\n- May omit full args — `args_hash` for dedup/forensics; sensitive args not stored verbatim."
+  },
+  "created_at": "2026-09-11T04:55:09.269Z",
+  "updated_at": "2026-09-17T15:29:39.609Z"
+}

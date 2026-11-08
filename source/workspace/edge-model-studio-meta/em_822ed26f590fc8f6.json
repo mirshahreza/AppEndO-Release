@@ -1,0 +1,62 @@
+{
+  "edgeModelId": "em_822ed26f590fc8f6",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "token_jti",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "token_hash",
+      "filterRole": "none"
+    },
+    {
+      "columnName": "expires_at",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "created_at"
+    },
+    {
+      "columnName": "created_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "revoked_at"
+    },
+    {
+      "columnName": "updated_at"
+    },
+    {
+      "columnName": "updated_by",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "replaced_by_jti"
+    },
+    {
+      "columnName": "user_agent"
+    },
+    {
+      "columnName": "ip_address"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_auth_refresh_tokens.user_id->base_users.id:base_auth_refresh_tokens_user_id_fkey",
+      "displayLabel": "User"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nRotating refresh-token sessions. Each row tracks `token_jti`, user, expiry, revocation — pairs with JWT access tokens from auth API.\n\n## Rules\n\n- `token_jti` unique — lookup key for rotation/revoke.\n- Revoke all on password change / admin lock when policy requires.\n- Cascade delete with user.\n- Do not expose refresh token in Data API public projections."
+  },
+  "created_at": "2026-09-11T04:55:10.048Z",
+  "updated_at": "2026-09-17T15:29:39.621Z"
+}

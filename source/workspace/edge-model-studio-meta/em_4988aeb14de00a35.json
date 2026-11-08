@@ -1,0 +1,59 @@
+{
+  "edgeModelId": "em_4988aeb14de00a35",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "feedback_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "message_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "file_name"
+    },
+    {
+      "columnName": "mime_type"
+    },
+    {
+      "columnName": "size_bytes",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "storage_key"
+    },
+    {
+      "columnName": "uploaded_by_user_id",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "staged_session_key"
+    },
+    {
+      "columnName": "created_at"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_app_feedback_attachments.feedback_id->base_app_feedback.id:base_app_feedback_attachments_feedback_id_fkey",
+      "displayLabel": "Feedback"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_attachments.message_id->base_app_feedback_messages.id:base_app_feedback_attachments_message_id_fkey",
+      "displayLabel": "Message"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_attachments.uploaded_by_user_id->base_users.id:base_app_feedback_attachments_uploaded_by_user_id_fkey",
+      "displayLabel": "Uploaded By"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nFile attachments for feedback tickets or specific messages. Metadata + `storage_key` pointer to file-manager blob — bytes not in DB row.\n\n## Rules\n\n- Either `feedback_id` and/or `message_id` set — staged uploads use `staged_session_key` until commit.\n- `uploaded_by_user_id` for audit; size/mime validated at upload API.\n- Deleting message cascades message-linked attachments per FK rules."
+  },
+  "created_at": "2026-08-28T14:59:10.070Z",
+  "updated_at": "2026-09-17T15:29:39.499Z"
+}

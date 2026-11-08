@@ -1,0 +1,51 @@
+{
+  "id": "ea_ops_identities_pivot",
+  "edgeModelId": "em_24f4928b2dd23610",
+  "key": "ops-identities-pivot",
+  "label": "Identities pivot",
+  "basePath": "/api/ops/ops_identities",
+  "operations": [
+    {
+      "id": "ops_identities-pivot",
+      "method": "POST",
+      "kind": "pivot",
+      "pathPattern": "/api/ops/ops_identities/pivot",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "user_id",
+          "provider_kind",
+          "linked_at"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": false,
+        "maxPageSize": 1000,
+        "defaultPageSize": 100
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Ops Insights"
+    ],
+    "summary": "Identities pivot"
+  },
+  "publishedAt": "2026-10-02T23:23:20.349Z",
+  "version": 137,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "base-user-identities.ops-identities-pivot"
+}

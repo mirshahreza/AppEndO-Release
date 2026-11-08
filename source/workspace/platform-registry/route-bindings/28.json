@@ -1,0 +1,32 @@
+{
+  "id": 28,
+  "mountId": "studio",
+  "routePattern": "file-manager",
+  "pageKey": "file-manager",
+  "enabled": true,
+  "auth": {
+    "accessMode": "specific",
+    "allowRoles": [
+      "ADMIN"
+    ],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "nav": {
+    "label": "File Manager",
+    "icon": "tabler:IconFolderOpen",
+    "group": "Development",
+    "order": 10,
+    "separatorBefore": true,
+    "description": "Browse, preview, and manage files in workspace/ with optional project-root access.",
+    "color": "text-sky-600"
+  },
+  "ownerPackageId": null,
+  "ownerPluginVersion": null,
+  "source": "manual",
+  "createdAt": "2026-07-15T06:40:00.000Z",
+  "createdBy": null,
+  "updatedAt": "2026-07-15T06:40:00.000Z",
+  "updatedBy": null
+}

@@ -1,0 +1,78 @@
+{
+  "edgeModelId": "em_f186ade9fbfe1ad0",
+  "tags": [],
+  "columnMeta": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "type"
+    },
+    {
+      "columnName": "status"
+    },
+    {
+      "columnName": "priority"
+    },
+    {
+      "columnName": "submitted_at",
+      "searchRole": "advanced"
+    },
+    {
+      "columnName": "page_key"
+    },
+    {
+      "columnName": "portal_slug"
+    },
+    {
+      "columnName": "assignee_role_name"
+    },
+    {
+      "columnName": "message_count",
+      "searchRole": "advanced"
+    }
+  ],
+  "associationMeta": [
+    {
+      "relationKey": "physical:base_app_feedback_attachments.feedback_id->base_app_feedback.id:base_app_feedback_attachments_feedback_id_fkey",
+      "displayLabel": "base_app_feedback_attachments (Feedback)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_messages.feedback_id->base_app_feedback.id:base_app_feedback_messages_feedback_id_fkey",
+      "displayLabel": "base_app_feedback_messages (Feedback)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback_read_cursors.feedback_id->base_app_feedback.id:base_app_feedback_read_cursors_feedback_id_fkey",
+      "displayLabel": "base_app_feedback_read_cursors (Feedback)"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.assignee_user_id->base_users.id:base_app_feedback_assignee_user_id_fkey",
+      "displayLabel": "Assignee"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.claimed_by_user_id->base_users.id:base_app_feedback_claimed_by_user_id_fkey",
+      "displayLabel": "Claimed By"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.duplicate_of_id->base_app_feedback.id:base_app_feedback_duplicate_of_id_fkey",
+      "displayLabel": "Duplicate Of"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.manually_assigned_by_user_id->base_users.id:base_app_feedback_manually_assigned_by_user_id_fkey",
+      "displayLabel": "Manually Assigned By"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.resolved_by_user_id->base_users.id:base_app_feedback_resolved_by_user_id_fkey",
+      "displayLabel": "Resolved By"
+    },
+    {
+      "relationKey": "physical:base_app_feedback.submitter_user_id->base_users.id:base_app_feedback_submitter_user_id_fkey",
+      "displayLabel": "Submitter"
+    }
+  ],
+  "extensions": {
+    "story": "## Purpose\n\nOperator feedback/ticket inbox — bug reports, suggestions, portal context capture. Threaded conversation via `base_app_feedback_messages`; routing via assignee user/role fields.\n\n## Lifecycle\n\n1. **Submit** — status `NEW`, optional anonymous contact JSON when user not logged in.\n2. **Route / claim** — assignee or role routing; `claimed_by_user_id` for operator lock.\n3. **Resolve / duplicate** — terminal statuses; `duplicate_of_id` links merged tickets.\n\n## Rules\n\n- `type` = Base Info subject code (`100.3.*` taxonomy) — column name kept as `type`.\n- `message_count` / `last_message_at` denormalized from messages — update in service layer.\n- Portal context (`portal_slug`, `page_key`, `route`) captured at submit for repro."
+  },
+  "created_at": "2026-08-26T07:50:50.454Z",
+  "updated_at": "2026-09-17T15:29:39.455Z"
+}

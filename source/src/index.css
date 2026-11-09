@@ -1228,11 +1228,11 @@ html[data-studio-no-select] .monaco-editor * {
 	-webkit-touch-callout: default;
 }
 
-/* Built-in AppEnd mark — grayscale PNG masked with accent logo gradient tokens. */
+/* Built-in AppEnd mark — SVG masked with accent logo gradient tokens. */
 .appendo-logo-themed {
 	background-image: var(--gradient-app-logo);
-	-webkit-mask-image: url('/assets/appendo-logo.png');
-	mask-image: url('/assets/appendo-logo.png');
+	-webkit-mask-image: url('/assets/appendo/brand/transparent/appendo-wordmark-currentColor.svg');
+	mask-image: url('/assets/appendo/brand/transparent/appendo-wordmark-currentColor.svg');
 	-webkit-mask-size: contain;
 	mask-size: contain;
 	-webkit-mask-repeat: no-repeat;
@@ -1242,8 +1242,8 @@ html[data-studio-no-select] .monaco-editor * {
 }
 
 .appendo-logo-themed--mark {
-	-webkit-mask-image: url('/assets/appendo-logo-only.png');
-	mask-image: url('/assets/appendo-logo-only.png');
+	-webkit-mask-image: url('/assets/appendo/brand/transparent/appendo-mark-currentColor.svg');
+	mask-image: url('/assets/appendo/brand/transparent/appendo-mark-currentColor.svg');
 }
 
 /* Shared portal/shell route loading — keep the surface alive (never blank white).
@@ -1343,14 +1343,14 @@ html[data-loading-identity='hawiety'][data-boot-splash-logo-locked='1']
 
 .app-route-loading__logo-stage--appendo .app-route-loading__logo-frame,
 .app-boot-logo-stage--appendo .app-boot-logo-frame {
-	inline-size: min(calc(var(--loading-logo-h) * 852 / 600), var(--loading-logo-max-w));
+	inline-size: min(calc(var(--loading-logo-h) * 1350.33 / 443.31), var(--loading-logo-max-w));
 }
 
 .app-route-loading__logo--appendo,
 #app-boot-splash .app-boot-logo:not(.app-boot-logo--custom) {
 	block-size: 100%;
 	inline-size: 100%;
-	aspect-ratio: 852 / 600;
+	aspect-ratio: 1350.33 / 443.31;
 }
 
 .app-route-loading__logo-stage--square .app-route-loading__logo-frame,

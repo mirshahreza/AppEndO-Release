@@ -27,7 +27,6 @@
       },
       "required": true,
       "searchRole": "advanced",
-      "filterRole": "none",
       "group": "Note",
       "sortOrder": 30
     },
@@ -41,7 +40,7 @@
     {
       "columnName": "created_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 50
     },
@@ -55,12 +54,7 @@
   ],
   "associationMeta": [
     {
-      "relationKey": "ea_7f3c10ee1130455b",
-      "displayLabel": "Member",
-      "formWidget": "lookup"
-    },
-    {
-      "relationKey": "ea_9fb4246e80db4128",
+      "relationKey": "ea_2cd42d9fbaa24b33",
       "displayLabel": "Author",
       "formWidget": "lookup",
       "attachedFields": [
@@ -71,7 +65,12 @@
       ]
     },
     {
-      "relationKey": "ea_e9b18840424d44bd",
+      "relationKey": "ea_4b30f1ab2482469c",
+      "displayLabel": "Member",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_e6698d6fccd64a72",
       "displayLabel": "Subject",
       "formWidget": "lookup",
       "targetFilter": [
@@ -109,5 +108,5 @@
     }
   },
   "created_at": "2026-09-16T13:15:04.948Z",
-  "updated_at": "2026-09-17T15:29:40.103Z"
+  "updated_at": "2026-11-08T18:48:31.173Z"
 }

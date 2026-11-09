@@ -1,8 +1,8 @@
 {
   "version": "1",
-  "generatedAt": "2026-11-04T16:54:02.776Z",
+  "generatedAt": "2026-11-08T15:11:24.170Z",
   "policy": "all-locked",
-  "pageCount": 98,
+  "pageCount": 103,
   "pages": [
     {
       "pageKey": "api-talk",
@@ -292,6 +292,15 @@
       "source": "package-ui"
     },
     {
+      "pageKey": "hwy-identity-components",
+      "label": "hwy-identity-components",
+      "routePattern": "hwy-identity-components",
+      "searchRoots": [
+        "src/features/hwy-identity-components"
+      ],
+      "source": "feature-graph"
+    },
+    {
       "pageKey": "hwy-institutes",
       "label": "hwy-institutes",
       "routePattern": "hawiety/institutes",
@@ -304,6 +313,15 @@
         "scripts/hwy-phase3"
       ],
       "source": "route-binding"
+    },
+    {
+      "pageKey": "hwy-masoolin-performance",
+      "label": "Masoolin performance",
+      "routePattern": "hawiety/masoolin-performance",
+      "searchRoots": [
+        "src/features/hwy-masoolin-performance"
+      ],
+      "source": "package-ui"
     },
     {
       "pageKey": "hwy-meetings-management",
@@ -594,6 +612,15 @@
       "source": "route-binding"
     },
     {
+      "pageKey": "hwy-members-social-screens",
+      "label": "Social screens",
+      "routePattern": "hawiety/members-social-screens",
+      "searchRoots": [
+        "src/features/hwy-members-social-screens"
+      ],
+      "source": "package-ui"
+    },
+    {
       "pageKey": "hwy-members-taleb-jameee",
       "label": "hwy-members-taleb-jameee",
       "routePattern": "hawiety/members-taleb-jameee",
@@ -776,6 +803,24 @@
       "routePattern": "hawiety/members-org-membership-transfer",
       "searchRoots": [
         "src/features/hwy-org-membership-transfer"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-payment-documents",
+      "label": "Payment documents",
+      "routePattern": "hawiety/finance/payment-documents",
+      "searchRoots": [
+        "src/features/hwy-payment-documents"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "hwy-payment-documents-members",
+      "label": "Grant receipt details",
+      "routePattern": "hawiety/finance/payment-documents-members",
+      "searchRoots": [
+        "src/features/hwy-payment-documents-members"
       ],
       "source": "package-ui"
     },

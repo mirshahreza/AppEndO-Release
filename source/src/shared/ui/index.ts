@@ -241,6 +241,18 @@ export {
   type FormFieldLayout,
 } from './FormSection';
 export {
+  BC_SPECIMEN_PREFIX,
+  formatHwyIcSectionCode,
+  formatHwyIcSpecimenCode,
+  formatStudioBcSpecimenCode,
+  HI_SPECIMEN_PREFIX,
+  HWY_IC_SPECIMEN_PREFIX,
+  STUDIO_BC_SPECIMEN_PREFIX,
+} from './catalog/catalogSpecimenCode';
+export { CatalogSpecimenCard } from './catalog/CatalogSpecimenCard';
+export { CatalogSpecimenCodeBadge } from './catalog/CatalogSpecimenCodeBadge';
+export { CatalogSpecimenGrid } from './catalog/CatalogSpecimenGrid';
+export {
   FORM_ACCESSORY_TAB_INDEX,
   FormAccessorySlot,
   formAccessoryTabProps,

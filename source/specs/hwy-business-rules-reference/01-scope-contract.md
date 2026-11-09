@@ -78,7 +78,7 @@ then:
 
 Load this file when touching **Hawiety domain behavior** or **business-rules reference** content. Treat doc drift as a **blocking product issue**, not optional polish.
 
-Cross-shard domain invariants (e.g. single electoral-tree anchor per role): [`docs/standards/package-hawiety-domain-invariants.md`](../../docs/standards/package-hawiety-domain-invariants.md).
+Cross-shard domain invariants (electoral geo — process vs direct assignment, one level): [`docs/standards/package-hawiety-domain-invariants.md`](../../docs/standards/package-hawiety-domain-invariants.md).
 
 
 </div>

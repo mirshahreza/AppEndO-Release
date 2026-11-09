@@ -37,6 +37,8 @@ AGENTS.md  (always-on + precedence)
 
 | Path | Role |
 |------|------|
+| [`outreach/why-appendo.md`](./outreach/why-appendo.md) | English introduction: AI coding guardrails, platform capabilities, and why AppEndO is useful |
+| [`outreach/why-appendo-fa.md`](./outreach/why-appendo-fa.md) | Persian version of the AppEndO introduction |
 | [`appendo-architecture.md`](./appendo-architecture.md) | High-level product architecture and runtime model |
 | [`appendo-features.md`](./appendo-features.md) | MVP feature inventory extracted from the current codebase |
 

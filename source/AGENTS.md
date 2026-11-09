@@ -84,7 +84,7 @@ Domain rules (deep links, record policy, workflow-engine testing, package UI) ar
 | Hawiety UI words (region / maktab, not eghtera / tamvin) | [`package-hawiety-ui-vocab.md`](docs/standards/package-hawiety-ui-vocab.md) |
 | Hawiety member list avatar caption (username blue / tracking red; queue lists) | [`package-hawiety-member-face-caption.md`](docs/standards/package-hawiety-member-face-caption.md) |
 | Hawiety member-list field-by-field filter rows (toolbar mode 2) | [`package-hawiety-member-list-legacy-filters.md`](docs/standards/package-hawiety-member-list-legacy-filters.md) |
-| Hawiety domain invariants (single electoral-tree anchor per role) | [`package-hawiety-domain-invariants.md`](docs/standards/package-hawiety-domain-invariants.md) |
+| Hawiety domain invariants (electoral geo: process vs direct) | [`package-hawiety-domain-invariants.md`](docs/standards/package-hawiety-domain-invariants.md) |
 | Custom skill index (`appendo-build-*` · `appendo-qa-*` · `appendo-perf-*`) | [`.claude/skills/SKILLS-CATALOG.md`](.claude/skills/SKILLS-CATALOG.md) |
 
 ## Change management

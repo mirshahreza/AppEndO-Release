@@ -209,10 +209,50 @@ import { requireHwyCardFlowAccess } from '../middleware/hwyCardFlowAccess.middle
 import { requireHwyCandidatePipelineAccess } from '../middleware/hwyCandidatePipelineAccess.middleware';
 import { requireHwyMeetingsManagementAccess } from '../middleware/hwyMeetingsAccess.middleware';
 import { requireHwyEmployeesListAccess } from '../middleware/hwyEmployeesListAccess.middleware';
+import { requireHwyPaymentDocumentsAccess } from '../middleware/hwyPaymentDocumentsAccess.middleware';
+import { requireHwyPaymentDocumentsMembersAccess } from '../middleware/hwyPaymentDocumentsMembersAccess.middleware';
+import { requireHwyMasoolinPerformanceAccess } from '../middleware/hwyMasoolinPerformanceAccess.middleware';
+import { requireHwyMembersSocialScreensAccess } from '../middleware/hwyMembersSocialScreensAccess.middleware';
 import {
   listHwyEmployees,
   removeHwyEmployeePlatformRoles,
 } from '../domain/hwy/hwyEmployeesList.service';
+import {
+  createHwyPaymentDocumentsBatch,
+  listHwyPaymentDocuments,
+  loadHwyPaymentDocumentsFilterOptions,
+  markHwyPaymentDocumentClosed,
+  markHwyPaymentDocumentFinalOk,
+  removeHwyPaymentDocumentById,
+  sendHwyPaymentDocumentToArea,
+  sendHwyPaymentDocumentToMali,
+} from '../domain/hwy/hwyPaymentDocuments.service';
+import {
+  exportHwyMasoolinPerformance,
+  listHwyMasoolinPerformance,
+  setHwyMasoolinChiefMasool,
+  loadHwyMasoolinPerformanceFilterOptions,
+} from '../domain/hwy/hwyMasoolinPerformance.service';
+import {
+  runHwyMasoolinStarsMonthBatch,
+  runHwyMasoolinStarsRecalcMember,
+} from '../domain/hwy/hwyMasoolinStars.service';
+import {
+  applyHwyMembersSocialScreensFinalAccept,
+  applyHwyMembersSocialScreensFinalReject,
+  loadHwyMembersSocialScreensFilterOptions,
+  loadHwyMembersSocialScreensHistoryMonths,
+  loadHwyMembersSocialScreensWorkflow,
+  parseMembersSocialScreensListType,
+  parseMembersSocialScreensMoveDir,
+} from '../domain/hwy/hwyMembersSocialScreens.service';
+import {
+  listHwyPaymentDocumentsMembers,
+  loadHwyPaymentDocumentsMembersFilterOptions,
+  loadHwyPaymentDocumentsMembersImages,
+  switchHwyPaymentDocumentsMemberPayability,
+  updateHwyPaymentDocumentsMemberPayAmount,
+} from '../domain/hwy/hwyPaymentDocumentsMembers.service';
 import {
   addHwyMeetingInstance,
   addHwyMeetingInstanceHazer,
@@ -1476,7 +1516,19 @@ export const mountHwyRoutes = (app: Express): void => {
       const page = Number(readQueryString(req.query, 'page') || '1') || 1;
       const pageSize = Number(readQueryString(req.query, 'pageSize') || '25') || 25;
       try {
-        const data = await listHwyCoursesAdmin({ queue, search, page, pageSize, queryLang });
+        const data = await listHwyCoursesAdmin({
+          queue,
+          search,
+          recordId: readQueryString(req.query, 'recordId'),
+          note: readQueryString(req.query, 'note'),
+          dateFrom: readQueryString(req.query, 'dateFrom'),
+          dateTo: readQueryString(req.query, 'dateTo'),
+          participantUsername: readQueryString(req.query, 'participantUsername'),
+          trainerUsername: readQueryString(req.query, 'trainerUsername'),
+          page,
+          pageSize,
+          queryLang,
+        });
         res.json({ success: true, data, meta: { queue, lang: queryLang } });
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Could not load courses.';
@@ -3609,6 +3661,573 @@ export const mountHwyRoutes = (app: Express): void => {
         res.json({ success: true });
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Remove failed.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/payment-documents',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    async (req: Request, res: Response) => {
+      try {
+        const data = await listHwyPaymentDocuments(
+          {
+            docYear: readQueryString(req.query, 'docYear'),
+            docMonth: readQueryString(req.query, 'docMonth'),
+            docProvinceId: readQueryString(req.query, 'docProvinceId'),
+            docCircleId: readQueryString(req.query, 'docCircleId'),
+            docGenderId: readQueryString(req.query, 'docGenderId'),
+            vFinalOk: readQueryString(req.query, 'vFinalOk'),
+            vClosed: readQueryString(req.query, 'vClosed'),
+            page: Number(readQueryString(req.query, 'page') || '1'),
+            pageSize: Number(readQueryString(req.query, 'pageSize') || '25'),
+          },
+          normalizeAuthRoles(req),
+          req.user?.username ?? req.user?.email ?? null,
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load payment documents.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/payment-documents/filter-options',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    async (req: Request, res: Response) => {
+      try {
+        const data = await loadHwyPaymentDocumentsFilterOptions(
+          readQueryString(req.query, 'docProvinceId'),
+          normalizeAuthRoles(req),
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load payment document filters.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/payment-documents/create',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    async (req: Request, res: Response) => {
+      const body = req.body as Record<string, unknown>;
+      const docYear = Number(body.docYear);
+      const docMonth = Number(body.docMonth);
+      const docProvinceId = Number(body.docProvinceId);
+      const docGenderId = Number(body.docGenderId);
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim();
+      if (!actorUsername || !Number.isFinite(docYear) || !Number.isFinite(docMonth) || !Number.isFinite(docProvinceId) || !Number.isFinite(docGenderId)) {
+        res.status(400).json({ success: false, message: 'docYear, docMonth, docProvinceId, and docGenderId are required.' });
+        return;
+      }
+      try {
+        await createHwyPaymentDocumentsBatch(
+          { docYear, docMonth, docProvinceId, docGenderId },
+          normalizeAuthRoles(req),
+          actorUsername,
+        );
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Create failed.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  const paymentDocumentAction = (
+    handler: (
+      documentId: string,
+      roles: string[],
+      actorUsername: string | null,
+    ) => Promise<void>,
+    failureMessage: string,
+  ) => async (req: Request, res: Response) => {
+    const documentId = req.params.documentId?.trim();
+    if (!documentId) {
+      res.status(400).json({ success: false, message: 'documentId is required.' });
+      return;
+    }
+    try {
+      await handler(documentId, normalizeAuthRoles(req), req.user?.username ?? req.user?.email ?? null);
+      res.json({ success: true });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : failureMessage;
+      const status = message === 'Forbidden.' ? 403 : 500;
+      res.status(status).json({ success: false, message });
+    }
+  };
+
+  router.post(
+    '/payment-documents/:documentId/remove',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    paymentDocumentAction(
+      (documentId, roles) => removeHwyPaymentDocumentById(documentId, roles),
+      'Remove failed.',
+    ),
+  );
+
+  router.post(
+    '/payment-documents/:documentId/send-to-area',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    paymentDocumentAction(
+      (documentId, roles) => sendHwyPaymentDocumentToArea(documentId, roles),
+      'Send to area failed.',
+    ),
+  );
+
+  router.post(
+    '/payment-documents/:documentId/send-to-mali',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    paymentDocumentAction(
+      (documentId, roles, actorUsername) =>
+        sendHwyPaymentDocumentToMali(documentId, roles, String(actorUsername ?? '').trim()),
+      'Send to finance failed.',
+    ),
+  );
+
+  router.post(
+    '/payment-documents/:documentId/mark-final-ok',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    paymentDocumentAction(
+      (documentId, roles, actorUsername) =>
+        markHwyPaymentDocumentFinalOk(documentId, roles, String(actorUsername ?? '').trim()),
+      'Mark paid failed.',
+    ),
+  );
+
+  router.post(
+    '/payment-documents/:documentId/mark-closed',
+    requireAuth,
+    requireHwyPaymentDocumentsAccess,
+    paymentDocumentAction(
+      (documentId, roles, actorUsername) =>
+        markHwyPaymentDocumentClosed(documentId, roles, String(actorUsername ?? '').trim()),
+      'Close failed.',
+    ),
+  );
+
+  router.get(
+    '/payment-documents-members',
+    requireAuth,
+    requireHwyPaymentDocumentsMembersAccess,
+    async (req: Request, res: Response) => {
+      try {
+        const data = await listHwyPaymentDocumentsMembers(
+          {
+            roleId: readQueryString(req.query, 'roleId'),
+            vPayOk: readQueryString(req.query, 'vPayOk'),
+            docYear: readQueryString(req.query, 'docYear'),
+            docMonth: readQueryString(req.query, 'docMonth'),
+            hideZeroAmounts: readQueryString(req.query, 'hideZeroAmounts'),
+            username: readQueryString(req.query, 'username'),
+            phone: readQueryString(req.query, 'phone'),
+            firstName: readQueryString(req.query, 'firstName'),
+            fatherName: readQueryString(req.query, 'fatherName'),
+            grandFatherName: readQueryString(req.query, 'grandFatherName'),
+            lastName: readQueryString(req.query, 'lastName'),
+            birthYear: readQueryString(req.query, 'birthYear'),
+            genderId: readQueryString(req.query, 'genderId'),
+            nakhebJoinProvinceId: readQueryString(req.query, 'nakhebJoinProvinceId'),
+            nakhebJoinCircleId: readQueryString(req.query, 'nakhebJoinCircleId'),
+            nakhebJoinTamvinId: readQueryString(req.query, 'nakhebJoinTamvinId'),
+            vFullId: readQueryString(req.query, 'vFullId'),
+            vSameDeviceCount: readQueryString(req.query, 'vSameDeviceCount'),
+            page: Number(readQueryString(req.query, 'page') || '1'),
+            pageSize: Number(readQueryString(req.query, 'pageSize') || '25'),
+          },
+          normalizeAuthRoles(req),
+          req.user?.username ?? req.user?.email ?? null,
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load grant receipt lines.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/payment-documents-members/filter-options',
+    requireAuth,
+    requireHwyPaymentDocumentsMembersAccess,
+    async (req: Request, res: Response) => {
+      try {
+        const data = await loadHwyPaymentDocumentsMembersFilterOptions(
+          readQueryString(req.query, 'nakhebJoinProvinceId'),
+          readQueryString(req.query, 'nakhebJoinCircleId'),
+          normalizeAuthRoles(req),
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load grant receipt filters.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/payment-documents-members/:lineId/images',
+    requireAuth,
+    requireHwyPaymentDocumentsMembersAccess,
+    async (req: Request, res: Response) => {
+      const lineId = req.params.lineId?.trim();
+      if (!lineId) {
+        res.status(400).json({ success: false, message: 'lineId is required.' });
+        return;
+      }
+      try {
+        const data = await loadHwyPaymentDocumentsMembersImages(lineId, normalizeAuthRoles(req));
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load images.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/payment-documents-members/:lineId/switch-payability',
+    requireAuth,
+    requireHwyPaymentDocumentsMembersAccess,
+    async (req: Request, res: Response) => {
+      const lineId = req.params.lineId?.trim();
+      if (!lineId) {
+        res.status(400).json({ success: false, message: 'lineId is required.' });
+        return;
+      }
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim();
+      if (!actorUsername) {
+        res.status(400).json({ success: false, message: 'Actor username is required.' });
+        return;
+      }
+      try {
+        await switchHwyPaymentDocumentsMemberPayability(lineId, normalizeAuthRoles(req), actorUsername);
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Switch payability failed.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/payment-documents-members/:lineId/update-pay-amount',
+    requireAuth,
+    requireHwyPaymentDocumentsMembersAccess,
+    async (req: Request, res: Response) => {
+      const lineId = req.params.lineId?.trim();
+      if (!lineId) {
+        res.status(400).json({ success: false, message: 'lineId is required.' });
+        return;
+      }
+      const body = req.body as Record<string, unknown>;
+      const payAmount = Number(body.payAmount);
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim();
+      if (!actorUsername || !Number.isFinite(payAmount)) {
+        res.status(400).json({ success: false, message: 'payAmount and actor are required.' });
+        return;
+      }
+      try {
+        await updateHwyPaymentDocumentsMemberPayAmount(
+          lineId,
+          { payAmount, note: String(body.note ?? '') },
+          normalizeAuthRoles(req),
+          actorUsername,
+        );
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Update pay amount failed.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/masoolin-performance',
+    requireAuth,
+    requireHwyMasoolinPerformanceAccess,
+    async (req: Request, res: Response) => {
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim() || null;
+      try {
+        const data = await listHwyMasoolinPerformance(
+          {
+            selectedProvinces: readQueryString(req.query, 'selectedProvinces'),
+            circleId: readQueryString(req.query, 'circleId'),
+            tamvinId: readQueryString(req.query, 'tamvinId'),
+            genderId: readQueryString(req.query, 'genderId'),
+            roleId: readQueryString(req.query, 'roleId'),
+            bi1LevelId: readQueryString(req.query, 'bi1LevelId'),
+            bi2LevelId: readQueryString(req.query, 'bi2LevelId'),
+            bi3LevelId: readQueryString(req.query, 'bi3LevelId'),
+            bicLevelId: readQueryString(req.query, 'bicLevelId'),
+            userName: readQueryString(req.query, 'userName'),
+            moneyAmount1: readQueryString(req.query, 'moneyAmount1'),
+            moneyAmount2: readQueryString(req.query, 'moneyAmount2'),
+            moneyAmount3: readQueryString(req.query, 'moneyAmount3'),
+            chiefMasool: readQueryString(req.query, 'chiefMasool'),
+            confilictState: readQueryString(req.query, 'confilictState'),
+            sameRogheCount: readQueryString(req.query, 'sameRogheCount'),
+          },
+          normalizeAuthRoles(req),
+          actorUsername,
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load masoolin performance.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/masoolin-performance/export',
+    requireAuth,
+    requireHwyMasoolinPerformanceAccess,
+    async (req: Request, res: Response) => {
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim() || null;
+      const mode = readQueryString(req.query, 'mode') === 'legacy-sp' ? 'legacy-sp' : 'filtered';
+      try {
+        const data = await exportHwyMasoolinPerformance(
+          {
+            selectedProvinces: readQueryString(req.query, 'selectedProvinces'),
+            circleId: readQueryString(req.query, 'circleId'),
+            tamvinId: readQueryString(req.query, 'tamvinId'),
+            genderId: readQueryString(req.query, 'genderId'),
+            roleId: readQueryString(req.query, 'roleId'),
+            bi1LevelId: readQueryString(req.query, 'bi1LevelId'),
+            bi2LevelId: readQueryString(req.query, 'bi2LevelId'),
+            bi3LevelId: readQueryString(req.query, 'bi3LevelId'),
+            bicLevelId: readQueryString(req.query, 'bicLevelId'),
+            userName: readQueryString(req.query, 'userName'),
+            moneyAmount1: readQueryString(req.query, 'moneyAmount1'),
+            moneyAmount2: readQueryString(req.query, 'moneyAmount2'),
+            moneyAmount3: readQueryString(req.query, 'moneyAmount3'),
+            chiefMasool: readQueryString(req.query, 'chiefMasool'),
+            confilictState: readQueryString(req.query, 'confilictState'),
+            sameRogheCount: readQueryString(req.query, 'sameRogheCount'),
+          },
+          normalizeAuthRoles(req),
+          actorUsername,
+          mode,
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not export masoolin performance.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/masoolin-performance/filter-options',
+    requireAuth,
+    requireHwyMasoolinPerformanceAccess,
+    async (req: Request, res: Response) => {
+      try {
+        const data = await loadHwyMasoolinPerformanceFilterOptions(
+          readQueryString(req.query, 'provinceId'),
+          readQueryString(req.query, 'circleId'),
+          normalizeAuthRoles(req),
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load masoolin performance filters.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/masoolin-performance/set-chief-masool',
+    requireAuth,
+    requireHwyMasoolinPerformanceAccess,
+    async (req: Request, res: Response) => {
+      const body = req.body as Record<string, unknown>;
+      const memberId = Number(body.memberId);
+      try {
+        await setHwyMasoolinChiefMasool(memberId, normalizeAuthRoles(req));
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Set chief masool failed.';
+        const status = message === 'Forbidden.' ? 403 : message.includes('required') ? 400 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/masoolin-stars/calc-month',
+    requireAuth,
+    async (req: Request, res: Response) => {
+      if (!normalizeAuthRoles(req).includes('ADMIN')) {
+        res.status(403).json({ success: false, message: 'Forbidden.' });
+        return;
+      }
+      const body = req.body as Record<string, unknown>;
+      const year = Number(body.year);
+      const month = Number(body.month);
+      try {
+        await runHwyMasoolinStarsMonthBatch(year, month);
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Masoolin stars batch failed.';
+        const status = message.includes('required') ? 400 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/masoolin-stars/recalc-member',
+    requireAuth,
+    async (req: Request, res: Response) => {
+      if (!normalizeAuthRoles(req).includes('ADMIN')) {
+        res.status(403).json({ success: false, message: 'Forbidden.' });
+        return;
+      }
+      const body = req.body as Record<string, unknown>;
+      const memberId = Number(body.memberId);
+      try {
+        await runHwyMasoolinStarsRecalcMember(memberId);
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Masoolin stars recalc failed.';
+        const status = message.includes('required') ? 400 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/members-social-screens/history-months',
+    requireAuth,
+    requireHwyMembersSocialScreensAccess,
+    async (req: Request, res: Response) => {
+      try {
+        const months = await loadHwyMembersSocialScreensHistoryMonths(normalizeAuthRoles(req));
+        res.json({ success: true, data: { months } });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load history months.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/members-social-screens/filter-options',
+    requireAuth,
+    requireHwyMembersSocialScreensAccess,
+    async (req: Request, res: Response) => {
+      try {
+        const data = await loadHwyMembersSocialScreensFilterOptions(normalizeAuthRoles(req));
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load social screen filters.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/members-social-screens/workflow',
+    requireAuth,
+    requireHwyMembersSocialScreensAccess,
+    async (req: Request, res: Response) => {
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim() || null;
+      const year = Number(readQueryString(req.query, 'year'));
+      const month = Number(readQueryString(req.query, 'month'));
+      if (!Number.isFinite(year) || !Number.isFinite(month) || year <= 0 || month <= 0) {
+        res.status(400).json({ success: false, message: 'year and month are required.' });
+        return;
+      }
+      try {
+        const data = await loadHwyMembersSocialScreensWorkflow(
+          {
+            y: year,
+            m: month,
+            listType: parseMembersSocialScreensListType(readQueryString(req.query, 'listType')),
+            currentMemberId: Number(readQueryString(req.query, 'currentMemberId')) || -1,
+            provinceId: Number(readQueryString(req.query, 'provinceId')) || 0,
+            genderId: Number(readQueryString(req.query, 'genderId')) || 0,
+            userName: readQueryString(req.query, 'userName'),
+            moveDir: parseMembersSocialScreensMoveDir(readQueryString(req.query, 'moveDir')),
+          },
+          normalizeAuthRoles(req),
+          actorUsername,
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not load social screen workflow.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/members-social-screens/final-accept',
+    requireAuth,
+    requireHwyMembersSocialScreensAccess,
+    async (req: Request, res: Response) => {
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim();
+      const headerId = Number((req.body as { headerId?: unknown })?.headerId);
+      if (!actorUsername || !Number.isFinite(headerId) || headerId <= 0) {
+        res.status(400).json({ success: false, message: 'headerId and actor are required.' });
+        return;
+      }
+      try {
+        await applyHwyMembersSocialScreensFinalAccept(headerId, normalizeAuthRoles(req), actorUsername);
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Final accept failed.';
+        const status = message === 'Forbidden.' ? 403 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/members-social-screens/final-reject',
+    requireAuth,
+    requireHwyMembersSocialScreensAccess,
+    async (req: Request, res: Response) => {
+      const actorUsername = String(req.user?.username ?? req.user?.email ?? '').trim();
+      const headerId = Number((req.body as { headerId?: unknown })?.headerId);
+      if (!actorUsername || !Number.isFinite(headerId) || headerId <= 0) {
+        res.status(400).json({ success: false, message: 'headerId and actor are required.' });
+        return;
+      }
+      try {
+        await applyHwyMembersSocialScreensFinalReject(headerId, normalizeAuthRoles(req), actorUsername);
+        res.json({ success: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Final reject failed.';
         const status = message === 'Forbidden.' ? 403 : 500;
         res.status(status).json({ success: false, message });
       }

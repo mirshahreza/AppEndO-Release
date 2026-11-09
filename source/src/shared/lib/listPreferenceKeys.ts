@@ -43,6 +43,7 @@ export const APP_LIST_PREFERENCE_KEYS = {
   hwyActivitiesAdmin: 'hwy-activities-admin',
   hwyActivitiesAdminCentral: 'hwy-activities-admin-central',
   hwyCoursesAdmin: 'hwy-courses-admin',
+  hwyMeetingsManagement: 'hwy-meetings-management-v2',
   hwyCoursesParticipants: 'hwy-courses-participants',
   hwyTarghinAdmin: 'hwy-targhin-requests-admin-v6',
   hwyMembersTarghin: 'hwy-members-targhin-v4',

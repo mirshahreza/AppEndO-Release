@@ -11,6 +11,8 @@ describe('classifyLoadingLogoShape', () => {
   });
 
   it('treats appendo mark-only asset as wide', () => {
-    expect(classifyLoadingLogoShape('/assets/appendo-logo-only.png')).toBe('wide');
+    expect(classifyLoadingLogoShape('/assets/appendo/brand/transparent/appendo-mark-currentColor.svg')).toBe(
+      'square',
+    );
   });
 });

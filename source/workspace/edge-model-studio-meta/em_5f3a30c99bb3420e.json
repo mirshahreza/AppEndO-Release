@@ -1,268 +1,726 @@
 {
   "edgeModelId": "em_5f3a30c99bb3420e",
-  "tags": [],
+  "tags": [
+    "hwy",
+    "member",
+    "directory",
+    "read-model"
+  ],
   "columnMeta": [
     {
-      "columnName": "id"
+      "columnName": "id",
+      "icon": "lucide:hash",
+      "formWidget": "number",
+      "required": true,
+      "group": "Keys",
+      "sortOrder": 10
     },
     {
       "columnName": "user_id",
-      "searchRole": "advanced"
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Keys",
+      "sortOrder": 20
     },
     {
       "columnName": "username",
-      "searchRole": "basic"
+      "formWidget": "text",
+      "searchRole": "basic",
+      "interfaceNotes": "التياري when active — not tracking code.",
+      "group": "Keys",
+      "sortOrder": 30
+    },
+    {
+      "columnName": "tracking_code",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "interfaceNotes": "Public tracking = member id.",
+      "group": "Keys",
+      "sortOrder": 40
     },
     {
       "columnName": "email",
-      "searchRole": "basic"
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Platform account",
+      "sortOrder": 50
     },
     {
-      "columnName": "user_mobile"
+      "columnName": "user_mobile",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Platform account",
+      "sortOrder": 60
     },
     {
       "columnName": "user_locked",
-      "searchRole": "advanced"
+      "formWidget": "switch",
+      "searchRole": "advanced",
+      "group": "Platform account",
+      "sortOrder": 70
     },
     {
-      "columnName": "last_login_at"
+      "columnName": "last_login_at",
+      "formWidget": "datetime",
+      "searchRole": "none",
+      "group": "Platform account",
+      "sortOrder": 80
     },
     {
-      "columnName": "firstname"
+      "columnName": "person_type_code",
+      "formWidget": "lookup",
+      "searchRole": "none",
+      "group": "Platform account",
+      "sortOrder": 90
     },
     {
-      "columnName": "lastname"
+      "columnName": "firstname",
+      "formWidget": "text",
+      "required": true,
+      "searchRole": "basic",
+      "group": "Arabic identity",
+      "sortOrder": 100
     },
     {
-      "columnName": "fathername"
+      "columnName": "lastname",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Arabic identity",
+      "sortOrder": 110
     },
     {
-      "columnName": "grandfathername"
+      "columnName": "fathername",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Arabic identity",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "grandfathername",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Arabic identity",
+      "sortOrder": 130
     },
     {
       "columnName": "nickname",
-      "searchRole": "basic"
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Arabic identity",
+      "sortOrder": 140
     },
     {
-      "columnName": "national_code"
+      "columnName": "national_code",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Arabic identity",
+      "sortOrder": 150
     },
     {
-      "columnName": "birth_year"
+      "columnName": "gender_code",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "group": "Arabic identity",
+      "sortOrder": 160
     },
     {
-      "columnName": "birth_month"
+      "columnName": "birth_year",
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Arabic identity",
+      "sortOrder": 170
     },
     {
-      "columnName": "birth_day"
+      "columnName": "birth_month",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Arabic identity",
+      "sortOrder": 180
     },
     {
-      "columnName": "gender_code"
+      "columnName": "birth_day",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Arabic identity",
+      "sortOrder": 190
     },
     {
-      "columnName": "person_type_code"
-    },
-    {
-      "columnName": "display_full_name"
+      "columnName": "display_full_name",
+      "formWidget": "hidden",
+      "searchRole": "basic",
+      "group": "Arabic identity",
+      "sortOrder": 200
     },
     {
       "columnName": "phone1",
-      "filterRole": "restricted"
+      "formWidget": "text",
+      "searchRole": "basic",
+      "group": "Contact",
+      "sortOrder": 210
     },
     {
       "columnName": "phone2",
-      "filterRole": "restricted"
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Contact",
+      "sortOrder": 220
     },
     {
-      "columnName": "has_profile_image"
+      "columnName": "facebook_id",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Contact",
+      "sortOrder": 230
     },
     {
-      "columnName": "avatar_url"
+      "columnName": "twitter_id",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Contact",
+      "sortOrder": 240
     },
     {
-      "columnName": "profile_image_mime"
+      "columnName": "tiktok_id",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Contact",
+      "sortOrder": 250
+    },
+    {
+      "columnName": "has_profile_image",
+      "formWidget": "switch",
+      "searchRole": "none",
+      "group": "Profile media",
+      "sortOrder": 260
+    },
+    {
+      "columnName": "avatar_url",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Profile media",
+      "sortOrder": 270
+    },
+    {
+      "columnName": "profile_image_mime",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Profile media",
+      "sortOrder": 280
     },
     {
       "columnName": "profile_image_size",
-      "searchRole": "advanced"
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Profile media",
+      "sortOrder": 290
     },
     {
-      "columnName": "facebook_id"
+      "columnName": "great_grandfather_name",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Mother & lineage",
+      "sortOrder": 300
     },
     {
-      "columnName": "twitter_id"
+      "columnName": "mother_first_name",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Mother & lineage",
+      "sortOrder": 310
     },
     {
-      "columnName": "tiktok_id"
+      "columnName": "mother_father_name",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Mother & lineage",
+      "sortOrder": 320
     },
     {
-      "columnName": "great_grandfather_name"
+      "columnName": "mother_grandfather_name",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Mother & lineage",
+      "sortOrder": 330
     },
     {
-      "columnName": "mother_first_name"
-    },
-    {
-      "columnName": "mother_father_name"
-    },
-    {
-      "columnName": "mother_grandfather_name"
-    },
-    {
-      "columnName": "addr_province_id"
+      "columnName": "addr_province_id",
+      "formWidget": "number",
+      "searchRole": "advanced",
+      "group": "Address",
+      "sortOrder": 340
     },
     {
       "columnName": "addr_district_id",
-      "searchRole": "advanced"
+      "formWidget": "number",
+      "searchRole": "advanced",
+      "group": "Address",
+      "sortOrder": 350
     },
     {
       "columnName": "addr_subdistrict_id",
-      "searchRole": "advanced"
+      "formWidget": "number",
+      "searchRole": "advanced",
+      "group": "Address",
+      "sortOrder": 360
     },
     {
-      "columnName": "addr_quarter_name"
+      "columnName": "addr_quarter_name",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Address",
+      "sortOrder": 370
     },
     {
-      "columnName": "addr_quarter_no"
+      "columnName": "addr_quarter_no",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Address",
+      "sortOrder": 380
     },
     {
-      "columnName": "addr_alley_no"
+      "columnName": "addr_alley_no",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Address",
+      "sortOrder": 390
     },
     {
-      "columnName": "addr_house_no"
+      "columnName": "addr_house_no",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Address",
+      "sortOrder": 400
     },
     {
-      "columnName": "addr_nearest_landmark"
+      "columnName": "addr_nearest_landmark",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "group": "Address",
+      "sortOrder": 410
     },
     {
-      "columnName": "addr_most_important_place"
+      "columnName": "addr_most_important_place",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Address",
+      "sortOrder": 420
     },
     {
-      "columnName": "addr_maktab_id"
+      "columnName": "addr_maktab_id",
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Address",
+      "sortOrder": 430
     },
     {
-      "columnName": "addr_region_id"
+      "columnName": "addr_region_id",
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Address",
+      "sortOrder": 440
     },
     {
-      "columnName": "addr_circle_id"
+      "columnName": "addr_circle_id",
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Address",
+      "sortOrder": 450
     },
     {
       "columnName": "nakhebin_id",
-      "searchRole": "advanced"
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Nakhebin",
+      "sortOrder": 460
     },
     {
-      "columnName": "nakhebin_link_type_code"
+      "columnName": "nakhebin_family_code",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Nakhebin",
+      "sortOrder": 470
+    },
+    {
+      "columnName": "nakhebin_link_type_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.006 (Nakhebin Link Type).",
+      "group": "Nakhebin",
+      "sortOrder": 480
     },
     {
       "columnName": "nakhebin_link_problem_reason_id",
-      "searchRole": "advanced"
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Nakhebin",
+      "sortOrder": 490
     },
     {
-      "columnName": "nakhebin_link_problem_note"
+      "columnName": "nakhebin_link_problem_note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "group": "Nakhebin",
+      "sortOrder": 500
     },
     {
-      "columnName": "nakhebin_link_region_id"
+      "columnName": "nakhebin_link_region_id",
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Nakhebin",
+      "sortOrder": 510
     },
     {
-      "columnName": "family_code"
+      "columnName": "nakhebin_join_tasjil_state_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.015 (Nakhebin Join Tasjil State).",
+      "group": "Nakhebin",
+      "sortOrder": 520
     },
     {
-      "columnName": "voted_on_2021"
+      "columnName": "family_code",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Nakhebin",
+      "sortOrder": 530
     },
     {
-      "columnName": "voted_on_2023"
+      "columnName": "voted_on_2021",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Nakhebin",
+      "sortOrder": 540
     },
     {
-      "columnName": "voted_on_2025"
+      "columnName": "voted_on_2023",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Nakhebin",
+      "sortOrder": 550
     },
     {
-      "columnName": "membership_status_code"
+      "columnName": "voted_on_2025",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Nakhebin",
+      "sortOrder": 560
     },
     {
-      "columnName": "membership_status_updated_on"
+      "columnName": "nakhebin_region_id",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Directory extras",
+      "sortOrder": 570
+    },
+    {
+      "columnName": "nakhebin_maktab_id",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Directory extras",
+      "sortOrder": 580
+    },
+    {
+      "columnName": "electoral_division_path",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Directory extras",
+      "sortOrder": 590
+    },
+    {
+      "columnName": "membership_status_code",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "developerNotes": "Picker filter: parent_id=220.001 (Membership Status).",
+      "group": "Membership",
+      "sortOrder": 600
+    },
+    {
+      "columnName": "registration_channel_code",
+      "formWidget": "lookup",
+      "searchRole": "basic",
+      "developerNotes": "Picker filter: parent_id=220.016 (Registration Channel).",
+      "group": "Membership",
+      "sortOrder": 610
+    },
+    {
+      "columnName": "membership_status_updated_on",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Membership",
+      "sortOrder": 620
     },
     {
       "columnName": "membership_status_updated_by",
-      "searchRole": "advanced"
+      "formWidget": "lookup",
+      "searchRole": "none",
+      "group": "Membership",
+      "sortOrder": 630
     },
     {
-      "columnName": "membership_on"
+      "columnName": "membership_on",
+      "formWidget": "date",
+      "searchRole": "advanced",
+      "group": "Membership",
+      "sortOrder": 640
     },
     {
-      "columnName": "referrer_username"
+      "columnName": "referrer_username",
+      "formWidget": "text",
+      "searchRole": "advanced",
+      "group": "Referrer",
+      "sortOrder": 650
     },
     {
       "columnName": "referrer_relation_id",
-      "searchRole": "advanced"
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Referrer",
+      "sortOrder": 660
     },
     {
       "columnName": "referrer_institute_id",
-      "searchRole": "advanced"
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Referrer",
+      "sortOrder": 670
     },
     {
-      "columnName": "second_referrer_username"
+      "columnName": "second_referrer_username",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Referrer",
+      "sortOrder": 680
     },
     {
-      "columnName": "education_level_code"
+      "columnName": "second_referrer_relation_id",
+      "formWidget": "number",
+      "searchRole": "none",
+      "group": "Referrer",
+      "sortOrder": 685
     },
     {
-      "columnName": "education_level_in_code"
+      "columnName": "education_level_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.011 (Education Level).",
+      "group": "Education",
+      "sortOrder": 690
     },
     {
-      "columnName": "education_entry_year"
+      "columnName": "education_level_in_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.012 (Education Stage).",
+      "group": "Education",
+      "sortOrder": 700
     },
     {
-      "columnName": "education_branch"
+      "columnName": "education_entry_year",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Education",
+      "sortOrder": 710
     },
     {
-      "columnName": "education_school"
+      "columnName": "education_branch",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Education",
+      "sortOrder": 720
     },
     {
-      "columnName": "education_end_year"
+      "columnName": "education_school",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Education",
+      "sortOrder": 730
     },
     {
-      "columnName": "education_university_code"
+      "columnName": "education_end_year",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Education",
+      "sortOrder": 740
     },
     {
-      "columnName": "education_university_faculty_code"
+      "columnName": "education_university_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.013 (Education University).",
+      "group": "Education",
+      "sortOrder": 750
     },
     {
-      "columnName": "job_type_code"
+      "columnName": "education_university_faculty_code",
+      "formWidget": "lookup",
+      "developerNotes": "Extend Base Info faculty list when ETL mapping is ready.",
+      "group": "Education",
+      "sortOrder": 760
     },
     {
-      "columnName": "job_place"
+      "columnName": "job_type_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.014 (Job Type).",
+      "group": "Employment",
+      "sortOrder": 770
+    },
+    {
+      "columnName": "job_place",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Employment",
+      "sortOrder": 780
+    },
+    {
+      "columnName": "mehani_union_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.030 (Mehani Professional Union).",
+      "group": "Employment",
+      "sortOrder": 790
+    },
+    {
+      "columnName": "mehani_union_degree_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.031 (Mehani Union Membership Degree).",
+      "group": "Employment",
+      "sortOrder": 800
+    },
+    {
+      "columnName": "mehani_membership_expires_on",
+      "formWidget": "date",
+      "searchRole": "none",
+      "group": "Employment",
+      "sortOrder": 810
     },
     {
       "columnName": "note",
-      "searchRole": "advanced"
-    },
-    {
-      "columnName": "nakhebin_region_id"
-    },
-    {
-      "columnName": "nakhebin_maktab_id"
-    },
-    {
-      "columnName": "electoral_division_path"
-    },
-    {
-      "columnName": "tracking_code"
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 4
+      },
+      "searchRole": "advanced",
+      "group": "Operator",
+      "sortOrder": 820
     },
     {
       "columnName": "created_by",
-      "searchRole": "advanced"
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 830
     },
     {
-      "columnName": "created_at"
+      "columnName": "created_at",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 840
     },
     {
       "columnName": "updated_by",
-      "searchRole": "advanced"
+      "formWidget": "lookup",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 850
     },
     {
-      "columnName": "updated_at"
+      "columnName": "updated_at",
+      "formWidget": "datetime",
+      "searchRole": "advanced",
+      "group": "Audit",
+      "sortOrder": 860
     }
   ],
   "associationMeta": [],
-  "extensions": {},
+  "extensions": {
+    "story": "## Purpose\n\nMember **directory read model** — one row per `hwy_members.id` with COALESCE from `base_user_profiles` and joined nakhebin geo titles. Lists, queues, and Data API list/getOne use this view — not the raw table alone.\n\n## Rules\n\n- Column order in Studio follows **Keys → platform account → Arabic identity → contact → profile media → lineage → address → nakhebin → membership → referrer → education → employment → operator → audit**.\n- Same group names as `hwy_members` where the field maps 1:1; extra groups **Platform account** and **Profile media** for login/profile surfaces.\n- `tracking_code` is always the member id string for public search — not the التياري username.",
+    "scenarioIds": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S6",
+      "S7"
+    ],
+    "columnGroupOrder": [
+      "Keys",
+      "Platform account",
+      "Arabic identity",
+      "Contact",
+      "Profile media",
+      "Mother & lineage",
+      "Address",
+      "Nakhebin",
+      "Membership",
+      "Referrer",
+      "Education",
+      "Employment",
+      "Directory extras",
+      "Operator",
+      "Audit"
+    ],
+    "columnGroupPresentation": {
+      "Keys": {
+        "icon": "lucide:key",
+        "color": "text-slate-600"
+      },
+      "Platform account": {
+        "icon": "lucide:user-circle",
+        "color": "text-violet-600"
+      },
+      "Arabic identity": {
+        "icon": "lucide:user",
+        "color": "text-indigo-600"
+      },
+      "Contact": {
+        "icon": "lucide:phone",
+        "color": "text-sky-600"
+      },
+      "Profile media": {
+        "icon": "lucide:image",
+        "color": "text-pink-600"
+      },
+      "Mother & lineage": {
+        "icon": "lucide:users",
+        "color": "text-violet-600"
+      },
+      "Address": {
+        "icon": "lucide:map-pin",
+        "color": "text-emerald-600"
+      },
+      "Nakhebin": {
+        "icon": "lucide:book-user",
+        "color": "text-amber-600"
+      },
+      "Membership": {
+        "icon": "lucide:badge-check",
+        "color": "text-rose-600"
+      },
+      "Referrer": {
+        "icon": "lucide:user-plus",
+        "color": "text-orange-600"
+      },
+      "Education": {
+        "icon": "lucide:graduation-cap",
+        "color": "text-cyan-600"
+      },
+      "Employment": {
+        "icon": "lucide:briefcase",
+        "color": "text-neutral-600"
+      },
+      "Directory extras": {
+        "icon": "lucide:route",
+        "color": "text-teal-600"
+      },
+      "Operator": {
+        "icon": "lucide:sticky-note",
+        "color": "text-slate-500"
+      },
+      "Audit": {
+        "icon": "lucide:clock",
+        "color": "text-slate-400"
+      }
+    }
+  },
   "created_at": "2026-09-17T10:28:45.131Z",
-  "updated_at": "2026-09-17T15:29:40.143Z"
+  "updated_at": "2026-11-08T18:48:31.602Z"
 }

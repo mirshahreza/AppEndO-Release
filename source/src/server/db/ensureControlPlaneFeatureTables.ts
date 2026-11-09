@@ -43,15 +43,24 @@ const FEATURE_TABLE_ENSURES: Array<() => Promise<void>> = [
   ensureDirectMessageTables,
 ];
 
+export type EnsureControlPlaneFeatureTablesOptions = {
+  /** Skip boot marker and re-apply all feature ensures (operator / CI). */
+  force?: boolean;
+};
+
 /** Idempotent Sequelize feature tables — parallel on server engines, serial on SQLite. */
-export async function ensureControlPlaneFeatureTables(settingsPath: string): Promise<void> {
+export async function ensureControlPlaneFeatureTables(
+  settingsPath: string,
+  options?: EnsureControlPlaneFeatureTablesOptions,
+): Promise<void> {
   const { provider } = readControlPlaneDatabaseSettings(settingsPath);
   if (
-    await isControlPlaneBootMarkerCurrent(
+    !options?.force
+    && (await isControlPlaneBootMarkerCurrent(
       provider,
       CONTROL_PLANE_BOOT_MARKER_KEYS.sequelizeFeatureTables,
       CONTROL_PLANE_SEQUELIZE_FEATURE_SCHEMA_VERSION,
-    )
+    ))
   ) {
     return;
   }

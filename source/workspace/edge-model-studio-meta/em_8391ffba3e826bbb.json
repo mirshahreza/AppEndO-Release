@@ -39,6 +39,7 @@
     {
       "columnName": "mime",
       "formWidget": "text",
+      "searchRole": "none",
       "group": "File",
       "sortOrder": 50
     },
@@ -52,6 +53,7 @@
     {
       "columnName": "checksum",
       "formWidget": "text",
+      "searchRole": "none",
       "group": "File",
       "sortOrder": 70
     },
@@ -78,7 +80,7 @@
     {
       "columnName": "created_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 110
     },
@@ -92,20 +94,26 @@
     {
       "columnName": "updated_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 130
     },
     {
       "columnName": "updated_at",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 140
     }
   ],
   "associationMeta": [
     {
-      "relationKey": "ea_7c749e72253f4349",
+      "relationKey": "ea_545b6a969fdd4c6b",
+      "displayLabel": "Member",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_bcc93c204268413a",
       "displayLabel": "File kind",
       "formWidget": "lookup",
       "targetFilter": [
@@ -122,19 +130,14 @@
       ]
     },
     {
-      "relationKey": "ea_cf24a327c6cf452a",
-      "displayLabel": "Created by",
+      "relationKey": "ea_d93dd8fb1712460a",
+      "displayLabel": "Updated by",
       "icon": "lucide:user",
       "formWidget": "lookup"
     },
     {
-      "relationKey": "ea_e2118e4003d14c18",
-      "displayLabel": "Member",
-      "formWidget": "lookup"
-    },
-    {
-      "relationKey": "ea_f8be6a1db83e4b4f",
-      "displayLabel": "Updated by",
+      "relationKey": "ea_f74076d252654914",
+      "displayLabel": "Created by",
       "icon": "lucide:user",
       "formWidget": "lookup"
     }
@@ -171,5 +174,5 @@
     }
   },
   "created_at": "2026-09-16T13:15:04.936Z",
-  "updated_at": "2026-09-17T15:29:40.096Z"
+  "updated_at": "2026-11-08T18:48:31.112Z"
 }

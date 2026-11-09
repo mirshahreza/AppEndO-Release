@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { PlatformRuntimeConfig } from '../../../shared/api/contracts/platform/types';
 import { HWY_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../../domain/hwy/hwyPlatformPortalBrandDefaults';
+import { DEFAULT_PORTAL_LOGO_URL } from '../../../shared/api/contracts/platform/portalBrand';
 import {
   resolveAuthLoginBrandContextPath,
   resolveAuthLoginPortalBrand,
@@ -57,7 +58,7 @@ describe('authLoginPortalBrand', () => {
           name: 'Hawiety',
           enabled: true,
           brand: {
-            logoUrl: '/assets/appendo-logo.png',
+            logoUrl: DEFAULT_PORTAL_LOGO_URL,
             title: 'AppEnd',
           },
         },
@@ -84,6 +85,6 @@ describe('authLoginPortalBrand', () => {
     const brand = resolveAuthLoginPortalBrand('/us/studio/users', config);
     expect(brand.portalSegment).toBe('studio');
     expect(brand.usesPortalLogo).toBe(false);
-    expect(brand.logoUrl).toBe('/assets/appendo-logo.png');
+    expect(brand.logoUrl).toBe(DEFAULT_PORTAL_LOGO_URL);
   });
 });

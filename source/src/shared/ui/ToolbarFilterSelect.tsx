@@ -147,7 +147,9 @@ export const ToolbarFilterSelect: React.FC<ToolbarFilterSelectProps> = ({
       <UiSelect
         size="sm"
         multiple={multiple}
-        preferNativeSelect
+        clipSafePopover
+        popoverPlacement="bottom"
+        shouldFlip
         value={selectValue}
         ariaLabel={ariaLabel}
         placeholder={allOptionLabel}

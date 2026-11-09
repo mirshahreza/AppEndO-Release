@@ -118,8 +118,8 @@ Helpers:
 
 | Tier | Navigation | Logo | Page guide |
 |------|------------|------|------------|
-| `desktop`+ | Docked sidebar (expanded / collapsed rail); section flyouts on collapsed rail | Full lockup in sidebar (`appendo-logo.png`) | Available |
-| `tablet` + `phone` | **Overlay drawer** from logical `start`; backdrop; closes on navigate / backdrop / Escape; focus return to hamburger | Mark-only in header + drawer (`appendo-logo-only.png`) | Hidden on `phone`; available on `tablet`+ |
+| `desktop`+ | Docked sidebar (expanded / collapsed rail); section flyouts on collapsed rail | Full lockup in sidebar (`appendo-wordmark-currentColor.svg`) | Available |
+| `tablet` + `phone` | **Overlay drawer** from logical `start`; backdrop; closes on navigate / backdrop / Escape; focus return to hamburger | Mark-only in header + drawer (`appendo-mark-currentColor.svg`) | Hidden on `phone`; available on `tablet`+ |
 
 **Tablet uses the same overlay nav as phone** — pointer hover is not a reliable tablet affordance; do not show docked rail or hover-only nav between 400–1023px.
 

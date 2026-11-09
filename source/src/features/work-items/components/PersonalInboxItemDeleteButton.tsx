@@ -11,7 +11,7 @@ import {
   personalInboxApi,
 } from '../../../shared/api/personalInboxApi';
 import { showAppFeedbackToast } from '../../../shared/ui/appFeedbackToast';
-import { useCultureT } from '../../../core/culture/CultureContext';
+import { useCultureT, useOptionalCulture } from '../../../core/culture/CultureContext';
 import { resolveCultureLabel } from '../../../core/culture/cultureShellKeys';
 import { cn } from '../../../lib/utils';
 import {
@@ -40,6 +40,8 @@ export const PersonalInboxItemDeleteButton: React.FC<PersonalInboxItemDeleteButt
   onAutoActivateDone,
 }) => {
   const t = useCultureT();
+  const culture = useOptionalCulture();
+  const textDir = culture?.direction ?? 'ltr';
   const [busy, setBusy] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
@@ -226,7 +228,9 @@ export const PersonalInboxItemDeleteButton: React.FC<PersonalInboxItemDeleteButt
           )}
         >
           <DestructiveConfirmBody
+            dir={textDir}
             question={confirmQuestion}
+            warning={null}
             entityName={item.title}
             entityDetail={item.id}
           />

@@ -177,7 +177,6 @@ export const BASE_COMPONENTS_SECTIONS: BaseComponentsSectionEntry[] = [
   { id: 'range-calendar-grid', label: 'Range calendar', group: 'pickers' },
   { id: 'kbd', label: 'Keyboard', group: 'data' },
   { id: 'user-card', label: 'User card', group: 'identity' },
-  { id: 'hwy-member-face', label: 'Hawiety member face', group: 'identity' },
   { id: 'snippet', label: 'Snippet', group: 'data' },
   { id: 'hover-card', label: 'Hover card', group: 'overlays' },
   { id: 'context-menu', label: 'Context menu', group: 'overlays' },
@@ -326,8 +325,6 @@ const BASE_COMPONENTS_SECTION_GUIDE_HINTS: Record<SectionId, string> = {
   'range-calendar-grid': 'Standalone month grid for picking an inclusive start and end date.',
   kbd: 'Keyboard shortcut chrome such as Ctrl + K for studio and documentation UI.',
   'user-card': 'Avatar, name, and short description as one identity block for authors and owners.',
-  'hwy-member-face':
-    'Member-directory list face: avatar, blue six-digit username or red tracking code, name, and birth/membership meta.',
   snippet: 'Read-only code or command chrome with an optional one-click copy control.',
   'hover-card': 'Rich hover preview with title and description, not a plain-text tooltip.',
   'context-menu': 'Right-click action menu anchored at the pointer for a selected object.',

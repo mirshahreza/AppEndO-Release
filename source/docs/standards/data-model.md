@@ -53,6 +53,25 @@ Existing Prisma control-plane code is **legacy**. Do not extend it. Edge/Data AP
 - General helpers/procedures: `zz_` prefix.
 - Domain objects: standard domain naming.
 
+## Schema ownership (layers)
+
+Non-Prisma database objects have a **single canonical upgrade path** per layer. Server boot may still run idempotent `ensure*` helpers; operators and CI should prefer the commands below.
+
+| Layer | Source of truth | Upgrade command |
+|-------|-----------------|-----------------|
+| Prisma `base_*` | `prisma/schema.prisma` | `npm run db:sync-schema` |
+| Sequelize feature `base_*` (not in Prisma) | `src/server/db/ensureControlPlaneFeatureTables.ts` | `npm run schema:install-extensions` |
+| Hawiety core tables | `scripts/hwy-phase1/db/install/hwy_schema.sqlserver.sql` | `npm run schema:install-extensions:hwy` |
+| Hawiety satellite DDL | `ensureHwy*Schema.ts` + matching `scripts/hwy-phase1/db/install/*.sql` | same |
+| Hawiety procs/views | `ensureHwyDbObjects` / `hwy_db_*.sqlserver.sql` | `npm run hwy:db-objects` (included in `--hwy` install) |
+| Edge package tables (`cms_*`, …) | Package / Data Studio deploy | Package install — not Prisma sync |
+
+Machine index: `src/config/controlPlaneSchemaOwnership.ts` · report: `npm run schema:ownership-report` · finance probe: `npm run schema:finance-parity-probe` · Hawiety ownership status (**closed on dev**): [`scripts/schema/schema-ownership-closeout.md`](../../scripts/schema/schema-ownership-closeout.md) · [`scripts/schema/schema-ownership-backlog.md`](../../scripts/schema/schema-ownership-backlog.md).
+
+Default `CONTROL_PLANE_SCHEMA_PROTECTED_TABLES` merge includes `hwy_*`, `vw_hwy_*`, `cms_*`, `zz_*` prefixes plus boot markers (see `controlPlaneSchemaProtectedTables.ts`).
+
+**IDs:** `data.control-plane.schema-ownership`
+
 ## Control-plane schema sync (do not drop unknown tables)
 
 - Operator command: `npm run db:sync-schema` (same as `npm run prisma:push`). This is the **only** supported upgrade path for an existing customer/project database.
@@ -62,4 +81,4 @@ Existing Prisma control-plane code is **legacy**. Do not extend it. Edge/Data AP
 - Optional lists: `CONTROL_PLANE_SCHEMA_PROTECTED_TABLES` (never drop these names) and `CONTROL_PLANE_SCHEMA_ALLOW_DROP_TABLES` (standalone `DROP TABLE` allowlist only).
 - Install-wizard **replace existing schema** remains an explicit wipe (`forceReset` / `resetAppDatabaseSchema`) and is not used for ordinary upgrades.
 
-**IDs:** `data.core-table-prefix`, `data.prisma.locked`, `data.note-field-naming`, `data.audit-*`, `data.db.utility-prefix`, `naming.latin-slug.identifier`, `data.control-plane.sqlserver-default`, `data.control-plane.provider-locked-after-setup`, `data.control-plane.schema-sync.preserve-unknown-tables`.
+**IDs:** `data.core-table-prefix`, `data.prisma.locked`, `data.note-field-naming`, `data.audit-*`, `data.db.utility-prefix`, `naming.latin-slug.identifier`, `data.control-plane.sqlserver-default`, `data.control-plane.provider-locked-after-setup`, `data.control-plane.schema-sync.preserve-unknown-tables`, `data.control-plane.schema-ownership`.

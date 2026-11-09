@@ -11,7 +11,11 @@ export const CmsSiteBrandSlot: React.FC = () => {
   const brandName = data?.chrome.brandName || 'Site';
   return (
     <SiteLink className="site-shell-brand" to={buildSiteHref(cultureId, { path: '' })}>
-      <img className="site-shell-brand-mark" src="/assets/appendo-logo-only.png" alt="" />
+      <img
+        className="site-shell-brand-mark"
+        src="/assets/appendo/brand/appendo-icon-mark.svg"
+        alt=""
+      />
       {brandName}
     </SiteLink>
   );

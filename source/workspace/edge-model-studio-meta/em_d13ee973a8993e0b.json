@@ -62,7 +62,7 @@
     {
       "columnName": "sort_order",
       "formWidget": "number",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Definition",
       "sortOrder": 80
     },
@@ -72,46 +72,58 @@
       "formWidgetProps": {
         "rows": 2
       },
-      "searchRole": "advanced",
       "group": "Definition",
       "sortOrder": 90
     },
     {
       "columnName": "created_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 100
     },
     {
       "columnName": "created_at",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 110
     },
     {
       "columnName": "updated_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 120
     },
     {
       "columnName": "updated_at",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 130
     }
   ],
   "associationMeta": [
     {
-      "relationKey": "ea_6e1da47718a7460c",
+      "relationKey": "ea_7bc04b2132084cb6",
+      "displayLabel": "Institute",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_7f54aff8940f43d4",
       "displayLabel": "Created by",
       "icon": "lucide:user",
       "formWidget": "lookup"
     },
     {
-      "relationKey": "ea_73ee313e87154264",
+      "relationKey": "ea_dcb2c4daf1f04285",
+      "displayLabel": "Updated by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_ee647b0d95044b18",
       "displayLabel": "List logic",
       "formWidget": "lookup",
       "targetFilter": [
@@ -126,17 +138,6 @@
           "value": "true"
         }
       ]
-    },
-    {
-      "relationKey": "ea_dc225df7c0b84ddd",
-      "displayLabel": "Institute",
-      "formWidget": "lookup"
-    },
-    {
-      "relationKey": "ea_f175adfc2bb8452f",
-      "displayLabel": "Updated by",
-      "icon": "lucide:user",
-      "formWidget": "lookup"
     }
   ],
   "extensions": {
@@ -165,5 +166,5 @@
     }
   },
   "created_at": "2026-09-16T13:15:04.980Z",
-  "updated_at": "2026-09-17T15:29:40.120Z"
+  "updated_at": "2026-11-08T18:48:31.449Z"
 }

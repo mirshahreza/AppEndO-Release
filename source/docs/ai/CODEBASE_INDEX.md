@@ -1,7 +1,7 @@
 # Codebase Index (AI Navigation)
 
 > **Generated** — do not edit tables by hand. Regenerate: `npm run codegen:ai-index`
-> **Source:** `src/config/platform-registry/navigation/studio.json` · 2026-11-04T16:54:02.736Z
+> **Source:** `src/config/platform-registry/navigation/studio.json` · 2026-11-08T15:11:24.053Z
 
 This map answers **where things live**. Constraints: `AGENTS.md` + one `docs/standards/` shard (`docs/standards/INDEX.md`). Human-only bulk docs: `docs/archive/` (AI-index excluded).
 
@@ -84,6 +84,7 @@ See [`docs/architecture/experience-routing.md`](../architecture/experience-routi
 | `dev-reference` | dev-reference | `src/features/dev-reference/` | — |
 | `feedback-inbox` | feedback-inbox | `—` | — |
 | `geographic-divisions` | geographic-divisions | `src/features/org-geo/` | Scoped Geographic Divisions tree UI over base_info root 100.5 (under Base) |
+| `hwy-identity-components` | hwy-identity-components | `src/features/hwy-identity-components/` | — |
 | `my-apis` | my-apis | `src/features/my-apis/` | Hidden from studio menu — opened from Profile drawer |
 | `my-feedback` | my-feedback | `—` | — |
 | `my-inbox` | my-inbox | `—` | — |

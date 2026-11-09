@@ -75,8 +75,6 @@ export const BASE_COMPONENTS_SECTION_DESCRIPTIONS: Record<SectionId, string> = {
   'range-calendar-grid': 'UiRangeCalendar — standalone month grid for picking an inclusive date range.',
   kbd: 'UiKbd — keyboard shortcut chrome such as Ctrl + K.',
   'user-card': 'UiUserCard — avatar, name, and short description as one identity block.',
-  'hwy-member-face':
-    'HwyMemberAvatarWithMembershipCode + HwyMemberDirectoryListFaceCard — list column-1 avatar, membership code, name, and meta.',
   snippet: 'UiSnippet — read-only code or command chrome with an optional copy control.',
   'hover-card': 'UiHoverCard — rich hover preview with title and description.',
   'context-menu': 'UiContextMenu — right-click action menu anchored at the pointer.',

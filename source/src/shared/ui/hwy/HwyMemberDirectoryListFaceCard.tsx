@@ -13,10 +13,8 @@ import { resolveMemberDirectoryFaceImageUrl } from '../../../domain/hwy/hwyMembe
 import { isHwyMemberDirectoryFacePhoneUnderNameLayout } from '../../../domain/hwy/hwyCandidatePipelineListParity';
 import { isHwyMemberRejectionListCompactMemberColumnLayout } from '../../../domain/hwy/hwyMemberRejectionListParity';
 import { cn } from '../../../lib/utils';
-import { NativeButton } from '../NativeButton';
 import { PhoneNumberDisplay } from '../PhoneNumberDisplay';
 import { HwyMemberAvatarWithMembershipCode } from './HwyMemberAvatarWithMembershipCode';
-import { HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS } from './hwyMemberFaceInteraction';
 
 /** Rejection-list face row: «تاريخ التسجيل» → «التسجيل» (labels only; dates stay bold). */
 const stripRejectionListDateLabelPrefix = (label: string): string => (
@@ -41,8 +39,6 @@ export type HwyMemberDirectoryListFaceCardProps = {
   allowRegistrationPersonalPhotoFallback?: boolean;
   shellIsRtl?: boolean;
   listScopeLegacy?: string | null;
-  memberInteractive?: boolean;
-  onMemberActivate?: () => void;
 };
 
 /**
@@ -54,8 +50,6 @@ export const HwyMemberDirectoryListFaceCard: React.FC<HwyMemberDirectoryListFace
   allowRegistrationPersonalPhotoFallback = true,
   shellIsRtl: shellIsRtlOverride,
   listScopeLegacy,
-  memberInteractive = false,
-  onMemberActivate,
 }) => {
   const culture = useOptionalCulture();
   const t = useOptionalCultureT();
@@ -155,7 +149,6 @@ export const HwyMemberDirectoryListFaceCard: React.FC<HwyMemberDirectoryListFace
   })();
 
   if (isCompactRejectionMemberColumn) {
-    const identityInteractive = memberInteractive && onMemberActivate;
     return (
       <div
         dir={shellIsRtl ? 'rtl' : 'ltr'}
@@ -168,21 +161,7 @@ export const HwyMemberDirectoryListFaceCard: React.FC<HwyMemberDirectoryListFace
           listScopeLegacy={listScopeLegacy}
         />
         <div className="flex min-w-0 flex-col justify-center gap-0.5 text-start">
-          {identityInteractive ? (
-            <NativeButton
-              type="button"
-              onClick={() => onMemberActivate?.()}
-              className={cn(
-                HWY_MEMBER_DIRECTORY_LIST_FACE_CARD_BUTTON_CLASS,
-                HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS,
-                'flex w-full min-w-0 flex-col items-stretch gap-0.5 px-0 py-0',
-              )}
-            >
-              {nameAndMeta}
-            </NativeButton>
-          ) : (
-            nameAndMeta
-          )}
+          {nameAndMeta}
           {primaryPhoneInline}
         </div>
         {rejectionListDateMetaLine}

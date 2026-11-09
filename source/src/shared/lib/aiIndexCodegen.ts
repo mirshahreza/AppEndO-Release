@@ -60,6 +60,7 @@ export const PAGE_KEY_TO_FEATURE: Record<string, string> = {
   'package-manager': 'packages',
   libraries: 'libraries',
   'base-components': 'base-components',
+  'hwy-identity-components': 'hwy-identity-components',
   'dev-reference': 'dev-reference',
   settings: 'settings',
   'platform-transfer': 'platform-transfer',
@@ -135,6 +136,7 @@ const LOADER_REF_TO_FEATURE_PAGE: Record<string, string> = {
   'hawiety:hwy-geo-responsibility': 'src/features/hwy-geo-responsibility/HwyGeoResponsibilityPage.tsx',
   'hawiety:hwy-etl-console': 'src/features/hwy-etl-console/HwyEtlConsolePage.tsx',
   'hawiety:hwy-business-rules-reference': 'src/features/hwy-business-rules-reference/HwyBusinessRulesReferencePage.tsx',
+  'hawiety:hwy-identity-components': 'src/features/hwy-identity-components/HwyIdentityComponentsPage.tsx',
 };
 
 type PageApiEntry = {

@@ -161,7 +161,6 @@ export const BASE_COMPONENTS_SECTION_ICONS: Record<SectionId, React.ReactNode> =
   'range-calendar-grid': <CalendarRange className="h-4 w-4" />,
   kbd: <Keyboard className="h-4 w-4" />,
   'user-card': <CircleUserRound className="h-4 w-4" />,
-  'hwy-member-face': <CircleUserRound className="h-4 w-4" />,
   snippet: <FileCode2 className="h-4 w-4" />,
   'hover-card': <MousePointerClick className="h-4 w-4" />,
   'context-menu': <Menu className="h-4 w-4" />,

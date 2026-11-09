@@ -1,5 +1,7 @@
-/** AppEnd wordmark aspect (mask PNG). */
-export const APPENDO_LOADING_LOGO_ASPECT = 852 / 600;
+import { APPENDO_BRAND_WORDMARK_ASPECT } from '../config/appendoBrandAssets';
+
+/** AppEnd wordmark aspect (mask SVG). */
+export const APPENDO_LOADING_LOGO_ASPECT = APPENDO_BRAND_WORDMARK_ASPECT;
 
 export type LoadingLogoStageShape = 'appendo' | 'square' | 'wide';
 
@@ -12,6 +14,9 @@ export function classifyLoadingLogoShape(logoSrc: string | undefined): LoadingLo
     return 'square';
   }
   if (path.includes('/assets/hawiety/') && path.includes('/mark-')) {
+    return 'square';
+  }
+  if (path.includes('/assets/appendo/brand/') && path.includes('mark')) {
     return 'square';
   }
   return 'wide';

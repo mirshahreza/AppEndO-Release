@@ -158,6 +158,8 @@ openssl rand -hex 32
 
 | Topic | Path |
 | --- | --- |
+| Why AppEndO | [Put Reins on AI Coding—and Build Beyond the Demo](source/docs/outreach/why-appendo.md) |
+| Why AppEndO (فارسی) | [نسخهٔ فارسی مقاله](source/docs/outreach/why-appendo-fa.md) |
 | Architecture | `source/src/ARCHITECTURE.md` |
 | Feature map | `source/docs/appendo-features.md` |
 | Data Studio | `source/docs/standards/data-studio.md` |

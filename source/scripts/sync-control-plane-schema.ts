@@ -29,6 +29,10 @@ Optional extra table lists:
   CONTROL_PLANE_SCHEMA_PROTECTED_TABLES=foo,bar   never drop these names
   CONTROL_PLANE_SCHEMA_ALLOW_DROP_TABLES=old_tmp  allow standalone DROP of these names only
 
+Non-Prisma layers (Sequelize features, hwy_*, cms_*) — canonical upgrade:
+  npm run schema:install-extensions
+  npm run schema:install-extensions -- --hwy   (SQL Server + Hawiety)
+
 Greenfield / empty databases still receive the full control-plane schema.
 `.trim();
 

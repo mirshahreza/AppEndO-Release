@@ -12,6 +12,7 @@ import {
 } from '../../../scripts/hwy-phase3/culture/memberDossierChangeLogTranslations';
 import { buildHwyMemberDirectoryLegacyFilterCultureKeysEn, buildHwyMemberDirectoryLegacyFilterCultureKeysIq } from '../../domain/hwy/hwyMemberDirectoryLegacyFilterLabels';
 import { buildHwyMemberListScopedEditCultureKeysEn, buildHwyMemberListScopedEditCultureKeysIq } from '../../domain/hwy/hwyMemberListScopedEditLabels';
+import { buildHwyIdentityComponentsCultureKeysEn, buildHwyIdentityComponentsCultureKeysIq } from '../../../scripts/hwy-phase3/culture/hwyIdentityComponentsTranslations';
 
 /**
  * Built-in English catalog shipped with the client bundle.
@@ -44,6 +45,11 @@ const HWY_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE: Partial<Record<string, Record<strin
   us: buildHwyMemberListScopedEditCultureKeysEn(),
 };
 
+const HWY_IDENTITY_COMPONENTS_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
+  iq: buildHwyIdentityComponentsCultureKeysIq(),
+  us: buildHwyIdentityComponentsCultureKeysEn(),
+};
+
 /** Merges shipped package overlays (e.g. Hawiety) onto API or builtin culture bundles. */
 export function mergePackageCultureOverlay(
   bundleId: string,
@@ -58,6 +64,10 @@ export function mergePackageCultureOverlay(
   const listScopedEdit = HWY_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE[bundleId];
   if (listScopedEdit) {
     merged = { ...merged, ...listScopedEdit };
+  }
+  const identityComponents = HWY_IDENTITY_COMPONENTS_BY_BUNDLE[bundleId];
+  if (identityComponents) {
+    merged = { ...merged, ...identityComponents };
   }
   const overlay = PACKAGE_CULTURE_OVERLAYS[bundleId];
   return overlay ? { ...merged, ...overlay } : merged;

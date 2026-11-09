@@ -2,7 +2,7 @@ import { buildPackagePageLoaderRef } from '../../shared/api/contracts/package-ma
 
 export const HAWIETY_PACKAGE_ID = 'hawiety';
 export const HAWIETY_PACKAGE_NAME = 'Hawiety';
-export const HAWIETY_PACKAGE_VERSION = '0.3.8';
+export const HAWIETY_PACKAGE_VERSION = '0.3.9';
 export const HAWIETY_PORTAL_SEGMENT = 'hawiety';
 export const HAWIETY_MOUNT_PATH_PREFIX = '/hawiety';
 
@@ -23,6 +23,7 @@ export const HAWIETY_HOST_PAGE_KEYS = [
   'hwy-member-targhin-admin',
   'hwy-etl-console',
   'hwy-business-rules-reference',
+  'hwy-identity-components',
   'hwy-members-all',
   'hwy-members-quick-search',
   'hwy-members-montadhemin',

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import studioNav from '../../../config/platform-registry/navigation/studio.json';
-import { navLabelKey, resolveNavLabel } from '../cultureShellKeys';
+import { navLabelKey, resolveNavLabel, tryResolveNavLabel } from '../cultureShellKeys';
 import { createTranslationRuntime } from '../TranslationRuntime';
 import { BUILTIN_TRANSLATION_MASTER_EN } from '../translations/masterEn';
 
@@ -17,6 +17,12 @@ describe('resolveNavLabel', () => {
     const { t } = createTranslationRuntime({}, {});
     expect(resolveNavLabel(undefined, 'future-feature', 'Future Feature')).toBe('Future Feature');
     expect(resolveNavLabel(t, 'future-feature', 'Future Feature')).toBe('Future Feature');
+  });
+
+  it('tryResolveNavLabel returns null when the key is missing', () => {
+    const { t } = createTranslationRuntime({}, {});
+    expect(tryResolveNavLabel(undefined, 'hwy-employees-list')).toBeNull();
+    expect(tryResolveNavLabel(t, 'hwy-employees-list')).toBeNull();
   });
 });
 

@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from 'vitest';
 
+import { DEFAULT_PORTAL_LOGO_URL } from '../../api/contracts/platform/portalBrand';
 import {
   applyPortalDocumentFavicon,
   isPortalOwnedDocumentChrome,
@@ -18,7 +19,7 @@ describe('portalDocumentChrome', () => {
   });
 
   it('falls back to bundled Hawiety mark for favicon', () => {
-    expect(resolveHawietyPublicPortalFaviconUrl('/assets/appendo-logo.png')).toBe(
+    expect(resolveHawietyPublicPortalFaviconUrl(DEFAULT_PORTAL_LOGO_URL)).toBe(
       '/assets/hawiety/mark-blue.png',
     );
     expect(resolveHawietyPublicPortalFaviconUrl('/assets/workspace/portals/hawiety/logo.png')).toBe(

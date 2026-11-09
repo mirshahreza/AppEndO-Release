@@ -107,7 +107,7 @@
         max-inline-size: var(--loading-logo-max-w);
       }
       #app-boot-splash .app-boot-logo-stage--appendo .app-boot-logo-frame {
-        inline-size: min(calc(var(--loading-logo-h) * 852 / 600), var(--loading-logo-max-w));
+        inline-size: min(calc(var(--loading-logo-h) * 1350.33 / 443.31), var(--loading-logo-max-w));
       }
       #app-boot-splash .app-boot-logo-stage--square .app-boot-logo-frame {
         inline-size: var(--loading-logo-h);
@@ -207,10 +207,10 @@
         animation: app-boot-logo 2.4s ease-in-out infinite;
       }
       #app-boot-splash .app-boot-logo:not(.app-boot-logo--custom) {
-        aspect-ratio: 852 / 600;
+        aspect-ratio: 1350.33 / 443.31;
         background-image: var(--gradient-app-logo);
-        -webkit-mask-image: url('/assets/appendo-logo.png');
-        mask-image: url('/assets/appendo-logo.png');
+        -webkit-mask-image: url('/assets/appendo/brand/transparent/appendo-wordmark-currentColor.svg');
+        mask-image: url('/assets/appendo/brand/transparent/appendo-wordmark-currentColor.svg');
         -webkit-mask-size: contain;
         mask-size: contain;
         -webkit-mask-repeat: no-repeat;
@@ -518,6 +518,9 @@
             if (p.indexOf('/assets/hawiety/') !== -1 && p.indexOf('/mark-') !== -1) {
               return 'square';
             }
+            if (p.indexOf('/assets/appendo/brand/') !== -1 && p.indexOf('mark') !== -1) {
+              return 'square';
+            }
             return 'wide';
           }
 
@@ -539,7 +542,7 @@
           }
 
           function applySplashLogo(pathOnly, title, windowTitle) {
-            if (pathOnly.indexOf('/assets/appendo-logo') === 0) {
+            if (pathOnly.indexOf('/assets/appendo/brand/') === 0) {
               markReady();
               return true;
             }

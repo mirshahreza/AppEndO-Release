@@ -38,4 +38,25 @@ describe('mergeShellHeaderModule', () => {
       titleTrail: ['Workflows', 'Edit'],
     });
   });
+
+  it('keeps nav group when override clears groupLabel without titleTrail', () => {
+    expect(mergeShellHeaderModule(baseContext, {
+      label: 'Workflows',
+      groupLabel: null,
+    })).toMatchObject({
+      label: 'Workflows',
+      groupLabel: 'Ops',
+    });
+  });
+
+  it('allows groupLabel null when titleTrail carries the hierarchy', () => {
+    expect(mergeShellHeaderModule(baseContext, {
+      label: 'Circles',
+      groupLabel: null,
+      titleTrail: ['Area officials', 'Circles'],
+    })).toMatchObject({
+      groupLabel: null,
+      titleTrail: ['Area officials', 'Circles'],
+    });
+  });
 });

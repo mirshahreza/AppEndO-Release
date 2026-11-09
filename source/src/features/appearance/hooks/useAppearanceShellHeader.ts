@@ -25,7 +25,6 @@ export function buildAppearanceShellHeaderOverride(t: TranslationFn | undefined)
       navDescriptionKey(APPEARANCE_PAGE_KEY),
       'Colors, shell layout, sidebar behavior, and atmosphere tokens.',
     ),
-    groupLabel: null,
   };
 }
 

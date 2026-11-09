@@ -994,6 +994,115 @@
             "denyRoles": [],
             "denyUsers": []
           }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-masoolin-performance",
+          "routePattern": "masoolin-performance",
+          "label": "Masoolin performance reports",
+          "icon": "BarChart3",
+          "description": "Responsible-officer activity reports (HWY_MasoolinPerformance).",
+          "iconColor": "text-violet-700",
+          "order": 8,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000003",
+              "HWY_R_1000094",
+              "HWY_R_1000051",
+              "HWY_R_1000013",
+              "HWY_R_1000040",
+              "HWY_R_1000030",
+              "HWY_R_1000000",
+              "HWY_R_1000047",
+              "HWY_R_1000027"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-members-social-screens",
+          "routePattern": "members-social-screens",
+          "label": "Social media attendance",
+          "icon": "Camera",
+          "description": "Member social-screen review workflow (HWY_Members_SocialScreens).",
+          "iconColor": "text-sky-700",
+          "order": 9,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000040",
+              "HWY_R_1000097"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Financial management",
+      "icon": "Wallet",
+      "order": 4.5,
+      "items": [
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-payment-documents",
+          "routePattern": "finance/payment-documents",
+          "label": "Organization officer grants",
+          "icon": "Wallet",
+          "description": "Payment document list and workflow (HWY_PaymentDocuments_List).",
+          "iconColor": "text-emerald-700",
+          "order": 1,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000027",
+              "HWY_R_1000000",
+              "HWY_R_1000051",
+              "HWY_R_1000013",
+              "HWY_R_1000003"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-payment-documents-members",
+          "routePattern": "finance/payment-documents-members",
+          "label": "Grant receipt details",
+          "icon": "Receipt",
+          "description": "Member grant receipt list (HWY_PaymentDocuments_Members_ReadList).",
+          "iconColor": "text-teal-700",
+          "order": 2,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN",
+              "HWY_R_1000047",
+              "HWY_R_1000120",
+              "HWY_R_1000027",
+              "HWY_R_1000013",
+              "HWY_R_1000040",
+              "HWY_R_1000003"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
         }
       ]
     },
@@ -1586,13 +1695,34 @@
           ]
         },
         {
+          "cultureId": "iq",
+          "portalSegment": "hawiety",
+          "pageKey": "hwy-identity-components",
+          "routePattern": "identity-components/*",
+          "label": "Hawiety Identity Components",
+          "icon": "tabler:IconFingerprint",
+          "description": "Living catalog of Hawiety portal identity UI primitives with realistic sample data.",
+          "iconColor": "text-sky-600",
+          "order": 4,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
           "pageKey": "hwy-business-rules-reference",
           "routePattern": "business-rules/*",
           "label": "Identity business rules",
           "icon": "BookOpen",
           "description": "Living reference for Hawiety membership logic, workflows, and field rules.",
           "iconColor": "text-cyan-700",
-          "order": 4,
+          "order": 5,
           "separatorBefore": true,
           "auth": {
             "accessMode": "specific",
@@ -1611,7 +1741,7 @@
           "icon": "Database",
           "description": "Run Hawiety legacy import scripts from the browser.",
           "iconColor": "text-sky-700",
-          "order": 5,
+          "order": 6,
           "separatorBefore": true,
           "auth": {
             "accessMode": "specific",

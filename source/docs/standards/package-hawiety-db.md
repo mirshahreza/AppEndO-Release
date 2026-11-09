@@ -21,7 +21,7 @@ Greenfield: one contract per operation — no parallel “TS path” and “SP p
 | **Naming** | Domain procedures/functions: `hwy_*` (same family as tables). Cross-package utilities stay `zz_*` per [`data-model.md`](./data-model.md). Prefer `CREATE OR ALTER PROCEDURE dbo.hwy_<domain>_<verb>`. |
 | **Parameters** | Typed `@` parameters only — never concatenate user input into dynamic SQL inside Hawiety SPs. |
 | **Errors** | `THROW` with stable `message` text (or `error_number` where legacy parity needs it). TypeScript maps known messages to HTTP 400/403/404. |
-| **Install** | SQL batches: `scripts/hwy-phase1/db/install/hwy_db_*.sqlserver.sql`, repackaged in vertical-app **`hawiety`** (`npm run hawiety:pack` / **`npm run hawiety:install`**). When the package is enabled, `ensureHwyDbObjects()` may still apply drift on boot. Operator/CI: **`npm run hwy:db-objects`** (after control plane is `sqlserver`). Geo nomination list/count procs: **`npm run hwy:gen-nomination-procs`** before install. Legacy `hwy:phase1` runs the same install after HWY schema. Proc params: use `NVARCHAR(MAX)` or ≤4000 — not `NVARCHAR(8000)`. |
+| **Install** | SQL batches: `scripts/hwy-phase1/db/install/hwy_db_*.sqlserver.sql`, repackaged in vertical-app **`hawiety`** (`npm run hawiety:pack` / **`npm run hawiety:install`**). Canonical operator upgrade (DDL + satellites + procs): **`npm run schema:install-extensions -- --hwy`** — see [`data-model.md`](./data-model.md) schema ownership. Boot may still run `ensureHwyDbObjects()` idempotently. Also: **`npm run hwy:db-objects`** (procs only). Geo nomination list/count procs: **`npm run hwy:gen-nomination-procs`** before install. Legacy `hwy:phase1` runs full phase-1 including seed. Proc params: use `NVARCHAR(MAX)` or ≤4000 — not `NVARCHAR(8000)`. |
 | **Discover** | **`npm run hwy:scan-inline-sql`** — list inline `sequelize.query` in `src/server/domain/hwy` and flag complex SQL (SP candidates). |
 | **Verify (repeatable)** | **`npm run hwy:verify-db-objects`** — install SQL ↔ `execHwyProcedure` coverage (no DB). **`npm run hwy:verify-db-objects -- --install`** — also apply and match `sys.procedures`. **`npm run hwy:verify-db-objects:tests`** — Vitest install/coverage/integration. Agent skill: **`.claude/skills/appendo-build-hwy-db-objects/SKILL.md`**. |
 | **TypeScript caller** | Service validates auth/roles, resolves Base Info ids if needed, then **one** `sequelize.query('EXEC dbo.hwy_…', { replacements })`. Post-commit side effects only: cache/session/record-event when they cannot live in DB. |
@@ -35,7 +35,7 @@ Greenfield: one contract per operation — no parallel “TS path” and “SP p
 
 ## NEVER
 
-- **Write to legacy MembersV2** (production Hawiety SQL). Runtime and ETL open legacy only with `ApplicationIntent=ReadOnly` via `readLegacyConn()` / `connectLegacyReadPool()`; mutations stay on control-plane `hwy_*` procs and imported `HWY_*` tables on the AppEndO edge DB.
+- **Write to legacy MembersV2** (production Hawiety SQL). Runtime and ETL open legacy only with `ApplicationIntent=ReadOnly` via `readLegacyConn()` / `connectLegacyReadPool()`; mutations stay on control-plane `hwy_*` procs and edge `dbo.hwy_*` tables (finance: `hwy_payment_documents`, `hwy_masoolin_stars`, … — not PascalCase `HWY_*` imports).
 - Multi-statement Hawiety **decision** flows implemented only as a chain of `sequelize.query` without a DB object (except transient scaffolding before SP lands in the same task).
 - Copy-paste SQL batches between ETL and runtime services — ETL may call the same SP once it exists.
 - Drop or replace existing `hwy_*` functions/views without updating `ensureHwy*` installers and the audit backlog.
@@ -48,6 +48,7 @@ Greenfield: one contract per operation — no parallel “TS path” and “SP p
 | `dbo.hwy_base_info_*`, `dbo.hwy_region_*` | Title paths for member list view |
 | `dbo.vw_hwy_members` | Denormalized member read model |
 | `dbo.vw_hwy_candidate_pipeline_*` | Candidate pipeline stage lists (security / interview / courses / install) |
+| `dbo.vw_hwy_platform_users`, `dbo.vw_hwy_platform_roles`, `dbo.vw_hwy_platform_user_roles` | Platform auth projected to snake_case columns for Hawiety SQL (`hwy_legacy_edge_pipeline_compat.sqlserver.sql`) |
 | `hwy_geo_responsibility*.sqlserver.sql` | Request table DDL + indexes |
 
 ## Execution order for migrations

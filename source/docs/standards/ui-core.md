@@ -94,7 +94,7 @@ Fixed option lists (status, province, role, enum) use **`UiSelect`** with `<opti
 | Closed list + type-to-filter | `UiCombobox` |
 | Toolbar / dense filter chip | `ToolbarFilterSelect` or `UiSelectMenu` where the catalog says so |
 
-**Never** ship plain browser `<select>` or `preferNativeSelect` on product forms to “fix” overflow — set `nested`, `popoverPlacement`, and `shouldFlip` instead. **Only** allowed native escape: Appearance shell preferences panel (locked internal prefs).
+**Never** ship plain browser `<select>` or `preferNativeSelect` on product forms to “fix” overflow — set `nested`, `popoverPlacement`, and `shouldFlip` instead. Designer dialog hosts may still auto-fallback to native via `insideDesignerDialog`. CI: `npm run hygiene:prefer-native-select`.
 
 **IDs:** `ui.form.select.heroui-menu`
 

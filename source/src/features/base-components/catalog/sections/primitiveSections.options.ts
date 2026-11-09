@@ -396,11 +396,6 @@ export const PRIMITIVE_SECTION_DEFINITIONS: readonly PrimitiveSectionDefinition[
     ['userCard.fallback', 'content', 'public-prop', 'text', 'AL', undefined, 'fallback'],
     ['userCard.size', 'layout', 'public-prop', 'select', 'md', sizes, 'size'],
   ]),
-  opt('hwy-member-face', 'Hawiety member face', 'identity', 'Member-directory list avatar with blue username or red tracking code under the photo.', [
-    ['hwyMemberFace.username', 'content', 'public-prop', 'text', '710093', undefined, 'username'],
-    ['hwyMemberFace.trackingCode', 'content', 'public-prop', 'text', '1190786', undefined, 'trackingCode'],
-    ['hwyMemberFace.displayName', 'content', 'public-prop', 'text', 'Sample member', undefined, 'displayName'],
-  ]),
   opt('snippet', 'Snippet', 'data', 'Read-only code chrome with an optional copy control.', [
     ['snippet.code', 'content', 'public-prop', 'text', 'npm run test:critical', undefined, 'code'],
     ['snippet.language', 'content', 'public-prop', 'text', 'bash', undefined, 'language'],

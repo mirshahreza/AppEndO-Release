@@ -21,7 +21,7 @@ Under the **member avatar** on directory grids and the shared list face card:
 | Avatar + code only | `HwyMemberAvatarWithMembershipCode` (`src/shared/ui/hwy/`) |
 | Member-directory column 1 (avatar + name + meta) | `HwyMemberDirectoryListFaceCard` |
 | Designer grid cell | `HwyMemberDirectoryGridFaceCell` → above |
-| Base Components catalog | Section `hwy-member-face` (`/studio/base-components`) |
+| Identity components catalog | Short reference codes `hi.{section}.{variant}` (e.g. `hi.mdf.reg`) on `/hawiety/identity-components` |
 
 **Resolve caption** with `resolveHwyMemberDirectoryListFaceCaptionForScope(row, listScopeLegacy, fields)` on every member-directory list. Do **not** use `resolveHwyMemberFaceCaptionFromIdentity` for list rows (misses enrich fields; bypasses queue mode).
 

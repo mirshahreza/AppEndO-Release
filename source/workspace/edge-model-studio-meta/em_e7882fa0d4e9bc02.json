@@ -52,27 +52,11 @@
       "sortOrder": 60
     },
     {
-      "columnName": "can_join_general_body_code",
-      "formWidget": "lookup",
-      "developerNotes": "Picker filter: parent_id=220.008 (Security Clearance Answer).",
-      "group": "General body",
-      "sortOrder": 70
-    },
-    {
-      "columnName": "can_join_general_body_note",
-      "formWidget": "multiline",
-      "formWidgetProps": {
-        "rows": 2
-      },
-      "group": "General body",
-      "sortOrder": 80
-    },
-    {
       "columnName": "allows_responsibility_code",
       "formWidget": "lookup",
       "developerNotes": "Picker filter: parent_id=220.008 (Security Clearance Answer).",
       "group": "Responsibility",
-      "sortOrder": 90
+      "sortOrder": 70
     },
     {
       "columnName": "allows_responsibility_note",
@@ -81,12 +65,28 @@
         "rows": 2
       },
       "group": "Responsibility",
+      "sortOrder": 80
+    },
+    {
+      "columnName": "can_join_general_body_code",
+      "formWidget": "lookup",
+      "developerNotes": "Picker filter: parent_id=220.008 (Security Clearance Answer).",
+      "group": "General body",
+      "sortOrder": 90
+    },
+    {
+      "columnName": "can_join_general_body_note",
+      "formWidget": "multiline",
+      "formWidgetProps": {
+        "rows": 2
+      },
+      "group": "General body",
       "sortOrder": 100
     },
     {
       "columnName": "created_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 110
     },
@@ -100,24 +100,7 @@
   ],
   "associationMeta": [
     {
-      "relationKey": "ea_037cfa4f6cad4d09",
-      "displayLabel": "General body clearance",
-      "formWidget": "lookup",
-      "targetFilter": [
-        {
-          "column": "parent_id",
-          "op": "eq",
-          "value": "220.008"
-        },
-        {
-          "column": "is_active",
-          "op": "eq",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "relationKey": "ea_0d7a198cbebe4a34",
+      "relationKey": "ea_1aafaa50c7d042b3",
       "displayLabel": "Responsibility allowance",
       "formWidget": "lookup",
       "targetFilter": [
@@ -134,8 +117,8 @@
       ]
     },
     {
-      "relationKey": "ea_2828b4e435a34e96",
-      "displayLabel": "Responsibility clearance",
+      "relationKey": "ea_1c9b8066263b43b2",
+      "displayLabel": "General body clearance",
       "formWidget": "lookup",
       "targetFilter": [
         {
@@ -151,7 +134,13 @@
       ]
     },
     {
-      "relationKey": "ea_3b73845150d84827",
+      "relationKey": "ea_2b431b3775304ab9",
+      "displayLabel": "Created by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_2e29fc64cc774a86",
       "displayLabel": "Identity card clearance",
       "formWidget": "lookup",
       "targetFilter": [
@@ -168,15 +157,26 @@
       ]
     },
     {
-      "relationKey": "ea_645759d45ba94405",
+      "relationKey": "ea_b42893d8bfea45bb",
       "displayLabel": "Member",
       "formWidget": "lookup"
     },
     {
-      "relationKey": "ea_dadffcb6ef084736",
-      "displayLabel": "Created by",
-      "icon": "lucide:user",
-      "formWidget": "lookup"
+      "relationKey": "ea_e9ca8c5a0e0b4512",
+      "displayLabel": "Responsibility clearance",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.008"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
     }
   ],
   "extensions": {
@@ -210,5 +210,5 @@
     }
   },
   "created_at": "2026-09-16T13:15:04.963Z",
-  "updated_at": "2026-09-17T15:29:40.112Z"
+  "updated_at": "2026-11-08T18:48:31.281Z"
 }

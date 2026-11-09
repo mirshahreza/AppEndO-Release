@@ -187,7 +187,10 @@ export const AiProviderFormModal: React.FC<AiProviderFormModalProps> = ({
               <SettingsField label="Template">
                 <UiSelect
                   size="sm"
-                  preferNativeSelect
+                  nested
+                  clipSafePopover
+                  popoverPlacement="bottom"
+                  shouldFlip
                   className={SETTINGS_CONTROL_CLASS}
                   value={selectedTemplateId}
                   onChange={(event) => handleTemplateChange(event.target.value)}

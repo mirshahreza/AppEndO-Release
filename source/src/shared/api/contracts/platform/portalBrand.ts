@@ -1,3 +1,8 @@
+import {
+  APPENDO_BRAND_ASSET_ROOT,
+  APPENDO_LOGO_SRC,
+} from '../../../../config/appendoBrandAssets';
+
 /** Per-portal identity shown in chrome, about, and loading surfaces. */
 
 export type PortalBrand = {
@@ -22,7 +27,7 @@ export const PORTAL_BRAND_LOGO_URL_MAX = 500;
 export const DEFAULT_PORTAL_TITLE = 'AppEnd';
 
 /** Built-in logo — used when a portal has not uploaded a custom mark. */
-export const DEFAULT_PORTAL_LOGO_URL = '/assets/appendo-logo.png';
+export const DEFAULT_PORTAL_LOGO_URL = APPENDO_LOGO_SRC;
 
 /** Built-in About headline — used when a portal has not set `aboutTitle`. */
 export const DEFAULT_PORTAL_ABOUT_TITLE =
@@ -68,7 +73,7 @@ export function isAllowedPortalBrandLogoUrl(value: string): boolean {
     return false;
   }
 
-  if (pathOnly === DEFAULT_PORTAL_LOGO_URL) {
+  if (pathOnly === DEFAULT_PORTAL_LOGO_URL || pathOnly.startsWith(`${APPENDO_BRAND_ASSET_ROOT}/`)) {
     return true;
   }
 

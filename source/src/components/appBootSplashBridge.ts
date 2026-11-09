@@ -1,8 +1,13 @@
+import { isDefaultAppEndBrandLogoUrl } from '../config/appendoBrandAssets';
 import { classifyLoadingLogoShape, loadingLogoStageClassName } from './appRouteLoadingLogoStage';
 import { scheduleAppBootSplashDismiss } from './scheduleAppBootSplashDismiss';
 
 const BOOT_SPLASH_ID = 'app-boot-splash';
-const ALLOWED_LOGO_PREFIXES = ['/assets/workspace/portals/', '/assets/hawiety/', '/assets/appendo-logo'];
+const ALLOWED_LOGO_PREFIXES = [
+  '/assets/workspace/portals/',
+  '/assets/hawiety/',
+  '/assets/appendo/brand/',
+];
 
 function isBootSplashVisible(): boolean {
   const splash = document.getElementById(BOOT_SPLASH_ID);
@@ -34,7 +39,7 @@ export function syncAppBootSplashLogo(logoUrl: string | undefined): void {
   }
 
   const pathOnly = logoUrl?.trim().split('?')[0] ?? '';
-  if (!pathOnly || !isAllowedSplashLogo(pathOnly) || pathOnly.startsWith('/assets/appendo-logo')) {
+  if (!pathOnly || !isAllowedSplashLogo(pathOnly) || isDefaultAppEndBrandLogoUrl(pathOnly)) {
     return;
   }
 

@@ -1,4 +1,4 @@
-# AppEndO — Public release 0.0.3
+# AppEndO — Public release 0.0.4
 
 [![Release](https://img.shields.io/github/v/tag/mirshahreza/AppEndO-Release?label=release)](https://github.com/mirshahreza/AppEndO-Release/releases)
 
@@ -158,6 +158,8 @@ openssl rand -hex 32
 
 | Topic | Path |
 | --- | --- |
+| Why AppEndO | [Put Reins on AI Coding—and Build Beyond the Demo](source/docs/outreach/why-appendo.md) |
+| Why AppEndO (فارسی) | [نسخهٔ فارسی مقاله](source/docs/outreach/why-appendo-fa.md) |
 | Architecture | `source/src/ARCHITECTURE.md` |
 | Feature map | `source/docs/appendo-features.md` |
 | Data Studio | `source/docs/standards/data-studio.md` |
@@ -182,6 +184,6 @@ This **AppEndO-Release** repository is the designated **public OSS distribution*
 sha256sum cms-*.zip
 ```
 
-Platform version: **0.0.3** · Manifest created: see **`MANIFEST.json`**.
+Platform version: **0.0.4** · Manifest created: see **`MANIFEST.json`**.
 
 **Issues & contributions:** use the official upstream project channels; this repo tracks **published releases** (tags `vX.Y.Z`).

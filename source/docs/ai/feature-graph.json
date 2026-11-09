@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "generatedAt": "2026-11-04T16:54:02.736Z",
+  "generatedAt": "2026-11-08T15:11:24.053Z",
   "source": {
     "navigation": "src/config/platform-registry/navigation/studio.json",
     "pageModulesDir": "src/config/platform-registry/page-modules"
@@ -379,6 +379,29 @@
         ]
       },
       "tests": "src/features/git/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "hwy-identity-components",
+      "label": "hwy-identity-components",
+      "menuGroup": null,
+      "routePattern": "hwy-identity-components",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/hwy-identity-components.json",
+        "loaderRef": "hawiety:hwy-identity-components",
+        "page": "src/features/hwy-identity-components/HwyIdentityComponentsPage.tsx",
+        "feature": "src/features/hwy-identity-components/",
+        "domain": null,
+        "workspace": "HwyIdentityComponentsWorkspace"
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
       "notes": null
     },
     {

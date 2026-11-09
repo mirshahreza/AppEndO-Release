@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/phosphor-icons-CmiDDHYH.js","assets/react-vendor-CsZD9bLw.js"])))=>i.map(i=>d[i]);
-import{i_ as c}from"./index-pnGHLJUm.js";import"./react-vendor-CsZD9bLw.js";import"./tanstack-query-BjZ08O4H.js";let t=null;async function p(){if(t)return t;const e=await c(()=>import("./phosphor-icons-CmiDDHYH.js"),__vite__mapDeps([0,1])),r=Object.keys(e).filter(o=>!o.endsWith("Icon")).sort((o,a)=>o.localeCompare(a)).map(o=>[o,e[o]]);return t={entries:r,map:Object.fromEntries(r)},t}export{p as default};

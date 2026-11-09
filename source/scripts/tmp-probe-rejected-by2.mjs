@@ -33,7 +33,7 @@ const r = await pool.request().query(`
     ON staff_by_username.UserName = m.MembershipStatus_UpdatedBy
   LEFT JOIN dbo.HWY_Members staff_by_id WITH (NOLOCK)
     ON CAST(staff_by_id.Id AS VARCHAR(32)) = CAST(m.MembershipStatus_UpdatedBy AS VARCHAR(32))
-  LEFT JOIN dbo.AppEnd_Users staff_u WITH (NOLOCK)
+  LEFT JOIN dbo.vw_hwy_platform_users staff_u WITH (NOLOCK)
     ON CAST(staff_u.Id AS VARCHAR(32)) = CAST(m.MembershipStatus_UpdatedBy AS VARCHAR(32))
   WHERE m.MembershipStatus = 10856
     AND m.MembershipStatus_UpdatedBy IS NOT NULL

@@ -102,7 +102,6 @@ export const BASE_COMPONENTS_SECTION_THEME: Record<SectionId, BaseComponentsSect
   'range-calendar-grid': theme('indigo', 'cyan'),
   kbd: theme('cyan', 'slate'),
   'user-card': theme('rose', 'indigo'),
-  'hwy-member-face': theme('sky', 'rose'),
   snippet: theme('cyan', 'slate'),
   'hover-card': theme('violet', 'slate'),
   'context-menu': theme('violet', 'slate'),

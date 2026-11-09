@@ -36,13 +36,14 @@
     {
       "columnName": "released_at",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Reservation",
       "sortOrder": 50
     }
   ],
   "associationMeta": [
     {
-      "relationKey": "ea_97bcda1cd5c04c08",
+      "relationKey": "ea_1ae1accf7e9a4ddb",
       "displayLabel": "Member",
       "formWidget": "lookup"
     },
@@ -52,7 +53,7 @@
     }
   ],
   "extensions": {
-    "story": "## Purpose\n\nReserved usernames (الرقم التياري display id) before member activation.\n\n## Scenarios\n\n- **S1** / activation — reserve on submit, release on abandon.",
+    "story": "## Purpose\n\nPool of membership numbers (الرقم التياري). Public applicant tracking uses `hwy_members.id` only.\n\n## Scenarios\n\n- **S1** — numbers with `member_id IS NULL` are picked at random when local verification approves to active (`hwy_membership_apply_local_decision`).",
     "scenarioIds": [
       "S1"
     ],
@@ -72,5 +73,5 @@
     }
   },
   "created_at": "2026-09-16T13:15:05.011Z",
-  "updated_at": "2026-09-17T15:29:40.136Z"
+  "updated_at": "2026-11-08T18:48:31.563Z"
 }

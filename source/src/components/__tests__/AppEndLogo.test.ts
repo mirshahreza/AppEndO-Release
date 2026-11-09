@@ -59,6 +59,6 @@ describe('resolveAppEndLogoMark', () => {
         mark: true,
       }),
     ).toBe(false);
-    expect(APPENDO_LOGO_SRC).toBe('/assets/appendo-logo.png');
+    expect(APPENDO_LOGO_SRC).toContain('/assets/appendo/brand/');
   });
 });

@@ -21,7 +21,6 @@ import {
   UiVirtualizedList,
   UiDashboardCanvas,
 } from '../../../shared/ui';
-import { HwyMemberDirectoryListFaceCard } from '../../../shared/ui/hwy/HwyMemberDirectoryListFaceCard';
 import { parseDashboardFilterBarConfig } from '../../../domain/component-designer/designerDashboardFilterBarConfig';
 import { DesignerRuntimeFilterBar } from '../../../domain/component-designer/DesignerRuntimeFilterBar';
 import {
@@ -406,38 +405,6 @@ const PrimitiveLivingPreviewInner: React.FC<PrimitiveLivingPreviewProps> = ({
         fallback={asText(publicProps.fallback, 'AL')}
         size={size === 'sm' || size === 'lg' ? size : 'md'}
       />
-    );
-  }
-
-  if (sectionId === 'hwy-member-face') {
-    const username = asText(publicProps.username, '710093');
-    const trackingCode = asText(publicProps.trackingCode, '1190786');
-    const displayName = asText(publicProps.displayName, 'Sample member');
-    const row = {
-      id: trackingCode,
-      username,
-      trackingCode,
-      displayFullName: displayName,
-      birthYear: '1990',
-      membershipOn: '2020-01-01',
-      genderCode: 'male',
-    };
-    return (
-      <div className="max-w-xs">
-        <HwyMemberDirectoryListFaceCard
-          row={row}
-          fields={{
-            imageUrlField: 'avatarUrl',
-            fallbackTextField: 'displayFullName',
-            captionField: 'username',
-            captionFallbackField: 'trackingCode',
-            genderCodeField: 'genderCode',
-            avatarSizePx: 43,
-            primaryField: 'displayFullName',
-            secondaryField: 'birthYear',
-          }}
-        />
-      </div>
     );
   }
 

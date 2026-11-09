@@ -676,9 +676,9 @@ var init_executeDataSourceQuery = __esm({
   "src/shared/lib/executeDataSourceQuery.ts"() {
     EXECUTE_DATA_SOURCE_QUERY_MAX_ROWS = 200;
     EXECUTE_DATA_SOURCE_QUERY_MAX_BYTES = 512e3;
-    stripSqlComments = (sql22) => sql22.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
-    unwrapLeadingExplainSql = (sql22) => {
-      const match = stripSqlComments(sql22).trim().match(/^explain\s+(?:analyze\s+)?([\s\S]+)$/i);
+    stripSqlComments = (sql23) => sql23.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
+    unwrapLeadingExplainSql = (sql23) => {
+      const match = stripSqlComments(sql23).trim().match(/^explain\s+(?:analyze\s+)?([\s\S]+)$/i);
       if (!match) {
         return null;
       }
@@ -697,8 +697,8 @@ var init_executeDataSourceQuery = __esm({
     FORBIDDEN_EXECUTE_SQL_PATTERN = /\b(insert|update|delete|merge|drop|alter|truncate|create|replace|grant|revoke|attach|detach)\b/i;
     ALLOWED_EXECUTE_SQL_START = /^(select|with|pragma|call|exec|execute|explain)\b/i;
     ALLOWED_EXECUTE_SQL_START_WITH_WRITE = /^(select|with|pragma|call|exec|execute|explain|insert|update|delete|merge)\b/i;
-    validateExecuteDataSourceSql = (sql22, options2) => {
-      const trimmed = sql22.trim();
+    validateExecuteDataSourceSql = (sql23, options2) => {
+      const trimmed = sql23.trim();
       if (!trimmed) {
         return { ok: false, reason: "SQL is empty." };
       }
@@ -960,10 +960,10 @@ var init_EdgeDbRouter = __esm({
       sqliteConnectionCache.set(resolvedPath, connection);
       return connection;
     };
-    runSqliteQuery = async (source, sql22, params = [], context) => {
+    runSqliteQuery = async (source, sql23, params = [], context) => {
       const connection = ensureSqliteConnection(source, context);
-      const stmt = connection.prepare(sql22);
-      const isRead = /^\s*(select|pragma|with|explain)\b/i.test(sql22);
+      const stmt = connection.prepare(sql23);
+      const isRead = /^\s*(select|pragma|with|explain)\b/i.test(sql23);
       if (isRead) {
         const rows = stmt.all(...params);
         return {
@@ -980,12 +980,12 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    convertQuestionMarkSql = (sql22, params, prefix) => {
+    convertQuestionMarkSql = (sql23, params, prefix) => {
       if (!Array.isArray(params) || params.length === 0) {
-        return { sql: sql22, binds: [] };
+        return { sql: sql23, binds: [] };
       }
       let index = 0;
-      const nextSql = sql22.replace(/\?/g, () => {
+      const nextSql = sql23.replace(/\?/g, () => {
         index += 1;
         return `${prefix}${index}`;
       });
@@ -1104,8 +1104,8 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    querySqlServerPool = async (source, pool, sql22, params = []) => {
-      const converted = convertQuestionMarkSql(sql22, params, "@p");
+    querySqlServerPool = async (source, pool, sql23, params = []) => {
+      const converted = convertQuestionMarkSql(sql23, params, "@p");
       const request = pool.request();
       for (const bind of converted.binds) {
         request.input(bind.name, bind.value);
@@ -1185,24 +1185,24 @@ var init_EdgeDbRouter = __esm({
         connection.close();
       }
     };
-    runSqlServerQuery = async (source, sql22, params = []) => {
-      const explainInner = unwrapLeadingExplainSql(sql22);
+    runSqlServerQuery = async (source, sql23, params = []) => {
+      const explainInner = unwrapLeadingExplainSql(sql23);
       if (explainInner) {
         return runSqlServerShowPlan(source, explainInner);
       }
       const pool = await ensureSqlServerPool(source);
       try {
-        return await querySqlServerPool(source, pool, sql22, params);
+        return await querySqlServerPool(source, pool, sql23, params);
       } catch (error) {
         if (!isSqlServerConnectionClosedError(error)) {
           throw error;
         }
         await dropCachedSqlServerPool(source);
         const retryPool = await ensureSqlServerPool(source);
-        return querySqlServerPool(source, retryPool, sql22, params);
+        return querySqlServerPool(source, retryPool, sql23, params);
       }
     };
-    runPostgresQuery = async (source, sql22, params = []) => {
+    runPostgresQuery = async (source, sql23, params = []) => {
       let pool = pgPoolCache.get(`pg:${source.id}`);
       if (!pool) {
         const moduleName = "pg";
@@ -1219,7 +1219,7 @@ var init_EdgeDbRouter = __esm({
         pgPoolCache.set(`pg:${source.id}`, pool);
       }
       let pIndex = 0;
-      const pgSql = sql22.replace(/\?/g, () => {
+      const pgSql = sql23.replace(/\?/g, () => {
         const value = params[pIndex];
         const placeholder = `$${++pIndex}`;
         return typeof value === "string" ? `${placeholder}::text` : placeholder;
@@ -1232,7 +1232,7 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    runMySqlQuery = async (source, sql22, params = []) => {
+    runMySqlQuery = async (source, sql23, params = []) => {
       let pool = mysqlPoolCache.get(source.id);
       if (!pool) {
         const moduleName = "mysql2/promise";
@@ -1250,7 +1250,7 @@ var init_EdgeDbRouter = __esm({
         });
         mysqlPoolCache.set(source.id, pool);
       }
-      const [rows] = await pool.execute(sql22, params);
+      const [rows] = await pool.execute(sql23, params);
       if (Array.isArray(rows)) {
         return {
           data: rows,
@@ -1265,7 +1265,7 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    runOracleQuery = async (source, sql22, params = []) => {
+    runOracleQuery = async (source, sql23, params = []) => {
       let connection = oracleConnectionCache.get(source.id);
       if (!connection) {
         const moduleName = "oracledb";
@@ -1279,7 +1279,7 @@ var init_EdgeDbRouter = __esm({
         });
         oracleConnectionCache.set(source.id, connection);
       }
-      const converted = convertQuestionMarkSql(sql22, params, ":p");
+      const converted = convertQuestionMarkSql(sql23, params, ":p");
       const binds = {};
       for (const bind of converted.binds) {
         binds[bind.name] = bind.value;
@@ -2675,10 +2675,10 @@ var init_controlPlaneSchemaDiff = __esm({
       const last = parts[parts.length - 1] ?? raw.trim();
       return last.toLowerCase();
     };
-    extractSqlTargetTables = (sql22) => {
+    extractSqlTargetTables = (sql23) => {
       const tables = [];
       const seen = /* @__PURE__ */ new Set();
-      for (const match of sql22.matchAll(SQL_TABLE_REF_RE)) {
+      for (const match of sql23.matchAll(SQL_TABLE_REF_RE)) {
         const name = normalizeSqlTableName(match[1] ?? "");
         if (!name || seen.has(name)) continue;
         if (name === "select") continue;
@@ -2745,6 +2745,85 @@ var init_controlPlaneSchemaDiff = __esm({
   }
 });
 
+// src/config/controlPlaneSchemaOwnership.ts
+var CONTROL_PLANE_SCHEMA_LAYER_IDS, CONTROL_PLANE_SCHEMA_OWNERSHIP_LAYERS, CONTROL_PLANE_SCHEMA_PROTECTED_TABLE_NAMES;
+var init_controlPlaneSchemaOwnership = __esm({
+  "src/config/controlPlaneSchemaOwnership.ts"() {
+    CONTROL_PLANE_SCHEMA_LAYER_IDS = {
+      prismaControlPlane: "prisma-control-plane",
+      sequelizeFeatureExtensions: "sequelize-feature-extensions",
+      hwyPackageCoreDdl: "hwy-package-core-ddl",
+      hwyPackageSatelliteDdl: "hwy-package-satellite-ddl",
+      hwyPackageDbObjects: "hwy-package-db-objects",
+      edgePackageModels: "edge-package-models"
+    };
+    CONTROL_PLANE_SCHEMA_OWNERSHIP_LAYERS = [
+      {
+        id: CONTROL_PLANE_SCHEMA_LAYER_IDS.prismaControlPlane,
+        title: "Prisma control plane (base_* in schema.prisma)",
+        source: "prisma/schema.prisma",
+        upgradeCommand: "npm run db:sync-schema",
+        notes: "Legacy access path; new base_* tables target Sequelize per data-model.md."
+      },
+      {
+        id: CONTROL_PLANE_SCHEMA_LAYER_IDS.sequelizeFeatureExtensions,
+        title: "Sequelize feature extensions (base_* not in Prisma)",
+        source: "src/server/db/ensureControlPlaneFeatureTables.ts",
+        upgradeCommand: "npm run schema:install-extensions",
+        notes: "Version marker: CONTROL_PLANE_SEQUELIZE_FEATURE_SCHEMA_VERSION in controlPlaneBootMarkers.ts."
+      },
+      {
+        id: CONTROL_PLANE_SCHEMA_LAYER_IDS.hwyPackageCoreDdl,
+        title: "Hawiety core tables (hwy_schema.sqlserver.sql)",
+        source: "scripts/hwy-phase1/db/install/hwy_schema.sqlserver.sql",
+        upgradeCommand: "npm run schema:install-extensions:hwy",
+        notes: "Also: npm run hwy:phase1 for full phase-1 (seed + edge models)."
+      },
+      {
+        id: CONTROL_PLANE_SCHEMA_LAYER_IDS.hwyPackageSatelliteDdl,
+        title: "Hawiety satellite DDL patches",
+        source: "scripts/hwy-phase1/db/install/*.sql + inline ensureHwy*Schema.ts",
+        upgradeCommand: "npm run schema:install-extensions:hwy"
+      },
+      {
+        id: CONTROL_PLANE_SCHEMA_LAYER_IDS.hwyPackageDbObjects,
+        title: "Hawiety procedures / views / functions",
+        source: "scripts/hwy-phase1/db/install/hwy_db_*.sqlserver.sql",
+        upgradeCommand: "npm run hwy:db-objects",
+        notes: "Ordered list: ensureHwyDbObjects SQL_INSTALL_ORDER."
+      },
+      {
+        id: CONTROL_PLANE_SCHEMA_LAYER_IDS.edgePackageModels,
+        title: "Edge / package tables (cms_*, designer data sources)",
+        source: "workspace/edge-models + package install SQL",
+        upgradeCommand: "Package-specific install / Data Studio deploy",
+        notes: "Not applied by db:sync-schema; never drop via destructive Prisma push."
+      }
+    ];
+    CONTROL_PLANE_SCHEMA_PROTECTED_TABLE_NAMES = [
+      "base_control_plane_boot_markers",
+      "_prisma_migrations"
+    ];
+  }
+});
+
+// src/server/db/controlPlaneSchemaProtectedTables.ts
+var resolveControlPlaneSchemaProtectedTables;
+var init_controlPlaneSchemaProtectedTables = __esm({
+  "src/server/db/controlPlaneSchemaProtectedTables.ts"() {
+    init_controlPlaneSchemaOwnership();
+    init_controlPlaneSchemaDiff();
+    resolveControlPlaneSchemaProtectedTables = (env2 = process.env) => {
+      const fromEnv = readSchemaDiffTableNameListsFromEnv(env2).protectedTables;
+      const merged = /* @__PURE__ */ new Set([
+        ...CONTROL_PLANE_SCHEMA_PROTECTED_TABLE_NAMES.map((n) => n.toLowerCase()),
+        ...fromEnv
+      ]);
+      return merged;
+    };
+  }
+});
+
 // src/server/db/controlPlaneSchemaPush.ts
 var import_fs3, import_os2, import_path4, import_node_child_process, SCHEMA_PATH, GENERATED_CLASS_PATH, readGeneratedPrismaActiveProvider, generatePrismaClientForRuntimeProvider, readActiveSchemaProvider, PROVIDERS_WITHOUT_MULTIPLE_CASCADE_PATHS, patchReferentialActionsForRestrictedProviders, patchPrismaSchemaForProvider, buildProviderPatchedSchemaContent, createProviderSchemaSession, quoteCliArg, AI_AGENT_ENV_KEYS, isAiAgentEnvKey, CONTROL_PLANE_SCHEMA_PUSH_CONSENT, buildPrismaCliEnv, dropLegacyPostgresBaseViews, writeTempPrismaConfig, isMissingDatabaseError, ensureSqliteFileExists, migrateDiffToSchema, CONTROL_PLANE_SCHEMA_PUSH_DESTRUCTIVE_ENV, isDestructiveControlPlaneSchemaPushRequested, applyAdditiveControlPlaneSchema, bufferToUtf8, formatPrismaCliFailure, runPrismaCliCapture, runPrismaCli, generatePrismaClient, UNICODE_UPGRADE_SCRIPT, prepareSqlServerDatabaseForSchemaPush, pushPrismaSchema, INSTALL_WIZARD_SCHEMA_RESET_CONSENT, forceResetControlPlaneSchemaWithPrisma, pushControlPlaneSchema, restoreDefaultPrismaGenerate, reconcilePrismaClientAfterSchemaOperation;
 var init_controlPlaneSchemaPush = __esm({
@@ -2755,6 +2834,7 @@ var init_controlPlaneSchemaPush = __esm({
     import_node_child_process = require("node:child_process");
     init_controlPlaneDatabase();
     init_controlPlaneSchemaDiff();
+    init_controlPlaneSchemaProtectedTables();
     init_generatedPrismaClientRuntime();
     SCHEMA_PATH = import_path4.default.join(process.cwd(), "prisma", "schema.prisma");
     GENERATED_CLASS_PATH = import_path4.default.join(process.cwd(), "src", "generated", "prisma", "internal", "class.ts");
@@ -2969,9 +3049,13 @@ var init_controlPlaneSchemaPush = __esm({
         }
         const prismaTables = listPrismaMappedTableNames(import_fs3.default.readFileSync(schemaPath, "utf8"));
         const extraNames = readSchemaDiffTableNameListsFromEnv();
+        const protectedTables = resolveControlPlaneSchemaProtectedTables();
+        for (const name of extraNames.protectedTables) {
+          protectedTables.add(name);
+        }
         const filtered = filterControlPlaneSchemaDiffSql(script, {
           prismaTables,
-          protectedTables: extraNames.protectedTables,
+          protectedTables,
           allowDropTables: extraNames.allowDropTables
         });
         if (filtered.skipped.length > 0) {
@@ -5143,9 +5227,9 @@ var init_database = __esm({
     ];
     SEED_ELEVATED_PLATFORM_ROLES = ["ADMIN", "DEVELOPER"];
     ROLE_ID_SEQUENCE_START = 1e3;
-    toPositionalParams = (sql22) => {
+    toPositionalParams = (sql23) => {
       let i = 0;
-      return sql22.replace(/\?/g, () => `$${++i}`);
+      return sql23.replace(/\?/g, () => `$${++i}`);
     };
   }
 });
@@ -5260,9 +5344,9 @@ var init_AuthAuditDbBatcher = __esm({
       insertBatch: async (entries) => {
         if (entries.length === 0) return;
         const rows = entries.map(mapAuthAuditEntryToRowValues);
-        const sql22 = buildAuthAuditBatchInsertSql(rows.length);
+        const sql23 = buildAuthAuditBatchInsertSql(rows.length);
         const values = flattenAuthAuditRowValues(rows);
-        await pool.query(sql22, values);
+        await pool.query(sql23, values);
       }
     });
   }
@@ -5346,9 +5430,9 @@ var init_LogDbBatcher = __esm({
       insertBatch: async (batch) => {
         if (batch.length === 0) return;
         const rows = batch.map(mapLogRecordToRowValues);
-        const sql22 = buildAppLogBatchInsertSql(rows.length);
+        const sql23 = buildAppLogBatchInsertSql(rows.length);
         const values = flattenAppLogRowValues(rows);
-        await pool.query(sql22, values);
+        await pool.query(sql23, values);
       }
     });
   }
@@ -5682,14 +5766,14 @@ var init_requestPerfAls = __esm({
       queryCount: 0,
       queries: []
     });
-    truncateSql = (sql22) => {
-      const normalized = sql22.replace(/\s+/g, " ").trim();
+    truncateSql = (sql23) => {
+      const normalized = sql23.replace(/\s+/g, " ").trim();
       if (normalized.length <= MAX_SQL_LENGTH) {
         return normalized;
       }
       return `${normalized.slice(0, MAX_SQL_LENGTH)}\u2026`;
     };
-    recordSequelizeQueryTiming = (source, sql22, timingMs) => {
+    recordSequelizeQueryTiming = (source, sql23, timingMs) => {
       const store = getRequestPerfStore();
       if (!store) {
         return;
@@ -5702,7 +5786,7 @@ var init_requestPerfAls = __esm({
       if (store.queries.length < MAX_QUERIES_PER_REQUEST) {
         store.queries.push({
           ms,
-          sql: truncateSql(sql22),
+          sql: truncateSql(sql23),
           source,
           rowCount: null
         });
@@ -5733,8 +5817,8 @@ var createSequelizeProfilerLogging, appendoSequelizeProfilerOptions;
 var init_sequelizeQueryLogger = __esm({
   "src/server/domain/perf/sequelizeQueryLogger.ts"() {
     init_requestPerfAls();
-    createSequelizeProfilerLogging = (source) => (sql22, timingMs) => {
-      recordSequelizeQueryTiming(source, sql22, timingMs);
+    createSequelizeProfilerLogging = (source) => (sql23, timingMs) => {
+      recordSequelizeQueryTiming(source, sql23, timingMs);
     };
     appendoSequelizeProfilerOptions = (source) => ({
       logging: createSequelizeProfilerLogging(source),
@@ -5744,6 +5828,16 @@ var init_sequelizeQueryLogger = __esm({
 });
 
 // src/server/db/controlPlaneSequelize.ts
+var controlPlaneSequelize_exports = {};
+__export(controlPlaneSequelize_exports, {
+  buildMssqlControlPlaneSequelizeOptions: () => buildMssqlControlPlaneSequelizeOptions,
+  closeControlPlaneSequelize: () => closeControlPlaneSequelize,
+  controlPlaneSequelizeSyncOptions: () => controlPlaneSequelizeSyncOptions,
+  dialectForProvider: () => dialectForProvider,
+  getControlPlaneSequelize: () => getControlPlaneSequelize,
+  patchMssqlAlterColumnDefaults: () => patchMssqlAlterColumnDefaults,
+  rewriteMssqlChangeColumnQuery: () => rewriteMssqlChangeColumnQuery
+});
 var import_sequelize, GLOBAL_KEY, dialectForProvider, sqliteStorageFromUrl, postgresUrl, DEFAULT_IN_DEFINITION, physicalTableName, rewriteMssqlChangeColumnQuery, patchMssqlAlterColumnDefaults, buildMssqlControlPlaneSequelizeOptions, createSequelize, getControlPlaneSequelize, closeControlPlaneSequelize, controlPlaneSequelizeSyncOptions;
 var init_controlPlaneSequelize = __esm({
   "src/server/db/controlPlaneSequelize.ts"() {
@@ -9330,18 +9424,18 @@ function buildDatasheetSelectSql(input) {
   }
   return `SELECT ${cols} FROM ${table}${where} LIMIT ${limit}`;
 }
-function stripQuotedSqlRegions(sql22) {
+function stripQuotedSqlRegions(sql23) {
   let out = "";
   let index = 0;
-  while (index < sql22.length) {
-    const char = sql22[index];
+  while (index < sql23.length) {
+    const char = sql23[index];
     if (char === "'" || char === '"' || char === "`") {
       const quote = char;
       out += " ";
       index += 1;
-      while (index < sql22.length) {
-        if (sql22[index] === quote) {
-          if (sql22[index + 1] === quote) {
+      while (index < sql23.length) {
+        if (sql23[index] === quote) {
+          if (sql23[index + 1] === quote) {
             out += "  ";
             index += 2;
             continue;
@@ -9358,11 +9452,11 @@ function stripQuotedSqlRegions(sql22) {
     if (char === "[") {
       out += " ";
       index += 1;
-      while (index < sql22.length && sql22[index] !== "]") {
+      while (index < sql23.length && sql23[index] !== "]") {
         out += " ";
         index += 1;
       }
-      if (index < sql22.length) {
+      if (index < sql23.length) {
         out += " ";
         index += 1;
       }
@@ -9510,12 +9604,12 @@ var init_datasheetWhereSql = __esm({
         throw new Error("Only a filter expression is allowed \u2014 not a changing statement.");
       }
     };
-    extractLimit = (sql22) => {
-      const top = sql22.match(/^select\s+top\s*\(?\s*(\d+)\s*\)?/i);
+    extractLimit = (sql23) => {
+      const top = sql23.match(/^select\s+top\s*\(?\s*(\d+)\s*\)?/i);
       if (top) {
         return assertDatasheetLimit(top[1]);
       }
-      const exposed = stripQuotedSqlRegions(sql22);
+      const exposed = stripQuotedSqlRegions(sql23);
       const fetch2 = exposed.match(/\bfetch\s+(?:first|next)\s+(\d+)/i);
       if (fetch2) {
         return assertDatasheetLimit(fetch2[1]);
@@ -9526,8 +9620,8 @@ var init_datasheetWhereSql = __esm({
       }
       return DATASHEET_WINDOW_DEFAULT_PAGE_SIZE;
     };
-    extractSelectList = (sql22) => {
-      let rest = sql22.replace(/^select\s+/i, "");
+    extractSelectList = (sql23) => {
+      let rest = sql23.replace(/^select\s+/i, "");
       rest = rest.replace(/^top\s*\(?\s*\d+\s*\)?\s+/i, "");
       rest = rest.replace(/^distinct\s+/i, "");
       const fromMatch = rest.match(/^([\s\S]+?)\s+from\b/i);
@@ -14721,7 +14815,7 @@ var init_projectStandards = __esm({
         {
           id: "ui.form.select.heroui-menu",
           title: "Closed-Set Pickers Use UiSelect Menu",
-          value: "fixed option lists on product forms use UiSelect with HeroUI trigger and listbox menu (Base Components selection-fields living sample) \u2014 not native HTML select and not UiSelect preferNativeSelect; use placeholder for empty state; when inside clipped wizards/cards/dialogs pass clipSafePopover (or nested on bordered nested surfaces) plus popoverPlacement/shouldFlip so the portaled menu stays visible; typeable filterable enums use UiCombobox; only Appearance shell preferences may keep preferNativeSelect \u2014 see docs/standards/ui-core.md \xA7Closed-set pickers",
+          value: "fixed option lists on product forms use UiSelect with HeroUI trigger and listbox menu (Base Components selection-fields living sample) \u2014 not native HTML select and not UiSelect preferNativeSelect; use placeholder for empty state; when inside clipped wizards/cards/dialogs pass clipSafePopover (or nested on bordered nested surfaces) plus popoverPlacement/shouldFlip so the portaled menu stays visible; typeable filterable enums use UiCombobox; enforce with npm run hygiene:prefer-native-select \u2014 see docs/standards/ui-core.md \xA7Closed-set pickers",
           appliesTo: ["UiSelect", "UiCombobox", "form fields", "wizards", "public portals", "Base Components"]
         },
         {
@@ -15164,7 +15258,7 @@ var init_projectStandards = __esm({
         {
           id: "ui.responsive.selective",
           title: "Selective Responsive Platform",
-          value: 'desktop-first chrome, all studio pages work on phone and tablet: stacked toolbars, presentation=auto grids, CreateEditModalShell near-fullscreen on phone and tablet; do not set minViewport:"desktop" on studio route nav or pageKeys (Server Functions, Git, Data Studio, File Manager, SSH/RDP/Sftp stay reachable below 1024px); optional minViewport on a custom/published binding still hides that nav item via filterAdminShellNavByViewport and renders DesktopOnlyGate on deep link; studio chrome: phone and tablet hamburger overlay drawer (no docked rail, no hover flyouts); desktop >=1024 expandable docked rail \u2014 do not change desktop >=1024; compact chrome keeps the AppEnd mark-only logo (appendo-logo-only.png) in the header and overlay drawer on phone and tablet; desktop lockup stays appendo-logo.png; page guide hidden on phone, available on tablet+; use viewportTokens.ts + useViewportTier + isOverlayNavTier + isCompactChromeTier (phone <=399, tablet 400-1023, desktop >=1024); AI panel overlay full-screen on phone and tablet (not docked); settings section select on phone; see docs/standards/ui-responsive.md',
+          value: 'desktop-first chrome, all studio pages work on phone and tablet: stacked toolbars, presentation=auto grids, CreateEditModalShell near-fullscreen on phone and tablet; do not set minViewport:"desktop" on studio route nav or pageKeys (Server Functions, Git, Data Studio, File Manager, SSH/RDP/Sftp stay reachable below 1024px); optional minViewport on a custom/published binding still hides that nav item via filterAdminShellNavByViewport and renders DesktopOnlyGate on deep link; studio chrome: phone and tablet hamburger overlay drawer (no docked rail, no hover flyouts); desktop >=1024 expandable docked rail \u2014 do not change desktop >=1024; compact chrome keeps the AppEnd mark-only logo (appendo-mark-currentColor.svg) in the header and overlay drawer on phone and tablet; desktop lockup stays appendo-wordmark-currentColor.svg under `/assets/appendo/brand/`; page guide hidden on phone, available on tablet+; use viewportTokens.ts + useViewportTier + isOverlayNavTier + isCompactChromeTier (phone <=399, tablet 400-1023, desktop >=1024); AI panel overlay full-screen on phone and tablet (not docked); settings section select on phone; see docs/standards/ui-responsive.md',
           appliesTo: ["admin shell", "route bindings", "nav registry", "mobile layouts", "new routes"]
         },
         {
@@ -15522,6 +15616,17 @@ var init_projectStandards = __esm({
             "prisma db push",
             "platform upgrade",
             "domain package tables"
+          ]
+        },
+        {
+          id: "data.control-plane.schema-ownership",
+          title: "Control-Plane Schema Ownership Layers",
+          value: "Non-Prisma schema has canonical upgrade commands per layer (controlPlaneSchemaOwnership.ts): db:sync-schema for prisma/schema.prisma; schema:install-extensions for Sequelize feature base_* tables; schema:install-extensions --hwy for Hawiety DDL + satellites + hwy:db-objects; schema:ownership-report for live classification; default protected-table merge includes hwy_/cms_/zz_ prefixes; Hawiety schema-ownership dev closeout CLOSED 2026-11-09 \u2014 scripts/schema/schema-ownership-closeout.md",
+          appliesTo: [
+            "control plane",
+            "schema sync",
+            "hawiety package",
+            "platform upgrade"
           ]
         },
         {
@@ -15940,7 +16045,7 @@ var init_projectStandards = __esm({
         {
           id: "package.hawiety.member-face-caption",
           title: "Hawiety member-directory avatar caption (username vs tracking)",
-          value: "member-directory list avatar code line MUST use HwyMemberAvatarWithMembershipCode / HwyMemberDirectoryListFaceCard / HwyMemberDirectoryGridFaceCell (Base Components hwy-member-face) and resolveHwyMemberDirectoryListFaceCaptionForScope(row, listScopeLegacy) \u2014 never resolveHwyMemberFaceCaptionFromIdentity on list rows; six-digit allocated username blue else tracking red; Waited/Marfoozeh/pending-institute scopes tracking-only (never blue); server lists MUST finish with applyHwyMemberDirectoryListFaceCaptionUsernames(rows, { listScopeLegacy }); npm run test:hwy-member-face-caption; shard package-hawiety-member-face-caption; barrel hwyMemberDirectoryFaceCaptionContract.ts",
+          value: "member-directory list avatar code line MUST use HwyMemberAvatarWithMembershipCode / HwyMemberDirectoryListFaceCard / HwyMemberDirectoryGridFaceCell (Hawiety /hawiety/identity-components, section member-directory-face) and resolveHwyMemberDirectoryListFaceCaptionForScope(row, listScopeLegacy) \u2014 never resolveHwyMemberFaceCaptionFromIdentity on list rows; six-digit allocated username blue else tracking red; Waited/Marfoozeh/pending-institute scopes tracking-only (never blue); server lists MUST finish with applyHwyMemberDirectoryListFaceCaptionUsernames(rows, { listScopeLegacy }); npm run test:hwy-member-face-caption; shard package-hawiety-member-face-caption; barrel hwyMemberDirectoryFaceCaptionContract.ts",
           appliesTo: [
             "Hawiety member-directory lists",
             "GET /api/hwy/member-directory",
@@ -15965,8 +16070,8 @@ var init_projectStandards = __esm({
         },
         {
           id: "package.hawiety.domain-invariants",
-          title: "Hawiety \u2014 electoral tree single anchor per role holder",
-          value: "One member MAY hold multiple Hawiety operational roles; all electoral-tree-scoped roles for that person MUST share exactly one geo_level and one node (legacy_geo_id / geo_base_info_id) \u2014 never two approved anchors on different levels or nodes; moves via nomination/removal not additive second anchor; nakhebin join and plain membership are out of scope; enforce in hwy_geo_responsibility_* / hwy_member_area_limits / geo scope writes when extending role assignment; operator mirror section electoral-tree-role-anchor in business-rules reference + npm run hwy:business-rules:seed; shard package-hawiety-domain-invariants",
+          title: "Hawiety \u2014 electoral tree geo assignment (process vs direct)",
+          value: "One member MAY hold multiple roles; one geo_level at a time \u2014 process path (geo responsibility) = exactly one node; direct path (employees list role+region) MAY assign multiple approved nodes on the same level; cross-level approved anchors are drift \u2014 skipped in hwy:etl:legacy-edge-parity and geo-responsibility ETL (hwyMemberAreaLimitsCrossLevelEtl), purge via hwy:etl:purge-cross-level-area-limits; same-level multi-row expected; nakhebin join and plain membership out of scope; operator mirror electoral-tree-role-anchor + hwy:business-rules:seed; shard package-hawiety-domain-invariants; probe schema:area-limits-invariant fails on cross-level only",
           appliesTo: [
             "Hawiety package",
             "hwy-geo-responsibility",
@@ -22451,7 +22556,6 @@ var init_baseComponentsSections = __esm({
       { id: "range-calendar-grid", label: "Range calendar", group: "pickers" },
       { id: "kbd", label: "Keyboard", group: "data" },
       { id: "user-card", label: "User card", group: "identity" },
-      { id: "hwy-member-face", label: "Hawiety member face", group: "identity" },
       { id: "snippet", label: "Snippet", group: "data" },
       { id: "hover-card", label: "Hover card", group: "overlays" },
       { id: "context-menu", label: "Context menu", group: "overlays" },
@@ -23403,11 +23507,6 @@ var init_primitiveSections_options = __esm({
         ["userCard.description", "content", "public-prop", "text", "Product designer", void 0, "description"],
         ["userCard.fallback", "content", "public-prop", "text", "AL", void 0, "fallback"],
         ["userCard.size", "layout", "public-prop", "select", "md", sizes, "size"]
-      ]),
-      opt("hwy-member-face", "Hawiety member face", "identity", "Member-directory list avatar with blue username or red tracking code under the photo.", [
-        ["hwyMemberFace.username", "content", "public-prop", "text", "710093", void 0, "username"],
-        ["hwyMemberFace.trackingCode", "content", "public-prop", "text", "1190786", void 0, "trackingCode"],
-        ["hwyMemberFace.displayName", "content", "public-prop", "text", "Sample member", void 0, "displayName"]
       ]),
       opt("snippet", "Snippet", "data", "Read-only code chrome with an optional copy control.", [
         ["snippet.code", "content", "public-prop", "text", "npm run test:critical", void 0, "code"],
@@ -25751,7 +25850,6 @@ var init_catalogSections_options = __esm({
       "range-calendar-grid": ["UiRangeCalendar"],
       kbd: ["UiKbd"],
       "user-card": ["UiUserCard"],
-      "hwy-member-face": ["HwyMemberAvatarWithMembershipCode", "HwyMemberDirectoryListFaceCard"],
       snippet: ["UiSnippet"],
       "hover-card": ["UiHoverCard"],
       "context-menu": ["UiContextMenu"],
@@ -44867,6 +44965,7 @@ var init_hawiety_iq = __esm({
       "hwy.membership.action.rejectFinal": "\u0631\u0641\u0636 \u0646\u0647\u0627\u0626\u064A",
       "hwy.membership.action.rejectReturn": "\u0631\u0641\u0636 (\u0642\u0627\u0628\u0644 \u0644\u0644\u0625\u0631\u062C\u0627\u0639)",
       "hwy.membership.action.returnToLocal": "\u0625\u0639\u0627\u062F\u0629 \u0644\u0644\u0645\u062D\u0644\u064A",
+      "hwy.membership.action.reactivate": "\u0627\u0639\u0627\u062F\u0629 \u0627\u0644\u062A\u0641\u0639\u064A\u0644",
       "hwy.membership.action.unreject": "\u0625\u0631\u062C\u0627\u0639 \u0625\u0644\u0649 \u0627\u0644\u0637\u0627\u0628\u0648\u0631",
       "hwy.membership.action.verificationHistoryByActor": "\u062C\u0645\u064A\u0639 \u062A\u0648\u062B\u064A\u0642\u0627\u062A\u0647",
       "hwy.membership.action.verificationHistoryByMember": "\u0633\u062C\u0644 \u0627\u0644\u062A\u0648\u062B\u064A\u0642\u0627\u062A",
@@ -44978,6 +45077,12 @@ var init_hawiety_iq = __esm({
       "nav.group.system management": "\u0627\u062F\u0627\u0631\u0629 \u0627\u0644\u0646\u0638\u0627\u0645",
       "nav.hwy-business-rules-reference": "\u0645\u0631\u062C\u0639 \u0642\u0648\u0627\u0646\u064A\u0646 \u0627\u0644\u0647\u0648\u064A\u0629",
       "nav.hwy-business-rules-reference.description": "\u0627\u0642\u0631\u0623 \u0642\u0648\u0627\u0639\u062F \u0627\u0644\u0639\u0636\u0648\u064A\u0629 \u0648\u0627\u0644\u0645\u0644\u0641 \u0648\u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062A \u0627\u0644\u0645\u0637\u0628\u0651\u0642\u0629 \u0641\u064A \u0628\u0627\u0642\u0629 \u0627\u0644\u0647\u0648\u064A\u0629 (\u0644\u0627 \u064A\u0634\u0645\u0644 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A).",
+      "nav.hwy-etl-console": "\u0644\u0648\u062D\u0629 \u0627\u0633\u062A\u064A\u0631\u0627\u062F \u0627\u0644\u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0642\u062F\u064A\u0645\u0629",
+      "nav.hwy-etl-console.description": "\u062A\u0634\u063A\u064A\u0644 \u0645\u0647\u0627\u0645 \u0627\u0633\u062A\u064A\u0631\u0627\u062F \u0627\u0644\u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0642\u062F\u064A\u0645\u0629 \u0645\u0646 \u0627\u0644\u0645\u062A\u0635\u0641\u062D \u062F\u0648\u0646 \u0637\u0631\u0641\u064A\u0629.",
+      "nav.hwy-employees-list": "\u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646",
+      "nav.hwy-employees-list.description": "\u062A\u0635\u0641\u0651\u062D \u062D\u0633\u0627\u0628\u0627\u062A \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646\u060C \u0627\u0644\u0623\u062F\u0648\u0627\u0631\u060C \u062D\u062F\u0648\u062F \u0627\u0644\u062C\u0646\u0633 \u0648\u0627\u0644\u0645\u0624\u0633\u0633\u0629\u060C \u0648\u0635\u062F\u0651\u0631 \u0627\u0644\u0642\u0648\u0627\u0626\u0645.",
+      "nav.hwy-identity-components": "\u0645\u0643\u0648\u0651\u0646\u0627\u062A \u0647\u0648\u064A\u0629 \u0627\u0644\u0628\u0648\u0627\u0628\u0629",
+      "nav.hwy-identity-components.description": "\u0643\u062A\u0627\u0644\u0648\u062C \u062D\u064A\u0651 \u0644\u0645\u0643\u0648\u0651\u0646\u0627\u062A \u0648\u0627\u062C\u0647\u0629 \u0647\u0648\u064A\u0629 \u0627\u0644\u0647\u0648\u064A\u0629 \u0645\u0639 \u0628\u064A\u0627\u0646\u0627\u062A \u0639\u064A\u0651\u0646\u0629 \u0648\u0627\u0642\u0639\u064A\u0629.",
       "nav.hwy-institutes": "\u0627\u0644\u0645\u0624\u0633\u0633\u0627\u062A",
       "nav.hwy-institutes.description": "\u0623\u0646\u0634\u0626 \u0627\u0644\u0645\u0624\u0633\u0633\u0627\u062A \u0648\u0639\u062F\u0651\u0644\u0647\u0627: \u0627\u0644\u0634\u0639\u0627\u0631\u060C \u0642\u0648\u0627\u0639\u062F \u0627\u0644\u062F\u0639\u0648\u0629\u060C \u0648\u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u0623\u0639\u0636\u0627\u0621 \u0627\u0644\u0645\u062E\u0635\u0635\u0629.",
       "nav.hwy-list-defs": "\u062A\u0639\u0631\u064A\u0641\u0627\u062A \u0627\u0644\u0642\u0648\u0627\u0626\u0645",
@@ -45057,11 +45162,11 @@ var init_hawiety_iq = __esm({
       "hwy.membership.wizard.nakhebin.eghteraRegionPicker.column.region": "\u0627\u0644\u0645\u0646\u0637\u0642\u0629",
       "hwy.selfReg.portal.tagline": "\u0646\u0638\u0627\u0645 \u0647\u0648\u064A\u062A\u064A \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A",
       "hwy.selfReg.portal.brand": "\u0647\u0648\u064A\u062A\u064A",
-      "hwy.selfReg.portal.aboutTitle": "\u0647\u0648\u064A\u062A\u064A",
-      "hwy.selfReg.portal.aboutBody": "\u0647\u0648\u064A\u062A\u064A \u0645\u0646\u0638\u0648\u0645\u0629 \u0645\u062A\u0643\u0627\u0645\u0644\u0629 \u0644\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0639\u0644\u0627\u0642\u0627\u062A.",
+      "hwy.selfReg.portal.aboutTitle": "\u0639\u0646 \u0627\u0644\u0646\u0638\u0627\u0645",
+      "hwy.selfReg.portal.aboutBody": "\u0646\u0638\u0627\u0645 \u0647\u0648\u064A\u062A\u064A \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u064A\u0633\u0627\u0639\u062F \u0627\u0644\u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0627\u0644\u062A\u0633\u062C\u064A\u0644 \u0648\u0645\u062A\u0627\u0628\u0639\u0629 \u0627\u0644\u0637\u0644\u0628\u0627\u062A \u0648\u0627\u0644\u062A\u0648\u0627\u0635\u0644 \u0645\u0639 \u0645\u0624\u0633\u0633\u0627\u062A\u0647\u0645.",
       "hwy.selfReg.portal.aboutAction": "\u0639\u0646 \u0627\u0644\u0646\u0638\u0627\u0645",
-      "hwy.selfReg.portal.aboutHawietyPackageVersionLabel": "\u0625\u0635\u062F\u0627\u0631 \u062D\u0632\u0645\u0629 \u0647\u0648\u064A\u062A\u064A",
-      "hwy.selfReg.portal.aboutStandardsLabel": "\u0625\u0635\u062F\u0627\u0631 \u0627\u0644\u0645\u0639\u0627\u064A\u064A\u0631",
+      "hwy.selfReg.portal.aboutHawietyPackageVersionLabel": "\u0625\u0635\u062F\u0627\u0631 \u062D\u0632\u0645\u0629 \u0647\u0627\u0648\u064A\u064A\u062A\u064A",
+      "hwy.selfReg.login.alforat": "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u0641\u0631\u0627\u062A",
       "hwy.selfReg.action.backToLogin": "\u0627\u0644\u0639\u0648\u062F\u0629 \u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644",
       "hwy.selfReg.action.submit": "\u0625\u0631\u0633\u0627\u0644 \u0627\u0644\u0637\u0644\u0628",
       "hwy.selfReg.action.submitting": "\u062C\u0627\u0631\u064A \u0627\u0644\u0625\u0631\u0633\u0627\u0644\u2026",
@@ -45269,7 +45374,7 @@ var init_hawiety_iq = __esm({
       "nav.hwy-members-taleb-jameee.description": "\u0637\u0644\u0627\u0628 \u062C\u0627\u0645\u0639\u064A\u0648\u0646 \u062E\u0627\u0631\u062C \u0645\u0624\u0633\u0633\u0629 \u0647\u0645\u0645 \u2014 \u0628\u062D\u062B \u0648\u0641\u062A\u062D \u0627\u0644\u0645\u0644\u0641\u0627\u062A.",
       "nav.hwy-members-waited-call-center": "\u0627\u0644\u0637\u0644\u0628\u0627\u062A \u0642\u064A\u062F \u0627\u0644\u0627\u0646\u062A\u0638\u0627\u0631",
       "nav.hwy-members-waited-call-center.description": "\u0631\u0627\u062C\u0639 \u0637\u0644\u0628\u0627\u062A \u0627\u0644\u0639\u0636\u0648\u064A\u0629 \u0627\u0644\u062C\u062F\u064A\u062F\u0629 \u2014 \u0627\u0639\u062A\u0645\u0627\u062F\u060C \u0631\u0641\u0636\u060C \u0623\u0648 \u0641\u062A\u062D \u0627\u0644\u0645\u0644\u0641.",
-      "nav.hwy-members-rejected-local-manage": "\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0645\u0631\u0641\u0648\u0636\u0627\u062A \u0627\u0644\u0645\u062D\u0644\u064A\u0629",
+      "nav.hwy-members-rejected-local-manage": "\u0625\u062F\u0627\u0631\u0629 \u0631\u0641\u0636 \u0627\u0644\u0645\u062D\u0644\u064A",
       "nav.hwy-members-rejected-local-manage.description": "\u0631\u0627\u062C\u0639 \u0645\u0631\u0641\u0648\u0636\u0627\u062A \u0627\u0644\u062A\u0648\u062B\u064A\u0642 \u0627\u0644\u0645\u062D\u0644\u064A \u2014 \u0625\u0639\u0627\u062F\u0629 \u0644\u0644\u0637\u0627\u0628\u0648\u0631 \u0623\u0648 \u0627\u0633\u062A\u0639\u0631\u0627\u0636 \u0642\u0631\u0627\u0631\u0627\u062A \u0627\u0644\u0631\u0641\u0636 \u0627\u0644\u0645\u062D\u0644\u064A.",
       "nav.hwy-members-waited-local": "\u0628\u0627\u0646\u062A\u0638\u0627\u0631 \u0627\u0644\u062A\u0648\u062B\u064A\u0642 \u0627\u0644\u0645\u062D\u0644\u064A",
       "nav.hwy-members-waited-local.description": "\u0623\u0643\u0645\u0644 \u0627\u0644\u062A\u0648\u062B\u064A\u0642 \u0627\u0644\u0645\u062D\u0644\u064A \u2014 \u0627\u0639\u062A\u0645\u0627\u062F\u060C \u0631\u0641\u0636\u060C \u0625\u0631\u062C\u0627\u0639 \u0644\u0644\u0645\u062A\u0642\u062F\u0651\u0645\u060C \u0623\u0648 \u0641\u062A\u062D \u0627\u0644\u0645\u0644\u0641.",
@@ -45449,7 +45554,6 @@ var init_hawiety_iq = __esm({
       "nav.hwy-card-flow-province-delivery": "(6) \u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
       "nav.hwy-card-flow-member-delivery": "(7) \u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u0646\u062A\u0638\u0645",
       "nav.hwy-card-flow-printed-history": "(8) \u0627\u0644\u0628\u0627\u062C\u0627\u062A \u0627\u0644\u0645\u0637\u0628\u0648\u0639\u0629",
-      "nav.hwy-meetings-management": "\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u0627\u062A \u0627\u0644\u062A\u064A\u0627\u0631\u064A\u0629",
       "nav.group.operations": "\u0627\u0644\u0639\u0645\u0644\u064A\u0627\u062A",
       "hwy.candidatePipeline.column.member": "\u0627\u0644\u0645\u0646\u062A\u0638\u0645",
       "hwy.candidatePipeline.column.patch": "\u0631\u0642\u0639\u0629 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
@@ -45532,17 +45636,17 @@ var init_hawiety_iq = __esm({
       "hwy.candidatePipeline.interview.finalResultHeading": "\u0646\u062A\u064A\u062C\u0629 \u0627\u0644\u0645\u0642\u0627\u0628\u0644\u0629",
       "hwy.candidatePipeline.interview.loadingScores": "\u062C\u0627\u0631\u064A \u062A\u062D\u0645\u064A\u0644 \u062E\u064A\u0627\u0631\u0627\u062A \u0627\u0644\u062A\u0642\u064A\u064A\u0645\u2026",
       "hwy.candidatePipeline.interview.noteMinChars": "\u062D\u0631\u0641\u0627\u064B \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644",
-      "hwy.candidatePipeline.interview.motefaregh": "\u0645\u062A\u0641\u0631\u063A \u0646\u0647\u0627\u064A\u0627\u062A \u0627\u0644\u0623\u0633\u0628\u0648\u0639\u061F",
-      "hwy.candidatePipeline.interview.hoursPerDay": "\u0633\u0627\u0639\u0627\u062A \u064A\u0648\u0645\u064A\u0629 \u0645\u0639\u062A\u0645\u062F\u0629 (1\u201324)",
-      "hwy.candidatePipeline.interview.hazerin": "\u0623\u0639\u0636\u0627\u0621 \u0627\u0644\u0644\u062C\u0646\u0629 \u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646",
       "hwy.candidatePipeline.interview.view": "\u0639\u0631\u0636 \u0627\u0644\u0645\u0642\u0627\u0628\u0644\u0629",
       "hwy.candidatePipeline.interview.viewTitle": "\u0633\u062C\u0644 \u0627\u0644\u0645\u0642\u0627\u0628\u0644\u0629 (2022)",
       "hwy.candidatePipeline.interview.loading": "\u062C\u0627\u0631\u064A \u062A\u062D\u0645\u064A\u0644 \u0627\u0644\u0645\u0642\u0627\u0628\u0644\u0629\u2026",
       "hwy.candidatePipeline.interview.close": "\u0625\u063A\u0644\u0627\u0642",
+      "hwy.candidatePipeline.interview.motefaregh": "\u0645\u062A\u0641\u0631\u063A \u0646\u0647\u0627\u064A\u0627\u062A \u0627\u0644\u0623\u0633\u0628\u0648\u0639\u061F",
       "hwy.candidatePipeline.interview.motefareghYes": "\u0645\u062A\u0641\u0631\u063A",
       "hwy.candidatePipeline.interview.motefareghNo": "\u063A\u064A\u0631 \u0645\u062A\u0641\u0631\u063A",
+      "hwy.candidatePipeline.interview.hoursPerDay": "\u0633\u0627\u0639\u0627\u062A \u064A\u0648\u0645\u064A\u0629 \u0645\u0639\u062A\u0645\u062F\u0629 (1\u201324)",
       "hwy.candidatePipeline.interview.note": "\u0634\u062E\u0635\u064A\u0629 \u0627\u0644\u0645\u0631\u0634\u062D \u0648\u0627\u0644\u0645\u0644\u0627\u062D\u0638\u0627\u062A",
       "hwy.candidatePipeline.interview.noteHint": "50 \u062D\u0631\u0641\u0627\u064B \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644",
+      "hwy.candidatePipeline.interview.hazerin": "\u0623\u0639\u0636\u0627\u0621 \u0627\u0644\u0644\u062C\u0646\u0629 \u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646",
       "hwy.candidatePipeline.interview.hazerPlaceholder": "\u0631\u0642\u0645 \u0627\u0646\u062A\u0645\u0627\u0621 (6)",
       "hwy.candidatePipeline.interview.hazerAdd": "\u0625\u0636\u0627\u0641\u0629",
       "hwy.candidatePipeline.interview.hazerRemove": "\u0625\u0632\u0627\u0644\u0629",
@@ -45671,18 +45775,224 @@ var init_hawiety_iq = __esm({
       "hwy.cardFlow.column.profileComplete": "\u0627\u0644\u0627\u0636\u0628\u0627\u0631\u0629",
       "hwy.cardFlow.column.securityOpinion": "\u0627\u0644\u0631\u0623\u064A \u0627\u0644\u0623\u0645\u0646\u064A",
       "hwy.cardFlow.column.startedOn": "\u0628\u062F\u0621 \u0627\u0644\u0633\u064A\u0631",
-      "hwy.meetings.filter.anyMeeting": "\u0627\u062C\u062A\u0645\u0627\u0639 \u0627\u0644\u062A\u064A\u0627\u0631",
+      "nav.hwy-meetings-management": "\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u0627\u062A \u0627\u0644\u062A\u064A\u0627\u0631\u064A\u0629",
+      "nav.hwy-meetings-management.description": "\u062C\u062F\u0648\u0644\u0629 \u062C\u0644\u0633\u0627\u062A \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u0627\u062A \u0627\u0644\u062A\u064A\u0627\u0631\u064A\u0629\u060C \u0625\u062F\u0627\u0631\u0629 \u0643\u0634\u0641 \u0627\u0644\u0623\u0639\u0636\u0627\u0621\u060C \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062D\u0636\u0648\u0631\u060C \u0648\u062A\u0635\u062F\u064A\u0631 \u062A\u0642\u0627\u0631\u064A\u0631 \u0627\u0644\u062D\u0636\u0648\u0631 \u0627\u0644\u0645\u062D\u0648\u0631\u064A\u0629.",
+      "nav.group.financial management": "\u0627\u0644\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0645\u0627\u0644\u064A\u0629",
+      "nav.hwy-payment-documents": "\u0625\u062F\u0627\u0631\u0629 \u0645\u0646\u062D \u0645\u0633\u0624\u0648\u0644\u064A \u0627\u0644\u062A\u0646\u0638\u064A\u0645",
+      "nav.hwy-payment-documents.description": "\u0625\u062F\u0627\u0631\u0629 \u0633\u0646\u062F\u0627\u062A \u0627\u0644\u0645\u0646\u062D \u0627\u0644\u0634\u0647\u0631\u064A\u0629 (HWY_PaymentDocuments_List).",
+      "nav.hwy-payment-documents-members": "\u062A\u0641\u0627\u0635\u064A\u0644 \u0627\u0633\u062A\u0644\u0627\u0645 \u0627\u0644\u0645\u0646\u062D",
+      "nav.hwy-payment-documents-members.description": "\u062A\u0641\u0627\u0635\u064A\u0644 \u0627\u0633\u062A\u0644\u0627\u0645 \u0627\u0644\u0645\u0646\u062D \u0644\u0644\u0623\u0639\u0636\u0627\u0621 (HWY_PaymentDocuments_Members_ReadList).",
+      "nav.hwy-masoolin-performance": "\u062A\u0642\u0627\u0631\u064A\u0631 \u0641\u0639\u0627\u0644\u064A\u0629 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646",
+      "nav.hwy-masoolin-performance.description": "\u062A\u0642\u0627\u0631\u064A\u0631 \u0641\u0639\u0627\u0644\u064A\u0629 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646 (HWY_MasoolinPerformance).",
+      "hwy.masoolinPerformance.search": "\u0627\u0628\u062D\u062B",
+      "hwy.masoolinPerformance.export": "\u062A\u0635\u062F\u064A\u0631",
+      "hwy.masoolinPerformance.searchFirst": "\u0646\u0641\u0651\u0630 \u0627\u0644\u0628\u062D\u062B \u0642\u0628\u0644 \u0627\u0644\u062A\u0635\u062F\u064A\u0631.",
+      "hwy.masoolinPerformance.exportDone": "\u0627\u0644\u062A\u0635\u062F\u064A\u0631 \u062C\u0627\u0647\u0632.",
+      "hwy.masoolinPerformance.exportEmpty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0635\u0641\u0648\u0641 \u0644\u0644\u062A\u0635\u062F\u064A\u0631.",
+      "hwy.masoolinPerformance.exportError": "\u0641\u0634\u0644 \u0627\u0644\u062A\u0635\u062F\u064A\u0631.",
+      "hwy.masoolinPerformance.calcStars": "\u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u062C\u0648\u0645 (\u0627\u0644\u0634\u0647\u0631 \u0627\u0644\u062D\u0627\u0644\u064A)",
+      "hwy.masoolinPerformance.calcStarsDone": "\u0627\u0643\u062A\u0645\u0644 \u0627\u062D\u062A\u0633\u0627\u0628 \u0646\u062C\u0648\u0645 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646 \u0644\u0644\u0634\u0647\u0631.",
+      "hwy.masoolinPerformance.calcStarsError": "\u0641\u0634\u0644 \u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u062C\u0648\u0645.",
+      "hwy.masoolinPerformance.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+      "hwy.masoolinPerformance.setChiefMasool": "\u062A\u0639\u064A\u064A\u0646 \u0645\u0633\u0624\u0648\u0644 \u0631\u0626\u064A\u0633\u064A",
+      "hwy.masoolinPerformance.setChiefMasoolDone": "\u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0627\u0644\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0631\u0626\u064A\u0633\u064A.",
+      "hwy.masoolinPerformance.setChiefMasoolError": "\u0641\u0634\u0644 \u062A\u0639\u064A\u064A\u0646 \u0627\u0644\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0631\u0626\u064A\u0633\u064A.",
+      "hwy.masoolinPerformance.setChiefMasoolConfirmTitle": "\u062A\u0639\u064A\u064A\u0646 \u0645\u0633\u0624\u0648\u0644 \u0631\u0626\u064A\u0633\u064A",
+      "hwy.masoolinPerformance.setChiefMasoolConfirmBody": "\u062A\u0639\u064A\u064A\u0646 \u0647\u0630\u0627 \u0627\u0644\u0639\u0636\u0648 \u0645\u0633\u0624\u0648\u0644\u0627\u064B \u0631\u0626\u064A\u0633\u064A\u0627\u064B \u0641\u064A \u0627\u0644\u0645\u0631\u0643\u0632 (\u064A\u0635\u0628\u062D \u0627\u0644\u0628\u0627\u0642\u0648\u0646 \u0641\u064A \u0646\u0641\u0633 \u0645\u062C\u0645\u0648\u0639\u0629 \u0627\u0644\u0631\u063A\u0628\u0629 \u0645\u0639\u0627\u0648\u0646\u064A\u0646)\u061F",
+      "hwy.masoolinPerformance.setChiefMasoolConfirm": "\u062A\u0623\u0643\u064A\u062F",
+      "hwy.masoolinPerformance.setChiefMasoolCancel": "\u0625\u0644\u063A\u0627\u0621",
+      "hwy.masoolinPerformance.empty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0646\u062A\u0627\u0626\u062C \u0645\u0637\u0627\u0628\u0642\u0629 \u0644\u0644\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062D\u0627\u0644\u064A\u0629.",
+      "hwy.masoolinPerformance.emptyHint": "\u062D\u062F\u0651\u062F \u0627\u0644\u0641\u0644\u0627\u062A\u0631 \u062B\u0645 \u0627\u0636\u063A\u0637 \u0627\u0628\u062D\u062B.",
+      "hwy.masoolinPerformance.filter.gender": "\u0627\u0644\u062C\u0646\u0633",
+      "hwy.masoolinPerformance.filter.genderAll": "\u0627\u0644\u062C\u0646\u0633 (\u0627\u0644\u0643\u0644)",
+      "hwy.masoolinPerformance.filter.role": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
+      "hwy.masoolinPerformance.filter.roleAll": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.masoolinPerformance.filter.province": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
+      "hwy.masoolinPerformance.filter.provinceAll": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.masoolinPerformance.filter.circle": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629",
+      "hwy.masoolinPerformance.filter.circleAll": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.masoolinPerformance.filter.tamvin": "\u0627\u0644\u0645\u0643\u062A\u0628",
+      "hwy.masoolinPerformance.filter.tamvinAll": "\u0627\u0644\u0645\u0643\u062A\u0628 (\u0627\u0644\u0643\u0644)",
+      "hwy.masoolinPerformance.filter.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "hwy.masoolinPerformance.column.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "hwy.masoolinPerformance.column.name": "\u0627\u0644\u0627\u0633\u0645",
+      "hwy.masoolinPerformance.column.geo": "\u0627\u0644\u0631\u0642\u0639\u0629",
+      "hwy.masoolinPerformance.column.role": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
+      "hwy.masoolinPerformance.column.daysInRole": "\u0639\u062F\u062F \u0623\u064A\u0627\u0645 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
+      "hwy.masoolinPerformance.column.chiefRole": "\u0631\u0626\u064A\u0633\u064A/\u0645\u0639\u0627\u0648\u0646",
+      "hwy.masoolinPerformance.column.conflict": "\u062A\u0636\u0627\u0631\u0628 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646",
+      "hwy.masoolinPerformance.column.currentMonth": "\u0627\u0644\u0641\u0639\u0627\u0644\u064A\u0629 \u0644\u0644\u0634\u0647\u0631 \u0627\u0644\u062D\u0627\u0644\u064A",
+      "hwy.masoolinPerformance.column.month1": "\u0627\u0644\u0641\u0639\u0627\u0644\u064A\u0629 \u0644\u0644\u0634\u0647\u0631 \u0627\u0644\u0645\u0627\u0636\u064A",
+      "hwy.masoolinPerformance.column.month2": "\u0627\u0644\u0641\u0639\u0627\u0644\u064A\u0629 \u0642\u0628\u0644 \u0634\u0647\u0631\u064A\u0646",
+      "hwy.masoolinPerformance.column.month3": "\u0627\u0644\u0641\u0639\u0627\u0644\u064A\u0629 \u0642\u0628\u0644 3 \u0627\u0634\u0647\u0631",
+      "hwy.masoolinPerformance.chiefRole.chief": "\u0631\u0626\u064A\u0633\u064A",
+      "hwy.masoolinPerformance.chiefRole.deputy": "\u0645\u0639\u0627\u0648\u0646",
+      "hwy.masoolinPerformance.role.circleOfficer": "\u0645\u0633\u0624\u0648\u0644 \u062F\u0627\u0626\u0631\u0629",
+      "hwy.masoolinPerformance.role.officeOfficer": "\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0643\u062A\u0628",
+      "hwy.masoolinPerformance.role.regionOfficer": "\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629",
+      "nav.hwy-members-social-screens": "\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u062D\u0636\u0648\u0631 \u0627\u0644\u0625\u0639\u0644\u0627\u0645\u064A",
+      "nav.hwy-members-social-screens.description": "\u0645\u0631\u0627\u062C\u0639\u0629 \u0627\u0633\u0643\u0631\u064A\u0646 \u0634\u0648\u062A \u0627\u0644\u062D\u0636\u0648\u0631 \u0627\u0644\u0625\u0639\u0644\u0627\u0645\u064A (HWY_Members_SocialScreens).",
+      "hwy.membersSocialScreens.totalCount": "\u0627\u0644\u0639\u062F\u062F \u0627\u0644\u0643\u0644\u064A",
+      "hwy.membersSocialScreens.filter.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "hwy.membersSocialScreens.filter.gender": "\u0627\u0644\u062C\u0646\u0633",
+      "hwy.membersSocialScreens.filter.genderAll": "\u0627\u0644\u062C\u0646\u0633 (\u0627\u0644\u0643\u0644)",
+      "hwy.membersSocialScreens.filter.province": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
+      "hwy.membersSocialScreens.filter.provinceAll": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.membersSocialScreens.filter.listType": "\u0627\u0644\u0642\u0627\u0626\u0645\u0629",
+      "hwy.membersSocialScreens.filter.month": "\u0627\u0644\u0634\u0647\u0631",
+      "hwy.membersSocialScreens.filter.monthEmpty": "\u0644\u0627 \u0623\u0634\u0647\u0631",
+      "hwy.membersSocialScreens.listType.toDecide": "\u0628\u0627\u0646\u062A\u0638\u0627\u0631 \u0627\u0644\u0642\u0631\u0627\u0631",
+      "hwy.membersSocialScreens.listType.accepted": "\u062A\u0645\u062A \u0627\u0644\u0645\u0648\u0627\u0641\u0642\u0629",
+      "hwy.membersSocialScreens.listType.rejected": "\u0645\u0631\u0641\u0648\u0636\u0627\u062A",
+      "hwy.membersSocialScreens.listType.onGoing": "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u0643\u0645\u064A\u0644",
+      "hwy.membersSocialScreens.loading": "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0645\u064A\u0644\u2026",
+      "hwy.membersSocialScreens.empty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0634\u064A\u0621 \u0644\u0644\u0645\u0631\u0627\u062C\u0639\u0629 \u0648\u0641\u0642 \u0627\u0644\u0641\u0644\u0627\u062A\u0631 \u0627\u0644\u062D\u0627\u0644\u064A\u0629.",
+      "hwy.membersSocialScreens.screenAlt": "\u0627\u0633\u0643\u0631\u064A\u0646 \u0634\u0648\u062A",
+      "hwy.membersSocialScreens.noImage": "\u0644\u0627 \u0645\u0639\u0627\u064A\u0646\u0629",
+      "hwy.membersSocialScreens.prev": "\u0627\u0644\u0633\u0627\u0628\u0642",
+      "hwy.membersSocialScreens.next": "\u0627\u0644\u062A\u0627\u0644\u064A",
+      "hwy.membersSocialScreens.accept": "\u0645\u0648\u0627\u0641\u0642",
+      "hwy.membersSocialScreens.reject": "\u0631\u0641\u0636",
+      "hwy.membersSocialScreens.actionDone": "\u062A\u0645 \u062A\u0646\u0641\u064A\u0630 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
+      "hwy.membersSocialScreens.actionError": "\u0641\u0634\u0644 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
+      "hwy.finance.comingSoon": "\u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0642\u064A\u062F \u0627\u0644\u062A\u0637\u0648\u064A\u0631.",
+      "hwy.paymentDocuments.column.id": "\u0627\u0644\u0645\u0639\u0631\u0651\u0641",
+      "hwy.paymentDocuments.column.year": "\u0627\u0644\u0633\u0646\u0629",
+      "hwy.paymentDocuments.column.month": "\u0627\u0644\u0634\u0647\u0631",
+      "hwy.paymentDocuments.column.gender": "\u0627\u0644\u062C\u0646\u0633",
+      "hwy.paymentDocuments.column.province": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
+      "hwy.paymentDocuments.column.circle": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629",
+      "hwy.paymentDocuments.column.totalAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0625\u062C\u0645\u0627\u0644\u064A",
+      "hwy.paymentDocuments.column.paidAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062F\u0641\u0648\u0639",
+      "hwy.paymentDocuments.column.pendingAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062A\u0628\u0642\u064A",
+      "hwy.paymentDocuments.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+      "hwy.paymentDocuments.filter.genderAll": "\u0627\u0644\u062C\u0646\u0633 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocuments.filter.provinceAll": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocuments.filter.circleAll": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocuments.filter.paymentState": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0635\u0631\u0641",
+      "hwy.paymentDocuments.filter.paymentStateAll": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0635\u0631\u0641 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocuments.filter.paymentEditing": "\u0642\u064A\u062F \u0627\u0644\u062A\u062D\u0631\u064A\u0631",
+      "hwy.paymentDocuments.filter.paymentPaying": "\u0642\u064A\u062F \u0627\u0644\u0635\u0631\u0641",
+      "hwy.paymentDocuments.filter.closedState": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0625\u063A\u0644\u0627\u0642",
+      "hwy.paymentDocuments.filter.closedStateAll": "\u0627\u0644\u0625\u063A\u0644\u0627\u0642 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocuments.filter.open": "\u0645\u0641\u062A\u0648\u062D",
+      "hwy.paymentDocuments.filter.closed": "\u0645\u063A\u0644\u0642",
+      "hwy.paymentDocuments.create": "\u0625\u0646\u0634\u0627\u0621 \u0627\u0644\u0633\u0646\u062F\u0627\u062A",
+      "hwy.paymentDocuments.createDone": "\u062A\u0645 \u0625\u0646\u0634\u0627\u0621 \u0627\u0644\u0633\u0646\u062F\u0627\u062A.",
+      "hwy.paymentDocuments.createError": "\u0641\u0634\u0644 \u0627\u0644\u0625\u0646\u0634\u0627\u0621.",
+      "hwy.paymentDocuments.actionDone": "\u062A\u0645 \u062A\u0646\u0641\u064A\u0630 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
+      "hwy.paymentDocuments.actionError": "\u0641\u0634\u0644 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
+      "hwy.paymentDocuments.sendToArea": "\u0625\u0639\u0627\u062F\u0629 \u0644\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629",
+      "hwy.paymentDocuments.sendToMali": "\u0625\u0631\u0633\u0627\u0644 \u0644\u0644\u0645\u0627\u0644\u064A\u0629",
+      "hwy.paymentDocuments.markPaid": "\u062A\u0639\u0644\u064A\u0645 \u0643\u0645\u0635\u0631\u0648\u0641",
+      "hwy.paymentDocuments.markClosed": "\u0625\u063A\u0644\u0627\u0642",
+      "hwy.paymentDocuments.remove": "\u062D\u0630\u0641",
+      "hwy.paymentDocuments.empty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0633\u0646\u062F\u0627\u062A \u0645\u0637\u0627\u0628\u0642\u0629 \u0644\u0644\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062D\u0627\u0644\u064A\u0629.",
+      "hwy.paymentDocuments.confirm.removeTitle": "\u062D\u0630\u0641 \u0627\u0644\u0633\u0646\u062F",
+      "hwy.paymentDocuments.confirm.removeBody": "\u062D\u0630\u0641 \u0633\u0646\u062F \u0627\u0644\u0645\u0646\u062D\u0629 \u0647\u0630\u0627\u061F",
+      "hwy.paymentDocuments.confirm.sendToAreaTitle": "\u0625\u0639\u0627\u062F\u0629 \u0644\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629",
+      "hwy.paymentDocuments.confirm.sendToAreaBody": "\u0625\u0639\u0627\u062F\u0629 \u0647\u0630\u0627 \u0627\u0644\u0633\u0646\u062F \u0644\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629\u061F",
+      "hwy.paymentDocuments.confirm.sendToMaliTitle": "\u0625\u0631\u0633\u0627\u0644 \u0644\u0644\u0645\u0627\u0644\u064A\u0629",
+      "hwy.paymentDocuments.confirm.sendToMaliBody": "\u0625\u0631\u0633\u0627\u0644 \u0647\u0630\u0627 \u0627\u0644\u0633\u0646\u062F \u0625\u0644\u0649 \u0627\u0644\u0645\u0627\u0644\u064A\u0629\u061F",
+      "hwy.paymentDocuments.confirm.markPaidTitle": "\u062A\u0639\u0644\u064A\u0645 \u0643\u0645\u0635\u0631\u0648\u0641",
+      "hwy.paymentDocuments.confirm.markPaidBody": "\u062A\u0639\u0644\u064A\u0645 \u0647\u0630\u0627 \u0627\u0644\u0633\u0646\u062F \u0643\u0645\u0635\u0631\u0648\u0641\u061F \u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u062A\u0631\u0627\u062C\u0639.",
+      "hwy.paymentDocuments.confirm.markClosedTitle": "\u0625\u063A\u0644\u0627\u0642 \u0627\u0644\u0633\u0646\u062F",
+      "hwy.paymentDocuments.confirm.markClosedBody": "\u0625\u063A\u0644\u0627\u0642 \u0647\u0630\u0627 \u0627\u0644\u0633\u0646\u062F \u0646\u0647\u0627\u0626\u064A\u0627\u064B\u061F",
+      "common.cancel": "\u0625\u0644\u063A\u0627\u0621",
+      "hwy.paymentDocuments.agg.pendingAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062A\u0628\u0642\u064A",
+      "hwy.paymentDocuments.agg.paidAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062F\u0641\u0648\u0639",
+      "hwy.paymentDocuments.agg.excludedAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u0633\u062A\u0628\u0639\u062F",
+      "hwy.paymentDocuments.agg.totalAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0625\u062C\u0645\u0627\u0644\u064A",
+      "hwy.paymentDocumentsMembers.column.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "hwy.paymentDocumentsMembers.column.name": "\u0627\u0644\u0627\u0633\u0645",
+      "hwy.paymentDocumentsMembers.column.role": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
+      "hwy.paymentDocumentsMembers.column.docPeriod": "\u0627\u0644\u0633\u0646\u0629 / \u0627\u0644\u0634\u0647\u0631",
+      "hwy.paymentDocumentsMembers.column.payAmount": "\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u0646\u062D\u0629",
+      "hwy.paymentDocumentsMembers.column.payableReason": "\u0633\u0628\u0628 \u0627\u0644\u0627\u0633\u062A\u062D\u0642\u0627\u0642",
+      "hwy.paymentDocumentsMembers.column.payOk": "\u062A\u0648\u0642\u064A\u0639 \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645",
+      "hwy.paymentDocumentsMembers.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+      "hwy.paymentDocumentsMembers.column.year": "\u0627\u0644\u0633\u0646\u0629",
+      "hwy.paymentDocumentsMembers.column.month": "\u0627\u0644\u0634\u0647\u0631",
+      "hwy.paymentDocumentsMembers.filter.role": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
+      "hwy.paymentDocumentsMembers.filter.roleAll": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocumentsMembers.filter.payOk": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645",
+      "hwy.paymentDocumentsMembers.filter.payOkAll": "\u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocumentsMembers.filter.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "hwy.paymentDocumentsMembers.filter.phone": "\u0631\u0642\u0645 \u0627\u0644\u0647\u0627\u062A\u0641",
+      "hwy.paymentDocumentsMembers.filter.firstName": "\u0627\u0644\u0627\u0633\u0645",
+      "hwy.paymentDocumentsMembers.filter.lastName": "\u0627\u0644\u0644\u0642\u0628",
+      "hwy.paymentDocumentsMembers.filter.hideZeroAmounts": "\u0625\u062E\u0641\u0627\u0621 \u0627\u0644\u0645\u0628\u0627\u0644\u063A \u0627\u0644\u0635\u0641\u0631\u064A\u0629",
+      "hwy.paymentDocumentsMembers.filter.geoShow": "\u0641\u0644\u0627\u062A\u0631 \u062C\u063A\u0631\u0627\u0641\u064A\u0629",
+      "hwy.paymentDocumentsMembers.filter.geoHide": "\u0625\u062E\u0641\u0627\u0621 \u0627\u0644\u0641\u0644\u0627\u062A\u0631 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0629",
+      "hwy.paymentDocumentsMembers.filter.genderAll": "\u0627\u0644\u062C\u0646\u0633 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocumentsMembers.filter.provinceAll": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocumentsMembers.filter.circleAll": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocumentsMembers.filter.tamvinAll": "\u0627\u0644\u0645\u0643\u062A\u0628 (\u0627\u0644\u0643\u0644)",
+      "hwy.paymentDocumentsMembers.filter.deviceFullId": "\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u062C\u0647\u0627\u0632 \u0627\u0644\u0643\u0627\u0645\u0644",
+      "hwy.paymentDocumentsMembers.filter.sameDevice": "\u0646\u0641\u0633 \u0627\u0644\u062C\u0647\u0627\u0632 \u0641\u0642\u0637",
+      "hwy.paymentDocumentsMembers.role.circleOfficer": "\u0645\u0633\u0624\u0648\u0644 \u062F\u0627\u0626\u0631\u0629",
+      "hwy.paymentDocumentsMembers.role.officeOfficer": "\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0643\u062A\u0628",
+      "hwy.paymentDocumentsMembers.role.regionOfficer": "\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629",
+      "hwy.paymentDocumentsMembers.payOk.signed": "\u0645\u0648\u0642\u0651\u0639",
+      "hwy.paymentDocumentsMembers.payOk.pending": "\u063A\u064A\u0631 \u0645\u0648\u0642\u0651\u0639",
+      "hwy.paymentDocumentsMembers.switchPayability": "\u062A\u0628\u062F\u064A\u0644 \u0627\u0644\u0627\u0633\u062A\u062D\u0642\u0627\u0642",
+      "hwy.paymentDocumentsMembers.editAmount": "\u062A\u0639\u062F\u064A\u0644 \u0627\u0644\u0645\u0628\u0644\u063A",
+      "hwy.paymentDocumentsMembers.viewImages": "\u0639\u0631\u0636 \u0627\u0644\u0635\u0648\u0631",
+      "hwy.paymentDocumentsMembers.empty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0633\u062C\u0644\u0627\u062A \u0645\u0637\u0627\u0628\u0642\u0629 \u0644\u0644\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062D\u0627\u0644\u064A\u0629.",
+      "hwy.paymentDocumentsMembers.actionDone": "\u062A\u0645 \u062A\u0646\u0641\u064A\u0630 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
+      "hwy.paymentDocumentsMembers.actionError": "\u0641\u0634\u0644 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
+      "hwy.paymentDocumentsMembers.payAmountDone": "\u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0627\u0644\u0645\u0628\u0644\u063A.",
+      "hwy.paymentDocumentsMembers.payAmountError": "\u0641\u0634\u0644 \u0627\u0644\u062A\u062D\u062F\u064A\u062B.",
+      "hwy.paymentDocumentsMembers.payAmountNote": "\u0645\u0644\u0627\u062D\u0638\u0629",
+      "hwy.paymentDocumentsMembers.confirm.switchTitle": "\u062A\u0628\u062F\u064A\u0644 \u0627\u0644\u0627\u0633\u062A\u062D\u0642\u0627\u0642",
+      "hwy.paymentDocumentsMembers.confirm.switchBody": "\u062A\u0628\u062F\u064A\u0644 \u062D\u0627\u0644\u0629 \u0627\u0644\u0627\u0633\u062A\u062D\u0642\u0627\u0642 \u0644\u0647\u0630\u0627 \u0627\u0644\u0633\u062C\u0644\u061F",
+      "hwy.paymentDocumentsMembers.editAmountTitle": "\u062A\u0639\u062F\u064A\u0644 \u0645\u0628\u0644\u063A \u0627\u0644\u0645\u0646\u062D\u0629",
+      "hwy.paymentDocumentsMembers.imagesTitle": "\u0635\u0648\u0631 \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645",
+      "hwy.paymentDocumentsMembers.image.selfie": "\u0627\u0644\u0633\u064A\u0644\u0641\u064A",
+      "hwy.paymentDocumentsMembers.image.member": "\u0635\u0648\u0631\u0629 \u0627\u0644\u0639\u0636\u0648",
+      "hwy.paymentDocumentsMembers.image.missing": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0635\u0648\u0631\u0629",
+      "hwy.meetings.filter.anyMeeting": "\u0643\u0644 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u0627\u062A",
       "hwy.meetings.filter.meeting": "\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
       "hwy.meetings.search.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
-      "hwy.meetings.manageMembers": "\u0623\u0639\u0636\u0627\u0621 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+      "hwy.meetings.search.aria": "\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062C\u0644\u0633\u0627\u062A \u0628\u0631\u0642\u0645 \u0627\u0646\u062A\u0645\u0627\u0621 \u0623\u062D\u062F \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646",
+      "hwy.meetings.manageMembers": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
       "hwy.meetings.addInstance": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629",
       "hwy.meetings.exportPivot": "\u062A\u0635\u062F\u064A\u0631 \u062D\u0636\u0648\u0631 \u0645\u062D\u0648\u0631\u064A",
-      "hwy.meetings.column.member": "\u0627\u0644\u0645\u0646\u062A\u0638\u0645",
+      "hwy.meetings.totalCount": "{count} \u0633\u062C\u0644",
+      "hwy.meetings.loading": "\u062C\u0627\u0631\u064A \u062A\u062D\u0645\u064A\u0644 \u062C\u0644\u0633\u0627\u062A \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u2026",
+      "hwy.meetings.loadError": "\u062A\u0639\u0630\u0631 \u062A\u062D\u0645\u064A\u0644 \u0627\u0644\u0642\u0627\u0626\u0645\u0629. \u062C\u0631\u0651\u0628 \u0627\u0644\u062A\u062D\u062F\u064A\u062B.",
+      "hwy.meetings.empty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u062C\u0644\u0633\u0627\u062A \u0645\u0637\u0627\u0628\u0642\u0629 \u0644\u0644\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062D\u0627\u0644\u064A\u0629.",
+      "hwy.meetings.removed": "\u062A\u0645 \u062D\u0630\u0641 \u0627\u0644\u062C\u0644\u0633\u0629.",
+      "hwy.meetings.instanceAdded": "\u062A\u0645\u062A \u0625\u0636\u0627\u0641\u0629 \u0627\u0644\u062C\u0644\u0633\u0629.",
+      "hwy.meetings.memberAdded": "\u062A\u0645\u062A \u0625\u0636\u0627\u0641\u0629 \u0627\u0644\u0639\u0636\u0648 \u0625\u0644\u0649 \u0627\u0644\u0643\u0634\u0641.",
+      "hwy.meetings.memberRemoved": "\u062A\u0645\u062A \u0625\u0632\u0627\u0644\u0629 \u0627\u0644\u0639\u0636\u0648 \u0645\u0646 \u0627\u0644\u0643\u0634\u0641.",
+      "hwy.meetings.exportDone": "\u0627\u0644\u062A\u0635\u062F\u064A\u0631 \u062C\u0627\u0647\u0632.",
+      "hwy.meetings.column.createdBy": "\u0645\u0646\u0634\u0626 \u0627\u0644\u062C\u0644\u0633\u0629",
       "hwy.meetings.column.meetingType": "\u0646\u0648\u0639 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
       "hwy.meetings.column.eventDate": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u0641\u0639\u0627\u0644\u064A\u0629",
-      "hwy.meetings.column.roster": "\u0627\u0644\u0643\u0634\u0641",
+      "hwy.meetings.column.createdOn": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062A\u0633\u062C\u064A\u0644",
+      "hwy.meetings.column.rosterYet": "\u0645\u0646\u062A\u0638\u0645",
+      "hwy.meetings.column.rosterNot": "\u063A\u064A\u0631 \u0645\u0646\u062A\u0638\u0645",
       "hwy.meetings.column.hazerin": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646",
       "hwy.meetings.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+      "hwy.meetings.column.memberYet": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0643\u0634\u0641",
+      "hwy.meetings.column.present": "\u0627\u0644\u062D\u0636\u0648\u0631",
+      "hwy.meetings.viewAttendance": "\u0627\u0644\u062D\u0636\u0648\u0631",
+      "hwy.meetings.deleteInstance": "\u062D\u0630\u0641 \u0627\u0644\u062C\u0644\u0633\u0629",
+      "hwy.meetings.deleteBlocked": "\u0623\u0632\u0644 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0642\u0628\u0644 \u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629.",
+      "hwy.meetings.addInstanceTitle": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629 \u0627\u062C\u062A\u0645\u0627\u0639",
+      "hwy.meetings.instanceDate": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062C\u0644\u0633\u0629",
+      "hwy.meetings.membersTitle": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639 \u0627\u0644\u062A\u064A\u0627\u0631\u064A",
+      "hwy.meetings.addMemberUsername": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "hwy.meetings.addMember": "\u0625\u0636\u0627\u0641\u0629 \u0639\u0636\u0648",
+      "hwy.meetings.noMembers": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
+      "hwy.meetings.attendanceTitle": "\u062D\u0636\u0648\u0631 \u0627\u0644\u062C\u0644\u0633\u0629",
+      "hwy.meetings.markAbsent": "\u062D\u0627\u0636\u0631 \u2014 \u0625\u0644\u063A\u0627\u0621",
+      "hwy.meetings.markPresent": "\u062A\u0633\u062C\u064A\u0644 \u062D\u0636\u0648\u0631",
+      "hwy.meetings.noAttendanceRows": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
+      "hwy.meetings.rosterSummary": "{yet} \u0645\u0646\u062A\u0638\u0645 \xB7 {not} \u063A\u064A\u0631 \u0645\u0646\u062A\u0638\u0645",
+      "hwy.meetings.memberYet.active": "\u0645\u0646\u062A\u0638\u0645",
+      "hwy.meetings.memberYet.inactive": "\u063A\u064A\u0631 \u0645\u0646\u062A\u0638\u0645",
       "nav.group.member courses and activities": "\u0625\u062F\u0627\u0631\u0629 \u0641\u0639\u0627\u0644\u064A\u0627\u062A \u0627\u0644\u0623\u0639\u0636\u0627\u0621",
       "nav.hwy-member-courses-activities-management": "\u0625\u062F\u0627\u0631\u0629 \u0641\u0639\u0627\u0644\u064A\u0627\u062A \u0627\u0644\u0623\u0639\u0636\u0627\u0621",
       "nav.hwy-member-courses-activities-management.description": "\u0633\u062C\u0651\u0644 \u0627\u0644\u062F\u0648\u0631\u0627\u062A \u0648\u0627\u0644\u0646\u0634\u0627\u0637\u0627\u062A\u060C \u0627\u0646\u0642\u0644\u0647\u0627 \u0628\u064A\u0646 \u0637\u0648\u0627\u0628\u064A\u0631 \u0627\u0644\u062A\u0648\u062B\u064A\u0642\u060C \u0648\u0623\u062F\u0631 \u0627\u0644\u062D\u0636\u0648\u0631.",
@@ -46067,8 +46377,8 @@ var init_hawiety_iq = __esm({
       "hwy.businessRules.section.nakhebin-linking.intro": "\u0645\u0639\u0627\u062F\u0644 \u0645\u0639\u0627\u0644\u062C \u0631\u0628\u0637 \u0627\u0644\u0646\u0627\u062E\u0628 (S2) \u0639\u0628\u0631 hwy_member_nakhebin_* \u0648\u0645\u0639\u0631\u0651\u0641\u0627\u062A \u0627\u0644\u062A\u0642\u0633\u064A\u0645\u0627\u062A \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0629.",
       "hwy.businessRules.section.geo-responsibility-legacy.title": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u0648\u0646 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0648\u0646 (\u062A\u0642\u0627\u0639\u062F SP \u0627\u0644\u0642\u062F\u064A\u0645)",
       "hwy.businessRules.section.geo-responsibility-legacy.intro": "\u0645\u0633\u0624\u0648\u0644\u064A\u0629 geo \u0641\u064A \u0627\u0644\u0627\u0633\u062A\u0648\u062F\u064A\u0648 \u062A\u062D\u0644 \u0645\u062D\u0644 SP\u0627\u062A H_Circle_* \u0648 H_Eghtera_* \u2014 \u0645\u0633\u0627\u0631 \u0648\u0627\u062D\u062F \u0639\u0646\u062F \u0627\u0644\u0642\u0637\u0639.",
-      "hwy.businessRules.section.electoral-tree-role-anchor.title": "\u0634\u062C\u0631\u0629 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628 \u2014 \u0646\u0642\u0637\u0629 \u0648\u0627\u062D\u062F\u0629 \u0644\u0643\u0644 \u062F\u0648\u0631",
-      "hwy.businessRules.section.electoral-tree-role-anchor.intro": "\u064A\u062C\u0648\u0632 \u0644\u0644\u0634\u062E\u0635 \u0627\u0644\u0648\u0627\u062D\u062F \u062D\u0645\u0644 \u0639\u062F\u0629 \u0623\u062F\u0648\u0627\u0631\u061B \u0644\u0643\u0646 \u0643\u0644 \u0627\u0644\u0623\u062F\u0648\u0627\u0631 \u0639\u0644\u0649 \u0627\u0644\u0634\u062C\u0631\u0629 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A\u0629 \u062A\u0634\u062A\u0631\u0643 \u0641\u064A \u0645\u0633\u062A\u0648\u0649 \u0648\u0627\u062D\u062F \u0648\u0646\u0642\u0637\u0629 \u0648\u0627\u062D\u062F\u0629 \u2014 \u0644\u0627 \u0641\u0631\u0639\u064A\u0646 \u0641\u064A \u0622\u0646 \u0648\u0627\u062D\u062F.",
+      "hwy.businessRules.section.electoral-tree-role-anchor.title": "\u0634\u062C\u0631\u0629 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628 \u2014 \u0645\u0633\u0627\u0631\u0627 \u0627\u0644\u062A\u062E\u0635\u064A\u0635 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A",
+      "hwy.businessRules.section.electoral-tree-role-anchor.intro": "\u064A\u062C\u0648\u0632 \u0644\u0644\u0634\u062E\u0635 \u062D\u0645\u0644 \u0639\u062F\u0629 \u0623\u062F\u0648\u0627\u0631. \u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0625\u062C\u0631\u0627\u0626\u064A (\u0645\u0633\u0624\u0648\u0644\u064A\u0629 geo) = \u0646\u0642\u0637\u0629 \u0648\u0627\u062D\u062F\u0629\u061B \u0627\u0644\u062A\u062E\u0635\u064A\u0635 \u0627\u0644\u0645\u0628\u0627\u0634\u0631 (\u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646: \u062F\u0648\u0631 + \u0645\u0646\u0637\u0642\u0629) \u064A\u062C\u0648\u0632 \u0641\u064A\u0647 \u0639\u062F\u0629 \u0646\u0642\u0627\u0637 \u0639\u0644\u0649 \u0646\u0641\u0633 \u0627\u0644\u0645\u0633\u062A\u0648\u0649 \u2014 \u0644\u0627 \u0645\u0633\u062A\u0648\u064A\u064A\u0646 \u0645\u0639\u0627\u064B.",
       "hwy.businessRules.rule.membership-tracking-vs-display.title": "\u0631\u0645\u0632 \u0627\u0644\u0645\u062A\u0627\u0628\u0639\u0629 \u0645\u0642\u0627\u0628\u0644 \u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u062A\u064A\u0627\u0631\u064A",
       "hwy.businessRules.rule.membership-tracking-vs-display.body": "\u0645\u062A\u0627\u0628\u0639\u0629 \u0627\u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u0630\u0627\u062A\u064A \u0627\u0644\u0639\u0627\u0645 = hwy_members.id \u062F\u0627\u0626\u0645\u0627\u064B (\u0628\u062F\u0648\u0646 \u062C\u062F\u0648\u0644 hwy_tracking_codes). \u0639\u0645\u0648\u062F \xAB\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621\xBB / \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 = hwy_members.username (\u0645\u0639 COALESCE \u0641\u064A vw_hwy_members) \u0648\u064A\u0628\u0642\u0649 \u0641\u0627\u0631\u063A\u0627\u064B \u062D\u062A\u0649 \u0645\u0648\u0627\u0641\u0642\u0629 \u0627\u0644\u062A\u062D\u0642\u0642 \u0627\u0644\u0645\u062D\u0644\u064A \u0625\u0644\u0649 active \u2014 \u0644\u0627 \u064A\u064F\u0633\u062A\u0628\u062F\u0644 \u0628\u0631\u0645\u0632 \u0627\u0644\u0645\u062A\u0627\u0628\u0639\u0629 \u0641\u064A \u0639\u0645\u0648\u062F \u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u062A\u064A\u0627\u0631\u064A.",
       "hwy.businessRules.rule.membership-display-priority.title": "\u0623\u0648\u0644\u0648\u064A\u0629 \u0627\u0644\u0639\u0631\u0636 (\u0627\u0633\u062A\u064A\u0631\u0627\u062F legacy)",
@@ -46221,12 +46531,12 @@ var init_hawiety_iq = __esm({
       "hwy.businessRules.rule.member-kasb-link.body": "AddKasb \u2192 hwy_member_kasb_link (second_referrer_username).",
       "hwy.businessRules.rule.role-electoral-multiple-roles.title": "\u0639\u062F\u0629 \u0623\u062F\u0648\u0627\u0631 \u0644\u0634\u062E\u0635 \u0648\u0627\u062D\u062F",
       "hwy.businessRules.rule.role-electoral-multiple-roles.body": "\u064A\u062C\u0648\u0632 \u0644\u0644\u0639\u0636\u0648 \u0627\u0644\u0648\u0627\u062D\u062F \u062D\u0645\u0644 \u0639\u062F\u0629 \u0623\u062F\u0648\u0627\u0631 \u062A\u0634\u063A\u064A\u0644\u064A\u0629 \u0641\u064A \u0622\u0646 \u0648\u0627\u062D\u062F (role_name \u0645\u062E\u062A\u0644\u0641\u060C \u062E\u0627\u0646\u0627\u062A \u0645\u0633\u0624\u0648\u0644\u064A\u0646\u060C \u0623\u0648 \u062D\u0632\u0645 \u0635\u0644\u0627\u062D\u064A\u0627\u062A). \u0647\u0630\u0627 \u0627\u0644\u0642\u0627\u0646\u0648\u0646 \u0644\u0627 \u064A\u062D\u062F\u0651 \u0639\u062F\u062F \u0627\u0644\u0623\u062F\u0648\u0627\u0631.",
-      "hwy.businessRules.rule.role-electoral-single-anchor.title": "\u0645\u0633\u062A\u0648\u0649 \u0648\u0627\u062D\u062F \u0648\u0646\u0642\u0637\u0629 \u0648\u0627\u062D\u062F\u0629 (\u0645\u0634\u062A\u0631\u0643\u0629)",
-      "hwy.businessRules.rule.role-electoral-single-anchor.body": "\u0643\u0644 \u0627\u0644\u0623\u062F\u0648\u0627\u0631 \u0627\u0644\u0645\u0631\u062A\u0628\u0637\u0629 \u0628\u0634\u062C\u0631\u0629 \u0627\u0644\u062A\u0642\u0633\u064A\u0645 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0644\u0630\u0644\u0643 \u0627\u0644\u0639\u0636\u0648 \u062A\u0634\u062A\u0631\u0643 \u0641\u064A \u0645\u0633\u062A\u0648\u0649 geo \u0648\u0627\u062D\u062F (\u0645\u062D\u0627\u0641\u0638\u0629\u060C \u0642\u0627\u0637\u0639\u0629\u060C \u062F\u0627\u0626\u0631\u0629\u060C \u0645\u0643\u062A\u0628\u060C \u0645\u0646\u0637\u0642\u0629) \u0648\u0646\u0642\u0637\u0629 \u0648\u0627\u062D\u062F\u0629 (legacy_geo_id + geo_base_info_id). \u0644\u0627 \u064A\u062C\u0648\u0632 \u0646\u0642\u0637\u062A\u0627 \u0627\u0631\u062A\u0643\u0627\u0632 \u0645\u0639\u062A\u0645\u062F\u062A\u0627\u0646 \u0639\u0644\u0649 \u0645\u0633\u062A\u0648\u064A\u064A\u0646 \u0623\u0648 \u0646\u0642\u0637\u062A\u064A\u0646 \u0645\u062E\u062A\u0644\u0641\u062A\u064A\u0646 \u2014 \u062D\u062A\u0649 \u0645\u0639 \u062A\u0639\u062F\u062F \u0627\u0644\u0623\u062F\u0648\u0627\u0631. \u0627\u0644\u0623\u062F\u0648\u0627\u0631 \u0627\u0644\u0625\u0636\u0627\u0641\u064A\u0629 \u0639\u0644\u0649 \u0646\u0641\u0633 \u0627\u0644\u0627\u0631\u062A\u0643\u0627\u0632\u061B \u0627\u0644\u0646\u0642\u0644 \u0639\u0628\u0631 \u0627\u0644\u062A\u0631\u0634\u064A\u062D / \u0627\u0644\u0625\u0632\u0627\u0644\u0629 \u2014 \u0644\u0627 \u0628\u0641\u0631\u0639 \u062B\u0627\u0646\u064D \u0639\u0644\u0649 \u0627\u0644\u0634\u062C\u0631\u0629.",
+      "hwy.businessRules.rule.role-electoral-single-anchor.title": "\u0645\u0633\u0627\u0631\u0627\u0646 \u0644\u0644\u062A\u062E\u0635\u064A\u0635 (\u0645\u0633\u062A\u0648\u0649 \u0648\u0627\u062D\u062F)",
+      "hwy.businessRules.rule.role-electoral-single-anchor.body": "\u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0625\u062C\u0631\u0627\u0626\u064A \u2014 \u062A\u0631\u0634\u064A\u062D \u0645\u0633\u0624\u0648\u0644\u064A\u0629 geo \u0644\u0644\u0623\u062F\u0648\u0627\u0631 \u0627\u0644\u0631\u0633\u0645\u064A\u0629: \u0646\u0642\u0637\u0629 \u0648\u0627\u062D\u062F\u0629 (legacy_geo_id + geo_base_info_id)\u061B \u0627\u0644\u0646\u0642\u0644 \u0639\u0628\u0631 \u0627\u0644\u062A\u0631\u0634\u064A\u062D / \u0627\u0644\u0625\u0632\u0627\u0644\u0629. \u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0645\u0628\u0627\u0634\u0631 \u2014 \u062A\u062E\u0635\u064A\u0635 \u062F\u0648\u0631 + \u0645\u0646\u0637\u0642\u0629 \u0645\u0646 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646 (\u0645\u0639\u0627\u062F\u0644 \u0627\u0644\u0625\u0633\u0646\u0627\u062F \u0627\u0644\u0645\u0628\u0627\u0634\u0631 legacy): \u064A\u062C\u0648\u0632 \u0639\u062F\u0629 \u0646\u0642\u0627\u0637 \u0645\u0639\u062A\u0645\u062F\u0629 \u0639\u0644\u0649 \u0646\u0641\u0633 \u0645\u0633\u062A\u0648\u0649 geo \u0641\u0642\u0637. \u0644\u0627 \u064A\u062C\u0648\u0632 \u0645\u0633\u062A\u0648\u064A\u0627\u0646 \u0645\u0639\u062A\u0645\u062F\u0627\u0646 \u0645\u0639\u0627\u064B (\u0645\u062B\u0644\u0627\u064B \u0645\u062D\u0627\u0641\u0638\u0629 + \u062F\u0627\u0626\u0631\u0629).",
       "hwy.businessRules.rule.role-electoral-out-of-scope.title": "\u0645\u0627 \u0644\u0627 \u064A\u0634\u0645\u0644\u0647 \u0647\u0630\u0627 \u0627\u0644\u0642\u0627\u0646\u0648\u0646",
       "hwy.businessRules.rule.role-electoral-out-of-scope.body": "\u0639\u0636\u0648\u064A\u0629 \u0639\u0627\u062F\u064A\u0629 \u0628\u0644\u0627 \u062F\u0648\u0631 \u0639\u0644\u0649 \u0627\u0644\u0634\u062C\u0631\u0629\u061B \u0631\u0628\u0637 \u0627\u0644\u0646\u0627\u062E\u0628 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0641\u064A \u0627\u0644\u0645\u0644\u0641 (\u062C\u063A\u0631\u0627\u0641\u064A\u0627 \u0627\u0644\u0639\u0636\u0648\u064A\u0629 \u0648\u0644\u064A\u0633 \u0627\u0631\u062A\u0643\u0627\u0632 \u0627\u0644\u0645\u0633\u0624\u0648\u0644)\u061B \u0639\u0636\u0648\u064A\u0629 \u0627\u0644\u0645\u0624\u0633\u0633\u0629 \u0645\u0627 \u0644\u0645 \u064A\u064F\u0631\u0628\u064E\u0637 \u0627\u0644\u062F\u0648\u0631 \u0635\u0631\u0627\u062D\u0629 \u0628\u0646\u0642\u0637\u0629 geo.",
-      "hwy.businessRules.rule.role-electoral-enforcement-gap.title": "\u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u0641\u064A \u0627\u0644\u0646\u0638\u0627\u0645 \u0627\u0644\u062D\u0627\u0644\u064A",
-      "hwy.businessRules.rule.role-electoral-enforcement-gap.body": "\u0627\u0644\u0647\u062F\u0641: hwy_geo_responsibility_* \u0648 hwy_member_area_limits \u062A\u0645\u0646\u0639 \u0646\u0642\u0637\u0629 \u0627\u0631\u062A\u0643\u0627\u0632 \u062B\u0627\u0646\u064A\u0629 \u0639\u0646\u062F \u0623\u064A \u062A\u0637\u0648\u064A\u0631 \u062C\u062F\u064A\u062F. \u0633\u0643\u0631\u0628\u062A hwy_geo_responsibility_member_area_limits \u064A\u0632\u0627\u0645\u0646 \u0635\u0641\u0648\u0641 area limit \u0645\u0646 \u0637\u0644\u0628\u0627\u062A \u0627\u0644\u062A\u0631\u0634\u064A\u062D (\u0635\u0641 \u0644\u0643\u0644 member_id + legacy_geo_id) \u0644\u0643\u0646\u0647 \u0644\u0627 \u064A\u062F\u0645\u062C \u0639\u062F\u0629 \u0646\u0642\u0627\u0637 \u0641\u064A \u0627\u0631\u062A\u0643\u0627\u0632 \u0648\u0627\u062D\u062F \u0628\u0639\u062F. ETL/legacy \u0642\u062F \u064A\u062A\u0631\u0643 \u0639\u062F\u0629 \u0646\u0642\u0627\u0637 \u0645\u0639\u062A\u0645\u062F\u0629. \u0627\u0639\u062A\u0628\u0631 \u062A\u0639\u062F\u062F \u0627\u0644\u0646\u0642\u0627\u0637 \u0627\u0646\u062D\u0631\u0627\u0641\u0627\u064B \u2014 \u0623\u064A \u0639\u0645\u0644 geo/\u0623\u062F\u0648\u0627\u0631 \u062C\u062F\u064A\u062F \u064A\u062C\u0628 \u0623\u0646 \u064A\u0645\u0646\u0639 \u0623\u0648 \u064A\u0633\u062A\u0628\u062F\u0644 \u0627\u0644\u0646\u0642\u0637\u0629 \u0627\u0644\u062B\u0627\u0646\u064A\u0629 \u0648\u064A\u064F\u062D\u062F\u0651\u062B \u0647\u0630\u0627 \u0627\u0644\u0642\u0627\u0646\u0648\u0646 \u0639\u0646\u062F\u0645\u0627 \u064A\u0637\u0627\u0628\u0642 \u0627\u0644\u0633\u0644\u0648\u0643.",
+      "hwy.businessRules.rule.role-electoral-enforcement-gap.title": "\u0635\u0641\u0648\u0641 \u0627\u0644\u0628\u064A\u0627\u0646\u0627\u062A \u0648\u0627\u0644\u0641\u062D\u0635",
+      "hwy.businessRules.rule.role-electoral-enforcement-gap.body": "\u0639\u062F\u0629 \u0635\u0641\u0648\u0641 \u0645\u0639\u062A\u0645\u062F\u0629 \u0639\u0644\u0649 \u0645\u0633\u062A\u0648\u0649 geo \u0648\u0627\u062D\u062F (\u062A\u062E\u0635\u064A\u0635 \u0645\u0628\u0627\u0634\u0631 / \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646) \u0645\u062A\u0648\u0642\u0639\u0629. \u0627\u0644\u0627\u0631\u062A\u0643\u0627\u0632 \u0639\u0628\u0631 \u0645\u0633\u062A\u0648\u064A\u064A\u0646 = \u0627\u0646\u062D\u0631\u0627\u0641: \u0644\u0627 \u064A\u064F\u0633\u062A\u0648\u0631\u062F \u0641\u064A ETL (legacy-edge parity \u0648 geo-responsibility). \u0627\u0644\u0643\u062A\u0627\u0628\u0629 \u0627\u0644\u062C\u062F\u064A\u062F\u0629 \u062A\u0645\u0646\u0639 \u0639\u0628\u0631 \u0627\u0644\u0645\u0633\u062A\u0648\u064A\u0627\u062A. schema:area-limits-invariant \u0644\u0644\u0641\u062D\u0635\u061B hwy:etl:purge-cross-level-area-limits \u0644\u062D\u0630\u0641 \u0627\u0644\u0627\u0646\u062D\u0631\u0627\u0641 \u0639\u0644\u0649 edge.",
       "hwy.businessRules.rule.list-legacy-filter-scope.title": "\u0645\u062A\u0649 \u064A\u064F\u0641\u0639\u0651\u064E\u0644 \u0627\u0644\u0648\u0636\u0639 2",
       "hwy.businessRules.rule.list-legacy-filter-scope.body": "\u0643\u0644 \u0642\u0627\u0626\u0645\u0629 \u0623\u0639\u0636\u0627\u0621 Hawiety \u0627\u0644\u062A\u064A \u064A\u0628\u062F\u0623 scope \u0627\u0644\u0642\u062F\u064A\u0645 \u0641\u064A\u0647\u0627 \u0628\u0640 HWY_Members_List_ \u062A\u0633\u062A\u062E\u062F\u0645 \u0644\u0648\u062D\u0629 \u0627\u0644\u062D\u0642\u0648\u0644 \u0639\u0646\u062F \u062A\u0634\u063A\u064A\u0644 \u0645\u0641\u062A\u0627\u062D legacy field \u2014 \u0645\u0627 \u0639\u062F\u0627 \u0645\u0646\u062A\u0642\u064A \u0627\u0644\u0628\u062D\u062B \u0627\u0644\u0633\u0631\u064A\u0639 AlMontadhemin_SingleView. \u0645\u0646\u062A\u0642\u064A\u0627\u062A \u0627\u0644\u0645\u0639\u0627\u0644\u062C\u0627\u062A \u062A\u062D\u062A\u0641\u0638 \u0628\u0634\u0631\u064A\u0637\u0647\u0627 \u0627\u0644\u0645\u062E\u062A\u0635\u0631.",
       "hwy.businessRules.rule.list-legacy-filter-panel-rows.title": "\u062A\u0631\u062A\u064A\u0628 \u0627\u0644\u0635\u0641\u0648\u0641 \u0627\u0644\u062B\u0627\u0628\u062A",
@@ -46900,6 +47210,10 @@ var init_hawiety_us = __esm({
       "nav.hwy-institutes.description": "Create and edit institutes, logos, invite rules, and dedicated member lists.",
       "nav.hwy-etl-console": "Legacy ETL console",
       "nav.hwy-etl-console.description": "Run one-off data import jobs from the browser (operators only).",
+      "nav.hwy-employees-list": "Employees",
+      "nav.hwy-employees-list.description": "Browse employee accounts, roles, organization limits, and export lists.",
+      "nav.hwy-identity-components": "Hawiety identity components",
+      "nav.hwy-identity-components.description": "Living catalog of Hawiety portal identity UI primitives with realistic sample data.",
       "nav.hwy-business-rules-reference": "Identity business rules",
       "nav.hwy-business-rules-reference.description": "Read enforced membership, dossier, and workflow rules for the Hawiety package.",
       "nav.hwy-list-defs": "List Definitions",
@@ -47010,8 +47324,8 @@ var init_hawiety_us = __esm({
       "hwy.businessRules.section.nakhebin-linking.intro": "Voter link wizard parity through hwy_member_nakhebin_* procedures and Geographic Divisions ids.",
       "hwy.businessRules.section.geo-responsibility-legacy.title": "Geo officials (legacy SP retirement)",
       "hwy.businessRules.section.geo-responsibility-legacy.intro": "Studio geo responsibility replaces H_Circle_* / H_Eghtera_* legacy suggest-approve SPs \u2014 single path at cutover.",
-      "hwy.businessRules.section.electoral-tree-role-anchor.title": "Electoral tree \u2014 one anchor per role",
-      "hwy.businessRules.section.electoral-tree-role-anchor.intro": "One person may hold several roles; every electoral-tree role still shares exactly one level and one node \u2014 never two places on the tree at once.",
+      "hwy.businessRules.section.electoral-tree-role-anchor.title": "Electoral tree \u2014 geo assignment paths",
+      "hwy.businessRules.section.electoral-tree-role-anchor.intro": "One person may hold several roles. Process-path officials get exactly one node; direct assignment (employees list role + region) may attach several nodes on the same level \u2014 never two levels at once.",
       "hwy.businessRules.rule.membership-tracking-vs-display.title": "Tracking id vs \u0627\u0644\u062A\u064A\u0627\u0631\u064A number",
       "hwy.businessRules.rule.membership-tracking-vs-display.body": "Public self-registration tracking is always hwy_members.id (no hwy_tracking_codes table). Staff \xABmembership number\xBB / login UserName is hwy_members.username (COALESCE with base_users.username in vw_hwy_members) and stays empty until local verification approves to active \u2014 the tracking id is not substituted into that column.",
       "hwy.businessRules.rule.membership-display-priority.title": "List column priority (legacy import)",
@@ -47164,12 +47478,12 @@ var init_hawiety_us = __esm({
       "hwy.businessRules.rule.member-kasb-link.body": "AddKasb maps to hwy_member_kasb_link \u2014 stores kasb member username on second_referrer_username with optional referrer_relation_id.",
       "hwy.businessRules.rule.role-electoral-multiple-roles.title": "Multiple roles per person",
       "hwy.businessRules.rule.role-electoral-multiple-roles.body": "One member MAY hold several operational roles at once (different role_name / official slots / access bundles). Role count is not limited by this contract.",
-      "hwy.businessRules.rule.role-electoral-single-anchor.title": "Single level and single node (shared)",
-      "hwy.businessRules.rule.role-electoral-single-anchor.body": "All electoral-tree-scoped roles for that member MUST share exactly one geo_level (province, ghavateh, circle, maktab, region) and exactly one node (legacy_geo_id + geo_base_info_id). A member MUST NOT hold two approved anchors on different levels or nodes at the same time \u2014 even with multiple roles. Extra roles attach to the same anchor; moves use nomination / removal workflows \u2014 not a second branch on the tree.",
+      "hwy.businessRules.rule.role-electoral-single-anchor.title": "Two assignment paths (one level)",
+      "hwy.businessRules.rule.role-electoral-single-anchor.body": "Process path \u2014 geo responsibility nominations for specific official roles: exactly one node (legacy_geo_id + geo_base_info_id) per member on that path; moves via nomination / removal, not a second branch. Direct path \u2014 employees list role + region assignment (legacy direct parity): MAY assign multiple approved nodes on the same geo_level only. Every member still has at most one geo_level among active approved anchors \u2014 never province and circle (or any two levels) at once.",
       "hwy.businessRules.rule.role-electoral-out-of-scope.title": "What this does not cover",
       "hwy.businessRules.rule.role-electoral-out-of-scope.body": "Plain membership without an electoral-tree role; nakhebin electoral join on the dossier (membership geography, not official anchoring); institute org membership unless product explicitly binds that role to a geo node.",
-      "hwy.businessRules.rule.role-electoral-enforcement-gap.title": "Enforcement today",
-      "hwy.businessRules.rule.role-electoral-enforcement-gap.body": "Target writes: hwy_geo_responsibility_* and hwy_member_area_limits must enforce single-anchor when extended. Install script hwy_geo_responsibility_member_area_limits MERGE-syncs area-limit rows from Studio nomination requests (one row per member_id + legacy_geo_id) but does not yet collapse multiple nodes to one anchor. ETL/legacy can still leave several approved nodes per member. Treat multi-anchor as drift \u2014 new geo/role work should block or replace a second anchor and update this rule when runtime matches.",
+      "hwy.businessRules.rule.role-electoral-enforcement-gap.title": "Data rows and probes",
+      "hwy.businessRules.rule.role-electoral-enforcement-gap.body": "dbo.hwy_member_area_limits may list several approved rows for one member when direct / employees assignment placed multiple nodes on the same level \u2014 expected, not drift. Cross-level approved rows are drift: legacy-edge parity and geo-responsibility ETL skip them (hwyMemberAreaLimitsCrossLevelEtl). New writes MUST block cross-level anchors. npm run schema:area-limits-invariant fails on cross-level counts; npm run hwy:etl:purge-cross-level-area-limits removes drift already on edge.",
       "hwy.businessRules.rule.list-legacy-filter-scope.title": "When mode 2 applies",
       "hwy.businessRules.rule.list-legacy-filter-scope.body": "Every Hawiety member-directory people list whose legacy scope starts with HWY_Members_List_ uses HwyMemberDirectoryLegacyFieldByFieldPanel when the legacy field toggle is on \u2014 except quick-search picker AlMontadhemin_SingleView. Wizard pickers (similar-members bar, etc.) keep their own compact filters.",
       "hwy.businessRules.rule.list-legacy-filter-panel-rows.title": "Locked row order",
@@ -47351,6 +47665,81 @@ var init_hawiety_us = __esm({
       "nav.hwy-card-flow-province-delivery": "(6) Province delivery",
       "nav.hwy-card-flow-member-delivery": "(7) Member delivery",
       "nav.hwy-card-flow-printed-history": "(8) Printed badges",
+      "nav.group.financial management": "Financial management",
+      "nav.hwy-payment-documents": "Organization officer grants",
+      "nav.hwy-payment-documents.description": "Manage monthly grant payment documents (HWY_PaymentDocuments_List).",
+      "nav.hwy-payment-documents-members": "Grant receipt details",
+      "nav.hwy-payment-documents-members.description": "Member grant receipt lines and pay amounts (HWY_PaymentDocuments_Members_ReadList).",
+      "nav.hwy-masoolin-performance": "Masoolin performance reports",
+      "nav.hwy-masoolin-performance.description": "Responsible-officer activity reports (HWY_MasoolinPerformance).",
+      "hwy.masoolinPerformance.search": "Search",
+      "hwy.masoolinPerformance.export": "Export",
+      "hwy.masoolinPerformance.searchFirst": "Run a search before exporting.",
+      "hwy.masoolinPerformance.exportDone": "Export ready.",
+      "hwy.masoolinPerformance.exportEmpty": "No rows to export.",
+      "hwy.masoolinPerformance.exportError": "Export failed.",
+      "hwy.masoolinPerformance.empty": "No rows match the current filters.",
+      "hwy.masoolinPerformance.emptyHint": "Set filters and press Search.",
+      "hwy.masoolinPerformance.filter.gender": "Gender",
+      "hwy.masoolinPerformance.filter.genderAll": "Gender (all)",
+      "hwy.masoolinPerformance.filter.role": "Responsibility",
+      "hwy.masoolinPerformance.filter.roleAll": "Responsibility (all)",
+      "hwy.masoolinPerformance.filter.province": "Province",
+      "hwy.masoolinPerformance.filter.provinceAll": "Province (all)",
+      "hwy.masoolinPerformance.filter.circle": "Circle",
+      "hwy.masoolinPerformance.filter.circleAll": "Circle (all)",
+      "hwy.masoolinPerformance.filter.tamvin": "Maktab",
+      "hwy.masoolinPerformance.filter.tamvinAll": "Maktab (all)",
+      "hwy.masoolinPerformance.filter.username": "Username",
+      "hwy.masoolinPerformance.column.username": "Username",
+      "hwy.masoolinPerformance.column.name": "Name",
+      "hwy.masoolinPerformance.column.geo": "Area",
+      "hwy.masoolinPerformance.column.role": "Responsibility",
+      "hwy.masoolinPerformance.column.daysInRole": "Days in role",
+      "hwy.masoolinPerformance.column.chiefRole": "Chief / deputy",
+      "hwy.masoolinPerformance.column.conflict": "Roghe conflict count",
+      "hwy.masoolinPerformance.column.currentMonth": "Current month",
+      "hwy.masoolinPerformance.column.month1": "Last month",
+      "hwy.masoolinPerformance.column.month2": "Two months ago",
+      "hwy.masoolinPerformance.column.month3": "Three months ago",
+      "hwy.masoolinPerformance.chiefRole.chief": "Chief",
+      "hwy.masoolinPerformance.chiefRole.deputy": "Deputy",
+      "hwy.masoolinPerformance.setChiefMasool": "Set as chief",
+      "hwy.masoolinPerformance.setChiefMasoolDone": "Chief masool updated.",
+      "hwy.masoolinPerformance.setChiefMasoolError": "Set chief masool failed.",
+      "hwy.masoolinPerformance.setChiefMasoolConfirmTitle": "Set chief masool",
+      "hwy.masoolinPerformance.setChiefMasoolConfirmBody": "Mark this member as chief in the center (others in the same roqhe group become deputies)?",
+      "hwy.masoolinPerformance.setChiefMasoolConfirm": "Confirm",
+      "hwy.masoolinPerformance.setChiefMasoolCancel": "Cancel",
+      "hwy.masoolinPerformance.role.circleOfficer": "Circle officer",
+      "hwy.masoolinPerformance.role.officeOfficer": "Office officer",
+      "hwy.masoolinPerformance.role.regionOfficer": "Region officer",
+      "nav.hwy-members-social-screens": "Social media attendance",
+      "nav.hwy-members-social-screens.description": "Member social-screen review workflow (HWY_Members_SocialScreens).",
+      "hwy.membersSocialScreens.totalCount": "Total queue",
+      "hwy.membersSocialScreens.filter.username": "Membership number",
+      "hwy.membersSocialScreens.filter.gender": "Gender",
+      "hwy.membersSocialScreens.filter.genderAll": "Gender (all)",
+      "hwy.membersSocialScreens.filter.province": "Province",
+      "hwy.membersSocialScreens.filter.provinceAll": "Province (all)",
+      "hwy.membersSocialScreens.filter.listType": "Queue",
+      "hwy.membersSocialScreens.filter.month": "Month",
+      "hwy.membersSocialScreens.filter.monthEmpty": "No months",
+      "hwy.membersSocialScreens.listType.toDecide": "Pending decision",
+      "hwy.membersSocialScreens.listType.accepted": "Approved",
+      "hwy.membersSocialScreens.listType.rejected": "Rejected",
+      "hwy.membersSocialScreens.listType.onGoing": "In progress",
+      "hwy.membersSocialScreens.loading": "Loading\u2026",
+      "hwy.membersSocialScreens.empty": "Nothing to review for the current filters.",
+      "hwy.membersSocialScreens.screenAlt": "Screenshot",
+      "hwy.membersSocialScreens.noImage": "No preview",
+      "hwy.membersSocialScreens.prev": "Previous",
+      "hwy.membersSocialScreens.next": "Next",
+      "hwy.membersSocialScreens.accept": "Approve",
+      "hwy.membersSocialScreens.reject": "Reject",
+      "hwy.membersSocialScreens.actionDone": "Action completed.",
+      "hwy.membersSocialScreens.actionError": "Action failed.",
+      "hwy.finance.comingSoon": "This page is coming soon.",
       "nav.hwy-meetings-management": "Regular meetings management",
       "hwy.candidatePipeline.column.member": "Member",
       "hwy.candidatePipeline.column.patch": "Responsibility patch",
@@ -47572,18 +47961,47 @@ var init_hawiety_us = __esm({
       "hwy.cardFlow.column.profileComplete": "Profile",
       "hwy.cardFlow.column.securityOpinion": "Security opinion",
       "hwy.cardFlow.column.startedOn": "Started",
-      "hwy.meetings.filter.anyMeeting": "Regular meeting",
+      "nav.hwy-meetings-management.description": "Schedule regular meeting instances, manage the roster, record attendance, and export pivot reports.",
+      "hwy.meetings.filter.anyMeeting": "All meetings",
       "hwy.meetings.filter.meeting": "Meeting",
       "hwy.meetings.search.username": "Membership number",
-      "hwy.meetings.manageMembers": "Meeting members",
+      "hwy.meetings.search.aria": "Filter instances by attendee membership number",
+      "hwy.meetings.manageMembers": "Meeting roster",
       "hwy.meetings.addInstance": "Add instance",
       "hwy.meetings.exportPivot": "Export attendance pivot",
-      "hwy.meetings.column.member": "Member",
+      "hwy.meetings.totalCount": "{count} records",
+      "hwy.meetings.loading": "Loading meeting instances\u2026",
+      "hwy.meetings.loadError": "Could not load the list. Try refresh.",
+      "hwy.meetings.empty": "No meeting instances match the current filters.",
+      "hwy.meetings.removed": "Instance removed.",
+      "hwy.meetings.instanceAdded": "Instance added.",
+      "hwy.meetings.memberAdded": "Member added to the roster.",
+      "hwy.meetings.memberRemoved": "Member removed from the roster.",
+      "hwy.meetings.exportDone": "Export ready.",
+      "hwy.meetings.column.createdBy": "Created by",
       "hwy.meetings.column.meetingType": "Meeting type",
       "hwy.meetings.column.eventDate": "Event date",
-      "hwy.meetings.column.roster": "Roster",
+      "hwy.meetings.column.createdOn": "Recorded on",
+      "hwy.meetings.column.rosterYet": "Active roster",
+      "hwy.meetings.column.rosterNot": "Inactive roster",
       "hwy.meetings.column.hazerin": "Present",
       "hwy.meetings.column.actions": "Actions",
+      "hwy.meetings.column.memberYet": "Active member",
+      "hwy.meetings.column.present": "Attendance",
+      "hwy.meetings.viewAttendance": "Attendance",
+      "hwy.meetings.deleteInstance": "Delete instance",
+      "hwy.meetings.deleteBlocked": "Remove all attendees before deleting this instance.",
+      "hwy.meetings.addInstanceTitle": "Add meeting instance",
+      "hwy.meetings.instanceDate": "Instance date",
+      "hwy.meetings.membersTitle": "Regular meeting roster",
+      "hwy.meetings.addMemberUsername": "Membership number",
+      "hwy.meetings.addMember": "Add member",
+      "hwy.meetings.noMembers": "No members on this meeting roster.",
+      "hwy.meetings.attendanceTitle": "Instance attendance",
+      "hwy.meetings.markAbsent": "Present \u2014 clear",
+      "hwy.meetings.markPresent": "Mark present",
+      "hwy.meetings.noAttendanceRows": "No roster members for this meeting.",
+      "hwy.meetings.rosterSummary": "{yet} active \xB7 {not} inactive",
       "nav.group.member courses and activities": "Member courses and activities",
       "nav.hwy-member-courses-activities-management": "Member courses and activities",
       "nav.hwy-member-courses-activities-management.description": "Register courses and activities, move them through documentation queues, and manage attendees.",
@@ -47604,6 +48022,8 @@ var init_hawiety_us = __esm({
       "hwy.coursesActivities.search.placeholder": "Search by id, title, or creator\u2026",
       "hwy.coursesActivities.search.aria": "Search list",
       "hwy.coursesActivities.loadFailed": "Could not load this list.",
+      "hwy.coursesActivities.loadError": "Could not load the list. Try refresh.",
+      "hwy.coursesActivities.totalCount": "{count} records",
       "hwy.coursesActivities.empty": "No records match this filter.",
       "hwy.coursesActivities.column.id": "ID",
       "hwy.coursesActivities.column.title": "Title",
@@ -47690,6 +48110,8 @@ var init_hawiety_us = __esm({
       "hwy.coursesActivities.edit.failed": "Save failed.",
       "hwy.coursesActivities.edit.selectType": "Select type",
       "hwy.coursesActivities.edit.selectSubtype": "Select subtype",
+      "hwy.coursesActivities.field.province": "Province",
+      "hwy.coursesActivities.edit.selectProvince": "Select province",
       "hwy.coursesActivities.edit.trainerId": "Member id",
       "hwy.coursesActivities.files.upload": "Upload file",
       "hwy.coursesActivities.files.uploaded": "File uploaded.",
@@ -47697,6 +48119,62 @@ var init_hawiety_us = __esm({
       "hwy.coursesActivities.files.delete": "Remove",
       "hwy.coursesActivities.files.deleted": "File removed.",
       "hwy.coursesActivities.files.deleteFailed": "Could not remove file.",
+      "hwy.coursesActivities.files.empty": "No attachments yet.",
+      "hwy.coursesActivities.files.remove": "Remove",
+      "hwy.coursesActivities.admin.cleanupDrafts": "Cleanup drafts",
+      "hwy.coursesActivities.admin.cleanupDone": "Removed {count} draft records.",
+      "hwy.coursesActivities.admin.cleanupFailed": "Cleanup failed.",
+      "hwy.coursesActivities.admin.copyParticipants": "Copy participants",
+      "hwy.coursesActivities.admin.copyDone": "Copied {count} participants.",
+      "hwy.coursesActivities.admin.copyFailed": "Copy failed.",
+      "hwy.coursesActivities.admin.copySource": "Source course id",
+      "hwy.coursesActivities.admin.copyTarget": "Target course id",
+      "hwy.coursesActivities.central.filter.allSubtypes": "All subtypes",
+      "hwy.coursesActivities.central.filter.recordId": "Code",
+      "hwy.coursesActivities.central.filter.dateFrom": "Date from",
+      "hwy.coursesActivities.central.filter.dateTo": "Date to",
+      "hwy.coursesActivities.central.filter.participantUsername": "Participant membership no.",
+      "hwy.coursesActivities.central.filter.deviceOsId": "Device OS id",
+      "hwy.coursesActivities.central.countTargetAudience": "Count limited target audience",
+      "hwy.coursesActivities.central.countTargetAudienceFailed": "Could not count target audience.",
+      "hwy.coursesActivities.central.newActivity": "New activity",
+      "hwy.coursesActivities.central.saveAndParticipants": "Confirm activity and open participants",
+      "hwy.coursesActivities.central.column.edit": "Edit",
+      "hwy.coursesActivities.central.column.activity": "Activity",
+      "hwy.coursesActivities.central.column.targetAudience": "Target audience",
+      "hwy.coursesActivities.central.audienceComingSoon": "Count target audience (coming soon)",
+      "hwy.coursesActivities.central.column.created": "Created",
+      "hwy.coursesActivities.central.column.updated": "Updated",
+      "hwy.coursesActivities.central.form.main": "Activity",
+      "hwy.coursesActivities.central.form.description": "Description",
+      "hwy.coursesActivities.central.form.titlePlaceholder": "Title",
+      "hwy.coursesActivities.central.form.descriptionPlaceholder": "Description",
+      "hwy.coursesActivities.central.form.subtypeLabel": "Type",
+      "hwy.coursesActivities.central.form.selfAnnounce": "Self announcement",
+      "hwy.coursesActivities.central.form.selfAnnounceLabel": "Allow members to self-announce attendance",
+      "hwy.coursesActivities.central.form.gender": "Gender",
+      "hwy.coursesActivities.central.form.windowStart": "Window start",
+      "hwy.coursesActivities.central.form.windowEnd": "Window end",
+      "hwy.coursesActivities.central.form.windowStartShort": "StartDate",
+      "hwy.coursesActivities.central.form.windowEndShort": "EndDate",
+      "hwy.coursesActivities.central.form.lat": "Latitude",
+      "hwy.coursesActivities.central.form.lon": "Longitude",
+      "hwy.coursesActivities.central.form.latShort": "Lat",
+      "hwy.coursesActivities.central.form.lonShort": "Lon",
+      "hwy.coursesActivities.central.form.maxDistance": "Max distance (m)",
+      "hwy.coursesActivities.central.form.maxDistanceShort": "MaxDist",
+      "hwy.coursesActivities.central.form.nbProvinces": "Province (audience)",
+      "hwy.coursesActivities.central.form.roles": "Role",
+      "hwy.coursesActivities.central.form.searchAdd": "Search and add",
+      "hwy.coursesActivities.central.form.orgNone": "Not affiliated with any organization",
+      "hwy.coursesActivities.central.form.orgNoneHint": "Applies to organization, scouting, and government options below.",
+      "hwy.coursesActivities.central.form.organizations": "Organization",
+      "hwy.coursesActivities.central.form.orgSearch": "Organization \u2014 search and add",
+      "hwy.coursesActivities.central.form.kashafeh": "Limited to scouting criteria (combined with other filters)",
+      "hwy.coursesActivities.central.form.gov": "Limited to government-affairs criteria (combined with other filters)",
+      "hwy.coursesActivities.central.validation.activityDate": "Activity date is required.",
+      "hwy.toolbar.legacyFieldFilters.toggle": "Field filters",
+      "hwy.toolbar.legacyFieldFilters.hint": "Show filters that search specific fields, like the previous app.",
       "hwy.coursesActivities.attendees.selfie": "Selfie on file",
       "hwy.coursesActivities.attendees.add": "Add attendee",
       "hwy.coursesActivities.attendees.added": "Attendee added.",
@@ -47996,15 +48474,11 @@ var init_hawiety_us = __esm({
       "hwy.membership.action.approve": "Approve",
       "hwy.membership.action.reject": "Reject",
       "hwy.membership.action.activate": "Activate member",
+      "hwy.membership.action.reactivate": "Reactivate",
       "hwy.membership.action.unreject": "Return to queue",
       "hwy.membership.action.rejectFinal": "Reject (final)",
       "hwy.membership.action.rejectReturn": "Reject (returnable)",
       "hwy.membership.toast.saved": "Membership decision saved.",
-      "hwy.membership.rejectionList.call": "Call",
-      "hwy.membership.rejectionList.column.governorate": "Governorate",
-      "hwy.membership.rejectionList.column.statusExplanation": "Status \u2014 explanation",
-      "hwy.membership.rejectionList.column.statusExplanationLocalManage": "Returned from region official",
-      "hwy.membership.rejectionList.whatsapp": "WhatsApp",
       "hwy.membership.dialog.approveCallCenterTitle": "Approve call center review",
       "hwy.membership.dialog.approveLocalTitle": "Approve local verification",
       "hwy.membership.dialog.rejectCallCenterTitle": "Reject at call center",
@@ -48429,8 +48903,8 @@ var init_hawiety_us = __esm({
       "hwy.selfReg.portal.aboutTitle": "Hawiety",
       "hwy.selfReg.portal.aboutBody": "Hawiety is a relationship management ecosystem.",
       "hwy.selfReg.portal.aboutAction": "About",
-      "hwy.selfReg.portal.aboutHawietyPackageVersionLabel": "Hawiety package",
-      "hwy.selfReg.portal.aboutStandardsLabel": "Standards",
+      "hwy.selfReg.portal.aboutHawietyPackageVersionLabel": "Hawiety package version",
+      "hwy.selfReg.login.alforat": "Al-Forat registration",
       "hwy.selfReg.action.backToLogin": "Back to login",
       "hwy.selfReg.action.submit": "Submit application",
       "hwy.selfReg.action.submitting": "Submitting\u2026",
@@ -49244,6 +49718,493 @@ var init_hwyMemberListScopedEditLabels = __esm({
           [vocab.emptyCellTranslationKey, "\u0627\u062E\u062A\u0631 \u0627\u0644\u0635\u0641\u0629"]
         ])
       )
+    });
+  }
+});
+
+// scripts/hwy-phase3/culture/hwyIdentityComponentsTranslations.ts
+var sectionLabelEn, sectionHintEn, previewEn, buildHwyIdentityComponentsCultureKeysEn, sectionLabelIq, sectionHintIq, previewIq, buildHwyIdentityComponentsCultureKeysIq;
+var init_hwyIdentityComponentsTranslations = __esm({
+  "scripts/hwy-phase3/culture/hwyIdentityComponentsTranslations.ts"() {
+    sectionLabelEn = (id, label) => ({ [`hwy.identityComponents.section.${id}.label`]: label });
+    sectionHintEn = (id, hint) => ({ [`hwy.identityComponents.section.${id}.hint`]: hint });
+    previewEn = (sectionId, sampleId, title, description) => ({
+      [`hwy.identityComponents.preview.${sectionId}.${sampleId}.title`]: title,
+      [`hwy.identityComponents.preview.${sectionId}.${sampleId}.description`]: description
+    });
+    buildHwyIdentityComponentsCultureKeysEn = () => ({
+      "hwy.identityComponents.catalog.badge": "Hawiety identity catalog",
+      "hwy.identityComponents.search.placeholder": "Search identity components\u2026",
+      "hwy.identityComponents.search.aria": "Search Hawiety identity components",
+      "hwy.identityComponents.search.noMatch": "No sections match this search.",
+      "hwy.identityComponents.mobile.sectionLabel": "Section",
+      "hwy.identityComponents.mobile.sectionAria": "Hawiety identity components section",
+      "hwy.identityComponents.unknownSection": "Unknown catalog section.",
+      "hwy.identityComponents.group.member-face": "Member face",
+      "hwy.identityComponents.group.electoral-geo": "Electoral & geo",
+      "hwy.identityComponents.group.targhin": "Targhin",
+      "hwy.identityComponents.group.list-filters": "List filters",
+      ...sectionLabelEn("member-directory-face", "Directory list face card"),
+      ...sectionHintEn(
+        "member-directory-face",
+        "Column-1 member card for member-directory grids \u2014 avatar, blue username or red tracking, birth/membership meta, and scope-specific layouts."
+      ),
+      ...sectionLabelEn("member-avatar-code", "Avatar + membership code"),
+      ...sectionHintEn(
+        "member-avatar-code",
+        "Avatar stack with caption under the photo; list rows must use scope-aware caption resolution."
+      ),
+      ...sectionLabelEn("member-grid-face-cell", "Grid face cell"),
+      ...sectionHintEn(
+        "member-grid-face-cell",
+        "Designer grid wrapper: clickable face cell with RTL shell and optional rejection-list compact layout."
+      ),
+      ...sectionLabelEn("member-admin-face-cell", "Admin list face cell"),
+      ...sectionHintEn(
+        "member-admin-face-cell",
+        "Targhin/geo/courses admin geometry for a single member row."
+      ),
+      ...sectionLabelEn("electoral-division-path-links", "Electoral path links"),
+      ...sectionHintEn(
+        "electoral-division-path-links",
+        "Linked electoral breadcrumb path that opens geo-responsibility inline lists per segment."
+      ),
+      ...sectionLabelEn("electoral-division-grid-cell", "Electoral grid cell"),
+      ...sectionHintEn(
+        "electoral-division-grid-cell",
+        "Member-directory electoral column \u2014 full path links or province fallback."
+      ),
+      ...sectionLabelEn("geo-responsibility-member-face", "Geo responsibility face"),
+      ...sectionHintEn(
+        "geo-responsibility-member-face",
+        "Official / nominee / candidate face chip for geo-responsibility lists."
+      ),
+      ...sectionLabelEn("geo-responsibility-mismatch-badge", "Electoral join mismatch"),
+      ...sectionHintEn(
+        "geo-responsibility-mismatch-badge",
+        "Warning badge when electoral join does not match nomination patch."
+      ),
+      ...sectionLabelEn("targhin-member-face", "Targhin member face"),
+      ...sectionHintEn(
+        "targhin-member-face",
+        "Targhin admin list face with optional electoral path and role titles."
+      ),
+      ...sectionLabelEn("targhin-dossier-face-link", "Dossier face link"),
+      ...sectionHintEn(
+        "targhin-dossier-face-link",
+        "Interactive wrapper that opens the member dossier from a face block."
+      ),
+      ...sectionLabelEn("targhin-requester-request-cell", "Requester + request cell"),
+      ...sectionHintEn(
+        "targhin-requester-request-cell",
+        "Legacy targhin admin column: requester face beside request preview."
+      ),
+      ...sectionLabelEn("targhin-nego-affordance", "Negotiation affordance"),
+      ...sectionHintEn(
+        "targhin-nego-affordance",
+        "Negotiation thread entry with optional last-note preview."
+      ),
+      ...sectionLabelEn("targhin-decision-badge", "Decision status badge"),
+      ...sectionHintEn(
+        "targhin-decision-badge",
+        "Status pill with nested decision date for targhin workflow rows."
+      ),
+      ...sectionLabelEn("list-filter-identity-row", "Legacy identity filter row"),
+      ...sectionHintEn(
+        "list-filter-identity-row",
+        "Toolbar mode-2 identity field row (name, codes, gender) for member lists."
+      ),
+      ...sectionLabelEn("list-legacy-filter-bar-toggle", "Legacy field filter toggle"),
+      ...sectionHintEn(
+        "list-legacy-filter-bar-toggle",
+        "Toggle between quick search and legacy field-by-field filter bar."
+      ),
+      ...previewEn(
+        "member-directory-face",
+        "registered",
+        "Registered member (blue username)",
+        "Montadhemin / all-people \u2014 six-digit allocated username under avatar."
+      ),
+      ...previewEn(
+        "member-directory-face",
+        "tracking",
+        "Tracking-only scope (red code)",
+        "Waited / Marfoozeh lists \u2014 caption uses tracking code only."
+      ),
+      ...previewEn(
+        "member-directory-face",
+        "rejection",
+        "Rejection list compact column",
+        "Registered-on and status-updated meta lines."
+      ),
+      ...previewEn(
+        "member-directory-face",
+        "candidate",
+        "Candidate pipeline \u2014 phone under name",
+        "Nakhebin parity layout."
+      ),
+      ...previewEn(
+        "member-avatar-code",
+        "allocated",
+        "Allocated username",
+        "Blue caption \u2014 designer cellFields + list scope."
+      ),
+      ...previewEn(
+        "member-avatar-code",
+        "tracking",
+        "Tracking fallback",
+        "Red caption when username is empty."
+      ),
+      ...previewEn(
+        "member-grid-face-cell",
+        "clickable",
+        "Clickable grid cell",
+        "Opens dossier when canClick is true."
+      ),
+      ...previewEn(
+        "member-admin-face-cell",
+        "admin",
+        "Courses / targhin / geo lists",
+        "Shared admin face geometry."
+      ),
+      ...previewEn(
+        "electoral-division-path-links",
+        "fullPath",
+        "Full electoral path",
+        "Segment links open geo inline list dialog."
+      ),
+      ...previewEn(
+        "electoral-division-grid-cell",
+        "pathColumn",
+        "Path column",
+        "Linked segments when path is present."
+      ),
+      ...previewEn(
+        "electoral-division-grid-cell",
+        "province",
+        "Province fallback",
+        "When electoral path is empty."
+      ),
+      ...previewEn(
+        "geo-responsibility-member-face",
+        "official",
+        "Official",
+        "Emerald surface \u2014 current patch holder."
+      ),
+      ...previewEn(
+        "geo-responsibility-member-face",
+        "nominee",
+        "Nominee",
+        "Amber surface \u2014 pending nomination."
+      ),
+      ...previewEn(
+        "geo-responsibility-member-face",
+        "candidate",
+        "Candidate pipeline",
+        "Indigo surface with join mismatch."
+      ),
+      "hwy.identityComponents.preview.geo-responsibility-member-face.candidate.joinMismatch": "Electoral join mismatch",
+      "hwy.identityComponents.sample.name.official": "Ahmed Salim Al-Mousawi",
+      "hwy.identityComponents.sample.name.nominee": "Zainab Karim",
+      "hwy.identityComponents.sample.name.candidate": "Hussein Fadhil",
+      "hwy.identityComponents.badge.official": "Official",
+      "hwy.identityComponents.badge.nominee": "Nominee",
+      "hwy.identityComponents.badge.candidate": "Candidate",
+      ...previewEn(
+        "geo-responsibility-mismatch-badge",
+        "badge",
+        "Join mismatch badge",
+        "Shown under geo-responsibility faces."
+      ),
+      ...previewEn(
+        "targhin-member-face",
+        "withPath",
+        "With electoral path",
+        "Requester column layout."
+      ),
+      ...previewEn(
+        "targhin-member-face",
+        "executor",
+        "Executor roles below avatar",
+        "Targhin members list."
+      ),
+      ...previewEn(
+        "targhin-dossier-face-link",
+        "linked",
+        "Linked face block",
+        "Wraps any face markup; opens dossier on click."
+      ),
+      ...previewEn(
+        "targhin-requester-request-cell",
+        "column",
+        "Requester + request preview",
+        "Legacy targhin admin column 1."
+      ),
+      ...previewEn(
+        "targhin-nego-affordance",
+        "thread",
+        "Thread with preview",
+        "Decision column negotiation entry."
+      ),
+      ...previewEn(
+        "targhin-decision-badge",
+        "approved",
+        "Approved with date",
+        "Nested decision date chip."
+      ),
+      ...previewEn(
+        "list-filter-identity-row",
+        "row",
+        "Identity filter row",
+        "Toolbar mode 2 \u2014 debounced text fields and gender select."
+      ),
+      ...previewEn(
+        "list-legacy-filter-bar-toggle",
+        "toggle",
+        "Filter bar mode toggle",
+        "Quick search vs field-by-field filters."
+      ),
+      "hwy.identityComponents.targhin.openThreadAria": "Open negotiation thread"
+    });
+    sectionLabelIq = (id, label) => ({ [`hwy.identityComponents.section.${id}.label`]: label });
+    sectionHintIq = (id, hint) => ({ [`hwy.identityComponents.section.${id}.hint`]: hint });
+    previewIq = (sectionId, sampleId, title, description) => ({
+      [`hwy.identityComponents.preview.${sectionId}.${sampleId}.title`]: title,
+      [`hwy.identityComponents.preview.${sectionId}.${sampleId}.description`]: description
+    });
+    buildHwyIdentityComponentsCultureKeysIq = () => ({
+      "hwy.identityComponents.catalog.badge": "\u0643\u062A\u0627\u0644\u0648\u062C \u0645\u0643\u0648\u0651\u0646\u0627\u062A \u0627\u0644\u0647\u0648\u064A\u0629",
+      "hwy.identityComponents.search.placeholder": "\u0628\u062D\u062B \u0641\u064A \u0645\u0643\u0648\u0651\u0646\u0627\u062A \u0627\u0644\u0647\u0648\u064A\u0629\u2026",
+      "hwy.identityComponents.search.aria": "\u0628\u062D\u062B \u0641\u064A \u0645\u0643\u0648\u0651\u0646\u0627\u062A \u0647\u0648\u064A\u0629 \u0627\u0644\u0628\u0648\u0627\u0628\u0629",
+      "hwy.identityComponents.search.noMatch": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0623\u0642\u0633\u0627\u0645 \u062A\u0637\u0627\u0628\u0642 \u0627\u0644\u0628\u062D\u062B.",
+      "hwy.identityComponents.mobile.sectionLabel": "\u0627\u0644\u0642\u0633\u0645",
+      "hwy.identityComponents.mobile.sectionAria": "\u0642\u0633\u0645 \u0645\u0643\u0648\u0651\u0646\u0627\u062A \u0627\u0644\u0647\u0648\u064A\u0629",
+      "hwy.identityComponents.unknownSection": "\u0642\u0633\u0645 \u0627\u0644\u0643\u062A\u0627\u0644\u0648\u063A \u063A\u064A\u0631 \u0645\u0639\u0631\u0648\u0641.",
+      "hwy.identityComponents.group.member-face": "\u0648\u062C\u0647 \u0627\u0644\u0639\u0636\u0648",
+      "hwy.identityComponents.group.electoral-geo": "\u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0648\u062C\u063A\u0631\u0627\u0641\u064A",
+      "hwy.identityComponents.group.targhin": "\u062A\u0631\u063A\u064A\u0646",
+      "hwy.identityComponents.group.list-filters": "\u0645\u0631\u0634\u0651\u062D\u0627\u062A \u0627\u0644\u0642\u0648\u0627\u0626\u0645",
+      ...sectionLabelIq("member-directory-face", "\u0628\u0637\u0627\u0642\u0629 \u0648\u062C\u0647 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062F\u0644\u064A\u0644"),
+      ...sectionHintIq(
+        "member-directory-face",
+        "\u0628\u0637\u0627\u0642\u0629 \u0627\u0644\u0639\u0636\u0648 \u0641\u064A \u0627\u0644\u0639\u0645\u0648\u062F \u0627\u0644\u0623\u0648\u0644 \u0644\u0634\u0628\u0643\u0627\u062A \u062F\u0644\u064A\u0644 \u0627\u0644\u0623\u0639\u0636\u0627\u0621 \u2014 \u0635\u0648\u0631\u0629 \u0631\u0645\u0632\u064A\u0629\u060C \u0627\u0633\u0645 \u0645\u0633\u062A\u062E\u062F\u0645 \u0623\u0632\u0631\u0642 \u0623\u0648 \u0631\u0645\u0632 \u0645\u062A\u0627\u0628\u0639\u0629 \u0623\u062D\u0645\u0631\u060C \u0648\u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0645\u064A\u0644\u0627\u062F/\u0627\u0644\u0639\u0636\u0648\u064A\u0629 \u062D\u0633\u0628 \u0627\u0644\u0646\u0637\u0627\u0642."
+      ),
+      ...sectionLabelIq("member-avatar-code", "\u0635\u0648\u0631\u0629 \u0631\u0645\u0632\u064A\u0629 + \u0631\u0645\u0632 \u0627\u0644\u0639\u0636\u0648\u064A\u0629"),
+      ...sectionHintIq(
+        "member-avatar-code",
+        "\u0645\u0643\u062F\u0651\u0633 \u0627\u0644\u0635\u0648\u0631\u0629 \u0627\u0644\u0631\u0645\u0632\u064A\u0629 \u0645\u0639 \u062A\u0633\u0645\u064A\u0629 \u062A\u062D\u062A \u0627\u0644\u0635\u0648\u0631\u0629\u061B \u0635\u0641\u0648\u0641 \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u064A\u062C\u0628 \u0623\u0646 \u062A\u062D\u0644\u0651 \u0627\u0644\u062A\u0633\u0645\u064A\u0629 \u062D\u0633\u0628 \u0646\u0637\u0627\u0642 \u0627\u0644\u0642\u0627\u0626\u0645\u0629."
+      ),
+      ...sectionLabelIq("member-grid-face-cell", "\u062E\u0644\u064A\u0629 \u0648\u062C\u0647 \u0627\u0644\u0634\u0628\u0643\u0629"),
+      ...sectionHintIq(
+        "member-grid-face-cell",
+        "\u063A\u0644\u0627\u0641 \u0634\u0628\u0643\u0629 \u0627\u0644\u0645\u0635\u0645\u0651\u0645: \u062E\u0644\u064A\u0629 \u0648\u062C\u0647 \u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u0646\u0642\u0631 \u0645\u0639 \u0642\u0634\u0631\u0629 RTL \u0648\u062A\u062E\u0637\u064A\u0637 \u0645\u0636\u063A\u0648\u0637 \u0627\u062E\u062A\u064A\u0627\u0631\u064A \u0644\u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u0631\u0641\u0636."
+      ),
+      ...sectionLabelIq("member-admin-face-cell", "\u062E\u0644\u064A\u0629 \u0648\u062C\u0647 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0625\u062F\u0627\u0631\u0629"),
+      ...sectionHintIq(
+        "member-admin-face-cell",
+        "\u0647\u0646\u062F\u0633\u0629 \u0648\u062C\u0647 \u0627\u0644\u0625\u062F\u0627\u0631\u0629 \u0644\u062A\u0631\u063A\u064A\u0646/\u062C\u063A\u0631\u0627\u0641\u064A\u0627/\u062F\u0648\u0631\u0627\u062A \u0641\u064A \u0635\u0641 \u0639\u0636\u0648 \u0648\u0627\u062D\u062F."
+      ),
+      ...sectionLabelIq("electoral-division-path-links", "\u0631\u0648\u0627\u0628\u0637 \u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A"),
+      ...sectionHintIq(
+        "electoral-division-path-links",
+        "\u0645\u0633\u0627\u0631 \u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0645\u062A\u0631\u0627\u0628\u0637 \u064A\u0641\u062A\u062D \u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0629 \u0627\u0644\u0645\u0636\u0645\u0646\u0629 \u0644\u0643\u0644 \u0645\u0642\u0637\u0639."
+      ),
+      ...sectionLabelIq("electoral-division-grid-cell", "\u062E\u0644\u064A\u0629 \u0627\u0644\u0634\u0628\u0643\u0629 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A\u0629"),
+      ...sectionHintIq(
+        "electoral-division-grid-cell",
+        "\u0639\u0645\u0648\u062F \u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0641\u064A \u062F\u0644\u064A\u0644 \u0627\u0644\u0623\u0639\u0636\u0627\u0621 \u2014 \u0631\u0648\u0627\u0628\u0637 \u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0643\u0627\u0645\u0644 \u0623\u0648 \u0628\u062F\u064A\u0644 \u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629."
+      ),
+      ...sectionLabelIq("geo-responsibility-member-face", "\u0648\u062C\u0647 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0629"),
+      ...sectionHintIq(
+        "geo-responsibility-member-face",
+        "\u0634\u0627\u0631\u0629 \u0648\u062C\u0647 \u0645\u0633\u0624\u0648\u0644 / \u0645\u0631\u0634\u0651\u062D / \u0645\u0631\u0634\u062D \u0644\u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0629."
+      ),
+      ...sectionLabelIq("geo-responsibility-mismatch-badge", "\u0639\u062F\u0645 \u062A\u0637\u0627\u0628\u0642 \u0627\u0644\u0631\u0628\u0637 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A"),
+      ...sectionHintIq(
+        "geo-responsibility-mismatch-badge",
+        "\u0634\u0627\u0631\u0629 \u062A\u062D\u0630\u064A\u0631 \u0639\u0646\u062F\u0645\u0627 \u0644\u0627 \u064A\u0637\u0627\u0628\u0642 \u0627\u0644\u0631\u0628\u0637 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0645\u0642\u0627\u0637\u0639 \u0627\u0644\u062A\u0631\u0634\u064A\u062D."
+      ),
+      ...sectionLabelIq("targhin-member-face", "\u0648\u062C\u0647 \u0639\u0636\u0648 \u062A\u0631\u063A\u064A\u0646"),
+      ...sectionHintIq(
+        "targhin-member-face",
+        "\u0648\u062C\u0647 \u0642\u0627\u0626\u0645\u0629 \u0625\u062F\u0627\u0631\u0629 \u062A\u0631\u063A\u064A\u0646 \u0645\u0639 \u0645\u0633\u0627\u0631 \u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0627\u062E\u062A\u064A\u0627\u0631\u064A \u0648\u0623\u0644\u0642\u0627\u0628 \u0627\u0644\u0623\u062F\u0648\u0627\u0631."
+      ),
+      ...sectionLabelIq("targhin-dossier-face-link", "\u0631\u0627\u0628\u0637 \u0648\u062C\u0647 \u0627\u0644\u0645\u0644\u0641"),
+      ...sectionHintIq(
+        "targhin-dossier-face-link",
+        "\u063A\u0644\u0627\u0641 \u062A\u0641\u0627\u0639\u0644\u064A \u064A\u0641\u062A\u062D \u0645\u0644\u0641 \u0627\u0644\u0639\u0636\u0648 \u0645\u0646 \u0643\u062A\u0644\u0629 \u0627\u0644\u0648\u062C\u0647."
+      ),
+      ...sectionLabelIq("targhin-requester-request-cell", "\u062E\u0644\u064A\u0629 \u0645\u0642\u062F\u0651\u0645 \u0627\u0644\u0637\u0644\u0628 \u0648\u0627\u0644\u0637\u0644\u0628"),
+      ...sectionHintIq(
+        "targhin-requester-request-cell",
+        "\u0639\u0645\u0648\u062F \u0625\u062F\u0627\u0631\u0629 \u062A\u0631\u063A\u064A\u0646 \u0627\u0644\u0642\u062F\u064A\u0645: \u0648\u062C\u0647 \u0645\u0642\u062F\u0651\u0645 \u0627\u0644\u0637\u0644\u0628 \u0628\u062C\u0627\u0646\u0628 \u0645\u0639\u0627\u064A\u0646\u0629 \u0627\u0644\u0637\u0644\u0628."
+      ),
+      ...sectionLabelIq("targhin-nego-affordance", "\u0648\u0627\u062C\u0647\u0629 \u0627\u0644\u062A\u0641\u0627\u0648\u0636"),
+      ...sectionHintIq(
+        "targhin-nego-affordance",
+        "\u0645\u062F\u062E\u0644 \u0633\u0644\u0633\u0644\u0629 \u0627\u0644\u062A\u0641\u0627\u0648\u0636 \u0645\u0639 \u0645\u0639\u0627\u064A\u0646\u0629 \u0627\u062E\u062A\u064A\u0627\u0631\u064A\u0629 \u0644\u0622\u062E\u0631 \u0645\u0644\u0627\u062D\u0638\u0629."
+      ),
+      ...sectionLabelIq("targhin-decision-badge", "\u0634\u0627\u0631\u0629 \u062D\u0627\u0644\u0629 \u0627\u0644\u0642\u0631\u0627\u0631"),
+      ...sectionHintIq(
+        "targhin-decision-badge",
+        "\u062D\u0628\u0629 \u062D\u0627\u0644\u0629 \u0645\u0639 \u062A\u0627\u0631\u064A\u062E \u0642\u0631\u0627\u0631 \u0645\u062A\u062F\u0627\u062E\u0644 \u0644\u0635\u0641\u0648\u0641 \u0645\u0633\u0627\u0631 \u062A\u0631\u063A\u064A\u0646."
+      ),
+      ...sectionLabelIq("list-filter-identity-row", "\u0635\u0641 \u0645\u0631\u0634\u0651\u062D \u0627\u0644\u0647\u0648\u064A\u0629 \u0627\u0644\u0642\u062F\u064A\u0645"),
+      ...sectionHintIq(
+        "list-filter-identity-row",
+        "\u0635\u0641 \u062D\u0642\u0648\u0644 \u0627\u0644\u0647\u0648\u064A\u0629 \u0641\u064A \u0648\u0636\u0639 \u0634\u0631\u064A\u0637 \u0627\u0644\u0623\u062F\u0648\u0627\u062A 2 (\u0627\u0644\u0627\u0633\u0645\u060C \u0627\u0644\u0631\u0645\u0648\u0632\u060C \u0627\u0644\u062C\u0646\u0633) \u0644\u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u0623\u0639\u0636\u0627\u0621."
+      ),
+      ...sectionLabelIq("list-legacy-filter-bar-toggle", "\u0645\u0641\u062A\u0627\u062D \u0645\u0631\u0634\u0651\u062D \u0627\u0644\u062D\u0642\u0648\u0644 \u0627\u0644\u0642\u062F\u064A\u0645"),
+      ...sectionHintIq(
+        "list-legacy-filter-bar-toggle",
+        "\u0627\u0644\u062A\u0628\u062F\u064A\u0644 \u0628\u064A\u0646 \u0627\u0644\u0628\u062D\u062B \u0627\u0644\u0633\u0631\u064A\u0639 \u0648\u0634\u0631\u064A\u0637 \u0627\u0644\u0645\u0631\u0634\u0651\u062D \u062D\u0642\u0644\u0627\u064B \u0628\u062D\u0642\u0644."
+      ),
+      ...previewIq(
+        "member-directory-face",
+        "registered",
+        "\u0639\u0636\u0648 \u0645\u0633\u062C\u0651\u0644 (\u0627\u0633\u0645 \u0645\u0633\u062A\u062E\u062F\u0645 \u0623\u0632\u0631\u0642)",
+        "\u0645\u0646\u062A\u0638\u0645\u0648\u0646 / \u062C\u0645\u064A\u0639 \u0627\u0644\u0623\u0634\u062E\u0627\u0635 \u2014 \u0627\u0633\u0645 \u0645\u0633\u062A\u062E\u062F\u0645 \u0645\u062E\u0635\u0651\u0635 \u0645\u0646 \u0633\u062A\u0629 \u0623\u0631\u0642\u0627\u0645 \u062A\u062D\u062A \u0627\u0644\u0635\u0648\u0631\u0629 \u0627\u0644\u0631\u0645\u0632\u064A\u0629."
+      ),
+      ...previewIq(
+        "member-directory-face",
+        "tracking",
+        "\u0646\u0637\u0627\u0642 \u0631\u0645\u0632 \u0645\u062A\u0627\u0628\u0639\u0629 \u0641\u0642\u0637 (\u0623\u062D\u0645\u0631)",
+        "\u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u0645\u0646\u062A\u0638\u0631\u064A\u0646/\u0627\u0644\u0645\u0631\u0641\u0648\u0636\u064A\u0646 \u2014 \u0627\u0644\u062A\u0633\u0645\u064A\u0629 \u062A\u0633\u062A\u062E\u062F\u0645 \u0631\u0645\u0632 \u0627\u0644\u0645\u062A\u0627\u0628\u0639\u0629 \u0641\u0642\u0637."
+      ),
+      ...previewIq(
+        "member-directory-face",
+        "rejection",
+        "\u0639\u0645\u0648\u062F \u0645\u0636\u063A\u0648\u0637 \u0644\u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0631\u0641\u0636",
+        "\u0633\u0637\u0648\u0631 \u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062A\u0633\u062C\u064A\u0644 \u0648\u062A\u062D\u062F\u064A\u062B \u0627\u0644\u062D\u0627\u0644\u0629."
+      ),
+      ...previewIq(
+        "member-directory-face",
+        "candidate",
+        "\u0645\u0633\u0627\u0631 \u0627\u0644\u0645\u0631\u0634\u062D\u064A\u0646 \u2014 \u0647\u0627\u062A\u0641 \u062A\u062D\u062A \u0627\u0644\u0627\u0633\u0645",
+        "\u062A\u062E\u0637\u064A\u0637 \u0645\u0637\u0627\u0628\u0642\u0629 \u0646\u0627\u062E\u0628\u064A\u0646."
+      ),
+      ...previewIq(
+        "member-avatar-code",
+        "allocated",
+        "\u0627\u0633\u0645 \u0645\u0633\u062A\u062E\u062F\u0645 \u0645\u062E\u0635\u0651\u0635",
+        "\u062A\u0633\u0645\u064A\u0629 \u0632\u0631\u0642\u0627\u0621 \u2014 \u062D\u0642\u0648\u0644 \u0627\u0644\u0634\u0628\u0643\u0629 + \u0646\u0637\u0627\u0642 \u0627\u0644\u0642\u0627\u0626\u0645\u0629."
+      ),
+      ...previewIq(
+        "member-avatar-code",
+        "tracking",
+        "\u0628\u062F\u064A\u0644 \u0631\u0645\u0632 \u0627\u0644\u0645\u062A\u0627\u0628\u0639\u0629",
+        "\u062A\u0633\u0645\u064A\u0629 \u062D\u0645\u0631\u0627\u0621 \u0639\u0646\u062F \u063A\u064A\u0627\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u0633\u062A\u062E\u062F\u0645."
+      ),
+      ...previewIq(
+        "member-grid-face-cell",
+        "clickable",
+        "\u062E\u0644\u064A\u0629 \u0634\u0628\u0643\u0629 \u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u0646\u0642\u0631",
+        "\u062A\u0641\u062A\u062D \u0627\u0644\u0645\u0644\u0641 \u0639\u0646\u062F\u0645\u0627 \u064A\u0643\u0648\u0646 canClick \u0635\u062D\u064A\u062D\u0627\u064B."
+      ),
+      ...previewIq(
+        "member-admin-face-cell",
+        "admin",
+        "\u0642\u0648\u0627\u0626\u0645 \u062F\u0648\u0631\u0627\u062A / \u062A\u0631\u063A\u064A\u0646 / \u062C\u063A\u0631\u0627\u0641\u064A\u0627",
+        "\u0647\u0646\u062F\u0633\u0629 \u0648\u062C\u0647 \u0625\u062F\u0627\u0631\u0629 \u0645\u0634\u062A\u0631\u0643\u0629."
+      ),
+      ...previewIq(
+        "electoral-division-path-links",
+        "fullPath",
+        "\u0645\u0633\u0627\u0631 \u0627\u0646\u062A\u062E\u0627\u0628\u064A \u0643\u0627\u0645\u0644",
+        "\u0631\u0648\u0627\u0628\u0637 \u0627\u0644\u0645\u0642\u0627\u0637\u0639 \u062A\u0641\u062A\u062D \u062D\u0648\u0627\u0631 \u0642\u0627\u0626\u0645\u0629 \u062C\u063A\u0631\u0627\u0641\u064A\u0629 \u0645\u0636\u0645\u0646\u0629."
+      ),
+      ...previewIq(
+        "electoral-division-grid-cell",
+        "pathColumn",
+        "\u0639\u0645\u0648\u062F \u0627\u0644\u0645\u0633\u0627\u0631",
+        "\u0645\u0642\u0627\u0637\u0639 \u0645\u062A\u0631\u0627\u0628\u0637\u0629 \u0639\u0646\u062F \u0648\u062C\u0648\u062F \u0645\u0633\u0627\u0631."
+      ),
+      ...previewIq(
+        "electoral-division-grid-cell",
+        "province",
+        "\u0628\u062F\u064A\u0644 \u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
+        "\u0639\u0646\u062F \u0641\u0631\u0627\u063A \u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A."
+      ),
+      ...previewIq(
+        "geo-responsibility-member-face",
+        "official",
+        "\u0645\u0633\u0624\u0648\u0644",
+        "\u0633\u0637\u062D \u0623\u062E\u0636\u0631 \u2014 \u0635\u0627\u062D\u0628 \u0627\u0644\u0645\u0642\u0627\u0637\u0639 \u0627\u0644\u062D\u0627\u0644\u064A."
+      ),
+      ...previewIq(
+        "geo-responsibility-member-face",
+        "nominee",
+        "\u0645\u0631\u0634\u0651\u062D \u0644\u0644\u0645\u0646\u0635\u0628",
+        "\u0633\u0637\u062D \u0639\u0646\u0628\u0631\u064A \u2014 \u062A\u0631\u0634\u064A\u062D \u0642\u064A\u062F \u0627\u0644\u0627\u0646\u062A\u0638\u0627\u0631."
+      ),
+      ...previewIq(
+        "geo-responsibility-member-face",
+        "candidate",
+        "\u0645\u0633\u0627\u0631 \u0627\u0644\u0645\u0631\u0634\u062D\u064A\u0646",
+        "\u0633\u0637\u062D \u0646\u064A\u0644\u064A \u0645\u0639 \u0639\u062F\u0645 \u062A\u0637\u0627\u0628\u0642 \u0627\u0644\u0631\u0628\u0637."
+      ),
+      "hwy.identityComponents.preview.geo-responsibility-member-face.candidate.joinMismatch": "\u0639\u062F\u0645 \u062A\u0637\u0627\u0628\u0642 \u0627\u0644\u0631\u0628\u0637 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A",
+      "hwy.identityComponents.sample.name.official": "\u0623\u062D\u0645\u062F \u0633\u0644\u064A\u0645 \u0627\u0644\u0645\u0648\u0633\u0648\u064A",
+      "hwy.identityComponents.sample.name.nominee": "\u0632\u064A\u0646\u0628 \u0643\u0631\u064A\u0645",
+      "hwy.identityComponents.sample.name.candidate": "\u062D\u0633\u064A\u0646 \u0641\u0627\u0636\u0644",
+      "hwy.identityComponents.badge.official": "\u0645\u0633\u0624\u0648\u0644",
+      "hwy.identityComponents.badge.nominee": "\u0645\u0631\u0634\u0651\u062D",
+      "hwy.identityComponents.badge.candidate": "\u0645\u0631\u0634\u062D",
+      ...previewIq(
+        "geo-responsibility-mismatch-badge",
+        "badge",
+        "\u0634\u0627\u0631\u0629 \u0639\u062F\u0645 \u0627\u0644\u062A\u0637\u0627\u0628\u0642",
+        "\u062A\u064F\u0639\u0631\u0636 \u062A\u062D\u062A \u0648\u062C\u0648\u0647 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0629."
+      ),
+      ...previewIq(
+        "targhin-member-face",
+        "withPath",
+        "\u0645\u0639 \u0645\u0633\u0627\u0631 \u0627\u0646\u062A\u062E\u0627\u0628\u064A",
+        "\u062A\u062E\u0637\u064A\u0637 \u0639\u0645\u0648\u062F \u0645\u0642\u062F\u0651\u0645 \u0627\u0644\u0637\u0644\u0628."
+      ),
+      ...previewIq(
+        "targhin-member-face",
+        "executor",
+        "\u0623\u062F\u0648\u0627\u0631 \u0627\u0644\u0645\u0646\u0641\u0651\u0630 \u062A\u062D\u062A \u0627\u0644\u0635\u0648\u0631\u0629",
+        "\u0642\u0627\u0626\u0645\u0629 \u0623\u0639\u0636\u0627\u0621 \u062A\u0631\u063A\u064A\u0646."
+      ),
+      ...previewIq(
+        "targhin-dossier-face-link",
+        "linked",
+        "\u0643\u062A\u0644\u0629 \u0648\u062C\u0647 \u0645\u0631\u062A\u0628\u0637\u0629",
+        "\u064A\u063A\u0644\u0651\u0641 \u0623\u064A \u062A\u0631\u0645\u064A\u0632 \u0648\u062C\u0647\u061B \u064A\u0641\u062A\u062D \u0627\u0644\u0645\u0644\u0641 \u0639\u0646\u062F \u0627\u0644\u0646\u0642\u0631."
+      ),
+      ...previewIq(
+        "targhin-requester-request-cell",
+        "column",
+        "\u0645\u0639\u0627\u064A\u0646\u0629 \u0645\u0642\u062F\u0651\u0645 \u0627\u0644\u0637\u0644\u0628 \u0648\u0627\u0644\u0637\u0644\u0628",
+        "\u0639\u0645\u0648\u062F \u0625\u062F\u0627\u0631\u0629 \u062A\u0631\u063A\u064A\u0646 \u0627\u0644\u0642\u062F\u064A\u0645 1."
+      ),
+      ...previewIq(
+        "targhin-nego-affordance",
+        "thread",
+        "\u0633\u0644\u0633\u0644\u0629 \u0645\u0639 \u0645\u0639\u0627\u064A\u0646\u0629",
+        "\u0645\u062F\u062E\u0644 \u062A\u0641\u0627\u0648\u0636 \u0639\u0645\u0648\u062F \u0627\u0644\u0642\u0631\u0627\u0631."
+      ),
+      ...previewIq(
+        "targhin-decision-badge",
+        "approved",
+        "\u0645\u0648\u0627\u0641\u0642 \u0645\u0639 \u062A\u0627\u0631\u064A\u062E",
+        "\u0634\u0631\u064A\u062D\u0629 \u062A\u0627\u0631\u064A\u062E \u0642\u0631\u0627\u0631 \u0645\u062A\u062F\u0627\u062E\u0644\u0629."
+      ),
+      ...previewIq(
+        "list-filter-identity-row",
+        "row",
+        "\u0635\u0641 \u0645\u0631\u0634\u0651\u062D \u0627\u0644\u0647\u0648\u064A\u0629",
+        "\u0648\u0636\u0639 \u0634\u0631\u064A\u0637 \u0627\u0644\u0623\u062F\u0648\u0627\u062A 2 \u2014 \u062D\u0642\u0648\u0644 \u0646\u0635 \u0645\u0624\u062C\u0651\u0644\u0629 \u0648\u0627\u062E\u062A\u064A\u0627\u0631 \u0627\u0644\u062C\u0646\u0633."
+      ),
+      ...previewIq(
+        "list-legacy-filter-bar-toggle",
+        "toggle",
+        "\u0645\u0641\u062A\u0627\u062D \u0648\u0636\u0639 \u0634\u0631\u064A\u0637 \u0627\u0644\u0645\u0631\u0634\u0651\u062D",
+        "\u0628\u062D\u062B \u0633\u0631\u064A\u0639 \u0645\u0642\u0627\u0628\u0644 \u0645\u0631\u0634\u0651\u062D\u0627\u062A \u062D\u0642\u0644 \u0628\u062D\u0642\u0644."
+      ),
+      "hwy.identityComponents.targhin.openThreadAria": "\u0641\u062A\u062D \u0633\u0644\u0633\u0644\u0629 \u0627\u0644\u062A\u0641\u0627\u0648\u0636"
     });
   }
 });
@@ -51421,6 +52382,12 @@ var init_bundle = __esm({
       "shell.inbox.deleteAria": "\u062D\u0630\u0641 \u0622\u06CC\u062A\u0645 \u0635\u0646\u062F\u0648\u0642 \u0648\u0631\u0648\u062F\u06CC",
       "shell.inbox.deleted": "\u0622\u06CC\u062A\u0645 \u062D\u0630\u0641 \u0634\u062F.",
       "shell.inbox.deleteFailed": "\u062D\u0630\u0641 \u0627\u06CC\u0646 \u0622\u06CC\u062A\u0645 \u0645\u0645\u06A9\u0646 \u0646\u0634\u062F.",
+      "shell.inbox.delete.moveToDeleted": "\u0627\u0646\u062A\u0642\u0627\u0644 \u0628\u0647 \xAB\u062D\u0630\u0641\u200C\u0634\u062F\u0647\xBB",
+      "shell.inbox.delete.permanent": "\u062D\u0630\u0641 \u062F\u0627\u0626\u0645\u06CC",
+      "shell.inbox.delete.permanentConfirmQuestion": "\u0627\u06CC\u0646 \u06A9\u0627\u0631 \u0642\u0627\u0628\u0644 \u0628\u0627\u0632\u06AF\u0634\u062A \u0646\u06CC\u0633\u062A. \u0622\u06CC\u062A\u0645 \u0628\u0631\u0627\u06CC \u0647\u0645\u06CC\u0634\u0647 \u0627\u0632 \u0635\u0646\u062F\u0648\u0642 \u0648\u0631\u0648\u062F\u06CC \u0634\u0645\u0627 \u062D\u0630\u0641 \u0645\u06CC\u200C\u0634\u0648\u062F.",
+      "shell.inbox.delete.permanentConfirmTitle": "\u062D\u0630\u0641 \u062F\u0627\u0626\u0645\u06CC\u061F",
+      "shell.inbox.delete.permanentFailed": "\u062D\u0630\u0641 \u062F\u0627\u0626\u0645\u06CC \u0627\u06CC\u0646 \u0622\u06CC\u062A\u0645 \u0645\u0645\u06A9\u0646 \u0646\u0634\u062F.",
+      "shell.inbox.delete.workItemPermanentBlocked": "\u0622\u06CC\u062A\u0645\u200C\u0647\u0627\u06CC \u06A9\u0627\u0631 \u0642\u0627\u0628\u0644 \u062D\u0630\u0641 \u062F\u0627\u0626\u0645\u06CC \u0646\u06CC\u0633\u062A\u0646\u062F.",
       "shell.inbox.deleteConfirmTitle": "\u062D\u0630\u0641 \u0622\u06CC\u062A\u0645 \u0635\u0646\u062F\u0648\u0642 \u0648\u0631\u0648\u062F\u06CC",
       "shell.inbox.deleteConfirmQuestion": "\u0627\u06CC\u0646 \u0647\u0634\u062F\u0627\u0631 \u0628\u0631\u0627\u06CC \u0647\u0645\u06CC\u0634\u0647 \u062D\u0630\u0641 \u0634\u0648\u062F\u061F \u0627\u06CC\u0646 \u06A9\u0627\u0631 \u0642\u0627\u0628\u0644 \u0628\u0627\u0632\u06AF\u0634\u062A \u0646\u06CC\u0633\u062A.",
       "shell.inbox.deleteConfirmQuestionRemove": "\u0627\u06CC\u0646 \u0622\u06CC\u062A\u0645 \u0627\u0632 \u0635\u0646\u062F\u0648\u0642 \u0648\u0631\u0648\u062F\u06CC \u0634\u0645\u0627 \u062D\u0630\u0641 \u0634\u0648\u062F\u061F",
@@ -55205,6 +56172,12 @@ var init_bundle2 = __esm({
       "shell.inbox.deleteAria": "\u062D\u0630\u0641 \u0639\u0646\u0635\u0631 \u0635\u0646\u062F\u0648\u0642 \u0627\u0644\u0648\u0627\u0631\u062F",
       "shell.inbox.deleted": "\u062A\u0645 \u062D\u0630\u0641 \u0627\u0644\u0639\u0646\u0635\u0631.",
       "shell.inbox.deleteFailed": "\u062A\u0639\u0630\u0631 \u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0639\u0646\u0635\u0631.",
+      "shell.inbox.delete.moveToDeleted": "\u0646\u0642\u0644 \u0625\u0644\u0649 \u0627\u0644\u0645\u062D\u0630\u0648\u0641",
+      "shell.inbox.delete.permanent": "\u062D\u0630\u0641 \u0646\u0647\u0627\u0626\u064A",
+      "shell.inbox.delete.permanentConfirmQuestion": "\u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u062A\u0631\u0627\u062C\u0639 \u0639\u0646 \u0630\u0644\u0643. \u0633\u064A\u064F\u0632\u0627\u0644 \u0627\u0644\u0639\u0646\u0635\u0631 \u0645\u0646 \u0635\u0646\u062F\u0648\u0642 \u0627\u0644\u0648\u0627\u0631\u062F \u0646\u0647\u0627\u0626\u064A\u0627\u064B.",
+      "shell.inbox.delete.permanentConfirmTitle": "\u062D\u0630\u0641 \u0646\u0647\u0627\u0626\u064A\u061F",
+      "shell.inbox.delete.permanentFailed": "\u062A\u0639\u0630\u0651\u0631 \u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0639\u0646\u0635\u0631 \u0646\u0647\u0627\u0626\u064A\u0627\u064B.",
+      "shell.inbox.delete.workItemPermanentBlocked": "\u0644\u0627 \u064A\u0645\u0643\u0646 \u062D\u0630\u0641 \u0639\u0646\u0627\u0635\u0631 \u0627\u0644\u0639\u0645\u0644 \u0646\u0647\u0627\u0626\u064A\u0627\u064B.",
       "shell.inbox.deleteConfirmTitle": "\u062D\u0630\u0641 \u0639\u0646\u0635\u0631 \u0635\u0646\u062F\u0648\u0642 \u0627\u0644\u0648\u0627\u0631\u062F",
       "shell.inbox.deleteConfirmQuestion": "\u0647\u0644 \u062A\u0631\u064A\u062F \u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u062A\u0646\u0628\u064A\u0647 \u0646\u0647\u0627\u0626\u064A\u0627\u064B\u061F \u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u062A\u0631\u0627\u062C\u0639 \u0639\u0646 \u0630\u0644\u0643.",
       "shell.inbox.deleteConfirmQuestionRemove": "\u0625\u0632\u0627\u0644\u0629 \u0647\u0630\u0627 \u0627\u0644\u0639\u0646\u0635\u0631 \u0645\u0646 \u0635\u0646\u062F\u0648\u0642 \u0627\u0644\u0648\u0627\u0631\u062F\u061F",
@@ -56903,6 +57876,10 @@ function mergePackageCultureOverlay(bundleId, base) {
   if (listScopedEdit) {
     merged = { ...merged, ...listScopedEdit };
   }
+  const identityComponents = HWY_IDENTITY_COMPONENTS_BY_BUNDLE[bundleId];
+  if (identityComponents) {
+    merged = { ...merged, ...identityComponents };
+  }
   const overlay = PACKAGE_CULTURE_OVERLAYS[bundleId];
   return overlay ? { ...merged, ...overlay } : merged;
 }
@@ -56917,7 +57894,7 @@ async function loadEmbeddedCultureBundle(bundleId) {
   }
   return { ...EMBEDDED_ENGLISH_BUNDLE };
 }
-var EMBEDDED_ENGLISH_BUNDLE, PACKAGE_CULTURE_OVERLAYS, MEMBER_DOSSIER_CHANGE_LOG_BY_BUNDLE, HWY_MEMBER_DIRECTORY_LEGACY_FILTER_BY_BUNDLE, HWY_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE, mergeEmbeddedPackageCultureOverlay, embeddedCultureBundleLoaders;
+var EMBEDDED_ENGLISH_BUNDLE, PACKAGE_CULTURE_OVERLAYS, MEMBER_DOSSIER_CHANGE_LOG_BY_BUNDLE, HWY_MEMBER_DIRECTORY_LEGACY_FILTER_BY_BUNDLE, HWY_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE, HWY_IDENTITY_COMPONENTS_BY_BUNDLE, mergeEmbeddedPackageCultureOverlay, embeddedCultureBundleLoaders;
 var init_embeddedTranslationBundles = __esm({
   "src/core/culture/embeddedTranslationBundles.ts"() {
     init_cultures();
@@ -56930,6 +57907,7 @@ var init_embeddedTranslationBundles = __esm({
     init_memberDossierChangeLogTranslations();
     init_hwyMemberDirectoryLegacyFilterLabels();
     init_hwyMemberListScopedEditLabels();
+    init_hwyIdentityComponentsTranslations();
     EMBEDDED_ENGLISH_BUNDLE = {
       ...BUILTIN_TRANSLATION_MASTER_EN
     };
@@ -56950,6 +57928,10 @@ var init_embeddedTranslationBundles = __esm({
     HWY_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE = {
       iq: buildHwyMemberListScopedEditCultureKeysIq(),
       us: buildHwyMemberListScopedEditCultureKeysEn()
+    };
+    HWY_IDENTITY_COMPONENTS_BY_BUNDLE = {
+      iq: buildHwyIdentityComponentsCultureKeysIq(),
+      us: buildHwyIdentityComponentsCultureKeysEn()
     };
     mergeEmbeddedPackageCultureOverlay = mergePackageCultureOverlay;
     embeddedCultureBundleLoaders = {
@@ -57330,15 +58312,34 @@ var init_useViewportTier = __esm({
   }
 });
 
+// src/config/appendoBrandAssets.ts
+var APPENDO_BRAND_ASSET_ROOT, APPENDO_BRAND_WORDMARK_MASK_URL, APPENDO_BRAND_MARK_MASK_URL, APPENDO_BRAND_WORDMARK_URL, APPENDO_BRAND_MARK_URL, APPENDO_LOGO_SRC, APPENDO_BRAND_WORDMARK_ASPECT, APPENDO_BRAND_MARK_ASPECT;
+var init_appendoBrandAssets = __esm({
+  "src/config/appendoBrandAssets.ts"() {
+    APPENDO_BRAND_ASSET_ROOT = "/assets/appendo/brand";
+    APPENDO_BRAND_WORDMARK_MASK_URL = `${APPENDO_BRAND_ASSET_ROOT}/transparent/appendo-wordmark-currentColor.svg`;
+    APPENDO_BRAND_MARK_MASK_URL = `${APPENDO_BRAND_ASSET_ROOT}/transparent/appendo-mark-currentColor.svg`;
+    APPENDO_BRAND_WORDMARK_URL = `${APPENDO_BRAND_ASSET_ROOT}/appendo-wordmark.svg`;
+    APPENDO_BRAND_MARK_URL = `${APPENDO_BRAND_ASSET_ROOT}/appendo-icon-mark.svg`;
+    APPENDO_LOGO_SRC = APPENDO_BRAND_WORDMARK_MASK_URL;
+    APPENDO_BRAND_WORDMARK_ASPECT = 1350.33 / 443.31;
+    APPENDO_BRAND_MARK_ASPECT = 1;
+  }
+});
+
 // src/components/AppEndLogo.tsx
-var import_jsx_runtime4;
+var import_jsx_runtime4, APPENDO_LOGO_ASPECT_RATIO, APPENDO_LOGO_ONLY_ASPECT_RATIO;
 var init_AppEndLogo = __esm({
   "src/components/AppEndLogo.tsx"() {
     init_utils();
     init_CultureContext();
     init_viewportTokens();
     init_useViewportTier();
+    init_appendoBrandAssets();
+    init_appendoBrandAssets();
     import_jsx_runtime4 = require("react/jsx-runtime");
+    APPENDO_LOGO_ASPECT_RATIO = `${APPENDO_BRAND_WORDMARK_ASPECT}`;
+    APPENDO_LOGO_ONLY_ASPECT_RATIO = `${APPENDO_BRAND_MARK_ASPECT}`;
   }
 });
 
@@ -89841,25 +90842,25 @@ var init_schemaObjectDefinition = __esm({
     quoteSqlServer = (name) => `[${name.replace(/]/g, "]]")}]`;
     startsWithCreate = (value) => /^\s*CREATE\b/i.test(value);
     escapeRegExp2 = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    expandPostgreSqlDollarQuotedBodies = (sql22) => sql22.replace(/\bAS\s+(\$[A-Za-z0-9_]*\$)([\s\S]*?)\1/g, (_match, tag, body) => `AS ${tag}
+    expandPostgreSqlDollarQuotedBodies = (sql23) => sql23.replace(/\bAS\s+(\$[A-Za-z0-9_]*\$)([\s\S]*?)\1/g, (_match, tag, body) => `AS ${tag}
 ${body.trim()}
 ${tag}`);
     formatPostgreSqlRoutineForEditor = (objectName, rawDefinition) => {
       const quotedName = quotePg(objectName);
-      let sql22 = expandPostgreSqlDollarQuotedBodies(rawDefinition.replace(/\r\n/g, "\n").trim());
-      sql22 = sql22.replace(
+      let sql23 = expandPostgreSqlDollarQuotedBodies(rawDefinition.replace(/\r\n/g, "\n").trim());
+      sql23 = sql23.replace(
         new RegExp(`\\bpublic\\.${escapeRegExp2(objectName)}\\b`, "gi"),
         quotedName
       );
-      sql22 = sql22.replace(
+      sql23 = sql23.replace(
         new RegExp(
           `(CREATE(?:\\s+OR\\s+REPLACE)?\\s+(?:PROCEDURE|FUNCTION)\\s+)${escapeRegExp2(objectName)}(?=\\s*\\()`,
           "gi"
         ),
         `$1${quotedName}`
       );
-      sql22 = sql22.replace(/\n[ \t]*LANGUAGE\s+/gi, "\nLANGUAGE ");
-      const simpleLanguageSqlMatch = sql22.match(
+      sql23 = sql23.replace(/\n[ \t]*LANGUAGE\s+/gi, "\nLANGUAGE ");
+      const simpleLanguageSqlMatch = sql23.match(
         /^([\s\S]*?\bLANGUAGE\s+sql\s+)AS\s+\$[A-Za-z0-9_]*\$\s*([\s\S]*?)\s*\$[A-Za-z0-9_]*\$\s*$/i
       );
       if (simpleLanguageSqlMatch) {
@@ -89870,11 +90871,11 @@ ${tag}`);
           if (!body.endsWith(";")) {
             body = `${body};`;
           }
-          sql22 = `${header}
+          sql23 = `${header}
 AS '${body}'`;
         }
       }
-      return sql22;
+      return sql23;
     };
     extractSchemaObjectDefinitionRow = (row) => {
       if (!row || typeof row !== "object") {
@@ -89974,11 +90975,11 @@ ${definition}`;
 
 // src/server/utils/dataSourceSchemaIntrospection.ts
 async function listDataSourceSchemaObjects(dbQuery, sourceType, objectType, context) {
-  const sql22 = buildIntrospectionSql(sourceType, objectType, context.functionKind);
-  if (!sql22) {
+  const sql23 = buildIntrospectionSql(sourceType, objectType, context.functionKind);
+  if (!sql23) {
     return [];
   }
-  const result = await dbQuery(sql22, [], context);
+  const result = await dbQuery(sql23, [], context);
   const names = result.data.map(extractName).filter((name) => Boolean(name));
   return Array.from(new Set(names)).sort((left, right) => left.localeCompare(right));
 }
@@ -91026,9 +92027,9 @@ var init_dataTools = __esm({
       updated_at: source.updated_at,
       hasPassword: source.hasPassword
     });
-    stripSqlComments2 = (sql22) => sql22.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
-    validateReadOnlySql = (sql22) => {
-      const trimmed = sql22.trim();
+    stripSqlComments2 = (sql23) => sql23.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
+    validateReadOnlySql = (sql23) => {
+      const trimmed = sql23.trim();
       if (!trimmed) {
         return { ok: false, reason: "SQL is empty." };
       }
@@ -91179,7 +92180,7 @@ var init_dataTools = __esm({
     };
     executeQueryReadonly = async (args, deps) => {
       const dataSourceId = typeof args.dataSourceId === "string" ? args.dataSourceId : "";
-      const sql22 = typeof args.sql === "string" ? args.sql : "";
+      const sql23 = typeof args.sql === "string" ? args.sql : "";
       const params = parseQueryParams(args.params);
       const resolved = resolveDataSource2(deps.getSettingsPath(), dataSourceId);
       if (!resolved.ok) {
@@ -91192,7 +92193,7 @@ var init_dataTools = __esm({
           error: "unsupported_data_source_type"
         };
       }
-      const validation = validateReadOnlySql(sql22);
+      const validation = validateReadOnlySql(sql23);
       if (!validation.ok) {
         return {
           ok: false,
@@ -91202,7 +92203,7 @@ var init_dataTools = __esm({
       }
       try {
         const queryResult = await deps.edgeDbQuery(
-          sql22.trim(),
+          sql23.trim(),
           params,
           {
             dataSourceId: resolved.source.id,
@@ -99577,13 +100578,13 @@ var init_ensureHwyMemberDirectoryListRuntime = __esm({
         return;
       }
       const raw = JSON.parse(import_node_fs10.default.readFileSync(metadataPath, "utf8"));
-      raw.useGlobalConfig = false;
-      raw.timeoutMs = timeoutMs;
+      raw.use_global_config = false;
+      raw.timeout_ms = timeoutMs;
       if (options2?.cacheTtlMs != null) {
-        raw.cacheTtlMs = options2.cacheTtlMs;
+        raw.cache_ttl_ms = options2.cacheTtlMs;
       }
       if (options2?.cacheByUser != null) {
-        raw.cacheByUser = options2.cacheByUser;
+        raw.cache_by_user = options2.cacheByUser;
       }
       import_node_fs10.default.writeFileSync(metadataPath, `${JSON.stringify(raw, null, 2)}
 `, "utf8");
@@ -99967,7 +100968,7 @@ const ALLOW_SORT = ${operation.query?.allowSort !== false};`;
       const qualifiedName = model.schema ? `${model.schema}.${model.objectName}` : model.objectName;
       const paramEntries = Object.entries(routine.paramMap).map(([paramName, sourceKey]) => `    ${JSON.stringify(paramName)}: payload[${JSON.stringify(sourceKey)}] ?? params?.[${JSON.stringify(sourceKey)}] ?? query?.[${JSON.stringify(sourceKey)}],`).join("\n");
       const placeholders = Object.keys(routine.paramMap).map(() => "?").join(", ");
-      const sql22 = routine.objectType === "PROCEDURE" ? `CALL ${qualifiedName}(${placeholders})` : `SELECT * FROM ${qualifiedName}(${placeholders})`;
+      const sql23 = routine.objectType === "PROCEDURE" ? `CALL ${qualifiedName}(${placeholders})` : `SELECT * FROM ${qualifiedName}(${placeholders})`;
       return `const query = req.query ?? {};
   const params = req.params ?? {};
   const payload = {
@@ -99980,7 +100981,7 @@ const ALLOW_SORT = ${operation.query?.allowSort !== false};`;
 ${paramEntries}
   };
   const replacements = Object.values(routineParams);
-  const results = await sequelize.query(${JSON.stringify(sql22)}, {
+  const results = await sequelize.query(${JSON.stringify(sql23)}, {
     replacements,
     type: QueryTypes.SELECT,
   });
@@ -109799,7 +110800,7 @@ var init_hwyFamilyHouseholdMemberQuery = __esm({
     collectNakhebinLinkedMemberIds = (nakhebin) => {
       const values = /* @__PURE__ */ new Set();
       for (const row of nakhebin) {
-        const key = normalizeHwyHouseholdMemberId(row.memberId ?? row.member_id);
+        const key = normalizeHwyHouseholdMemberId(row.member_id ?? row.member_id);
         if (!key) {
           continue;
         }
@@ -109870,7 +110871,7 @@ async function attachNakhebinLinkedMemberDisplay(rows) {
     }
   }
   for (const row of rows) {
-    const memberId = normalizeHwyHouseholdMemberId(row.memberId ?? row.member_id);
+    const memberId = normalizeHwyHouseholdMemberId(row.member_id ?? row.member_id);
     applyNakhebinLinkedMemberDisplayFields(row, memberById.get(memberId));
   }
 }
@@ -109907,11 +110908,11 @@ var init_hwyNakhebinLinkedMemberDisplay = __esm({
       return readTrimmed3(member, "trackingCode");
     };
     applyNakhebinLinkedMemberDisplayFields = (row, member) => {
-      delete row.memberLinkAvatarUrl;
-      delete row.memberLinkUsername;
-      delete row.memberLinkGenderCode;
-      delete row.memberLinkDisplayName;
-      const memberId = normalizeHwyHouseholdMemberId(row.memberId ?? row.member_id);
+      delete row.member_link_avatar_url;
+      delete row.member_link_username;
+      delete row.member_link_gender_code;
+      delete row.member_link_display_name;
+      const memberId = normalizeHwyHouseholdMemberId(row.member_id ?? row.member_id);
       if (!memberId) {
         return;
       }
@@ -109922,21 +110923,21 @@ var init_hwyNakhebinLinkedMemberDisplay = __esm({
       attachHwyHouseholdMemberAvatarUrl(memberRow);
       const avatarUrl = readTrimmed3(memberRow, "avatarUrl", "avatar_url");
       if (avatarUrl) {
-        row.memberLinkAvatarUrl = avatarUrl;
+        row.member_link_avatar_url = avatarUrl;
       }
       const username = resolveMemberLinkUsername(memberRow);
       if (username) {
-        row.memberLinkUsername = username;
+        row.member_link_username = username;
       }
       const genderCode = readTrimmed3(memberRow, "genderCode", "gender_code");
       if (genderCode) {
-        row.memberLinkGenderCode = genderCode;
+        row.member_link_gender_code = genderCode;
       }
       const displayName = formatHwyMemberPersonDisplayName(
         readTrimmed3(memberRow, "displayFullName", "display_full_name")
       );
       if (displayName) {
-        row.memberLinkDisplayName = displayName;
+        row.member_link_display_name = displayName;
       }
     };
   }
@@ -110067,10 +111068,10 @@ var init_hwyNakhebinRegionDisplay = __esm({
         const baseInfoId = resolvedIds.get(raw) ?? raw;
         const title = titleById.get(baseInfoId);
         if (title) {
-          row.genderCodeTitle = title;
+          row.gender_code_title = title;
           continue;
         }
-        row.genderCodeTitle = raw;
+        row.gender_code_title = raw;
       }
     };
     attachHwyRegionElectoralPathsByRegionId = async (rows, cultureId, geoMap) => {
@@ -110097,7 +111098,7 @@ var init_hwyNakhebinRegionDisplay = __esm({
         if (baseInfoId) {
           const path145 = titlePathById.get(baseInfoId)?.trim() || labelById.get(baseInfoId)?.trim();
           if (path145) {
-            row.electoralDivisionPath = path145;
+            row.electoral_division_path = path145;
             continue;
           }
         }
@@ -110106,10 +111107,10 @@ var init_hwyNakhebinRegionDisplay = __esm({
           `${HWY_REGION_SHORT_PREFIX}${ref}`
         );
         if (placeholder) {
-          row.electoralDivisionPath = placeholder;
+          row.electoral_division_path = placeholder;
           continue;
         }
-        row.electoralDivisionPath = ref;
+        row.electoral_division_path = ref;
       }
     };
   }
@@ -110895,10 +111896,10 @@ async function attachImageFixRegistrationThumbsToMemberDirectoryRows(rows, optio
       };
     });
     const payload = { slots };
-    row.registrationImageFixThumbs = payload;
+    row.registration_image_fix_thumbs = payload;
     if (mirrorRegistrationPersonalPhotoToListFace) {
       const faceAvatar = resolveHwyMemberImageFixListFaceAvatarUrl(
-        row.avatarUrl != null ? String(row.avatarUrl) : row.avatar_url != null ? String(row.avatar_url) : null,
+        row.avatar_url != null ? String(row.avatar_url) : row.avatar_url != null ? String(row.avatar_url) : null,
         slots
       );
       if (faceAvatar) {
@@ -111030,27 +112031,27 @@ var init_hwyMemberDirectoryListImageFixThumbs = __esm({
     init_hwyMemberDirectoryListScope_service();
     init_hwyMemberFileKindResolve_service();
     parseMemberId = (row) => {
-      const raw = row.id ?? row.memberId;
+      const raw = row.id ?? row.member_id;
       const id = Number(raw);
       return Number.isFinite(id) && id > 0 ? id : null;
     };
-    readExistingListFaceAvatarUrl = (row) => String(row.avatarUrl ?? row.avatar_url ?? "").trim();
+    readExistingListFaceAvatarUrl = (row) => String(row.avatar_url ?? row.avatar_url ?? "").trim();
     slimRegistrationImageFixThumbsForListFaceOnly = (rows) => {
       const allowed = new Set(HWY_MEMBER_LIST_FACE_REGISTRATION_KIND_SLUGS);
       for (const row of rows) {
         const thumbRow = readHwyMemberImageFixThumbRow(row);
         if (!thumbRow?.slots.length) {
-          delete row.registrationImageFixThumbs;
+          delete row.registration_image_fix_thumbs;
           continue;
         }
         const slots = thumbRow.slots.filter(
           (slot) => allowed.has(slot.kindSlug) && slot.previewUrl && slot.hasBlob
         );
         if (!slots.length) {
-          delete row.registrationImageFixThumbs;
+          delete row.registration_image_fix_thumbs;
           continue;
         }
-        row.registrationImageFixThumbs = { slots };
+        row.registration_image_fix_thumbs = { slots };
       }
     };
   }
@@ -111083,8 +112084,8 @@ async function loadActiveMemberInstituteTitlesForList(memberIds) {
     }
   );
   const mapped = queryRows2.map((row) => ({
-    memberId: String(row.memberId ?? "").trim(),
-    instituteTitle: String(row.instituteTitle ?? "").trim()
+    memberId: String(row.member_id ?? "").trim(),
+    instituteTitle: String(row.institute_title ?? "").trim()
   }));
   return buildMemberInstitutesSummaryByMemberId(mapped);
 }
@@ -111171,8 +112172,8 @@ async function attachListInstituteCharacterFields(rows, instituteCode, queryLang
     if (!characterCode) {
       continue;
     }
-    row.characterCode = characterCode;
-    row.characterCodeTitle = titleById.get(characterCode) || characterCode;
+    row.character_code = characterCode;
+    row.character_code_title = titleById.get(characterCode) || characterCode;
   }
 }
 var import_sequelize20;
@@ -111476,7 +112477,7 @@ async function attachLegacyMembershipUsernamesToMemberDirectoryRows(rows) {
       row.username = legacy.username;
     }
     if (legacy.trackingCode) {
-      row.trackingCode = legacy.trackingCode;
+      row.tracking_code = legacy.trackingCode;
     }
   }
 }
@@ -111503,12 +112504,12 @@ async function attachLegacyTrackingCodesToMemberDirectoryRows(rows) {
     }
     const legacy = legacyById.get(memberId);
     if (legacy?.trackingCode) {
-      row.trackingCode = legacy.trackingCode;
+      row.tracking_code = legacy.trackingCode;
       continue;
     }
-    const trackingRaw = row.trackingCode;
+    const trackingRaw = row.tracking_code;
     if (trackingRaw == null || String(trackingRaw).trim() === "") {
-      row.trackingCode = String(memberId);
+      row.tracking_code = String(memberId);
     }
   }
 }
@@ -111523,7 +112524,7 @@ var init_hwyLegacyMembershipUsernameByMemberId_service = __esm({
     init_legacyHwyReadPool();
     LEGACY_BATCH = 40;
     readMemberId = (row) => {
-      const raw = row.id ?? row.memberId ?? row.member_id;
+      const raw = row.id ?? row.member_id ?? row.member_id;
       if (raw == null || raw === "") {
         return null;
       }
@@ -111531,11 +112532,11 @@ var init_hwyLegacyMembershipUsernameByMemberId_service = __esm({
       return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
     };
     readRowUsername = (row) => {
-      const raw = row.username ?? row.userUsername;
+      const raw = row.username ?? row.user_username;
       return raw == null ? "" : String(raw).trim();
     };
     readUserId = (row) => {
-      const raw = row.userId ?? row.user_id;
+      const raw = row.user_id ?? row.user_id;
       if (raw == null || raw === "") {
         return null;
       }
@@ -111562,7 +112563,7 @@ async function applyHwyMemberDirectoryListFaceCaptionUsernames(rows, options2 = 
     for (const row of rows) {
       row.username = "";
       if (Object.prototype.hasOwnProperty.call(row, "userUsername")) {
-        row.userUsername = "";
+        row.user_username = "";
       }
     }
     await attachLegacyTrackingCodesToMemberDirectoryRows(rows);
@@ -111771,7 +112772,7 @@ var init_hwyMemberDossierProfileRailLoginUsername_service = __esm({
     init_hwyMemberMembershipStatusIds_service();
     LEGACY_BATCH2 = 40;
     readMemberId2 = (row) => {
-      const raw = row.id ?? row.memberId ?? row.member_id;
+      const raw = row.id ?? row.member_id ?? row.member_id;
       if (raw == null || raw === "") {
         return null;
       }
@@ -111779,7 +112780,7 @@ var init_hwyMemberDossierProfileRailLoginUsername_service = __esm({
       return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
     };
     readUserId2 = (row) => {
-      const raw = row.userId ?? row.user_id;
+      const raw = row.user_id ?? row.user_id;
       if (raw == null || raw === "") {
         return null;
       }
@@ -111845,16 +112846,16 @@ async function loadHwyMemberSingleViewStatsByMemberId(memberIds) {
     }
   );
   for (const row of rows) {
-    const memberId = String(row.memberId ?? "").trim();
+    const memberId = String(row.member_id ?? "").trim();
     if (!memberId) {
       continue;
     }
     result.set(memberId, {
       ...emptyStats(),
-      statNashatatCount: readCount(row.statNashatatCount),
-      statDoratCount: readCount(row.statDoratCount),
-      statMoassesatCount: readCount(row.statMoassesatCount),
-      statVasaeghCount: readCount(row.statVasaeghCount)
+      statNashatatCount: readCount(row.stat_nashatat_count),
+      statDoratCount: readCount(row.stat_dorat_count),
+      statMoassesatCount: readCount(row.stat_moassesat_count),
+      statVasaeghCount: readCount(row.stat_vasaegh_count)
     });
   }
   for (const id of memberIds) {
@@ -111918,7 +112919,7 @@ async function enrichHwyMemberDirectoryListRows(rows, queryLang, options2 = {}) 
       if (!readStringField3(row, "regionId")) {
         const regionRef = resolveMemberDirectoryListElectoralRegionRef(row);
         if (regionRef) {
-          row.regionId = regionRef;
+          row.region_id = regionRef;
         }
       }
     }
@@ -111949,7 +112950,7 @@ async function enrichHwyMemberDirectoryListRows(rows, queryLang, options2 = {}) 
       slimRegistrationImageFixThumbsForListFaceOnly(rows);
     } else {
       for (const row of rows) {
-        delete row.registrationImageFixThumbs;
+        delete row.registration_image_fix_thumbs;
       }
     }
   }
@@ -112068,7 +113069,7 @@ var init_hwyMemberDirectoryDetailDisplay = __esm({
         if (!formatted) {
           continue;
         }
-        row.displayFullName = formatted;
+        row.display_full_name = formatted;
         if (Object.prototype.hasOwnProperty.call(row, "display_full_name")) {
           row.display_full_name = formatted;
         }
@@ -112262,7 +113263,7 @@ var init_hwyMemberDirectoryDetailDisplay = __esm({
         }
         const maktabTitle = titleById.get(baseInfoId);
         if (maktabTitle) {
-          row.electoralDivisionPath = maktabTitle;
+          row.electoral_division_path = maktabTitle;
         }
       }
     };
@@ -112306,7 +113307,7 @@ var init_hwyMemberDirectoryDetailDisplay = __esm({
         const path145 = String(match.title_path ?? "").trim();
         const title = resolveMemberDirectoryGeoDisplayTitle(ADDR_PROVINCE_TITLE_SPEC, plain, path145);
         if (title) {
-          row.addrProvinceTitle = title;
+          row.addr_province_title = title;
         }
       }
     };
@@ -112319,7 +113320,7 @@ var init_hwyMemberDirectoryDetailDisplay = __esm({
         if (!created) {
           continue;
         }
-        row.membershipOn = created.length >= 10 ? created.slice(0, 10) : created;
+        row.membership_on = created.length >= 10 ? created.slice(0, 10) : created;
       }
     };
     attachListMemberInstituteSummaries = async (rows) => {
@@ -112337,7 +113338,7 @@ var init_hwyMemberDirectoryDetailDisplay = __esm({
         const memberId = readStringField3(row, "id");
         const summary = summaryByMember.get(memberId);
         if (summary) {
-          row.memberInstitutesSummary = summary;
+          row.member_institutes_summary = summary;
         }
       }
     };
@@ -112873,11 +113874,12 @@ OUTER APPLY (
       return [...exprs];
     };
     buildOrderClause = (sequelize, order, joinNeeds) => {
-      if (!order || order.length === 0) {
+      const orderItems = order == null ? [] : Array.isArray(order) ? order : [order];
+      if (orderItems.length === 0) {
         return "m.updated_at DESC, m.id ASC";
       }
       const parts = [];
-      for (const item3 of order) {
+      for (const item3 of orderItems) {
         if (!Array.isArray(item3)) {
           continue;
         }
@@ -112932,12 +113934,12 @@ OUTER APPLY (
       }
       const dialect = sequelize.getDialect();
       const idCast = dialect === "mssql" ? "CAST(m.id AS NVARCHAR(32))" : "CAST(m.id AS TEXT)";
-      const sql22 = `AND (
+      const sql23 = `AND (
     m.phone1 LIKE :searchLike OR m.phone2 LIKE :searchLike OR m.username LIKE :searchLike
     OR m.first_name LIKE :searchLike OR m.family_name LIKE :searchLike OR m.national_id LIKE :searchLike
     OR ${idCast} LIKE :searchLike
   )`;
-      return { sql: sql22, replacements: { searchLike: `%${trimmed}%` } };
+      return { sql: sql23, replacements: { searchLike: `%${trimmed}%` } };
     };
     resolveScopeQueryPlan = async (sequelize, scope) => {
       const ctx3 = await loadHwyMemberListScopeContext();
@@ -113088,7 +114090,7 @@ INNER JOIN ${membersTable2} m ON m.id = mi.member_id
       if (joinNeeds.memberLinkedNakhebin) {
         joinClauses.push(memberLinkedNakhebinApplyClause(nakhebinTable));
       }
-      const sql22 = `
+      const sql23 = `
 SELECT ${selectList}
 ${fromSql}
 ${joinClauses.join("\n")}
@@ -113098,7 +114100,7 @@ ${joinTasjilSql}
 ${montadheminInstituteSql}
 ORDER BY ${orderBy}
 OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY`;
-      const rows = await sequelize.query(sql22, {
+      const rows = await sequelize.query(sql23, {
         type: import_sequelize25.QueryTypes.SELECT,
         replacements: {
           ...replacements,
@@ -113129,14 +114131,14 @@ OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY`;
       );
       const instituteScoped = definition.scope.type === "active_institute" || definition.scope.type === "pending_local_institute";
       const countExpr = instituteScoped ? "COUNT(DISTINCT m.id)" : "COUNT(*)";
-      const sql22 = `
+      const sql23 = `
 SELECT ${countExpr} AS cnt
 ${fromSql}
 ${whereSql}
 ${searchSql}
 ${joinTasjilSql}
 ${montadheminInstituteSql}`;
-      const rows = await sequelize.query(sql22, {
+      const rows = await sequelize.query(sql23, {
         type: import_sequelize25.QueryTypes.SELECT,
         replacements: {
           ...replacements,
@@ -113191,13 +114193,13 @@ ${montadheminInstituteSql}`;
       if (joinNeeds.memberLinkedNakhebin) {
         joinClauses.push(memberLinkedNakhebinApplyClause(nakhebinTable));
       }
-      const sql22 = `
+      const sql23 = `
 SELECT ${selectList}
 FROM ${membersTable2} m
 ${joinClauses.join("\n")}
 WHERE m.username = :lookup
    OR CAST(m.id AS NVARCHAR(32)) = :lookup`;
-      const rows = await sequelize.query(sql22, {
+      const rows = await sequelize.query(sql23, {
         type: import_sequelize25.QueryTypes.SELECT,
         replacements: { lookup: trimmedId }
       });
@@ -113486,8 +114488,8 @@ async function queryLegacyRejectionListStatusFields(memberIds) {
           WHERE n.MemberId = m.Id
             AND EXISTS (
               SELECT 1
-              FROM dbo.AppEnd_Users_R_Roles r WITH (NOLOCK)
-              INNER JOIN dbo.AppEnd_Users u WITH (NOLOCK) ON u.Id = r.UserId
+              FROM dbo.vw_hwy_platform_user_roles r WITH (NOLOCK)
+              INNER JOIN dbo.vw_hwy_platform_users u WITH (NOLOCK) ON u.Id = r.UserId
               WHERE u.UserName = n.CreatedBy
                 AND r.RoleId = 1000006
             )
@@ -113541,7 +114543,7 @@ async function queryLegacyRejectionListStatusFields(memberIds) {
         ON staff_un.UserName = m.MembershipStatus_UpdatedBy
       LEFT JOIN dbo.HWY_Members staff_id WITH (NOLOCK)
         ON CAST(staff_id.Id AS VARCHAR(32)) = CAST(m.MembershipStatus_UpdatedBy AS VARCHAR(32))
-      LEFT JOIN dbo.AppEnd_Users au WITH (NOLOCK)
+      LEFT JOIN dbo.vw_hwy_platform_users au WITH (NOLOCK)
         ON CAST(au.Id AS VARCHAR(32)) = CAST(m.MembershipStatus_UpdatedBy AS VARCHAR(32))
       LEFT JOIN dbo.HWY_Members staff_uid WITH (NOLOCK)
         ON staff_uid.UserId = au.Id
@@ -113565,65 +114567,65 @@ function applyLegacyRejectionListStatusFieldsToRow(row, legacy, listScopeLegacy)
   const callCenterNote = trimNote(legacy.note_by_call_center);
   const latestNote = trimNote(legacy.latest_note);
   const hasChangeReasonId = legacy.change_reason_id != null && Number(legacy.change_reason_id) > 0;
-  if (!String(row.membershipStatusUpdatedOn ?? "").trim() && legacy.status_updated_on) {
-    row.membershipStatusUpdatedOn = legacy.status_updated_on;
+  if (!String(row.membership_status_updated_on ?? "").trim() && legacy.status_updated_on) {
+    row.membership_status_updated_on = legacy.status_updated_on;
   }
-  if (!trimNote(String(row.membershipStatusNoteByCallCenter ?? "")) && callCenterNote) {
-    row.membershipStatusNoteByCallCenter = callCenterNote;
+  if (!trimNote(String(row.membership_status_note_by_call_center ?? "")) && callCenterNote) {
+    row.membership_status_note_by_call_center = callCenterNote;
   }
-  if (!trimNote(String(row.membershipLatestNote ?? "")) && latestNote) {
-    row.membershipLatestNote = latestNote;
+  if (!trimNote(String(row.membership_latest_note ?? "")) && latestNote) {
+    row.membership_latest_note = latestNote;
   }
-  const cpNote = trimNote(String(row.membershipStatusDecisionNote ?? ""));
-  const cpReason = trimNote(String(row.membershipStatusDecisionReasonTitle ?? ""));
+  const cpNote = trimNote(String(row.membership_status_decision_note ?? ""));
+  const cpReason = trimNote(String(row.membership_status_decision_reason_title ?? ""));
   if (hasChangeReasonId) {
     if (isLocalManage) {
-      row.membershipStatusLegacyHasChangeReason = true;
-      row.membershipStatusReturnedFromRegionBadge = REGION_RETURN_BADGE;
+      row.membership_status_legacy_has_change_reason = true;
+      row.membership_status_returned_from_region_badge = REGION_RETURN_BADGE;
     }
     if (changeReasonTitle) {
-      row.membershipStatusDecisionReasonTitle = changeReasonTitle;
+      row.membership_status_decision_reason_title = changeReasonTitle;
     }
     if (statusNote && (!cpNote || statusNote.length >= cpNote.length)) {
-      row.membershipStatusDecisionNote = statusNote;
+      row.membership_status_decision_note = statusNote;
     } else if (!cpNote && statusNote) {
-      row.membershipStatusDecisionNote = statusNote;
+      row.membership_status_decision_note = statusNote;
     }
   } else if (!cpNote && !cpReason) {
     if (callCenterNote) {
-      row.membershipStatusDecisionNote = callCenterNote;
+      row.membership_status_decision_note = callCenterNote;
     } else if (statusNote) {
-      row.membershipStatusDecisionNote = statusNote;
+      row.membership_status_decision_note = statusNote;
     } else if (latestNote) {
-      row.membershipStatusDecisionNote = latestNote;
+      row.membership_status_decision_note = latestNote;
     }
   } else if (!cpNote && statusNote) {
-    row.membershipStatusDecisionNote = statusNote;
+    row.membership_status_decision_note = statusNote;
   }
-  if (!trimNote(String(row.membershipStatusDecisionPreviousNote ?? "")) && latestNote && latestNote !== trimNote(String(row.membershipStatusDecisionNote ?? "")) && latestNote !== callCenterNote) {
-    row.membershipStatusDecisionPreviousNote = latestNote;
+  if (!trimNote(String(row.membership_status_decision_previous_note ?? "")) && latestNote && latestNote !== trimNote(String(row.membership_status_decision_note ?? "")) && latestNote !== callCenterNote) {
+    row.membership_status_decision_previous_note = latestNote;
   }
   const legacyLogin = trimNote(legacy.updated_by_username);
   const legacyDisplay = trimNote(legacy.updated_by_display_name);
   const legacyPhone = trimNote(legacy.updated_by_phone);
   const legacyStaffId = trimNote(legacy.updated_by_staff_member_id);
   const legacyRoles = trimNote(legacy.updated_by_roles);
-  if (!trimNote(String(row.membershipStatusUpdatedByDisplayName ?? "")) && legacyDisplay) {
-    row.membershipStatusUpdatedByDisplayName = legacyDisplay;
-  } else if (!trimNote(String(row.membershipStatusUpdatedByDisplayName ?? "")) && legacyLogin) {
-    row.membershipStatusUpdatedByDisplayName = legacyLogin;
+  if (!trimNote(String(row.membership_status_updated_by_display_name ?? "")) && legacyDisplay) {
+    row.membership_status_updated_by_display_name = legacyDisplay;
+  } else if (!trimNote(String(row.membership_status_updated_by_display_name ?? "")) && legacyLogin) {
+    row.membership_status_updated_by_display_name = legacyLogin;
   }
-  if (!trimNote(String(row.membershipStatusUpdatedByLogin ?? "")) && legacyLogin) {
-    row.membershipStatusUpdatedByLogin = legacyLogin;
+  if (!trimNote(String(row.membership_status_updated_by_login ?? "")) && legacyLogin) {
+    row.membership_status_updated_by_login = legacyLogin;
   }
-  if (!trimNote(String(row.membershipStatusUpdatedByPhone ?? "")) && legacyPhone) {
-    row.membershipStatusUpdatedByPhone = legacyPhone;
+  if (!trimNote(String(row.membership_status_updated_by_phone ?? "")) && legacyPhone) {
+    row.membership_status_updated_by_phone = legacyPhone;
   }
-  if (!trimNote(String(row.membershipStatusUpdatedByStaffMemberId ?? "")) && legacyStaffId) {
-    row.membershipStatusUpdatedByStaffMemberId = legacyStaffId;
+  if (!trimNote(String(row.membership_status_updated_by_staff_member_id ?? "")) && legacyStaffId) {
+    row.membership_status_updated_by_staff_member_id = legacyStaffId;
   }
-  if (!trimNote(String(row.membershipStatusUpdatedByRoles ?? "")) && legacyRoles) {
-    row.membershipStatusUpdatedByRoles = legacyRoles;
+  if (!trimNote(String(row.membership_status_updated_by_roles ?? "")) && legacyRoles) {
+    row.membership_status_updated_by_roles = legacyRoles;
   }
 }
 async function attachLegacyRejectionListStatusFields(rows, listScopeLegacy) {
@@ -113631,10 +114633,10 @@ async function attachLegacyRejectionListStatusFields(rows, listScopeLegacy) {
     return;
   }
   try {
-    const memberIds = rows.map((row) => String(row.id ?? row.memberId ?? "").trim()).filter(Boolean);
+    const memberIds = rows.map((row) => String(row.id ?? row.member_id ?? "").trim()).filter(Boolean);
     const legacyByMember = await queryLegacyRejectionListStatusFields(memberIds);
     for (const row of rows) {
-      const memberId = String(row.id ?? row.memberId ?? "").trim();
+      const memberId = String(row.id ?? row.member_id ?? "").trim();
       const legacy = legacyByMember.get(memberId);
       if (legacy) {
         applyLegacyRejectionListStatusFieldsToRow(row, legacy, listScopeLegacy);
@@ -113810,8 +114812,8 @@ var init_hwyGeoResponsibilityLegacyCenterStats_service = __esm({
       if (!Number.isFinite(input.legacyGeoId) || input.legacyGeoId <= 0) {
         return null;
       }
-      const runQuery = async (sql23) => {
-        const rows = await getControlPlaneSequelize().query(sql23, { type: import_sequelize26.QueryTypes.SELECT });
+      const runQuery = async (sql24) => {
+        const rows = await getControlPlaneSequelize().query(sql24, { type: import_sequelize26.QueryTypes.SELECT });
         const row = rows[0];
         if (!row) {
           return null;
@@ -113825,10 +114827,10 @@ var init_hwyGeoResponsibilityLegacyCenterStats_service = __esm({
           totalMembers: montadheminCount
         };
       };
-      const sql22 = legacyStatsSql(input.level, input.legacyGeoId);
+      const sql23 = legacyStatsSql(input.level, input.legacyGeoId);
       if (await controlPlaneHasLegacyHwyMembersTable()) {
         try {
-          return await runQuery(sql22);
+          return await runQuery(sql23);
         } catch {
         }
       }
@@ -113836,7 +114838,7 @@ var init_hwyGeoResponsibilityLegacyCenterStats_service = __esm({
         const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
         const pool = await connectLegacyReadPool2();
         try {
-          const result = await pool.request().query(sql22);
+          const result = await pool.request().query(sql23);
           const row = result.recordset[0];
           if (!row) {
             return null;
@@ -114017,21 +115019,21 @@ async function attachHwyMemberRejectionListParityFields(sequelize, rows, listSco
       });
     }
     const updater = updatersByMember.get(memberId);
-    if (!String(row.membershipStatusUpdatedOn ?? "").trim() && updater?.membership_status_updated_on) {
-      row.membershipStatusUpdatedOn = updater.membership_status_updated_on;
+    if (!String(row.membership_status_updated_on ?? "").trim() && updater?.membership_status_updated_on) {
+      row.membership_status_updated_on = updater.membership_status_updated_on;
     }
     const hasDecisionText = Boolean(
-      String(row.membershipStatusDecisionNote ?? "").trim() || String(row.membershipStatusDecisionReasonTitle ?? "").trim()
+      String(row.membership_status_decision_note ?? "").trim() || String(row.membership_status_decision_reason_title ?? "").trim()
     );
     const fallbackNote = String(updater?.member_note ?? "").trim();
     if (!hasDecisionText && fallbackNote) {
       applyParsedDecisionNotes(row, { latest: fallbackNote, previous: "" });
     }
     if (bucket?.callCenter) {
-      row.membershipStatusNoteByCallCenter = bucket.callCenter;
+      row.membership_status_note_by_call_center = bucket.callCenter;
     }
     if (bucket?.latestOverall) {
-      row.membershipLatestNote = bucket.latestOverall;
+      row.membership_latest_note = bucket.latestOverall;
     }
     mergeRejectedByFieldsOntoRow(row, {
       display_name: updater?.display_name,
@@ -114055,7 +115057,7 @@ async function attachHwyMemberRejectionListParityFields(sequelize, rows, listSco
   );
   for (const row of rows) {
     const hasRejectedBy = Boolean(
-      trimRejectedByField(String(row.membershipStatusUpdatedByDisplayName ?? "")) || trimRejectedByField(String(row.membershipStatusUpdatedByLogin ?? ""))
+      trimRejectedByField(String(row.membership_status_updated_by_display_name ?? "")) || trimRejectedByField(String(row.membership_status_updated_by_login ?? ""))
     );
     if (!hasRejectedBy) {
       continue;
@@ -114090,25 +115092,25 @@ var init_hwyMemberRejectionListParity_service = __esm({
       const login2 = trimRejectedByField(source.login);
       const phone = trimRejectedByField(source.phone);
       const staffMemberId = trimRejectedByField(source.staff_member_id);
-      if (!trimRejectedByField(String(row.membershipStatusUpdatedByDisplayName ?? "")) && display) {
-        row.membershipStatusUpdatedByDisplayName = display;
-      } else if (!trimRejectedByField(String(row.membershipStatusUpdatedByDisplayName ?? "")) && login2) {
-        row.membershipStatusUpdatedByDisplayName = login2;
+      if (!trimRejectedByField(String(row.membership_status_updated_by_display_name ?? "")) && display) {
+        row.membership_status_updated_by_display_name = display;
+      } else if (!trimRejectedByField(String(row.membership_status_updated_by_display_name ?? "")) && login2) {
+        row.membership_status_updated_by_display_name = login2;
       }
-      if (!trimRejectedByField(String(row.membershipStatusUpdatedByLogin ?? "")) && login2) {
-        row.membershipStatusUpdatedByLogin = login2;
+      if (!trimRejectedByField(String(row.membership_status_updated_by_login ?? "")) && login2) {
+        row.membership_status_updated_by_login = login2;
       }
-      if (!trimRejectedByField(String(row.membershipStatusUpdatedByPhone ?? "")) && phone) {
-        row.membershipStatusUpdatedByPhone = phone;
+      if (!trimRejectedByField(String(row.membership_status_updated_by_phone ?? "")) && phone) {
+        row.membership_status_updated_by_phone = phone;
       }
-      if (!trimRejectedByField(String(row.membershipStatusUpdatedByStaffMemberId ?? "")) && staffMemberId) {
-        row.membershipStatusUpdatedByStaffMemberId = staffMemberId;
+      if (!trimRejectedByField(String(row.membership_status_updated_by_staff_member_id ?? "")) && staffMemberId) {
+        row.membership_status_updated_by_staff_member_id = staffMemberId;
       }
     };
     REGION_RETURN_BADGE2 = "\u0645\u0639\u0627\u062F \u0645\u0646 \u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629";
     STATUS_DECISION_SUBJECTS = ["local_verification", "membership"];
     readMemberId3 = (row) => {
-      const raw = row.id ?? row.memberId;
+      const raw = row.id ?? row.member_id;
       if (raw === null || raw === void 0) {
         return "";
       }
@@ -114119,23 +115121,23 @@ var init_hwyMemberRejectionListParity_service = __esm({
       const latestParsed = splitHwyMembershipDecisionNoteBody(notes.latest);
       const previousParsed = splitHwyMembershipDecisionNoteBody(notes.previous);
       if (latestParsed.reasonTitle) {
-        row.membershipStatusDecisionReasonTitle = latestParsed.reasonTitle;
-        row.membershipStatusDecisionNote = latestParsed.note || notes.latest;
+        row.membership_status_decision_reason_title = latestParsed.reasonTitle;
+        row.membership_status_decision_note = latestParsed.note || notes.latest;
       } else if (notes.latest) {
-        row.membershipStatusDecisionNote = latestParsed.note;
+        row.membership_status_decision_note = latestParsed.note;
       }
       if (notes.previous) {
         const previousText = previousParsed.note || notes.previous;
-        if (previousText && previousText !== row.membershipStatusDecisionNote) {
-          row.membershipStatusDecisionPreviousNote = previousText;
-          if (previousParsed.reasonTitle && !row.membershipStatusDecisionReasonTitle) {
-            row.membershipStatusDecisionReasonTitle = previousParsed.reasonTitle;
+        if (previousText && previousText !== row.membership_status_decision_note) {
+          row.membership_status_decision_previous_note = previousText;
+          if (previousParsed.reasonTitle && !row.membership_status_decision_reason_title) {
+            row.membership_status_decision_reason_title = previousParsed.reasonTitle;
           }
         }
       }
-      const combined = `${String(row.membershipStatusDecisionReasonTitle ?? "")} ${String(row.membershipStatusDecisionNote ?? "")} ${String(row.membershipStatusDecisionPreviousNote ?? "")}`;
+      const combined = `${String(row.membership_status_decision_reason_title ?? "")} ${String(row.membership_status_decision_note ?? "")} ${String(row.membership_status_decision_previous_note ?? "")}`;
       if (combined.includes("\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629") || combined.includes("\u0645\u0639\u0627\u062F \u0645\u0646")) {
-        row.membershipStatusReturnedFromRegionBadge = REGION_RETURN_BADGE2;
+        row.membership_status_returned_from_region_badge = REGION_RETURN_BADGE2;
       }
     };
     buildMemberNoteBuckets = (noteRows) => {
@@ -116445,14 +117447,14 @@ async function applyHwyMemberIdentityFieldMasksToRows(sequelize, rows, viewerOrS
     viewerOrSession,
     sequelize
   );
-  const memberIds = rows.map((row) => row.id ?? row.memberId).filter(Boolean);
+  const memberIds = rows.map((row) => row.id ?? row.member_id).filter((id) => id != null && id !== "").map((id) => typeof id === "string" || typeof id === "number" ? id : String(id));
   const instituteMap = await loadHwyMemberIdentityInstitutePhoneMap(sequelize, memberIds);
   for (const row of rows) {
     const genderMasked = applyGenderIdentityMaskToMemberRow(row, viewer);
-    const institute = readMemberIdentityInstitutePhoneContext(instituteMap, row.id ?? row.memberId);
+    const institute = readMemberIdentityInstitutePhoneContext(instituteMap, row.id ?? row.member_id);
     const institutePhoneMasked = applyInstituteOwnershipPhoneMaskToMemberRow(row, viewer, institute);
     if (institute.orgsMembershipSummary) {
-      row.orgsMembershipSummary = institute.orgsMembershipSummary;
+      row.orgs_membership_summary = institute.orgsMembershipSummary;
     }
     if (options2?.attachIdentityFieldPolicy) {
       const policy = resolveHwyMemberDirectoryIdentityFieldPolicy({
@@ -116461,6 +117463,7 @@ async function applyHwyMemberIdentityFieldMasksToRows(sequelize, rows, viewerOrS
         genderMasked,
         institutePhoneMasked
       });
+      row.identity_field_policy = policy;
       row.identityFieldPolicy = policy;
     }
   }
@@ -116471,7 +117474,7 @@ var init_applyHwyMemberIdentityFieldMasks = __esm({
     init_hwyMemberIdentityFieldMask();
     init_hwyMemberIdentityFieldMaskInstitutes();
     init_hwyMemberIdentityFieldMaskContext();
-    readMemberGender = (row) => row.genderCode ?? row.gender_code ?? row.GenderId ?? row.genderId;
+    readMemberGender = (row) => row.gender_code ?? row.gender_code ?? row.GenderId ?? row.gender_id;
   }
 });
 
@@ -120136,7 +121139,7 @@ var init_hawietyPackage = __esm({
     init_verticalApp();
     HAWIETY_PACKAGE_ID = "hawiety";
     HAWIETY_PACKAGE_NAME = "Hawiety";
-    HAWIETY_PACKAGE_VERSION = "0.3.8";
+    HAWIETY_PACKAGE_VERSION = "0.3.9";
     HAWIETY_PORTAL_SEGMENT = "hawiety";
     HAWIETY_MOUNT_PATH_PREFIX = "/hawiety";
     HAWIETY_HOST_PAGE_KEYS = [
@@ -120155,6 +121158,7 @@ var init_hawietyPackage = __esm({
       "hwy-member-targhin-admin",
       "hwy-etl-console",
       "hwy-business-rules-reference",
+      "hwy-identity-components",
       "hwy-members-all",
       "hwy-members-quick-search",
       "hwy-members-montadhemin",
@@ -120262,6 +121266,92 @@ var init_hawietyRuntime = __esm({
   }
 });
 
+// src/server/domain/hwy/hwyFinanceParityState.service.ts
+var import_sequelize36, queryOk, hwyFinancePaymentTablesReady, hwyFinanceMasoolinSchemaReady, hwyFinanceMasoolinProcessReady, hwyFinanceMasoolinEdgeReady, hwyFinancePaymentWritesReady, hwyFinancePaymentReadsReady, hwyFinancePaymentViewsReady, hwyFinanceMasoolinInstallReady, hwyFinanceMasoolinDeferredReady, hwyFinanceEdgeCompatReady, hwyFinancePaymentProcsReady;
+var init_hwyFinanceParityState_service = __esm({
+  "src/server/domain/hwy/hwyFinanceParityState.service.ts"() {
+    import_sequelize36 = require("sequelize");
+    init_controlPlaneSequelize();
+    init_prismaHelpers();
+    queryOk = async (sql23) => {
+      if (readControlPlaneProvider() !== "sqlserver") return false;
+      const rows = await getControlPlaneSequelize().query(sql23, { type: import_sequelize36.QueryTypes.SELECT });
+      return Number(rows[0]?.ok) === 1;
+    };
+    hwyFinancePaymentTablesReady = () => queryOk(`
+  SELECT CASE
+    WHEN OBJECT_ID(N'dbo.hwy_payment_documents', N'U') IS NOT NULL THEN 1
+    WHEN OBJECT_ID(N'dbo.HWY_PaymentDocuments', N'U') IS NOT NULL THEN 1
+    ELSE 0
+  END AS ok
+  `);
+    hwyFinanceMasoolinSchemaReady = () => queryOk(`
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.HWY_Members', N'U') IS NULL THEN 0
+      WHEN OBJECT_ID(N'dbo.hwy_masoolin_stars', N'U') IS NULL
+        AND OBJECT_ID(N'dbo.HWY_MasoolinStars', N'U') IS NULL THEN 0
+      WHEN OBJECT_ID(N'dbo.hwy_masoolin_stars_overal', N'U') IS NULL
+        AND OBJECT_ID(N'dbo.HWY_MasoolinStarsOveral', N'U') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+  `);
+    hwyFinanceMasoolinProcessReady = () => queryOk(`
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.HWY_Members', N'U') IS NULL THEN 0
+      WHEN OBJECT_ID(N'dbo.hwy_masoolin_performance_list', N'P') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+  `);
+    hwyFinanceMasoolinEdgeReady = () => queryOk(`
+    SELECT CASE WHEN OBJECT_ID(N'dbo.HWY_Members', N'U') IS NULL THEN 0 ELSE 1 END AS ok
+  `);
+    hwyFinancePaymentWritesReady = () => queryOk(`
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.hwy_payment_documents_create', N'P') IS NULL THEN 0
+      WHEN OBJECT_ID(N'dbo.hwy_payment_documents', N'U') IS NULL
+        AND OBJECT_ID(N'dbo.HWY_PaymentDocuments', N'U') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+  `);
+    hwyFinancePaymentReadsReady = () => queryOk(`
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.hwy_payment_documents_list', N'P') IS NULL THEN 0
+      WHEN OBJECT_ID(N'dbo.hwy_payment_documents', N'U') IS NULL
+        AND OBJECT_ID(N'dbo.HWY_PaymentDocuments', N'U') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+  `);
+    hwyFinancePaymentViewsReady = () => queryOk(`
+    SELECT CASE WHEN OBJECT_ID(N'dbo.vw_hwy_payment_documents_members', N'V') IS NULL THEN 0 ELSE 1 END AS ok
+  `);
+    hwyFinanceMasoolinInstallReady = () => queryOk(`
+    SELECT CASE WHEN OBJECT_ID(N'dbo.hwy_masoolin_performance_list', N'P') IS NULL THEN 0 ELSE 1 END AS ok
+  `);
+    hwyFinanceMasoolinDeferredReady = () => queryOk(`
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.hwy_members', N'U') IS NULL THEN 0
+      WHEN COL_LENGTH(N'dbo.hwy_members', N'payable') IS NULL THEN 0
+      WHEN COL_LENGTH(N'dbo.vw_hwy_platform_roles', N'IsExecutive') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+  `);
+    hwyFinanceEdgeCompatReady = () => queryOk(`
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.vw_hwy_platform_user_roles_finance', N'V') IS NULL
+        AND OBJECT_ID(N'dbo.vw_hwy_platform_user_roles', N'V') IS NULL THEN 0
+      WHEN COL_LENGTH(N'dbo.hwy_members', N'gender_id') IS NULL
+        AND COL_LENGTH(N'dbo.hwy_members', N'GenderId') IS NULL
+        AND COL_LENGTH(N'dbo.hwy_members', N'gender_legacy_id') IS NULL
+        AND COL_LENGTH(N'dbo.hwy_members', N'gender_code') IS NULL THEN 0
+      WHEN COL_LENGTH(N'dbo.hwy_members', N'MasooliatLevelId') IS NULL
+        AND COL_LENGTH(N'dbo.hwy_members', N'masooliat_level_id') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+  `);
+    hwyFinancePaymentProcsReady = () => hwyFinanceEdgeCompatReady();
+  }
+});
+
 // src/domain/hwy/hwyLegacyEdgeParityTableNames.ts
 var HWY_MEMBER_EDGE_PARITY_TABLES, HWY_MEMBER_EDGE_PARITY_TABLE_ETL_ORDER;
 var init_hwyLegacyEdgeParityTableNames = __esm({
@@ -120309,10 +121399,10 @@ var init_hwyLegacyEdgeParityTableNames = __esm({
 });
 
 // src/server/domain/hwy/hwyLegacyImportParityState.service.ts
-var import_sequelize36, cardFlowSteps, securityStatuses, parityTablesSql, hwyLegacyImportParityTablesReady, hwyLegacyImportParityReady;
+var import_sequelize37, cardFlowSteps, securityStatuses, parityTablesSql, hwyLegacyImportParityTablesReady, hwyLegacyImportParityReady;
 var init_hwyLegacyImportParityState_service = __esm({
   "src/server/domain/hwy/hwyLegacyImportParityState.service.ts"() {
-    import_sequelize36 = require("sequelize");
+    import_sequelize37 = require("sequelize");
     init_hwyLegacyEdgeParityTableNames();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -120320,10 +121410,12 @@ var init_hwyLegacyImportParityState_service = __esm({
     securityStatuses = HWY_MEMBER_EDGE_PARITY_TABLES.securityStatuses.edge;
     parityTablesSql = `
   SELECT CASE
-    WHEN OBJECT_ID(N'dbo.HWY_Members', N'U') IS NULL THEN 0
+    WHEN OBJECT_ID(N'dbo.hwy_members', N'U') IS NULL THEN 0
     WHEN OBJECT_ID(N'dbo.${cardFlowSteps}', N'U') IS NULL THEN 0
     WHEN OBJECT_ID(N'dbo.${securityStatuses}', N'U') IS NULL THEN 0
-    WHEN COL_LENGTH(N'dbo.HWY_Members', N'Picture_FileBody_xs') IS NULL THEN 0
+    WHEN COL_LENGTH(N'dbo.hwy_members', N'picture_file_body_xs') IS NULL
+      AND COL_LENGTH(N'dbo.HWY_Members', N'Picture_FileBody_xs') IS NULL THEN 0
+    WHEN OBJECT_ID(N'dbo.vw_hwy_members_legacy_row', N'V') IS NULL THEN 0
     ELSE 1
   END AS ok
 `;
@@ -120332,7 +121424,7 @@ var init_hwyLegacyImportParityState_service = __esm({
         return false;
       }
       const sequelize = getControlPlaneSequelize();
-      const rows = await sequelize.query(parityTablesSql, { type: import_sequelize36.QueryTypes.SELECT });
+      const rows = await sequelize.query(parityTablesSql, { type: import_sequelize37.QueryTypes.SELECT });
       return Number(rows[0]?.ok) === 1;
     };
     hwyLegacyImportParityReady = async () => {
@@ -120347,7 +121439,7 @@ var init_hwyLegacyImportParityState_service = __esm({
       ELSE 1
     END AS ok
     `,
-        { type: import_sequelize36.QueryTypes.SELECT }
+        { type: import_sequelize37.QueryTypes.SELECT }
       );
       return Number(rows[0]?.ok) === 1;
     };
@@ -120355,16 +121447,17 @@ var init_hwyLegacyImportParityState_service = __esm({
 });
 
 // src/server/domain/hwy/ensureHwyDbObjects.ts
-var import_node_fs12, import_node_path13, import_node_url2, import_sequelize37, import_meta2, ensurePromise2, resetHwyDbObjectsInstallState, installDir, SQL_INSTALL_ORDER, formatInstallError, HWY_LEGACY_IMPORT_PARITY_FILES, applySqlFile, ensureHwyDbObjects;
+var import_node_fs12, import_node_path13, import_node_url2, import_sequelize38, import_meta2, ensurePromise2, resetHwyDbObjectsInstallState, installDir, SQL_INSTALL_ORDER, formatInstallError, HWY_LEGACY_IMPORT_PARITY_FILES, HWY_FINANCE_EDGE_COMPAT_FILES, HWY_FINANCE_PAYMENT_FILES, HWY_FINANCE_MASOOLIN_PROCESS_FILES, HWY_FINANCE_MASOOLIN_FILES, HWY_FINANCE_LEGACY_RETIRE_FILE, HWY_FINANCE_DEFERRED_FILE, applySqlFile, ensureHwyDbObjects;
 var init_ensureHwyDbObjects = __esm({
   "src/server/domain/hwy/ensureHwyDbObjects.ts"() {
     import_node_fs12 = require("node:fs");
     import_node_path13 = __toESM(require("node:path"), 1);
     import_node_url2 = require("node:url");
-    import_sequelize37 = require("sequelize");
+    import_sequelize38 = require("sequelize");
     init_controlPlaneSequelize();
     init_hawietyRuntime();
     init_prismaHelpers();
+    init_hwyFinanceParityState_service();
     init_hwyLegacyImportParityState_service();
     import_meta2 = {};
     ensurePromise2 = null;
@@ -120404,6 +121497,7 @@ var init_ensureHwyDbObjects = __esm({
       "hwy_db_procedures_reads_employees.sqlserver.sql",
       "hwy_member_stat_columns.sqlserver.sql",
       "hwy_member_pipeline_snake_columns.sqlserver.sql",
+      "hwy_pipeline_member_pascal_compat.sqlserver.sql",
       "hwy_member_stats_recalc_support.sqlserver.sql",
       "hwy_member_passed_necessary_dorat.sqlserver.sql",
       "hwy_legacy_edge_parity_table_rename.sqlserver.sql",
@@ -120414,6 +121508,7 @@ var init_ensureHwyDbObjects = __esm({
       "hwy_geo_responsibility_member_area_limits.sqlserver.sql",
       "hwy_ref_mirror_members_gender_limits.sqlserver.sql",
       "hwy_ref_mirror_pipeline_reference.sqlserver.sql",
+      "vw_hwy_members_legacy_row.sqlserver.sql",
       "hwy_legacy_pipeline_views.sqlserver.sql",
       "hwy_legacy_edge_function_retire.sqlserver.sql",
       "hwy_member_card_flow_columns.sqlserver.sql",
@@ -120421,7 +121516,23 @@ var init_ensureHwyDbObjects = __esm({
       "hwy_candidate_pipeline.sqlserver.sql",
       "hwy_card_flow.sqlserver.sql",
       "hwy_members_legacy_pascal_retire.sqlserver.sql",
-      "hwy_meetings.sqlserver.sql"
+      "hwy_members_drop_pascal_computed_aliases.sqlserver.sql",
+      "hwy_meetings.sqlserver.sql",
+      "hwy_member_masooliat_star_columns.sqlserver.sql",
+      "hwy_finance_greenfield_compat.sqlserver.sql",
+      "hwy_finance_ref_compat.sqlserver.sql",
+      "hwy_finance_edge_table_rename.sqlserver.sql",
+      "hwy_finance_edge_column_rename.sqlserver.sql",
+      "hwy_finance_edge_functions.sqlserver.sql",
+      "hwy_db_procedures_finance_payment.sqlserver.sql",
+      "hwy_db_procedures_writes_finance.sqlserver.sql",
+      "hwy_db_procedures_reads_finance.sqlserver.sql",
+      "hwy_db_views_finance_payment.sqlserver.sql",
+      "hwy_db_procedures_finance_masoolin_process.sqlserver.sql",
+      "hwy_db_views_finance_masoolin.sqlserver.sql",
+      "hwy_db_procedures_finance_masoolin.sqlserver.sql",
+      "hwy_db_procedures_finance_deferred.sqlserver.sql",
+      "hwy_db_procedures_finance_legacy_retire.sqlserver.sql"
     ];
     formatInstallError = (error) => {
       const parts = [];
@@ -120457,13 +121568,34 @@ var init_ensureHwyDbObjects = __esm({
       "hwy_card_flow.sqlserver.sql",
       "hwy_meetings.sqlserver.sql"
     ]);
+    HWY_FINANCE_EDGE_COMPAT_FILES = /* @__PURE__ */ new Set([
+      "hwy_finance_edge_table_rename.sqlserver.sql",
+      "hwy_finance_edge_column_rename.sqlserver.sql",
+      "hwy_finance_edge_functions.sqlserver.sql"
+    ]);
+    HWY_FINANCE_PAYMENT_FILES = /* @__PURE__ */ new Set([
+      "hwy_db_procedures_finance_payment.sqlserver.sql",
+      "hwy_db_procedures_writes_finance.sqlserver.sql",
+      "hwy_db_procedures_reads_finance.sqlserver.sql",
+      "hwy_db_views_finance_payment.sqlserver.sql",
+      "hwy_member_masooliat_star_columns.sqlserver.sql"
+    ]);
+    HWY_FINANCE_MASOOLIN_PROCESS_FILES = /* @__PURE__ */ new Set([
+      "hwy_db_procedures_finance_masoolin_process.sqlserver.sql"
+    ]);
+    HWY_FINANCE_MASOOLIN_FILES = /* @__PURE__ */ new Set([
+      "hwy_db_views_finance_masoolin.sqlserver.sql",
+      "hwy_db_procedures_finance_masoolin.sqlserver.sql"
+    ]);
+    HWY_FINANCE_LEGACY_RETIRE_FILE = "hwy_db_procedures_finance_legacy_retire.sqlserver.sql";
+    HWY_FINANCE_DEFERRED_FILE = "hwy_db_procedures_finance_deferred.sqlserver.sql";
     applySqlFile = async (fileName) => {
       const sequelize = getControlPlaneSequelize();
       const ddl = (0, import_node_fs12.readFileSync)(import_node_path13.default.join(installDir, fileName), "utf8");
       const batches = ddl.split(/^\s*GO\s*$/gim).map((chunk2) => chunk2.trim()).filter(Boolean);
       for (let index = 0; index < batches.length; index += 1) {
         try {
-          await sequelize.query(batches[index], { type: import_sequelize37.QueryTypes.RAW });
+          await sequelize.query(batches[index], { type: import_sequelize38.QueryTypes.RAW });
         } catch (error) {
           throw new Error(
             `Hawiety DB install failed in ${fileName} (batch ${index + 1}/${batches.length}): ${formatInstallError(error)}`,
@@ -120482,6 +121614,128 @@ var init_ensureHwyDbObjects = __esm({
       if (!ensurePromise2) {
         ensurePromise2 = (async () => {
           for (const file of SQL_INSTALL_ORDER) {
+            if (file === HWY_FINANCE_DEFERRED_FILE) {
+              if (!await hwyFinancePaymentProcsReady()) {
+                console.warn(`[HWY DB objects] Skipping ${file} \u2014 finance compat not ready.`);
+                continue;
+              }
+              if (!await hwyFinancePaymentTablesReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 hwy_payment_documents not on control plane.`
+                );
+                continue;
+              }
+              if (!await hwyFinanceMasoolinDeferredReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 masoolin deferred schema parity incomplete (IsExecutive / payable).`
+                );
+                continue;
+              }
+              try {
+                await applySqlFile(file);
+              } catch (error) {
+                console.warn(
+                  `[HWY DB objects] Deferred finance install failed in ${file}: ${formatInstallError(error)}`
+                );
+              }
+              continue;
+            }
+            if (file === HWY_FINANCE_LEGACY_RETIRE_FILE) {
+              if (!await hwyFinanceMasoolinEdgeReady()) {
+                console.warn(`[HWY DB objects] Skipping ${file} \u2014 HWY_Members missing on edge.`);
+                continue;
+              }
+              try {
+                await applySqlFile(file);
+              } catch (error) {
+                console.warn(
+                  `[HWY DB objects] Finance legacy retire failed in ${file}: ${formatInstallError(error)}`
+                );
+              }
+              continue;
+            }
+            if (HWY_FINANCE_MASOOLIN_PROCESS_FILES.has(file)) {
+              if (!await hwyFinancePaymentProcsReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 finance member/platform compat not ready.`
+                );
+                continue;
+              }
+              if (!await hwyFinanceMasoolinProcessReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 need HWY_Members and dbo.hwy_masoolin_performance_list.`
+                );
+                continue;
+              }
+              try {
+                await applySqlFile(file);
+              } catch (error) {
+                console.warn(
+                  `[HWY DB objects] Masoolin process install failed in ${file}: ${formatInstallError(error)}`
+                );
+              }
+              continue;
+            }
+            if (HWY_FINANCE_MASOOLIN_FILES.has(file)) {
+              if (!await hwyFinancePaymentProcsReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 finance member/platform compat not ready.`
+                );
+                continue;
+              }
+              if (!await hwyFinanceMasoolinSchemaReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 masoolin schema missing (HWY_Members / hwy_masoolin_stars).`
+                );
+                continue;
+              }
+              try {
+                await applySqlFile(file);
+              } catch (error) {
+                console.warn(
+                  `[HWY DB objects] Masoolin finance install failed in ${file}: ${formatInstallError(error)}`
+                );
+              }
+              continue;
+            }
+            if (HWY_FINANCE_EDGE_COMPAT_FILES.has(file)) {
+              if (!await hwyFinanceEdgeCompatReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 finance edge compat not ready (legacy import / member parity columns).`
+                );
+                continue;
+              }
+              try {
+                await applySqlFile(file);
+              } catch (error) {
+                console.warn(
+                  `[HWY DB objects] Finance edge compat install failed in ${file}: ${formatInstallError(error)}`
+                );
+              }
+              continue;
+            }
+            if (HWY_FINANCE_PAYMENT_FILES.has(file)) {
+              if (!await hwyFinancePaymentTablesReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 hwy_payment_documents not on control plane (finance import).`
+                );
+                continue;
+              }
+              if (!await hwyFinancePaymentProcsReady()) {
+                console.warn(
+                  `[HWY DB objects] Skipping ${file} \u2014 finance member/platform compat not ready (run greenfield compat / ETL).`
+                );
+                continue;
+              }
+              try {
+                await applySqlFile(file);
+              } catch (error) {
+                console.warn(
+                  `[HWY DB objects] Finance install failed in ${file}: ${formatInstallError(error)}`
+                );
+              }
+              continue;
+            }
             if (HWY_LEGACY_IMPORT_PARITY_FILES.has(file)) {
               if (!await hwyLegacyImportParityTablesReady()) {
                 console.warn(
@@ -120518,7 +121772,7 @@ async function loadHwyInstituteLogo(instituteId) {
   const rows = await sequelize.query(
     `SELECT logo_content, logo_content_type FROM ${table} WHERE id = :instituteId`,
     {
-      type: import_sequelize38.QueryTypes.SELECT,
+      type: import_sequelize39.QueryTypes.SELECT,
       replacements: { instituteId }
     }
   );
@@ -120542,7 +121796,7 @@ async function loadHwyInstituteLogoFlags(instituteIds) {
   const rows = await sequelize.query(
     `SELECT id FROM ${table} WHERE id IN (:ids) AND logo_content IS NOT NULL AND ${lengthPredicate}`,
     {
-      type: import_sequelize38.QueryTypes.SELECT,
+      type: import_sequelize39.QueryTypes.SELECT,
       replacements: { ids: ids2 }
     }
   );
@@ -120562,7 +121816,7 @@ async function saveHwyInstituteLogo(instituteId, content, contentType) {
          updated_at = ${dialect === "mssql" ? "SYSUTCDATETIME()" : "NOW()"}
      WHERE id = :instituteId`,
     {
-      type: import_sequelize38.QueryTypes.UPDATE,
+      type: import_sequelize39.QueryTypes.UPDATE,
       replacements: { instituteId, content, contentType: mime }
     }
   );
@@ -120580,7 +121834,7 @@ async function clearHwyInstituteLogo(instituteId) {
          updated_at = ${dialect === "mssql" ? "SYSUTCDATETIME()" : "NOW()"}
      WHERE id = :instituteId`,
     {
-      type: import_sequelize38.QueryTypes.UPDATE,
+      type: import_sequelize39.QueryTypes.UPDATE,
       replacements: { instituteId }
     }
   );
@@ -120620,10 +121874,10 @@ async function applyHwyInstituteLogoPayloadFields(instituteId, payload) {
   const contentType = typeof rawType === "string" && rawType.trim() ? rawType.trim() : "image/png";
   await saveHwyInstituteLogo(instituteId, content, contentType);
 }
-var import_sequelize38, resolveInstitutesTable;
+var import_sequelize39, resolveInstitutesTable;
 var init_hwyInstituteLogo_service = __esm({
   "src/server/domain/hwy/hwyInstituteLogo.service.ts"() {
-    import_sequelize38 = require("sequelize");
+    import_sequelize39 = require("sequelize");
     init_hwyInstituteLogoPath();
     init_controlPlaneSequelize();
     init_hwyInstituteLogoPayload();
@@ -120677,10 +121931,10 @@ var init_hwyInstitutesDataApiLogo = __esm({
 });
 
 // src/server/services/data-api/dataApiExecutor.ts
-var import_sequelize39, DATA_API_WRITE_KINDS, jsonExtractionsFromOperation, cubeAnnotationFromStudioMeta, pivotFiltersToQuery, asRecord3, decodeBlobPayloadValue, coerceDataApiIntegerWriteValue, normalizeDataApiWritePayload, buildRoutineSql, DataApiExecutor;
+var import_sequelize40, DATA_API_WRITE_KINDS, jsonExtractionsFromOperation, cubeAnnotationFromStudioMeta, pivotFiltersToQuery, asRecord3, decodeBlobPayloadValue, coerceDataApiIntegerWriteValue, normalizeDataApiWritePayload, buildRoutineSql, DataApiExecutor;
 var init_dataApiExecutor = __esm({
   "src/server/services/data-api/dataApiExecutor.ts"() {
-    import_sequelize39 = require("sequelize");
+    import_sequelize40 = require("sequelize");
     init_edgeApiStore();
     init_dataApiBinaryPreview();
     init_edgeModelStore();
@@ -120968,7 +122222,7 @@ var init_dataApiExecutor = __esm({
           const compiled = listWhereIrToSequelize(
             sanitized ? listWhereTreeToIr(sanitized, DEFAULT_WHERE_OPERATORS) : null,
             listWhereColumnMap,
-            import_sequelize39.Op
+            import_sequelize40.Op
           );
           if (compiled) {
             listWhere = compiled;
@@ -120989,7 +122243,7 @@ var init_dataApiExecutor = __esm({
           querySurfacesDoc,
           selectedPresetIds,
           fullColumnMapForPresets,
-          import_sequelize39.Op,
+          import_sequelize40.Op,
           model.columns
         );
         const recordPolicyOverride = {
@@ -121362,10 +122616,10 @@ var init_dataApiExecutor = __esm({
               }
               return value;
             });
-            const sql22 = buildRoutineSql(model, operation, dialect2);
-            const results = await sequelize.query(sql22, {
+            const sql23 = buildRoutineSql(model, operation, dialect2);
+            const results = await sequelize.query(sql23, {
               replacements,
-              type: import_sequelize39.QueryTypes.SELECT
+              type: import_sequelize40.QueryTypes.SELECT
             });
             return finishWrite({
               success: true,
@@ -121597,10 +122851,10 @@ var init_dataApiTools = __esm({
 });
 
 // src/server/domain/dashboard-canvas/dashboardCanvasSequelizeModels.ts
-var import_sequelize40, commentModel, accessModel, snapshotModel, getDashboardWidgetCommentModel, getDashboardPageAccessModel, getDashboardSnapshotModel, LEGACY_WIDGET_COMMENT_INDEX, WIDGET_COMMENT_TABLE, dropLegacyDashboardWidgetCommentIndexSql, ensureDashboardCanvasTables;
+var import_sequelize41, commentModel, accessModel, snapshotModel, getDashboardWidgetCommentModel, getDashboardPageAccessModel, getDashboardSnapshotModel, LEGACY_WIDGET_COMMENT_INDEX, WIDGET_COMMENT_TABLE, dropLegacyDashboardWidgetCommentIndexSql, ensureDashboardCanvasTables;
 var init_dashboardCanvasSequelizeModels = __esm({
   "src/server/domain/dashboard-canvas/dashboardCanvasSequelizeModels.ts"() {
-    import_sequelize40 = require("sequelize");
+    import_sequelize41 = require("sequelize");
     init_controlPlaneSequelize();
     commentModel = null;
     accessModel = null;
@@ -121612,12 +122866,12 @@ var init_dashboardCanvasSequelizeModels = __esm({
       commentModel = sequelize.define(
         "BaseDashboardWidgetComment",
         {
-          id: { type: import_sequelize40.DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-          pageId: { type: import_sequelize40.DataTypes.STRING(128), allowNull: false, field: "page_id" },
-          widgetNodeId: { type: import_sequelize40.DataTypes.STRING(128), allowNull: false, field: "widget_node_id" },
-          authorId: { type: import_sequelize40.DataTypes.BIGINT, allowNull: false, field: "author_id" },
-          body: { type: import_sequelize40.DataTypes.TEXT, allowNull: false },
-          createdAt: { type: import_sequelize40.DataTypes.DATE, allowNull: true, field: "created_at" }
+          id: { type: import_sequelize41.DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+          pageId: { type: import_sequelize41.DataTypes.STRING(128), allowNull: false, field: "page_id" },
+          widgetNodeId: { type: import_sequelize41.DataTypes.STRING(128), allowNull: false, field: "widget_node_id" },
+          authorId: { type: import_sequelize41.DataTypes.BIGINT, allowNull: false, field: "author_id" },
+          body: { type: import_sequelize41.DataTypes.TEXT, allowNull: false },
+          createdAt: { type: import_sequelize41.DataTypes.DATE, allowNull: true, field: "created_at" }
         },
         {
           tableName: "base_dashboard_widget_comments",
@@ -121639,15 +122893,15 @@ var init_dashboardCanvasSequelizeModels = __esm({
       accessModel = sequelize.define(
         "BaseDashboardPageAccess",
         {
-          pageId: { type: import_sequelize40.DataTypes.STRING(128), primaryKey: true, field: "page_id" },
-          accessControl: { type: import_sequelize40.DataTypes.TEXT, allowNull: true, field: "access_control" },
-          accessPermission: { type: import_sequelize40.DataTypes.STRING(16), allowNull: false, defaultValue: "view", field: "access_permission" },
-          ownerUserId: { type: import_sequelize40.DataTypes.BIGINT, allowNull: false, defaultValue: 0, field: "owner_user_id" },
-          embedAllowedOrigins: { type: import_sequelize40.DataTypes.TEXT, allowNull: true, field: "embed_allowed_origins" },
-          createdAt: { type: import_sequelize40.DataTypes.DATE, allowNull: true, field: "created_at" },
-          createdBy: { type: import_sequelize40.DataTypes.BIGINT, allowNull: true, field: "created_by" },
-          updatedAt: { type: import_sequelize40.DataTypes.DATE, allowNull: true, field: "updated_at" },
-          updatedBy: { type: import_sequelize40.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
+          pageId: { type: import_sequelize41.DataTypes.STRING(128), primaryKey: true, field: "page_id" },
+          accessControl: { type: import_sequelize41.DataTypes.TEXT, allowNull: true, field: "access_control" },
+          accessPermission: { type: import_sequelize41.DataTypes.STRING(16), allowNull: false, defaultValue: "view", field: "access_permission" },
+          ownerUserId: { type: import_sequelize41.DataTypes.BIGINT, allowNull: false, defaultValue: 0, field: "owner_user_id" },
+          embedAllowedOrigins: { type: import_sequelize41.DataTypes.TEXT, allowNull: true, field: "embed_allowed_origins" },
+          createdAt: { type: import_sequelize41.DataTypes.DATE, allowNull: true, field: "created_at" },
+          createdBy: { type: import_sequelize41.DataTypes.BIGINT, allowNull: true, field: "created_by" },
+          updatedAt: { type: import_sequelize41.DataTypes.DATE, allowNull: true, field: "updated_at" },
+          updatedBy: { type: import_sequelize41.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
         },
         { tableName: "base_dashboard_page_access", timestamps: false }
       );
@@ -121660,12 +122914,12 @@ var init_dashboardCanvasSequelizeModels = __esm({
       snapshotModel = sequelize.define(
         "BaseDashboardSnapshot",
         {
-          id: { type: import_sequelize40.DataTypes.STRING(36), primaryKey: true },
-          pageId: { type: import_sequelize40.DataTypes.STRING(128), allowNull: false, field: "page_id" },
-          renderedPayload: { type: import_sequelize40.DataTypes.TEXT("long"), allowNull: false, field: "rendered_payload" },
-          createdBy: { type: import_sequelize40.DataTypes.BIGINT, allowNull: false, field: "created_by" },
-          createdAt: { type: import_sequelize40.DataTypes.DATE, allowNull: true, field: "created_at" },
-          expiresAt: { type: import_sequelize40.DataTypes.DATE, allowNull: true, field: "expires_at" }
+          id: { type: import_sequelize41.DataTypes.STRING(36), primaryKey: true },
+          pageId: { type: import_sequelize41.DataTypes.STRING(128), allowNull: false, field: "page_id" },
+          renderedPayload: { type: import_sequelize41.DataTypes.TEXT("long"), allowNull: false, field: "rendered_payload" },
+          createdBy: { type: import_sequelize41.DataTypes.BIGINT, allowNull: false, field: "created_by" },
+          createdAt: { type: import_sequelize41.DataTypes.DATE, allowNull: true, field: "created_at" },
+          expiresAt: { type: import_sequelize41.DataTypes.DATE, allowNull: true, field: "expires_at" }
         },
         { tableName: "base_dashboard_snapshots", timestamps: false }
       );
@@ -124844,7 +126098,7 @@ function isAllowedPortalBrandLogoUrl(value) {
   if (pathOnly.includes("..") || pathOnly.includes("//", 1) || pathOnly.includes("<")) {
     return false;
   }
-  if (pathOnly === DEFAULT_PORTAL_LOGO_URL) {
+  if (pathOnly === DEFAULT_PORTAL_LOGO_URL || pathOnly.startsWith(`${APPENDO_BRAND_ASSET_ROOT}/`)) {
     return true;
   }
   if (HWY_PUBLIC_BRAND_LOGO_PATH_RE.test(pathOnly)) {
@@ -124940,12 +126194,13 @@ function parsePortalBrandField(raw) {
 var PORTAL_BRAND_TITLE_MAX, PORTAL_BRAND_ABOUT_TITLE_MAX, PORTAL_BRAND_ABOUT_BODY_MAX, PORTAL_BRAND_LOGO_URL_MAX, DEFAULT_PORTAL_TITLE, DEFAULT_PORTAL_LOGO_URL, DEFAULT_PORTAL_ABOUT_TITLE, DEFAULT_PORTAL_ABOUT_BODY, PORTAL_BRAND_LOGO_PATH_RE, HWY_PUBLIC_BRAND_LOGO_PATH_RE, HWY_INSTITUTE_LOGO_API_PATH_RE;
 var init_portalBrand = __esm({
   "src/shared/api/contracts/platform/portalBrand.ts"() {
+    init_appendoBrandAssets();
     PORTAL_BRAND_TITLE_MAX = 80;
     PORTAL_BRAND_ABOUT_TITLE_MAX = 160;
     PORTAL_BRAND_ABOUT_BODY_MAX = 8e3;
     PORTAL_BRAND_LOGO_URL_MAX = 500;
     DEFAULT_PORTAL_TITLE = "AppEnd";
-    DEFAULT_PORTAL_LOGO_URL = "/assets/appendo-logo.png";
+    DEFAULT_PORTAL_LOGO_URL = APPENDO_LOGO_SRC;
     DEFAULT_PORTAL_ABOUT_TITLE = "AI-Assisted Framework for Rapid Application Development";
     DEFAULT_PORTAL_ABOUT_BODY = "AppEnd is a purpose-built administrative workspace designed for speed, modularity, and AI-native workflows. It serves as the definitive core for managing enterprise distributions through a clean, high-performance interface.";
     PORTAL_BRAND_LOGO_PATH_RE = /^\/assets\/workspace\/portals\/[a-z0-9._-]+\/logo\.[a-z0-9]+$/i;
@@ -129032,6 +130287,7 @@ var init_hwyMemberSegmentNavIq = __esm({
       HWY_Members_List_Imagefix: "\u0645\u0639\u0627\u0644\u062C\u0629 \u0635\u0648\u0631 \u0627\u0644\u062A\u0633\u062C\u064A\u0644",
       HWY_Members_List_AlMontadhemin_TalebJameee: montadheminSubNav("\u0637\u0644\u0627\u0628 \u062C\u0627\u0645\u0639\u064A\u0648\u0646 \u062E\u0627\u0631\u062C \u0647\u0645\u0645"),
       HWY_Members_List_Waited_1: "\u0627\u0644\u0637\u0644\u0628\u0627\u062A \u0642\u064A\u062F \u0627\u0644\u0627\u0646\u062A\u0638\u0627\u0631",
+      HWY_Members_List_Waited_1_Rejected: "\u0625\u062F\u0627\u0631\u0629 \u0631\u0641\u0636 \u0627\u0644\u0645\u062D\u0644\u064A",
       HWY_Members_List_Waited_2: "\u0628\u0627\u0646\u062A\u0638\u0627\u0631 \u0627\u0644\u062A\u0648\u062B\u064A\u0642 \u0627\u0644\u0645\u062D\u0644\u064A",
       HWY_Members_List_Waited_2_Hemam: pendingLocalSubNav("\u0647\u0645\u0645"),
       HWY_Members_List_Waited_2_Mehani: pendingLocalSubNav("\u0627\u0644\u0645\u0643\u062A\u0628 \u0627\u0644\u0645\u0647\u0646\u064A"),
@@ -129085,6 +130341,7 @@ var init_hwyCultureKeysCatalog = __esm({
     init_hwyMemberSegmentNavIq();
     init_hwySelfRegistrationCultureKeys();
     init_hwyBusinessRulesReferenceTranslations();
+    init_hwyIdentityComponentsTranslations();
     init_hwyImageFixTranslations();
     init_nakhebinMemberLinkActionTranslations();
     init_membershipWizardTranslations();
@@ -148329,8 +149586,8 @@ var init_userRoleListFilter = __esm({
 
 // src/server/db/sqlServerIdentityUserInsert.ts
 async function insertSqlServerUserWithIdentity(input) {
-  const { sql: sql22, values } = buildSqlServerUserIdentityInsertBatch(input);
-  await prisma().$executeRawUnsafe(sql22, ...values);
+  const { sql: sql23, values } = buildSqlServerUserIdentityInsertBatch(input);
+  await prisma().$executeRawUnsafe(sql23, ...values);
 }
 var requireSafeInt, buildSqlServerUserIdentityInsertBatch;
 var init_sqlServerIdentityUserInsert = __esm({
@@ -149184,10 +150441,10 @@ var init_userNotificationDigestRepository = __esm({
 });
 
 // src/server/domain/personal-inbox/personalInboxProjectionSequelizeModels.ts
-var import_sequelize41, cachedItemModel, cachedMetaModel, testSequelize3, resolveSequelize5, getPersonalInboxProjectionItemModel, getPersonalInboxProjectionMetaModel, ensurePersonalInboxProjectionTables;
+var import_sequelize42, cachedItemModel, cachedMetaModel, testSequelize3, resolveSequelize5, getPersonalInboxProjectionItemModel, getPersonalInboxProjectionMetaModel, ensurePersonalInboxProjectionTables;
 var init_personalInboxProjectionSequelizeModels = __esm({
   "src/server/domain/personal-inbox/personalInboxProjectionSequelizeModels.ts"() {
-    import_sequelize41 = require("sequelize");
+    import_sequelize42 = require("sequelize");
     init_controlPlaneSequelize();
     cachedItemModel = null;
     cachedMetaModel = null;
@@ -149201,21 +150458,21 @@ var init_personalInboxProjectionSequelizeModels = __esm({
       cachedItemModel = db.define(
         "BasePersonalInboxProjectionItem",
         {
-          id: { type: import_sequelize41.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-          userId: { type: import_sequelize41.DataTypes.BIGINT, allowNull: false, field: "user_id" },
-          itemKey: { type: import_sequelize41.DataTypes.STRING(128), allowNull: false, field: "item_key" },
-          kind: { type: import_sequelize41.DataTypes.STRING(16), allowNull: false },
-          origin: { type: import_sequelize41.DataTypes.STRING(64), allowNull: false },
-          originDetail: { type: import_sequelize41.DataTypes.STRING(256), allowNull: true, field: "origin_detail" },
-          title: { type: import_sequelize41.DataTypes.STRING(500), allowNull: false },
-          summary: { type: import_sequelize41.DataTypes.TEXT, allowNull: true },
-          surfacedAt: { type: import_sequelize41.DataTypes.DATE, allowNull: false, field: "surfaced_at" },
-          attention: { type: import_sequelize41.DataTypes.STRING(24), allowNull: false },
-          href: { type: import_sequelize41.DataTypes.STRING(2048), allowNull: false },
-          refType: { type: import_sequelize41.DataTypes.STRING(24), allowNull: false, field: "ref_type" },
-          refId: { type: import_sequelize41.DataTypes.BIGINT, allowNull: false, field: "ref_id" },
-          createdAt: { type: import_sequelize41.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize41.DataTypes.NOW },
-          updatedAt: { type: import_sequelize41.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize41.DataTypes.NOW }
+          id: { type: import_sequelize42.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+          userId: { type: import_sequelize42.DataTypes.BIGINT, allowNull: false, field: "user_id" },
+          itemKey: { type: import_sequelize42.DataTypes.STRING(128), allowNull: false, field: "item_key" },
+          kind: { type: import_sequelize42.DataTypes.STRING(16), allowNull: false },
+          origin: { type: import_sequelize42.DataTypes.STRING(64), allowNull: false },
+          originDetail: { type: import_sequelize42.DataTypes.STRING(256), allowNull: true, field: "origin_detail" },
+          title: { type: import_sequelize42.DataTypes.STRING(500), allowNull: false },
+          summary: { type: import_sequelize42.DataTypes.TEXT, allowNull: true },
+          surfacedAt: { type: import_sequelize42.DataTypes.DATE, allowNull: false, field: "surfaced_at" },
+          attention: { type: import_sequelize42.DataTypes.STRING(24), allowNull: false },
+          href: { type: import_sequelize42.DataTypes.STRING(2048), allowNull: false },
+          refType: { type: import_sequelize42.DataTypes.STRING(24), allowNull: false, field: "ref_type" },
+          refId: { type: import_sequelize42.DataTypes.BIGINT, allowNull: false, field: "ref_id" },
+          createdAt: { type: import_sequelize42.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize42.DataTypes.NOW },
+          updatedAt: { type: import_sequelize42.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize42.DataTypes.NOW }
         },
         {
           tableName: "base_personal_inbox_projection_items",
@@ -149241,10 +150498,10 @@ var init_personalInboxProjectionSequelizeModels = __esm({
       cachedMetaModel = db.define(
         "BasePersonalInboxProjectionMeta",
         {
-          userId: { type: import_sequelize41.DataTypes.BIGINT, primaryKey: true, field: "user_id" },
-          refreshedAt: { type: import_sequelize41.DataTypes.DATE, allowNull: true, field: "refreshed_at" },
-          itemCount: { type: import_sequelize41.DataTypes.INTEGER, allowNull: false, field: "item_count", defaultValue: 0 },
-          updatedAt: { type: import_sequelize41.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize41.DataTypes.NOW }
+          userId: { type: import_sequelize42.DataTypes.BIGINT, primaryKey: true, field: "user_id" },
+          refreshedAt: { type: import_sequelize42.DataTypes.DATE, allowNull: true, field: "refreshed_at" },
+          itemCount: { type: import_sequelize42.DataTypes.INTEGER, allowNull: false, field: "item_count", defaultValue: 0 },
+          updatedAt: { type: import_sequelize42.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize42.DataTypes.NOW }
         },
         {
           tableName: "base_personal_inbox_projection_meta",
@@ -149262,13 +150519,13 @@ var init_personalInboxProjectionSequelizeModels = __esm({
 });
 
 // src/server/domain/personal-inbox/personalInboxSeenSequelizeModels.ts
-var import_sequelize42, PersonalInboxItemSeenModel, modelsInitialized, initModels, getPersonalInboxItemSeenModel, migrateProjectionSeenRows, ensurePersonalInboxSeenTable;
+var import_sequelize43, PersonalInboxItemSeenModel, modelsInitialized, initModels, getPersonalInboxItemSeenModel, migrateProjectionSeenRows, ensurePersonalInboxSeenTable;
 var init_personalInboxSeenSequelizeModels = __esm({
   "src/server/domain/personal-inbox/personalInboxSeenSequelizeModels.ts"() {
-    import_sequelize42 = require("sequelize");
+    import_sequelize43 = require("sequelize");
     init_controlPlaneSequelize();
     init_personalInboxProjectionSequelizeModels();
-    PersonalInboxItemSeenModel = class extends import_sequelize42.Model {
+    PersonalInboxItemSeenModel = class extends import_sequelize43.Model {
     };
     modelsInitialized = false;
     initModels = (sequelize) => {
@@ -149277,9 +150534,9 @@ var init_personalInboxSeenSequelizeModels = __esm({
       }
       PersonalInboxItemSeenModel.init(
         {
-          userId: { type: import_sequelize42.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
-          itemKey: { type: import_sequelize42.DataTypes.STRING(128), allowNull: false, field: "item_key", primaryKey: true },
-          seenAt: { type: import_sequelize42.DataTypes.DATE, allowNull: false, field: "seen_at", defaultValue: import_sequelize42.DataTypes.NOW }
+          userId: { type: import_sequelize43.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
+          itemKey: { type: import_sequelize43.DataTypes.STRING(128), allowNull: false, field: "item_key", primaryKey: true },
+          seenAt: { type: import_sequelize43.DataTypes.DATE, allowNull: false, field: "seen_at", defaultValue: import_sequelize43.DataTypes.NOW }
         },
         {
           sequelize,
@@ -149729,10 +150986,10 @@ var init_userNotification_service = __esm({
 });
 
 // src/server/domain/user-message-dispatches/userMessageDispatchSequelizeModels.ts
-var import_sequelize43, cachedModel6, testSequelize4, resolveSequelize6, getUserMessageDispatchModel, ensureUserMessageDispatchTables;
+var import_sequelize44, cachedModel6, testSequelize4, resolveSequelize6, getUserMessageDispatchModel, ensureUserMessageDispatchTables;
 var init_userMessageDispatchSequelizeModels = __esm({
   "src/server/domain/user-message-dispatches/userMessageDispatchSequelizeModels.ts"() {
-    import_sequelize43 = require("sequelize");
+    import_sequelize44 = require("sequelize");
     init_controlPlaneSequelize();
     cachedModel6 = null;
     testSequelize4 = null;
@@ -149745,22 +151002,22 @@ var init_userMessageDispatchSequelizeModels = __esm({
       cachedModel6 = db.define(
         "BaseUserMessageDispatch",
         {
-          id: { type: import_sequelize43.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-          userId: { type: import_sequelize43.DataTypes.BIGINT, allowNull: false, field: "user_id" },
-          correlationId: { type: import_sequelize43.DataTypes.STRING(36), allowNull: false, field: "correlation_id" },
-          eventType: { type: import_sequelize43.DataTypes.STRING(128), allowNull: false, field: "event_type" },
-          channel: { type: import_sequelize43.DataTypes.STRING(16), allowNull: false },
-          deliveryStatus: { type: import_sequelize43.DataTypes.STRING(32), allowNull: false, field: "delivery_status" },
-          title: { type: import_sequelize43.DataTypes.STRING(500), allowNull: false },
-          bodySummary: { type: import_sequelize43.DataTypes.TEXT, allowNull: false, field: "body_summary" },
-          href: { type: import_sequelize43.DataTypes.STRING(2048), allowNull: true },
-          severity: { type: import_sequelize43.DataTypes.STRING(16), allowNull: false, defaultValue: "info" },
-          metadataJson: { type: import_sequelize43.DataTypes.TEXT, allowNull: true, field: "metadata_json" },
-          inAppNotificationId: { type: import_sequelize43.DataTypes.BIGINT, allowNull: true, field: "in_app_notification_id" },
-          digestBatchId: { type: import_sequelize43.DataTypes.STRING(36), allowNull: true, field: "digest_batch_id" },
-          deliveredAt: { type: import_sequelize43.DataTypes.DATE, allowNull: true, field: "delivered_at" },
-          errorSummary: { type: import_sequelize43.DataTypes.TEXT, allowNull: true, field: "error_summary" },
-          createdAt: { type: import_sequelize43.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize43.DataTypes.NOW }
+          id: { type: import_sequelize44.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+          userId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: false, field: "user_id" },
+          correlationId: { type: import_sequelize44.DataTypes.STRING(36), allowNull: false, field: "correlation_id" },
+          eventType: { type: import_sequelize44.DataTypes.STRING(128), allowNull: false, field: "event_type" },
+          channel: { type: import_sequelize44.DataTypes.STRING(16), allowNull: false },
+          deliveryStatus: { type: import_sequelize44.DataTypes.STRING(32), allowNull: false, field: "delivery_status" },
+          title: { type: import_sequelize44.DataTypes.STRING(500), allowNull: false },
+          bodySummary: { type: import_sequelize44.DataTypes.TEXT, allowNull: false, field: "body_summary" },
+          href: { type: import_sequelize44.DataTypes.STRING(2048), allowNull: true },
+          severity: { type: import_sequelize44.DataTypes.STRING(16), allowNull: false, defaultValue: "info" },
+          metadataJson: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "metadata_json" },
+          inAppNotificationId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "in_app_notification_id" },
+          digestBatchId: { type: import_sequelize44.DataTypes.STRING(36), allowNull: true, field: "digest_batch_id" },
+          deliveredAt: { type: import_sequelize44.DataTypes.DATE, allowNull: true, field: "delivered_at" },
+          errorSummary: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "error_summary" },
+          createdAt: { type: import_sequelize44.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize44.DataTypes.NOW }
         },
         {
           tableName: "base_user_message_dispatches",
@@ -150417,9 +151674,9 @@ Output: {"tablePurpose":"Stores customer purchase orders.","columns":[{"columnNa
               return candidate;
             }
             const edge = outgoingEdgeByColumn.get(candidate.field.name);
-            const sql22 = buildScopedReferenceRowsSql(dialectLabel, edge, MAX_DISTINCT_VALUES + 1);
-            if (!sql22) return candidate;
-            const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql22 })).body.data;
+            const sql23 = buildScopedReferenceRowsSql(dialectLabel, edge, MAX_DISTINCT_VALUES + 1);
+            if (!sql23) return candidate;
+            const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql23 })).body.data;
             if (Array.isArray(rows) && rows.length > 0 && rows.length <= MAX_DISTINCT_VALUES) {
               return { ...candidate, fkGlossarySample: rows };
             }
@@ -150428,9 +151685,9 @@ Output: {"tablePurpose":"Stores customer purchase orders.","columns":[{"columnNa
           return candidate;
         }
         try {
-          const sql22 = buildFrequentValuesSql(dialectLabel, item3.name, candidate.field.name, MAX_DISTINCT_VALUES + 1);
-          if (!sql22) return candidate;
-          const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql22 })).body.data;
+          const sql23 = buildFrequentValuesSql(dialectLabel, item3.name, candidate.field.name, MAX_DISTINCT_VALUES + 1);
+          if (!sql23) return candidate;
+          const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql23 })).body.data;
           if (Array.isArray(rows) && rows.length > 0) {
             const truncated = rows.length > MAX_DISTINCT_VALUES;
             return {
@@ -150770,10 +152027,10 @@ Do not invent schema objects that were not provided.`;
 });
 
 // src/server/domain/retention/archiveSequelizeModels.ts
-var import_sequelize44, hotAppLogModels, archiveAppLogModels, hotAuthAuditModels, archiveAuthAuditModels, archiveRecordEventModels, archiveUserMessageDispatchModels, appLogAttributes, archiveExtra, authAuditAttributes, userMessageDispatchAttributes, recordEventAttributes, getHotAppLogModel, getArchiveAppLogModel, getHotAuthAuditModel, getArchiveAuthAuditModel, getArchiveUserMessageDispatchModel, getArchiveRecordEventModel, ensureArchiveTables;
+var import_sequelize45, hotAppLogModels, archiveAppLogModels, hotAuthAuditModels, archiveAuthAuditModels, archiveRecordEventModels, archiveUserMessageDispatchModels, appLogAttributes, archiveExtra, authAuditAttributes, userMessageDispatchAttributes, recordEventAttributes, getHotAppLogModel, getArchiveAppLogModel, getHotAuthAuditModel, getArchiveAuthAuditModel, getArchiveUserMessageDispatchModel, getArchiveRecordEventModel, ensureArchiveTables;
 var init_archiveSequelizeModels = __esm({
   "src/server/domain/retention/archiveSequelizeModels.ts"() {
-    import_sequelize44 = require("sequelize");
+    import_sequelize45 = require("sequelize");
     hotAppLogModels = /* @__PURE__ */ new WeakMap();
     archiveAppLogModels = /* @__PURE__ */ new WeakMap();
     hotAuthAuditModels = /* @__PURE__ */ new WeakMap();
@@ -150781,89 +152038,89 @@ var init_archiveSequelizeModels = __esm({
     archiveRecordEventModels = /* @__PURE__ */ new WeakMap();
     archiveUserMessageDispatchModels = /* @__PURE__ */ new WeakMap();
     appLogAttributes = {
-      id: { type: import_sequelize44.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-      actor: { type: import_sequelize44.DataTypes.STRING, allowNull: false, defaultValue: "SYSTEM" },
-      callSuccess: { type: import_sequelize44.DataTypes.INTEGER, allowNull: true, field: "call_success" },
-      failureReason: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "failure_reason" },
-      durationMs: { type: import_sequelize44.DataTypes.INTEGER, allowNull: true, field: "duration_ms" },
-      level: { type: import_sequelize44.DataTypes.STRING, allowNull: false },
-      context: { type: import_sequelize44.DataTypes.STRING, allowNull: false },
-      message: { type: import_sequelize44.DataTypes.TEXT, allowNull: false },
-      messageSize: { type: import_sequelize44.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "message_size" },
-      hasMeta: { type: import_sequelize44.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "has_meta" },
-      metaJson: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "meta_json" },
-      metaSize: { type: import_sequelize44.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "meta_size" },
-      createdAt: { type: import_sequelize44.DataTypes.DATE, allowNull: true, field: "created_at" },
-      createdBy: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "created_by" },
-      updatedAt: { type: import_sequelize44.DataTypes.DATE, allowNull: true, field: "updated_at" },
-      updatedBy: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
+      id: { type: import_sequelize45.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+      actor: { type: import_sequelize45.DataTypes.STRING, allowNull: false, defaultValue: "SYSTEM" },
+      callSuccess: { type: import_sequelize45.DataTypes.INTEGER, allowNull: true, field: "call_success" },
+      failureReason: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "failure_reason" },
+      durationMs: { type: import_sequelize45.DataTypes.INTEGER, allowNull: true, field: "duration_ms" },
+      level: { type: import_sequelize45.DataTypes.STRING, allowNull: false },
+      context: { type: import_sequelize45.DataTypes.STRING, allowNull: false },
+      message: { type: import_sequelize45.DataTypes.TEXT, allowNull: false },
+      messageSize: { type: import_sequelize45.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "message_size" },
+      hasMeta: { type: import_sequelize45.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "has_meta" },
+      metaJson: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "meta_json" },
+      metaSize: { type: import_sequelize45.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "meta_size" },
+      createdAt: { type: import_sequelize45.DataTypes.DATE, allowNull: true, field: "created_at" },
+      createdBy: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "created_by" },
+      updatedAt: { type: import_sequelize45.DataTypes.DATE, allowNull: true, field: "updated_at" },
+      updatedBy: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
     };
     archiveExtra = {
-      archivedAt: { type: import_sequelize44.DataTypes.DATE, allowNull: false, field: "archived_at" },
-      archiveJobId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: false, field: "archive_job_id" }
+      archivedAt: { type: import_sequelize45.DataTypes.DATE, allowNull: false, field: "archived_at" },
+      archiveJobId: { type: import_sequelize45.DataTypes.BIGINT, allowNull: false, field: "archive_job_id" }
     };
     authAuditAttributes = {
-      id: { type: import_sequelize44.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-      userId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "user_id" },
-      email: { type: import_sequelize44.DataTypes.STRING, allowNull: true },
-      eventType: { type: import_sequelize44.DataTypes.STRING, allowNull: false, field: "event_type" },
-      success: { type: import_sequelize44.DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-      reason: { type: import_sequelize44.DataTypes.TEXT, allowNull: true },
-      ipAddress: { type: import_sequelize44.DataTypes.STRING, allowNull: true, field: "ip_address" },
-      userAgent: { type: import_sequelize44.DataTypes.STRING, allowNull: true, field: "user_agent" },
-      metadataJson: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "metadata_json" },
-      createdAt: { type: import_sequelize44.DataTypes.DATE, allowNull: true, field: "created_at" },
-      createdBy: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "created_by" },
-      updatedAt: { type: import_sequelize44.DataTypes.DATE, allowNull: true, field: "updated_at" },
-      updatedBy: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
+      id: { type: import_sequelize45.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+      userId: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "user_id" },
+      email: { type: import_sequelize45.DataTypes.STRING, allowNull: true },
+      eventType: { type: import_sequelize45.DataTypes.STRING, allowNull: false, field: "event_type" },
+      success: { type: import_sequelize45.DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+      reason: { type: import_sequelize45.DataTypes.TEXT, allowNull: true },
+      ipAddress: { type: import_sequelize45.DataTypes.STRING, allowNull: true, field: "ip_address" },
+      userAgent: { type: import_sequelize45.DataTypes.STRING, allowNull: true, field: "user_agent" },
+      metadataJson: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "metadata_json" },
+      createdAt: { type: import_sequelize45.DataTypes.DATE, allowNull: true, field: "created_at" },
+      createdBy: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "created_by" },
+      updatedAt: { type: import_sequelize45.DataTypes.DATE, allowNull: true, field: "updated_at" },
+      updatedBy: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
     };
     userMessageDispatchAttributes = {
-      id: { type: import_sequelize44.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-      userId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: false, field: "user_id" },
-      correlationId: { type: import_sequelize44.DataTypes.STRING(36), allowNull: false, field: "correlation_id" },
-      eventType: { type: import_sequelize44.DataTypes.STRING(128), allowNull: false, field: "event_type" },
-      channel: { type: import_sequelize44.DataTypes.STRING(16), allowNull: false },
-      deliveryStatus: { type: import_sequelize44.DataTypes.STRING(32), allowNull: false, field: "delivery_status" },
-      title: { type: import_sequelize44.DataTypes.STRING(500), allowNull: false },
-      bodySummary: { type: import_sequelize44.DataTypes.TEXT, allowNull: false, field: "body_summary" },
-      href: { type: import_sequelize44.DataTypes.STRING(2048), allowNull: true },
-      severity: { type: import_sequelize44.DataTypes.STRING(16), allowNull: false, defaultValue: "info" },
-      metadataJson: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "metadata_json" },
-      inAppNotificationId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "in_app_notification_id" },
-      digestBatchId: { type: import_sequelize44.DataTypes.STRING(36), allowNull: true, field: "digest_batch_id" },
-      deliveredAt: { type: import_sequelize44.DataTypes.DATE, allowNull: true, field: "delivered_at" },
-      errorSummary: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "error_summary" },
-      createdAt: { type: import_sequelize44.DataTypes.DATE, allowNull: false, field: "created_at" }
+      id: { type: import_sequelize45.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+      userId: { type: import_sequelize45.DataTypes.BIGINT, allowNull: false, field: "user_id" },
+      correlationId: { type: import_sequelize45.DataTypes.STRING(36), allowNull: false, field: "correlation_id" },
+      eventType: { type: import_sequelize45.DataTypes.STRING(128), allowNull: false, field: "event_type" },
+      channel: { type: import_sequelize45.DataTypes.STRING(16), allowNull: false },
+      deliveryStatus: { type: import_sequelize45.DataTypes.STRING(32), allowNull: false, field: "delivery_status" },
+      title: { type: import_sequelize45.DataTypes.STRING(500), allowNull: false },
+      bodySummary: { type: import_sequelize45.DataTypes.TEXT, allowNull: false, field: "body_summary" },
+      href: { type: import_sequelize45.DataTypes.STRING(2048), allowNull: true },
+      severity: { type: import_sequelize45.DataTypes.STRING(16), allowNull: false, defaultValue: "info" },
+      metadataJson: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "metadata_json" },
+      inAppNotificationId: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "in_app_notification_id" },
+      digestBatchId: { type: import_sequelize45.DataTypes.STRING(36), allowNull: true, field: "digest_batch_id" },
+      deliveredAt: { type: import_sequelize45.DataTypes.DATE, allowNull: true, field: "delivered_at" },
+      errorSummary: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "error_summary" },
+      createdAt: { type: import_sequelize45.DataTypes.DATE, allowNull: false, field: "created_at" }
     };
     recordEventAttributes = {
-      id: { type: import_sequelize44.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-      subjectKind: { type: import_sequelize44.DataTypes.STRING(128), allowNull: false, field: "subject_kind" },
-      subjectId: { type: import_sequelize44.DataTypes.STRING(64), allowNull: false, field: "subject_id" },
-      occurredAt: { type: import_sequelize44.DataTypes.DATE, allowNull: false, field: "occurred_at" },
-      actorUserId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "actor_user_id" },
-      actingAsUserId: { type: import_sequelize44.DataTypes.BIGINT, allowNull: true, field: "acting_as_user_id" },
-      actorKind: { type: import_sequelize44.DataTypes.STRING(16), allowNull: false, field: "actor_kind" },
-      outcome: { type: import_sequelize44.DataTypes.STRING(16), allowNull: false, defaultValue: "success" },
-      source: { type: import_sequelize44.DataTypes.STRING(16), allowNull: false },
-      sourceRef: { type: import_sequelize44.DataTypes.STRING(128), allowNull: true, field: "source_ref" },
-      requestId: { type: import_sequelize44.DataTypes.STRING(64), allowNull: true, field: "request_id" },
-      eventKind: { type: import_sequelize44.DataTypes.STRING(32), allowNull: false, field: "event_kind" },
-      field: { type: import_sequelize44.DataTypes.STRING(128), allowNull: true },
-      fromValue: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "from_value" },
-      toValue: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "to_value" },
-      reasonCode: { type: import_sequelize44.DataTypes.STRING(64), allowNull: true, field: "reason_code" },
-      reasonText: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "reason_text" },
-      correlationId: { type: import_sequelize44.DataTypes.STRING(36), allowNull: false, field: "correlation_id" },
-      subjectSeq: { type: import_sequelize44.DataTypes.BIGINT, allowNull: false, field: "subject_seq" },
-      prevHash: { type: import_sequelize44.DataTypes.CHAR(64), allowNull: false, field: "prev_hash" },
-      rowHash: { type: import_sequelize44.DataTypes.CHAR(64), allowNull: false, field: "row_hash" },
-      idempotencyKey: { type: import_sequelize44.DataTypes.STRING(128), allowNull: false, field: "idempotency_key" },
-      clientChannel: { type: import_sequelize44.DataTypes.STRING(16), allowNull: true, field: "client_channel" },
-      clientIp: { type: import_sequelize44.DataTypes.STRING(64), allowNull: true, field: "client_ip" },
-      clientTimeZone: { type: import_sequelize44.DataTypes.STRING(64), allowNull: true, field: "client_time_zone" },
-      clientInstallId: { type: import_sequelize44.DataTypes.STRING(64), allowNull: true, field: "client_install_id" },
-      clientJson: { type: import_sequelize44.DataTypes.TEXT, allowNull: true, field: "client_json" },
-      payload: { type: import_sequelize44.DataTypes.TEXT, allowNull: true }
+      id: { type: import_sequelize45.DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+      subjectKind: { type: import_sequelize45.DataTypes.STRING(128), allowNull: false, field: "subject_kind" },
+      subjectId: { type: import_sequelize45.DataTypes.STRING(64), allowNull: false, field: "subject_id" },
+      occurredAt: { type: import_sequelize45.DataTypes.DATE, allowNull: false, field: "occurred_at" },
+      actorUserId: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "actor_user_id" },
+      actingAsUserId: { type: import_sequelize45.DataTypes.BIGINT, allowNull: true, field: "acting_as_user_id" },
+      actorKind: { type: import_sequelize45.DataTypes.STRING(16), allowNull: false, field: "actor_kind" },
+      outcome: { type: import_sequelize45.DataTypes.STRING(16), allowNull: false, defaultValue: "success" },
+      source: { type: import_sequelize45.DataTypes.STRING(16), allowNull: false },
+      sourceRef: { type: import_sequelize45.DataTypes.STRING(128), allowNull: true, field: "source_ref" },
+      requestId: { type: import_sequelize45.DataTypes.STRING(64), allowNull: true, field: "request_id" },
+      eventKind: { type: import_sequelize45.DataTypes.STRING(32), allowNull: false, field: "event_kind" },
+      field: { type: import_sequelize45.DataTypes.STRING(128), allowNull: true },
+      fromValue: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "from_value" },
+      toValue: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "to_value" },
+      reasonCode: { type: import_sequelize45.DataTypes.STRING(64), allowNull: true, field: "reason_code" },
+      reasonText: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "reason_text" },
+      correlationId: { type: import_sequelize45.DataTypes.STRING(36), allowNull: false, field: "correlation_id" },
+      subjectSeq: { type: import_sequelize45.DataTypes.BIGINT, allowNull: false, field: "subject_seq" },
+      prevHash: { type: import_sequelize45.DataTypes.CHAR(64), allowNull: false, field: "prev_hash" },
+      rowHash: { type: import_sequelize45.DataTypes.CHAR(64), allowNull: false, field: "row_hash" },
+      idempotencyKey: { type: import_sequelize45.DataTypes.STRING(128), allowNull: false, field: "idempotency_key" },
+      clientChannel: { type: import_sequelize45.DataTypes.STRING(16), allowNull: true, field: "client_channel" },
+      clientIp: { type: import_sequelize45.DataTypes.STRING(64), allowNull: true, field: "client_ip" },
+      clientTimeZone: { type: import_sequelize45.DataTypes.STRING(64), allowNull: true, field: "client_time_zone" },
+      clientInstallId: { type: import_sequelize45.DataTypes.STRING(64), allowNull: true, field: "client_install_id" },
+      clientJson: { type: import_sequelize45.DataTypes.TEXT, allowNull: true, field: "client_json" },
+      payload: { type: import_sequelize45.DataTypes.TEXT, allowNull: true }
     };
     getHotAppLogModel = (sequelize) => {
       const cached = hotAppLogModels.get(sequelize);
@@ -150950,7 +152207,7 @@ var init_archiveSequelizeModels = __esm({
 async function authenticateArchiveDestination(connectionId) {
   const source = resolveLogArchiveDataSource(connectionId);
   const hydrated = hydrateDataSourcePassword(source);
-  const sequelize = new import_sequelize45.Sequelize({
+  const sequelize = new import_sequelize46.Sequelize({
     ...buildSequelizeOptions(hydrated),
     logging: false
   });
@@ -150969,7 +152226,7 @@ async function openArchiveSequelize(connectionId) {
     return existing;
   }
   const hydrated = hydrateDataSourcePassword(source);
-  const sequelize = new import_sequelize45.Sequelize({
+  const sequelize = new import_sequelize46.Sequelize({
     ...buildSequelizeOptions(hydrated),
     logging: false
   });
@@ -150978,10 +152235,10 @@ async function openArchiveSequelize(connectionId) {
   cache2.set(source.id, sequelize);
   return sequelize;
 }
-var import_sequelize45, cache2, LOG_ARCHIVE_PURPOSE, archiveDataSourceTypeForProvider, isLogArchivePurpose, listLogArchiveDestinations, resolveLogArchiveDataSource;
+var import_sequelize46, cache2, LOG_ARCHIVE_PURPOSE, archiveDataSourceTypeForProvider, isLogArchivePurpose, listLogArchiveDestinations, resolveLogArchiveDataSource;
 var init_archiveSequelizeFactory = __esm({
   "src/server/domain/retention/archiveSequelizeFactory.ts"() {
-    import_sequelize45 = require("sequelize");
+    import_sequelize46 = require("sequelize");
     init_dataSourceSecrets();
     init_settingsFile();
     init_controlPlaneDatabase();
@@ -151180,10 +152437,10 @@ async function runRecordEventPurge(deps) {
     deps
   });
 }
-var import_sequelize46, import_node_path18, LOG_RETENTION_JOB_TYPE, RECORD_EVENT_RETENTION_JOB_TYPE, RECORD_EVENT_PURGE_JOB_TYPE, BATCH_SIZE, DAY_MS, STUB_KINDS, DEFAULT_JSON_ARCHIVE_DIRECTORY, emptyFamily, subjectKey, cutoffFromDays, estimateBytes, listLegalHoldSubjectKinds, assertAuthPolicy, requireDestination, copyAndDelete, runAppLogs, runAuthAudit, loadHoldKeys, runRecordEvents, runUserMessageDispatches;
+var import_sequelize47, import_node_path18, LOG_RETENTION_JOB_TYPE, RECORD_EVENT_RETENTION_JOB_TYPE, RECORD_EVENT_PURGE_JOB_TYPE, BATCH_SIZE, DAY_MS, STUB_KINDS, DEFAULT_JSON_ARCHIVE_DIRECTORY, emptyFamily, subjectKey, cutoffFromDays, estimateBytes, listLegalHoldSubjectKinds, assertAuthPolicy, requireDestination, copyAndDelete, runAppLogs, runAuthAudit, loadHoldKeys, runRecordEvents, runUserMessageDispatches;
 var init_retentionExecutor = __esm({
   "src/server/domain/retention/retentionExecutor.ts"() {
-    import_sequelize46 = require("sequelize");
+    import_sequelize47 = require("sequelize");
     import_node_path18 = __toESM(require("node:path"), 1);
     init_HttpError();
     init_controlPlaneSequelize();
@@ -151306,7 +152563,7 @@ var init_retentionExecutor = __esm({
       if (!cutoff) return result;
       const dest = dryRun ? {} : await requireDestination(policy, deps);
       const hot = getHotAppLogModel(deps.hotSequelize ?? getControlPlaneSequelize());
-      const where = { createdAt: { [import_sequelize46.Op.lt]: cutoff } };
+      const where = { createdAt: { [import_sequelize47.Op.lt]: cutoff } };
       result.matched = await hot.count({ where });
       if (dryRun) return result;
       const Archive = dest.archiveSequelize ? getArchiveAppLogModel(dest.archiveSequelize) : null;
@@ -151327,11 +152584,11 @@ var init_retentionExecutor = __esm({
             jsonWriter: writer,
             now,
             jobId,
-            destroy: (ids2) => hot.destroy({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }),
+            destroy: (ids2) => hot.destroy({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }),
             bulkCreate: Archive ? async (payload) => {
               await Archive.bulkCreate(payload, { ignoreDuplicates: true });
             } : void 0,
-            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }) : void 0
+            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }) : void 0
           });
           result.copied += batch.copied;
           result.deleted += batch.deleted;
@@ -151350,7 +152607,7 @@ var init_retentionExecutor = __esm({
       if (!cutoff) return result;
       const dest = dryRun ? {} : await requireDestination(policy, deps);
       const hot = getHotAuthAuditModel(deps.hotSequelize ?? getControlPlaneSequelize());
-      const where = { createdAt: { [import_sequelize46.Op.lt]: cutoff } };
+      const where = { createdAt: { [import_sequelize47.Op.lt]: cutoff } };
       result.matched = await hot.count({ where });
       if (dryRun) return result;
       const Archive = dest.archiveSequelize ? getArchiveAuthAuditModel(dest.archiveSequelize) : null;
@@ -151371,11 +152628,11 @@ var init_retentionExecutor = __esm({
             jsonWriter: writer,
             now,
             jobId,
-            destroy: (ids2) => hot.destroy({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }),
+            destroy: (ids2) => hot.destroy({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }),
             bulkCreate: Archive ? async (payload) => {
               await Archive.bulkCreate(payload, { ignoreDuplicates: true });
             } : void 0,
-            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }) : void 0
+            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }) : void 0
           });
           result.copied += batch.copied;
           result.deleted += batch.deleted;
@@ -151402,8 +152659,8 @@ var init_retentionExecutor = __esm({
         const rows = await Model5.findAll({
           where: {
             ...where,
-            id: { [import_sequelize46.Op.gt]: afterId },
-            eventKind: { [import_sequelize46.Op.notIn]: [...STUB_KINDS] }
+            id: { [import_sequelize47.Op.gt]: afterId },
+            eventKind: { [import_sequelize47.Op.notIn]: [...STUB_KINDS] }
           },
           order: [["id", "ASC"]],
           limit: BATCH_SIZE
@@ -151411,8 +152668,8 @@ var init_retentionExecutor = __esm({
         return rows.map((row) => row.get({ plain: true }));
       };
       const where = {
-        occurredAt: { [import_sequelize46.Op.lt]: cutoff },
-        ...legalHoldKinds.size > 0 ? { subjectKind: { [import_sequelize46.Op.notIn]: [...legalHoldKinds] } } : {}
+        occurredAt: { [import_sequelize47.Op.lt]: cutoff },
+        ...legalHoldKinds.size > 0 ? { subjectKind: { [import_sequelize47.Op.notIn]: [...legalHoldKinds] } } : {}
       };
       if (dryRun) {
         let afterId = 0;
@@ -151462,11 +152719,11 @@ var init_retentionExecutor = __esm({
             jsonWriter: writer,
             now,
             jobId,
-            destroy: (ids2) => Model5.destroy({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }),
+            destroy: (ids2) => Model5.destroy({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }),
             bulkCreate: Archive ? async (payload) => {
               await Archive.bulkCreate(payload, { ignoreDuplicates: true });
             } : void 0,
-            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }) : void 0
+            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }) : void 0
           });
           result.copied += batch.copied;
           result.deleted += batch.deleted;
@@ -151511,7 +152768,7 @@ var init_retentionExecutor = __esm({
       if (!cutoff) return result;
       const dest = dryRun ? {} : await requireDestination(policy, deps);
       const Model5 = getUserMessageDispatchModel(deps.hotSequelize);
-      const where = { createdAt: { [import_sequelize46.Op.lt]: cutoff } };
+      const where = { createdAt: { [import_sequelize47.Op.lt]: cutoff } };
       result.matched = await Model5.count({ where });
       if (dryRun) return result;
       const Archive = dest.archiveSequelize ? getArchiveUserMessageDispatchModel(dest.archiveSequelize) : null;
@@ -151532,11 +152789,11 @@ var init_retentionExecutor = __esm({
             jsonWriter: writer,
             now,
             jobId,
-            destroy: (ids2) => Model5.destroy({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }),
+            destroy: (ids2) => Model5.destroy({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }),
             bulkCreate: Archive ? async (payload) => {
               await Archive.bulkCreate(payload, { ignoreDuplicates: true });
             } : void 0,
-            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize46.Op.in]: ids2 } } }) : void 0
+            destCount: Archive ? (ids2) => Archive.count({ where: { id: { [import_sequelize47.Op.in]: ids2 } } }) : void 0
           });
           result.copied += batch.copied;
           result.deleted += batch.deleted;
@@ -151564,10 +152821,10 @@ __export(recordEventJobs_exports, {
   runRecordEventPurge: () => runRecordEventPurge2,
   upsertRecordEventHold: () => upsertRecordEventHold
 });
-var import_sequelize47, RECORD_EVENT_PURGE_JOB_TYPE2, RECORD_EVENT_INTEGRITY_JOB_TYPE, subjectKey2, hasRecordEventHold, upsertRecordEventHold, deleteRecordEventHold, modelHasLegalHold, listLegalHoldSubjectKinds2, clearHotRecordEvents, runRecordEventPurge2, runRecordEventIntegrity, eraseRecordEvents;
+var import_sequelize48, RECORD_EVENT_PURGE_JOB_TYPE2, RECORD_EVENT_INTEGRITY_JOB_TYPE, subjectKey2, hasRecordEventHold, upsertRecordEventHold, deleteRecordEventHold, modelHasLegalHold, listLegalHoldSubjectKinds2, clearHotRecordEvents, runRecordEventPurge2, runRecordEventIntegrity, eraseRecordEvents;
 var init_recordEventJobs = __esm({
   "src/server/domain/record-events/recordEventJobs.ts"() {
-    import_sequelize47 = require("sequelize");
+    import_sequelize48 = require("sequelize");
     init_Logger();
     init_edgeModelStore();
     init_edgeModelStudioMetaStore();
@@ -151623,15 +152880,15 @@ var init_recordEventJobs = __esm({
       const legalHoldKinds = listLegalHoldSubjectKinds2();
       const keepClauses = [];
       if (holdPairs.length > 0) {
-        keepClauses.push({ [import_sequelize47.Op.or]: holdPairs });
+        keepClauses.push({ [import_sequelize48.Op.or]: holdPairs });
       }
       if (legalHoldKinds.length > 0) {
-        keepClauses.push({ subjectKind: { [import_sequelize47.Op.in]: legalHoldKinds } });
+        keepClauses.push({ subjectKind: { [import_sequelize48.Op.in]: legalHoldKinds } });
       }
-      const keepWhere = keepClauses.length === 0 ? null : keepClauses.length === 1 ? keepClauses[0] : { [import_sequelize47.Op.or]: keepClauses };
+      const keepWhere = keepClauses.length === 0 ? null : keepClauses.length === 1 ? keepClauses[0] : { [import_sequelize48.Op.or]: keepClauses };
       const skipped = keepWhere ? await Model5.count({ where: keepWhere }) : 0;
       const deleted = await Model5.destroy({
-        where: keepWhere ? { [import_sequelize47.Op.not]: keepWhere } : {}
+        where: keepWhere ? { [import_sequelize48.Op.not]: keepWhere } : {}
       });
       return { deleted, skipped };
     };
@@ -154340,12 +155597,12 @@ SET IDENTITY_INSERT [base_roles] OFF;
 // src/server/db/controlPlaneEnrichmentSchemaPatches.ts
 async function ensureDbEnrichmentRunProgressLogColumn(provider) {
   const prisma3 = getPrismaControlPlane();
-  const sql22 = STATEMENTS[provider];
-  if (!sql22) {
+  const sql23 = STATEMENTS[provider];
+  if (!sql23) {
     return;
   }
   try {
-    await prisma3.$executeRawUnsafe(sql22);
+    await prisma3.$executeRawUnsafe(sql23);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     if (provider === "sqlite" && /duplicate column name/i.test(message)) {
@@ -154562,9 +155819,9 @@ async function ensureUserProfileLegalEntityColumns(provider) {
       default:
         break;
     }
-    for (const sql22 of statements) {
+    for (const sql23 of statements) {
       try {
-        await prisma3.$executeRawUnsafe(sql22);
+        await prisma3.$executeRawUnsafe(sql23);
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         if (provider === "sqlite" && /duplicate column name/i.test(message)) {
@@ -154810,8 +156067,8 @@ async function ensureSampleMockSchema(settings) {
   if (!await sampleMockTablesExist(settings.provider)) {
     console.log("[AppEndO] Creating base_sample_mock_* tables\u2026");
     const prisma3 = getPrismaControlPlane();
-    for (const sql22 of statementsFor(settings.provider)) {
-      await prisma3.$executeRawUnsafe(sql22);
+    for (const sql23 of statementsFor(settings.provider)) {
+      await prisma3.$executeRawUnsafe(sql23);
     }
   }
   await ensureSampleMockGeoColumns(settings.provider);
@@ -155123,8 +156380,8 @@ END
     CONSTRAINT fk_base_sample_mock_record_tags_tag FOREIGN KEY (tag_id) REFERENCES base_sample_mock_tags(id) ON DELETE CASCADE
   )`)
     ];
-    mysqlCreateIfMissing = (sql22) => sql22.replace(/^CREATE TABLE IF NOT EXISTS/i, "CREATE TABLE IF NOT EXISTS");
-    MYSQL_STATEMENTS = POSTGRES_STATEMENTS.map((sql22) => mysqlCreateIfMissing(sql22).replace(/BIGSERIAL PRIMARY KEY/g, "BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY").replace(/TIMESTAMPTZ/g, "DATETIME(3)").replace(/NOW\(\)/g, "CURRENT_TIMESTAMP(3)").replace(/BOOLEAN/g, "TINYINT(1)").replace(/FALSE/g, "0").replace(/TRUE/g, "1").replace(/::text/g, ""));
+    mysqlCreateIfMissing = (sql23) => sql23.replace(/^CREATE TABLE IF NOT EXISTS/i, "CREATE TABLE IF NOT EXISTS");
+    MYSQL_STATEMENTS = POSTGRES_STATEMENTS.map((sql23) => mysqlCreateIfMissing(sql23).replace(/BIGSERIAL PRIMARY KEY/g, "BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY").replace(/TIMESTAMPTZ/g, "DATETIME(3)").replace(/NOW\(\)/g, "CURRENT_TIMESTAMP(3)").replace(/BOOLEAN/g, "TINYINT(1)").replace(/FALSE/g, "0").replace(/TRUE/g, "1").replace(/::text/g, ""));
     statementsFor = (provider) => {
       switch (provider) {
         case "postgresql":
@@ -155167,9 +156424,9 @@ END
     };
     ensureSampleMockGeoColumns = async (provider) => {
       const prisma3 = getPrismaControlPlane();
-      for (const sql22 of geoAlterStatements(provider)) {
+      for (const sql23 of geoAlterStatements(provider)) {
         try {
-          await prisma3.$executeRawUnsafe(sql22);
+          await prisma3.$executeRawUnsafe(sql23);
         } catch {
         }
       }
@@ -155178,13 +156435,13 @@ END
 });
 
 // src/server/domain/hwy/ensureHwyCoursesActivitiesSchema.ts
-var import_node_fs15, import_node_path20, import_node_url4, import_sequelize48, import_meta4, ensurePromise3, schemaReady, CORE_TABLES, ddlPath, coreCoursesActivitiesTablesPresent, applyCoursesActivitiesDdl, ensureHwyCoursesActivitiesSchema;
+var import_node_fs15, import_node_path20, import_node_url4, import_sequelize49, import_meta4, ensurePromise3, schemaReady, CORE_TABLES, ddlPath, coreCoursesActivitiesTablesPresent, applyCoursesActivitiesDdl, ensureHwyCoursesActivitiesSchema;
 var init_ensureHwyCoursesActivitiesSchema = __esm({
   "src/server/domain/hwy/ensureHwyCoursesActivitiesSchema.ts"() {
     import_node_fs15 = require("node:fs");
     import_node_path20 = __toESM(require("node:path"), 1);
     import_node_url4 = require("node:url");
-    import_sequelize48 = require("sequelize");
+    import_sequelize49 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     import_meta4 = {};
@@ -155205,7 +156462,7 @@ var init_ensureHwyCoursesActivitiesSchema = __esm({
       const inList = CORE_TABLES.map((name) => `N'${name}'`).join(", ");
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS cnt FROM sys.tables WHERE name IN (${inList})`,
-        { type: import_sequelize48.QueryTypes.SELECT }
+        { type: import_sequelize49.QueryTypes.SELECT }
       );
       return Number(rows[0]?.cnt ?? 0) === CORE_TABLES.length;
     };
@@ -155214,7 +156471,7 @@ var init_ensureHwyCoursesActivitiesSchema = __esm({
       const ddl = (0, import_node_fs15.readFileSync)(ddlPath, "utf8");
       const batches = ddl.split(/^\s*GO\s*$/gim).map((chunk2) => chunk2.trim()).filter(Boolean);
       for (const batch of batches) {
-        await sequelize.query(batch, { type: import_sequelize48.QueryTypes.RAW });
+        await sequelize.query(batch, { type: import_sequelize49.QueryTypes.RAW });
       }
     };
     ensureHwyCoursesActivitiesSchema = async () => {
@@ -155243,13 +156500,13 @@ var init_ensureHwyCoursesActivitiesSchema = __esm({
 });
 
 // src/server/domain/hwy/ensureHwyGeoResponsibilitySchema.ts
-var import_node_fs16, import_node_path21, import_node_url5, import_sequelize49, import_meta5, ensurePromise4, ddlPath2, applyGeoResponsibilityDdl, ensureHwyGeoResponsibilitySchema;
+var import_node_fs16, import_node_path21, import_node_url5, import_sequelize50, import_meta5, ensurePromise4, ddlPath2, applyGeoResponsibilityDdl, ensureHwyGeoResponsibilitySchema;
 var init_ensureHwyGeoResponsibilitySchema = __esm({
   "src/server/domain/hwy/ensureHwyGeoResponsibilitySchema.ts"() {
     import_node_fs16 = require("node:fs");
     import_node_path21 = __toESM(require("node:path"), 1);
     import_node_url5 = require("node:url");
-    import_sequelize49 = require("sequelize");
+    import_sequelize50 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     import_meta5 = {};
@@ -155263,7 +156520,7 @@ var init_ensureHwyGeoResponsibilitySchema = __esm({
       const ddl = (0, import_node_fs16.readFileSync)(ddlPath2, "utf8");
       const batches = ddl.split(/^\s*GO\s*$/gim).map((chunk2) => chunk2.trim()).filter(Boolean);
       for (const batch of batches) {
-        await sequelize.query(batch, { type: import_sequelize49.QueryTypes.RAW });
+        await sequelize.query(batch, { type: import_sequelize50.QueryTypes.RAW });
       }
     };
     ensureHwyGeoResponsibilitySchema = async () => {
@@ -155282,10 +156539,10 @@ var init_ensureHwyGeoResponsibilitySchema = __esm({
 });
 
 // src/server/domain/hwy/ensureHwyMemberDossierSatellitesSchema.ts
-var import_sequelize50, ensurePromise5, applyTarghinRequestsTableDdl, ensureHwyMemberDossierSatellitesSchema;
+var import_sequelize51, ensurePromise5, applyTarghinRequestsTableDdl, ensureHwyMemberDossierSatellitesSchema;
 var init_ensureHwyMemberDossierSatellitesSchema = __esm({
   "src/server/domain/hwy/ensureHwyMemberDossierSatellitesSchema.ts"() {
-    import_sequelize50 = require("sequelize");
+    import_sequelize51 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     ensurePromise5 = null;
@@ -155309,7 +156566,7 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
       CREATE INDEX IX_hwy_member_targhin_requests_member ON dbo.hwy_member_targhin_requests (member_id, created_at DESC);
     END
     `,
-        { type: import_sequelize50.QueryTypes.RAW }
+        { type: import_sequelize51.QueryTypes.RAW }
       );
       await sequelize.query(
         `
@@ -155319,7 +156576,7 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
       ALTER TABLE dbo.hwy_member_targhin_requests ADD request_reason_code NVARCHAR(64) NULL;
     END
     `,
-        { type: import_sequelize50.QueryTypes.RAW }
+        { type: import_sequelize51.QueryTypes.RAW }
       );
       try {
         await sequelize.query(
@@ -155334,7 +156591,7 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
           FOREIGN KEY (request_reason_code) REFERENCES dbo.base_info(id);
       END
       `,
-          { type: import_sequelize50.QueryTypes.RAW }
+          { type: import_sequelize51.QueryTypes.RAW }
         );
       } catch {
       }
@@ -155386,7 +156643,7 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
         ON dbo.hwy_member_targhin_requests (status_code, created_at DESC);
     END
     `,
-        { type: import_sequelize50.QueryTypes.RAW }
+        { type: import_sequelize51.QueryTypes.RAW }
       );
       try {
         await sequelize.query(
@@ -155410,7 +156667,7 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
           FOREIGN KEY (final_reason_code) REFERENCES dbo.base_info(id);
       END
       `,
-          { type: import_sequelize50.QueryTypes.RAW }
+          { type: import_sequelize51.QueryTypes.RAW }
         );
       } catch {
       }
@@ -155428,7 +156685,7 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
         WHERE legacy_targhin_history_id IS NOT NULL;
     END
     `,
-        { type: import_sequelize50.QueryTypes.RAW }
+        { type: import_sequelize51.QueryTypes.RAW }
       );
       await sequelize.query(
         `
@@ -155448,7 +156705,7 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
         ON dbo.hwy_member_targhin_nego_notes (member_id, created_at DESC, id DESC);
     END
     `,
-        { type: import_sequelize50.QueryTypes.RAW }
+        { type: import_sequelize51.QueryTypes.RAW }
       );
     };
     ensureHwyMemberDossierSatellitesSchema = async () => {
@@ -155467,10 +156724,10 @@ var init_ensureHwyMemberDossierSatellitesSchema = __esm({
 });
 
 // src/server/domain/hwy/ensureHwyMembersSelfRegistrationSchema.ts
-var import_sequelize51, ensurePromise6, applySelfRegistrationMemberColumns, ensureHwyMembersSelfRegistrationSchema;
+var import_sequelize52, ensurePromise6, applySelfRegistrationMemberColumns, ensureHwyMembersSelfRegistrationSchema;
 var init_ensureHwyMembersSelfRegistrationSchema = __esm({
   "src/server/domain/hwy/ensureHwyMembersSelfRegistrationSchema.ts"() {
-    import_sequelize51 = require("sequelize");
+    import_sequelize52 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     ensurePromise6 = null;
@@ -155488,7 +156745,7 @@ var init_ensureHwyMembersSelfRegistrationSchema = __esm({
       ALTER TABLE dbo.hwy_members ADD tosigh_confirm_code INT NULL;
     END
     `,
-        { type: import_sequelize51.QueryTypes.RAW }
+        { type: import_sequelize52.QueryTypes.RAW }
       );
     };
     ensureHwyMembersSelfRegistrationSchema = async () => {
@@ -157211,10 +158468,10 @@ var init_applyApplicationSettingsRuntime = __esm({
 });
 
 // src/server/domain/idea-foundry/ideaFoundrySequelizeModel.ts
-var import_sequelize52, cachedModel7, getProductIdeaModel, ensureProductIdeaTable;
+var import_sequelize53, cachedModel7, getProductIdeaModel, ensureProductIdeaTable;
 var init_ideaFoundrySequelizeModel = __esm({
   "src/server/domain/idea-foundry/ideaFoundrySequelizeModel.ts"() {
-    import_sequelize52 = require("sequelize");
+    import_sequelize53 = require("sequelize");
     init_controlPlaneSequelize();
     cachedModel7 = null;
     getProductIdeaModel = (sequelize = getControlPlaneSequelize()) => {
@@ -157224,28 +158481,28 @@ var init_ideaFoundrySequelizeModel = __esm({
       cachedModel7 = sequelize.define(
         "BaseProductIdea",
         {
-          id: { type: import_sequelize52.DataTypes.STRING(36), primaryKey: true },
-          title: { type: import_sequelize52.DataTypes.STRING(255), allowNull: false },
-          description: { type: import_sequelize52.DataTypes.TEXT, allowNull: false },
-          icon: { type: import_sequelize52.DataTypes.STRING(128), allowNull: true },
-          importance: { type: import_sequelize52.DataTypes.STRING(32), allowNull: false },
-          scale: { type: import_sequelize52.DataTypes.STRING(32), allowNull: false },
-          maturity: { type: import_sequelize52.DataTypes.STRING(32), allowNull: false },
-          targetKind: { type: import_sequelize52.DataTypes.STRING(32), allowNull: false, field: "target_kind" },
-          packageId: { type: import_sequelize52.DataTypes.STRING(128), allowNull: true, field: "package_id" },
-          packageTitle: { type: import_sequelize52.DataTypes.STRING(255), allowNull: true, field: "package_title" },
-          sectionKey: { type: import_sequelize52.DataTypes.STRING(128), allowNull: true, field: "section_key" },
-          sectionTitle: { type: import_sequelize52.DataTypes.STRING(255), allowNull: true, field: "section_title" },
-          frontOffice: { type: import_sequelize52.DataTypes.TEXT, allowNull: true, field: "front_office" },
-          backOffice: { type: import_sequelize52.DataTypes.TEXT, allowNull: true, field: "back_office" },
-          note: { type: import_sequelize52.DataTypes.TEXT, allowNull: true },
-          decisionMaker: { type: import_sequelize52.DataTypes.TEXT, allowNull: true, field: "decision_maker" },
-          collaborators: { type: import_sequelize52.DataTypes.TEXT, allowNull: true },
-          teamModels: { type: import_sequelize52.DataTypes.TEXT, allowNull: true, field: "team_models" },
-          createdAt: { type: import_sequelize52.DataTypes.DATE, allowNull: true, field: "created_at" },
-          createdBy: { type: import_sequelize52.DataTypes.BIGINT, allowNull: true, field: "created_by" },
-          updatedAt: { type: import_sequelize52.DataTypes.DATE, allowNull: true, field: "updated_at" },
-          updatedBy: { type: import_sequelize52.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
+          id: { type: import_sequelize53.DataTypes.STRING(36), primaryKey: true },
+          title: { type: import_sequelize53.DataTypes.STRING(255), allowNull: false },
+          description: { type: import_sequelize53.DataTypes.TEXT, allowNull: false },
+          icon: { type: import_sequelize53.DataTypes.STRING(128), allowNull: true },
+          importance: { type: import_sequelize53.DataTypes.STRING(32), allowNull: false },
+          scale: { type: import_sequelize53.DataTypes.STRING(32), allowNull: false },
+          maturity: { type: import_sequelize53.DataTypes.STRING(32), allowNull: false },
+          targetKind: { type: import_sequelize53.DataTypes.STRING(32), allowNull: false, field: "target_kind" },
+          packageId: { type: import_sequelize53.DataTypes.STRING(128), allowNull: true, field: "package_id" },
+          packageTitle: { type: import_sequelize53.DataTypes.STRING(255), allowNull: true, field: "package_title" },
+          sectionKey: { type: import_sequelize53.DataTypes.STRING(128), allowNull: true, field: "section_key" },
+          sectionTitle: { type: import_sequelize53.DataTypes.STRING(255), allowNull: true, field: "section_title" },
+          frontOffice: { type: import_sequelize53.DataTypes.TEXT, allowNull: true, field: "front_office" },
+          backOffice: { type: import_sequelize53.DataTypes.TEXT, allowNull: true, field: "back_office" },
+          note: { type: import_sequelize53.DataTypes.TEXT, allowNull: true },
+          decisionMaker: { type: import_sequelize53.DataTypes.TEXT, allowNull: true, field: "decision_maker" },
+          collaborators: { type: import_sequelize53.DataTypes.TEXT, allowNull: true },
+          teamModels: { type: import_sequelize53.DataTypes.TEXT, allowNull: true, field: "team_models" },
+          createdAt: { type: import_sequelize53.DataTypes.DATE, allowNull: true, field: "created_at" },
+          createdBy: { type: import_sequelize53.DataTypes.BIGINT, allowNull: true, field: "created_by" },
+          updatedAt: { type: import_sequelize53.DataTypes.DATE, allowNull: true, field: "updated_at" },
+          updatedBy: { type: import_sequelize53.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
         },
         {
           tableName: "base_product_ideas",
@@ -157263,10 +158520,10 @@ var init_ideaFoundrySequelizeModel = __esm({
 });
 
 // src/server/domain/personal-inbox/personalInboxArchivedSequelizeModels.ts
-var import_sequelize53, cachedModel8, testSequelize5, resolveSequelize7, getPersonalInboxArchivedItemModel, ensurePersonalInboxArchivedTables;
+var import_sequelize54, cachedModel8, testSequelize5, resolveSequelize7, getPersonalInboxArchivedItemModel, ensurePersonalInboxArchivedTables;
 var init_personalInboxArchivedSequelizeModels = __esm({
   "src/server/domain/personal-inbox/personalInboxArchivedSequelizeModels.ts"() {
-    import_sequelize53 = require("sequelize");
+    import_sequelize54 = require("sequelize");
     init_controlPlaneSequelize();
     cachedModel8 = null;
     testSequelize5 = null;
@@ -157279,9 +158536,9 @@ var init_personalInboxArchivedSequelizeModels = __esm({
       cachedModel8 = db.define(
         "BasePersonalInboxArchivedItem",
         {
-          userId: { type: import_sequelize53.DataTypes.BIGINT, allowNull: false, primaryKey: true, field: "user_id" },
-          itemKey: { type: import_sequelize53.DataTypes.STRING(128), allowNull: false, primaryKey: true, field: "item_key" },
-          archivedAt: { type: import_sequelize53.DataTypes.DATE, allowNull: false, field: "archived_at", defaultValue: import_sequelize53.DataTypes.NOW }
+          userId: { type: import_sequelize54.DataTypes.BIGINT, allowNull: false, primaryKey: true, field: "user_id" },
+          itemKey: { type: import_sequelize54.DataTypes.STRING(128), allowNull: false, primaryKey: true, field: "item_key" },
+          archivedAt: { type: import_sequelize54.DataTypes.DATE, allowNull: false, field: "archived_at", defaultValue: import_sequelize54.DataTypes.NOW }
         },
         {
           tableName: "base_personal_inbox_archived_items",
@@ -157356,16 +158613,16 @@ var init_personalInboxFolderRefs = __esm({
 });
 
 // src/server/domain/personal-inbox/personalInboxFolderSequelizeModels.ts
-var import_sequelize54, PersonalInboxUserFolderModel, PersonalInboxItemFolderTagModel, modelsInitialized2, initModels2, getPersonalInboxUserFolderModel, getPersonalInboxItemFolderTagModel, migrateLegacyArchivedRows, ensurePersonalInboxFolderTables;
+var import_sequelize55, PersonalInboxUserFolderModel, PersonalInboxItemFolderTagModel, modelsInitialized2, initModels2, getPersonalInboxUserFolderModel, getPersonalInboxItemFolderTagModel, migrateLegacyArchivedRows, ensurePersonalInboxFolderTables;
 var init_personalInboxFolderSequelizeModels = __esm({
   "src/server/domain/personal-inbox/personalInboxFolderSequelizeModels.ts"() {
-    import_sequelize54 = require("sequelize");
+    import_sequelize55 = require("sequelize");
     init_controlPlaneSequelize();
     init_personalInboxArchivedSequelizeModels();
     init_personalInboxFolderRefs();
-    PersonalInboxUserFolderModel = class extends import_sequelize54.Model {
+    PersonalInboxUserFolderModel = class extends import_sequelize55.Model {
     };
-    PersonalInboxItemFolderTagModel = class extends import_sequelize54.Model {
+    PersonalInboxItemFolderTagModel = class extends import_sequelize55.Model {
     };
     modelsInitialized2 = false;
     initModels2 = (sequelize) => {
@@ -157374,11 +158631,11 @@ var init_personalInboxFolderSequelizeModels = __esm({
       }
       PersonalInboxUserFolderModel.init(
         {
-          id: { type: import_sequelize54.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-          userId: { type: import_sequelize54.DataTypes.BIGINT, allowNull: false, field: "user_id" },
-          name: { type: import_sequelize54.DataTypes.STRING(128), allowNull: false },
-          createdAt: { type: import_sequelize54.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize54.DataTypes.NOW },
-          updatedAt: { type: import_sequelize54.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize54.DataTypes.NOW }
+          id: { type: import_sequelize55.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
+          userId: { type: import_sequelize55.DataTypes.BIGINT, allowNull: false, field: "user_id" },
+          name: { type: import_sequelize55.DataTypes.STRING(128), allowNull: false },
+          createdAt: { type: import_sequelize55.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize55.DataTypes.NOW },
+          updatedAt: { type: import_sequelize55.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize55.DataTypes.NOW }
         },
         {
           sequelize,
@@ -157389,10 +158646,10 @@ var init_personalInboxFolderSequelizeModels = __esm({
       );
       PersonalInboxItemFolderTagModel.init(
         {
-          userId: { type: import_sequelize54.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
-          itemKey: { type: import_sequelize54.DataTypes.STRING(128), allowNull: false, field: "item_key", primaryKey: true },
-          folderRef: { type: import_sequelize54.DataTypes.STRING(64), allowNull: false, field: "folder_ref", primaryKey: true },
-          taggedAt: { type: import_sequelize54.DataTypes.DATE, allowNull: false, field: "tagged_at", defaultValue: import_sequelize54.DataTypes.NOW }
+          userId: { type: import_sequelize55.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
+          itemKey: { type: import_sequelize55.DataTypes.STRING(128), allowNull: false, field: "item_key", primaryKey: true },
+          folderRef: { type: import_sequelize55.DataTypes.STRING(64), allowNull: false, field: "folder_ref", primaryKey: true },
+          taggedAt: { type: import_sequelize55.DataTypes.DATE, allowNull: false, field: "tagged_at", defaultValue: import_sequelize55.DataTypes.NOW }
         },
         {
           sequelize,
@@ -157452,12 +158709,12 @@ var init_personalInboxFolderSequelizeModels = __esm({
 });
 
 // src/server/domain/personal-inbox/personalInboxCorrespondenceSequelizeModels.ts
-var import_sequelize55, PersonalInboxCorrespondenceModel, modelsInitialized3, initModels3, getPersonalInboxCorrespondenceModel, ensurePersonalInboxCorrespondenceTable;
+var import_sequelize56, PersonalInboxCorrespondenceModel, modelsInitialized3, initModels3, getPersonalInboxCorrespondenceModel, ensurePersonalInboxCorrespondenceTable;
 var init_personalInboxCorrespondenceSequelizeModels = __esm({
   "src/server/domain/personal-inbox/personalInboxCorrespondenceSequelizeModels.ts"() {
-    import_sequelize55 = require("sequelize");
+    import_sequelize56 = require("sequelize");
     init_controlPlaneSequelize();
-    PersonalInboxCorrespondenceModel = class extends import_sequelize55.Model {
+    PersonalInboxCorrespondenceModel = class extends import_sequelize56.Model {
     };
     modelsInitialized3 = false;
     initModels3 = (sequelize) => {
@@ -157466,11 +158723,11 @@ var init_personalInboxCorrespondenceSequelizeModels = __esm({
       }
       PersonalInboxCorrespondenceModel.init(
         {
-          userId: { type: import_sequelize55.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
-          itemKey: { type: import_sequelize55.DataTypes.STRING(128), allowNull: false, field: "item_key", primaryKey: true },
-          repliedAt: { type: import_sequelize55.DataTypes.DATE, allowNull: true, field: "replied_at" },
-          forwardedAt: { type: import_sequelize55.DataTypes.DATE, allowNull: true, field: "forwarded_at" },
-          updatedAt: { type: import_sequelize55.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize55.DataTypes.NOW }
+          userId: { type: import_sequelize56.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
+          itemKey: { type: import_sequelize56.DataTypes.STRING(128), allowNull: false, field: "item_key", primaryKey: true },
+          repliedAt: { type: import_sequelize56.DataTypes.DATE, allowNull: true, field: "replied_at" },
+          forwardedAt: { type: import_sequelize56.DataTypes.DATE, allowNull: true, field: "forwarded_at" },
+          updatedAt: { type: import_sequelize56.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize56.DataTypes.NOW }
         },
         {
           sequelize,
@@ -157495,10 +158752,10 @@ var init_personalInboxCorrespondenceSequelizeModels = __esm({
 });
 
 // src/server/domain/workbooks/workbookSequelizeModel.ts
-var import_sequelize56, cachedModel9, getWorkbookModel, dropLegacyColumn, ensureWorkbookTable;
+var import_sequelize57, cachedModel9, getWorkbookModel, dropLegacyColumn, ensureWorkbookTable;
 var init_workbookSequelizeModel = __esm({
   "src/server/domain/workbooks/workbookSequelizeModel.ts"() {
-    import_sequelize56 = require("sequelize");
+    import_sequelize57 = require("sequelize");
     init_controlPlaneSequelize();
     cachedModel9 = null;
     getWorkbookModel = (sequelize = getControlPlaneSequelize()) => {
@@ -157508,17 +158765,17 @@ var init_workbookSequelizeModel = __esm({
       cachedModel9 = sequelize.define(
         "BaseWorkbook",
         {
-          id: { type: import_sequelize56.DataTypes.STRING(36), primaryKey: true },
-          name: { type: import_sequelize56.DataTypes.STRING(255), allowNull: false },
-          note: { type: import_sequelize56.DataTypes.TEXT, allowNull: true },
-          sheetsJson: { type: import_sequelize56.DataTypes.TEXT("long"), allowNull: false, field: "sheets_json" },
-          ownerUserId: { type: import_sequelize56.DataTypes.BIGINT, allowNull: false, defaultValue: 0, field: "owner_user_id" },
-          accessControl: { type: import_sequelize56.DataTypes.TEXT, allowNull: true, field: "access_control" },
-          accessPermission: { type: import_sequelize56.DataTypes.STRING(16), allowNull: true, field: "access_permission" },
-          createdAt: { type: import_sequelize56.DataTypes.DATE, allowNull: true, field: "created_at" },
-          createdBy: { type: import_sequelize56.DataTypes.BIGINT, allowNull: true, field: "created_by" },
-          updatedAt: { type: import_sequelize56.DataTypes.DATE, allowNull: true, field: "updated_at" },
-          updatedBy: { type: import_sequelize56.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
+          id: { type: import_sequelize57.DataTypes.STRING(36), primaryKey: true },
+          name: { type: import_sequelize57.DataTypes.STRING(255), allowNull: false },
+          note: { type: import_sequelize57.DataTypes.TEXT, allowNull: true },
+          sheetsJson: { type: import_sequelize57.DataTypes.TEXT("long"), allowNull: false, field: "sheets_json" },
+          ownerUserId: { type: import_sequelize57.DataTypes.BIGINT, allowNull: false, defaultValue: 0, field: "owner_user_id" },
+          accessControl: { type: import_sequelize57.DataTypes.TEXT, allowNull: true, field: "access_control" },
+          accessPermission: { type: import_sequelize57.DataTypes.STRING(16), allowNull: true, field: "access_permission" },
+          createdAt: { type: import_sequelize57.DataTypes.DATE, allowNull: true, field: "created_at" },
+          createdBy: { type: import_sequelize57.DataTypes.BIGINT, allowNull: true, field: "created_by" },
+          updatedAt: { type: import_sequelize57.DataTypes.DATE, allowNull: true, field: "updated_at" },
+          updatedBy: { type: import_sequelize57.DataTypes.BIGINT, allowNull: true, field: "updated_by" }
         },
         {
           tableName: "base_workbooks",
@@ -157545,10 +158802,10 @@ var init_workbookSequelizeModel = __esm({
 });
 
 // src/server/domain/hwy/hwyBusinessRuleDocsSequelizeModel.ts
-var import_sequelize57, cachedModel10, getHwyBusinessRuleDocModel, ensureHwyBusinessRuleDocTable;
+var import_sequelize58, cachedModel10, getHwyBusinessRuleDocModel, ensureHwyBusinessRuleDocTable;
 var init_hwyBusinessRuleDocsSequelizeModel = __esm({
   "src/server/domain/hwy/hwyBusinessRuleDocsSequelizeModel.ts"() {
-    import_sequelize57 = require("sequelize");
+    import_sequelize58 = require("sequelize");
     init_controlPlaneSequelize();
     cachedModel10 = null;
     getHwyBusinessRuleDocModel = (sequelize = getControlPlaneSequelize()) => {
@@ -157558,14 +158815,14 @@ var init_hwyBusinessRuleDocsSequelizeModel = __esm({
       cachedModel10 = sequelize.define(
         "BaseHwyBusinessRuleDoc",
         {
-          slug: { type: import_sequelize57.DataTypes.STRING(64), primaryKey: true },
-          navGroupId: { type: import_sequelize57.DataTypes.STRING(64), allowNull: false, field: "nav_group_id" },
-          title: { type: import_sequelize57.DataTypes.STRING(500), allowNull: false },
-          introMarkdown: { type: import_sequelize57.DataTypes.TEXT, allowNull: true, field: "intro_markdown" },
-          bodyMarkdown: { type: import_sequelize57.DataTypes.TEXT, allowNull: false, field: "body_markdown" },
-          sortOrder: { type: import_sequelize57.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "sort_order" },
-          updatedAt: { type: import_sequelize57.DataTypes.DATE, allowNull: true, field: "updated_at" },
-          updatedByUsername: { type: import_sequelize57.DataTypes.STRING(128), allowNull: true, field: "updated_by_username" }
+          slug: { type: import_sequelize58.DataTypes.STRING(64), primaryKey: true },
+          navGroupId: { type: import_sequelize58.DataTypes.STRING(64), allowNull: false, field: "nav_group_id" },
+          title: { type: import_sequelize58.DataTypes.STRING(500), allowNull: false },
+          introMarkdown: { type: import_sequelize58.DataTypes.TEXT, allowNull: true, field: "intro_markdown" },
+          bodyMarkdown: { type: import_sequelize58.DataTypes.TEXT, allowNull: false, field: "body_markdown" },
+          sortOrder: { type: import_sequelize58.DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: "sort_order" },
+          updatedAt: { type: import_sequelize58.DataTypes.DATE, allowNull: true, field: "updated_at" },
+          updatedByUsername: { type: import_sequelize58.DataTypes.STRING(128), allowNull: true, field: "updated_by_username" }
         },
         {
           tableName: "base_hwy_business_rule_docs",
@@ -157596,18 +158853,18 @@ __export(directMessageSequelizeModels_exports, {
   getDirectMessageThreadModel: () => getDirectMessageThreadModel,
   resetDirectMessageModelsForTests: () => resetDirectMessageModelsForTests
 });
-var import_sequelize58, DirectMessageThreadModel, DirectMessageMessageModel, DirectMessageParticipantStateModel, DirectMessageAttachmentModel, modelsInitialized4, initModels4, getDirectMessageThreadModel, getDirectMessageMessageModel, getDirectMessageParticipantStateModel, getDirectMessageAttachmentModel, ensureDirectMessageTables, resetDirectMessageModelsForTests;
+var import_sequelize59, DirectMessageThreadModel, DirectMessageMessageModel, DirectMessageParticipantStateModel, DirectMessageAttachmentModel, modelsInitialized4, initModels4, getDirectMessageThreadModel, getDirectMessageMessageModel, getDirectMessageParticipantStateModel, getDirectMessageAttachmentModel, ensureDirectMessageTables, resetDirectMessageModelsForTests;
 var init_directMessageSequelizeModels = __esm({
   "src/server/domain/direct-messages/directMessageSequelizeModels.ts"() {
-    import_sequelize58 = require("sequelize");
+    import_sequelize59 = require("sequelize");
     init_controlPlaneSequelize();
-    DirectMessageThreadModel = class extends import_sequelize58.Model {
+    DirectMessageThreadModel = class extends import_sequelize59.Model {
     };
-    DirectMessageMessageModel = class extends import_sequelize58.Model {
+    DirectMessageMessageModel = class extends import_sequelize59.Model {
     };
-    DirectMessageParticipantStateModel = class extends import_sequelize58.Model {
+    DirectMessageParticipantStateModel = class extends import_sequelize59.Model {
     };
-    DirectMessageAttachmentModel = class extends import_sequelize58.Model {
+    DirectMessageAttachmentModel = class extends import_sequelize59.Model {
     };
     modelsInitialized4 = false;
     initModels4 = (sequelize) => {
@@ -157616,13 +158873,13 @@ var init_directMessageSequelizeModels = __esm({
       }
       DirectMessageThreadModel.init(
         {
-          id: { type: import_sequelize58.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-          participantLowUserId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: false, field: "participant_low_user_id" },
-          participantHighUserId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: false, field: "participant_high_user_id" },
-          lastMessageAt: { type: import_sequelize58.DataTypes.DATE, allowNull: true, field: "last_message_at" },
-          lastMessagePreview: { type: import_sequelize58.DataTypes.STRING(500), allowNull: true, field: "last_message_preview" },
-          createdAt: { type: import_sequelize58.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize58.DataTypes.NOW },
-          updatedAt: { type: import_sequelize58.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize58.DataTypes.NOW }
+          id: { type: import_sequelize59.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
+          participantLowUserId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: false, field: "participant_low_user_id" },
+          participantHighUserId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: false, field: "participant_high_user_id" },
+          lastMessageAt: { type: import_sequelize59.DataTypes.DATE, allowNull: true, field: "last_message_at" },
+          lastMessagePreview: { type: import_sequelize59.DataTypes.STRING(500), allowNull: true, field: "last_message_preview" },
+          createdAt: { type: import_sequelize59.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize59.DataTypes.NOW },
+          updatedAt: { type: import_sequelize59.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize59.DataTypes.NOW }
         },
         {
           sequelize,
@@ -157640,13 +158897,13 @@ var init_directMessageSequelizeModels = __esm({
       );
       DirectMessageMessageModel.init(
         {
-          id: { type: import_sequelize58.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-          threadId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: false, field: "thread_id" },
-          senderUserId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: false, field: "sender_user_id" },
-          body: { type: import_sequelize58.DataTypes.TEXT, allowNull: false },
-          replyToMessageId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: true, field: "reply_to_message_id" },
-          forwardedFromMessageId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: true, field: "forwarded_from_message_id" },
-          createdAt: { type: import_sequelize58.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize58.DataTypes.NOW }
+          id: { type: import_sequelize59.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
+          threadId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: false, field: "thread_id" },
+          senderUserId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: false, field: "sender_user_id" },
+          body: { type: import_sequelize59.DataTypes.TEXT, allowNull: false },
+          replyToMessageId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: true, field: "reply_to_message_id" },
+          forwardedFromMessageId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: true, field: "forwarded_from_message_id" },
+          createdAt: { type: import_sequelize59.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize59.DataTypes.NOW }
         },
         {
           sequelize,
@@ -157659,10 +158916,10 @@ var init_directMessageSequelizeModels = __esm({
       );
       DirectMessageParticipantStateModel.init(
         {
-          threadId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: false, field: "thread_id", primaryKey: true },
-          userId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
-          lastReadMessageId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: true, field: "last_read_message_id" },
-          updatedAt: { type: import_sequelize58.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize58.DataTypes.NOW }
+          threadId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: false, field: "thread_id", primaryKey: true },
+          userId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: false, field: "user_id", primaryKey: true },
+          lastReadMessageId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: true, field: "last_read_message_id" },
+          updatedAt: { type: import_sequelize59.DataTypes.DATE, allowNull: false, field: "updated_at", defaultValue: import_sequelize59.DataTypes.NOW }
         },
         {
           sequelize,
@@ -157672,15 +158929,15 @@ var init_directMessageSequelizeModels = __esm({
       );
       DirectMessageAttachmentModel.init(
         {
-          id: { type: import_sequelize58.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-          messageId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: true, field: "message_id" },
-          fileName: { type: import_sequelize58.DataTypes.STRING(260), allowNull: false, field: "file_name" },
-          mimeType: { type: import_sequelize58.DataTypes.STRING(120), allowNull: false, field: "mime_type" },
-          sizeBytes: { type: import_sequelize58.DataTypes.INTEGER, allowNull: false, field: "size_bytes" },
-          storageKey: { type: import_sequelize58.DataTypes.STRING(500), allowNull: false, field: "storage_key" },
-          uploadedByUserId: { type: import_sequelize58.DataTypes.BIGINT, allowNull: false, field: "uploaded_by_user_id" },
-          stagedSessionKey: { type: import_sequelize58.DataTypes.STRING(64), allowNull: true, field: "staged_session_key" },
-          createdAt: { type: import_sequelize58.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize58.DataTypes.NOW }
+          id: { type: import_sequelize59.DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
+          messageId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: true, field: "message_id" },
+          fileName: { type: import_sequelize59.DataTypes.STRING(260), allowNull: false, field: "file_name" },
+          mimeType: { type: import_sequelize59.DataTypes.STRING(120), allowNull: false, field: "mime_type" },
+          sizeBytes: { type: import_sequelize59.DataTypes.INTEGER, allowNull: false, field: "size_bytes" },
+          storageKey: { type: import_sequelize59.DataTypes.STRING(500), allowNull: false, field: "storage_key" },
+          uploadedByUserId: { type: import_sequelize59.DataTypes.BIGINT, allowNull: false, field: "uploaded_by_user_id" },
+          stagedSessionKey: { type: import_sequelize59.DataTypes.STRING(64), allowNull: true, field: "staged_session_key" },
+          createdAt: { type: import_sequelize59.DataTypes.DATE, allowNull: false, field: "created_at", defaultValue: import_sequelize59.DataTypes.NOW }
         },
         {
           sequelize,
@@ -157730,9 +158987,9 @@ var init_directMessageSequelizeModels = __esm({
 });
 
 // src/server/db/ensureControlPlaneFeatureTables.ts
-async function ensureControlPlaneFeatureTables(settingsPath) {
+async function ensureControlPlaneFeatureTables(settingsPath, options2) {
   const { provider } = readControlPlaneDatabaseSettings(settingsPath);
-  if (await isControlPlaneBootMarkerCurrent(
+  if (!options2?.force && await isControlPlaneBootMarkerCurrent(
     provider,
     CONTROL_PLANE_BOOT_MARKER_KEYS.sequelizeFeatureTables,
     CONTROL_PLANE_SEQUELIZE_FEATURE_SCHEMA_VERSION
@@ -158330,7 +159587,7 @@ SELECT
 FROM base_logs_auth_audit a
 LEFT JOIN base_users u ON u.id = a.user_id
 `;
-    trimSql = (sql22) => sql22.replace(/^\s+/gm, "  ").trim();
+    trimSql = (sql23) => sql23.replace(/^\s+/gm, "  ").trim();
     buildOpsDashboardViewStatements = (dialect) => {
       const bodies = {
         base_ops_work_item_queue: trimSql(workItemQueueBody(dialect)),
@@ -158366,10 +159623,10 @@ ${body}`
 });
 
 // src/server/domain/platform-ops-dashboards/ensureOpsDashboardViews.ts
-var import_sequelize59, ensureOpsDashboardViews;
+var import_sequelize60, ensureOpsDashboardViews;
 var init_ensureOpsDashboardViews = __esm({
   "src/server/domain/platform-ops-dashboards/ensureOpsDashboardViews.ts"() {
-    import_sequelize59 = require("sequelize");
+    import_sequelize60 = require("sequelize");
     init_controlPlaneBootMarkers();
     init_controlPlaneSequelize();
     init_Logger();
@@ -158388,9 +159645,9 @@ var init_ensureOpsDashboardViews = __esm({
       for (const statement of statements) {
         try {
           if (statement.dropSql) {
-            await sequelize.query(statement.dropSql, { type: import_sequelize59.QueryTypes.RAW });
+            await sequelize.query(statement.dropSql, { type: import_sequelize60.QueryTypes.RAW });
           }
-          await sequelize.query(statement.ensureSql, { type: import_sequelize59.QueryTypes.RAW });
+          await sequelize.query(statement.ensureSql, { type: import_sequelize60.QueryTypes.RAW });
         } catch (error) {
           const message = error instanceof Error ? error.message : String(error);
           logger.warn("Server", `Could not ensure ops dashboard view ${statement.name}: ${message}`);
@@ -163110,7 +164367,7 @@ var init_data_sources_service = __esm({
           objectName,
           objectType,
           functionKind,
-          sql: sql22
+          sql: sql23
         } = parsed.data;
         const sources = getDataSourcesFromSettings(this.deps.settingsPath);
         const source = sources.find((item3) => item3.id === dataSourceId);
@@ -163120,7 +164377,7 @@ var init_data_sources_service = __esm({
         if (!this.deps.edgeDbQuery) {
           throw new HttpError2(500, "Schema object creation is unavailable.");
         }
-        const statement = sql22?.trim() ? assertCreateSchemaSql(sql22) : buildCreateSchemaObjectStatement(source.type, {
+        const statement = sql23?.trim() ? assertCreateSchemaSql(sql23) : buildCreateSchemaObjectStatement(source.type, {
           objectName: assertSchemaObjectName(objectName ?? ""),
           objectType,
           functionKind
@@ -163389,7 +164646,7 @@ var init_data_sources_service = __esm({
           dataSourceId,
           objectType,
           functionKind,
-          sql: sql22
+          sql: sql23
         } = parsed.data;
         const sources = getDataSourcesFromSettings(this.deps.settingsPath);
         const source = sources.find((item3) => item3.id === dataSourceId);
@@ -163399,7 +164656,7 @@ var init_data_sources_service = __esm({
         if (!this.deps.edgeDbQuery) {
           throw new HttpError2(500, "Schema object update is unavailable.");
         }
-        const statement = assertAlterSchemaSql(sql22);
+        const statement = assertAlterSchemaSql(sql23);
         try {
           await this.deps.edgeDbQuery(statement, [], { dataSourceId: source.id });
         } catch (error) {
@@ -163419,8 +164676,8 @@ var init_data_sources_service = __esm({
         if (!parsed.success) {
           throw new HttpError2(400, parsed.error.issues[0]?.message ?? "Invalid execute query payload.");
         }
-        const { dataSourceId, sql: sql22, allowWrite } = parsed.data;
-        const validation = validateExecuteDataSourceSql(sql22, { allowWrite });
+        const { dataSourceId, sql: sql23, allowWrite } = parsed.data;
+        const validation = validateExecuteDataSourceSql(sql23, { allowWrite });
         if (!validation.ok) {
           throw new HttpError2(400, validation.reason);
         }
@@ -163434,7 +164691,7 @@ var init_data_sources_service = __esm({
         }
         try {
           const queryResult = await this.deps.edgeDbQuery(
-            sql22.trim(),
+            sql23.trim(),
             [],
             { dataSourceId: source.id, database: source.database }
           );
@@ -171078,8 +172335,8 @@ var init_sql_console_routes = __esm({
       });
       router.post("/collections/:collectionId/scripts", (req, res) => {
         const name = String(req.body?.name || "").trim();
-        const sql22 = String(req.body?.sql || "").trim();
-        if (!name || !sql22) {
+        const sql23 = String(req.body?.sql || "").trim();
+        if (!name || !sql23) {
           res.status(400).json({ success: false, error: "name and sql are required." });
           return;
         }
@@ -171087,7 +172344,7 @@ var init_sql_console_routes = __esm({
           collectionId: req.params.collectionId,
           folderId: typeof req.body?.folderId === "string" ? req.body.folderId : null,
           name,
-          sql: sql22,
+          sql: sql23,
           dataSourceId: String(req.body?.dataSourceId || "").trim()
         });
         if (!item3) {
@@ -171101,8 +172358,8 @@ var init_sql_console_routes = __esm({
       });
       router.post("/scripts", (req, res) => {
         const name = String(req.body?.name || "").trim();
-        const sql22 = String(req.body?.sql || "").trim();
-        if (!name || !sql22) {
+        const sql23 = String(req.body?.sql || "").trim();
+        if (!name || !sql23) {
           res.status(400).json({ success: false, error: "name and sql are required." });
           return;
         }
@@ -171111,7 +172368,7 @@ var init_sql_console_routes = __esm({
           collectionId: collectionId || null,
           folderId: typeof req.body?.folderId === "string" ? req.body.folderId : null,
           name,
-          sql: sql22,
+          sql: sql23,
           dataSourceId: String(req.body?.dataSourceId || "").trim()
         });
         if (!item3) {
@@ -171232,7 +172489,7 @@ async function listWorkbooks(ownerUserId) {
 async function listCandidateSharedWorkbooks() {
   const rows = await getWorkbookModel().findAll({
     where: {
-      accessControl: { [import_sequelize60.Op.ne]: null }
+      accessControl: { [import_sequelize61.Op.ne]: null }
     },
     order: [["updatedAt", "DESC"]]
   });
@@ -171319,7 +172576,7 @@ async function updateWorkbookAccess(input) {
       updatedAt: /* @__PURE__ */ new Date(),
       updatedBy: input.ownerUserId
     },
-    { where: { id: input.id, ownerUserId: { [import_sequelize60.Op.eq]: input.ownerUserId } } }
+    { where: { id: input.id, ownerUserId: { [import_sequelize61.Op.eq]: input.ownerUserId } } }
   );
   if (!count) {
     throw new HttpError2(404, "Workbook not found.");
@@ -171330,11 +172587,11 @@ async function deleteWorkbook(id, ownerUserId) {
   await getWorkbook(id, ownerUserId);
   await getWorkbookModel().destroy({ where: { id, ...ownerWhere(ownerUserId) } });
 }
-var import_node_crypto21, import_sequelize60, toStoredSheets, parseSheets, toIso3, asWorkbookUserId, asUserId, readWorkbookAccessControl, readWorkbookAccessPermission, loadActorUsernamesByWorkbookId, redactedAccessControl, mapRow6, withActorUsernames, toRecord3, toListItem, ownerWhere, ownerViewer;
+var import_node_crypto21, import_sequelize61, toStoredSheets, parseSheets, toIso3, asWorkbookUserId, asUserId, readWorkbookAccessControl, readWorkbookAccessPermission, loadActorUsernamesByWorkbookId, redactedAccessControl, mapRow6, withActorUsernames, toRecord3, toListItem, ownerWhere, ownerViewer;
 var init_workbookRepository = __esm({
   "src/server/domain/workbooks/workbookRepository.ts"() {
     import_node_crypto21 = require("node:crypto");
-    import_sequelize60 = require("sequelize");
+    import_sequelize61 = require("sequelize");
     init_HttpError();
     init_accessControl();
     init_access();
@@ -171403,7 +172660,7 @@ var init_workbookRepository = __esm({
      LEFT JOIN base_users creator ON creator.id = w.created_by
      LEFT JOIN base_users editor ON editor.id = w.updated_by
      WHERE w.id IN (${placeholders})`,
-        { replacements, type: import_sequelize60.QueryTypes.SELECT }
+        { replacements, type: import_sequelize61.QueryTypes.SELECT }
       );
       return new Map(rows.map((row) => {
         const created = String(row.created_by_username ?? row.createdByUsername ?? "").trim();
@@ -171969,11 +173226,11 @@ async function updateProductIdea(input) {
     updatedByUsername: names?.updatedByUsername ?? null
   };
 }
-var import_node_crypto22, import_sequelize61, toIso4, asUserId2, loadActorUsernamesByIdeaId, parseJson2, stringifyJson, mapRow7;
+var import_node_crypto22, import_sequelize62, toIso4, asUserId2, loadActorUsernamesByIdeaId, parseJson2, stringifyJson, mapRow7;
 var init_ideaFoundryRepository = __esm({
   "src/server/domain/idea-foundry/ideaFoundryRepository.ts"() {
     import_node_crypto22 = require("node:crypto");
-    import_sequelize61 = require("sequelize");
+    import_sequelize62 = require("sequelize");
     init_HttpError();
     init_types7();
     init_controlPlaneSequelize();
@@ -172006,7 +173263,7 @@ var init_ideaFoundryRepository = __esm({
      LEFT JOIN base_users creator ON creator.id = i.created_by
      LEFT JOIN base_users editor ON editor.id = i.updated_by
      WHERE i.id IN (${placeholders})`,
-        { replacements, type: import_sequelize61.QueryTypes.SELECT }
+        { replacements, type: import_sequelize62.QueryTypes.SELECT }
       );
       return new Map(rows.map((row) => {
         const created = String(row.created_by_username ?? row.createdByUsername ?? "").trim();
@@ -172282,10 +173539,10 @@ var init_profileDisplayName = __esm({
 });
 
 // src/server/domain/idea-foundry/ideaFoundryTeam.ts
-var import_sequelize62, asUserId3, hasXsImage, loadIdeaTeamPeopleByIds;
+var import_sequelize63, asUserId3, hasXsImage, loadIdeaTeamPeopleByIds;
 var init_ideaFoundryTeam = __esm({
   "src/server/domain/idea-foundry/ideaFoundryTeam.ts"() {
-    import_sequelize62 = require("sequelize");
+    import_sequelize63 = require("sequelize");
     init_avatar();
     init_profileDisplayName();
     init_controlPlaneSequelize();
@@ -172312,7 +173569,7 @@ var init_ideaFoundryTeam = __esm({
      FROM base_users u
      LEFT JOIN base_user_profiles p ON p.user_id = u.id
      WHERE u.id IN (${placeholders})`,
-        { replacements, type: import_sequelize62.QueryTypes.SELECT }
+        { replacements, type: import_sequelize63.QueryTypes.SELECT }
       );
       const people = /* @__PURE__ */ new Map();
       for (const row of rows) {
@@ -204861,8 +206118,8 @@ var init_cryptoActions = __esm({
 });
 
 // src/server/domain/workflow/actions/corePack/dbActions.ts
-function stripSqlComments3(sql22) {
-  return sql22.replace(/--.*$/gm, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
+function stripSqlComments3(sql23) {
+  return sql23.replace(/--.*$/gm, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
 }
 function assertReadOnlySelect(rawSql) {
   const stripped = stripSqlComments3(rawSql).trim();
@@ -204880,10 +206137,10 @@ function assertReadOnlySelect(rawSql) {
   }
   return { ok: true };
 }
-var import_sequelize63, edgeDbQuery2, MAX_ROWS, FORBIDDEN_KEYWORDS2, dataDbQueryDefinition, dataDbQueryExecutor, CRUD_GEN_MAX_ROWS, CRUD_GEN_SAFE_IDENTIFIER, assertCrudGenSafeIdentifier, edgeSequelizeFactory, CRUD_GEN_OPERATORS, buildCrudGenColumns, buildCrudGenWhere, dataCrudGenQueryDefinition, dataCrudGenQueryExecutor;
+var import_sequelize64, edgeDbQuery2, MAX_ROWS, FORBIDDEN_KEYWORDS2, dataDbQueryDefinition, dataDbQueryExecutor, CRUD_GEN_MAX_ROWS, CRUD_GEN_SAFE_IDENTIFIER, assertCrudGenSafeIdentifier, edgeSequelizeFactory, CRUD_GEN_OPERATORS, buildCrudGenColumns, buildCrudGenWhere, dataCrudGenQueryDefinition, dataCrudGenQueryExecutor;
 var init_dbActions = __esm({
   "src/server/domain/workflow/actions/corePack/dbActions.ts"() {
-    import_sequelize63 = require("sequelize");
+    import_sequelize64 = require("sequelize");
     init_EdgeDbRouter();
     init_dataSourcesStore();
     init_settingsFile();
@@ -204965,18 +206222,18 @@ var init_dbActions = __esm({
         if (typeof dataSourceId !== "string" || dataSourceId.trim().length === 0) {
           return { status: "FAILED", errorCode: "DB_QUERY_DATASOURCE_REQUIRED", errorClass: "VALIDATION", safeMessage: "config.dataSourceId is required." };
         }
-        const sql22 = input?.sql;
-        if (typeof sql22 !== "string" || sql22.trim().length === 0) {
+        const sql23 = input?.sql;
+        if (typeof sql23 !== "string" || sql23.trim().length === 0) {
           return { status: "FAILED", errorCode: "DB_QUERY_SQL_REQUIRED", errorClass: "VALIDATION", safeMessage: "input.sql is required." };
         }
         const paramsInput = input?.params;
         const params = Array.isArray(paramsInput) ? paramsInput : [];
-        const guard = assertReadOnlySelect(sql22);
+        const guard = assertReadOnlySelect(sql23);
         if (guard.ok === false) {
           return { status: "FAILED", errorCode: "DB_QUERY_NOT_READ_ONLY", errorClass: "VALIDATION", safeMessage: guard.reason };
         }
         try {
-          const result = await edgeDbQuery2(sql22, params, { dataSourceId });
+          const result = await edgeDbQuery2(sql23, params, { dataSourceId });
           const truncated = result.data.length > MAX_ROWS;
           const rows = truncated ? result.data.slice(0, MAX_ROWS) : result.data;
           return { status: "SUCCEEDED", output: { rows, count: rows.length, truncated } };
@@ -204999,14 +206256,14 @@ var init_dbActions = __esm({
       getDataSources: () => getDataSourcesFromSettings(SETTINGS_PATH)
     });
     CRUD_GEN_OPERATORS = {
-      eq: import_sequelize63.Op.eq,
-      ne: import_sequelize63.Op.ne,
-      gt: import_sequelize63.Op.gt,
-      gte: import_sequelize63.Op.gte,
-      lt: import_sequelize63.Op.lt,
-      lte: import_sequelize63.Op.lte,
-      like: import_sequelize63.Op.like,
-      in: import_sequelize63.Op.in
+      eq: import_sequelize64.Op.eq,
+      ne: import_sequelize64.Op.ne,
+      gt: import_sequelize64.Op.gt,
+      gte: import_sequelize64.Op.gte,
+      lt: import_sequelize64.Op.lt,
+      lte: import_sequelize64.Op.lte,
+      like: import_sequelize64.Op.like,
+      in: import_sequelize64.Op.in
     };
     buildCrudGenColumns = (fields) => fields.map((field3) => ({
       name: field3.name,
@@ -205037,7 +206294,7 @@ var init_dbActions = __esm({
         }
         return { [field3]: { [opSymbol]: clause.value } };
       });
-      return { [import_sequelize63.Op.and]: parts };
+      return { [import_sequelize64.Op.and]: parts };
     };
     dataCrudGenQueryDefinition = {
       key: "data.crud-gen-query",
@@ -209973,8 +211230,8 @@ var init_data_api_controller = __esm({
         this.queryDatasheet = async (req, res) => {
           try {
             const body = req.body && typeof req.body === "object" ? req.body : {};
-            const sql22 = typeof body.sql === "string" ? body.sql : typeof req.query.sql === "string" ? req.query.sql : "";
-            const data = await this.datasheetService.query(req.params.id, { sql: sql22 });
+            const sql23 = typeof body.sql === "string" ? body.sql : typeof req.query.sql === "string" ? req.query.sql : "";
+            const data = await this.datasheetService.query(req.params.id, { sql: sql23 });
             res.json({ success: true, data });
           } catch (error) {
             sendDatasheetError(res, error, "Failed to load datasheet.");
@@ -210245,10 +211502,10 @@ var init_data_api_controller = __esm({
 });
 
 // src/server/services/data-api/edgeModelDatasheet.service.ts
-var import_sequelize64, asRecord14, serializeCell, serializeRow, isBlobColumn, visibleColumns, keyFromRow, sequelizeErrorField, EdgeModelDatasheetService;
+var import_sequelize65, asRecord14, serializeCell, serializeRow, isBlobColumn, visibleColumns, keyFromRow, sequelizeErrorField, EdgeModelDatasheetService;
 var init_edgeModelDatasheet_service = __esm({
   "src/server/services/data-api/edgeModelDatasheet.service.ts"() {
-    import_sequelize64 = require("sequelize");
+    import_sequelize65 = require("sequelize");
     init_datasheetCoerce();
     init_datasheetWhereSql();
     init_datasheetWindow();
@@ -210390,7 +211647,7 @@ var init_edgeModelDatasheet_service = __esm({
         const ModelCtor2 = await this.resolveCtor(model);
         try {
           const rowsResult = await ModelCtor2.findAll({
-            where: parsed.whereSql ? (0, import_sequelize64.literal)(`(${parsed.whereSql})`) : void 0,
+            where: parsed.whereSql ? (0, import_sequelize65.literal)(`(${parsed.whereSql})`) : void 0,
             limit,
             offset: 0,
             attributes: selected.map((column) => column.field)
@@ -212039,18 +213296,18 @@ async function listArchivedAppLogs(query) {
       const compiled = listWhereIrToSequelize(
         tree ? listWhereTreeToIr(tree, DEFAULT_WHERE_OPERATORS) : null,
         LOGS_LIST_WHERE_COLUMNS,
-        import_sequelize65.Op
+        import_sequelize66.Op
       );
       if (compiled) Object.assign(where, compiled);
     } else {
       if (query.level) {
-        where.level = Array.isArray(query.level) ? { [import_sequelize65.Op.in]: query.level } : query.level;
+        where.level = Array.isArray(query.level) ? { [import_sequelize66.Op.in]: query.level } : query.level;
       }
-      if (query.actor) where.actor = { [import_sequelize65.Op.like]: `%${query.actor}%` };
-      if (query.context) where.context = { [import_sequelize65.Op.like]: `%${query.context}%` };
+      if (query.actor) where.actor = { [import_sequelize66.Op.like]: `%${query.actor}%` };
+      if (query.context) where.context = { [import_sequelize66.Op.like]: `%${query.context}%` };
       if (query.requestId) {
         const requestId = query.requestId.replace(/"/g, "");
-        where.metaJson = { [import_sequelize65.Op.like]: `%"requestId":"${requestId}"%` };
+        where.metaJson = { [import_sequelize66.Op.like]: `%"requestId":"${requestId}"%` };
       }
     }
     const windowLimit = Math.max((query.limit || 200) + (query.offset ?? 0), 1);
@@ -212104,7 +213361,7 @@ async function hasArchivedHttpLogForRequestId(requestId) {
   try {
     const sequelize = await withTimeout3(openArchiveSequelize(settings.appLogs.offload?.connectionId));
     const row = await withTimeout3(getArchiveAppLogModel(sequelize).findOne({
-      where: { metaJson: { [import_sequelize65.Op.like]: `%"requestId":"${sanitized}"%` } },
+      where: { metaJson: { [import_sequelize66.Op.like]: `%"requestId":"${sanitized}"%` } },
       attributes: ["id"]
     }));
     return Boolean(row);
@@ -212129,7 +213386,7 @@ async function listArchivedRecordEventRows(query) {
       const compiled = listWhereIrToSequelize(
         tree ? listWhereTreeToIr(tree, DEFAULT_WHERE_OPERATORS) : null,
         RECORD_EVENTS_LIST_WHERE_COLUMNS2,
-        import_sequelize65.Op
+        import_sequelize66.Op
       );
       if (compiled) Object.assign(where, compiled);
     } else {
@@ -212155,10 +213412,10 @@ async function listArchivedRecordEventRows(query) {
     return { items: [], totalCount: 0, unavailable: true };
   }
 }
-var import_sequelize65, ARCHIVE_QUERY_TIMEOUT_MS, withTimeout3, mapArchiveLogRow;
+var import_sequelize66, ARCHIVE_QUERY_TIMEOUT_MS, withTimeout3, mapArchiveLogRow;
 var init_archiveLookup = __esm({
   "src/server/domain/retention/archiveLookup.ts"() {
-    import_sequelize65 = require("sequelize");
+    import_sequelize66 = require("sequelize");
     init_retention();
     init_archiveSequelizeModels();
     init_archiveSequelizeFactory();
@@ -212444,10 +213701,10 @@ var init_recordEventHistoryFields = __esm({
 });
 
 // src/server/domain/record-events/queryRecordEvents.ts
-var import_sequelize66, toNumber3, parseJson4, toPublicRecordEvent, namedInClause, rowValue, loadActorIdentitiesFromSequelize, loadActorIdentities, loadExtraReasonLabels, attachRecordEventParties, authEventKind, compareOccurredAtDesc, requestIdJsonFragment, projectAuthAuditRow, listRecordEvents, getRecordEventById, listUserDevices, hasHttpLogForRequestId;
+var import_sequelize67, toNumber3, parseJson4, toPublicRecordEvent, namedInClause, rowValue, loadActorIdentitiesFromSequelize, loadActorIdentities, loadExtraReasonLabels, attachRecordEventParties, authEventKind, compareOccurredAtDesc, requestIdJsonFragment, projectAuthAuditRow, listRecordEvents, getRecordEventById, listUserDevices, hasHttpLogForRequestId;
 var init_queryRecordEvents = __esm({
   "src/server/domain/record-events/queryRecordEvents.ts"() {
-    import_sequelize66 = require("sequelize");
+    import_sequelize67 = require("sequelize");
     init_filterCatalog();
     init_formatRecordEventValue();
     init_recordEventHistoryFields();
@@ -212526,7 +213783,7 @@ var init_queryRecordEvents = __esm({
      FROM base_users u
      LEFT JOIN base_user_profiles p ON p.user_id = u.id
      WHERE u.id IN (${placeholders})`,
-        { replacements, type: import_sequelize66.QueryTypes.SELECT }
+        { replacements, type: import_sequelize67.QueryTypes.SELECT }
       );
       const identities = /* @__PURE__ */ new Map();
       for (const row of rows) {
@@ -212578,7 +213835,7 @@ var init_queryRecordEvents = __esm({
         `SELECT id, title_en, title
      FROM base_info
      WHERE id IN (${placeholders})`,
-        { replacements, type: import_sequelize66.QueryTypes.SELECT }
+        { replacements, type: import_sequelize67.QueryTypes.SELECT }
       );
       return new Map(
         rows.map((row) => [row.id, (row.title_en || row.title || row.id).trim()])
@@ -212663,7 +213920,7 @@ var init_queryRecordEvents = __esm({
       }
       const baseWhere = {};
       if (subjectKinds?.length === 1) baseWhere.subjectKind = subjectKinds[0];
-      if (subjectKinds && subjectKinds.length > 1) baseWhere.subjectKind = { [import_sequelize66.Op.in]: subjectKinds };
+      if (subjectKinds && subjectKinds.length > 1) baseWhere.subjectKind = { [import_sequelize67.Op.in]: subjectKinds };
       if (query.subjectId) baseWhere.subjectId = query.subjectId;
       if (query.actorUserId) baseWhere.actorUserId = query.actorUserId;
       if (query.actingAsUserId) baseWhere.actingAsUserId = query.actingAsUserId;
@@ -212679,8 +213936,8 @@ var init_queryRecordEvents = __esm({
         if (fieldQuery) baseWhere.field = fieldQuery;
         if (query.from || query.to) {
           baseWhere.occurredAt = {
-            ...query.from ? { [import_sequelize66.Op.gte]: new Date(query.from) } : {},
-            ...query.to ? { [import_sequelize66.Op.lte]: new Date(query.to) } : {}
+            ...query.from ? { [import_sequelize67.Op.gte]: new Date(query.from) } : {},
+            ...query.to ? { [import_sequelize67.Op.lte]: new Date(query.to) } : {}
           };
         }
       }
@@ -212691,10 +213948,10 @@ var init_queryRecordEvents = __esm({
         const compiled = listWhereIrToSequelize(
           tree ? listWhereTreeToIr(tree, DEFAULT_WHERE_OPERATORS) : null,
           RECORD_EVENTS_LIST_WHERE_COLUMNS,
-          import_sequelize66.Op
+          import_sequelize67.Op
         );
         if (compiled && Object.keys(compiled).length > 0) {
-          where = { [import_sequelize66.Op.and]: [baseWhere, compiled] };
+          where = { [import_sequelize67.Op.and]: [baseWhere, compiled] };
         }
       }
       const limit = query.limit ?? 100;
@@ -212703,7 +213960,7 @@ var init_queryRecordEvents = __esm({
         const latestWhere = {
           ...where,
           outcome: "success",
-          field: fieldQuery ? fieldQuery : { [import_sequelize66.Op.and]: [{ [import_sequelize66.Op.ne]: null }, { [import_sequelize66.Op.ne]: "" }] }
+          field: fieldQuery ? fieldQuery : { [import_sequelize67.Op.and]: [{ [import_sequelize67.Op.ne]: null }, { [import_sequelize67.Op.ne]: "" }] }
         };
         const latestRows = await Model5.findAll({
           where: latestWhere,
@@ -212811,8 +214068,8 @@ var init_queryRecordEvents = __esm({
       const subjectId = String(userId);
       const rows = await Model5.findAll({
         where: {
-          clientInstallId: { [import_sequelize66.Op.ne]: null },
-          [import_sequelize66.Op.or]: [
+          clientInstallId: { [import_sequelize67.Op.ne]: null },
+          [import_sequelize67.Op.or]: [
             { subjectKind: "base_users", subjectId },
             { actorUserId: userId }
           ]
@@ -221274,9 +222531,9 @@ function decodeBinaryColumnValue(value) {
   }
   return null;
 }
-function expandPackageBlobTokens(sql22, blobsByEntry, dialect) {
+function expandPackageBlobTokens(sql23, blobsByEntry, dialect) {
   BLOB_TOKEN_PATTERN.lastIndex = 0;
-  return sql22.replace(BLOB_TOKEN_PATTERN, (_full, entry) => {
+  return sql23.replace(BLOB_TOKEN_PATTERN, (_full, entry) => {
     const bytes = blobsByEntry.get(entry);
     if (!bytes) {
       throw new Error(`Package blob "${entry}" is missing from the ZIP.`);
@@ -221356,10 +222613,10 @@ function sqlBooleanLiteral(value, dialect) {
 function sqlBooleanLiteralForSourceType(value, sourceType) {
   return sqlBooleanLiteral(value, dialectFamilyFromDataSourceType(sourceType));
 }
-function splitSqlGoBatches(sql22) {
+function splitSqlGoBatches(sql23) {
   const batches = [];
   let current = [];
-  for (const line of sql22.split(/\r?\n/)) {
+  for (const line of sql23.split(/\r?\n/)) {
     if (/^\s*GO\s*$/i.test(line)) {
       const batch = current.join("\n").trim();
       if (batch) batches.push(batch);
@@ -221372,17 +222629,17 @@ function splitSqlGoBatches(sql22) {
   if (last) batches.push(last);
   return batches.length > 0 ? batches : [];
 }
-function rewriteUnquotedBooleanKeywords(sql22, dialect) {
-  if (dialect === "postgres") return sql22;
+function rewriteUnquotedBooleanKeywords(sql23, dialect) {
+  if (dialect === "postgres") return sql23;
   let out = "";
   let index = 0;
   let inSingle = false;
-  while (index < sql22.length) {
-    const char = sql22[index];
+  while (index < sql23.length) {
+    const char = sql23[index];
     if (inSingle) {
       out += char;
-      if (char === "'" && sql22[index + 1] === "'") {
-        out += sql22[index + 1];
+      if (char === "'" && sql23[index + 1] === "'") {
+        out += sql23[index + 1];
         index += 2;
         continue;
       }
@@ -221396,14 +222653,14 @@ function rewriteUnquotedBooleanKeywords(sql22, dialect) {
       index += 1;
       continue;
     }
-    const prev = index === 0 ? "" : sql22[index - 1];
+    const prev = index === 0 ? "" : sql23[index - 1];
     const isBoundary = (ch) => !ch || !/[A-Za-z0-9_]/.test(ch);
-    if (sql22.slice(index, index + 4).toUpperCase() === "TRUE" && isBoundary(prev) && isBoundary(sql22[index + 4])) {
+    if (sql23.slice(index, index + 4).toUpperCase() === "TRUE" && isBoundary(prev) && isBoundary(sql23[index + 4])) {
       out += "1";
       index += 4;
       continue;
     }
-    if (sql22.slice(index, index + 5).toUpperCase() === "FALSE" && isBoundary(prev) && isBoundary(sql22[index + 5])) {
+    if (sql23.slice(index, index + 5).toUpperCase() === "FALSE" && isBoundary(prev) && isBoundary(sql23[index + 5])) {
       out += "0";
       index += 5;
       continue;
@@ -221427,16 +222684,16 @@ function escapeSqlStringLiteral(value, sourceType) {
   }
   return `'${cleaned.replace(/'/g, "''")}'`;
 }
-function splitSqlStatementsRespectingQuotes(sql22) {
+function splitSqlStatementsRespectingQuotes(sql23) {
   const statements = [];
   let current = "";
   let inSingle = false;
-  for (let index = 0; index < sql22.length; index += 1) {
-    const char = sql22[index];
+  for (let index = 0; index < sql23.length; index += 1) {
+    const char = sql23[index];
     if (inSingle) {
       current += char;
-      if (char === "'" && sql22[index + 1] === "'") {
-        current += sql22[index + 1];
+      if (char === "'" && sql23[index + 1] === "'") {
+        current += sql23[index + 1];
         index += 1;
         continue;
       }
@@ -221459,11 +222716,11 @@ function splitSqlStatementsRespectingQuotes(sql22) {
   if (current.trim()) statements.push(current);
   return statements;
 }
-function wrapSqlServerIdentityInserts(sql22, identityTables) {
-  if (identityTables.size === 0) return sql22;
-  const statements = splitSqlStatementsRespectingQuotes(sql22);
+function wrapSqlServerIdentityInserts(sql23, identityTables) {
+  if (identityTables.size === 0) return sql23;
+  const statements = splitSqlStatementsRespectingQuotes(sql23);
   if (statements.some((statement) => /^\s*SET\s+IDENTITY_INSERT\b/i.test(statement))) {
-    return sql22;
+    return sql23;
   }
   const identity = new Set([...identityTables].map((name) => name.trim().toLowerCase()));
   const out = [];
@@ -221541,9 +222798,9 @@ async function planBaseInfoHidRewrite(captured, existingById, allocateId) {
   }
   return map;
 }
-function applyHidRewriteMap(sql22, map) {
+function applyHidRewriteMap(sql23, map) {
   const entries = Object.entries(map).filter(([from, to]) => from && to && from !== to).sort((left, right) => right[0].length - left[0].length);
-  let rewritten = sql22;
+  let rewritten = sql23;
   for (const [from, to] of entries) {
     rewritten = rewritten.split(`'${from}'`).join(`'${to}'`);
   }
@@ -221663,8 +222920,8 @@ function dialectForDataSource(dataSourceId) {
   const source = sources.find((item3) => item3.id === dataSourceId) ?? sources.find((item3) => item3.isDefault);
   return dialectFamilyFromDataSourceType(source?.type ?? "");
 }
-function expandPackageDbScriptSql(sql22, blobs, dialect, hidMap = {}) {
-  const expanded = expandPackageBlobTokens(sql22.trim(), blobs, dialect);
+function expandPackageDbScriptSql(sql23, blobs, dialect, hidMap = {}) {
+  const expanded = expandPackageBlobTokens(sql23.trim(), blobs, dialect);
   return applyHidRewriteMap(expanded, hidMap);
 }
 async function listSqlServerIdentityTables(execute, dataSourceId) {
@@ -221725,8 +222982,8 @@ function collectSqlFailureLines(error) {
   walk2(error, 0);
   return lines.length > 0 ? lines : ["SQL execution failed."];
 }
-async function executeSqlScript(sql22, dataSourceId, blobs, hidMap) {
-  const trimmed = sql22.trim();
+async function executeSqlScript(sql23, dataSourceId, blobs, hidMap) {
+  const trimmed = sql23.trim();
   if (!trimmed) return;
   const dialect = dialectForDataSource(dataSourceId);
   const expanded = rewriteUnquotedBooleanKeywords(
@@ -227623,8 +228880,8 @@ var init_packageDbCapture_service = __esm({
       ].filter(Boolean).join(" ");
       return sourceType === "SQL Server" ? selectSql.replace(/^SELECT /, `SELECT TOP ${fetchLimit} `) : selectSql;
     };
-    queryRows = async (edgeDbQuery3, sql22, context) => {
-      const result = await edgeDbQuery3(sql22, [], context);
+    queryRows = async (edgeDbQuery3, sql23, context) => {
+      const result = await edgeDbQuery3(sql23, [], context);
       return Array.isArray(result.data) ? result.data : [];
     };
   }
@@ -232469,10 +233726,10 @@ async function resolveAvatarUsernamesForUserIds(users) {
   }
   return resolved;
 }
-var import_sequelize67, CHUNK, trimText, isMemberIdPlaceholderUsername, loadHwyMemberLinksForUserIds;
+var import_sequelize68, CHUNK, trimText, isMemberIdPlaceholderUsername, loadHwyMemberLinksForUserIds;
 var init_hwyMemberUsernameLookup = __esm({
   "src/server/domain/users/hwyMemberUsernameLookup.ts"() {
-    import_sequelize67 = require("sequelize");
+    import_sequelize68 = require("sequelize");
     init_hwyMembershipUsername();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -232504,7 +233761,7 @@ var init_hwyMemberUsernameLookup = __esm({
             `SELECT user_id, id AS member_id, username
          FROM dbo.hwy_members
          WHERE user_id IN (${placeholders.join(", ")})`,
-            { replacements, type: import_sequelize67.QueryTypes.SELECT }
+            { replacements, type: import_sequelize68.QueryTypes.SELECT }
           );
           for (const row of rows) {
             const userId = Number(row.user_id);
@@ -233388,11 +234645,11 @@ var init_dataApiExecutor_middleware = __esm({
 });
 
 // src/server/services/data-api/edgeDomainManagedFunction.ts
-var import_vm4, import_sequelize68, asRecord18, isEdgeDomainActionManagedFunction, runEdgeDomainActionManagedFunction;
+var import_vm4, import_sequelize69, asRecord18, isEdgeDomainActionManagedFunction, runEdgeDomainActionManagedFunction;
 var init_edgeDomainManagedFunction = __esm({
   "src/server/services/data-api/edgeDomainManagedFunction.ts"() {
     import_vm4 = __toESM(require("vm"), 1);
-    import_sequelize68 = require("sequelize");
+    import_sequelize69 = require("sequelize");
     init_sandboxTranspile();
     init_dataApiPublishedRuntime();
     asRecord18 = (value) => value && typeof value === "object" && !Array.isArray(value) ? value : null;
@@ -233459,8 +234716,8 @@ var init_edgeDomainManagedFunction = __esm({
           error: (...args) => console.error("[Edge Domain Action]", ...args)
         },
         resolvePublishedEdgeModel,
-        Op: import_sequelize68.Op,
-        QueryTypes: import_sequelize68.QueryTypes,
+        Op: import_sequelize69.Op,
+        QueryTypes: import_sequelize69.QueryTypes,
         module: { exports: {} },
         exports: {}
       };
@@ -240861,8 +242118,8 @@ var init_hwyFamilyHouseholdMemberGender = __esm({
       }
       return String(raw).trim();
     };
-    readNakhebinMemberId = (row) => normalizeHwyHouseholdMemberId(row.memberId ?? row.member_id);
-    readMemberNakhebinId = (row) => normalizeHwyHouseholdMemberId(row.nakhebinId ?? row.nakhebin_id);
+    readNakhebinMemberId = (row) => normalizeHwyHouseholdMemberId(row.member_id ?? row.member_id);
+    readMemberNakhebinId = (row) => normalizeHwyHouseholdMemberId(row.nakhebin_id ?? row.nakhebin_id);
     attachHouseholdMemberGenderFromLinkedNakhebin = (members, nakhebin) => {
       if (members.length === 0 || nakhebin.length === 0) {
         return;
@@ -240934,14 +242191,11 @@ async function loadHwyFamilyHousehold(query, req) {
     order: [["displayFullName", "ASC"]],
     raw: true
   });
-  const memberEnrichmentDeps = await resolveFieldEnrichmentDeps(MEMBER_DIRECTORY_MODEL_ID2, {
-    enrichments: MEMBER_DIRECTORY_ENRICHMENTS
-  });
   const enrichedMembers = await applyFieldEnrichments(
     memberRows,
     MEMBER_DIRECTORY_ENRICHMENTS,
     lang,
-    memberEnrichmentDeps
+    void 0
   );
   await enrichHwyGenderCodeTitles(enrichedMembers, lang);
   await enrichHwyMemberDirectoryListRows(enrichedMembers, lang, {
@@ -240955,7 +242209,7 @@ async function loadHwyFamilyHousehold(query, req) {
   for (const member of enrichedMembers) {
     attachHwyHouseholdMemberAvatarUrl(member);
   }
-  const provinceTitle = nakhebinPlain.map((row) => resolveHwyElectoralProvinceTitle(row.electoralDivisionPath)).find((title) => title.length > 0) ?? "";
+  const provinceTitle = nakhebinPlain.map((row) => resolveHwyElectoralProvinceTitle(row.electoral_division_path)).find((title) => title.length > 0) ?? "";
   return {
     members: enrichedMembers,
     nakhebin: nakhebinPlain,
@@ -241066,7 +242320,7 @@ async function lookupActiveInstituteIdByCode(code) {
   const rows = await sequelize.query(
     `SELECT id FROM ${table} WHERE code = :code AND is_active = 1`,
     {
-      type: import_sequelize69.QueryTypes.SELECT,
+      type: import_sequelize70.QueryTypes.SELECT,
       replacements: { code: trimmed }
     }
   );
@@ -241087,10 +242341,10 @@ async function resolveHwySelfRegistrationInstituteId(input) {
   }
   return lookupActiveInstituteIdByCode(input.channel);
 }
-var import_sequelize69, resolveInstitutesTable2;
+var import_sequelize70, resolveInstitutesTable2;
 var init_hwySelfRegistrationInstituteResolve_service = __esm({
   "src/server/domain/hwy/hwySelfRegistrationInstituteResolve.service.ts"() {
-    import_sequelize69 = require("sequelize");
+    import_sequelize70 = require("sequelize");
     init_hwySelfRegistrationInstituteChannels();
     init_hwySelfRegistrationInstituteDefaults();
     init_controlPlaneSequelize();
@@ -242381,18 +243635,18 @@ var init_hwyMemberDossierFileUploadPolicy = __esm({
 async function execHwyProcedure(procedureName, replacements, options2) {
   const keys = Object.keys(replacements);
   const argList = keys.map((key) => `@${key} = :${key}`).join(", ");
-  const sql22 = argList.length ? `EXEC dbo.${procedureName} ${argList}` : `EXEC dbo.${procedureName}`;
+  const sql23 = argList.length ? `EXEC dbo.${procedureName} ${argList}` : `EXEC dbo.${procedureName}`;
   const sequelize = getControlPlaneSequelize();
-  return sequelize.query(sql22, {
+  return sequelize.query(sql23, {
     replacements,
-    type: import_sequelize70.QueryTypes.SELECT,
+    type: import_sequelize71.QueryTypes.SELECT,
     transaction: options2?.transaction
   });
 }
-var import_sequelize70;
+var import_sequelize71;
 var init_hwyExecDbObject = __esm({
   "src/server/domain/hwy/hwyExecDbObject.ts"() {
-    import_sequelize70 = require("sequelize");
+    import_sequelize71 = require("sequelize");
     init_controlPlaneSequelize();
   }
 });
@@ -242440,7 +243694,7 @@ async function upsertHwyMemberDossierFile(input) {
       `,
       {
         replacements: { memberId, fileKindCode },
-        type: import_sequelize71.QueryTypes.SELECT
+        type: import_sequelize72.QueryTypes.SELECT
       }
     );
     const rawId = existing[0]?.id;
@@ -242464,7 +243718,7 @@ async function upsertHwyMemberDossierFile(input) {
   }
   const verify = await sequelize.query(
     `SELECT DATALENGTH(content) AS contentLen FROM dbo.hwy_member_files WHERE id = :fileId`,
-    { replacements: { fileId: Number(row.id) }, type: import_sequelize71.QueryTypes.SELECT }
+    { replacements: { fileId: Number(row.id) }, type: import_sequelize72.QueryTypes.SELECT }
   );
   const contentLen = Number(verify[0]?.contentLen ?? 0);
   if (contentLen !== sizeBytes) {
@@ -242486,10 +243740,10 @@ async function persistHwyMemberFileByKindSlug(input) {
     updatedByUserId: input.updatedByUserId
   });
 }
-var import_sequelize71, MAX_MEMBER_FILE_BYTES, parseMemberId3;
+var import_sequelize72, MAX_MEMBER_FILE_BYTES, parseMemberId3;
 var init_hwyMemberDossierFileUpsert_service = __esm({
   "src/server/domain/hwy/hwyMemberDossierFileUpsert.service.ts"() {
-    import_sequelize71 = require("sequelize");
+    import_sequelize72 = require("sequelize");
     init_hwyMemberDossierFileUploadPolicy();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -242594,10 +243848,10 @@ var init_coerceSqlServerBitField = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberImageFixEditor.service.ts
-var import_sequelize72, resolveShortNameFromTypeCode, loadHwyMemberImageFixEditorFields, patchHwyMemberImageFixEditorFields;
+var import_sequelize73, resolveShortNameFromTypeCode, loadHwyMemberImageFixEditorFields, patchHwyMemberImageFixEditorFields;
 var init_hwyMemberImageFixEditor_service = __esm({
   "src/server/domain/hwy/hwyMemberImageFixEditor.service.ts"() {
-    import_sequelize72 = require("sequelize");
+    import_sequelize73 = require("sequelize");
     init_hwyMemberImageFixVoterCardType();
     init_controlPlaneSequelize();
     init_hwyMemberDirectoryListCache();
@@ -242613,7 +243867,7 @@ var init_hwyMemberImageFixEditor_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT TOP (1) short_name FROM dbo.base_info WHERE id = :id`,
-        { replacements: { id: trimmed }, type: import_sequelize72.QueryTypes.SELECT }
+        { replacements: { id: trimmed }, type: import_sequelize73.QueryTypes.SELECT }
       );
       const shortName = String(rows[0]?.short_name ?? "").trim();
       return isHwyVoterCardFrontTypeShortName(shortName) ? shortName : null;
@@ -242630,7 +243884,7 @@ var init_hwyMemberImageFixEditor_service = __esm({
     FROM dbo.hwy_members
     WHERE id = :memberId
     `,
-        { replacements: { memberId }, type: import_sequelize72.QueryTypes.SELECT }
+        { replacements: { memberId }, type: import_sequelize73.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row) {
@@ -242683,7 +243937,7 @@ var init_hwyMemberImageFixEditor_service = __esm({
     SET ${sets.join(", ")}
     WHERE id = :memberId
     `,
-        { replacements, type: import_sequelize72.QueryTypes.UPDATE }
+        { replacements, type: import_sequelize73.QueryTypes.UPDATE }
       );
       await invalidateHwyMemberDirectoryListCache();
     };
@@ -243804,7 +245058,7 @@ async function loadMemberInstituteBlockContext(memberId, queryLang) {
     FROM dbo.hwy_members m
     WHERE m.id = :memberId
     `,
-    { replacements: { memberId }, type: import_sequelize73.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize74.QueryTypes.SELECT }
   );
   const record = { ...rows[0] ?? {} };
   await attachBaseInfoTitles(
@@ -243825,7 +245079,7 @@ async function loadMemberInstituteBlockContext(memberId, queryLang) {
 async function resolveCharacterTitlesByInstitute(rows, queryLang) {
   const cultureId = resolveBaseInfoCultureId(queryLang);
   const codes = [...new Set(
-    rows.map((row) => normalizeInstituteCode(row.instituteCode)).filter((code) => code.length > 0)
+    rows.map((row) => normalizeInstituteCode(row.institute_code)).filter((code) => code.length > 0)
   )];
   const labelByInstituteAndId = /* @__PURE__ */ new Map();
   await Promise.all(codes.map(async (instituteCode) => {
@@ -243837,13 +245091,13 @@ async function resolveCharacterTitlesByInstitute(rows, queryLang) {
     labelByInstituteAndId.set(instituteCode, byId);
   }));
   for (const row of rows) {
-    const instituteCode = normalizeInstituteCode(row.instituteCode);
-    const characterCode = String(row.characterCode ?? "").trim();
+    const instituteCode = normalizeInstituteCode(row.institute_code);
+    const characterCode = String(row.character_code ?? "").trim();
     if (!instituteCode || !characterCode) {
-      row.characterCodeTitle = null;
+      row.character_code_title = null;
       continue;
     }
-    row.characterCodeTitle = labelByInstituteAndId.get(instituteCode)?.get(characterCode) ?? null;
+    row.character_code_title = labelByInstituteAndId.get(instituteCode)?.get(characterCode) ?? null;
   }
 }
 function mergeMemberContext(row, context) {
@@ -243878,7 +245132,7 @@ function mergeMemberContext(row, context) {
 }
 async function enrichHwyMemberDossierInstituteSpecificRows(memberId, rows, queryLang) {
   const visibleRows = rows.filter(
-    (row) => coerceSqlServerBitField(row.showInstituteCharacterInDossier)
+    (row) => coerceSqlServerBitField(row.show_institute_character_in_dossier)
   );
   let memberContext = null;
   if (visibleRows.length > 0) {
@@ -243889,7 +245143,7 @@ async function enrichHwyMemberDossierInstituteSpecificRows(memberId, rows, query
     );
     await resolveCharacterTitlesByInstitute(visibleRows, queryLang);
     const needsMemberContext = visibleRows.some((row) => {
-      const code = normalizeInstituteCode(row.instituteCode);
+      const code = normalizeInstituteCode(row.institute_code);
       return code === "gov" || code === "mehani" || code === "hemam";
     });
     if (needsMemberContext) {
@@ -243897,8 +245151,8 @@ async function enrichHwyMemberDossierInstituteSpecificRows(memberId, rows, query
     }
   }
   return rows.map((row) => {
-    const showInstituteCharacterInDossier = coerceSqlServerBitField(row.showInstituteCharacterInDossier);
-    const instituteCode = String(row.instituteCode ?? "").trim() || void 0;
+    const showInstituteCharacterInDossier = coerceSqlServerBitField(row.show_institute_character_in_dossier);
+    const instituteCode = String(row.institute_code ?? "").trim() || void 0;
     const normalized = {
       ...row,
       instituteCode,
@@ -243944,10 +245198,10 @@ function stripInstituteSpecificDossierFields(row) {
   delete row.educationUniversityFacultyCode;
   delete row.educationUniversityFacultyCodeTitle;
 }
-var import_sequelize73, normalizeInstituteCode;
+var import_sequelize74, normalizeInstituteCode;
 var init_hwyMemberDossierInstituteSpecificEnrichment_service = __esm({
   "src/server/domain/hwy/hwyMemberDossierInstituteSpecificEnrichment.service.ts"() {
-    import_sequelize73 = require("sequelize");
+    import_sequelize74 = require("sequelize");
     init_baseInfoCultureTranslations();
     init_controlPlaneSequelize();
     init_hwyMemberInstituteCharacterSelectOptions_service();
@@ -244130,7 +245384,7 @@ async function loadHwyMemberMembershipStatusCodeByPk(memberId) {
     `SELECT TOP (1) membership_status_code FROM dbo.hwy_members WHERE id = :memberId`,
     {
       replacements: { memberId },
-      type: import_sequelize74.QueryTypes.SELECT
+      type: import_sequelize75.QueryTypes.SELECT
     }
   );
   const code = rows[0]?.membership_status_code;
@@ -244205,10 +245459,10 @@ async function listHwyMemberDossierKasbAcquired(memberIdRaw, _queryLang = "ar") 
     host_member_id: memberId
   });
   return rows.map((row) => ({
-    kasbMemberId: String(row.kasbMemberId ?? "").trim(),
-    kasbUsername: String(row.kasbUsername ?? "").trim(),
-    linkSlot: String(row.linkSlot ?? "").trim() === "secondReferrer" ? "secondReferrer" : "referrer",
-    referrerRelationId: row.referrerRelationId
+    kasbMemberId: String(row.kasb_member_id ?? "").trim(),
+    kasbUsername: String(row.kasb_username ?? "").trim(),
+    linkSlot: String(row.link_slot ?? "").trim() === "secondReferrer" ? "secondReferrer" : "referrer",
+    referrerRelationId: row.referrer_relation_id
   }));
 }
 async function listHwyMemberDossierTarghinRequests(memberIdRaw, queryLang = "ar") {
@@ -244331,7 +245585,7 @@ async function readLatestHwyMemberSecurityProfileHistoryRow(memberId, queryLang)
   const sequelize = getControlPlaneSequelize();
   const historyExists = await sequelize.query(
     `SELECT CASE WHEN OBJECT_ID(N'dbo.hwy_member_security_profile_history', N'U') IS NOT NULL THEN 1 ELSE 0 END AS ok`,
-    { type: import_sequelize74.QueryTypes.SELECT }
+    { type: import_sequelize75.QueryTypes.SELECT }
   );
   if (!historyExists[0]?.ok) {
     return null;
@@ -244344,7 +245598,7 @@ ${SECURITY_PROFILE_HISTORY_SELECT}
     WHERE sp.member_id = :memberId
     ORDER BY sp.created_on DESC
     `,
-    { replacements: { memberId }, type: import_sequelize74.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize75.QueryTypes.SELECT }
   );
   if (!rows.length) {
     return null;
@@ -244362,7 +245616,7 @@ ${SECURITY_PROFILE_SNAPSHOT_SELECT}
     WHERE sp.member_id = :memberId
     ORDER BY sp.created_at DESC
     `,
-    { replacements: { memberId }, type: import_sequelize74.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize75.QueryTypes.SELECT }
   );
   if (!rows.length) {
     return null;
@@ -244402,7 +245656,7 @@ async function listHwyMemberDossierSecurityProfileHistory(memberIdRaw, queryLang
   const sequelize = getControlPlaneSequelize();
   const historyExists = await sequelize.query(
     `SELECT CASE WHEN OBJECT_ID(N'dbo.hwy_member_security_profile_history', N'U') IS NOT NULL THEN 1 ELSE 0 END AS ok`,
-    { type: import_sequelize74.QueryTypes.SELECT }
+    { type: import_sequelize75.QueryTypes.SELECT }
   );
   if (historyExists[0]?.ok) {
     const rows2 = await sequelize.query(
@@ -244413,7 +245667,7 @@ ${SECURITY_PROFILE_HISTORY_SELECT}
     WHERE sp.member_id = :memberId
     ORDER BY sp.created_on DESC
     `,
-      { replacements: { memberId }, type: import_sequelize74.QueryTypes.SELECT }
+      { replacements: { memberId }, type: import_sequelize75.QueryTypes.SELECT }
     );
     await attachSecurityProfileTitles(rows2, queryLang);
     return rows2;
@@ -244426,7 +245680,7 @@ ${SECURITY_PROFILE_SELECT}
     WHERE sp.member_id = :memberId
     ORDER BY sp.created_at DESC
     `,
-    { replacements: { memberId }, type: import_sequelize74.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize75.QueryTypes.SELECT }
   );
   await attachSecurityProfileTitles(rows, queryLang);
   return rows;
@@ -244437,18 +245691,18 @@ async function appendHwyMemberDossierSecurityProfileOpinion(memberIdRaw, input) 
   }
   await ensureHwyDbObjects();
   const memberId = await resolveHwyMemberPrimaryKey(memberIdRaw);
-  const trim36 = (value) => String(value ?? "").trim();
+  const trim41 = (value) => String(value ?? "").trim();
   await execHwyProcedure("hwy_candidate_pipeline_security_record", {
     member_id: memberId,
     can_get_identity_card: input.canGetIdentityCard,
-    can_get_identity_card_note: trim36(input.canGetIdentityCardNote) || null,
+    can_get_identity_card_note: trim41(input.canGetIdentityCardNote) || null,
     can_get_masooliat: input.canGetMasooliat,
-    can_get_masooliat_note: trim36(input.canGetMasooliatNote) || null,
+    can_get_masooliat_note: trim41(input.canGetMasooliatNote) || null,
     can_be_member_of_aammeh: input.canBeMemberOfAammeh,
-    can_be_member_of_aammeh_note: trim36(input.canBeMemberOfAammehNote) || null,
+    can_be_member_of_aammeh_note: trim41(input.canBeMemberOfAammehNote) || null,
     allows_responsibility: input.allowsResponsibility,
-    allows_responsibility_note: trim36(input.allowsResponsibilityNote) || null,
-    actor: trim36(input.actorUsername) || null
+    allows_responsibility_note: trim41(input.allowsResponsibilityNote) || null,
+    actor: trim41(input.actorUsername) || null
   });
 }
 async function readHwyMemberFileContent(fileIdRaw) {
@@ -244468,7 +245722,7 @@ async function readHwyMemberFileContent(fileIdRaw) {
     FROM dbo.hwy_member_files
     WHERE id = :fileId
     `,
-    { replacements: { fileId: Number(fileId) }, type: import_sequelize74.QueryTypes.SELECT }
+    { replacements: { fileId: Number(fileId) }, type: import_sequelize75.QueryTypes.SELECT }
   );
   const row = rows[0];
   if (!row?.body || !Buffer.isBuffer(row.body) || row.body.length === 0) {
@@ -244476,10 +245730,10 @@ async function readHwyMemberFileContent(fileIdRaw) {
   }
   return { mime: row.mime ?? "application/octet-stream", body: row.body };
 }
-var import_sequelize74, resolveHwyMemberNoteCreatedByUserId, resolveHwyMemberPrimaryKey, attachBaseInfoTitles, SECURITY_PROFILE_CODE_TITLE_FIELDS, SECURITY_PROFILE_HISTORY_SELECT, SECURITY_PROFILE_SNAPSHOT_SELECT, SECURITY_PROFILE_SELECT;
+var import_sequelize75, resolveHwyMemberNoteCreatedByUserId, resolveHwyMemberPrimaryKey, attachBaseInfoTitles, SECURITY_PROFILE_CODE_TITLE_FIELDS, SECURITY_PROFILE_HISTORY_SELECT, SECURITY_PROFILE_SNAPSHOT_SELECT, SECURITY_PROFILE_SELECT;
 var init_hwyMemberDossierSatellites_service = __esm({
   "src/server/domain/hwy/hwyMemberDossierSatellites.service.ts"() {
-    import_sequelize74 = require("sequelize");
+    import_sequelize75 = require("sequelize");
     init_hwyMemberTarghinRequestReasons();
     init_baseInfoCultureTranslations();
     init_treeRepository();
@@ -244498,7 +245752,7 @@ var init_hwyMemberDossierSatellites_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT id FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId: createdByUserId }, type: import_sequelize74.QueryTypes.SELECT }
+        { replacements: { userId: createdByUserId }, type: import_sequelize75.QueryTypes.SELECT }
       );
       return rows.length ? createdByUserId : null;
     };
@@ -244513,7 +245767,7 @@ var init_hwyMemberDossierSatellites_service = __esm({
         if (Number.isFinite(id) && id > 0) {
           const byId = await sequelize.query(
             `SELECT id FROM dbo.hwy_members WHERE id = :id`,
-            { replacements: { id }, type: import_sequelize74.QueryTypes.SELECT }
+            { replacements: { id }, type: import_sequelize75.QueryTypes.SELECT }
           );
           if (byId.length) {
             return byId[0].id;
@@ -244522,7 +245776,7 @@ var init_hwyMemberDossierSatellites_service = __esm({
       }
       const byUsername = await sequelize.query(
         `SELECT id FROM dbo.hwy_members WHERE username = :username`,
-        { replacements: { username: trimmed }, type: import_sequelize74.QueryTypes.SELECT }
+        { replacements: { username: trimmed }, type: import_sequelize75.QueryTypes.SELECT }
       );
       if (byUsername.length) {
         return byUsername[0].id;
@@ -244534,7 +245788,7 @@ var init_hwyMemberDossierSatellites_service = __esm({
     INNER JOIN dbo.base_users u ON u.id = m.user_id
     WHERE LTRIM(RTRIM(u.username)) = :username
     `,
-        { replacements: { username: trimmed }, type: import_sequelize74.QueryTypes.SELECT }
+        { replacements: { username: trimmed }, type: import_sequelize75.QueryTypes.SELECT }
       );
       if (byUserLogin.length) {
         return byUserLogin[0].id;
@@ -244605,14 +245859,14 @@ var init_hwyMemberDossierSatellites_service = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberDomainWriteExtras.service.ts
-var import_sequelize75, parseId, assertSqlServer, removeHwyTarghinDirect, respondHwyMemberInstituteInvite, clearHwyMemberInstituteEmployment, linkHwyMemberKasb, unlinkHwyMemberKasb, runHwyMemberAfterCreateHook, resendHwyMemberRegistrationSms, syncHwyMemberOathDocumentApproveFlag, syncHwyMemberRegistrationFileApproveFlags;
+var import_sequelize76, parseId, assertSqlServer, removeHwyTarghinDirect, respondHwyMemberInstituteInvite, clearHwyMemberInstituteEmployment, linkHwyMemberKasb, unlinkHwyMemberKasb, runHwyMemberAfterCreateHook, resendHwyMemberRegistrationSms, syncHwyMemberOathDocumentApproveFlag, syncHwyMemberRegistrationFileApproveFlags;
 var init_hwyMemberDomainWriteExtras_service = __esm({
   "src/server/domain/hwy/hwyMemberDomainWriteExtras.service.ts"() {
     init_hwyBaseInfoVocabIds();
     init_ensureHwyDbObjects();
     init_hwyExecDbObject();
     init_prismaHelpers();
-    import_sequelize75 = require("sequelize");
+    import_sequelize76 = require("sequelize");
     init_controlPlaneSequelize();
     init_hwyMemberFileKindResolve_service();
     init_hwyMemberImageFixVoterCardType();
@@ -244775,7 +246029,7 @@ var init_hwyMemberDomainWriteExtras_service = __esm({
             memberId: input.memberId,
             fileKindCode: kind.id
           },
-          type: import_sequelize75.QueryTypes.UPDATE
+          type: import_sequelize76.QueryTypes.UPDATE
         }
       );
     };
@@ -244810,7 +246064,7 @@ var init_hwyMemberDomainWriteExtras_service = __esm({
           });
         }
         if (typeShortNameRaw !== void 0) {
-          const voterCardFrontTypeShortName = typeShortNameRaw === null || isHwyVoterCardFrontTypeShortName(typeShortNameRaw) ? typeShortNameRaw : null;
+          const voterCardFrontTypeShortName = typeShortNameRaw === null ? null : isHwyVoterCardFrontTypeShortName(typeShortNameRaw) ? typeShortNameRaw : null;
           await patchHwyMemberImageFixEditorFields({
             memberId: input.memberId,
             voterCardFrontTypeShortName,
@@ -244824,10 +246078,10 @@ var init_hwyMemberDomainWriteExtras_service = __esm({
 });
 
 // src/server/domain/hwy/selfRegistration.service.ts
-var import_sequelize76, trim3, normalizePhone, submitHwySelfRegistration, trackHwySelfRegistration;
+var import_sequelize77, trim3, normalizePhone, submitHwySelfRegistration, trackHwySelfRegistration;
 var init_selfRegistration_service = __esm({
   "src/server/domain/hwy/selfRegistration.service.ts"() {
-    import_sequelize76 = require("sequelize");
+    import_sequelize77 = require("sequelize");
     init_hwySelfRegistrationInstituteResolve_service();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -245040,7 +246294,7 @@ var init_selfRegistration_service = __esm({
     `,
         {
           replacements: { code: trackingCode },
-          type: import_sequelize76.QueryTypes.SELECT
+          type: import_sequelize77.QueryTypes.SELECT
         }
       );
       const statusCode = rows[0]?.membership_status_code;
@@ -245159,7 +246413,7 @@ async function loadHwyInstituteSelfRegistrationBrand(input) {
      FROM ${table}
      WHERE id = :instituteId AND is_active = 1`,
     {
-      type: import_sequelize77.QueryTypes.SELECT,
+      type: import_sequelize78.QueryTypes.SELECT,
       replacements: { instituteId }
     }
   );
@@ -245181,10 +246435,10 @@ async function loadHwyInstituteSelfRegistrationBrand(input) {
     inviteExpiresAfterDays: row.invite_expires_after_days ?? null
   };
 }
-var import_sequelize77, readBool;
+var import_sequelize78, readBool;
 var init_hwyInstituteSelfRegistrationBrand_service = __esm({
   "src/server/domain/hwy/hwyInstituteSelfRegistrationBrand.service.ts"() {
-    import_sequelize77 = require("sequelize");
+    import_sequelize78 = require("sequelize");
     init_hwyInstituteLogoPath();
     init_hwyInstituteLogo_service();
     init_hwySelfRegistrationInstituteResolve_service();
@@ -245195,10 +246449,10 @@ var init_hwyInstituteSelfRegistrationBrand_service = __esm({
 });
 
 // src/server/domain/hwy/hwyInstituteScopedEditConfig.service.ts
-var import_sequelize78, listHwyInstituteScopedEditConfig;
+var import_sequelize79, listHwyInstituteScopedEditConfig;
 var init_hwyInstituteScopedEditConfig_service = __esm({
   "src/server/domain/hwy/hwyInstituteScopedEditConfig.service.ts"() {
-    import_sequelize78 = require("sequelize");
+    import_sequelize79 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyDbObjects();
@@ -245217,7 +246471,7 @@ var init_hwyInstituteScopedEditConfig_service = __esm({
     FROM dbo.hwy_institutes i
     WHERE i.is_active = 1
     `,
-        { type: import_sequelize78.QueryTypes.SELECT }
+        { type: import_sequelize79.QueryTypes.SELECT }
       );
       return rows.map((row) => ({
         instituteCode: String(row.code).trim().toLowerCase(),
@@ -245284,7 +246538,7 @@ async function deleteHwyMemberDossierFile(fileIdRaw) {
     FROM dbo.hwy_member_files
     WHERE id = :fileId
     `,
-    { replacements: { fileId }, type: import_sequelize79.QueryTypes.SELECT }
+    { replacements: { fileId }, type: import_sequelize80.QueryTypes.SELECT }
   );
   const fileKindCode = String(rows[0]?.fileKindCode ?? "").trim();
   if (!fileKindCode) {
@@ -245301,10 +246555,10 @@ async function deleteHwyMemberDossierFile(fileIdRaw) {
     throw new Error("File not found.");
   }
 }
-var import_sequelize79, parseFileId;
+var import_sequelize80, parseFileId;
 var init_hwyMemberDossierFileDelete_service = __esm({
   "src/server/domain/hwy/hwyMemberDossierFileDelete.service.ts"() {
-    import_sequelize79 = require("sequelize");
+    import_sequelize80 = require("sequelize");
     init_hwyMemberDossierEditPolicy();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -245347,7 +246601,7 @@ async function loadMemberFileById(memberId, fileId) {
     `,
     {
       replacements: { memberId, fileId },
-      type: import_sequelize80.QueryTypes.SELECT
+      type: import_sequelize81.QueryTypes.SELECT
     }
   );
   const row = rows[0];
@@ -245413,10 +246667,10 @@ async function moveHwyMemberImageFixRegistrationFileSlot(input) {
     await updateFileKind(memberId, targetFile.id, sourceKindCode, updatedBy, transaction);
   });
 }
-var import_sequelize80, parseMemberId4, parseFileId2, assertRegistrationSlotSlug;
+var import_sequelize81, parseMemberId4, parseFileId2, assertRegistrationSlotSlug;
 var init_hwyMemberImageFixFileSlotMove_service = __esm({
   "src/server/domain/hwy/hwyMemberImageFixFileSlotMove.service.ts"() {
-    import_sequelize80 = require("sequelize");
+    import_sequelize81 = require("sequelize");
     init_hwyMemberImageFixCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -245583,18 +246837,17 @@ var init_hwyMemberSimilarMembers_service = __esm({
     mapSimilarRow = (row) => ({
       id: readRowString3(row, "id"),
       username: readRowString3(row, "username") || void 0,
-      displayFullName: formatHwyMemberPersonDisplayName(readRowString3(row, "displayFullName")) || void 0,
-      birthYear: readRowString3(row, "birthYear") || void 0,
+      displayFullName: formatHwyMemberPersonDisplayName(readRowString3(row, "display_full_name")) || void 0,
+      birthYear: readRowString3(row, "birth_year") || void 0,
       phone1: readRowString3(row, "phone1") || void 0,
       phone2: readRowString3(row, "phone2") || void 0,
-      membershipStatusCode: readRowString3(row, "membershipStatusCode") || void 0,
-      avatarUrl: readRowString3(row, "avatarUrl") || void 0,
-      nakhebinId: readRowString3(row, "nakhebinId") || void 0,
-      familyCode: readRowString3(row, "familyCode") || void 0,
-      membershipOn: readRowString3(row, "membershipOn") || void 0,
-      electoralDivisionPath: readRowString3(row, "electoralDivisionPath") || void 0,
-      addrProvinceId: readRowString3(row, "addrProvinceId") || void 0,
-      addrProvinceTitle: readRowString3(row, "addrProvinceTitle") || void 0
+      membershipStatusCode: readRowString3(row, "membership_status_code") || void 0,
+      avatarUrl: readRowString3(row, "avatar_url") || void 0,
+      nakhebinId: readRowString3(row, "nakhebin_id") || void 0,
+      familyCode: readRowString3(row, "family_code") || void 0,
+      membershipOn: readRowString3(row, "membership_on") || void 0,
+      electoralDivisionPath: readRowString3(row, "electoral_division_path") || void 0,
+      addrProvinceTitle: readRowString3(row, "addr_province_title") || void 0
     });
     enrichMembershipStatusTitles = async (rows, cultureId) => {
       const ids2 = /* @__PURE__ */ new Set();
@@ -246082,7 +247335,7 @@ async function syncHwyMemberDirectoryPatchToLinkedAccount(sequelize, userId, pat
   if (profileSets.length > 1) {
     await sequelize.query(
       `UPDATE dbo.base_user_profiles SET ${profileSets.join(", ")} WHERE user_id = :user_id`,
-      { replacements: profileReplacements, type: import_sequelize81.QueryTypes.UPDATE }
+      { replacements: profileReplacements, type: import_sequelize82.QueryTypes.UPDATE }
     );
   }
   if (Object.prototype.hasOwnProperty.call(patch, "email")) {
@@ -246094,7 +247347,7 @@ async function syncHwyMemberDirectoryPatchToLinkedAccount(sequelize, userId, pat
           email: trimOptional(patch.email, 500),
           updated_at: updatedAt
         },
-        type: import_sequelize81.QueryTypes.UPDATE
+        type: import_sequelize82.QueryTypes.UPDATE
       }
     );
   }
@@ -246102,7 +247355,7 @@ async function syncHwyMemberDirectoryPatchToLinkedAccount(sequelize, userId, pat
 async function readHwyMemberLinkedUserId(sequelize, memberId) {
   const rows = await sequelize.query(
     `SELECT user_id FROM dbo.hwy_members WHERE id = :id`,
-    { replacements: { id: memberId }, type: import_sequelize81.QueryTypes.SELECT }
+    { replacements: { id: memberId }, type: import_sequelize82.QueryTypes.SELECT }
   );
   const raw = rows[0]?.user_id;
   if (raw == null) {
@@ -246111,10 +247364,10 @@ async function readHwyMemberLinkedUserId(sequelize, memberId) {
   const userId = Number(raw);
   return Number.isFinite(userId) && userId > 0 ? userId : null;
 }
-var import_sequelize81, trimOptional;
+var import_sequelize82, trimOptional;
 var init_hwyMemberDirectoryPatchProfileSync = __esm({
   "src/server/domain/hwy/hwyMemberDirectoryPatchProfileSync.ts"() {
-    import_sequelize81 = require("sequelize");
+    import_sequelize82 = require("sequelize");
     trimOptional = (value, max = 4e3) => {
       if (value == null) {
         return null;
@@ -246249,7 +247502,7 @@ async function getHwyMemberPhonePendingState(memberIdRaw) {
      LEFT JOIN dbo.base_users u ON u.id = c.request_by
      WHERE c.member_id = :memberId AND c.final_result IS NULL
      ORDER BY c.request_at DESC`,
-    { replacements: { memberId }, type: import_sequelize82.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize83.QueryTypes.SELECT }
   );
   const swapRows = await sequelize.query(
     `SELECT s.*, u.username AS request_by_username,
@@ -246263,7 +247516,7 @@ async function getHwyMemberPhonePendingState(memberIdRaw) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      WHERE s.member_id = :memberId AND s.final_result IS NULL
      ORDER BY s.request_at DESC`,
-    { replacements: { memberId }, type: import_sequelize82.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize83.QueryTypes.SELECT }
   );
   const changeBySlot = { 1: null, 2: null };
   for (const row of changeRows) {
@@ -246296,7 +247549,7 @@ async function listHwyMemberPhoneHistory(memberIdRaw, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = c.final_by
      WHERE c.member_id = :memberId`,
-    { replacements: { memberId }, type: import_sequelize82.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize83.QueryTypes.SELECT }
   );
   const swapRows = await sequelize.query(
     `SELECT s.*, 'swap' AS request_kind, u.username AS request_by_username,
@@ -246313,7 +247566,7 @@ async function listHwyMemberPhoneHistory(memberIdRaw, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = s.final_by
      WHERE s.member_id = :memberId`,
-    { replacements: { memberId }, type: import_sequelize82.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize83.QueryTypes.SELECT }
   );
   const merged = [...changeRows, ...swapRows].map((row) => mapAdminRow(row, cultureLang)).sort((a, b) => b.requestAt.localeCompare(a.requestAt));
   await attachRejectTitles(merged, cultureLang);
@@ -246364,7 +247617,7 @@ async function createHwyMemberPhoneChangeRequest(input) {
         requestNote: (input.requestNote ?? "").trim().slice(0, 512) || null,
         requestBy: input.actorUserId
       },
-      type: import_sequelize82.QueryTypes.INSERT
+      type: import_sequelize83.QueryTypes.INSERT
     }
   );
   return { appliedDirectly: false };
@@ -246400,7 +247653,7 @@ async function createHwyMemberPhoneSwapRequest(input) {
         requestNote: (input.requestNote ?? "").trim().slice(0, 512) || null,
         requestBy: input.actorUserId
       },
-      type: import_sequelize82.QueryTypes.INSERT
+      type: import_sequelize83.QueryTypes.INSERT
     }
   );
   return { appliedDirectly: false };
@@ -246427,7 +247680,7 @@ async function listHwyMemberPhoneAdmin(input, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = c.final_by
      WHERE ${filter}`,
-    { type: import_sequelize82.QueryTypes.SELECT }
+    { type: import_sequelize83.QueryTypes.SELECT }
   );
   const swapRows = await sequelize.query(
     `SELECT s.*, 'swap' AS request_kind, u.username AS request_by_username,
@@ -246444,7 +247697,7 @@ async function listHwyMemberPhoneAdmin(input, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = s.final_by
      WHERE ${filter}`,
-    { type: import_sequelize82.QueryTypes.SELECT }
+    { type: import_sequelize83.QueryTypes.SELECT }
   );
   let merged = [...changeRows, ...swapRows].map((row) => mapAdminRow(row, cultureLang));
   if (search) {
@@ -246487,7 +247740,7 @@ async function decideHwyMemberPhoneRequest(input) {
   const table = isSwap ? "hwy_member_phone_swap_requests" : "hwy_member_phone_change_requests";
   const pendingRows = await sequelize.query(
     `SELECT * FROM dbo.${table} WHERE id = :id AND final_result IS NULL`,
-    { replacements: { id: requestId }, type: import_sequelize82.QueryTypes.SELECT }
+    { replacements: { id: requestId }, type: import_sequelize83.QueryTypes.SELECT }
   );
   const req = pendingRows[0];
   if (!req) {
@@ -246533,15 +247786,15 @@ async function decideHwyMemberPhoneRequest(input) {
         finalNote: finalNote.slice(0, 512),
         finalBy: input.actorUserId
       },
-      type: import_sequelize82.QueryTypes.UPDATE
+      type: import_sequelize83.QueryTypes.UPDATE
     }
   );
 }
-var import_node_crypto45, import_sequelize82, DEFAULT_PAGE_SIZE5, MAX_PAGE_SIZE5, AUTO_DISMISS_CHANGE_NOTE, AUTO_DISMISS_SWAP_NOTE, assertSqlServer2, parseMemberId7, clampPage2, loadMemberPhoneRow, ensurePhoneAvailable, ensureNoPendingSwap, ensureNoPendingChangeForSlot, ensureNoPendingChanges, applyMemberPhones, dismissPendingChangesForSlot, dismissPendingSwap, applyApprovedPhoneChange, applyApprovedPhoneSwap, mapAdminRow, attachRejectTitles, queueFilterSql, isSwapRequestId;
+var import_node_crypto45, import_sequelize83, DEFAULT_PAGE_SIZE5, MAX_PAGE_SIZE5, AUTO_DISMISS_CHANGE_NOTE, AUTO_DISMISS_SWAP_NOTE, assertSqlServer2, parseMemberId7, clampPage2, loadMemberPhoneRow, ensurePhoneAvailable, ensureNoPendingSwap, ensureNoPendingChangeForSlot, ensureNoPendingChanges, applyMemberPhones, dismissPendingChangesForSlot, dismissPendingSwap, applyApprovedPhoneChange, applyApprovedPhoneSwap, mapAdminRow, attachRejectTitles, queueFilterSql, isSwapRequestId;
 var init_hwyMemberPhoneRequests_service = __esm({
   "src/server/domain/hwy/hwyMemberPhoneRequests.service.ts"() {
     import_node_crypto45 = __toESM(require("node:crypto"), 1);
-    import_sequelize82 = require("sequelize");
+    import_sequelize83 = require("sequelize");
     init_hwyMemberPhoneRequestRules();
     init_hwyMemberDirectoryDetail();
     init_hwyMemberPersonDisplayName();
@@ -246591,7 +247844,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
      LEFT JOIN dbo.base_users u ON u.id = m.user_id
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      WHERE m.id = :id`,
-        { replacements: { id: memberId }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { id: memberId }, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (!rows[0]) {
         throw new Error("Member not found.");
@@ -246606,7 +247859,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
       const usedRows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.hwy_members WITH (NOLOCK)
      WHERE id <> :memberId AND (phone1 = :phone OR phone2 = :phone)`,
-        { replacements: { memberId: excludeMemberId, phone }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { memberId: excludeMemberId, phone }, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (Number(usedRows[0]?.c ?? 0) > 0) {
         throw new Error("Phone number is already used by another member.");
@@ -246620,7 +247873,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
       const pendingRows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.hwy_member_phone_change_requests WITH (NOLOCK)
      WHERE new_phone = :phone AND final_result IS NULL${excludeClause}`,
-        { replacements: pendingReplacements, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: pendingReplacements, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (Number(pendingRows[0]?.c ?? 0) > 0) {
         throw new Error("Phone number is reserved by another pending change request.");
@@ -246631,7 +247884,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.hwy_member_phone_swap_requests WITH (NOLOCK)
      WHERE member_id = :memberId AND final_result IS NULL`,
-        { replacements: { memberId }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { memberId }, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (Number(rows[0]?.c ?? 0) > 0) {
         throw new Error("A pending phone swap request already exists for this member.");
@@ -246642,7 +247895,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.hwy_member_phone_change_requests WITH (NOLOCK)
      WHERE member_id = :memberId AND phone_slot = :phoneSlot AND final_result IS NULL`,
-        { replacements: { memberId, phoneSlot }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { memberId, phoneSlot }, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (Number(rows[0]?.c ?? 0) > 0) {
         throw new Error("A pending change request already exists for this phone slot.");
@@ -246653,7 +247906,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.hwy_member_phone_change_requests WITH (NOLOCK)
      WHERE member_id = :memberId AND final_result IS NULL`,
-        { replacements: { memberId }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { memberId }, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (Number(rows[0]?.c ?? 0) > 0) {
         throw new Error("A pending phone change request already exists for this member.");
@@ -246663,7 +247916,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const beforeRows = await sequelize.query(
         `SELECT ${HWY_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.hwy_members WHERE id = :id`,
-        { replacements: { id: input.memberId }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { id: input.memberId }, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (!beforeRows[0]) {
         throw new Error("Member not found.");
@@ -246676,12 +247929,12 @@ var init_hwyMemberPhoneRequests_service = __esm({
         `UPDATE dbo.hwy_members SET phone1 = :phone1, phone2 = :phone2, updated_at = :updated_at WHERE id = :id`,
         {
           replacements: { id: input.memberId, phone1: p1Db, phone2: p2Db, updated_at: now },
-          type: import_sequelize82.QueryTypes.UPDATE
+          type: import_sequelize83.QueryTypes.UPDATE
         }
       );
       const afterRows = await sequelize.query(
         `SELECT ${HWY_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.hwy_members WHERE id = :id`,
-        { replacements: { id: input.memberId }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { id: input.memberId }, type: import_sequelize83.QueryTypes.SELECT }
       );
       if (afterRows[0]) {
         await emitHwyMemberDirectoryPatchHistory({
@@ -246708,7 +247961,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
      WHERE member_id = :memberId AND phone_slot = :phoneSlot AND final_result IS NULL`,
         {
           replacements: { memberId, phoneSlot, note, final_by: actorUserId2 },
-          type: import_sequelize82.QueryTypes.UPDATE
+          type: import_sequelize83.QueryTypes.UPDATE
         }
       );
     };
@@ -246721,7 +247974,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
      WHERE member_id = :memberId AND final_result IS NULL`,
         {
           replacements: { memberId, note, final_by: actorUserId2 },
-          type: import_sequelize82.QueryTypes.UPDATE
+          type: import_sequelize83.QueryTypes.UPDATE
         }
       );
     };
@@ -246801,7 +248054,7 @@ var init_hwyMemberPhoneRequests_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.hwy_member_phone_swap_requests WHERE id = :id`,
-        { replacements: { id: requestId }, type: import_sequelize82.QueryTypes.SELECT }
+        { replacements: { id: requestId }, type: import_sequelize83.QueryTypes.SELECT }
       );
       return Number(rows[0]?.c ?? 0) > 0;
     };
@@ -246928,8 +248181,8 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
     const fileId = readString5(row, "id");
     const fileName = readString5(row, "originalFileName") || "Attachment";
     const kindTitle = fileKindTitleById.get(readString5(row, "fileKindCode")) || readString5(row, "fileKindCode");
-    const fileCreated = toIso8(row.createdAt);
-    const fileUpdated = toIso8(row.updatedAt);
+    const fileCreated = toIso8(row.created_at);
+    const fileUpdated = toIso8(row.updated_at);
     pushEvent(events, {
       kind: "file.added",
       occurredAt: fileCreated,
@@ -246965,7 +248218,7 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
     const preview = body.length > 120 ? `${body.slice(0, 117)}\u2026` : body;
     pushEvent(events, {
       kind: "note.added",
-      occurredAt: toIso8(row.createdAt),
+      occurredAt: toIso8(row.created_at),
       actorUserId: readString5(row, "createdBy") || void 0,
       copyParams: preview ? { preview } : {},
       sourceTable: "hwy_member_notes",
@@ -246981,14 +248234,14 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
     const linkId = readString5(row, "id");
     pushEvent(events, {
       kind: "institute.linked",
-      occurredAt: toIso8(row.createdAt),
+      occurredAt: toIso8(row.created_at),
       actorUserId: readString5(row, "createdBy") || void 0,
       copyParams: { instituteTitle },
       sourceTable: "hwy_member_institutes",
       sourceId: linkId,
       detailLines: [{ labelKey: "hwy.memberDossier.changeLog.detail.institute", value: instituteTitle }]
     });
-    const invitedAt = toIso8(row.invitedAt);
+    const invitedAt = toIso8(row.invited_at);
     if (invitedAt) {
       pushEvent(events, {
         kind: "institute.invited",
@@ -247000,7 +248253,7 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
         detailLines: [{ labelKey: "hwy.memberDossier.changeLog.detail.institute", value: instituteTitle }]
       });
     }
-    const activatedAt = toIso8(row.activatedAt);
+    const activatedAt = toIso8(row.activated_at);
     if (activatedAt) {
       pushEvent(events, {
         kind: "institute.activated",
@@ -247027,7 +248280,7 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
     const statusCode2 = readString5(row, "statusCode");
     pushEvent(events, {
       kind: "targhin.requested",
-      occurredAt: toIso8(row.createdAt),
+      occurredAt: toIso8(row.created_at),
       actorUserId: readString5(row, "createdBy") || void 0,
       copyParams: {
         ...note ? { note } : {},
@@ -247040,7 +248293,7 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
         ...statusCode2 ? [{ labelKey: "hwy.memberDossier.field.status", value: statusCode2 }] : []
       ]
     });
-    const finalAt = toIso8(row.finalAt);
+    const finalAt = toIso8(row.final_at);
     const finalNote = readString5(row, "finalNote");
     const finalReasonTitle = readString5(row, "finalReasonCodeTitle");
     if (statusCode2 === "approved" && finalAt) {
@@ -247086,7 +248339,7 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
   for (const row of securityRows) {
     pushEvent(events, {
       kind: "security.profileCreated",
-      occurredAt: toIso8(row.createdAt),
+      occurredAt: toIso8(row.created_at),
       actorUserId: readString5(row, "createdBy") || void 0,
       sourceTable: "hwy_member_security_profile",
       sourceId: readString5(row, "id"),
@@ -247100,7 +248353,7 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
     const code = readString5(row, "code");
     pushEvent(events, {
       kind: "registration.trackingCode",
-      occurredAt: toIso8(row.createdAt),
+      occurredAt: toIso8(row.created_at),
       copyParams: {
         ...code ? { code } : {}
       },
@@ -247119,7 +248372,7 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
     const reservedUsername = readString5(row, "username");
     pushEvent(events, {
       kind: "registration.usernameReserved",
-      occurredAt: toIso8(row.reservedAt),
+      occurredAt: toIso8(row.reserved_at),
       copyParams: reservedUsername ? { username: reservedUsername } : {},
       sourceTable: "hwy_username_repo",
       sourceId: readString5(row, "id"),
@@ -247157,10 +248410,10 @@ async function listHwyMemberDossierChangeLog(memberIdRaw, queryLang = "ar") {
   await attachChangeLogActorIdentities(events);
   return { events: sortHwyMemberDossierChangeLogEvents(events) };
 }
-var import_sequelize83, loadChangeLogActorIdentities, attachChangeLogActorIdentities, readString5, toIso8, pushEvent, mapRecordEventKind, appendRecordEventsToChangeLog, appendPhoneRequestEventsToChangeLog;
+var import_sequelize84, loadChangeLogActorIdentities, attachChangeLogActorIdentities, readString5, toIso8, pushEvent, mapRecordEventKind, appendRecordEventsToChangeLog, appendPhoneRequestEventsToChangeLog;
 var init_hwyMemberDossierChangeLog_service = __esm({
   "src/server/domain/hwy/hwyMemberDossierChangeLog.service.ts"() {
-    import_sequelize83 = require("sequelize");
+    import_sequelize84 = require("sequelize");
     init_hwyMemberDossierChangeLog();
     init_hwyMemberDossierChangeLogActor();
     init_baseInfoCultureTranslations();
@@ -247193,7 +248446,7 @@ var init_hwyMemberDossierChangeLog_service = __esm({
      FROM dbo.base_users u
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = u.id
      WHERE u.id IN (${placeholders})`,
-        { replacements, type: import_sequelize83.QueryTypes.SELECT }
+        { replacements, type: import_sequelize84.QueryTypes.SELECT }
       );
       for (const row of rows) {
         const id = Number(row.id);
@@ -247375,11 +248628,11 @@ async function listHwyMemberActivityAttendances(memberIdRaw, limit = 50, offset 
   const mapped = rows.map((row) => ({
     id: String(row.id),
     activityId: String(row.activity_id),
-    activityTitle: row.activity_title?.trim() || null,
-    activityDate: row.activity_date ? new Date(row.activity_date).toISOString().slice(0, 10) : null,
-    activityTypeCode: row.activity_type_code?.trim() || null,
-    createdAt: new Date(row.created_at).toISOString(),
-    selfieSizeBytes: row.selfie_size_bytes ?? null
+    activityTitle: trim4(row.activity_title) || null,
+    activityDate: row.activity_date ? new Date(trim4(row.activity_date)).toISOString().slice(0, 10) : null,
+    activityTypeCode: trim4(row.activity_type_code) || null,
+    createdAt: new Date(trim4(row.created_at)).toISOString(),
+    selfieSizeBytes: row.selfie_size_bytes != null ? Number(row.selfie_size_bytes) : null
   }));
   const enrichRows = mapped;
   await attachBaseInfoTitles(
@@ -247412,11 +248665,11 @@ async function listHwyMemberCourseAttendances(memberIdRaw, limit = 50, offset = 
   const mapped = rows.map((row) => ({
     id: String(row.id),
     courseId: String(row.course_id),
-    courseDate: row.course_date ? new Date(row.course_date).toISOString().slice(0, 10) : null,
-    courseTypeCode: row.course_type_code?.trim() || null,
-    courseSubtypeCode: row.course_subtype_code?.trim() || null,
-    note: row.note?.trim() || null,
-    createdAt: new Date(row.created_at).toISOString()
+    courseDate: row.course_date ? new Date(trim4(row.course_date)).toISOString().slice(0, 10) : null,
+    courseTypeCode: trim4(row.course_type_code) || null,
+    courseSubtypeCode: trim4(row.course_subtype_code) || null,
+    note: trim4(row.note) || null,
+    createdAt: new Date(trim4(row.created_at)).toISOString()
   }));
   const enrichRows = mapped;
   await attachBaseInfoTitles(
@@ -247433,16 +248686,17 @@ async function listHwyMemberCourseAttendances(memberIdRaw, limit = 50, offset = 
     courseSubtypeCodeTitle: String(enrichRows[index]?.courseSubtypeCodeTitle ?? "").trim() || void 0
   }));
 }
-var import_sequelize84, resolveHwyMemberDirectoryMemberId;
+var import_sequelize85, trim4, resolveHwyMemberDirectoryMemberId;
 var init_hwyMemberCoursesActivities_service = __esm({
   "src/server/domain/hwy/hwyMemberCoursesActivities.service.ts"() {
-    import_sequelize84 = require("sequelize");
+    import_sequelize85 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyCoursesActivitiesSchema();
     init_ensureHwyDbObjects();
     init_hwyExecDbObject();
     init_hwyMemberDossierSatellites_service();
+    trim4 = (value) => String(value ?? "").trim();
     resolveHwyMemberDirectoryMemberId = async (raw) => {
       const trimmed = raw.trim();
       if (!trimmed) {
@@ -247454,7 +248708,7 @@ var init_hwyMemberCoursesActivities_service = __esm({
         if (Number.isFinite(id) && id > 0) {
           const rows = await sequelize.query(
             `SELECT id FROM dbo.hwy_members WHERE id = :id`,
-            { replacements: { id }, type: import_sequelize84.QueryTypes.SELECT }
+            { replacements: { id }, type: import_sequelize85.QueryTypes.SELECT }
           );
           if (rows.length) {
             return rows[0].id;
@@ -247463,7 +248717,7 @@ var init_hwyMemberCoursesActivities_service = __esm({
       }
       const byUsername = await sequelize.query(
         `SELECT id FROM dbo.hwy_members WHERE username = :username`,
-        { replacements: { username: trimmed }, type: import_sequelize84.QueryTypes.SELECT }
+        { replacements: { username: trimmed }, type: import_sequelize85.QueryTypes.SELECT }
       );
       if (byUsername.length) {
         return byUsername[0].id;
@@ -247504,10 +248758,10 @@ async function getHwyMemberDossierProfileNavCounts(memberIdRaw, queryLang = "ar"
     courses: coursesActivities.courses
   };
 }
-var import_sequelize85, emptyCounts, resolveMemberPrimaryKey, readCount2, countSimilarMembersDistinct;
+var import_sequelize86, emptyCounts, resolveMemberPrimaryKey, readCount2, countSimilarMembersDistinct;
 var init_hwyMemberDossierProfileNavCounts_service = __esm({
   "src/server/domain/hwy/hwyMemberDossierProfileNavCounts.service.ts"() {
-    import_sequelize85 = require("sequelize");
+    import_sequelize86 = require("sequelize");
     init_hwyMemberFileKindCatalog();
     init_hwyMemberSimilarMembers();
     init_controlPlaneSequelize();
@@ -247541,7 +248795,7 @@ var init_hwyMemberDossierProfileNavCounts_service = __esm({
         if (Number.isFinite(id) && id > 0) {
           const byId = await sequelize.query(
             `SELECT id FROM dbo.hwy_members WHERE id = :id`,
-            { replacements: { id }, type: import_sequelize85.QueryTypes.SELECT }
+            { replacements: { id }, type: import_sequelize86.QueryTypes.SELECT }
           );
           if (byId.length) {
             return byId[0].id;
@@ -247550,7 +248804,7 @@ var init_hwyMemberDossierProfileNavCounts_service = __esm({
       }
       const byUsername = await sequelize.query(
         `SELECT id FROM dbo.hwy_members WHERE username = :username`,
-        { replacements: { username: trimmed }, type: import_sequelize85.QueryTypes.SELECT }
+        { replacements: { username: trimmed }, type: import_sequelize86.QueryTypes.SELECT }
       );
       if (byUsername.length) {
         return byUsername[0].id;
@@ -247791,11 +249045,11 @@ var init_hwyMemberStatsRecalcCatalog = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberStatsRecalcLegacy.service.ts
-var import_sequelize86, LEGACY_STAT_CACHE_TTL_MS, legacyStatCache, LEGACY_MEMBER_STATS_SELECT, runLegacyMemberUpdateStatsAndRead, resolveLegacyMemberStatRow, syncEdgeMemberStatsFromRow;
+var import_sequelize87, LEGACY_STAT_CACHE_TTL_MS, legacyStatCache, LEGACY_MEMBER_STATS_SELECT, runLegacyMemberUpdateStatsAndRead, resolveLegacyMemberStatRow, syncEdgeMemberStatsFromRow;
 var init_hwyMemberStatsRecalcLegacy_service = __esm({
   "src/server/domain/hwy/hwyMemberStatsRecalcLegacy.service.ts"() {
     init_hwyMemberStatRecalcDisplay();
-    import_sequelize86 = require("sequelize");
+    import_sequelize87 = require("sequelize");
     init_controlPlaneSequelize();
     init_hwyExecDbObject();
     LEGACY_STAT_CACHE_TTL_MS = 9e4;
@@ -247822,10 +249076,10 @@ var init_hwyMemberStatsRecalcLegacy_service = __esm({
     runLegacyMemberUpdateStatsAndRead = async (memberId) => {
       try {
         const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-        const sql22 = await import("mssql");
-        const pool = await new sql22.ConnectionPool(readLegacyConn2()).connect();
+        const sql23 = await import("mssql");
+        const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
         try {
-          const update = await pool.request().input("MemberId", sql22.BigInt, memberId).query(`
+          const update = await pool.request().input("MemberId", sql23.BigInt, memberId).query(`
           IF OBJECT_ID(N'dbo.HWY_SP_Members_UpdateStats', N'P') IS NULL
             SELECT CAST(0 AS BIT) AS ok;
           ELSE
@@ -247838,7 +249092,7 @@ var init_hwyMemberStatsRecalcLegacy_service = __esm({
           if (!ok) {
             return null;
           }
-          const read = await pool.request().input("MemberId", sql22.BigInt, memberId).query(LEGACY_MEMBER_STATS_SELECT);
+          const read = await pool.request().input("MemberId", sql23.BigInt, memberId).query(LEGACY_MEMBER_STATS_SELECT);
           const row = read.recordset[0];
           return row ?? null;
         } finally {
@@ -247904,7 +249158,7 @@ var init_hwyMemberStatsRecalcLegacy_service = __esm({
             statAdamTatbighCount: pick2("statAdamTatbighCount", "Stat_AdamTatbighCount"),
             statPoints: pick2("statPoints", "Stat_Points")
           },
-          type: import_sequelize86.QueryTypes.UPDATE
+          type: import_sequelize87.QueryTypes.UPDATE
         }
       );
     };
@@ -247912,10 +249166,10 @@ var init_hwyMemberStatsRecalcLegacy_service = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberStatsRecalc.service.ts
-var import_sequelize87, assertSqlServer3, readMemberStatRow, runHwyMemberStatRecalcStep;
+var import_sequelize88, assertSqlServer3, readMemberStatRow, runHwyMemberStatRecalcStep;
 var init_hwyMemberStatsRecalc_service = __esm({
   "src/server/domain/hwy/hwyMemberStatsRecalc.service.ts"() {
-    import_sequelize87 = require("sequelize");
+    import_sequelize88 = require("sequelize");
     init_hwyMemberStatRecalcDisplay();
     init_hwyMemberStatsRecalcCatalog();
     init_controlPlaneSequelize();
@@ -247950,7 +249204,7 @@ var init_hwyMemberStatsRecalc_service = __esm({
     FROM dbo.hwy_members WITH (NOLOCK)
     WHERE id = :member_id
     `,
-        { replacements: { member_id: memberId }, type: import_sequelize87.QueryTypes.SELECT }
+        { replacements: { member_id: memberId }, type: import_sequelize88.QueryTypes.SELECT }
       );
       return rows[0] ?? null;
     };
@@ -248233,30 +249487,30 @@ var init_ensureHwyCoursesActivitiesStatusVocab = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberListFaceMap.ts
-var trim4, mapHwyMemberListFaceFromVmFields;
+var trim5, mapHwyMemberListFaceFromVmFields;
 var init_hwyMemberListFaceMap = __esm({
   "src/server/domain/hwy/hwyMemberListFaceMap.ts"() {
     init_hwyMemberPersonDisplayName();
     init_hwyGeoResponsibilityMemberDisplay();
-    trim4 = (value) => String(value ?? "").trim();
+    trim5 = (value) => String(value ?? "").trim();
     mapHwyMemberListFaceFromVmFields = (input) => {
-      const id = trim4(input.id != null ? String(input.id) : "");
+      const id = trim5(input.id != null ? String(input.id) : "");
       if (!id) {
         return null;
       }
       const userId = input.userId != null ? Number(input.userId) : null;
       return {
         id,
-        username: trim4(input.username) || null,
-        displayFullName: formatHwyMemberPersonDisplayName(trim4(input.displayFullName)) || null,
-        genderCode: trim4(input.genderCode) || null,
+        username: trim5(input.username) || null,
+        displayFullName: formatHwyMemberPersonDisplayName(trim5(input.displayFullName)) || null,
+        genderCode: trim5(input.genderCode) || null,
         avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-          avatarUrl: trim4(input.avatarUrl) || null,
+          avatarUrl: trim5(input.avatarUrl) || null,
           userId: Number.isFinite(userId) ? userId : null,
           hasProfileImage: input.hasProfileImage === true || input.hasProfileImage === 1
         }),
-        phone: trim4(input.phone) || null,
-        electoralDivisionPath: trim4(input.electoralDivisionPath) || null
+        phone: trim5(input.phone) || null,
+        electoralDivisionPath: trim5(input.electoralDivisionPath) || null
       };
     };
   }
@@ -248264,7 +249518,7 @@ var init_hwyMemberListFaceMap = __esm({
 
 // src/server/domain/hwy/hwyLegacyMemberFaceByUsername.service.ts
 async function loadLegacyHwyMemberFacesByUsernames(usernames) {
-  const keys = [...new Set(usernames.map(trim5).filter(Boolean))];
+  const keys = [...new Set(usernames.map(trim6).filter(Boolean))];
   const result = /* @__PURE__ */ new Map();
   if (!keys.length) {
     return result;
@@ -248285,7 +249539,7 @@ async function loadLegacyHwyMemberFacesByUsernames(usernames) {
         WHERE UserName IN (${params.join(", ")})
       `);
       for (const row of queryResult.recordset) {
-        const username = trim5(row.UserName);
+        const username = trim6(row.UserName);
         if (!username) {
           continue;
         }
@@ -248297,16 +249551,16 @@ async function loadLegacyHwyMemberFacesByUsernames(usernames) {
   }
   return result;
 }
-var import_mssql9, LEGACY_BATCH3, trim5, mapLegacyRowToFace;
+var import_mssql9, LEGACY_BATCH3, trim6, mapLegacyRowToFace;
 var init_hwyLegacyMemberFaceByUsername_service = __esm({
   "src/server/domain/hwy/hwyLegacyMemberFaceByUsername.service.ts"() {
     import_mssql9 = __toESM(require("mssql"), 1);
     init_hwyMemberPersonDisplayName();
     init_legacyHwyReadPool();
     LEGACY_BATCH3 = 40;
-    trim5 = (value) => String(value ?? "").trim();
+    trim6 = (value) => String(value ?? "").trim();
     mapLegacyRowToFace = (row) => {
-      const username = trim5(row.UserName);
+      const username = trim6(row.UserName);
       const displayFullName = buildHwyMemberPersonDisplayNameFromParts({
         firstname: row.FirstName,
         fathername: row.FatherName,
@@ -248319,7 +249573,7 @@ var init_hwyLegacyMemberFaceByUsername_service = __esm({
         displayFullName,
         genderCode: null,
         avatarUrl: null,
-        phone: trim5(row.Phone1) || null,
+        phone: trim6(row.Phone1) || null,
         electoralDivisionPath: null
       };
     };
@@ -248384,7 +249638,7 @@ async function resolveHwyPlatformAdminUserId() {
     WHERE username IN (N'admin', N'ADMIN')
     ORDER BY id ASC
     `,
-    { type: import_sequelize88.QueryTypes.SELECT }
+    { type: import_sequelize89.QueryTypes.SELECT }
   );
   const id = Number(rows[0]?.id);
   cachedPlatformAdminUserId = Number.isFinite(id) && id > 0 ? id : null;
@@ -248402,7 +249656,7 @@ async function resolveHwyLegacyStaffUserId(legacyUserIdRaw) {
   const sequelize = getControlPlaneSequelize();
   const rows = await sequelize.query(
     `SELECT id FROM dbo.base_users WHERE id = :id`,
-    { replacements: { id }, type: import_sequelize88.QueryTypes.SELECT }
+    { replacements: { id }, type: import_sequelize89.QueryTypes.SELECT }
   );
   return rows.length ? id : null;
 }
@@ -248423,14 +249677,14 @@ async function resolveHwyLegacyActorUserId(legacyActorRaw) {
   const sequelize = getControlPlaneSequelize();
   const rows = await sequelize.query(
     `SELECT TOP 1 id FROM dbo.base_users WHERE username = :username`,
-    { replacements: { username: trimmed }, type: import_sequelize88.QueryTypes.SELECT }
+    { replacements: { username: trimmed }, type: import_sequelize89.QueryTypes.SELECT }
   );
   return rows[0]?.id ?? null;
 }
-var import_sequelize88, cachedPlatformAdminUserId;
+var import_sequelize89, cachedPlatformAdminUserId;
 var init_hwyLegacyStaffUserId = __esm({
   "src/server/domain/hwy/hwyLegacyStaffUserId.ts"() {
-    import_sequelize88 = require("sequelize");
+    import_sequelize89 = require("sequelize");
     init_hwyLegacyPlatformAdminActor();
     init_controlPlaneSequelize();
     cachedPlatformAdminUserId = null;
@@ -248439,7 +249693,7 @@ var init_hwyLegacyStaffUserId = __esm({
 
 // src/server/domain/hwy/hwyMemberTarghinNegoAuthorResolve.ts
 async function resolveHwyMemberListFaceForLegacyActor(legacyActorRaw) {
-  const legacy = trim6(legacyActorRaw);
+  const legacy = trim7(legacyActorRaw);
   if (!legacy) {
     return null;
   }
@@ -248518,7 +249772,7 @@ async function resolveHwyMemberListFaceForLegacyActor(legacyActorRaw) {
 }
 async function resolveNegoNoteAuthorsBatch(rawRows) {
   const result = /* @__PURE__ */ new Map();
-  const legacies = [...new Set(rawRows.map((row) => trim6(row.createdByLegacy)).filter(Boolean))];
+  const legacies = [...new Set(rawRows.map((row) => trim7(row.createdByLegacy)).filter(Boolean))];
   const legacyUserId = /* @__PURE__ */ new Map();
   await Promise.all(legacies.map(async (legacy) => {
     legacyUserId.set(legacy, await resolveHwyLegacyActorUserId(legacy));
@@ -248527,7 +249781,7 @@ async function resolveNegoNoteAuthorsBatch(rawRows) {
   const memberIds = /* @__PURE__ */ new Set();
   const usernames = /* @__PURE__ */ new Set();
   for (const row of rawRows) {
-    const legacy = trim6(row.createdByLegacy);
+    const legacy = trim7(row.createdByLegacy);
     const storedUserId = row.createdByUserId;
     if (storedUserId != null && storedUserId > 0) {
       userIds.add(storedUserId);
@@ -248553,7 +249807,7 @@ async function resolveNegoNoteAuthorsBatch(rawRows) {
       result.set(row.id, row.author);
       continue;
     }
-    const legacy = trim6(row.createdByLegacy);
+    const legacy = trim7(row.createdByLegacy);
     const resolvedUserId = legacyUserId.get(legacy) ?? null;
     const storedUserId = row.createdByUserId;
     if (/^\d+$/.test(legacy)) {
@@ -248607,10 +249861,10 @@ async function resolveNegoNoteAuthorsBatch(rawRows) {
   }
   return result;
 }
-var import_sequelize89, trim6, negoAuthorHasLabel, mapVmRowToFace, loadHwyAccountUserFacesByUserIds, loadHwyMemberFacesByPlatformUserIds, loadMemberFacesByMemberIds, loadMemberFacesByUsernames, loadMemberIdByUserId, loadMemberFaceViaBaseUserMemberLink, loadMemberFaceByLegacyActorKey;
+var import_sequelize90, trim7, negoAuthorHasLabel, mapVmRowToFace, loadHwyAccountUserFacesByUserIds, loadHwyMemberFacesByPlatformUserIds, loadMemberFacesByMemberIds, loadMemberFacesByUsernames, loadMemberIdByUserId, loadMemberFaceViaBaseUserMemberLink, loadMemberFaceByLegacyActorKey;
 var init_hwyMemberTarghinNegoAuthorResolve = __esm({
   "src/server/domain/hwy/hwyMemberTarghinNegoAuthorResolve.ts"() {
-    import_sequelize89 = require("sequelize");
+    import_sequelize90 = require("sequelize");
     init_hwyMemberPersonDisplayName();
     init_hwyGeoResponsibilityMemberDisplay();
     init_profileDisplayName();
@@ -248618,19 +249872,19 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
     init_hwyLegacyMemberFaceByUsername_service();
     init_hwyLegacyPlatformAdminActor();
     init_hwyLegacyStaffUserId();
-    trim6 = (value) => String(value ?? "").trim();
+    trim7 = (value) => String(value ?? "").trim();
     negoAuthorHasLabel = (author) => Boolean(author?.displayFullName?.trim() || author?.username?.trim());
     mapVmRowToFace = (row) => ({
-      id: trim6(row.id),
-      username: trim6(row.username) || null,
-      displayFullName: formatHwyMemberPersonDisplayName(trim6(row.display_full_name)) || null,
-      genderCode: trim6(row.gender_code) || null,
+      id: trim7(row.id),
+      username: trim7(row.username) || null,
+      displayFullName: formatHwyMemberPersonDisplayName(trim7(row.display_full_name)) || null,
+      genderCode: trim7(row.gender_code) || null,
       avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-        avatarUrl: trim6(row.avatar_url) || null,
+        avatarUrl: trim7(row.avatar_url) || null,
         hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1,
         userId: row.user_id != null ? Number(row.user_id) : null
       }),
-      phone: trim6(row.phone1) || null,
+      phone: trim7(row.phone1) || null,
       electoralDivisionPath: null
     });
     loadHwyAccountUserFacesByUserIds = async (userIds) => {
@@ -248655,14 +249909,14 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
     LEFT JOIN dbo.base_user_profiles p WITH (NOLOCK) ON p.user_id = u.id
     WHERE u.id IN (${placeholders})
     `,
-        { replacements, type: import_sequelize89.QueryTypes.SELECT }
+        { replacements, type: import_sequelize90.QueryTypes.SELECT }
       );
       for (const row of rows) {
         const id = Number(row.id);
         if (!Number.isFinite(id) || id <= 0) {
           continue;
         }
-        const username = trim6(row.username) || null;
+        const username = trim7(row.username) || null;
         const displayFullName = formatHwyMemberPersonDisplayName(
           formatProfileDisplayName({
             firstname: row.firstname,
@@ -248711,7 +249965,7 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
     FROM dbo.vw_hwy_members WITH (NOLOCK)
     WHERE user_id IN (${placeholders})
     `,
-        { replacements, type: import_sequelize89.QueryTypes.SELECT }
+        { replacements, type: import_sequelize90.QueryTypes.SELECT }
       );
       for (const row of rows) {
         const userId = row.user_id != null ? Number(row.user_id) : null;
@@ -248720,7 +249974,7 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
         }
         map.set(userId, {
           ...mapVmRowToFace(row),
-          electoralDivisionPath: trim6(row.electoral_division_path) || null
+          electoralDivisionPath: trim7(row.electoral_division_path) || null
         });
       }
       return map;
@@ -248748,7 +250002,7 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
     FROM dbo.vw_hwy_members WITH (NOLOCK)
     WHERE id IN (${placeholders})
     `,
-        { replacements, type: import_sequelize89.QueryTypes.SELECT }
+        { replacements, type: import_sequelize90.QueryTypes.SELECT }
       );
       for (const row of rows) {
         const memberId = Number(row.id);
@@ -248761,7 +250015,7 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
     };
     loadMemberFacesByUsernames = async (usernames) => {
       const map = /* @__PURE__ */ new Map();
-      const keys = [...new Set(usernames.map(trim6).filter(Boolean))];
+      const keys = [...new Set(usernames.map(trim7).filter(Boolean))];
       if (!keys.length) {
         return map;
       }
@@ -248782,10 +250036,10 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
     FROM dbo.vw_hwy_members WITH (NOLOCK)
     WHERE username IN (${placeholders})
     `,
-        { replacements, type: import_sequelize89.QueryTypes.SELECT }
+        { replacements, type: import_sequelize90.QueryTypes.SELECT }
       );
       for (const row of rows) {
-        const username = trim6(row.username);
+        const username = trim7(row.username);
         if (!username) {
           continue;
         }
@@ -248800,7 +250054,7 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT TOP 1 id FROM dbo.hwy_members WITH (NOLOCK) WHERE user_id = :userId`,
-        { replacements: { userId }, type: import_sequelize89.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize90.QueryTypes.SELECT }
       );
       const memberId = rows[0]?.id != null ? Number(rows[0].id) : null;
       return memberId != null && Number.isFinite(memberId) && memberId > 0 ? memberId : null;
@@ -248828,7 +250082,7 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
          AND u.id = TRY_CONVERT(BIGINT, :legacy)
        )
     `,
-        { replacements: { legacy }, type: import_sequelize89.QueryTypes.SELECT }
+        { replacements: { legacy }, type: import_sequelize90.QueryTypes.SELECT }
       );
       if (!rows.length) {
         return null;
@@ -248863,7 +250117,7 @@ var init_hwyMemberTarghinNegoAuthorResolve = __esm({
         ELSE 2
       END
     `,
-        { replacements: { legacy }, type: import_sequelize89.QueryTypes.SELECT }
+        { replacements: { legacy }, type: import_sequelize90.QueryTypes.SELECT }
       );
       if (!rows.length) {
         return null;
@@ -248879,18 +250133,18 @@ async function listHwyActivitiesAdmin(input) {
   await assertSqlServer4();
   const { page, pageSize, offset } = clampPage3(input.page, input.pageSize);
   const filter = resolveHwyActivitiesAdminStatusFilter(input.queue);
-  const search = trim7(input.search);
+  const search = trim8(input.search);
   const procBase = {
     status_code: filter.statusCode ?? null,
     exclude_central_type: filter.excludeCentralType ? 1 : 0,
     central_type_only: filter.centralTypeOnly ? 1 : 0,
     central_type_code: "213915",
     search_like: search ? `%${search}%` : null,
-    activity_subtype_code: trim7(input.activitySubtypeCode) || null,
+    activity_subtype_code: trim8(input.activitySubtypeCode) || null,
     id_filter: normalizeActivityListRecordId(input.recordId),
     title_like: likeWrap(input.title),
-    date_from: trim7(input.dateFrom) || null,
-    date_to: trim7(input.dateTo) || null,
+    date_from: trim8(input.dateFrom) || null,
+    date_to: trim8(input.dateTo) || null,
     participant_username_like: likeWrap(input.participantUsername),
     device_os_id_like: likeWrap(input.deviceOsId)
   };
@@ -248907,19 +250161,19 @@ async function listHwyActivitiesAdmin(input) {
   );
   const rows = rawRows.map((row) => ({
     id: String(row.id),
-    title: row.title?.trim() || null,
-    note: row.note?.trim() || null,
-    activityDate: row.activity_date ? new Date(row.activity_date).toISOString().slice(0, 10) : null,
-    activityTypeCode: row.activity_type_code?.trim() || null,
-    activitySubtypeCode: row.activity_subtype_code?.trim() || null,
-    statusCode: row.status_code?.trim() || null,
-    statusNote: row.status_note?.trim() || null,
-    nashatLocation: row.nashat_location?.trim() || null,
+    title: trim8(row.title) || null,
+    note: trim8(row.note) || null,
+    activityDate: row.activity_date ? new Date(trim8(row.activity_date)).toISOString().slice(0, 10) : null,
+    activityTypeCode: trim8(row.activity_type_code) || null,
+    activitySubtypeCode: trim8(row.activity_subtype_code) || null,
+    statusCode: trim8(row.status_code) || null,
+    statusNote: trim8(row.status_note) || null,
+    nashatLocation: trim8(row.nashat_location) || null,
     legacyProvinceId: row.legacy_province_id != null ? Number(row.legacy_province_id) : null,
-    legacyCreatedBy: row.legacy_created_by?.trim() || null,
-    legacyUpdatedBy: row.legacy_updated_by?.trim() || null,
-    createdAt: new Date(row.created_at).toISOString(),
-    updatedAt: row.updated_at ? new Date(row.updated_at).toISOString() : null,
+    legacyCreatedBy: trim8(row.legacy_created_by) || null,
+    legacyUpdatedBy: trim8(row.legacy_updated_by) || null,
+    createdAt: new Date(trim8(row.created_at)).toISOString(),
+    updatedAt: row.updated_at ? new Date(trim8(row.updated_at)).toISOString() : null,
     memberCount: Number(row.member_count) || 0,
     fileCount: Number(row.file_count) || 0
   }));
@@ -248960,11 +250214,17 @@ async function listHwyCoursesAdmin(input) {
   const { page, pageSize, offset } = clampPage3(input.page, input.pageSize);
   const statusCodes = resolveHwyCoursesAdminStatusCodes(input.queue);
   const draftStatus = resolveHwyCoursesAdminListDraftStatus(input.queue);
-  const search = trim7(input.search);
+  const search = trim8(input.search);
   const procBase = {
     draft_status: draftStatus,
     review_status_csv: statusCodes?.length ? statusCodes.join(",") : null,
-    search_like: search ? `%${search}%` : null
+    search_like: search ? `%${search}%` : null,
+    id_filter: normalizeActivityListRecordId(input.recordId),
+    note_like: likeWrap(input.note),
+    date_from: trim8(input.dateFrom) || null,
+    date_to: trim8(input.dateTo) || null,
+    participant_username_like: likeWrap(input.participantUsername),
+    trainer_username_like: likeWrap(input.trainerUsername)
   };
   const countRows = await withSqlServerDeadlockRetry(
     () => execHwyProcedure("hwy_courses_admin_count", procBase)
@@ -248979,11 +250239,11 @@ async function listHwyCoursesAdmin(input) {
   );
   const rows = rawRows.map((row) => ({
     id: String(row.id),
-    courseDate: row.course_date ? new Date(row.course_date).toISOString().slice(0, 10) : null,
-    courseTypeCode: row.course_type_code?.trim() || null,
-    courseSubtypeCode: row.course_subtype_code?.trim() || null,
-    statusCode: row.status_code?.trim() || null,
-    note: row.note?.trim() || null,
+    courseDate: row.course_date ? new Date(trim8(row.course_date)).toISOString().slice(0, 10) : null,
+    courseTypeCode: trim8(row.course_type_code) || null,
+    courseSubtypeCode: trim8(row.course_subtype_code) || null,
+    statusCode: trim8(row.status_code) || null,
+    note: trim8(row.note) || null,
     trainer: mapHwyMemberListFaceFromVmFields({
       id: row.trainer_member_id,
       displayFullName: row.trainer_display_name,
@@ -248994,8 +250254,8 @@ async function listHwyCoursesAdmin(input) {
       phone: row.trainer_phone1,
       hasProfileImage: row.trainer_has_profile_image
     }),
-    legacyCreatedBy: row.legacy_created_by?.trim() || null,
-    createdAt: new Date(row.created_at).toISOString(),
+    legacyCreatedBy: trim8(row.legacy_created_by) || null,
+    createdAt: new Date(trim8(row.created_at)).toISOString(),
     memberCount: Number(row.member_count) || 0
   }));
   await enrichCourseRows(rows, input.queryLang ?? "iq");
@@ -249003,7 +250263,7 @@ async function listHwyCoursesAdmin(input) {
 }
 async function readHwyActivityAdminDetail(activityIdRaw, queryLang = "iq") {
   await assertSqlServer4();
-  const activityId = trim7(activityIdRaw);
+  const activityId = trim8(activityIdRaw);
   if (!/^\d+$/.test(activityId)) {
     throw new Error("Activity not found.");
   }
@@ -249016,16 +250276,16 @@ async function readHwyActivityAdminDetail(activityIdRaw, queryLang = "iq") {
   const row = rows[0];
   const detail = {
     id: String(row.id),
-    title: trim7(String(row.title ?? "")) || null,
-    note: trim7(String(row.note ?? "")) || null,
-    statusNote: trim7(String(row.status_note ?? "")) || null,
+    title: trim8(String(row.title ?? "")) || null,
+    note: trim8(String(row.note ?? "")) || null,
+    statusNote: trim8(String(row.status_note ?? "")) || null,
     activityDate: row.activity_date ? new Date(row.activity_date).toISOString().slice(0, 10) : null,
-    activityTypeCode: trim7(String(row.activity_type_code ?? "")) || null,
-    activitySubtypeCode: trim7(String(row.activity_subtype_code ?? "")) || null,
-    statusCode: trim7(String(row.status_code ?? "")) || null,
-    nashatLocation: trim7(String(row.nashat_location ?? "")) || null,
-    legacyCreatedBy: trim7(String(row.legacy_created_by ?? "")) || null,
-    legacyUpdatedBy: trim7(String(row.legacy_updated_by ?? "")) || null,
+    activityTypeCode: trim8(String(row.activity_type_code ?? "")) || null,
+    activitySubtypeCode: trim8(String(row.activity_subtype_code ?? "")) || null,
+    statusCode: trim8(String(row.status_code ?? "")) || null,
+    nashatLocation: trim8(String(row.nashat_location ?? "")) || null,
+    legacyCreatedBy: trim8(String(row.legacy_created_by ?? "")) || null,
+    legacyUpdatedBy: trim8(String(row.legacy_updated_by ?? "")) || null,
     updatedAt: row.updated_at ? new Date(row.updated_at).toISOString() : null,
     createdAt: new Date(row.created_at).toISOString(),
     memberCount: Number(row.member_count) || 0,
@@ -249036,18 +250296,18 @@ async function readHwyActivityAdminDetail(activityIdRaw, queryLang = "iq") {
     legacyRegionCircleId: row.legacy_region_circle_id != null ? Number(row.legacy_region_circle_id) : null,
     enableSelfAnnouncement: row.enable_self_announcement === true || row.enable_self_announcement === 1 || row.enable_self_announcement === "1",
     requireSubmissionDeviceMetadata: row.require_submission_device_metadata == null ? null : row.require_submission_device_metadata === true || row.require_submission_device_metadata === 1 || row.require_submission_device_metadata === "1",
-    nbLocationLat: trim7(String(row.nb_location_lat ?? "")) || null,
-    nbLocationLon: trim7(String(row.nb_location_lon ?? "")) || null,
+    nbLocationLat: trim8(String(row.nb_location_lat ?? "")) || null,
+    nbLocationLon: trim8(String(row.nb_location_lon ?? "")) || null,
     nbMaxDistanceM: row.nb_max_distance_m != null ? Number(row.nb_max_distance_m) : null,
     nbWindowStartAt: row.nb_window_start_at ? new Date(row.nb_window_start_at).toISOString() : null,
     nbWindowEndAt: row.nb_window_end_at ? new Date(row.nb_window_end_at).toISOString() : null,
-    nbLegacyProvinceId: trim7(String(row.nb_legacy_province_id ?? "")) || null,
+    nbLegacyProvinceId: trim8(String(row.nb_legacy_province_id ?? "")) || null,
     nbLegacyCircleId: row.nb_legacy_circle_id != null ? Number(row.nb_legacy_circle_id) : null,
     nbLegacyMaktabId: row.nb_legacy_maktab_id != null ? Number(row.nb_legacy_maktab_id) : null,
     nbLegacyRegionId: row.nb_legacy_region_id != null ? Number(row.nb_legacy_region_id) : null,
     nbLegacyGenderId: row.nb_legacy_gender_id != null ? Number(row.nb_legacy_gender_id) : null,
-    nbAllowedRoles: trim7(String(row.nb_allowed_roles ?? "")) || null,
-    nbOrganizationIds: trim7(String(row.nb_organization_ids ?? "")) || null,
+    nbAllowedRoles: trim8(String(row.nb_allowed_roles ?? "")) || null,
+    nbOrganizationIds: trim8(String(row.nb_organization_ids ?? "")) || null,
     nbOnlyKashafeh: row.nb_only_kashafeh === true || row.nb_only_kashafeh === 1 || row.nb_only_kashafeh === "1",
     nbAllowGov: row.nb_allow_gov === true || row.nb_allow_gov === 1 || row.nb_allow_gov === "1"
   };
@@ -249059,7 +250319,7 @@ async function readHwyActivityAdminDetail(activityIdRaw, queryLang = "iq") {
 }
 async function readHwyCourseAdminDetail(courseIdRaw, queryLang = "iq") {
   await assertSqlServer4();
-  const courseId = trim7(courseIdRaw);
+  const courseId = trim8(courseIdRaw);
   if (!/^\d+$/.test(courseId)) {
     throw new Error("Course not found.");
   }
@@ -249073,11 +250333,11 @@ async function readHwyCourseAdminDetail(courseIdRaw, queryLang = "iq") {
   const detail = {
     id: String(row.id),
     courseDate: row.course_date ? new Date(row.course_date).toISOString().slice(0, 10) : null,
-    courseTypeCode: trim7(String(row.course_type_code ?? "")) || null,
-    courseSubtypeCode: trim7(String(row.course_subtype_code ?? "")) || null,
-    statusCode: trim7(String(row.status_code ?? "")) || null,
-    statusNote: trim7(String(row.status_note ?? "")) || null,
-    note: trim7(String(row.note ?? "")) || null,
+    courseTypeCode: trim8(String(row.course_type_code ?? "")) || null,
+    courseSubtypeCode: trim8(String(row.course_subtype_code ?? "")) || null,
+    statusCode: trim8(String(row.status_code ?? "")) || null,
+    statusNote: trim8(String(row.status_note ?? "")) || null,
+    note: trim8(String(row.note ?? "")) || null,
     trainer: mapHwyMemberListFaceFromVmFields({
       id: row.trainer_member_id,
       displayFullName: row.trainer_display_name,
@@ -249088,11 +250348,11 @@ async function readHwyCourseAdminDetail(courseIdRaw, queryLang = "iq") {
       phone: row.trainer_phone1,
       hasProfileImage: row.trainer_has_profile_image
     }),
-    legacyCreatedBy: trim7(String(row.legacy_created_by ?? "")) || null,
-    legacyUpdatedBy: trim7(String(row.legacy_updated_by ?? "")) || null,
+    legacyCreatedBy: trim8(String(row.legacy_created_by ?? "")) || null,
+    legacyUpdatedBy: trim8(String(row.legacy_updated_by ?? "")) || null,
     updatedAt: row.updated_at ? new Date(row.updated_at).toISOString() : null,
     legacyProvinceId: row.legacy_province_id != null ? Number(row.legacy_province_id) : null,
-    legacyStatusChangedBy: trim7(String(row.legacy_status_changed_by ?? "")) || null,
+    legacyStatusChangedBy: trim8(String(row.legacy_status_changed_by ?? "")) || null,
     statusChangedAt: row.status_changed_at ? new Date(row.status_changed_at).toISOString() : null,
     createdAt: new Date(row.created_at).toISOString(),
     memberCount: Number(row.member_count) || 0,
@@ -249106,7 +250366,7 @@ async function readHwyCourseAdminDetail(courseIdRaw, queryLang = "iq") {
 }
 async function listHwyActivityAdminAttendances(activityIdRaw, limit = 50, offset = 0) {
   await assertSqlServer4();
-  const activityId = Number(trim7(activityIdRaw));
+  const activityId = Number(trim8(activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Activity not found.");
   }
@@ -249137,19 +250397,19 @@ async function listHwyActivityAdminAttendances(activityIdRaw, limit = 50, offset
       memberUsername: member?.username ?? null,
       memberAvatarUrl: member?.avatarUrl ?? null,
       createdAt: new Date(row.created_at).toISOString(),
-      rfidBatch: trim7(String(row.rfid_batch ?? "")) || null,
+      rfidBatch: trim8(String(row.rfid_batch ?? "")) || null,
       fromLegacyProvinceId: row.from_legacy_province_id != null ? Number(row.from_legacy_province_id) : null,
       fromLegacyCircleId: row.from_legacy_circle_id != null ? Number(row.from_legacy_circle_id) : null,
-      nbLocationLat: trim7(String(row.nb_location_lat ?? "")) || null,
-      nbLocationLon: trim7(String(row.nb_location_lon ?? "")) || null,
-      selfieFileName: trim7(String(row.selfie_file_name ?? "")) || null,
-      selfieMime: trim7(String(row.selfie_mime ?? "")) || null,
+      nbLocationLat: trim8(String(row.nb_location_lat ?? "")) || null,
+      nbLocationLon: trim8(String(row.nb_location_lon ?? "")) || null,
+      selfieFileName: trim8(String(row.selfie_file_name ?? "")) || null,
+      selfieMime: trim8(String(row.selfie_mime ?? "")) || null,
       selfieSizeBytes: row.selfie_size_bytes != null ? Number(row.selfie_size_bytes) : null,
       hasSelfieContent: row.has_selfie_content === true || row.has_selfie_content === 1 || row.has_selfie_content === "1",
-      nbDeviceOs: trim7(String(row.nb_device_os ?? "")) || null,
-      nbDeviceId: trim7(String(row.nb_device_id ?? "")) || null,
-      nbDeviceDatetime: trim7(String(row.nb_device_datetime ?? "")) || null,
-      legacyCreatedBy: trim7(String(row.legacy_created_by ?? "")) || null,
+      nbDeviceOs: trim8(String(row.nb_device_os ?? "")) || null,
+      nbDeviceId: trim8(String(row.nb_device_id ?? "")) || null,
+      nbDeviceDatetime: trim8(String(row.nb_device_datetime ?? "")) || null,
+      legacyCreatedBy: trim8(String(row.legacy_created_by ?? "")) || null,
       createdBy: null
     };
   });
@@ -249157,7 +250417,7 @@ async function listHwyActivityAdminAttendances(activityIdRaw, limit = 50, offset
 }
 async function listHwyActivityAdminFiles(activityIdRaw) {
   await assertSqlServer4();
-  const activityId = Number(trim7(activityIdRaw));
+  const activityId = Number(trim8(activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Activity not found.");
   }
@@ -249166,23 +250426,23 @@ async function listHwyActivityAdminFiles(activityIdRaw) {
   });
   return rows.map((row) => ({
     id: String(row.id),
-    originalFileName: row.original_file_name?.trim() || "file",
-    mime: row.mime?.trim() || null,
+    originalFileName: trim8(row.original_file_name) || "file",
+    mime: trim8(row.mime) || null,
     sizeBytes: Number(row.size_bytes) || 0,
-    hasContent: row.has_content === true || row.has_content === 1 || row.has_content === "1",
-    createdAt: new Date(row.created_at).toISOString()
+    hasContent: row.has_content === true || row.has_content === 1 || String(row.has_content) === "1",
+    createdAt: new Date(trim8(row.created_at)).toISOString()
   }));
 }
 async function readHwyActivityFileContent(fileIdRaw) {
   await assertSqlServer4();
-  const fileId = trim7(fileIdRaw);
+  const fileId = trim8(fileIdRaw);
   if (!fileId) {
     throw new Error("File not found.");
   }
   const sequelize = getControlPlaneSequelize();
   const rows = await sequelize.query(
     `SELECT original_file_name, mime, content, thumbnail_content FROM dbo.hwy_activity_files WHERE id = :fileId`,
-    { replacements: { fileId }, type: import_sequelize90.QueryTypes.SELECT }
+    { replacements: { fileId }, type: import_sequelize91.QueryTypes.SELECT }
   );
   if (!rows.length) {
     throw new Error("File not found.");
@@ -249193,14 +250453,14 @@ async function readHwyActivityFileContent(fileIdRaw) {
     throw new Error("File content is not available on this server.");
   }
   return {
-    mime: row.mime?.trim() || "application/octet-stream",
-    fileName: row.original_file_name?.trim() || "activity-file",
+    mime: trim8(row.mime) || "application/octet-stream",
+    fileName: trim8(row.original_file_name) || "activity-file",
     buffer: buffer4
   };
 }
 async function readHwyActivityAttendanceSelfieContent(attendanceIdRaw) {
   await assertSqlServer4();
-  const attendanceId = Number(trim7(attendanceIdRaw));
+  const attendanceId = Number(trim8(attendanceIdRaw));
   if (!Number.isFinite(attendanceId) || attendanceId <= 0) {
     throw new Error("Attendance not found.");
   }
@@ -249211,7 +250471,7 @@ async function readHwyActivityAttendanceSelfieContent(attendanceIdRaw) {
     FROM dbo.hwy_activity_attendances
     WHERE id = :attendanceId
     `,
-    { replacements: { attendanceId }, type: import_sequelize90.QueryTypes.SELECT }
+    { replacements: { attendanceId }, type: import_sequelize91.QueryTypes.SELECT }
   );
   if (!rows.length) {
     throw new Error("Attendance not found.");
@@ -249222,14 +250482,14 @@ async function readHwyActivityAttendanceSelfieContent(attendanceIdRaw) {
     throw new Error("Selfie content is not available on this server.");
   }
   return {
-    mime: row.selfie_mime?.trim() || "image/jpeg",
-    fileName: row.selfie_file_name?.trim() || "selfie.jpg",
+    mime: trim8(row.selfie_mime) || "image/jpeg",
+    fileName: trim8(row.selfie_file_name) || "selfie.jpg",
     buffer: buffer4
   };
 }
 async function listHwyActivityAdminApprovalSteps(activityIdRaw, queryLang = "iq") {
   await assertSqlServer4();
-  const activityId = Number(trim7(activityIdRaw));
+  const activityId = Number(trim8(activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Activity not found.");
   }
@@ -249238,10 +250498,10 @@ async function listHwyActivityAdminApprovalSteps(activityIdRaw, queryLang = "iq"
   });
   const mapped = rows.map((row) => ({
     id: String(row.id),
-    statusCode: row.status_code?.trim() || null,
-    note: row.note?.trim() || null,
-    legacyCreatedBy: row.legacy_created_by?.trim() || null,
-    createdAt: new Date(row.created_at).toISOString()
+    statusCode: trim8(row.status_code) || null,
+    note: trim8(row.note) || null,
+    legacyCreatedBy: trim8(row.legacy_created_by) || null,
+    createdAt: new Date(trim8(row.created_at)).toISOString()
   }));
   const enrichRows = mapped;
   await attachBaseInfoTitles(
@@ -249254,13 +250514,13 @@ async function listHwyActivityAdminApprovalSteps(activityIdRaw, queryLang = "iq"
     statusCodeTitle: resolveHwyCoursesActivitiesStatusLocalizedTitle(
       row.statusCode,
       queryLang,
-      enrichRows[index]?.statusCodeTitle
+      trim8(String(enrichRows[index]?.statusCodeTitle ?? "")) || void 0
     )
   }));
 }
 async function listHwyCourseAdminAttendances(courseIdRaw, limit = 50, offset = 0) {
   await assertSqlServer4();
-  const courseId = Number(trim7(courseIdRaw));
+  const courseId = Number(trim8(courseIdRaw));
   if (!Number.isFinite(courseId) || courseId <= 0) {
     throw new Error("Course not found.");
   }
@@ -249290,16 +250550,16 @@ async function listHwyCourseAdminAttendances(courseIdRaw, limit = 50, offset = 0
       memberDisplayName: member?.displayFullName ?? null,
       memberUsername: member?.username ?? null,
       memberAvatarUrl: member?.avatarUrl ?? null,
-      note: trim7(String(row.note ?? "")) || null,
+      note: trim8(String(row.note ?? "")) || null,
       createdAt: new Date(row.created_at).toISOString(),
       updatedAt: row.updated_at ? new Date(row.updated_at).toISOString() : null,
-      nbLocationLat: trim7(String(row.nb_location_lat ?? "")) || null,
-      nbLocationLon: trim7(String(row.nb_location_lon ?? "")) || null,
-      nbDeviceOs: trim7(String(row.nb_device_os ?? "")) || null,
-      nbDeviceId: trim7(String(row.nb_device_id ?? "")) || null,
-      nbDeviceDatetime: trim7(String(row.nb_device_datetime ?? "")) || null,
-      legacyCreatedBy: trim7(String(row.legacy_created_by ?? "")) || null,
-      legacyUpdatedBy: trim7(String(row.legacy_updated_by ?? "")) || null,
+      nbLocationLat: trim8(String(row.nb_location_lat ?? "")) || null,
+      nbLocationLon: trim8(String(row.nb_location_lon ?? "")) || null,
+      nbDeviceOs: trim8(String(row.nb_device_os ?? "")) || null,
+      nbDeviceId: trim8(String(row.nb_device_id ?? "")) || null,
+      nbDeviceDatetime: trim8(String(row.nb_device_datetime ?? "")) || null,
+      legacyCreatedBy: trim8(String(row.legacy_created_by ?? "")) || null,
+      legacyUpdatedBy: trim8(String(row.legacy_updated_by ?? "")) || null,
       createdBy: null
     };
   });
@@ -249307,7 +250567,7 @@ async function listHwyCourseAdminAttendances(courseIdRaw, limit = 50, offset = 0
 }
 async function listHwyCourseAdminApprovalSteps(courseIdRaw, queryLang = "iq") {
   await assertSqlServer4();
-  const courseId = Number(trim7(courseIdRaw));
+  const courseId = Number(trim8(courseIdRaw));
   if (!Number.isFinite(courseId) || courseId <= 0) {
     throw new Error("Course not found.");
   }
@@ -249316,10 +250576,10 @@ async function listHwyCourseAdminApprovalSteps(courseIdRaw, queryLang = "iq") {
   });
   const mapped = rows.map((row) => ({
     id: String(row.id),
-    statusCode: row.status_code?.trim() || null,
-    note: row.note?.trim() || null,
-    legacyCreatedBy: row.legacy_created_by?.trim() || null,
-    createdAt: row.created_at ? new Date(row.created_at).toISOString() : ""
+    statusCode: trim8(row.status_code) || null,
+    note: trim8(row.note) || null,
+    legacyCreatedBy: trim8(row.legacy_created_by) || null,
+    createdAt: row.created_at ? new Date(trim8(row.created_at)).toISOString() : ""
   }));
   const enrichRows = mapped;
   await attachBaseInfoTitles(
@@ -249332,7 +250592,7 @@ async function listHwyCourseAdminApprovalSteps(courseIdRaw, queryLang = "iq") {
     statusCodeTitle: resolveHwyCoursesActivitiesStatusLocalizedTitle(
       row.statusCode,
       queryLang,
-      enrichRows[index]?.statusCodeTitle
+      trim8(String(enrichRows[index]?.statusCodeTitle ?? "")) || void 0
     )
   }));
 }
@@ -249346,14 +250606,14 @@ async function listHwyTajammoatOrganizationPickerOptions() {
     WHERE is_active = 1
     ORDER BY title_ar, id
     `,
-    { type: import_sequelize90.QueryTypes.SELECT }
+    { type: import_sequelize91.QueryTypes.SELECT }
   );
-  return rows.map((row) => ({ id: trim7(String(row.id)), label: trim7(String(row.label)) })).filter((row) => row.id && row.label);
+  return rows.map((row) => ({ id: trim8(String(row.id)), label: trim8(String(row.label)) })).filter((row) => row.id && row.label);
 }
-var import_sequelize90, DEFAULT_PAGE_SIZE6, MAX_PAGE_SIZE6, mapAuditActorMemberFaceFromDetailRow, resolveDetailAuditActor, mergeAuditActorMemberMedia, scoreAuditListFace, pickRicherAuditListFace, enrichActivityAuditFaceAvatars, enrichActivityListAuditActors, enrichAttendanceRowsCreatedBy, trim7, resolveLegacyGeoNodeTitle, attachCoursesActivitiesDetailGeoTitles, assertSqlServer4, clampPage3, enrichActivityRows, enrichCourseRows, normalizeActivityListRecordId, likeWrap;
+var import_sequelize91, DEFAULT_PAGE_SIZE6, MAX_PAGE_SIZE6, mapAuditActorMemberFaceFromDetailRow, resolveDetailAuditActor, mergeAuditActorMemberMedia, scoreAuditListFace, pickRicherAuditListFace, enrichActivityAuditFaceAvatars, enrichActivityListAuditActors, enrichAttendanceRowsCreatedBy, trim8, resolveLegacyGeoNodeTitle, attachCoursesActivitiesDetailGeoTitles, assertSqlServer4, clampPage3, enrichActivityRows, enrichCourseRows, normalizeActivityListRecordId, likeWrap;
 var init_hwyCoursesActivitiesAdmin_service = __esm({
   "src/server/domain/hwy/hwyCoursesActivitiesAdmin.service.ts"() {
-    import_sequelize90 = require("sequelize");
+    import_sequelize91 = require("sequelize");
     init_hwyCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -249434,7 +250694,7 @@ var init_hwyCoursesActivitiesAdmin_service = __esm({
       const faceMemberPairs = [];
       const platformUserIds = /* @__PURE__ */ new Set();
       for (const face of faces) {
-        const id = trim7(face.id);
+        const id = trim8(face.id);
         if (/^\d+$/.test(id)) {
           memberIds.add(Number(id));
           faceMemberPairs.push({ face, memberId: id });
@@ -249506,7 +250766,7 @@ var init_hwyCoursesActivitiesAdmin_service = __esm({
       }
       const legacyCache = /* @__PURE__ */ new Map();
       const resolveLegacyCached = async (legacyRaw) => {
-        const legacy = trim7(legacyRaw ?? "");
+        const legacy = trim8(legacyRaw ?? "");
         if (!legacy) {
           return null;
         }
@@ -249585,7 +250845,7 @@ var init_hwyCoursesActivitiesAdmin_service = __esm({
         createdBy: authorByAttendanceId.get(row.id) ?? null
       }));
     };
-    trim7 = (value) => String(value ?? "").trim();
+    trim8 = (value) => String(value ?? "").trim();
     resolveLegacyGeoNodeTitle = async (legacyId, kind, queryLang) => {
       if (legacyId == null || !Number.isFinite(legacyId)) {
         return null;
@@ -249599,7 +250859,7 @@ var init_hwyCoursesActivitiesAdmin_service = __esm({
       if (!match) {
         return null;
       }
-      const path145 = trim7(String(match.title_path ?? match.title ?? match.title_canonical ?? ""));
+      const path145 = trim8(String(match.title_path ?? match.title ?? match.title_canonical ?? ""));
       return leafTitleFromGeoPath(path145) || path145 || null;
     };
     attachCoursesActivitiesDetailGeoTitles = async (detail, queryLang) => {
@@ -249652,12 +250912,12 @@ var init_hwyCoursesActivitiesAdmin_service = __esm({
       );
       for (let index = 0; index < rows.length; index += 1) {
         const source = enrichRows[index];
-        rows[index].activityTypeCodeTitle = trim7(String(source?.activityTypeCodeTitle ?? "")) || void 0;
-        rows[index].activitySubtypeCodeTitle = trim7(String(source?.activitySubtypeCodeTitle ?? "")) || void 0;
+        rows[index].activityTypeCodeTitle = trim8(String(source?.activityTypeCodeTitle ?? "")) || void 0;
+        rows[index].activitySubtypeCodeTitle = trim8(String(source?.activitySubtypeCodeTitle ?? "")) || void 0;
         rows[index].statusCodeTitle = resolveHwyCoursesActivitiesStatusLocalizedTitle(
           rows[index].statusCode,
           queryLang,
-          source?.statusCodeTitle
+          trim8(String(source?.statusCodeTitle ?? "")) || void 0
         );
       }
     };
@@ -249674,21 +250934,21 @@ var init_hwyCoursesActivitiesAdmin_service = __esm({
       );
       for (let index = 0; index < rows.length; index += 1) {
         const source = enrichRows[index];
-        rows[index].courseTypeCodeTitle = trim7(String(source?.courseTypeCodeTitle ?? "")) || void 0;
-        rows[index].courseSubtypeCodeTitle = trim7(String(source?.courseSubtypeCodeTitle ?? "")) || void 0;
+        rows[index].courseTypeCodeTitle = trim8(String(source?.courseTypeCodeTitle ?? "")) || void 0;
+        rows[index].courseSubtypeCodeTitle = trim8(String(source?.courseSubtypeCodeTitle ?? "")) || void 0;
         rows[index].statusCodeTitle = resolveHwyCoursesActivitiesStatusLocalizedTitle(
           rows[index].statusCode,
           queryLang,
-          source?.statusCodeTitle
+          trim8(String(source?.statusCodeTitle ?? "")) || void 0
         );
       }
     };
     normalizeActivityListRecordId = (raw) => {
-      const trimmed = trim7(raw).toLowerCase().replace(/^p/, "");
+      const trimmed = trim8(raw).toLowerCase().replace(/^p/, "");
       return trimmed || null;
     };
     likeWrap = (raw) => {
-      const trimmed = trim7(raw);
+      const trimmed = trim8(raw);
       return trimmed ? `%${trimmed}%` : null;
     };
   }
@@ -249724,7 +250984,7 @@ async function listHwyMemberNbSelfieHistory(memberIdRaw) {
       COALESCE(TRY_CONVERT(DATETIME2, att.nb_device_datetime), att.created_at) DESC,
       att.id DESC
     `,
-    { replacements: { memberId }, type: import_sequelize91.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize92.QueryTypes.SELECT }
   );
   return rows.filter((row) => Number(row.has_selfie) === 1).map((row) => {
     const recordId = String(row.id);
@@ -249747,17 +251007,17 @@ async function readHwyMemberDirectoryActivityAttendanceSelfie(memberIdRaw, atten
   const sequelize = getControlPlaneSequelize();
   const ownerRows = await sequelize.query(
     `SELECT member_id FROM dbo.hwy_activity_attendances WHERE id = :attendanceId`,
-    { replacements: { attendanceId }, type: import_sequelize91.QueryTypes.SELECT }
+    { replacements: { attendanceId }, type: import_sequelize92.QueryTypes.SELECT }
   );
   if (!ownerRows.length || Number(ownerRows[0].member_id) !== memberId) {
     throw new Error("Attendance not found.");
   }
   return readHwyActivityAttendanceSelfieContent(attendanceIdRaw);
 }
-var import_sequelize91;
+var import_sequelize92;
 var init_hwyMemberNbSelfieHistory_service = __esm({
   "src/server/domain/hwy/hwyMemberNbSelfieHistory.service.ts"() {
-    import_sequelize91 = require("sequelize");
+    import_sequelize92 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyCoursesActivitiesSchema();
@@ -249772,7 +251032,7 @@ async function searchHwyMemberPicker(input) {
     return [];
   }
   await ensureHwyDbObjects();
-  const q = trim8(input.qRaw);
+  const q = trim9(input.qRaw);
   if (q.length < 1) {
     return [];
   }
@@ -249805,15 +251065,15 @@ async function searchHwyMemberPicker(input) {
   return maskedRows.map((row) => mapHwyMemberListFaceFromVmFields({
     id: row.id,
     username: row.username,
-    displayFullName: row.displayFullName,
-    avatarUrl: row.avatarUrl,
-    userId: row.userId,
-    genderCode: row.genderCode,
+    displayFullName: row.display_full_name,
+    avatarUrl: row.avatar_url,
+    userId: row.user_id,
+    genderCode: row.gender_code,
     phone: row.phone1,
-    hasProfileImage: row.hasProfileImage
+    hasProfileImage: row.has_profile_image
   })).filter((face) => face != null);
 }
-var trim8, MAX_LIMIT;
+var trim9, MAX_LIMIT;
 var init_hwyMemberPicker_service = __esm({
   "src/server/domain/hwy/hwyMemberPicker.service.ts"() {
     init_prismaHelpers();
@@ -249822,17 +251082,17 @@ var init_hwyMemberPicker_service = __esm({
     init_hwyExecDbObject();
     init_hwyMemberListFaceMap();
     init_applyHwyMemberIdentityFieldMasks();
-    trim8 = (value) => String(value ?? "").trim();
+    trim9 = (value) => String(value ?? "").trim();
     MAX_LIMIT = 25;
   }
 });
 
 // src/domain/hwy/hwyActivitySelfAnnouncementPolicy.ts
-var trim9, recordDeviceFields, requireDeviceFields, baseSelfAnnouncementFields, activityRequiresDeviceMetadataOnSelfie, resolveHwyActivitySelfAnnouncementMetadataPolicy, assertHwyActivitySelfAnnouncementAllowed;
+var trim10, recordDeviceFields, requireDeviceFields, baseSelfAnnouncementFields, activityRequiresDeviceMetadataOnSelfie, resolveHwyActivitySelfAnnouncementMetadataPolicy, assertHwyActivitySelfAnnouncementAllowed;
 var init_hwyActivitySelfAnnouncementPolicy = __esm({
   "src/domain/hwy/hwyActivitySelfAnnouncementPolicy.ts"() {
     init_hwyCoursesActivitiesCatalog();
-    trim9 = (value) => String(value ?? "").trim();
+    trim10 = (value) => String(value ?? "").trim();
     recordDeviceFields = [
       { id: "nbDeviceOs", mode: "record" },
       { id: "nbDeviceId", mode: "record" },
@@ -249852,7 +251112,7 @@ var init_hwyActivitySelfAnnouncementPolicy = __esm({
       if (activity.requireSubmissionDeviceMetadata != null) {
         return Boolean(activity.requireSubmissionDeviceMetadata);
       }
-      return trim9(activity.activityTypeCode) === HWY_ACTIVITY_CENTRAL_TYPE_CODE;
+      return trim10(activity.activityTypeCode) === HWY_ACTIVITY_CENTRAL_TYPE_CODE;
     };
     resolveHwyActivitySelfAnnouncementMetadataPolicy = (activity) => {
       const deviceFields = activityRequiresDeviceMetadataOnSelfie(activity) ? requireDeviceFields : recordDeviceFields;
@@ -249864,7 +251124,7 @@ var init_hwyActivitySelfAnnouncementPolicy = __esm({
       if (!activity.enableSelfAnnouncement) {
         throw new Error("Self-announcement is not enabled for this activity.");
       }
-      if (trim9(activity.statusCode) === HWY_ACTIVITY_STATUS_COMPLETED) {
+      if (trim10(activity.statusCode) === HWY_ACTIVITY_STATUS_COMPLETED) {
         throw new Error("Self-announcement is closed for this activity.");
       }
       const startRaw = activity.nbWindowStartAt?.trim();
@@ -249886,10 +251146,10 @@ var init_hwyActivitySelfAnnouncementPolicy = __esm({
 });
 
 // src/domain/hwy/hwySubmissionMetadata.ts
-var trim10, labelFor, HwySubmissionMetadataValidationError, parseHwySubmissionMetadataPayload, assertHwySubmissionMetadata;
+var trim11, labelFor, HwySubmissionMetadataValidationError, parseHwySubmissionMetadataPayload, assertHwySubmissionMetadata;
 var init_hwySubmissionMetadata = __esm({
   "src/domain/hwy/hwySubmissionMetadata.ts"() {
-    trim10 = (value) => String(value ?? "").trim();
+    trim11 = (value) => String(value ?? "").trim();
     labelFor = (id) => {
       switch (id) {
         case "nbLocationLat":
@@ -249916,11 +251176,11 @@ var init_hwySubmissionMetadata = __esm({
       }
     };
     parseHwySubmissionMetadataPayload = (raw) => ({
-      nbLocationLat: trim10(raw.nbLocationLat) || null,
-      nbLocationLon: trim10(raw.nbLocationLon) || null,
-      nbDeviceOs: trim10(raw.nbDeviceOs) || null,
-      nbDeviceId: trim10(raw.nbDeviceId) || null,
-      nbDeviceDatetime: trim10(raw.nbDeviceDatetime) || null
+      nbLocationLat: trim11(raw.nbLocationLat) || null,
+      nbLocationLon: trim11(raw.nbLocationLon) || null,
+      nbDeviceOs: trim11(raw.nbDeviceOs) || null,
+      nbDeviceId: trim11(raw.nbDeviceId) || null,
+      nbDeviceDatetime: trim11(raw.nbDeviceDatetime) || null
     });
     assertHwySubmissionMetadata = (input) => {
       const valueFor = (id) => {
@@ -249958,44 +251218,44 @@ var init_hwySubmissionMetadata = __esm({
 });
 
 // src/domain/hwy/hwySubmissionMetadataFromClient.ts
-var trim11, enrichHwySubmissionMetadataFromClientClaimed;
+var trim12, enrichHwySubmissionMetadataFromClientClaimed;
 var init_hwySubmissionMetadataFromClient = __esm({
   "src/domain/hwy/hwySubmissionMetadataFromClient.ts"() {
-    trim11 = (value) => String(value ?? "").trim();
+    trim12 = (value) => String(value ?? "").trim();
     enrichHwySubmissionMetadataFromClientClaimed = (payload, claimed) => {
       const next = { ...payload };
       if (!next.nbDeviceOs) {
-        const osName = trim11(claimed.osName);
-        const osVersion = trim11(claimed.osVersion);
+        const osName = trim12(claimed.osName);
+        const osVersion = trim12(claimed.osVersion);
         if (osName && osVersion) {
           next.nbDeviceOs = `${osName} ${osVersion}`.slice(0, 128);
         } else if (osName) {
           next.nbDeviceOs = osName.slice(0, 128);
         } else if (typeof claimed.ext === "object" && claimed.ext != null) {
-          const ua = trim11(claimed.ext.userAgent);
+          const ua = trim12(claimed.ext.userAgent);
           if (ua) {
             next.nbDeviceOs = ua.slice(0, 128);
           }
         }
       }
       if (!next.nbDeviceId) {
-        next.nbDeviceId = trim11(claimed.installId) || trim11(claimed.vendorId) || null;
+        next.nbDeviceId = trim12(claimed.installId) || trim12(claimed.vendorId) || null;
         if (next.nbDeviceId) {
           next.nbDeviceId = next.nbDeviceId.slice(0, 128);
         }
       }
       if (!next.nbDeviceDatetime) {
-        const clientAt = trim11(claimed.clientOccurredAt);
+        const clientAt = trim12(claimed.clientOccurredAt);
         next.nbDeviceDatetime = clientAt ? clientAt.slice(0, 32) : null;
       }
       const location = claimed.location;
       if (location && typeof location === "object" && !Array.isArray(location)) {
         const loc = location;
         if (!next.nbLocationLat && loc.lat != null) {
-          next.nbLocationLat = trim11(loc.lat).slice(0, 128);
+          next.nbLocationLat = trim12(loc.lat).slice(0, 128);
         }
         if (!next.nbLocationLon && loc.lng != null) {
-          next.nbLocationLon = trim11(loc.lng).slice(0, 128);
+          next.nbLocationLon = trim12(loc.lng).slice(0, 128);
         }
       }
       return next;
@@ -250009,7 +251269,7 @@ async function readHwyActivitySelfAnnouncementSpec(activityIdRaw) {
   if (readControlPlaneProvider() !== "sqlserver") {
     return { fields: [] };
   }
-  const activityId = Number(trim12(activityIdRaw));
+  const activityId = Number(trim13(activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Activity not found.");
   }
@@ -250025,7 +251285,7 @@ async function submitHwyActivitySelfAnnouncement(input) {
   if (readControlPlaneProvider() !== "sqlserver") {
     throw new Error("Self-announcement requires SQL Server control plane.");
   }
-  const activityId = Number(trim12(input.activityIdRaw));
+  const activityId = Number(trim13(input.activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Activity not found.");
   }
@@ -250052,14 +251312,14 @@ async function submitHwyActivitySelfAnnouncement(input) {
   const sequelize = getControlPlaneSequelize();
   const idRows = await sequelize.query(
     `SELECT ISNULL(MAX(id), 0) + 1 AS next_id FROM dbo.hwy_activity_attendances WITH (UPDLOCK, HOLDLOCK)`,
-    { type: import_sequelize92.QueryTypes.SELECT }
+    { type: import_sequelize93.QueryTypes.SELECT }
   );
   const attendanceId = Number(idRows[0]?.next_id);
   if (!Number.isFinite(attendanceId) || attendanceId <= 0) {
     throw new Error("Could not allocate an attendance id.");
   }
-  const selfieName = trim12(input.selfie.originalName).slice(0, 128) || "selfie.jpg";
-  const selfieMime = trim12(input.selfie.mime).slice(0, 32) || "image/jpeg";
+  const selfieName = trim13(input.selfie.originalName).slice(0, 128) || "selfie.jpg";
+  const selfieMime = trim13(input.selfie.mime).slice(0, 32) || "image/jpeg";
   const legacyCreatedBy = await resolveActorUsername(input.userId);
   try {
     await execHwyProcedure("hwy_activity_self_announce", {
@@ -250086,10 +251346,10 @@ async function submitHwyActivitySelfAnnouncement(input) {
   }
   return { attendanceId: String(attendanceId) };
 }
-var import_sequelize92, trim12, readActivityPolicyRow, toPolicyInput, resolveHwyMemberIdForUser, resolveActorUsername;
+var import_sequelize93, trim13, readActivityPolicyRow, toPolicyInput, resolveHwyMemberIdForUser, resolveActorUsername;
 var init_hwyActivitySelfAnnouncement_service = __esm({
   "src/server/domain/hwy/hwyActivitySelfAnnouncement.service.ts"() {
-    import_sequelize92 = require("sequelize");
+    import_sequelize93 = require("sequelize");
     init_hwyActivitySelfAnnouncementPolicy();
     init_hwySubmissionMetadata();
     init_hwySubmissionMetadataFromClient();
@@ -250098,7 +251358,7 @@ var init_hwyActivitySelfAnnouncement_service = __esm({
     init_ensureHwyCoursesActivitiesSchema();
     init_ensureHwyDbObjects();
     init_hwyExecDbObject();
-    trim12 = (value) => String(value ?? "").trim();
+    trim13 = (value) => String(value ?? "").trim();
     readActivityPolicyRow = async (activityId) => {
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
@@ -250114,18 +251374,18 @@ var init_hwyActivitySelfAnnouncement_service = __esm({
     FROM dbo.hwy_activities
     WHERE id = :activityId
     `,
-        { replacements: { activityId }, type: import_sequelize92.QueryTypes.SELECT }
+        { replacements: { activityId }, type: import_sequelize93.QueryTypes.SELECT }
       );
       return rows[0] ?? null;
     };
     toPolicyInput = (row) => ({
-      activityTypeCode: trim12(row.activity_type_code) || null,
-      statusCode: trim12(row.status_code) || null,
-      enableSelfAnnouncement: row.enable_self_announcement === true || row.enable_self_announcement === 1 || row.enable_self_announcement === "1",
+      activityTypeCode: trim13(row.activity_type_code) || null,
+      statusCode: trim13(row.status_code) || null,
+      enableSelfAnnouncement: row.enable_self_announcement === true || row.enable_self_announcement === 1 || String(row.enable_self_announcement) === "1",
       activityDate: row.activity_date ? new Date(row.activity_date).toISOString().slice(0, 10) : null,
       nbWindowStartAt: row.nb_window_start_at ? new Date(row.nb_window_start_at).toISOString() : null,
       nbWindowEndAt: row.nb_window_end_at ? new Date(row.nb_window_end_at).toISOString() : null,
-      requireSubmissionDeviceMetadata: row.require_submission_device_metadata == null ? null : row.require_submission_device_metadata === true || row.require_submission_device_metadata === 1 || row.require_submission_device_metadata === "1"
+      requireSubmissionDeviceMetadata: row.require_submission_device_metadata == null ? null : row.require_submission_device_metadata === true || row.require_submission_device_metadata === 1 || String(row.require_submission_device_metadata) === "1"
     });
     resolveHwyMemberIdForUser = async (userId) => {
       if (!Number.isFinite(userId) || userId <= 0) {
@@ -250134,7 +251394,7 @@ var init_hwyActivitySelfAnnouncement_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT TOP 1 id FROM dbo.hwy_members WHERE user_id = :userId`,
-        { replacements: { userId }, type: import_sequelize92.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize93.QueryTypes.SELECT }
       );
       const id = Number(rows[0]?.id);
       return Number.isFinite(id) && id > 0 ? id : null;
@@ -250143,9 +251403,9 @@ var init_hwyActivitySelfAnnouncement_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT username FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId }, type: import_sequelize92.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize93.QueryTypes.SELECT }
       );
-      return trim12(rows[0]?.username) || "member";
+      return trim13(rows[0]?.username) || "member";
     };
   }
 });
@@ -250203,14 +251463,14 @@ var init_readClientClaimedFromRequest = __esm({
 // src/server/domain/hwy/hwyCoursesActivitiesWorkflow.service.ts
 async function applyHwyActivityWorkflowAction(input) {
   await assertSqlServer5();
-  const activityId = Number(trim13(input.activityIdRaw));
+  const activityId = Number(trim14(input.activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Activity not found.");
   }
   const snapshot = await readActivityStatus(activityId);
   assertActivityTransition(input.action, snapshot.statusCode, snapshot);
   const targetStatus = resolveHwyActivityWorkflowTargetStatus(input.action);
-  const note = trim13(input.note).slice(0, 512);
+  const note = trim14(input.note).slice(0, 512);
   const actorUsername2 = await resolveActorUsername2(input.actorUserId);
   const sequelize = getControlPlaneSequelize();
   const stepId = (0, import_node_crypto46.randomUUID)();
@@ -250225,14 +251485,14 @@ async function applyHwyActivityWorkflowAction(input) {
 }
 async function applyHwyCourseWorkflowAction(input) {
   await assertSqlServer5();
-  const courseId = Number(trim13(input.courseIdRaw));
+  const courseId = Number(trim14(input.courseIdRaw));
   if (!Number.isFinite(courseId) || courseId <= 0) {
     throw new Error("Course not found.");
   }
   const snapshot = await readCourseStatus(courseId);
   assertCourseTransition(input.action, snapshot.statusCode, snapshot.memberCount);
   const targetStatus = resolveHwyCourseWorkflowTargetStatus(input.action);
-  const note = trim13(input.note).slice(0, 1e3);
+  const note = trim14(input.note).slice(0, 1e3);
   const actorUsername2 = await resolveActorUsername2(input.actorUserId);
   const sequelize = getControlPlaneSequelize();
   const stepId = (0, import_node_crypto46.randomUUID)();
@@ -250245,11 +251505,11 @@ async function applyHwyCourseWorkflowAction(input) {
   });
   return readHwyCourseAdminDetail(String(courseId), input.queryLang ?? "iq");
 }
-var import_node_crypto46, import_sequelize93, trim13, assertSqlServer5, resolveActorUsername2, readActivityStatus, readCourseStatus, assertActivityTransition, assertCourseTransition;
+var import_node_crypto46, import_sequelize94, trim14, assertSqlServer5, resolveActorUsername2, readActivityStatus, readCourseStatus, assertActivityTransition, assertCourseTransition;
 var init_hwyCoursesActivitiesWorkflow_service = __esm({
   "src/server/domain/hwy/hwyCoursesActivitiesWorkflow.service.ts"() {
     import_node_crypto46 = require("node:crypto");
-    import_sequelize93 = require("sequelize");
+    import_sequelize94 = require("sequelize");
     init_hwyCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -250257,7 +251517,7 @@ var init_hwyCoursesActivitiesWorkflow_service = __esm({
     init_ensureHwyDbObjects();
     init_hwyExecDbObject();
     init_hwyCoursesActivitiesAdmin_service();
-    trim13 = (value) => String(value ?? "").trim();
+    trim14 = (value) => String(value ?? "").trim();
     assertSqlServer5 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Hwy courses/activities workflow requires SQL Server control plane.");
@@ -250272,9 +251532,9 @@ var init_hwyCoursesActivitiesWorkflow_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT username FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId }, type: import_sequelize93.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize94.QueryTypes.SELECT }
       );
-      return trim13(rows[0]?.username) || "admin";
+      return trim14(rows[0]?.username) || "admin";
     };
     readActivityStatus = async (activityId) => {
       const sequelize = getControlPlaneSequelize();
@@ -250287,14 +251547,14 @@ var init_hwyCoursesActivitiesWorkflow_service = __esm({
     FROM dbo.hwy_activities a
     WHERE a.id = :activityId
     `,
-        { replacements: { activityId }, type: import_sequelize93.QueryTypes.SELECT }
+        { replacements: { activityId }, type: import_sequelize94.QueryTypes.SELECT }
       );
       if (!rows.length) {
         throw new Error("Activity not found.");
       }
       const row = rows[0];
       return {
-        statusCode: trim13(row.status_code) || null,
+        statusCode: trim14(row.status_code) || null,
         memberCount: Number(row.member_count) || 0,
         fileCount: Number(row.file_count) || 0
       };
@@ -250309,13 +251569,13 @@ var init_hwyCoursesActivitiesWorkflow_service = __esm({
     FROM dbo.hwy_courses c
     WHERE c.id = :courseId
     `,
-        { replacements: { courseId }, type: import_sequelize93.QueryTypes.SELECT }
+        { replacements: { courseId }, type: import_sequelize94.QueryTypes.SELECT }
       );
       if (!rows.length) {
         throw new Error("Course not found.");
       }
       return {
-        statusCode: trim13(rows[0].status_code) || null,
+        statusCode: trim14(rows[0].status_code) || null,
         memberCount: Number(rows[0].member_count) || 0
       };
     };
@@ -250392,8 +251652,8 @@ var init_hwyCoursesActivitiesWorkflow_service = __esm({
 // src/server/domain/hwy/hwyCoursesActivitiesAttendanceWrite.service.ts
 async function addHwyActivityAdminAttendance(input) {
   await assertSqlServer6();
-  const activityId = Number(trim14(input.activityIdRaw));
-  const memberId = Number(trim14(input.memberIdRaw));
+  const activityId = Number(trim15(input.activityIdRaw));
+  const memberId = Number(trim15(input.memberIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Activity not found.");
   }
@@ -250403,12 +251663,12 @@ async function addHwyActivityAdminAttendance(input) {
   const sequelize = getControlPlaneSequelize();
   const activityRows = await sequelize.query(
     `SELECT status_code FROM dbo.hwy_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize94.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize95.QueryTypes.SELECT }
   );
   if (!activityRows.length) {
     throw new Error("Activity not found.");
   }
-  if (trim14(activityRows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
+  if (trim15(activityRows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
     throw new Error("Attendees can only be changed on draft activities.");
   }
   const actor = await resolveActorUsername3(input.actorUserId);
@@ -250433,20 +251693,20 @@ async function addHwyActivityAdminAttendance(input) {
 }
 async function removeHwyActivityAdminAttendance(input) {
   await assertSqlServer6();
-  const activityId = Number(trim14(input.activityIdRaw));
-  const attendanceId = Number(trim14(input.attendanceIdRaw));
+  const activityId = Number(trim15(input.activityIdRaw));
+  const attendanceId = Number(trim15(input.attendanceIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0 || !Number.isFinite(attendanceId) || attendanceId <= 0) {
     throw new Error("Attendance not found.");
   }
   const sequelize = getControlPlaneSequelize();
   const activityRows = await sequelize.query(
     `SELECT status_code FROM dbo.hwy_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize94.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize95.QueryTypes.SELECT }
   );
   if (!activityRows.length) {
     throw new Error("Activity not found.");
   }
-  if (trim14(activityRows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
+  if (trim15(activityRows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
     throw new Error("Attendees can only be changed on draft activities.");
   }
   await execHwyProcedure("hwy_activity_attendance_remove", {
@@ -250456,8 +251716,8 @@ async function removeHwyActivityAdminAttendance(input) {
 }
 async function addHwyCourseAdminAttendance(input) {
   await assertSqlServer6();
-  const courseId = Number(trim14(input.courseIdRaw));
-  const memberId = Number(trim14(input.memberIdRaw));
+  const courseId = Number(trim15(input.courseIdRaw));
+  const memberId = Number(trim15(input.memberIdRaw));
   if (!Number.isFinite(courseId) || courseId <= 0) {
     throw new Error("Course not found.");
   }
@@ -250467,17 +251727,17 @@ async function addHwyCourseAdminAttendance(input) {
   const sequelize = getControlPlaneSequelize();
   const courseRows = await sequelize.query(
     `SELECT status_code FROM dbo.hwy_courses WHERE id = :courseId`,
-    { replacements: { courseId }, type: import_sequelize94.QueryTypes.SELECT }
+    { replacements: { courseId }, type: import_sequelize95.QueryTypes.SELECT }
   );
   if (!courseRows.length) {
     throw new Error("Course not found.");
   }
-  if (trim14(courseRows[0].status_code) !== HWY_COURSE_STATUS_DRAFT) {
+  if (trim15(courseRows[0].status_code) !== HWY_COURSE_STATUS_DRAFT) {
     throw new Error("Attendees can only be changed on draft courses.");
   }
   const actor = await resolveActorUsername3(input.actorUserId);
   const id = await allocateNextAttendanceId("hwy_course_attendances");
-  const note = trim14(input.note).slice(0, 512) || null;
+  const note = trim15(input.note).slice(0, 512) || null;
   try {
     await execHwyProcedure("hwy_course_attendance_add", {
       course_id: courseId,
@@ -250499,20 +251759,20 @@ async function addHwyCourseAdminAttendance(input) {
 }
 async function removeHwyCourseAdminAttendance(input) {
   await assertSqlServer6();
-  const courseId = Number(trim14(input.courseIdRaw));
-  const attendanceId = Number(trim14(input.attendanceIdRaw));
+  const courseId = Number(trim15(input.courseIdRaw));
+  const attendanceId = Number(trim15(input.attendanceIdRaw));
   if (!Number.isFinite(courseId) || courseId <= 0 || !Number.isFinite(attendanceId) || attendanceId <= 0) {
     throw new Error("Attendance not found.");
   }
   const sequelize = getControlPlaneSequelize();
   const courseRows = await sequelize.query(
     `SELECT status_code FROM dbo.hwy_courses WHERE id = :courseId`,
-    { replacements: { courseId }, type: import_sequelize94.QueryTypes.SELECT }
+    { replacements: { courseId }, type: import_sequelize95.QueryTypes.SELECT }
   );
   if (!courseRows.length) {
     throw new Error("Course not found.");
   }
-  if (trim14(courseRows[0].status_code) !== HWY_COURSE_STATUS_DRAFT) {
+  if (trim15(courseRows[0].status_code) !== HWY_COURSE_STATUS_DRAFT) {
     throw new Error("Attendees can only be changed on draft courses.");
   }
   await execHwyProcedure("hwy_course_attendance_remove", {
@@ -250522,20 +251782,20 @@ async function removeHwyCourseAdminAttendance(input) {
 }
 async function deleteHwyActivityAdminFile(input) {
   await assertSqlServer6();
-  const activityId = Number(trim14(input.activityIdRaw));
-  const fileId = trim14(input.fileIdRaw);
+  const activityId = Number(trim15(input.activityIdRaw));
+  const fileId = trim15(input.fileIdRaw);
   if (!Number.isFinite(activityId) || activityId <= 0 || !fileId) {
     throw new Error("File not found.");
   }
   const sequelize = getControlPlaneSequelize();
   const activityRows = await sequelize.query(
     `SELECT status_code FROM dbo.hwy_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize94.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize95.QueryTypes.SELECT }
   );
   if (!activityRows.length) {
     throw new Error("Activity not found.");
   }
-  if (trim14(activityRows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
+  if (trim15(activityRows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
     throw new Error("Files can only be removed on draft activities.");
   }
   await execHwyProcedure("hwy_activity_file_delete", {
@@ -250543,17 +251803,17 @@ async function deleteHwyActivityAdminFile(input) {
     activity_id: activityId
   });
 }
-var import_sequelize94, trim14, assertSqlServer6, resolveActorUsername3, allocateNextAttendanceId;
+var import_sequelize95, trim15, assertSqlServer6, resolveActorUsername3, allocateNextAttendanceId;
 var init_hwyCoursesActivitiesAttendanceWrite_service = __esm({
   "src/server/domain/hwy/hwyCoursesActivitiesAttendanceWrite.service.ts"() {
-    import_sequelize94 = require("sequelize");
+    import_sequelize95 = require("sequelize");
     init_hwyCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyCoursesActivitiesSchema();
     init_ensureHwyDbObjects();
     init_hwyExecDbObject();
-    trim14 = (value) => String(value ?? "").trim();
+    trim15 = (value) => String(value ?? "").trim();
     assertSqlServer6 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Hwy courses/activities attendance write requires SQL Server control plane.");
@@ -250568,15 +251828,15 @@ var init_hwyCoursesActivitiesAttendanceWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT username FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId }, type: import_sequelize94.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize95.QueryTypes.SELECT }
       );
-      return trim14(rows[0]?.username) || "admin";
+      return trim15(rows[0]?.username) || "admin";
     };
     allocateNextAttendanceId = async (table) => {
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ISNULL(MAX(id), 0) + 1 AS next_id FROM dbo.${table} WITH (UPDLOCK, HOLDLOCK)`,
-        { type: import_sequelize94.QueryTypes.SELECT }
+        { type: import_sequelize95.QueryTypes.SELECT }
       );
       const nextId = Number(rows[0]?.next_id);
       if (!Number.isFinite(nextId) || nextId <= 0) {
@@ -250591,14 +251851,14 @@ var init_hwyCoursesActivitiesAttendanceWrite_service = __esm({
 async function listHwyCoursesActivitiesVocabOptions(input) {
   const categoryTitle = input.kind === "activity" ? ACTIVITY_TYPE_CATEGORY : COURSE_TYPE_CATEGORY;
   const categoryId = await findBaseInfoCategoryId(categoryTitle);
-  const parentCode = trim15(input.parentCode);
+  const parentCode = trim16(input.parentCode);
   const parentId = parentCode || categoryId;
   const rows = await prisma().baseInfo.findMany({
     where: { parentId, isActive: true },
     orderBy: [{ viewOrder: "asc" }, { title: "asc" }],
     select: { id: true, title: true, parentId: true }
   });
-  const cultureId = trim15(input.queryLang) || "iq";
+  const cultureId = trim16(input.queryLang) || "iq";
   const { listBaseInfoEnrichmentRowsByIds: listBaseInfoEnrichmentRowsByIds2 } = await Promise.resolve().then(() => (init_treeRepository(), treeRepository_exports));
   const enriched = await listBaseInfoEnrichmentRowsByIds2(
     rows.map((row) => row.id),
@@ -250607,7 +251867,7 @@ async function listHwyCoursesActivitiesVocabOptions(input) {
   const labelById = new Map(
     enriched.map((entry) => [
       String(entry.id ?? "").trim(),
-      trim15(String(entry.title ?? entry.title_canonical ?? ""))
+      trim16(String(entry.title ?? entry.title_canonical ?? ""))
     ])
   );
   return rows.map((row) => ({
@@ -250618,16 +251878,16 @@ async function listHwyCoursesActivitiesVocabOptions(input) {
 }
 async function createHwyActivityDraft(input, actorUserId2, queryLang) {
   await assertSqlServer7();
-  const title = trim15(input.title);
+  const title = trim16(input.title);
   if (!title) {
     throw new Error("Activity title is required.");
   }
-  const activityTypeCode = trim15(input.activityTypeCode);
+  const activityTypeCode = trim16(input.activityTypeCode);
   if (!activityTypeCode) {
     throw new Error("Activity type is required.");
   }
   await assertBaseInfoNode(activityTypeCode, ACTIVITY_TYPE_CATEGORY);
-  const activitySubtypeCode = trim15(input.activitySubtypeCode);
+  const activitySubtypeCode = trim16(input.activitySubtypeCode);
   if (activitySubtypeCode) {
     await assertBaseInfoNode(activitySubtypeCode, ACTIVITY_TYPE_CATEGORY);
   }
@@ -250636,12 +251896,12 @@ async function createHwyActivityDraft(input, actorUserId2, queryLang) {
   await execHwyProcedure("hwy_activity_insert_draft", {
     id,
     title,
-    note: trim15(input.note) || null,
-    activity_date: trim15(input.activityDate) || null,
+    note: trim16(input.note) || null,
+    activity_date: trim16(input.activityDate) || null,
     activity_type_code: activityTypeCode,
     activity_subtype_code: activitySubtypeCode || null,
     status_code: HWY_ACTIVITY_STATUS_REGISTER,
-    nashat_location: trim15(input.nashatLocation) || null,
+    nashat_location: trim16(input.nashatLocation) || null,
     enable_self_announcement: input.enableSelfAnnouncement ? 1 : 0,
     require_submission_device_metadata: input.requireSubmissionDeviceMetadata == null ? null : input.requireSubmissionDeviceMetadata ? 1 : 0,
     legacy_created_by: actor
@@ -250653,32 +251913,32 @@ async function createHwyActivityDraft(input, actorUserId2, queryLang) {
 }
 async function updateHwyActivityDraft(activityIdRaw, input, actorUserId2, queryLang) {
   await assertSqlServer7();
-  const activityId = Number(trim15(activityIdRaw));
+  const activityId = Number(trim16(activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Invalid activity id.");
   }
   const sequelize = getControlPlaneSequelize();
   const existing = await sequelize.query(
     `SELECT status_code FROM dbo.hwy_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize95.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize96.QueryTypes.SELECT }
   );
   if (!existing.length) {
     throw new Error("Activity not found.");
   }
-  const isTajammoatUpdate = Boolean(input.tajammoatMode) && trim15(input.activityTypeCode) === HWY_ACTIVITY_CENTRAL_TYPE_CODE;
-  if (!isTajammoatUpdate && trim15(existing[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
+  const isTajammoatUpdate = Boolean(input.tajammoatMode) && trim16(input.activityTypeCode) === HWY_ACTIVITY_CENTRAL_TYPE_CODE;
+  if (!isTajammoatUpdate && trim16(existing[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
     throw new Error("Only draft activities can be edited.");
   }
-  const title = trim15(input.title);
+  const title = trim16(input.title);
   if (!title) {
     throw new Error("Activity title is required.");
   }
-  const activityTypeCode = trim15(input.activityTypeCode);
+  const activityTypeCode = trim16(input.activityTypeCode);
   if (!activityTypeCode) {
     throw new Error("Activity type is required.");
   }
   await assertBaseInfoNode(activityTypeCode, ACTIVITY_TYPE_CATEGORY);
-  const activitySubtypeCode = trim15(input.activitySubtypeCode);
+  const activitySubtypeCode = trim16(input.activitySubtypeCode);
   if (activitySubtypeCode) {
     await assertBaseInfoNode(activitySubtypeCode, ACTIVITY_TYPE_CATEGORY);
   }
@@ -250692,11 +251952,11 @@ async function updateHwyActivityDraft(activityIdRaw, input, actorUserId2, queryL
       activity_id: activityId,
       expected_status_code: HWY_ACTIVITY_STATUS_REGISTER,
       title,
-      note: trim15(input.note) || null,
-      activity_date: trim15(input.activityDate) || null,
+      note: trim16(input.note) || null,
+      activity_date: trim16(input.activityDate) || null,
       activity_type_code: activityTypeCode,
       activity_subtype_code: activitySubtypeCode || null,
-      nashat_location: trim15(input.nashatLocation) || null,
+      nashat_location: trim16(input.nashatLocation) || null,
       enable_self_announcement: input.enableSelfAnnouncement ? 1 : 0,
       require_submission_device_metadata: input.requireSubmissionDeviceMetadata == null ? null : input.requireSubmissionDeviceMetadata ? 1 : 0,
       legacy_updated_by: actor
@@ -250715,16 +251975,16 @@ async function updateHwyActivityDraft(activityIdRaw, input, actorUserId2, queryL
 }
 async function createHwyCourseDraft(input, actorUserId2, queryLang) {
   await assertSqlServer7();
-  const courseTypeCode = trim15(input.courseTypeCode);
+  const courseTypeCode = trim16(input.courseTypeCode);
   if (!courseTypeCode) {
     throw new Error("Course type is required.");
   }
   await assertBaseInfoNode(courseTypeCode, COURSE_TYPE_CATEGORY);
-  const courseSubtypeCode = trim15(input.courseSubtypeCode);
+  const courseSubtypeCode = trim16(input.courseSubtypeCode);
   if (courseSubtypeCode) {
     await assertBaseInfoNode(courseSubtypeCode, COURSE_TYPE_CATEGORY);
   }
-  const trainerMemberIdRaw = trim15(input.trainerMemberId);
+  const trainerMemberIdRaw = trim16(input.trainerMemberId);
   const trainerMemberId = trainerMemberIdRaw && /^\d+$/.test(trainerMemberIdRaw) ? Number(trainerMemberIdRaw) : null;
   const legacyProvinceId = parseOptionalLegacyProvinceId(input.legacyProvinceId);
   const actor = await resolveActorUsername4(actorUserId2);
@@ -250735,8 +251995,8 @@ async function createHwyCourseDraft(input, actorUserId2, queryLang) {
     legacy_province_id: legacyProvinceId,
     course_type_code: courseTypeCode,
     course_subtype_code: courseSubtypeCode || null,
-    note: trim15(input.note) || null,
-    course_date: trim15(input.courseDate) || null,
+    note: trim16(input.note) || null,
+    course_date: trim16(input.courseDate) || null,
     status_code: HWY_COURSE_STATUS_DRAFT,
     legacy_created_by: actor
   });
@@ -250744,31 +252004,31 @@ async function createHwyCourseDraft(input, actorUserId2, queryLang) {
 }
 async function updateHwyCourseDraft(courseIdRaw, input, actorUserId2, queryLang) {
   await assertSqlServer7();
-  const courseId = Number(trim15(courseIdRaw));
+  const courseId = Number(trim16(courseIdRaw));
   if (!Number.isFinite(courseId) || courseId <= 0) {
     throw new Error("Invalid course id.");
   }
   const sequelize = getControlPlaneSequelize();
   const existing = await sequelize.query(
     `SELECT status_code FROM dbo.hwy_courses WHERE id = :courseId`,
-    { replacements: { courseId }, type: import_sequelize95.QueryTypes.SELECT }
+    { replacements: { courseId }, type: import_sequelize96.QueryTypes.SELECT }
   );
   if (!existing.length) {
     throw new Error("Course not found.");
   }
-  if (trim15(existing[0].status_code) !== HWY_COURSE_STATUS_DRAFT) {
+  if (trim16(existing[0].status_code) !== HWY_COURSE_STATUS_DRAFT) {
     throw new Error("Only draft courses can be edited.");
   }
-  const courseTypeCode = trim15(input.courseTypeCode);
+  const courseTypeCode = trim16(input.courseTypeCode);
   if (!courseTypeCode) {
     throw new Error("Course type is required.");
   }
   await assertBaseInfoNode(courseTypeCode, COURSE_TYPE_CATEGORY);
-  const courseSubtypeCode = trim15(input.courseSubtypeCode);
+  const courseSubtypeCode = trim16(input.courseSubtypeCode);
   if (courseSubtypeCode) {
     await assertBaseInfoNode(courseSubtypeCode, COURSE_TYPE_CATEGORY);
   }
-  const trainerMemberIdRaw = trim15(input.trainerMemberId);
+  const trainerMemberIdRaw = trim16(input.trainerMemberId);
   const trainerMemberId = trainerMemberIdRaw && /^\d+$/.test(trainerMemberIdRaw) ? Number(trainerMemberIdRaw) : null;
   const legacyProvinceId = parseOptionalLegacyProvinceId(input.legacyProvinceId);
   const actor = await resolveActorUsername4(actorUserId2);
@@ -250780,8 +252040,8 @@ async function updateHwyCourseDraft(courseIdRaw, input, actorUserId2, queryLang)
       legacy_province_id: legacyProvinceId,
       course_type_code: courseTypeCode,
       course_subtype_code: courseSubtypeCode || null,
-      note: trim15(input.note) || null,
-      course_date: trim15(input.courseDate) || null,
+      note: trim16(input.note) || null,
+      course_date: trim16(input.courseDate) || null,
       legacy_updated_by: actor
     });
   } catch (error) {
@@ -250798,7 +252058,7 @@ async function updateHwyCourseDraft(courseIdRaw, input, actorUserId2, queryLang)
 }
 async function uploadHwyActivityFile(input) {
   await assertSqlServer7();
-  const activityId = Number(trim15(input.activityIdRaw));
+  const activityId = Number(trim16(input.activityIdRaw));
   if (!Number.isFinite(activityId) || activityId <= 0) {
     throw new Error("Invalid activity id.");
   }
@@ -250811,19 +252071,19 @@ async function uploadHwyActivityFile(input) {
     FROM dbo.hwy_activities a
     WHERE a.id = :activityId
     `,
-    { replacements: { activityId }, type: import_sequelize95.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize96.QueryTypes.SELECT }
   );
   if (!rows.length) {
     throw new Error("Activity not found.");
   }
-  if (trim15(rows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
+  if (trim16(rows[0].status_code) !== HWY_ACTIVITY_STATUS_REGISTER) {
     throw new Error("Files can only be added to draft activities.");
   }
   const fileCount = Number(rows[0].file_count) || 0;
   if (fileCount >= 4) {
     throw new Error("An activity can have at most four files.");
   }
-  const fileName = trim15(input.fileName).slice(0, 256);
+  const fileName = trim16(input.fileName).slice(0, 256);
   if (!fileName) {
     throw new Error("File name is required.");
   }
@@ -250838,7 +252098,7 @@ async function uploadHwyActivityFile(input) {
       activity_id: activityId,
       expected_status_code: HWY_ACTIVITY_STATUS_REGISTER,
       original_file_name: fileName,
-      mime: trim15(input.mime).slice(0, 32) || "application/octet-stream",
+      mime: trim16(input.mime).slice(0, 32) || "application/octet-stream",
       size_bytes: input.buffer.length,
       content: input.buffer,
       legacy_created_by: actor
@@ -250858,11 +252118,11 @@ async function uploadHwyActivityFile(input) {
   }
   return { id: fileId };
 }
-var import_node_crypto47, import_sequelize95, trim15, ACTIVITY_TYPE_CATEGORY, COURSE_TYPE_CATEGORY, assertSqlServer7, resolveActorUsername4, findBaseInfoCategoryId, assertBaseInfoNode, allocateNextId, readBodyField, readOptionalBodyBoolean, readOptionalBodyNumber, readUpsertHwyActivityDraftInput, parseLegacyProvinceId, execHwyActivityUpdateTajammoat, parseOptionalLegacyProvinceId;
+var import_node_crypto47, import_sequelize96, trim16, ACTIVITY_TYPE_CATEGORY, COURSE_TYPE_CATEGORY, assertSqlServer7, resolveActorUsername4, findBaseInfoCategoryId, assertBaseInfoNode, allocateNextId, readBodyField, readOptionalBodyBoolean, readOptionalBodyNumber, readUpsertHwyActivityDraftInput, parseLegacyProvinceId, execHwyActivityUpdateTajammoat, parseOptionalLegacyProvinceId;
 var init_hwyCoursesActivitiesWrite_service = __esm({
   "src/server/domain/hwy/hwyCoursesActivitiesWrite.service.ts"() {
     import_node_crypto47 = require("node:crypto");
-    import_sequelize95 = require("sequelize");
+    import_sequelize96 = require("sequelize");
     init_hwyCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -250870,7 +252130,7 @@ var init_hwyCoursesActivitiesWrite_service = __esm({
     init_ensureHwyDbObjects();
     init_hwyExecDbObject();
     init_hwyCoursesActivitiesAdmin_service();
-    trim15 = (value) => String(value ?? "").trim();
+    trim16 = (value) => String(value ?? "").trim();
     ACTIVITY_TYPE_CATEGORY = "Activity Type";
     COURSE_TYPE_CATEGORY = "Course Type";
     assertSqlServer7 = async () => {
@@ -250887,9 +252147,9 @@ var init_hwyCoursesActivitiesWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT username FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId }, type: import_sequelize95.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize96.QueryTypes.SELECT }
       );
-      return trim15(rows[0]?.username) || "admin";
+      return trim16(rows[0]?.username) || "admin";
     };
     findBaseInfoCategoryId = async (categoryTitle) => {
       const category = await prisma().baseInfo.findFirst({
@@ -250902,7 +252162,7 @@ var init_hwyCoursesActivitiesWrite_service = __esm({
       return category.id;
     };
     assertBaseInfoNode = async (code, categoryTitle) => {
-      const id = trim15(code);
+      const id = trim16(code);
       if (!/^\d+$/.test(id)) {
         throw new Error("Invalid type code.");
       }
@@ -250935,7 +252195,7 @@ var init_hwyCoursesActivitiesWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ISNULL(MAX(id), 0) + 1 AS next_id FROM dbo.${table} WITH (UPDLOCK, HOLDLOCK)`,
-        { type: import_sequelize95.QueryTypes.SELECT }
+        { type: import_sequelize96.QueryTypes.SELECT }
       );
       const nextId = Number(rows[0]?.next_id);
       if (!Number.isFinite(nextId) || nextId <= 0) {
@@ -250975,33 +252235,33 @@ var init_hwyCoursesActivitiesWrite_service = __esm({
       return Number.isFinite(parsed) ? parsed : null;
     };
     readUpsertHwyActivityDraftInput = (body) => ({
-      title: trim15(String(readBodyField(body, "title") ?? "")),
-      note: readBodyField(body, "note") == null ? null : trim15(String(readBodyField(body, "note"))),
-      activityDate: readBodyField(body, "activityDate") == null ? null : trim15(String(readBodyField(body, "activityDate"))),
-      activityTypeCode: trim15(String(readBodyField(body, "activityTypeCode") ?? "")),
-      activitySubtypeCode: readBodyField(body, "activitySubtypeCode") == null ? null : trim15(String(readBodyField(body, "activitySubtypeCode"))),
-      nashatLocation: readBodyField(body, "nashatLocation") == null ? null : trim15(String(readBodyField(body, "nashatLocation"))),
-      legacyProvinceId: readBodyField(body, "legacyProvinceId") == null ? null : trim15(String(readBodyField(body, "legacyProvinceId"))),
+      title: trim16(String(readBodyField(body, "title") ?? "")),
+      note: readBodyField(body, "note") == null ? null : trim16(String(readBodyField(body, "note"))),
+      activityDate: readBodyField(body, "activityDate") == null ? null : trim16(String(readBodyField(body, "activityDate"))),
+      activityTypeCode: trim16(String(readBodyField(body, "activityTypeCode") ?? "")),
+      activitySubtypeCode: readBodyField(body, "activitySubtypeCode") == null ? null : trim16(String(readBodyField(body, "activitySubtypeCode"))),
+      nashatLocation: readBodyField(body, "nashatLocation") == null ? null : trim16(String(readBodyField(body, "nashatLocation"))),
+      legacyProvinceId: readBodyField(body, "legacyProvinceId") == null ? null : trim16(String(readBodyField(body, "legacyProvinceId"))),
       enableSelfAnnouncement: readOptionalBodyBoolean(body, "enableSelfAnnouncement"),
       requireSubmissionDeviceMetadata: readOptionalBodyBoolean(body, "requireSubmissionDeviceMetadata"),
       tajammoatMode: readOptionalBodyBoolean(body, "tajammoatMode") === true,
-      nbLocationLat: readBodyField(body, "nbLocationLat") == null ? null : trim15(String(readBodyField(body, "nbLocationLat"))),
-      nbLocationLon: readBodyField(body, "nbLocationLon") == null ? null : trim15(String(readBodyField(body, "nbLocationLon"))),
+      nbLocationLat: readBodyField(body, "nbLocationLat") == null ? null : trim16(String(readBodyField(body, "nbLocationLat"))),
+      nbLocationLon: readBodyField(body, "nbLocationLon") == null ? null : trim16(String(readBodyField(body, "nbLocationLon"))),
       nbMaxDistanceM: readOptionalBodyNumber(body, "nbMaxDistanceM"),
-      nbWindowStartAt: readBodyField(body, "nbWindowStartAt") == null ? null : trim15(String(readBodyField(body, "nbWindowStartAt"))),
-      nbWindowEndAt: readBodyField(body, "nbWindowEndAt") == null ? null : trim15(String(readBodyField(body, "nbWindowEndAt"))),
-      nbLegacyProvinceId: readBodyField(body, "nbLegacyProvinceId") == null ? null : trim15(String(readBodyField(body, "nbLegacyProvinceId"))),
+      nbWindowStartAt: readBodyField(body, "nbWindowStartAt") == null ? null : trim16(String(readBodyField(body, "nbWindowStartAt"))),
+      nbWindowEndAt: readBodyField(body, "nbWindowEndAt") == null ? null : trim16(String(readBodyField(body, "nbWindowEndAt"))),
+      nbLegacyProvinceId: readBodyField(body, "nbLegacyProvinceId") == null ? null : trim16(String(readBodyField(body, "nbLegacyProvinceId"))),
       nbLegacyCircleId: readOptionalBodyNumber(body, "nbLegacyCircleId"),
       nbLegacyMaktabId: readOptionalBodyNumber(body, "nbLegacyMaktabId"),
       nbLegacyRegionId: readOptionalBodyNumber(body, "nbLegacyRegionId"),
       nbLegacyGenderId: readOptionalBodyNumber(body, "nbLegacyGenderId"),
-      nbAllowedRoles: readBodyField(body, "nbAllowedRoles") == null ? null : trim15(String(readBodyField(body, "nbAllowedRoles"))),
-      nbOrganizationIds: readBodyField(body, "nbOrganizationIds") == null ? null : trim15(String(readBodyField(body, "nbOrganizationIds"))),
+      nbAllowedRoles: readBodyField(body, "nbAllowedRoles") == null ? null : trim16(String(readBodyField(body, "nbAllowedRoles"))),
+      nbOrganizationIds: readBodyField(body, "nbOrganizationIds") == null ? null : trim16(String(readBodyField(body, "nbOrganizationIds"))),
       nbOnlyKashafeh: readOptionalBodyBoolean(body, "nbOnlyKashafeh"),
       nbAllowGov: readOptionalBodyBoolean(body, "nbAllowGov")
     });
     parseLegacyProvinceId = (raw) => {
-      const trimmed = trim15(raw);
+      const trimmed = trim16(raw);
       if (!trimmed) {
         return null;
       }
@@ -251011,33 +252271,33 @@ var init_hwyCoursesActivitiesWrite_service = __esm({
     execHwyActivityUpdateTajammoat = async (activityId, input, actor) => {
       await execHwyProcedure("hwy_activity_update_tajammoat", {
         activity_id: activityId,
-        title: trim15(input.title),
-        note: trim15(input.note) || null,
-        activity_date: trim15(input.activityDate) || null,
-        activity_subtype_code: trim15(input.activitySubtypeCode) || null,
+        title: trim16(input.title),
+        note: trim16(input.note) || null,
+        activity_date: trim16(input.activityDate) || null,
+        activity_subtype_code: trim16(input.activitySubtypeCode) || null,
         legacy_province_id: parseLegacyProvinceId(input.legacyProvinceId),
-        nashat_location: trim15(input.nashatLocation) || null,
+        nashat_location: trim16(input.nashatLocation) || null,
         enable_self_announcement: input.enableSelfAnnouncement ? 1 : 0,
         require_submission_device_metadata: input.requireSubmissionDeviceMetadata == null ? null : input.requireSubmissionDeviceMetadata ? 1 : 0,
-        nb_location_lat: trim15(input.nbLocationLat) || null,
-        nb_location_lon: trim15(input.nbLocationLon) || null,
+        nb_location_lat: trim16(input.nbLocationLat) || null,
+        nb_location_lon: trim16(input.nbLocationLon) || null,
         nb_max_distance_m: input.nbMaxDistanceM ?? null,
-        nb_window_start_at: trim15(input.nbWindowStartAt) || null,
-        nb_window_end_at: trim15(input.nbWindowEndAt) || null,
-        nb_legacy_province_id: trim15(input.nbLegacyProvinceId) || null,
+        nb_window_start_at: trim16(input.nbWindowStartAt) || null,
+        nb_window_end_at: trim16(input.nbWindowEndAt) || null,
+        nb_legacy_province_id: trim16(input.nbLegacyProvinceId) || null,
         nb_legacy_circle_id: input.nbLegacyCircleId ?? null,
         nb_legacy_maktab_id: input.nbLegacyMaktabId ?? null,
         nb_legacy_region_id: input.nbLegacyRegionId ?? null,
         nb_legacy_gender_id: input.nbLegacyGenderId ?? null,
-        nb_allowed_roles: trim15(input.nbAllowedRoles) || null,
-        nb_organization_ids: trim15(input.nbOrganizationIds) || null,
+        nb_allowed_roles: trim16(input.nbAllowedRoles) || null,
+        nb_organization_ids: trim16(input.nbOrganizationIds) || null,
         nb_only_kashafeh: input.nbOnlyKashafeh ? 1 : 0,
         nb_allow_gov: input.nbAllowGov ? 1 : 0,
         legacy_updated_by: actor
       });
     };
     parseOptionalLegacyProvinceId = (raw) => {
-      const text2 = trim15(raw);
+      const text2 = trim16(raw);
       if (!text2 || !/^\d+$/.test(text2)) {
         return null;
       }
@@ -251128,14 +252388,14 @@ async function countHwyActivityNbTargetAudience(activityIdRaw) {
   }
   return countFromLegacyMembersSql(crit);
 }
-var import_mssql10, import_sequelize96, NB_ACTIVE_MEMBER_SQL, NB_KASHAFEH_CORE_SQL, NB_GOV_CORE_SQL, NB_ORGANIZATION_MEMBER_MATCH_SQL, NB_NO_ORGANIZATION_AFFILIATION_SQL, readSqlBit, loadActivityNbRow, appendAudienceSegmentOr, appendDemoFilters, bindDemoParams, countFromLegacyMembersSql, countGovListDefault, countKashafehListDefault;
+var import_mssql10, import_sequelize97, NB_ACTIVE_MEMBER_SQL, NB_KASHAFEH_CORE_SQL, NB_GOV_CORE_SQL, NB_ORGANIZATION_MEMBER_MATCH_SQL, NB_NO_ORGANIZATION_AFFILIATION_SQL, readSqlBit, loadActivityNbRow, appendAudienceSegmentOr, appendDemoFilters, bindDemoParams, countFromLegacyMembersSql, countGovListDefault, countKashafehListDefault;
 var init_hwyActivityNbTargetAudienceCount_service = __esm({
   "src/server/domain/hwy/hwyActivityNbTargetAudienceCount.service.ts"() {
     import_mssql10 = __toESM(require("mssql"), 1);
     init_hwyActivityNbTargetAudience();
     init_controlPlaneSequelize();
     init_prismaHelpers();
-    import_sequelize96 = require("sequelize");
+    import_sequelize97 = require("sequelize");
     NB_ACTIVE_MEMBER_SQL = "Mem.MembershipStatus=10851";
     NB_KASHAFEH_CORE_SQL = `
   ISNULL(Mem.DeviceOsTypeId,0)<>213991
@@ -251182,7 +252442,7 @@ NOT EXISTS (SELECT 1 FROM dbo.HWY_Members_Organizations O WITH (NOLOCK) WHERE O.
     FROM dbo.hwy_activities
     WHERE id = :activityId
     `,
-        { replacements: { activityId }, type: import_sequelize96.QueryTypes.SELECT }
+        { replacements: { activityId }, type: import_sequelize97.QueryTypes.SELECT }
       );
       return rows[0] ?? null;
     };
@@ -251215,7 +252475,7 @@ NOT EXISTS (SELECT 1 FROM dbo.HWY_Members_Organizations O WITH (NOLOCK) WHERE O.
       }
       if (crit.nbAllowedRolesCsv !== "") {
         sqlParts.push(
-          " AND dbo.CheckStringIntersection(@NbAllowedRoles, (SELECT STRING_AGG(CAST(URR.RoleId AS VARCHAR(20)), ',') FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=Mem.UserId), ',')=1"
+          " AND dbo.CheckStringIntersection(@NbAllowedRoles, (SELECT STRING_AGG(CAST(URR.RoleId AS VARCHAR(20)), ',') FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=Mem.UserId), ',')=1"
         );
       }
     };
@@ -251455,7 +252715,7 @@ async function patchHwyMemberDirectoryMember(memberIdRaw, input, options2) {
   const sequelize = getControlPlaneSequelize();
   const beforeRows = await sequelize.query(
     `SELECT ${HWY_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.hwy_members WHERE id = :id`,
-    { replacements: { id: memberId }, type: import_sequelize97.QueryTypes.SELECT }
+    { replacements: { id: memberId }, type: import_sequelize98.QueryTypes.SELECT }
   );
   if (!beforeRows[0]) {
     throw new Error("Member not found.");
@@ -251531,7 +252791,7 @@ async function patchHwyMemberDirectoryMember(memberIdRaw, input, options2) {
   }
   const afterRows = await sequelize.query(
     `SELECT ${HWY_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.hwy_members WHERE id = :id`,
-    { replacements: { id: memberId }, type: import_sequelize97.QueryTypes.SELECT }
+    { replacements: { id: memberId }, type: import_sequelize98.QueryTypes.SELECT }
   );
   if (afterRows[0]) {
     await emitHwyMemberDirectoryPatchHistory({
@@ -251547,10 +252807,10 @@ async function patchHwyMemberDirectoryMember(memberIdRaw, input, options2) {
   }
   await invalidateHwyMemberDirectoryListCache();
 }
-var import_sequelize97, trimOptional2, parseOptionalBigInt, parseMemberId8;
+var import_sequelize98, trimOptional2, parseOptionalBigInt, parseMemberId8;
 var init_hwyMemberDirectoryPatch_service = __esm({
   "src/server/domain/hwy/hwyMemberDirectoryPatch.service.ts"() {
-    import_sequelize97 = require("sequelize");
+    import_sequelize98 = require("sequelize");
     init_hwyMemberIdentityFieldMask();
     init_hwyMemberDossierEditPolicy();
     init_applyHwyMemberIdentityFieldMasks();
@@ -251656,7 +252916,7 @@ async function loadHwyMemberListScopedEditFields(input) {
     FROM dbo.hwy_members m
     WHERE m.id = :memberId
     `,
-    { replacements: { memberId }, type: import_sequelize98.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize99.QueryTypes.SELECT }
   );
   const memberRow = memberRows[0];
   if (!memberRow) {
@@ -251679,7 +252939,7 @@ async function loadHwyMemberListScopedEditFields(input) {
       `,
       {
         replacements: { memberId, instituteId },
-        type: import_sequelize98.QueryTypes.SELECT
+        type: import_sequelize99.QueryTypes.SELECT
       }
     );
     characterCode = trimOptional3(linkRows[0]?.characterCode ?? null, 128);
@@ -251805,7 +253065,7 @@ async function patchHwyMemberListScopedEditFields(input) {
           updated_by = :updatedBy
       WHERE id = :memberId
       `,
-      { replacements, type: import_sequelize98.QueryTypes.UPDATE }
+      { replacements, type: import_sequelize99.QueryTypes.UPDATE }
     );
     invalidateHwyMemberDirectoryListCache();
     return;
@@ -251830,7 +253090,7 @@ async function patchHwyMemberListScopedEditFields(input) {
       WHERE mi.member_id = :memberId AND mi.institute_id = :instituteId
       ORDER BY mi.id DESC
       `,
-      { replacements: { memberId, instituteId }, type: import_sequelize98.QueryTypes.SELECT }
+      { replacements: { memberId, instituteId }, type: import_sequelize99.QueryTypes.SELECT }
     );
     if (!linkRows[0]?.linkId) {
       throw new Error("Institute membership link not found for this member.");
@@ -251850,16 +253110,16 @@ async function patchHwyMemberListScopedEditFields(input) {
           updatedAt: now,
           updatedBy: input.actorUserId ?? null
         },
-        type: import_sequelize98.QueryTypes.UPDATE
+        type: import_sequelize99.QueryTypes.UPDATE
       }
     );
     invalidateHwyMemberDirectoryListCache();
   }
 }
-var import_sequelize98, trimOptional3, parseMemberId9, scopedEditAllowsCache, SCOPED_EDIT_ALLOWS_CACHE_MS, loadInstituteAllowsScopedEditSet, resolveListScopedEditProfile;
+var import_sequelize99, trimOptional3, parseMemberId9, scopedEditAllowsCache, SCOPED_EDIT_ALLOWS_CACHE_MS, loadInstituteAllowsScopedEditSet, resolveListScopedEditProfile;
 var init_hwyMemberListScopedEdit_service = __esm({
   "src/server/domain/hwy/hwyMemberListScopedEdit.service.ts"() {
-    import_sequelize98 = require("sequelize");
+    import_sequelize99 = require("sequelize");
     init_hwyMemberListScopedEditCatalog();
     init_hwyInstituteScopedEditConfig_service();
     init_hwyMemberInstituteCodes();
@@ -251923,7 +253183,7 @@ async function loadHwyMemberDirectoryIdentityFieldPolicyForMember(memberIdRaw, s
       FROM dbo.hwy_members
       WHERE id = :id
     `,
-    { replacements: { id: memberId }, type: import_sequelize99.QueryTypes.SELECT }
+    { replacements: { id: memberId }, type: import_sequelize100.QueryTypes.SELECT }
   );
   if (!rows[0]) {
     throw new Error("Member not found.");
@@ -251950,10 +253210,10 @@ async function assertHwyMemberDossierFileUploadAllowed(input) {
     throw new Error("Forbidden.");
   }
 }
-var import_sequelize99, parseMemberId10;
+var import_sequelize100, parseMemberId10;
 var init_hwyMemberDirectoryIdentityPolicy_service = __esm({
   "src/server/domain/hwy/hwyMemberDirectoryIdentityPolicy.service.ts"() {
-    import_sequelize99 = require("sequelize");
+    import_sequelize100 = require("sequelize");
     init_hwyMemberFileKindCatalog();
     init_controlPlaneSequelize();
     init_applyHwyMemberIdentityFieldMasks();
@@ -252040,16 +253300,22 @@ var init_hwyEtlConsoleCatalog = __esm({
         order: 6
       },
       {
+        id: "finance",
+        title: "Finance & payment",
+        description: "Payment documents, masoolin stars tables, and dbo.hwy_* finance SQL install.",
+        order: 7
+      },
+      {
         id: "repairs",
         title: "Repairs & backfills",
         description: "Targeted fixes without a full re-import.",
-        order: 7
+        order: 8
       },
       {
         id: "diagnostics",
         title: "Diagnostics",
         description: "Read-only probes and schema checks (safe to run anytime).",
-        order: 8
+        order: 9
       }
     ];
     shardEnv = [
@@ -252426,6 +253692,77 @@ var init_hwyEtlConsoleCatalog = __esm({
         risk: "mutating"
       },
       {
+        id: "legacy-edge-parity",
+        categoryId: "domain",
+        title: "Legacy edge parity tables",
+        description: "Card flow, pipeline, and related HWY_* tables for dbo.hwy_* procs on control plane.",
+        scriptRel: "scripts/hwy-etl/migrate-legacy-edge-parity-tables.ts",
+        npmScript: "hwy:etl:legacy-edge-parity",
+        kind: "migrate",
+        risk: "destructive",
+        cliArgs: [],
+        envOptions: [replaceEnv("HWY_ETL_EDGE_PARITY_REPLACE", "Replace edge parity tables")]
+      },
+      {
+        id: "finance-payment-import",
+        categoryId: "finance",
+        title: "Finance payment tables",
+        description: "Copy finance tables from MembersV2 into dbo.hwy_* edge names (payment documents, members without blobs, masoolin stars/history/current/overal). Optional single table via HWY_ETL_FINANCE_TABLE (legacy or edge name).",
+        scriptRel: "scripts/hwy-etl/migrate-finance-payment-tables.ts",
+        npmScript: "hwy:etl:finance-payment",
+        kind: "migrate",
+        risk: "mutating",
+        cliArgs: [],
+        envOptions: [
+          replaceEnv("HWY_ETL_FINANCE_REPLACE", "Replace finance tables (--replace)"),
+          {
+            key: "HWY_ETL_FINANCE_TABLE",
+            label: "Single table (optional)",
+            description: "When set, imports only this table (legacy or edge name, e.g. hwy_payment_documents_members). Leave empty for full finance set.",
+            type: "string",
+            defaultValue: ""
+          },
+          {
+            key: "HWY_ETL_FINANCE_PAGE",
+            label: "Bulk page size",
+            description: "Rows per bulk page for PaymentDocuments and MasoolinStars.",
+            type: "number",
+            defaultValue: 2e3
+          }
+        ]
+      },
+      {
+        id: "finance-gen-procs",
+        categoryId: "finance",
+        title: "Generate finance SQL from legacy",
+        description: "Regenerate hwy_db_procedures_finance_* from MembersV2 (requires legacy SQL reachable).",
+        scriptRel: "scripts/hwy-phase1/db/gen-hwy-finance-procs-from-legacy.ts",
+        npmScript: "hwy:gen-finance-procs",
+        kind: "migrate",
+        risk: "safe"
+      },
+      {
+        id: "finance-parity-count",
+        categoryId: "finance",
+        title: "Finance wave parity (legacy vs edge counts)",
+        description: "Row counts for payment/masoolin tables + key proc presence. Exit 1 on mismatch.",
+        scriptRel: "scripts/hwy-phase3/parity-count-finance-wave.ts",
+        npmScript: "hwy:parity:finance-wave",
+        kind: "migrate",
+        risk: "safe"
+      },
+      {
+        id: "finance-db-objects-install",
+        categoryId: "finance",
+        title: "Install finance dbo.hwy_* objects",
+        description: "Apply finance/payment/masoolin SQL batches on control plane (skipped files when schema missing).",
+        scriptRel: "scripts/hwy-phase1/install-hwy-db-objects.ts",
+        npmScript: "hwy:db-objects",
+        kind: "migrate",
+        risk: "mutating",
+        cliArgs: []
+      },
+      {
         id: "backfill-nakhebin-phones",
         categoryId: "repairs",
         title: "Backfill nakhebin phones",
@@ -252637,6 +253974,20 @@ var init_hwyEtlConsoleCatalog = __esm({
           "backfill-nakhebin-phones",
           "repair-family-code"
         ]
+      },
+      {
+        id: "finance-wave",
+        title: "Finance wave (import + SQL)",
+        description: "Import payment/masoolin tables from legacy, regenerate finance procs, install dbo.hwy_* on control plane. Use replace mode for full table rebuild.",
+        stepIds: ["finance-payment-import", "finance-gen-procs", "finance-db-objects-install", "finance-parity-count"],
+        defaultRunOptions: {
+          syncMode: "incremental"
+        },
+        stepRunOptions: {
+          "finance-db-objects-install": {
+            cliArgs: ["--force"]
+          }
+        }
       }
     ];
     stepById = new Map(HWY_ETL_STEPS.map((step) => [step.id, step]));
@@ -252653,7 +254004,9 @@ var init_hwyEtlIncremental = __esm({
       "HWY_ETL_REPLACE_CHANGE_HISTORY",
       "HWY_ETL_REPLACE_SATELLITES",
       "HWY_ETL_COURSES_ACTIVITIES_REPLACE",
-      "HWY_ETL_SATELLITE_CLEAR_ONLY"
+      "HWY_ETL_SATELLITE_CLEAR_ONLY",
+      "HWY_ETL_EDGE_PARITY_REPLACE",
+      "HWY_ETL_FINANCE_REPLACE"
     ];
     applyHwyEtlSyncMode = (options2 = {}) => {
       if (options2.syncMode !== "incremental") {
@@ -252814,14 +254167,14 @@ function cancelHwyEtlConsoleRun() {
   }
   return { ok: true, message: "Cancel requested." };
 }
-var import_node_child_process12, import_node_fs34, import_node_path38, import_node_url8, import_sequelize100, import_meta9, repoRoot2, MAX_LOG_LINES, activeRun, queue, nowIso6, appendLog, serializeRun, envFromOptions, cliArgsFromOptions, spawnStepScript, finishStep, runJob, drainQueue, enqueueJob, mergeRunOptions, getHwyEtlConsoleCatalog, readLocalCountsRow, buildJobFromSteps;
+var import_node_child_process12, import_node_fs34, import_node_path38, import_node_url8, import_sequelize101, import_meta9, repoRoot2, MAX_LOG_LINES, activeRun, queue, nowIso6, appendLog, serializeRun, envFromOptions, envTruthy, cliArgsFromOptions, spawnStepScript, finishStep, runJob, drainQueue, enqueueJob, mergeRunOptions, getHwyEtlConsoleCatalog, readLocalCountsRow, buildJobFromSteps;
 var init_hwyEtlConsole_service = __esm({
   "src/server/domain/hwy/hwyEtlConsole.service.ts"() {
     import_node_child_process12 = require("node:child_process");
     import_node_fs34 = __toESM(require("node:fs"), 1);
     import_node_path38 = __toESM(require("node:path"), 1);
     import_node_url8 = require("node:url");
-    import_sequelize100 = require("sequelize");
+    import_sequelize101 = require("sequelize");
     init_hwyEtlConsoleCatalog();
     init_hwyEtlIncremental();
     init_hwyEtlSyncStateSummary();
@@ -252880,10 +254233,12 @@ var init_hwyEtlConsole_service = __esm({
       }
       return env2;
     };
+    envTruthy = (value) => value === true || value === 1 || value === "1" || value === "true";
     cliArgsFromOptions = (step, options2 = {}) => {
-      const args = [...step.cliArgs ?? [], ...options2.cliArgs ?? []];
+      const normalized = applyHwyEtlSyncMode(options2);
+      const args = [...step.cliArgs ?? [], ...normalized.cliArgs ?? []];
       if (step.id === "orchestrator-all") {
-        const env2 = options2.env ?? {};
+        const env2 = normalized.env ?? {};
         if (env2.HWY_ETL_WITH_VOCAB === true || env2.HWY_ETL_WITH_VOCAB === "1") args.push("--with-vocab");
         if (env2.HWY_ETL_WITH_GEO === true || env2.HWY_ETL_WITH_GEO === "1") args.push("--with-geo");
         if (env2.HWY_ETL_SKIP_ENRICHMENT === true || env2.HWY_ETL_SKIP_ENRICHMENT === "1") {
@@ -252895,15 +254250,25 @@ var init_hwyEtlConsole_service = __esm({
         }
       }
       if (step.id === "orchestrator-enrichment") {
-        const env2 = options2.env ?? {};
+        const env2 = normalized.env ?? {};
         if (env2.HWY_ETL_WITH_NOTES === true || env2.HWY_ETL_WITH_NOTES === "1") args.push("--with-notes");
         if (env2.HWY_ETL_WITH_USERNAMES === true || env2.HWY_ETL_WITH_USERNAMES === "1") args.push("--with-usernames");
         if (env2.HWY_ETL_WITH_COURSES_ACTIVITIES === true || env2.HWY_ETL_WITH_COURSES_ACTIVITIES === "1") {
           args.push("--with-courses-activities");
         }
       }
-      if (step.id === "orchestrator-fast-full" && options2.shardCount != null) {
-        args.push(`--shards=${Math.max(1, Math.min(8, options2.shardCount))}`);
+      if (step.id === "orchestrator-fast-full" && normalized.shardCount != null) {
+        args.push(`--shards=${Math.max(1, Math.min(8, normalized.shardCount))}`);
+      }
+      if (normalized.syncMode === "replace" || envTruthy(normalized.env?.HWY_ETL_FINANCE_REPLACE)) {
+        if (step.id === "finance-payment-import") args.push("--replace");
+      }
+      if (normalized.syncMode === "replace" || envTruthy(normalized.env?.HWY_ETL_EDGE_PARITY_REPLACE)) {
+        if (step.id === "legacy-edge-parity") args.push("--replace");
+      }
+      if (step.id === "finance-db-objects-install") {
+        const force = normalized.syncMode === "replace" || envTruthy(normalized.env?.HWY_ETL_DB_OBJECTS_FORCE) || (normalized.cliArgs ?? []).includes("--force");
+        if (force && !args.includes("--force")) args.push("--force");
       }
       return args;
     };
@@ -253040,7 +254405,7 @@ var init_hwyEtlConsole_service = __esm({
       (SELECT COUNT(*) FROM dbo.base_record_events WHERE idempotency_key LIKE N'hwy-etl:ch:%') AS events,
       ${geoSql}
     `,
-        { type: import_sequelize100.QueryTypes.SELECT }
+        { type: import_sequelize101.QueryTypes.SELECT }
       ))[0];
       return {
         members: Number(row?.members ?? 0),
@@ -253117,7 +254482,7 @@ var init_hwyEtlSyncEnv = __esm({
 async function localMaxHwyMemberId() {
   const row = (await getControlPlaneSequelize().query(
     "SELECT MAX(id) AS maxId FROM dbo.hwy_members",
-    { type: import_sequelize101.QueryTypes.SELECT }
+    { type: import_sequelize102.QueryTypes.SELECT }
   ))[0];
   return Math.max(0, Number(row?.maxId ?? 0));
 }
@@ -253134,7 +254499,7 @@ async function filterIdsExistingInHwyMembers(memberIds) {
     });
     const rows = await getControlPlaneSequelize().query(
       `SELECT id FROM dbo.hwy_members WHERE id IN (${placeholders.join(", ")})`,
-      { replacements, type: import_sequelize101.QueryTypes.SELECT }
+      { replacements, type: import_sequelize102.QueryTypes.SELECT }
     );
     existing.push(...rows.map((r) => Number(r.id)));
   }
@@ -253179,11 +254544,11 @@ async function queryChangeHistoryMemberIdsSince(legacy, afterChangeHistoryId) {
   }
   return [...memberIds];
 }
-var import_mssql11, import_sequelize101, LEGACY_MEMBER_FILTER, chunkIds;
+var import_mssql11, import_sequelize102, LEGACY_MEMBER_FILTER, chunkIds;
 var init_memberLegacyQueries = __esm({
   "scripts/hwy-etl/memberLegacyQueries.ts"() {
     import_mssql11 = __toESM(require("mssql"), 1);
-    import_sequelize101 = require("sequelize");
+    import_sequelize102 = require("sequelize");
     init_controlPlaneSequelize();
     LEGACY_MEMBER_FILTER = "ISNULL(DeviceOsTypeId, 0) != 213991";
     chunkIds = (ids2, size) => {
@@ -256465,11 +257830,11 @@ var init_hwyMembershipDecisionParse = __esm({
 });
 
 // src/server/domain/hwy/hwyMembershipDecision.service.ts
-var import_node_crypto48, import_sequelize102, NOTE_MAX, trimRequired, trimOptional4, LEGACY_LOCAL_REJECTION_BANK_NOTE_MIN, parseTosighConfirmCode, parseMemberId11, assertSqlServer8, formatDecisionNote, readHistorySnapshot, buildMemberActivationPassword, parseClearReferrer, runDecision, applyHwyMembershipCallCenterDecision, applyHwyMembershipLocalDecision, mapMembershipProcError, REASON_CATEGORY, listHwyMembershipDecisionReasonOptions;
+var import_node_crypto48, import_sequelize103, NOTE_MAX, trimRequired, trimOptional4, LEGACY_LOCAL_REJECTION_BANK_NOTE_MIN, parseTosighConfirmCode, parseMemberId11, assertSqlServer8, formatDecisionNote, readHistorySnapshot, buildMemberActivationPassword, parseClearReferrer, runDecision, applyHwyMembershipCallCenterDecision, applyHwyMembershipLocalDecision, mapMembershipProcError, REASON_CATEGORY, listHwyMembershipDecisionReasonOptions;
 var init_hwyMembershipDecision_service = __esm({
   "src/server/domain/hwy/hwyMembershipDecision.service.ts"() {
     import_node_crypto48 = __toESM(require("node:crypto"), 1);
-    import_sequelize102 = require("sequelize");
+    import_sequelize103 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_hwyMemberHistory();
@@ -256539,7 +257904,7 @@ var init_hwyMembershipDecision_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ${HWY_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.hwy_members WHERE id = :id`,
-        { replacements: { id: memberId }, type: import_sequelize102.QueryTypes.SELECT }
+        { replacements: { id: memberId }, type: import_sequelize103.QueryTypes.SELECT }
       );
       return rows[0] ? hwyMemberRowToHistorySnapshot(rows[0]) : null;
     };
@@ -256597,10 +257962,10 @@ var init_hwyMembershipDecision_service = __esm({
         });
       }
       await invalidateHwyMemberDirectoryListCache();
-      const assignedUsername = "assignedUsername" in row ? String(row.assignedUsername ?? "").trim() || void 0 : void 0;
+      const assignedUsername = "assignedUsername" in row ? String(row.assigned_username ?? "").trim() || void 0 : void 0;
       return {
-        memberId: String(row.memberId),
-        membershipStatusCode: String(row.membershipStatusCode ?? ""),
+        memberId: String(row.member_id),
+        membershipStatusCode: String(row.membership_status_code ?? ""),
         ...assignedUsername ? { assignedUsername } : {}
       };
     };
@@ -256721,7 +258086,7 @@ var init_hwyMembershipDecision_service = __esm({
     WHERE cat.title = :categoryTitle AND bi.is_active = 1
     ORDER BY bi.view_order, bi.id
     `,
-        { replacements: { categoryTitle }, type: import_sequelize102.QueryTypes.SELECT }
+        { replacements: { categoryTitle }, type: import_sequelize103.QueryTypes.SELECT }
       );
       const cultureId = resolveBaseInfoCultureId(input.cultureId);
       const bundle4 = buildMergedCultureBundle(cultureId);
@@ -256809,7 +258174,7 @@ async function lookupHwyMembershipReferrerByCode(codeRaw) {
       LEFT JOIN dbo.base_user_profiles p WITH (NOLOCK) ON p.user_id = m.user_id
       WHERE m.id = :memberId
     `,
-    { replacements: { memberId }, type: import_sequelize103.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize104.QueryTypes.SELECT }
   );
   const row = rows[0];
   const mapped = row ? mapRow12(row) : null;
@@ -256828,11 +258193,11 @@ async function lookupHwyMembershipReferrerByCode(codeRaw) {
     avatarUrl: faceRow.avatarUrl?.trim() || resolvedAvatar
   };
 }
-var import_mssql21, import_sequelize103, mapRow12, resolveReferrerLookupMemberId;
+var import_mssql21, import_sequelize104, mapRow12, resolveReferrerLookupMemberId;
 var init_hwyMembershipReferrerLookup_service = __esm({
   "src/server/domain/hwy/hwyMembershipReferrerLookup.service.ts"() {
     import_mssql21 = __toESM(require("mssql"), 1);
-    import_sequelize103 = require("sequelize");
+    import_sequelize104 = require("sequelize");
     init_hwyMemberPersonDisplayName();
     init_hwyGeoResponsibilityMemberDisplay();
     init_controlPlaneSequelize();
@@ -256877,7 +258242,7 @@ var init_hwyMembershipReferrerLookup_service = __esm({
       FROM dbo.vw_hwy_members vm WITH (NOLOCK)
       WHERE LTRIM(RTRIM(vm.username)) = :code
     `,
-        { replacements: { code }, type: import_sequelize103.QueryTypes.SELECT }
+        { replacements: { code }, type: import_sequelize104.QueryTypes.SELECT }
       );
       const vmId = vmRows[0]?.id != null ? Number(vmRows[0].id) : null;
       if (vmId != null && Number.isFinite(vmId) && vmId > 0) {
@@ -256903,10 +258268,10 @@ var init_hwyMembershipReferrerLookup_service = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberNakhebinWrite.service.ts
-var import_sequelize104, parseMemberId12, parseNakhebinId, assertSqlServer9, readSnapshot, emitIfChanged, execNakhebinMutation, linkHwyMemberNakhebinBallot, linkHwyMemberNakhebinFamily, linkHwyMemberNakhebinWithProblem, linkHwyMemberNakhebinEghtera, clearHwyMemberNakhebinLink, changeHwyMemberNakhebinRoghe, setHwyMemberAddrEghtera;
+var import_sequelize105, parseMemberId12, parseNakhebinId, assertSqlServer9, readSnapshot, emitIfChanged, execNakhebinMutation, linkHwyMemberNakhebinBallot, linkHwyMemberNakhebinFamily, linkHwyMemberNakhebinWithProblem, linkHwyMemberNakhebinEghtera, clearHwyMemberNakhebinLink, changeHwyMemberNakhebinRoghe, setHwyMemberAddrEghtera;
 var init_hwyMemberNakhebinWrite_service = __esm({
   "src/server/domain/hwy/hwyMemberNakhebinWrite.service.ts"() {
-    import_sequelize104 = require("sequelize");
+    import_sequelize105 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_hwyMemberHistory();
@@ -256946,7 +258311,7 @@ var init_hwyMemberNakhebinWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ${HWY_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.hwy_members WHERE id = :id`,
-        { replacements: { id: memberId }, type: import_sequelize104.QueryTypes.SELECT }
+        { replacements: { id: memberId }, type: import_sequelize105.QueryTypes.SELECT }
       );
       return rows[0] ? hwyMemberRowToHistorySnapshot(rows[0]) : null;
     };
@@ -257207,13 +258572,13 @@ var init_ensureHwyRegistrationChannelStudioStaff = __esm({
 });
 
 // src/server/domain/hwy/hwyStaffMemberCreateReferrer.service.ts
-var import_sequelize105, trim16, isHwyStaffRegistrarEmployee, loadMemberUsernameByUserId, resolveStaffCreateReferrer;
+var import_sequelize106, trim17, isHwyStaffRegistrarEmployee, loadMemberUsernameByUserId, resolveStaffCreateReferrer;
 var init_hwyStaffMemberCreateReferrer_service = __esm({
   "src/server/domain/hwy/hwyStaffMemberCreateReferrer.service.ts"() {
-    import_sequelize105 = require("sequelize");
+    import_sequelize106 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
-    trim16 = (value, max = 500) => {
+    trim17 = (value, max = 500) => {
       if (value == null) return null;
       const s = value.trim();
       if (!s) return null;
@@ -257229,7 +258594,7 @@ var init_hwyStaffMemberCreateReferrer_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT TOP (1) id FROM dbo.hwy_members WITH (NOLOCK) WHERE user_id = :userId`,
-        { replacements: { userId: actorUserId2 }, type: import_sequelize105.QueryTypes.SELECT }
+        { replacements: { userId: actorUserId2 }, type: import_sequelize106.QueryTypes.SELECT }
       );
       return rows.length > 0;
     };
@@ -257237,7 +258602,7 @@ var init_hwyStaffMemberCreateReferrer_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT TOP (1) username FROM dbo.hwy_members WITH (NOLOCK) WHERE user_id = :userId`,
-        { replacements: { userId }, type: import_sequelize105.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize106.QueryTypes.SELECT }
       );
       const username = rows[0]?.username;
       return username != null ? String(username).trim() || null : null;
@@ -257245,7 +258610,7 @@ var init_hwyStaffMemberCreateReferrer_service = __esm({
     resolveStaffCreateReferrer = async (input) => {
       const relationRaw = input.referrerRelationId != null ? String(input.referrerRelationId).trim() : "";
       const relationId = relationRaw && /^\d+$/.test(relationRaw) ? Number(relationRaw) : null;
-      const requestedUsername = trim16(input.referrerUsername);
+      const requestedUsername = trim17(input.referrerUsername);
       const employee = await isHwyStaffRegistrarEmployee(input.actorUserId);
       if (employee) {
         return {
@@ -257267,7 +258632,7 @@ var init_hwyStaffMemberCreateReferrer_service = __esm({
 });
 
 // src/server/domain/hwy/staffMemberCreate.service.ts
-var import_sequelize106, trim17, resolveInstituteIdByCode, submitHwyStaffMemberCreate;
+var import_sequelize107, trim18, resolveInstituteIdByCode, submitHwyStaffMemberCreate;
 var init_staffMemberCreate_service = __esm({
   "src/server/domain/hwy/staffMemberCreate.service.ts"() {
     init_selfRegistration_service();
@@ -257276,9 +258641,9 @@ var init_staffMemberCreate_service = __esm({
     init_hwyStaffMemberCreateReferrer_service();
     init_controlPlaneSequelize();
     init_prismaHelpers();
-    import_sequelize106 = require("sequelize");
+    import_sequelize107 = require("sequelize");
     init_hwySelfRegistrationFieldValidation();
-    trim17 = (value, max = 32) => {
+    trim18 = (value, max = 32) => {
       if (value == null) return null;
       const s = value.trim();
       if (!s) return null;
@@ -257292,7 +258657,7 @@ var init_staffMemberCreate_service = __esm({
     FROM dbo.hwy_institutes i
     WHERE LOWER(i.code) = LOWER(:code) AND i.is_active = 1
     `,
-        { replacements: { code: instituteCode }, type: import_sequelize106.QueryTypes.SELECT }
+        { replacements: { code: instituteCode }, type: import_sequelize107.QueryTypes.SELECT }
       );
       const id = rows[0]?.id;
       return id != null && Number.isFinite(Number(id)) ? Number(id) : null;
@@ -257310,7 +258675,7 @@ var init_staffMemberCreate_service = __esm({
         referrerUsername: input.body.referrerUsername,
         referrerRelationId
       });
-      const adminInstituteCode = trim17(input.body.adminInstituteCode);
+      const adminInstituteCode = trim18(input.body.adminInstituteCode);
       if (adminInstituteCode && !isValidHwySelfRegistrationInstituteCode(adminInstituteCode)) {
         throw new Error("Admin institute code must be three digits when provided.");
       }
@@ -257335,7 +258700,7 @@ var init_staffMemberCreate_service = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberInstituteAdminAssign.service.ts
-var import_sequelize107, parseMemberId13, resolveInstituteIdByCode2, assignHwyMemberInstituteByAdmin;
+var import_sequelize108, parseMemberId13, resolveInstituteIdByCode2, assignHwyMemberInstituteByAdmin;
 var init_hwyMemberInstituteAdminAssign_service = __esm({
   "src/server/domain/hwy/hwyMemberInstituteAdminAssign.service.ts"() {
     init_ensureHwyDbObjects();
@@ -257343,7 +258708,7 @@ var init_hwyMemberInstituteAdminAssign_service = __esm({
     init_hwyBaseInfoRuntime();
     init_prismaHelpers();
     init_controlPlaneSequelize();
-    import_sequelize107 = require("sequelize");
+    import_sequelize108 = require("sequelize");
     init_hwySelfRegistrationFieldValidation();
     parseMemberId13 = (raw) => {
       const trimmed = raw.trim();
@@ -257364,7 +258729,7 @@ var init_hwyMemberInstituteAdminAssign_service = __esm({
     FROM dbo.hwy_institutes i
     WHERE LOWER(i.code) = LOWER(:code) AND i.is_active = 1
     `,
-        { replacements: { code: instituteCode }, type: import_sequelize107.QueryTypes.SELECT }
+        { replacements: { code: instituteCode }, type: import_sequelize108.QueryTypes.SELECT }
       );
       const id = rows[0]?.id;
       if (id == null || !Number.isFinite(Number(id))) {
@@ -258069,10 +259434,10 @@ var init_hwyOrgMembershipTransferCatalog = __esm({
 });
 
 // src/server/domain/hwy/hwyOrgMembershipTransfer.service.ts
-var import_sequelize108, DEFAULT_PAGE_SIZE7, MAX_PAGE_SIZE7, trim18, loadResolvedTransferInstitutes, userCanRequestForInstitute, readHwyOrgMembershipTransferConfig, loadInstituteMembershipByMemberIds, buildMemberDisplayFullName, buildNakhebinPatchSummary, buildInstituteLinks, searchHwyOrgMembershipTransferMembers, resolveInstituteForMutation, requestHwyOrgMembershipTransferForMember, rollbackHwyOrgMembershipTransferForMember;
+var import_sequelize109, DEFAULT_PAGE_SIZE7, MAX_PAGE_SIZE7, trim19, loadResolvedTransferInstitutes, userCanRequestForInstitute, readHwyOrgMembershipTransferConfig, loadInstituteMembershipByMemberIds, buildMemberDisplayFullName, buildNakhebinPatchSummary, buildInstituteLinks, searchHwyOrgMembershipTransferMembers, resolveInstituteForMutation, requestHwyOrgMembershipTransferForMember, rollbackHwyOrgMembershipTransferForMember;
 var init_hwyOrgMembershipTransfer_service = __esm({
   "src/server/domain/hwy/hwyOrgMembershipTransfer.service.ts"() {
-    import_sequelize108 = require("sequelize");
+    import_sequelize109 = require("sequelize");
     init_hwyOrgMembershipTransferCatalog();
     init_hwyMemberPersonDisplayName();
     init_controlPlaneSequelize();
@@ -258086,7 +259451,7 @@ var init_hwyOrgMembershipTransfer_service = __esm({
     init_applyHwyMemberIdentityFieldMasks();
     DEFAULT_PAGE_SIZE7 = 20;
     MAX_PAGE_SIZE7 = 100;
-    trim18 = (value) => value?.trim() ?? "";
+    trim19 = (value) => String(value ?? "").trim();
     loadResolvedTransferInstitutes = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         return [];
@@ -258099,7 +259464,7 @@ var init_hwyOrgMembershipTransfer_service = __esm({
     FROM dbo.hwy_institutes
     WHERE code IN (:codes) AND is_active = 1
     `,
-        { replacements: { codes }, type: import_sequelize108.QueryTypes.SELECT }
+        { replacements: { codes }, type: import_sequelize109.QueryTypes.SELECT }
       );
       const byCode = new Map(rows.map((row) => [String(row.code), row]));
       const resolved = [];
@@ -258148,11 +259513,11 @@ var init_hwyOrgMembershipTransfer_service = __esm({
     `,
         {
           replacements: { memberIds: [...memberIds], instituteIds: [...instituteIds] },
-          type: import_sequelize108.QueryTypes.SELECT
+          type: import_sequelize109.QueryTypes.SELECT
         }
       );
       for (const row of rows) {
-        const memberId = trim18(row.memberId);
+        const memberId = trim19(row.memberId);
         if (!memberId) {
           continue;
         }
@@ -258164,16 +259529,16 @@ var init_hwyOrgMembershipTransfer_service = __esm({
     };
     buildMemberDisplayFullName = (row) => {
       const parts = [
-        row.firstName,
-        row.fatherName,
-        row.grandfatherName,
-        row.familyName
-      ].map((part) => trim18(String(part ?? ""))).filter(Boolean);
+        row.first_name,
+        row.father_name,
+        row.grandfather_name,
+        row.family_name
+      ].map((part) => trim19(String(part ?? ""))).filter(Boolean);
       return parts.length > 0 ? parts.join(" ") : null;
     };
     buildNakhebinPatchSummary = (row) => {
-      const line1 = trim18(String(row.electoralDivisionLine1 ?? row.electoralDivisionPath ?? ""));
-      const line2 = trim18(String(row.electoralDivisionLine2 ?? ""));
+      const line1 = trim19(String(row.electoral_division_line1 ?? row.electoral_division_path ?? ""));
+      const line2 = trim19(String(row.electoral_division_line2 ?? ""));
       const joined = [line1, line2].filter(Boolean).join(" / ");
       return joined || null;
     };
@@ -258184,7 +259549,7 @@ var init_hwyOrgMembershipTransfer_service = __esm({
         const membership = byInstituteId.get(institute.instituteId);
         const hasRecord = membership != null;
         const approvedByMember = membership?.memberAccepted === true || membership?.memberAccepted === 1;
-        const requestedByOrganization = hasRecord && trim18(membership?.joinPathCode ?? "") === inviteJoinPathCode;
+        const requestedByOrganization = hasRecord && trim19(membership?.joinPathCode ?? "") === inviteJoinPathCode;
         const canRequest = userCanRequestForInstitute(roleNames, institute) && !requestedByOrganization;
         const canRollback = hasRecord && userCanRequestForInstitute(roleNames, institute);
         return {
@@ -258217,7 +259582,7 @@ var init_hwyOrgMembershipTransfer_service = __esm({
         input.grandfatherName,
         input.familyName,
         input.birthYear
-      ].some((value) => trim18(value));
+      ].some((value) => trim19(value));
       const ctx3 = await loadHwyMemberListScopeContext();
       const otherPortalCode = await findHwyBaseInfoItemIdByShortName("Registration Channel", "other_portal");
       const inviteJoinPathCode = await resolveHwyBaseInfoItemId("Institute Join Path", "invite");
@@ -258255,15 +259620,15 @@ var init_hwyOrgMembershipTransfer_service = __esm({
           other_portal_code: otherPortalCode,
           offset,
           page_size: pageSize,
-          username: eqOrNull(trim18(input.username)),
-          tracking_code: eqOrNull(trim18(input.trackingCode)),
-          gender_code: eqOrNull(trim18(input.genderCode)),
-          birth_year: eqOrNull(trim18(input.birthYear)),
-          phone: eqOrNull(trim18(input.phone)),
-          first_name_like: likeOrNull(trim18(input.firstName)),
-          father_name_like: likeOrNull(trim18(input.fatherName)),
-          grandfather_name_like: likeOrNull(trim18(input.grandfatherName)),
-          family_name_like: likeOrNull(trim18(input.familyName))
+          username: eqOrNull(trim19(input.username)),
+          tracking_code: eqOrNull(trim19(input.trackingCode)),
+          gender_code: eqOrNull(trim19(input.genderCode)),
+          birth_year: eqOrNull(trim19(input.birthYear)),
+          phone: eqOrNull(trim19(input.phone)),
+          first_name_like: likeOrNull(trim19(input.firstName)),
+          father_name_like: likeOrNull(trim19(input.fatherName)),
+          grandfather_name_like: likeOrNull(trim19(input.grandfatherName)),
+          family_name_like: likeOrNull(trim19(input.familyName))
         });
         total = Number(rawRows[0]?.__total ?? 0);
       }
@@ -258273,23 +259638,23 @@ var init_hwyOrgMembershipTransfer_service = __esm({
       });
       const sequelize = getControlPlaneSequelize();
       await applyHwyMemberIdentityFieldMasksToRows(sequelize, rawRows, session ?? null);
-      const memberIds = rawRows.map((row) => trim18(String(row.id ?? ""))).filter(Boolean);
+      const memberIds = rawRows.map((row) => trim19(String(row.id ?? ""))).filter(Boolean);
       const instituteIds = institutes.map((row) => row.instituteId);
       const membershipByMember = await loadInstituteMembershipByMemberIds(memberIds, instituteIds);
       const rows = rawRows.map((row) => {
-        const memberId = trim18(String(row.id ?? ""));
+        const memberId = trim19(String(row.id ?? ""));
         return {
           id: memberId,
           username: row.username != null ? String(row.username) : null,
           displayFullName: formatHwyMemberPersonDisplayName(
-            row.displayFullName != null ? String(row.displayFullName) : buildMemberDisplayFullName(row)
+            row.display_full_name != null ? String(row.display_full_name) : buildMemberDisplayFullName(row)
           ) || null,
-          avatarUrl: row.avatarUrl != null ? String(row.avatarUrl) : null,
-          genderCode: row.genderCode != null ? String(row.genderCode) : null,
-          birthYear: row.birthYear != null ? String(row.birthYear) : null,
+          avatarUrl: row.avatar_url != null ? String(row.avatar_url) : null,
+          genderCode: row.gender_code != null ? String(row.gender_code) : null,
+          birthYear: row.birth_year != null ? String(row.birth_year) : null,
           phone1: row.phone1 != null ? String(row.phone1) : null,
           phone2: row.phone2 != null ? String(row.phone2) : null,
-          membershipOn: row.membershipOn != null ? String(row.membershipOn) : null,
+          membershipOn: row.membership_on != null ? String(row.membership_on) : null,
           nakhebinPatchSummary: buildNakhebinPatchSummary(row),
           institutes: buildInstituteLinks(
             memberId,
@@ -258328,7 +259693,7 @@ var init_hwyOrgMembershipTransfer_service = __esm({
       if (!userCanRequestForInstitute(input.roleNames, institute)) {
         throw new Error("Forbidden.");
       }
-      const memberId = trim18(input.memberId);
+      const memberId = trim19(input.memberId);
       if (!memberId) {
         throw new Error("Member id is required.");
       }
@@ -258355,7 +259720,7 @@ var init_hwyOrgMembershipTransfer_service = __esm({
       if (!userCanRequestForInstitute(input.roleNames, institute)) {
         throw new Error("Forbidden.");
       }
-      const memberId = trim18(input.memberId);
+      const memberId = trim19(input.memberId);
       if (!memberId) {
         throw new Error("Member id is required.");
       }
@@ -258448,17 +259813,17 @@ var init_hwyGeoResponsibilityNomination = __esm({
 });
 
 // src/domain/hwy/hwyGeoResponsibilityNominationSearch.ts
-var trim19, hwyGeoResponsibilityNominationMemberFilterProcParams;
+var trim20, hwyGeoResponsibilityNominationMemberFilterProcParams;
 var init_hwyGeoResponsibilityNominationSearch = __esm({
   "src/domain/hwy/hwyGeoResponsibilityNominationSearch.ts"() {
-    trim19 = (value) => String(value ?? "").trim();
+    trim20 = (value) => String(value ?? "").trim();
     hwyGeoResponsibilityNominationMemberFilterProcParams = (filters) => {
       const like = (value) => {
-        const trimmed = trim19(value);
+        const trimmed = trim20(value);
         return trimmed ? `%${trimmed}%` : null;
       };
       return {
-        filter_membership_number: trim19(filters?.membershipNumber) || null,
+        filter_membership_number: trim20(filters?.membershipNumber) || null,
         filter_first_name_like: like(filters?.firstName),
         filter_father_name_like: like(filters?.fatherName),
         filter_grandfather_name_like: like(filters?.grandfatherName),
@@ -258619,7 +259984,7 @@ async function upsertHwyPatchHistoryEventsBatch(events) {
         s.actor_display_name, s.actor_username, s.source, s.request_id
       );
       `,
-      { replacements, type: import_sequelize109.QueryTypes.RAW }
+      { replacements, type: import_sequelize110.QueryTypes.RAW }
     );
   }
 }
@@ -258631,7 +259996,7 @@ async function syncHwyGeoResponsibilityPatchHistoryForRequest(requestId) {
   const rows = await getControlPlaneSequelize().query(
     `${STUDIO_REQUEST_HISTORY_SQL}
      WHERE r.id = :requestId`,
-    { replacements: { requestId: id }, type: import_sequelize109.QueryTypes.SELECT }
+    { replacements: { requestId: id }, type: import_sequelize110.QueryTypes.SELECT }
   );
   const row = rows[0];
   if (!row) {
@@ -258639,10 +260004,10 @@ async function syncHwyGeoResponsibilityPatchHistoryForRequest(requestId) {
   }
   await upsertHwyPatchHistoryEventsBatch(studioEventsFromRequestRow(row));
 }
-var import_sequelize109, PATCH_HISTORY_UPSERT_CHUNK, isGeoLevel, normalizePatchHistoryActor, studioEventsFromRequestRow, STUDIO_REQUEST_HISTORY_SQL;
+var import_sequelize110, PATCH_HISTORY_UPSERT_CHUNK, isGeoLevel, normalizePatchHistoryActor, studioEventsFromRequestRow, STUDIO_REQUEST_HISTORY_SQL;
 var init_hwyGeoResponsibilityPatchHistory_store = __esm({
   "src/server/domain/hwy/hwyGeoResponsibilityPatchHistory.store.ts"() {
-    import_sequelize109 = require("sequelize");
+    import_sequelize110 = require("sequelize");
     init_hwyLegacyPlatformAdminActor();
     init_hwyMemberPersonDisplayName();
     init_controlPlaneSequelize();
@@ -258748,10 +260113,10 @@ var init_hwyGeoResponsibilityPatchHistory_store = __esm({
 });
 
 // src/server/domain/hwy/hwyGeoResponsibility.service.ts
-var import_sequelize110, hasHwyGeoOrCoursesActivitiesAccess, DEFAULT_PAGE_SIZE8, MAX_PAGE_SIZE8, MAX_NODE_LIST_PAGE_SIZE, SUBMITTED_STATUS, trim20, bestEffortSyncGeoResponsibilityPatchHistory, clampPage4, clampNodeListPage, canNominateLevel, canApproveLevel, assertSqlServer10, ensureGeoResponsibilitySqlServerReady, buildMemberDisplayName, readHwyGeoResponsibilityConfig, readNominationGenderFilter, nominationMemberFiltersActive, readNominationProvinceScopeId, listHwyGeoResponsibilityNominationCandidates, lookupHwyGeoResponsibilityMemberByUsername, enrichHwyGeoResponsibilityNodeOfficialSlotAvatars, listHwyGeoResponsibilityNodes, listHwyGeoResponsibilityElectoralOptions, fetchHwyGeoResponsibilityProvinceHasGhavateh, resolveHwyGeoResponsibilityElectoralSelection, listHwyGeoResponsibilityRequests, ensureMemberEligible, submitHwyGeoResponsibilityNomination, applyApprovedNomination, readActiveGeoResponsibilityOfficialRequest, resolveActiveGeoResponsibilityOfficialForMember, applyApprovedOfficialRemoval, applyApprovedScopeOnlyOfficialRemoval, findSubmittedHwyGeoResponsibilityNominationRequestId, findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId, readHwyGeoResponsibilityAssigneePendingRemovalRequestId, cancelHwyGeoResponsibilityPendingNominationForSlot, cancelHwyGeoResponsibilityNominationRequest, submitHwyGeoResponsibilityOfficialRemovalRequest, approveHwyGeoResponsibilityRequest, rejectHwyGeoResponsibilityRequest, geoResponsibilityPatchMemberCountProc, readGeoPatchCountTotal, readGeoPatchNakhebinCount, getHwyGeoResponsibilityPatchMemberCount, getHwyGeoResponsibilityPatchNakhebinCount, getHwyGeoResponsibilityCenterStats, isPatchHistoryEventKind, isPatchHistorySource, getHwyGeoResponsibilityPatchHistory;
+var import_sequelize111, hasHwyGeoOrCoursesActivitiesAccess, DEFAULT_PAGE_SIZE8, MAX_PAGE_SIZE8, MAX_NODE_LIST_PAGE_SIZE, SUBMITTED_STATUS, trim21, bestEffortSyncGeoResponsibilityPatchHistory, clampPage4, clampNodeListPage, canNominateLevel, canApproveLevel, assertSqlServer10, ensureGeoResponsibilitySqlServerReady, buildMemberDisplayName, readHwyGeoResponsibilityConfig, readNominationGenderFilter, nominationMemberFiltersActive, readNominationProvinceScopeId, listHwyGeoResponsibilityNominationCandidates, lookupHwyGeoResponsibilityMemberByUsername, enrichHwyGeoResponsibilityNodeOfficialSlotAvatars, listHwyGeoResponsibilityNodes, listHwyGeoResponsibilityElectoralOptions, fetchHwyGeoResponsibilityProvinceHasGhavateh, resolveHwyGeoResponsibilityElectoralSelection, listHwyGeoResponsibilityRequests, ensureMemberEligible, submitHwyGeoResponsibilityNomination, applyApprovedNomination, readActiveGeoResponsibilityOfficialRequest, resolveActiveGeoResponsibilityOfficialForMember, applyApprovedOfficialRemoval, applyApprovedScopeOnlyOfficialRemoval, findSubmittedHwyGeoResponsibilityNominationRequestId, findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId, readHwyGeoResponsibilityAssigneePendingRemovalRequestId, cancelHwyGeoResponsibilityPendingNominationForSlot, cancelHwyGeoResponsibilityNominationRequest, submitHwyGeoResponsibilityOfficialRemovalRequest, approveHwyGeoResponsibilityRequest, rejectHwyGeoResponsibilityRequest, geoResponsibilityPatchMemberCountProc, readGeoPatchCountTotal, readGeoPatchNakhebinCount, getHwyGeoResponsibilityPatchMemberCount, getHwyGeoResponsibilityPatchNakhebinCount, getHwyGeoResponsibilityCenterStats, isPatchHistoryEventKind, isPatchHistorySource, getHwyGeoResponsibilityPatchHistory;
 var init_hwyGeoResponsibility_service = __esm({
   "src/server/domain/hwy/hwyGeoResponsibility.service.ts"() {
-    import_sequelize110 = require("sequelize");
+    import_sequelize111 = require("sequelize");
     init_hwyGeoResponsibilityNomination();
     init_hwyGeoResponsibilityNominationSearch();
     init_ensureHwyGeoResponsibilitySchema();
@@ -258787,9 +260152,9 @@ var init_hwyGeoResponsibility_service = __esm({
     MAX_PAGE_SIZE8 = 100;
     MAX_NODE_LIST_PAGE_SIZE = 1e3;
     SUBMITTED_STATUS = "submitted";
-    trim20 = (value) => String(value ?? "").trim();
+    trim21 = (value) => String(value ?? "").trim();
     bestEffortSyncGeoResponsibilityPatchHistory = (requestId) => {
-      const id = trim20(requestId);
+      const id = trim21(requestId);
       if (!id) {
         return;
       }
@@ -258844,7 +260209,7 @@ var init_hwyGeoResponsibility_service = __esm({
         row.father_name,
         row.grandfather_name,
         row.family_name
-      ].map((part) => trim20(part)).filter(Boolean);
+      ].map((part) => trim21(part)).filter(Boolean);
       return parts.length > 0 ? parts.join(" ") : null;
     };
     readHwyGeoResponsibilityConfig = (roleNames) => ({
@@ -258857,7 +260222,7 @@ var init_hwyGeoResponsibility_service = __esm({
       }))
     });
     readNominationGenderFilter = (raw) => {
-      const value = trim20(raw);
+      const value = trim21(raw);
       if (value === "male" || value === "female") {
         return value;
       }
@@ -258868,7 +260233,7 @@ var init_hwyGeoResponsibility_service = __esm({
         return false;
       }
       return Boolean(
-        trim20(filters.membershipNumber) || trim20(filters.firstName) || trim20(filters.fatherName) || trim20(filters.grandfatherName) || trim20(filters.familyName)
+        trim21(filters.membershipNumber) || trim21(filters.firstName) || trim21(filters.fatherName) || trim21(filters.grandfatherName) || trim21(filters.familyName)
       );
     };
     readNominationProvinceScopeId = async (geoBaseInfoId, level) => {
@@ -258877,7 +260242,7 @@ var init_hwyGeoResponsibility_service = __esm({
         geo_level: level
       });
       const id = rows[0]?.province_id;
-      return id ? trim20(id) : null;
+      return id ? trim21(id) : null;
     };
     listHwyGeoResponsibilityNominationCandidates = async (input, roleNames) => {
       await ensureGeoResponsibilitySqlServerReady();
@@ -258891,7 +260256,7 @@ var init_hwyGeoResponsibility_service = __esm({
           throw new Error("Forbidden.");
         }
       }
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -258909,7 +260274,7 @@ var init_hwyGeoResponsibility_service = __esm({
       const titleRows = await execHwyProcedure("hwy_geo_responsibility_geo_leaf_title", {
         geo_base_info_id: geoBaseInfoId
       });
-      const geoTitle = titleRows[0]?.title ? trim20(titleRows[0].title) : null;
+      const geoTitle = titleRows[0]?.title ? trim21(titleRows[0].title) : null;
       const useBalancedGenderPage = offset === 0 && pageSize <= 50 && !nominationMemberFiltersActive(input.memberFilters);
       const nominationPerGenderCap = useBalancedGenderPage ? Math.ceil(pageSize / 2) : 25;
       const geoRoleNamesCsv = hwyGeoResponsibilityPatchRoleNames().join(",");
@@ -258945,13 +260310,13 @@ var init_hwyGeoResponsibility_service = __esm({
         });
         total = Number(countRows[0]?.total ?? offset + rows.length);
       }
-      const nominationTargetGeoBaseInfoId = trim20(input.nominationTargetGeoBaseInfoId ?? "");
+      const nominationTargetGeoBaseInfoId = trim21(input.nominationTargetGeoBaseInfoId ?? "");
       const mappedRows = rows.map((row) => {
-        const userId = row.userId ? trim20(row.userId) : null;
-        const activeRoleName = row.activeRoleName ? trim20(row.activeRoleName) : null;
-        const activeGeoBaseInfoId = row.activeGeoBaseInfoId ? trim20(row.activeGeoBaseInfoId) : null;
-        const genderCode = row.genderCode ? trim20(row.genderCode) : null;
-        const canGetResponsibilityTitle = row.canGetResponsibilityTitle ? trim20(row.canGetResponsibilityTitle) : null;
+        const userId = row.user_id ? trim21(row.user_id) : null;
+        const activeRoleName = row.active_role_name ? trim21(row.active_role_name) : null;
+        const activeGeoBaseInfoId = row.active_geo_base_info_id ? trim21(row.active_geo_base_info_id) : null;
+        const genderCode = row.gender_code ? trim21(row.gender_code) : null;
+        const canGetResponsibilityTitle = row.can_get_responsibility_title ? trim21(row.can_get_responsibility_title) : null;
         const nodeGeoBaseInfoId = nominationTargetGeoBaseInfoId || geoBaseInfoId;
         const nominationGate = openMemberPick ? { selectable: true, blockedReason: null } : resolveHwyGeoResponsibilityNominationSelectable({
           userId,
@@ -258963,26 +260328,26 @@ var init_hwyGeoResponsibility_service = __esm({
         });
         const { selectable: baseSelectable, blockedReason } = nominationGate;
         return {
-          id: trim20(row.id),
-          username: row.username ? trim20(row.username) : null,
-          displayFullName: formatHwyMemberPersonDisplayName(row.displayFullName) || null,
+          id: trim21(row.id),
+          username: row.username ? trim21(row.username) : null,
+          displayFullName: formatHwyMemberPersonDisplayName(trim21(row.display_full_name)) || null,
           genderCode,
-          birthYear: row.birthYear ? trim20(row.birthYear) : null,
+          birthYear: row.birth_year ? trim21(row.birth_year) : null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: row.avatarUrl ? trim20(row.avatarUrl) : null,
+            avatarUrl: row.avatar_url ? trim21(row.avatar_url) : null,
             userId: userId ? Number(userId) : null,
-            hasProfileImage: row.hasProfileImage === true || row.hasProfileImage === 1
+            hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1
           }),
-          electoralDivisionPath: row.electoralDivisionPath ? trim20(row.electoralDivisionPath) : null,
+          electoralDivisionPath: row.electoral_division_path ? trim21(row.electoral_division_path) : null,
           selectable: baseSelectable,
           blockedReason,
           activeRoleName,
           activeGeoBaseInfoId,
-          activeGeoTitle: row.activeGeoTitle ? trim20(row.activeGeoTitle) : null,
-          activeGeoTitlePath: row.activeGeoTitlePath ? trim20(row.activeGeoTitlePath) : null,
+          activeGeoTitle: row.active_geo_title ? trim21(row.active_geo_title) : null,
+          activeGeoTitlePath: row.active_geo_title_path ? trim21(row.active_geo_title_path) : null,
           canGetResponsibilityTitle,
-          canGetResponsibilityNote: row.canGetResponsibilityNote ? trim20(row.canGetResponsibilityNote) : null,
-          allowsResponsibilityTitle: row.allowsResponsibilityTitle ? trim20(row.allowsResponsibilityTitle) : null,
+          canGetResponsibilityNote: row.can_get_responsibility_note ? trim21(row.can_get_responsibility_note) : null,
+          allowsResponsibilityTitle: row.allows_responsibility_title ? trim21(row.allows_responsibility_title) : null,
           hasOtherResponsibility: Boolean(activeRoleName)
         };
       });
@@ -259008,19 +260373,19 @@ var init_hwyGeoResponsibility_service = __esm({
     lookupHwyGeoResponsibilityMemberByUsername = async (username) => {
       await ensureGeoResponsibilitySqlServerReady();
       const rows = await execHwyProcedure("hwy_geo_responsibility_member_lookup", {
-        username: trim20(username)
+        username: trim21(username)
       });
       const row = rows[0];
       if (!row) {
         throw new Error("Member not found.");
       }
       return {
-        id: trim20(row.id),
-        userId: row.user_id ? trim20(row.user_id) : null,
-        username: row.username ? trim20(row.username) : null,
+        id: trim21(row.id),
+        userId: row.user_id ? trim21(row.user_id) : null,
+        username: row.username ? trim21(row.username) : null,
         displayFullName: buildMemberDisplayName(row),
-        genderCode: row.gender_code ? trim20(row.gender_code) : null,
-        canGetResponsibilityCode: row.can_get_responsibility_code ? trim20(row.can_get_responsibility_code) : null
+        genderCode: row.gender_code ? trim21(row.gender_code) : null,
+        canGetResponsibilityCode: row.can_get_responsibility_code ? trim21(row.can_get_responsibility_code) : null
       };
     };
     enrichHwyGeoResponsibilityNodeOfficialSlotAvatars = async (rows) => {
@@ -259081,7 +260446,7 @@ var init_hwyGeoResponsibility_service = __esm({
         throw new Error("Invalid level.");
       }
       const { page, pageSize, offset } = clampNodeListPage(input.page, input.pageSize);
-      const search = trim20(input.search);
+      const search = trim21(input.search);
       const searchLike = search ? `%${search}%` : null;
       const countRows = await execHwyProcedure("hwy_geo_responsibility_nodes_count", {
         legacy_kind: spec.geoMapKind,
@@ -259097,7 +260462,7 @@ var init_hwyGeoResponsibility_service = __esm({
         page_size: pageSize
       });
       const mapMemberFace2 = (displayName, username, avatarUrl, electoralDivisionPath, memberId, userId, hasProfileImage) => {
-        const trimmedName = formatHwyMemberPersonDisplayName(displayName) || null;
+        const trimmedName = formatHwyMemberPersonDisplayName(displayName != null ? trim21(displayName) : null) || null;
         if (!trimmedName) {
           return {
             displayName: null,
@@ -259110,13 +260475,13 @@ var init_hwyGeoResponsibility_service = __esm({
         const numericUserId = Number(userId);
         return {
           displayName: trimmedName,
-          username: username ? trim20(username) : null,
+          username: username ? trim21(username) : null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: avatarUrl ? trim20(avatarUrl) : null,
+            avatarUrl: avatarUrl ? trim21(avatarUrl) : null,
             userId: Number.isFinite(numericUserId) && numericUserId > 0 ? numericUserId : null,
             hasProfileImage: hasProfileImage === true || hasProfileImage === 1
           }),
-          electoralDivisionPath: electoralDivisionPath ? trim20(electoralDivisionPath) : null
+          electoralDivisionPath: electoralDivisionPath ? trim21(electoralDivisionPath) : null
         };
       };
       const mapMemberId = (value) => {
@@ -259158,56 +260523,56 @@ var init_hwyGeoResponsibility_service = __esm({
           assigneeAvatarUrl: assignee.avatarUrl,
           assigneeElectoralDivisionPath: assignee.electoralDivisionPath,
           pendingMemberId: pending.displayName ? mappedPendingMemberId : null,
-          pendingRequestId: pending.displayName && pendingRequestId != null && String(pendingRequestId).trim() ? trim20(String(pendingRequestId)) : null,
+          pendingRequestId: pending.displayName && pendingRequestId != null && String(pendingRequestId).trim() ? trim21(String(pendingRequestId)) : null,
           pendingMemberDisplayName: pending.displayName,
           pendingMemberUsername: pending.username,
           pendingMemberAvatarUrl: pending.avatarUrl,
           pendingElectoralDivisionPath: pending.electoralDivisionPath,
-          assigneePendingRemovalRequestId: assignee.displayName && assigneePendingRemovalRequestId != null && String(assigneePendingRemovalRequestId).trim() ? trim20(String(assigneePendingRemovalRequestId)) : null
+          assigneePendingRemovalRequestId: assignee.displayName && assigneePendingRemovalRequestId != null && String(assigneePendingRemovalRequestId).trim() ? trim21(String(assigneePendingRemovalRequestId)) : null
         };
       };
       const mappedRows = rows.map((row) => ({
-        geoBaseInfoId: trim20(row.geoBaseInfoId),
-        legacyGeoId: Number.isFinite(Number(row.legacyGeoId)) ? Number(row.legacyGeoId) : null,
-        title: trim20(row.title),
-        parentTitle: row.parentTitle ? trim20(row.parentTitle) : null,
-        titlePath: row.titlePath ? trim20(row.titlePath) : null,
+        geoBaseInfoId: trim21(row.geo_base_info_id),
+        legacyGeoId: Number.isFinite(Number(row.legacy_geo_id)) ? Number(row.legacy_geo_id) : null,
+        title: trim21(row.title),
+        parentTitle: row.parent_title ? trim21(row.parent_title) : null,
+        titlePath: row.title_path ? trim21(row.title_path) : null,
         level: input.level,
         male: mapSlot(
-          row.maleAssigneeDisplayName,
-          row.maleAssigneeUsername,
-          row.maleAssigneeAvatarUrl,
-          row.maleAssigneeElectoralDivisionPath,
-          row.maleAssigneeMemberId,
-          row.maleAssigneeUserId,
-          row.maleAssigneeHasProfileImage,
-          row.malePendingDisplayName,
-          row.malePendingUsername,
-          row.malePendingAvatarUrl,
-          row.malePendingElectoralDivisionPath,
-          row.malePendingMemberId,
-          row.malePendingUserId,
-          row.malePendingHasProfileImage,
-          row.malePendingRequestId,
-          row.maleAssigneePendingRemovalRequestId
+          row.male_assignee_display_name,
+          row.male_assignee_username,
+          row.male_assignee_avatar_url,
+          row.male_assignee_electoral_division_path,
+          row.male_assignee_member_id,
+          row.male_assignee_user_id,
+          row.male_assignee_has_profile_image,
+          row.male_pending_display_name,
+          row.male_pending_username,
+          row.male_pending_avatar_url,
+          row.male_pending_electoral_division_path,
+          row.male_pending_member_id,
+          row.male_pending_user_id,
+          row.male_pending_has_profile_image,
+          row.male_pending_request_id,
+          row.male_assignee_pending_removal_request_id
         ),
         female: mapSlot(
-          row.femaleAssigneeDisplayName,
-          row.femaleAssigneeUsername,
-          row.femaleAssigneeAvatarUrl,
-          row.femaleAssigneeElectoralDivisionPath,
-          row.femaleAssigneeMemberId,
-          row.femaleAssigneeUserId,
-          row.femaleAssigneeHasProfileImage,
-          row.femalePendingDisplayName,
-          row.femalePendingUsername,
-          row.femalePendingAvatarUrl,
-          row.femalePendingElectoralDivisionPath,
-          row.femalePendingMemberId,
-          row.femalePendingUserId,
-          row.femalePendingHasProfileImage,
-          row.femalePendingRequestId,
-          row.femaleAssigneePendingRemovalRequestId
+          row.female_assignee_display_name,
+          row.female_assignee_username,
+          row.female_assignee_avatar_url,
+          row.female_assignee_electoral_division_path,
+          row.female_assignee_member_id,
+          row.female_assignee_user_id,
+          row.female_assignee_has_profile_image,
+          row.female_pending_display_name,
+          row.female_pending_username,
+          row.female_pending_avatar_url,
+          row.female_pending_electoral_division_path,
+          row.female_pending_member_id,
+          row.female_pending_user_id,
+          row.female_pending_has_profile_image,
+          row.female_pending_request_id,
+          row.female_assignee_pending_removal_request_id
         )
       }));
       await enrichHwyGeoResponsibilityNodeOfficialSlotAvatars(mappedRows);
@@ -259226,7 +260591,7 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!isHwyElectoralGeoKind(input.kind)) {
         throw new Error("Invalid electoral kind.");
       }
-      const parentId = trim20(input.parentBaseInfoId);
+      const parentId = trim21(input.parentBaseInfoId);
       if (input.kind !== "province" && !parentId) {
         throw new Error("parentBaseInfoId is required for this electoral kind.");
       }
@@ -259236,9 +260601,9 @@ var init_hwyGeoResponsibility_service = __esm({
       });
       return {
         rows: rows.map((row) => ({
-          geoBaseInfoId: trim20(row.geoBaseInfoId),
-          legacyGeoId: Number.isFinite(Number(row.legacyGeoId)) ? Number(row.legacyGeoId) : null,
-          title: trim20(row.title)
+          geoBaseInfoId: trim21(row.geo_base_info_id),
+          legacyGeoId: Number.isFinite(Number(row.legacy_geo_id)) ? Number(row.legacy_geo_id) : null,
+          title: trim21(row.title)
         }))
       };
     };
@@ -259247,7 +260612,7 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!await hasHwyGeoOrCoursesActivitiesAccess(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const provinceId = trim20(provinceBaseInfoId);
+      const provinceId = trim21(provinceBaseInfoId);
       if (!provinceId) {
         throw new Error("provinceBaseInfoId is required.");
       }
@@ -259262,7 +260627,7 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!await hasHwyGeoOrCoursesActivitiesAccess(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const startId = trim20(geoBaseInfoId);
+      const startId = trim21(geoBaseInfoId);
       if (!startId) {
         throw new Error("geoBaseInfoId is required.");
       }
@@ -259272,9 +260637,9 @@ var init_hwyGeoResponsibility_service = __esm({
       );
       const selection = {};
       for (const row of rows) {
-        const kind = trim20(row.legacy_kind);
+        const kind = trim21(row.legacy_kind);
         if (isHwyElectoralGeoKind(kind)) {
-          selection[kind] = trim20(row.id);
+          selection[kind] = trim21(row.id);
         }
       }
       return selection;
@@ -259298,31 +260663,34 @@ var init_hwyGeoResponsibility_service = __esm({
         offset,
         page_size: pageSize
       });
-      const mappedRows = rows.map((row) => ({
-        id: trim20(row.id),
-        status: row.status,
-        level: row.geo_level,
-        geoBaseInfoId: trim20(row.geo_base_info_id),
-        geoTitle: row.geoTitle ? trim20(row.geoTitle) : null,
-        memberId: trim20(row.member_id),
-        memberDisplayName: formatHwyMemberPersonDisplayName(row.memberDisplayName) || null,
-        memberUsername: row.memberUsername ? trim20(row.memberUsername) : null,
-        memberPhone: row.memberPhone ? trim20(row.memberPhone) : null,
-        geoTitlePath: row.geoTitlePath ? trim20(row.geoTitlePath) : null,
-        memberAvatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-          avatarUrl: row.memberAvatarUrl ? trim20(row.memberAvatarUrl) : null,
-          userId: Number(row.memberUserId),
-          hasProfileImage: row.memberHasProfileImage === true || row.memberHasProfileImage === 1
-        }),
-        memberGenderCode: row.memberGenderCode ? trim20(row.memberGenderCode) : null,
-        roleName: trim20(row.role_name),
-        nominatedAt: row.nominated_at ? new Date(row.nominated_at).toISOString() : null,
-        nominatedByDisplayName: row.nominatedByDisplayName ? trim20(row.nominatedByDisplayName) : null,
-        nominatedByUsername: row.nominatedByUsername ? trim20(row.nominatedByUsername) : null,
-        decisionNote: row.decision_note ? trim20(row.decision_note) : null,
-        requestKind: isHwyGeoResponsibilityRequestKind(trim20(row.request_kind)) ? trim20(row.request_kind) : HWY_GEO_RESPONSIBILITY_REQUEST_KIND_NOMINATION,
-        isOfficialRemovalRequest: isHwyGeoResponsibilityOfficialRemovalRequestKind(row.request_kind)
-      }));
+      const mappedRows = rows.map((row) => {
+        const requestKindRaw = trim21(row.request_kind);
+        return {
+          id: trim21(row.id),
+          status: row.status,
+          level: row.geo_level,
+          geoBaseInfoId: trim21(row.geo_base_info_id),
+          geoTitle: row.geo_title ? trim21(row.geo_title) : null,
+          memberId: trim21(row.member_id),
+          memberDisplayName: formatHwyMemberPersonDisplayName(trim21(row.member_display_name)) || null,
+          memberUsername: row.member_username ? trim21(row.member_username) : null,
+          memberPhone: row.member_phone ? trim21(row.member_phone) : null,
+          geoTitlePath: row.geo_title_path ? trim21(row.geo_title_path) : null,
+          memberAvatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
+            avatarUrl: row.member_avatar_url ? trim21(row.member_avatar_url) : null,
+            userId: Number(row.member_user_id),
+            hasProfileImage: row.member_has_profile_image === true || row.member_has_profile_image === 1
+          }),
+          memberGenderCode: row.member_gender_code ? trim21(row.member_gender_code) : null,
+          roleName: trim21(row.role_name),
+          nominatedAt: row.nominated_at ? new Date(trim21(row.nominated_at)).toISOString() : null,
+          nominatedByDisplayName: row.nominated_by_display_name ? trim21(row.nominated_by_display_name) : null,
+          nominatedByUsername: row.nominated_by_username ? trim21(row.nominated_by_username) : null,
+          decisionNote: row.decision_note ? trim21(row.decision_note) : null,
+          requestKind: isHwyGeoResponsibilityRequestKind(requestKindRaw) ? requestKindRaw : HWY_GEO_RESPONSIBILITY_REQUEST_KIND_NOMINATION,
+          isOfficialRemovalRequest: isHwyGeoResponsibilityOfficialRemovalRequestKind(requestKindRaw)
+        };
+      });
       const faceEnrich = mappedRows.map((row) => ({
         memberId: row.memberId,
         avatarUrl: row.memberAvatarUrl
@@ -259355,8 +260723,8 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!spec) {
         throw new Error("Invalid level.");
       }
-      const memberId = trim20(input.memberId);
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const memberId = trim21(input.memberId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!memberId || !geoBaseInfoId) {
         throw new Error("Member and geographic node are required.");
       }
@@ -259369,7 +260737,7 @@ var init_hwyGeoResponsibility_service = __esm({
     `,
         {
           replacements: { geoBaseInfoId, kind: spec.geoMapKind },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
       if (!mapRows2[0]) {
@@ -259380,18 +260748,18 @@ var init_hwyGeoResponsibility_service = __esm({
     SELECT CAST(id AS VARCHAR(32)) AS id, CAST(user_id AS VARCHAR(32)) AS user_id, gender_code
     FROM dbo.hwy_members WHERE id = :memberId
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow) {
         throw new Error("Member not found.");
       }
       const memberLookup = {
-        id: trim20(memberRow.id) || memberId,
-        userId: memberRow.user_id ? trim20(memberRow.user_id) : null,
+        id: trim21(memberRow.id) || memberId,
+        userId: memberRow.user_id ? trim21(memberRow.user_id) : null,
         username: null,
         displayFullName: null,
-        genderCode: memberRow.gender_code ? trim20(memberRow.gender_code) : null,
+        genderCode: memberRow.gender_code ? trim21(memberRow.gender_code) : null,
         canGetResponsibilityCode: null
       };
       ensureMemberEligible(memberLookup);
@@ -259405,7 +260773,7 @@ var init_hwyGeoResponsibility_service = __esm({
       AND ${hwyGeoResponsibilitySqlActiveNominationAssignment("r")}
     ORDER BY COALESCE(r.decided_at, r.nominated_at) DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const clearanceRows = await sequelize.query(
         `
@@ -259415,15 +260783,15 @@ var init_hwyGeoResponsibility_service = __esm({
     WHERE sp.member_id = :memberId
     ORDER BY sp.id DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const nominationGate = resolveHwyGeoResponsibilityNominationSelectable({
         userId: memberLookup.userId,
-        activeRoleName: activeRows[0]?.role_name ? trim20(activeRows[0].role_name) : null,
-        activeGeoBaseInfoId: activeRows[0]?.geo_base_info_id ? trim20(activeRows[0].geo_base_info_id) : null,
+        activeRoleName: activeRows[0]?.role_name ? trim21(activeRows[0].role_name) : null,
+        activeGeoBaseInfoId: activeRows[0]?.geo_base_info_id ? trim21(activeRows[0].geo_base_info_id) : null,
         nodeGeoBaseInfoId: geoBaseInfoId,
         genderCode: memberLookup.genderCode,
-        canGetResponsibilityTitle: clearanceRows[0]?.can_get_title ? trim20(clearanceRows[0].can_get_title) : null
+        canGetResponsibilityTitle: clearanceRows[0]?.can_get_title ? trim21(clearanceRows[0].can_get_title) : null
       });
       if (!nominationGate.selectable) {
         if (nominationGate.blockedReason === "official_at_node") {
@@ -259453,7 +260821,7 @@ var init_hwyGeoResponsibility_service = __esm({
             memberId: Number(memberId),
             montadheminMembershipStatusCode: montadheminScope.membershipStatusCodes.active
           },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
       if (!montadheminRows[0]) {
@@ -259473,7 +260841,7 @@ var init_hwyGeoResponsibility_service = __esm({
     `,
         {
           replacements: { memberId: Number(memberId) },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
       if (memberPending[0]) {
@@ -259488,7 +260856,7 @@ var init_hwyGeoResponsibility_service = __esm({
         role_name: spec.roleName,
         nominated_by: nominatedBy
       });
-      const requestId = trim20(inserted[0]?.requestId);
+      const requestId = trim21(inserted[0]?.requestId);
       if (!requestId) {
         throw new Error("Could not create nomination request.");
       }
@@ -259527,14 +260895,14 @@ var init_hwyGeoResponsibility_service = __esm({
             roleName: input.roleName,
             memberId: input.memberId
           },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
       const row = rows[0];
       if (!row?.id || row.user_id == null) {
         return null;
       }
-      return { id: trim20(row.id), user_id: Number(row.user_id) };
+      return { id: trim21(row.id), user_id: Number(row.user_id) };
     };
     resolveActiveGeoResponsibilityOfficialForMember = async (input) => {
       const officialRequest = await readActiveGeoResponsibilityOfficialRequest({
@@ -259576,7 +260944,7 @@ var init_hwyGeoResponsibility_service = __esm({
             memberId: input.memberId,
             level: input.level
           },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
       if (scopeRows[0]?.id != null) {
@@ -259627,10 +260995,10 @@ var init_hwyGeoResponsibility_service = __esm({
             level: input.level,
             roleName: input.roleName
           },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
-      const id = rows[0]?.id ? trim20(rows[0].id) : "";
+      const id = rows[0]?.id ? trim21(rows[0].id) : "";
       return id || null;
     };
     findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId = async (input) => {
@@ -259653,17 +261021,17 @@ var init_hwyGeoResponsibility_service = __esm({
             level: input.level,
             roleName: input.roleName
           },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
-      const id = rows[0]?.id ? trim20(rows[0].id) : "";
+      const id = rows[0]?.id ? trim21(rows[0].id) : "";
       return id || null;
     };
     readHwyGeoResponsibilityAssigneePendingRemovalRequestId = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
       const spec = findHwyGeoResponsibilityRoleSpec(input.level);
-      const memberId = trim20(input.memberId);
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const memberId = trim21(input.memberId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!spec || !memberId || !geoBaseInfoId) {
         return { requestId: null };
       }
@@ -259687,8 +261055,8 @@ var init_hwyGeoResponsibility_service = __esm({
         throw new Error("Forbidden.");
       }
       const spec = findHwyGeoResponsibilityRoleSpec(input.level);
-      const memberId = trim20(input.memberId);
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const memberId = trim21(input.memberId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!spec || !memberId || !geoBaseInfoId) {
         throw new Error("Invalid cancel request.");
       }
@@ -259715,7 +261083,7 @@ var init_hwyGeoResponsibility_service = __esm({
     };
     cancelHwyGeoResponsibilityNominationRequest = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
-      const requestId = trim20(input.requestId);
+      const requestId = trim21(input.requestId);
       const actorUserId2 = input.actorUserId;
       if (actorUserId2 == null || !Number.isFinite(actorUserId2)) {
         throw new Error("Authenticated user required.");
@@ -259727,7 +261095,7 @@ var init_hwyGeoResponsibility_service = __esm({
     FROM dbo.hwy_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -259747,8 +261115,8 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!canNominateLevel(input.roleNames, input.level)) {
         throw new Error("Forbidden.");
       }
-      const memberId = trim20(input.memberId);
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const memberId = trim21(input.memberId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       const spec = findHwyGeoResponsibilityRoleSpec(input.level);
       if (!spec || !memberId || !geoBaseInfoId) {
         throw new Error("Invalid removal request.");
@@ -259764,14 +261132,14 @@ var init_hwyGeoResponsibility_service = __esm({
     FROM dbo.hwy_members
     WHERE id = :memberId
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow) {
         throw new Error("Member not found.");
       }
       const memberGenderSlot = resolveHwyGeoResponsibilityGenderSlot(
-        memberRow.gender_code ? trim20(memberRow.gender_code) : null
+        memberRow.gender_code ? trim21(memberRow.gender_code) : null
       );
       if (memberGenderSlot !== "male" && memberGenderSlot !== "female") {
         throw new Error("Member gender is required.");
@@ -259802,7 +261170,7 @@ var init_hwyGeoResponsibility_service = __esm({
             geoBaseInfoId,
             roleName: spec.roleName
           },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
       if (pendingDuplicate[0]) {
@@ -259816,7 +261184,7 @@ var init_hwyGeoResponsibility_service = __esm({
     `,
         {
           replacements: { geoBaseInfoId, kind: spec.geoMapKind },
-          type: import_sequelize110.QueryTypes.SELECT
+          type: import_sequelize111.QueryTypes.SELECT
         }
       );
       if (!mapRows2[0]) {
@@ -259834,7 +261202,7 @@ var init_hwyGeoResponsibility_service = __esm({
           nominated_by: nominatedBy
         }
       );
-      const requestId = trim20(inserted[0]?.requestId);
+      const requestId = trim21(inserted[0]?.requestId);
       if (!requestId) {
         throw new Error("Could not create removal request.");
       }
@@ -259842,7 +261210,7 @@ var init_hwyGeoResponsibility_service = __esm({
     };
     approveHwyGeoResponsibilityRequest = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
-      const requestId = trim20(input.requestId);
+      const requestId = trim21(input.requestId);
       if (!requestId) {
         throw new Error("Request id is required.");
       }
@@ -259865,7 +261233,7 @@ var init_hwyGeoResponsibility_service = __esm({
     FROM dbo.hwy_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -259878,9 +261246,9 @@ var init_hwyGeoResponsibility_service = __esm({
       if (row.user_id == null) {
         throw new Error("Member has no linked user account.");
       }
-      const geoBaseInfoId = trim20(row.geo_base_info_id);
-      const roleName = trim20(row.role_name);
-      const requestKind = trim20(row.request_kind);
+      const geoBaseInfoId = trim21(row.geo_base_info_id);
+      const roleName = trim21(row.role_name);
+      const requestKind = trim21(row.request_kind);
       if (isHwyGeoResponsibilityOfficialRemovalRequestKind(requestKind)) {
         const officialForMember = await resolveActiveGeoResponsibilityOfficialForMember({
           sequelize,
@@ -259928,7 +261296,7 @@ var init_hwyGeoResponsibility_service = __esm({
     };
     rejectHwyGeoResponsibilityRequest = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
-      const requestId = trim20(input.requestId);
+      const requestId = trim21(input.requestId);
       const actorUserId2 = input.actorUserId;
       if (actorUserId2 == null || !Number.isFinite(actorUserId2)) {
         throw new Error("Authenticated user required.");
@@ -259940,7 +261308,7 @@ var init_hwyGeoResponsibility_service = __esm({
     FROM dbo.hwy_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -259953,7 +261321,7 @@ var init_hwyGeoResponsibility_service = __esm({
         await execHwyProcedure("hwy_geo_responsibility_reject_request", {
           request_id: requestId,
           actor_user_id: actorUserId2,
-          note: trim20(input.note) || null
+          note: trim21(input.note) || null
         });
       } catch (error) {
         const message = error instanceof Error ? error.message : "";
@@ -259997,7 +261365,7 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!hwyGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -260020,7 +261388,7 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!hwyGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -260040,7 +261408,7 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!hwyGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -260118,7 +261486,7 @@ var init_hwyGeoResponsibility_service = __esm({
       if (!hwyGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim20(input.geoBaseInfoId);
+      const geoBaseInfoId = trim21(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -260135,21 +261503,21 @@ var init_hwyGeoResponsibility_service = __esm({
       });
       const events = [];
       for (const row of rows) {
-        const eventKind = trim20(row.eventKind);
-        const source = trim20(row.source);
+        const eventKind = trim21(row.event_kind);
+        const source = trim21(row.source);
         if (!isPatchHistoryEventKind(eventKind) || !isPatchHistorySource(source)) {
           continue;
         }
         const actor = normalizeHwyPlatformAdminActorFields({
-          actorDisplayName: row.actorDisplayName ? trim20(row.actorDisplayName) : null,
-          actorUsername: row.actorUsername ? trim20(row.actorUsername) : null
+          actorDisplayName: row.actor_display_name ? trim21(row.actor_display_name) : null,
+          actorUsername: row.actor_username ? trim21(row.actor_username) : null
         });
         events.push({
           eventKind,
-          eventOn: row.eventOn,
-          memberId: row.memberId ? trim20(row.memberId) : null,
-          memberDisplayName: row.memberDisplayName ? formatHwyMemberPersonDisplayName(row.memberDisplayName) : null,
-          memberUsername: row.memberUsername ? trim20(row.memberUsername) : null,
+          eventOn: trim21(row.event_on),
+          memberId: row.member_id ? trim21(row.member_id) : null,
+          memberDisplayName: row.member_display_name ? formatHwyMemberPersonDisplayName(trim21(row.member_display_name)) : null,
+          memberUsername: row.member_username ? trim21(row.member_username) : null,
           actorDisplayName: actor.actorDisplayName,
           actorUsername: actor.actorUsername,
           source
@@ -260161,13 +261529,13 @@ var init_hwyGeoResponsibility_service = __esm({
 });
 
 // src/server/domain/hwy/ensureHwyMemberPassedNecessaryDoratSql.ts
-var import_node_fs37, import_node_path42, import_node_url12, import_sequelize111, import_meta14, ensurePromise12, ddlPath3, applyDdl, ensureHwyMemberPassedNecessaryDoratSql;
+var import_node_fs37, import_node_path42, import_node_url12, import_sequelize112, import_meta14, ensurePromise12, ddlPath3, applyDdl, ensureHwyMemberPassedNecessaryDoratSql;
 var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
   "src/server/domain/hwy/ensureHwyMemberPassedNecessaryDoratSql.ts"() {
     import_node_fs37 = require("node:fs");
     import_node_path42 = __toESM(require("node:path"), 1);
     import_node_url12 = require("node:url");
-    import_sequelize111 = require("sequelize");
+    import_sequelize112 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     import_meta14 = {};
@@ -260181,7 +261549,7 @@ var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
       const ddl = (0, import_node_fs37.readFileSync)(ddlPath3, "utf8");
       const batches = ddl.split(/^\s*GO\s*$/gim).map((chunk2) => chunk2.trim()).filter(Boolean);
       for (const batch of batches) {
-        await sequelize.query(batch, { type: import_sequelize111.QueryTypes.RAW });
+        await sequelize.query(batch, { type: import_sequelize112.QueryTypes.RAW });
       }
     };
     ensureHwyMemberPassedNecessaryDoratSql = async () => {
@@ -260200,7 +261568,7 @@ var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
 });
 
 // src/server/domain/hwy/hwyGeoResponsibilityMontadheminAdmin.service.ts
-var DEFAULT_PAGE_SIZE9, MAX_PAGE_SIZE9, trim21, assertSqlServer11, clampPage5, listHwyGeoResponsibilityMontadheminAdmin;
+var DEFAULT_PAGE_SIZE9, MAX_PAGE_SIZE9, trim22, assertSqlServer11, clampPage5, listHwyGeoResponsibilityMontadheminAdmin;
 var init_hwyGeoResponsibilityMontadheminAdmin_service = __esm({
   "src/server/domain/hwy/hwyGeoResponsibilityMontadheminAdmin.service.ts"() {
     init_hwyGeoResponsibilityCatalog();
@@ -260214,7 +261582,7 @@ var init_hwyGeoResponsibilityMontadheminAdmin_service = __esm({
     init_hwyExecDbObject();
     DEFAULT_PAGE_SIZE9 = 25;
     MAX_PAGE_SIZE9 = 100;
-    trim21 = (value) => String(value ?? "").trim();
+    trim22 = (value) => String(value ?? "").trim();
     assertSqlServer11 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Hwy geo-responsibility montadhemin admin requires SQL Server control plane.");
@@ -260241,7 +261609,7 @@ var init_hwyGeoResponsibilityMontadheminAdmin_service = __esm({
       const scope = await loadHwyMemberListScopeContext();
       const activeMembership = scope.membershipStatusCodes.active;
       const geoRoleNamesCsv = hwyGeoResponsibilityPatchRoleNames().join(",");
-      const search = trim21(input.search);
+      const search = trim22(input.search);
       const searchLike = search ? `%${search}%` : null;
       const procBase = {
         active_membership_code: activeMembership,
@@ -260263,22 +261631,22 @@ var init_hwyGeoResponsibilityMontadheminAdmin_service = __esm({
         page,
         pageSize,
         rows: rows.map((row) => ({
-          id: trim21(row.id),
-          username: row.username ? trim21(row.username) : null,
-          displayFullName: formatHwyMemberPersonDisplayName(row.displayFullName) || null,
-          genderCode: row.genderCode ? trim21(row.genderCode) : null,
+          id: trim22(row.id),
+          username: row.username ? trim22(row.username) : null,
+          displayFullName: formatHwyMemberPersonDisplayName(trim22(row.display_full_name)) || null,
+          genderCode: row.gender_code ? trim22(row.gender_code) : null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: row.avatarUrl,
-            hasProfileImage: row.hasProfileImage,
-            userId: row.userId ? Number(row.userId) : null
+            avatarUrl: row.avatar_url ? trim22(row.avatar_url) : null,
+            hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1,
+            userId: row.user_id ? Number(row.user_id) : null
           }),
-          electoralDivisionPath: row.electoralDivisionPath ? trim21(row.electoralDivisionPath) : null,
-          passedNecessaryDorat: row.passedNecessaryDorat === true || row.passedNecessaryDorat === 1,
-          canGetResponsibilityTitle: row.canGetResponsibilityTitle ? trim21(row.canGetResponsibilityTitle) : null,
-          canGetResponsibilityNote: row.canGetResponsibilityNote ? trim21(row.canGetResponsibilityNote) : null,
-          allowsResponsibilityTitle: row.allowsResponsibilityTitle ? trim21(row.allowsResponsibilityTitle) : null,
-          activeResponsibilityRole: row.activeResponsibilityRole ? trim21(row.activeResponsibilityRole) : null,
-          activeResponsibilityGeoTitlePath: row.activeResponsibilityGeoTitlePath ? trim21(row.activeResponsibilityGeoTitlePath) : null,
+          electoralDivisionPath: row.electoral_division_path ? trim22(row.electoral_division_path) : null,
+          passedNecessaryDorat: row.passed_necessary_dorat === true || row.passed_necessary_dorat === 1,
+          canGetResponsibilityTitle: row.can_get_responsibility_title ? trim22(row.can_get_responsibility_title) : null,
+          canGetResponsibilityNote: row.can_get_responsibility_note ? trim22(row.can_get_responsibility_note) : null,
+          allowsResponsibilityTitle: row.allows_responsibility_title ? trim22(row.allows_responsibility_title) : null,
+          activeResponsibilityRole: row.active_responsibility_role ? trim22(row.active_responsibility_role) : null,
+          activeResponsibilityGeoTitlePath: row.active_responsibility_geo_title_path ? trim22(row.active_responsibility_geo_title_path) : null,
           profileComplete: null,
           interviewResultTitle: null,
           allDocumentsApproved: null,
@@ -260421,7 +261789,7 @@ var init_hwyLegacyParitySqlBuilders = __esm({
           w += ` AND ${alias}.IsApproved=${isApproved}`;
         }
         if (rid) {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
         }
       } else if (st === "interview") {
         if (!lt) lt = "NotInterviewed";
@@ -260433,7 +261801,7 @@ var init_hwyLegacyParitySqlBuilders = __esm({
         }
         const approveState = input.approveState?.trim();
         if (approveState && approveState !== "-1") {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${alias}.RoleId AND URR.RoleId IN (1000004,1000005) AND URR.Approved=${approveState})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${alias}.RoleId AND URR.RoleId IN (1000004,1000005) AND URR.Approved=${approveState})`;
         }
         if (rid) w += ` AND ${alias}.RoleId=${rid}`;
       } else if (st === "courses") {
@@ -260441,18 +261809,18 @@ var init_hwyLegacyParitySqlBuilders = __esm({
         if (lt === "NotPassed") w += ` AND COALESCE(${alias}.PassedNecessaryDorat, 0)=0`;
         else if (lt === "Passed") w += ` AND COALESCE(${alias}.PassedNecessaryDorat, 0)=1`;
         if (rid) {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
         }
         const approveState = input.approveState?.trim();
         if (approveState && approveState !== "-1") {
-          w += ` AND (SELECT TOP 1 URR.Approved FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.RoleId IN (1000004,1000005) AND URR.UserId=${alias}.UserId)=${approveState}`;
+          w += ` AND (SELECT TOP 1 URR.Approved FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.RoleId IN (1000004,1000005) AND URR.UserId=${alias}.UserId)=${approveState}`;
         }
       } else if (st === "install") {
         w += ` AND ${alias}.SecurityStatus=211751`;
         let pon = input.passedOrNot?.trim() || "-1";
         if (pon !== "-1") w += ` AND ${alias}.NecessaryDoratPassed=${pon}`;
         if (rid) {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
         }
       }
       const tarshihProv = `(SELECT TOP 1 A.HWY_StateId FROM dbo.hwy_member_area_limits AL WITH (NOLOCK) LEFT JOIN dbo.HWY_VW_H_AllArea A ON A.AreaId=AL.item_id WHERE AL.member_id=${alias}.id AND AL.approved=1 ORDER BY AL.id DESC)`;
@@ -260562,7 +261930,7 @@ var init_hwyLegacyParitySqlBuilders = __esm({
       if (visibility === "visible") w += ` AND ISNULL(${alias}.card_flow_visibility,1)=1`;
       if (visibility === "invisible") w += ` AND ISNULL(${alias}.card_flow_visibility,1)=0`;
       if (rid) {
-        w += ` AND EXISTS (SELECT 1 FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+        w += ` AND EXISTS (SELECT 1 FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
       }
       if (input.nakhebProvinceId != null) w += ` AND ${alias}.nakheb_join_province_id=${input.nakhebProvinceId}`;
       if (input.nakhebCircleId != null) w += ` AND ${alias}.nakheb_join_circle_id=${input.nakhebCircleId}`;
@@ -260614,7 +261982,7 @@ var init_hwyLegacyParityRead_service = __esm({
         areaCol = `, CAST(V.AreaId AS VARCHAR(32)) AS areaId, CAST(V.NecessaryDoratPassed AS BIT) AS necessaryDoratPassed, V.InterviewFinalResultTitle AS interviewFinalResultTitle, CAST(V.ProfilePerfect AS INT) AS profilePerfect, CAST(V.AllImagesApproved AS BIT) AS allImagesApproved, CAST(V.HasOath AS BIT) AS hasOath`;
       }
       const passedDoratCol = input.stage === "courses" ? "V.PassedDorat AS passedDoratHtml" : "CAST(NULL AS NVARCHAR(MAX)) AS passedDoratHtml";
-      const sql22 = `
+      const sql23 = `
     SELECT
       CAST(V.Id AS VARCHAR(32)) AS id,
       V.UserName AS username,
@@ -260642,7 +262010,7 @@ var init_hwyLegacyParityRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql22);
+        const result = await pool.request().query(sql23);
         return result.recordset;
       } finally {
         await pool.close();
@@ -260664,7 +262032,7 @@ var init_hwyLegacyParityRead_service = __esm({
     queryLegacyCardFlowList = async (input, offset, pageSize) => {
       const where = buildHwyCardFlowWhereSql(input);
       const latest = latestStepSubquery("M");
-      const sql22 = `
+      const sql23 = `
     SELECT
       CAST(M.Id AS VARCHAR(32)) AS id,
       M.UserName AS username,
@@ -260692,7 +262060,7 @@ var init_hwyLegacyParityRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql22);
+        const result = await pool.request().query(sql23);
         return result.recordset;
       } finally {
         await pool.close();
@@ -260781,7 +262149,7 @@ var init_hwyLegacyParityRead_service = __esm({
           OR mi.Id IN (
             SELECT H.InstanceId
             FROM dbo.HWY_Meetings_Hazerin H WITH (NOLOCK)
-            INNER JOIN dbo.HWY_Members M WITH (NOLOCK) ON M.Id = H.member_id
+            INNER JOIN dbo.HWY_Members M WITH (NOLOCK) ON M.Id = H.MemberId
             WHERE M.UserName LIKE N'%' + @username + N'%'
           )
         )
@@ -260825,7 +262193,7 @@ var init_hwyLegacyParityRead_service = __esm({
           OR mi.Id IN (
             SELECT H.InstanceId
             FROM dbo.HWY_Meetings_Hazerin H WITH (NOLOCK)
-            INNER JOIN dbo.HWY_Members M WITH (NOLOCK) ON M.Id = H.member_id
+            INNER JOIN dbo.HWY_Members M WITH (NOLOCK) ON M.Id = H.MemberId
             WHERE M.UserName LIKE N'%' + @username + N'%'
           )
         )
@@ -260876,6 +262244,10 @@ var init_hwyLegacyParityRead_service = __esm({
 });
 
 // src/server/domain/hwy/hwyLegacyOperatorGeoScope.service.ts
+var hwyLegacyOperatorGeoScope_service_exports = {};
+__export(hwyLegacyOperatorGeoScope_service_exports, {
+  resolveHwyLegacyOperatorGeoScope: () => resolveHwyLegacyOperatorGeoScope
+});
 var resolveHwyLegacyOperatorGeoScope;
 var init_hwyLegacyOperatorGeoScope_service = __esm({
   "src/server/domain/hwy/hwyLegacyOperatorGeoScope.service.ts"() {
@@ -260927,11 +262299,11 @@ async function attachHwyCandidatePipelineNominationRoles(rows) {
               CAST(ur.Approved AS INT) AS is_approved,
               R.RoleName AS role_name
        FROM dbo.HWY_Members m WITH (NOLOCK)
-       INNER JOIN dbo.AppEnd_Users_R_Roles ur WITH (NOLOCK)
+       INNER JOIN dbo.vw_hwy_platform_user_roles ur WITH (NOLOCK)
          ON ur.UserId = m.UserId AND ur.RoleId IN (1000004, 1000005)
-       LEFT JOIN dbo.AppEnd_Roles R WITH (NOLOCK) ON R.Id = ur.RoleId
+       LEFT JOIN dbo.vw_hwy_platform_roles R WITH (NOLOCK) ON R.Id = ur.RoleId
        WHERE m.Id IN (:memberIds)`,
-      { replacements: { memberIds }, type: import_sequelize112.QueryTypes.SELECT }
+      { replacements: { memberIds }, type: import_sequelize113.QueryTypes.SELECT }
     );
   } catch {
     return;
@@ -260956,23 +262328,23 @@ async function attachHwyCandidatePipelineNominationRoles(rows) {
     const match = existingRoleId ? assignments.find((item3) => String(item3.role_id).trim() === existingRoleId) : assignments[0];
     const picked = match ?? assignments[0];
     if (!readStringField5(row, "roleId")) {
-      row.roleId = String(picked.role_id).trim();
+      row.role_id = String(picked.role_id).trim();
     }
-    if (row.isApprovedRow == null && picked.is_approved != null) {
-      row.isApprovedRow = Number(picked.is_approved);
+    if (row.is_approved_row == null && picked.is_approved != null) {
+      row.is_approved_row = Number(picked.is_approved);
     }
     if (!readStringField5(row, "roleOfTarshih")) {
       const roleName = String(picked.role_name ?? "").trim();
       if (roleName) {
-        row.roleOfTarshih = roleName;
+        row.role_of_tarshih = roleName;
       }
     }
   }
 }
-var import_sequelize112, readStringField5;
+var import_sequelize113, readStringField5;
 var init_hwyCandidatePipelineNominationRole_service = __esm({
   "src/server/domain/hwy/hwyCandidatePipelineNominationRole.service.ts"() {
-    import_sequelize112 = require("sequelize");
+    import_sequelize113 = require("sequelize");
     init_controlPlaneSequelize();
     readStringField5 = (row, key) => String(row[key] ?? "").trim();
   }
@@ -260994,7 +262366,7 @@ async function attachHwyCandidatePipelineResponsibilityPatchPaths(rows, queryLan
        WHERE al.member_id IN (:memberIds)
          AND (al.approved = 1 OR al.approved = 0)
        ORDER BY al.member_id, al.approved DESC, al.id`,
-      { replacements: { memberIds }, type: import_sequelize113.QueryTypes.SELECT }
+      { replacements: { memberIds }, type: import_sequelize114.QueryTypes.SELECT }
     );
     for (const limit of limits) {
       const memberId = String(limit.member_id ?? "").trim();
@@ -261023,10 +262395,10 @@ async function attachHwyCandidatePipelineResponsibilityPatchPaths(rows, queryLan
   }
   await attachFromLegacyGeoIdLists(rows, memberIdToLegacyIds, queryLang);
 }
-var import_sequelize113, readStringField6, GEO_KIND_PRIORITY, LEGACY_ROLE_ID_TO_GEO_LEVEL, isGeoResponsibilityLevel, memberItemKey, resolveGeoLevelFromLegacyKind, pickLegacyKindForItemId, parseLegacyGeoIds, pickBestBaseInfoIdPerLegacyId, loadIqTitlePathsByBaseInfoId, loadTitlePathsByItemIdSql, resolveHwyLegacyGeoIdTitlePaths, loadNominationGeoLevelByMemberItem, resolvePatchGeoLevelForRow, attachFromLegacyGeoIdLists;
+var import_sequelize114, readStringField6, GEO_KIND_PRIORITY, LEGACY_ROLE_ID_TO_GEO_LEVEL, isGeoResponsibilityLevel, memberItemKey, resolveGeoLevelFromLegacyKind, pickLegacyKindForItemId, parseLegacyGeoIds, pickBestBaseInfoIdPerLegacyId, loadIqTitlePathsByBaseInfoId, loadTitlePathsByItemIdSql, resolveHwyLegacyGeoIdTitlePaths, loadNominationGeoLevelByMemberItem, resolvePatchGeoLevelForRow, attachFromLegacyGeoIdLists;
 var init_hwyCandidatePipelineResponsibilityPatchDisplay_service = __esm({
   "src/server/domain/hwy/hwyCandidatePipelineResponsibilityPatchDisplay.service.ts"() {
-    import_sequelize113 = require("sequelize");
+    import_sequelize114 = require("sequelize");
     init_baseInfoCultureTranslations();
     init_hwyMemberDirectoryPathDisplay();
     init_controlPlaneSequelize();
@@ -261115,7 +262487,7 @@ var init_hwyCandidatePipelineResponsibilityPatchDisplay_service = __esm({
        WHERE bi.id IN (:baseInfoIds)`,
           {
             replacements: { baseInfoIds },
-            type: import_sequelize113.QueryTypes.SELECT
+            type: import_sequelize114.QueryTypes.SELECT
           }
         );
         const map = /* @__PURE__ */ new Map();
@@ -261147,7 +262519,7 @@ var init_hwyCandidatePipelineResponsibilityPatchDisplay_service = __esm({
                 dbo.hwy_region_electoral_title_path(CAST(ids.item_id AS NVARCHAR(128)))
               ))), N'') AS title_path
        FROM (SELECT CAST(value AS VARCHAR(32)) AS item_id FROM STRING_SPLIT(:itemIdsCsv, N',')) ids`,
-          { replacements: { itemIdsCsv: ids2.join(",") }, type: import_sequelize113.QueryTypes.SELECT }
+          { replacements: { itemIdsCsv: ids2.join(",") }, type: import_sequelize114.QueryTypes.SELECT }
         );
         const map = /* @__PURE__ */ new Map();
         for (const row of rows) {
@@ -261176,7 +262548,7 @@ var init_hwyCandidatePipelineResponsibilityPatchDisplay_service = __esm({
             legacy_kind
      FROM dbo.hwy_etl_geo_map WITH (NOLOCK)
      WHERE legacy_id IN (:legacyIds)`,
-        { replacements: { legacyIds: numericIds }, type: import_sequelize113.QueryTypes.SELECT }
+        { replacements: { legacyIds: numericIds }, type: import_sequelize114.QueryTypes.SELECT }
       );
       const baseInfoByLegacyId = pickBestBaseInfoIdPerLegacyId(mapRows2);
       const baseInfoIds = [...new Set(baseInfoByLegacyId.values())];
@@ -261222,7 +262594,7 @@ var init_hwyCandidatePipelineResponsibilityPatchDisplay_service = __esm({
          AND r.status IN (N'submitted', N'approved')
          AND r.revoked_at IS NULL
          AND r.legacy_geo_id IS NOT NULL`,
-          { replacements: { memberIds }, type: import_sequelize113.QueryTypes.SELECT }
+          { replacements: { memberIds }, type: import_sequelize114.QueryTypes.SELECT }
         );
         for (const row of requestRows) {
           const memberId = String(row.member_id ?? "").trim();
@@ -261244,7 +262616,7 @@ var init_hwyCandidatePipelineResponsibilityPatchDisplay_service = __esm({
           `SELECT CAST(legacy_id AS VARCHAR(32)) AS legacy_id, legacy_kind
        FROM dbo.hwy_etl_geo_map WITH (NOLOCK)
        WHERE legacy_id IN (:itemIds)`,
-          { replacements: { itemIds: missingItemIds.map((id) => Number(id)).filter(Number.isFinite) }, type: import_sequelize113.QueryTypes.SELECT }
+          { replacements: { itemIds: missingItemIds.map((id) => Number(id)).filter(Number.isFinite) }, type: import_sequelize114.QueryTypes.SELECT }
         );
         for (const [memberId, legacyIds] of memberIdToLegacyIds) {
           for (const itemId of legacyIds) {
@@ -261292,8 +262664,8 @@ var init_hwyCandidatePipelineResponsibilityPatchDisplay_service = __esm({
         if (paths.length === 0) {
           continue;
         }
-        row.responsibilityPatchPaths = paths;
-        row.responsibilityPatchPath = paths[0] ?? null;
+        row.responsibility_patch_paths = paths;
+        row.responsibility_patch_path = paths[0] ?? null;
       }
     };
   }
@@ -261323,7 +262695,7 @@ async function attachHwyCandidatePipelineElectoralCenterPaths(rows, queryLang) {
          FROM dbo.hwy_members m WITH (NOLOCK)
          LEFT JOIN dbo.HWY_Members M WITH (NOLOCK) ON M.Id = m.id
          WHERE m.id IN (:memberIds)`,
-        { replacements: { memberIds: missingMemberIds }, type: import_sequelize114.QueryTypes.SELECT }
+        { replacements: { memberIds: missingMemberIds }, type: import_sequelize115.QueryTypes.SELECT }
       );
       for (const row of joinRows) {
         const memberId = String(row.member_id ?? "").trim();
@@ -261342,14 +262714,14 @@ async function attachHwyCandidatePipelineElectoralCenterPaths(rows, queryLang) {
     const eghteraId = eghteraIdByMemberId.get(id);
     const fromJoinRegion = eghteraId ? pathByEghteraId.get(eghteraId)?.trim() : "";
     if (fromJoinRegion) {
-      row.electoralDivisionPath = formatHwyGeoElectoralPathForDisplay(fromJoinRegion);
+      row.electoral_division_path = formatHwyGeoElectoralPathForDisplay(fromJoinRegion);
     }
   }
 }
-var import_sequelize114, readStringField7;
+var import_sequelize115, readStringField7;
 var init_hwyCandidatePipelineElectoralCenterDisplay_service = __esm({
   "src/server/domain/hwy/hwyCandidatePipelineElectoralCenterDisplay.service.ts"() {
-    import_sequelize114 = require("sequelize");
+    import_sequelize115 = require("sequelize");
     init_hwyMemberDirectoryPathDisplay();
     init_controlPlaneSequelize();
     init_hwyCandidatePipelineResponsibilityPatchDisplay_service();
@@ -261358,7 +262730,7 @@ var init_hwyCandidatePipelineElectoralCenterDisplay_service = __esm({
 });
 
 // src/domain/hwy/hwyCandidatePipelineInterviewCatalog.ts
-var HWY_INTERVIEW_2022_SCORE_PARENT_ID, HWY_INTERVIEW_2022_SCORE_UNSET_ID, HWY_INTERVIEW_2022_REQUIRED_HAZER_ROLE_ID, HWY_INTERVIEW_2022_HAZER_ALLOWED_ROLE_IDS, HWY_INTERVIEW_2022_NOTE_MIN_LENGTH, HWY_INTERVIEW_2022_NOTE_MAX_LENGTH, HWY_INTERVIEW_2022_HOURS_MIN, HWY_INTERVIEW_2022_HOURS_MAX, HWY_INTERVIEW_2022_SCORE_FIELDS, isHwyInterview2022ScoreAnswered, trim22, validateHwyCandidatePipelineInterviewCreate;
+var HWY_INTERVIEW_2022_SCORE_PARENT_ID, HWY_INTERVIEW_2022_SCORE_UNSET_ID, HWY_INTERVIEW_2022_REQUIRED_HAZER_ROLE_ID, HWY_INTERVIEW_2022_HAZER_ALLOWED_ROLE_IDS, HWY_INTERVIEW_2022_NOTE_MIN_LENGTH, HWY_INTERVIEW_2022_NOTE_MAX_LENGTH, HWY_INTERVIEW_2022_HOURS_MIN, HWY_INTERVIEW_2022_HOURS_MAX, HWY_INTERVIEW_2022_SCORE_FIELDS, isHwyInterview2022ScoreAnswered, trim23, validateHwyCandidatePipelineInterviewCreate;
 var init_hwyCandidatePipelineInterviewCatalog = __esm({
   "src/domain/hwy/hwyCandidatePipelineInterviewCatalog.ts"() {
     HWY_INTERVIEW_2022_SCORE_PARENT_ID = 211520;
@@ -261417,12 +262789,12 @@ var init_hwyCandidatePipelineInterviewCatalog = __esm({
       }
     ];
     isHwyInterview2022ScoreAnswered = (scoreId) => scoreId != null && Number.isFinite(scoreId) && scoreId !== HWY_INTERVIEW_2022_SCORE_UNSET_ID;
-    trim22 = (value) => String(value ?? "").trim();
+    trim23 = (value) => String(value ?? "").trim();
     validateHwyCandidatePipelineInterviewCreate = (input, hazerinRoleIdsByMember, validFinalResults2) => {
-      if (!trim22(input.memberId)) {
+      if (!trim23(input.memberId)) {
         throw new Error("memberId is required.");
       }
-      if (!trim22(input.interviewOn)) {
+      if (!trim23(input.interviewOn)) {
         throw new Error("interviewOn is required.");
       }
       if (!validFinalResults2.has(input.finalResult)) {
@@ -261441,14 +262813,14 @@ var init_hwyCandidatePipelineInterviewCatalog = __esm({
       if (!Number.isFinite(hours) || hours < HWY_INTERVIEW_2022_HOURS_MIN || hours > HWY_INTERVIEW_2022_HOURS_MAX) {
         throw new Error(`Daily availability hours must be between ${HWY_INTERVIEW_2022_HOURS_MIN} and ${HWY_INTERVIEW_2022_HOURS_MAX}.`);
       }
-      const note = trim22(input.note);
+      const note = trim23(input.note);
       if (note.length < HWY_INTERVIEW_2022_NOTE_MIN_LENGTH) {
         throw new Error(`Interview note must be at least ${HWY_INTERVIEW_2022_NOTE_MIN_LENGTH} characters.`);
       }
       if (note.length > HWY_INTERVIEW_2022_NOTE_MAX_LENGTH) {
         throw new Error(`Interview note must be at most ${HWY_INTERVIEW_2022_NOTE_MAX_LENGTH} characters.`);
       }
-      const hazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim22(id)).filter(Boolean))];
+      const hazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim23(id)).filter(Boolean))];
       if (hazerIds.length === 0) {
         throw new Error("At least one committee member (hazer) is required.");
       }
@@ -261477,13 +262849,13 @@ var init_hwyCandidatePipelineUiConstants = __esm({
 });
 
 // src/server/domain/hwy/hwyCandidatePipelineInterviewMapper.ts
-var trim23, mapHwyCandidatePipelineInterviewRow;
+var trim24, mapHwyCandidatePipelineInterviewRow;
 var init_hwyCandidatePipelineInterviewMapper = __esm({
   "src/server/domain/hwy/hwyCandidatePipelineInterviewMapper.ts"() {
-    trim23 = (value) => String(value ?? "").trim();
+    trim24 = (value) => String(value ?? "").trim();
     mapHwyCandidatePipelineInterviewRow = (row) => {
       let hazerin = [];
-      const rawHazerin = row.hazerinJson;
+      const rawHazerin = row.hazerin_json;
       if (typeof rawHazerin === "string" && rawHazerin.trim()) {
         try {
           const parsed = JSON.parse(rawHazerin);
@@ -261491,12 +262863,12 @@ var init_hwyCandidatePipelineInterviewMapper = __esm({
             hazerin = parsed.map((item3) => {
               const o = item3;
               return {
-                memberId: trim23(o.memberId ?? o.Id ?? o.id),
-                username: o.username ? trim23(o.username) : o.UserName ? trim23(o.UserName) : null,
-                firstName: o.firstName ? trim23(o.firstName) : o.FirstName ? trim23(o.FirstName) : null,
-                fatherName: o.fatherName ? trim23(o.fatherName) : o.FatherName ? trim23(o.FatherName) : null,
-                grandFatherName: o.grandFatherName ? trim23(o.grandFatherName) : o.GrandFatherName ? trim23(o.GrandFatherName) : null,
-                lastName: o.lastName ? trim23(o.lastName) : o.LastName ? trim23(o.LastName) : null
+                memberId: trim24(o.memberId ?? o.Id ?? o.id),
+                username: o.username ? trim24(o.username) : o.UserName ? trim24(o.UserName) : null,
+                firstName: o.firstName ? trim24(o.firstName) : o.FirstName ? trim24(o.FirstName) : null,
+                fatherName: o.fatherName ? trim24(o.fatherName) : o.FatherName ? trim24(o.FatherName) : null,
+                grandFatherName: o.grandFatherName ? trim24(o.grandFatherName) : o.GrandFatherName ? trim24(o.GrandFatherName) : null,
+                lastName: o.lastName ? trim24(o.lastName) : o.LastName ? trim24(o.LastName) : null
               };
             }).filter((h) => h.memberId);
           }
@@ -261505,22 +262877,22 @@ var init_hwyCandidatePipelineInterviewMapper = __esm({
         }
       }
       return {
-        interviewId: trim23(row.interviewId),
-        memberId: trim23(row.memberId),
-        interviewOn: trim23(row.interviewOn),
+        interviewId: trim24(row.interview_id),
+        memberId: trim24(row.member_id),
+        interviewOn: trim24(row.interview_on),
         karizma: Number(row.karizma),
-        likeToLearnMore: Number(row.likeToLearnMore),
-        showIsFan: Number(row.showIsFan),
-        abilityToMakeTeam: Number(row.abilityToMakeTeam),
-        ghodratElec: Number(row.ghodratElec),
-        knowsMasoolin: Number(row.knowsMasoolin),
-        isMotefaregh: row.isMotefaregh === true || row.isMotefaregh === 1,
-        isMotefareghSaat: Number(row.isMotefareghSaat),
-        note: trim23(row.note),
-        finalResult: Number(row.finalResult),
-        finalResultTitle: row.finalResultTitle ? trim23(row.finalResultTitle) : null,
-        createdBy: row.createdBy ? trim23(row.createdBy) : null,
-        createdOn: row.createdOn ? trim23(row.createdOn) : null,
+        likeToLearnMore: Number(row.like_to_learn_more),
+        showIsFan: Number(row.show_is_fan),
+        abilityToMakeTeam: Number(row.ability_to_make_team),
+        ghodratElec: Number(row.ghodrat_elec),
+        knowsMasoolin: Number(row.knows_masoolin),
+        isMotefaregh: row.is_motefaregh === true || row.is_motefaregh === 1,
+        isMotefareghSaat: Number(row.is_motefaregh_saat),
+        note: trim24(row.note),
+        finalResult: Number(row.final_result),
+        finalResultTitle: row.final_result_title ? trim24(row.final_result_title) : null,
+        createdBy: row.created_by ? trim24(row.created_by) : null,
+        createdOn: row.created_on ? trim24(row.created_on) : null,
         hazerin
       };
     };
@@ -261528,7 +262900,7 @@ var init_hwyCandidatePipelineInterviewMapper = __esm({
 });
 
 // src/server/domain/hwy/hwyCandidatePipelineInterview.service.ts
-var import_sequelize115, trim24, assertSqlServer12, validFinalResults, listHwyInterview2022ScoreOptions, getHwyCandidatePipelineInterviewLast, lookupHwyInterview2022HazerinMember, applyHwyCandidatePipelineInterviewCreateFull;
+var import_sequelize116, trim25, assertSqlServer12, validFinalResults, listHwyInterview2022ScoreOptions, getHwyCandidatePipelineInterviewLast, lookupHwyInterview2022HazerinMember, applyHwyCandidatePipelineInterviewCreateFull;
 var init_hwyCandidatePipelineInterview_service = __esm({
   "src/server/domain/hwy/hwyCandidatePipelineInterview.service.ts"() {
     init_hwyCandidatePipelineInterviewCatalog();
@@ -261539,9 +262911,9 @@ var init_hwyCandidatePipelineInterview_service = __esm({
     init_hwyLegacyBaseInformationReader();
     init_prismaHelpers();
     init_controlPlaneSequelize();
-    import_sequelize115 = require("sequelize");
+    import_sequelize116 = require("sequelize");
     init_hwyCandidatePipelineInterviewMapper();
-    trim24 = (value) => String(value ?? "").trim();
+    trim25 = (value) => String(value ?? "").trim();
     assertSqlServer12 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Hwy candidate pipeline requires SQL Server control plane.");
@@ -261557,7 +262929,7 @@ var init_hwyCandidatePipelineInterview_service = __esm({
       assertSqlServer12();
       await assertHwyCandidatePipelineStageAccess("interview", roleNames);
       await ensureHwyDbObjects();
-      const id = trim24(memberId);
+      const id = trim25(memberId);
       if (!id) {
         throw new Error("memberId is required.");
       }
@@ -261573,11 +262945,11 @@ var init_hwyCandidatePipelineInterview_service = __esm({
     lookupHwyInterview2022HazerinMember = async (username, actorUsername2, roleNames) => {
       assertSqlServer12();
       await assertHwyCandidatePipelineStageAccess("interview", roleNames);
-      const uname = trim24(username);
+      const uname = trim25(username);
       if (!/^\d{6}$/.test(uname)) {
         throw new Error("Membership number must be exactly 6 digits.");
       }
-      const actor = trim24(actorUsername2);
+      const actor = trim25(actorUsername2);
       if (actor && actor === uname) {
         throw new Error("You are already the interview operator; do not add your own membership number.");
       }
@@ -261595,7 +262967,7 @@ var init_hwyCandidatePipelineInterview_service = __esm({
     FROM dbo.HWY_Members M WITH (NOLOCK)
     WHERE M.UserName = :username
     `,
-        { replacements: { username: uname }, type: import_sequelize115.QueryTypes.SELECT }
+        { replacements: { username: uname }, type: import_sequelize116.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow?.memberId) {
@@ -261607,10 +262979,10 @@ var init_hwyCandidatePipelineInterview_service = __esm({
         const roleRows = await sequelize.query(
           `
       SELECT URR.RoleId AS roleId
-      FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK)
+      FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK)
       WHERE URR.UserId = :userId
       `,
-          { replacements: { userId: Number(userId) }, type: import_sequelize115.QueryTypes.SELECT }
+          { replacements: { userId: Number(userId) }, type: import_sequelize116.QueryTypes.SELECT }
         );
         roleIds = roleRows.map((r) => Number(r.roleId)).filter((n) => Number.isFinite(n));
       }
@@ -261622,12 +262994,12 @@ var init_hwyCandidatePipelineInterview_service = __esm({
       }
       return {
         member: {
-          memberId: trim24(memberRow.memberId),
-          username: memberRow.username ? trim24(memberRow.username) : null,
-          firstName: memberRow.firstName ? trim24(memberRow.firstName) : null,
-          fatherName: memberRow.fatherName ? trim24(memberRow.fatherName) : null,
-          grandFatherName: memberRow.grandFatherName ? trim24(memberRow.grandFatherName) : null,
-          lastName: memberRow.lastName ? trim24(memberRow.lastName) : null
+          memberId: trim25(memberRow.memberId),
+          username: memberRow.username ? trim25(memberRow.username) : null,
+          firstName: memberRow.firstName ? trim25(memberRow.firstName) : null,
+          fatherName: memberRow.fatherName ? trim25(memberRow.fatherName) : null,
+          grandFatherName: memberRow.grandFatherName ? trim25(memberRow.grandFatherName) : null,
+          lastName: memberRow.lastName ? trim25(memberRow.lastName) : null
         },
         roleIds
       };
@@ -261637,13 +263009,13 @@ var init_hwyCandidatePipelineInterview_service = __esm({
       await assertHwyCandidatePipelineStageAccess("interview", roleNames);
       await ensureHwyDbObjects();
       const hazerinRoleIdsByMember = /* @__PURE__ */ new Map();
-      const uniqueHazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim24(id)).filter(Boolean))];
+      const uniqueHazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim25(id)).filter(Boolean))];
       for (const hazerId of uniqueHazerIds) {
         const memberRows = await getControlPlaneSequelize().query(
           `SELECT TOP 1 UserName AS username FROM dbo.HWY_Members WITH (NOLOCK) WHERE Id = :id`,
-          { replacements: { id: Number(hazerId) }, type: import_sequelize115.QueryTypes.SELECT }
+          { replacements: { id: Number(hazerId) }, type: import_sequelize116.QueryTypes.SELECT }
         );
-        const username = memberRows[0]?.username ? trim24(memberRows[0].username) : "";
+        const username = memberRows[0]?.username ? trim25(memberRows[0].username) : "";
         if (!username) {
           throw new Error(`Committee member ${hazerId} was not found.`);
         }
@@ -261653,8 +263025,8 @@ var init_hwyCandidatePipelineInterview_service = __esm({
       validateHwyCandidatePipelineInterviewCreate(input, hazerinRoleIdsByMember, validFinalResults);
       const hazerinJson = JSON.stringify(uniqueHazerIds.map((id) => ({ hazer_id: Number(id) })));
       await execHwyProcedure("hwy_candidate_pipeline_interview_create", {
-        member_id: Number(trim24(input.memberId)),
-        interview_on: trim24(input.interviewOn),
+        member_id: Number(trim25(input.memberId)),
+        interview_on: trim25(input.interviewOn),
         karizma: input.karizma,
         like_to_learn_more: input.likeToLearnMore,
         show_is_fan: input.showIsFan,
@@ -261663,20 +263035,20 @@ var init_hwyCandidatePipelineInterview_service = __esm({
         knows_masoolin: input.knowsMasoolin,
         is_motefaregh: input.isMotefaregh ? 1 : 0,
         is_motefaregh_saat: input.isMotefareghSaat,
-        note: trim24(input.note),
+        note: trim25(input.note),
         final_result: input.finalResult,
         hazerin_json: hazerinJson,
-        actor: trim24(actorUsername2) || null
+        actor: trim25(actorUsername2) || null
       });
       await execHwyProcedure("hwy_member_stat_recalc_interviews_2022_count", {
-        member_id: Number(trim24(input.memberId))
+        member_id: Number(trim25(input.memberId))
       });
     };
   }
 });
 
 // src/server/domain/hwy/hwyCandidatePipeline.service.ts
-var DEFAULT_PAGE_SIZE10, INSTALL_PAGE_SIZE, MAX_PAGE_SIZE10, trim25, ELECTORAL_PATH_JOIN, buildCandidatePipelineElectoralPath, assertSqlServer13, clampPage6, composePipelineDisplayName, mapRow13, PIPELINE_TOTAL_COLUMN, HWY_MONTADHEMIN_LIST_SCOPE, finalizePipelineListRows, mapPipelineListResult, buildProcBase, listHwyCandidatePipeline, applyHwyCandidatePipelineInstallAction, applyHwyCandidatePipelineSecurityRecord;
+var DEFAULT_PAGE_SIZE10, INSTALL_PAGE_SIZE, MAX_PAGE_SIZE10, trim26, ELECTORAL_PATH_JOIN, buildCandidatePipelineElectoralPath, assertSqlServer13, clampPage6, composePipelineDisplayName, mapRow13, PIPELINE_TOTAL_COLUMN, HWY_MONTADHEMIN_LIST_SCOPE, finalizePipelineListRows, mapPipelineListResult, buildProcBase, listHwyCandidatePipeline, applyHwyCandidatePipelineInstallAction, applyHwyCandidatePipelineSecurityRecord;
 var init_hwyCandidatePipeline_service = __esm({
   "src/server/domain/hwy/hwyCandidatePipeline.service.ts"() {
     init_hwyCandidatePipelineAccess_service();
@@ -261694,15 +263066,15 @@ var init_hwyCandidatePipeline_service = __esm({
     DEFAULT_PAGE_SIZE10 = 25;
     INSTALL_PAGE_SIZE = 15;
     MAX_PAGE_SIZE10 = 100;
-    trim25 = (value) => String(value ?? "").trim();
+    trim26 = (value) => String(value ?? "").trim();
     ELECTORAL_PATH_JOIN = " | ";
     buildCandidatePipelineElectoralPath = (row) => {
       const parts = [
-        row.nakhebJoinProvinceName,
-        row.nakhebJoinCircleName,
-        row.nakhebJoinTamvinName,
-        row.nakhebJoinEghteraName
-      ].map((part) => trim25(part)).filter(Boolean);
+        row.nakheb_join_province_name,
+        row.nakheb_join_circle_name,
+        row.nakheb_join_tamvin_name,
+        row.nakheb_join_eghtera_name
+      ].map((part) => trim26(part)).filter(Boolean);
       return parts.length > 0 ? parts.join(ELECTORAL_PATH_JOIN) : null;
     };
     assertSqlServer13 = () => {
@@ -261717,47 +263089,47 @@ var init_hwyCandidatePipeline_service = __esm({
       return { page: safePage, pageSize: safePageSize, offset: (safePage - 1) * safePageSize };
     };
     composePipelineDisplayName = (row) => [
-      row.firstName,
-      row.fatherName,
-      row.grandFatherName,
-      row.lastName
-    ].map((part) => trim25(part)).filter(Boolean).join(" ");
+      row.first_name,
+      row.father_name,
+      row.grand_father_name,
+      row.last_name
+    ].map((part) => trim26(part)).filter(Boolean).join(" ");
     mapRow13 = (row) => ({
-      id: trim25(row.id),
-      username: row.username ? trim25(row.username) : null,
-      userId: row.userId ? trim25(row.userId) : null,
-      firstName: row.firstName ? trim25(row.firstName) : null,
-      fatherName: row.fatherName ? trim25(row.fatherName) : null,
-      grandFatherName: row.grandFatherName ? trim25(row.grandFatherName) : null,
-      lastName: row.lastName ? trim25(row.lastName) : null,
-      displayFullName: trim25(row.displayFullName) || composePipelineDisplayName(row) || null,
-      avatarUrl: row.avatarUrl ? trim25(row.avatarUrl) : null,
-      birthYear: row.birthYear != null && String(row.birthYear).trim() !== "" ? String(row.birthYear).trim() : null,
-      genderCode: row.genderCode ? trim25(row.genderCode) : row.genderId ? trim25(row.genderId) : null,
-      membershipOn: row.membershipOn ? trim25(row.membershipOn) : null,
-      trackingCode: trim25(row.trackingCode) || trim25(row.tracking_code) || null,
-      phone1: row.phone1 ? trim25(row.phone1) : null,
-      phone2: row.phone2 ? trim25(row.phone2) : null,
+      id: trim26(row.id),
+      username: row.username ? trim26(row.username) : null,
+      userId: row.user_id ? trim26(row.user_id) : null,
+      firstName: row.first_name ? trim26(row.first_name) : null,
+      fatherName: row.father_name ? trim26(row.father_name) : null,
+      grandFatherName: row.grand_father_name ? trim26(row.grand_father_name) : null,
+      lastName: row.last_name ? trim26(row.last_name) : null,
+      displayFullName: trim26(row.display_full_name) || composePipelineDisplayName(row) || null,
+      avatarUrl: row.avatar_url ? trim26(row.avatar_url) : null,
+      birthYear: row.birth_year != null && String(row.birth_year).trim() !== "" ? String(row.birth_year).trim() : null,
+      genderCode: row.gender_code ? trim26(row.gender_code) : row.gender_id ? trim26(row.gender_id) : null,
+      membershipOn: row.membership_on ? trim26(row.membership_on) : null,
+      trackingCode: trim26(row.tracking_code) || trim26(row.tracking_code) || null,
+      phone1: row.phone1 ? trim26(row.phone1) : null,
+      phone2: row.phone2 ? trim26(row.phone2) : null,
       electoralDivisionPath: buildCandidatePipelineElectoralPath(row),
-      genderId: row.genderId ? trim25(row.genderId) : null,
-      roleOfTarshih: row.roleOfTarshih ? trim25(row.roleOfTarshih) : null,
-      areaOfTarshih: row.areaOfTarshih ? String(row.areaOfTarshih) : null,
-      dateOfTarshih: row.dateOfTarshih ? trim25(row.dateOfTarshih) : null,
-      moarasshehOfTarshih: row.moarasshehOfTarshih ? trim25(row.moarasshehOfTarshih) : null,
-      passedDoratHtml: row.passedDoratHtml ? String(row.passedDoratHtml) : null,
-      areaId: row.areaId ? trim25(row.areaId) : null,
-      necessaryDoratPassed: row.necessaryDoratPassed === true || row.necessaryDoratPassed === 1,
-      daysFrom: row.daysFrom != null ? Number(row.daysFrom) : null,
-      lastSecurityProfileCanGetMasooliat: row.lastSecurityProfileCanGetMasooliat != null ? Number(row.lastSecurityProfileCanGetMasooliat) : null,
-      isApprovedRow: row.isApprovedRow != null ? Number(row.isApprovedRow) : null,
-      interviewOn: row.interviewOn ? trim25(row.interviewOn) : null,
-      interviewFinalResult: row.interviewFinalResult ? trim25(row.interviewFinalResult) : null,
-      roleId: row.roleId ? trim25(row.roleId) : null,
-      passedNecessaryDorat: row.passedNecessaryDorat === true || row.passedNecessaryDorat === 1,
-      interviewFinalResultTitle: row.interviewFinalResultTitle ? trim25(row.interviewFinalResultTitle) : null,
-      profilePerfect: row.profilePerfect != null ? Number(row.profilePerfect) : null,
-      allImagesApproved: row.allImagesApproved === true || row.allImagesApproved === 1,
-      hasOath: row.hasOath === true || row.hasOath === 1,
+      genderId: row.gender_id ? trim26(row.gender_id) : null,
+      roleOfTarshih: row.role_of_tarshih ? trim26(row.role_of_tarshih) : null,
+      areaOfTarshih: row.area_of_tarshih ? String(row.area_of_tarshih) : null,
+      dateOfTarshih: row.date_of_tarshih ? trim26(row.date_of_tarshih) : null,
+      moarasshehOfTarshih: row.moarassheh_of_tarshih ? trim26(row.moarassheh_of_tarshih) : null,
+      passedDoratHtml: row.passed_dorat_html ? String(row.passed_dorat_html) : null,
+      areaId: row.area_id ? trim26(row.area_id) : null,
+      necessaryDoratPassed: row.necessary_dorat_passed === true || row.necessary_dorat_passed === 1,
+      daysFrom: row.days_from != null ? Number(row.days_from) : null,
+      lastSecurityProfileCanGetMasooliat: row.last_security_profile_can_get_masooliat != null ? Number(row.last_security_profile_can_get_masooliat) : null,
+      isApprovedRow: row.is_approved_row != null ? Number(row.is_approved_row) : null,
+      interviewOn: row.interview_on ? trim26(row.interview_on) : null,
+      interviewFinalResult: row.interview_final_result ? trim26(row.interview_final_result) : null,
+      roleId: row.role_id ? trim26(row.role_id) : null,
+      passedNecessaryDorat: row.passed_necessary_dorat === true || row.passed_necessary_dorat === 1,
+      interviewFinalResultTitle: row.interview_final_result_title ? trim26(row.interview_final_result_title) : null,
+      profilePerfect: row.profile_perfect != null ? Number(row.profile_perfect) : null,
+      allImagesApproved: row.all_images_approved === true || row.all_images_approved === 1,
+      hasOath: row.has_oath === true || row.has_oath === 1,
       ...(() => {
         const passthrough2 = {};
         for (const key of [
@@ -261774,7 +263146,7 @@ var init_hwyCandidatePipeline_service = __esm({
         ]) {
           const raw = row[key];
           if (raw !== null && raw !== void 0 && String(raw).trim() !== "") {
-            passthrough2[key] = trim25(String(raw));
+            passthrough2[key] = trim26(String(raw));
           }
         }
         return passthrough2;
@@ -261788,7 +263160,7 @@ var init_hwyCandidatePipeline_service = __esm({
       }
       const asRecords = rows;
       for (const row of asRecords) {
-        delete row.electoralDivisionPath;
+        delete row.electoral_division_path;
         delete row.electoral_division_path;
       }
       await enrichHwyMemberDirectoryListRows(asRecords, queryLang, {
@@ -261814,22 +263186,22 @@ var init_hwyCandidatePipeline_service = __esm({
       const geo = await resolveHwyLegacyOperatorGeoScope(actorUsername2, roleNames);
       return {
         stage: input.stage,
-        list_type: trim25(input.listType) || null,
-        role_id: trim25(input.roleId) || null,
-        is_approved: trim25(input.isApproved) || null,
-        approve_state: trim25(input.approveState) || null,
-        passed_or_not: trim25(input.passedOrNot) || null,
-        interview_approve_state: trim25(input.interviewApproveState) || null,
+        list_type: trim26(input.listType) || null,
+        role_id: trim26(input.roleId) || null,
+        is_approved: trim26(input.isApproved) || null,
+        approve_state: trim26(input.approveState) || null,
+        passed_or_not: trim26(input.passedOrNot) || null,
+        interview_approve_state: trim26(input.interviewApproveState) || null,
         scope_unrestricted: geo.unrestricted ? 1 : 0,
         nakheb_province_id: input.nakhebProvinceId ? Number(input.nakhebProvinceId) : null,
         nakheb_circle_id: input.nakhebCircleId ? Number(input.nakhebCircleId) : null,
         nakheb_tamvin_id: input.nakhebTamvinId ? Number(input.nakhebTamvinId) : null,
-        date_start: trim25(input.dateStart) || null,
-        date_end: trim25(input.dateEnd) || null,
-        username: trim25(input.username) || null,
-        phone: trim25(input.phone) || null,
-        gender_id: trim25(input.genderId) || null,
-        actor_user_name: trim25(input.actorUserName) || null,
+        date_start: trim26(input.dateStart) || null,
+        date_end: trim26(input.dateEnd) || null,
+        username: trim26(input.username) || null,
+        phone: trim26(input.phone) || null,
+        gender_id: trim26(input.genderId) || null,
+        actor_user_name: trim26(input.actorUserName) || null,
         area_limit_id: geo.unrestricted ? null : geo.areaLimitId,
         geo_limits_csv: geo.unrestricted ? null : geo.geoLimitsCsv
       };
@@ -261839,7 +263211,7 @@ var init_hwyCandidatePipeline_service = __esm({
       await assertHwyCandidatePipelineStageAccess(input.stage, roleNames);
       await ensureHwyDbObjects();
       const { page, pageSize, offset } = clampPage6(input.page, input.pageSize, input.stage);
-      const queryLang = trim25(input.queryLang) || "ar";
+      const queryLang = trim26(input.queryLang) || "ar";
       const procBase = await buildProcBase(input, roleNames, actorUsername2);
       if (!await hwyLegacyImportParityReady()) {
         const whereInput = toCandidatePipelineWhereInput(procBase, input.stage);
@@ -261869,8 +263241,8 @@ var init_hwyCandidatePipeline_service = __esm({
       assertSqlServer13();
       await assertHwyCandidatePipelineStageAccess("install", roleNames);
       await ensureHwyDbObjects();
-      const memberId = trim25(input.memberId);
-      const areaId = trim25(input.areaId);
+      const memberId = trim26(input.memberId);
+      const areaId = trim26(input.areaId);
       if (!memberId || !areaId) {
         throw new Error("memberId and areaId are required.");
       }
@@ -261878,28 +263250,28 @@ var init_hwyCandidatePipeline_service = __esm({
       await execHwyProcedure(procName, {
         member_id: Number(memberId),
         area_id: Number(areaId),
-        actor: trim25(input.actorUsername) || null
+        actor: trim26(input.actorUsername) || null
       });
     };
     applyHwyCandidatePipelineSecurityRecord = async (input, roleNames) => {
       assertSqlServer13();
       await assertHwyCandidatePipelineStageAccess("security", roleNames);
       await ensureHwyDbObjects();
-      const memberId = trim25(input.memberId);
+      const memberId = trim26(input.memberId);
       if (!memberId) {
         throw new Error("memberId is required.");
       }
       await execHwyProcedure("hwy_candidate_pipeline_security_record", {
         member_id: Number(memberId),
         can_get_identity_card: input.canGetIdentityCard,
-        can_get_identity_card_note: trim25(input.canGetIdentityCardNote) || null,
+        can_get_identity_card_note: trim26(input.canGetIdentityCardNote) || null,
         can_get_masooliat: input.canGetMasooliat,
-        can_get_masooliat_note: trim25(input.canGetMasooliatNote) || null,
+        can_get_masooliat_note: trim26(input.canGetMasooliatNote) || null,
         can_be_member_of_aammeh: input.canBeMemberOfAammeh,
-        can_be_member_of_aammeh_note: trim25(input.canBeMemberOfAammehNote) || null,
+        can_be_member_of_aammeh_note: trim26(input.canBeMemberOfAammehNote) || null,
         allows_responsibility: input.allowsResponsibility,
-        allows_responsibility_note: trim25(input.allowsResponsibilityNote) || null,
-        actor: trim25(input.actorUsername) || null
+        allows_responsibility_note: trim26(input.allowsResponsibilityNote) || null,
+        actor: trim26(input.actorUsername) || null
       });
     };
   }
@@ -262006,7 +263378,7 @@ var init_hwyCardFlowAccess_service = __esm({
 });
 
 // src/server/domain/hwy/hwyCardFlow.service.ts
-var DEFAULT_PAGE_SIZE11, MAX_PAGE_SIZE11, trim26, execLegacyCardFlowRecalcCanStart, assertSqlServer14, clampPage7, mapRow14, mapHistoryRow, buildListProcBase, listHwyCardFlow, applyHwyCardFlowStep, applyHwyCardFlowSecurityRecord;
+var DEFAULT_PAGE_SIZE11, MAX_PAGE_SIZE11, trim27, execLegacyCardFlowRecalcCanStart, assertSqlServer14, clampPage7, mapRow14, mapHistoryRow, buildListProcBase, listHwyCardFlow, applyHwyCardFlowStep, applyHwyCardFlowSecurityRecord;
 var init_hwyCardFlow_service = __esm({
   "src/server/domain/hwy/hwyCardFlow.service.ts"() {
     init_prismaHelpers();
@@ -262018,11 +263390,11 @@ var init_hwyCardFlow_service = __esm({
     init_hwyLegacyOperatorGeoScope_service();
     DEFAULT_PAGE_SIZE11 = 25;
     MAX_PAGE_SIZE11 = 100;
-    trim26 = (v) => String(v ?? "").trim();
+    trim27 = (value) => String(value ?? "").trim();
     execLegacyCardFlowRecalcCanStart = async () => {
       const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-      const sql22 = await import("mssql");
-      const pool = await new sql22.ConnectionPool(readLegacyConn2()).connect();
+      const sql23 = await import("mssql");
+      const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
       try {
         await pool.request().query("EXEC dbo.HWY_SP_Members_CalcStats2 NULL");
       } finally {
@@ -262040,48 +263412,48 @@ var init_hwyCardFlow_service = __esm({
       return { page: safePage, pageSize: safePageSize, offset: (safePage - 1) * safePageSize };
     };
     mapRow14 = (row) => ({
-      id: trim26(row.id),
-      username: row.username ? trim26(row.username) : null,
-      firstName: row.firstName ? trim26(row.firstName) : null,
-      fatherName: row.fatherName ? trim26(row.fatherName) : null,
-      grandFatherName: row.grandFatherName ? trim26(row.grandFatherName) : null,
-      lastName: row.lastName ? trim26(row.lastName) : null,
-      phone1: row.phone1 ? trim26(row.phone1) : null,
-      genderId: row.genderId ? trim26(row.genderId) : null,
-      cardFlowLastStatusId: row.cardFlowLastStatusId ? trim26(row.cardFlowLastStatusId) : null,
-      cardFlowStartedOn: row.cardFlowStartedOn ? trim26(row.cardFlowStartedOn) : null,
-      cardFlowVisibility: row.cardFlowVisibility === true || row.cardFlowVisibility === 1,
-      latestStepId: row.latestStepId ? trim26(row.latestStepId) : null,
-      lastCanGetIdentityCard: row.lastCanGetIdentityCard != null ? Number(row.lastCanGetIdentityCard) : null,
-      nakhebJoinProvinceName: row.nakhebJoinProvinceName ? trim26(row.nakhebJoinProvinceName) : null,
-      nakhebJoinCircleName: row.nakhebJoinCircleName ? trim26(row.nakhebJoinCircleName) : null,
-      nakhebJoinTamvinName: row.nakhebJoinTamvinName ? trim26(row.nakhebJoinTamvinName) : null,
-      lastSecurityProfileCanGetIdentityCard: row.lastSecurityProfileCanGetIdentityCard != null ? Number(row.lastSecurityProfileCanGetIdentityCard) : row.lastCanGetIdentityCard != null ? Number(row.lastCanGetIdentityCard) : null,
-      statFieldsCompleted: row.statFieldsCompleted != null ? Number(row.statFieldsCompleted) : null
+      id: trim27(row.id),
+      username: row.username ? trim27(row.username) : null,
+      firstName: row.first_name ? trim27(row.first_name) : null,
+      fatherName: row.father_name ? trim27(row.father_name) : null,
+      grandFatherName: row.grand_father_name ? trim27(row.grand_father_name) : null,
+      lastName: row.last_name ? trim27(row.last_name) : null,
+      phone1: row.phone1 ? trim27(row.phone1) : null,
+      genderId: row.gender_id ? trim27(row.gender_id) : null,
+      cardFlowLastStatusId: row.card_flow_last_status_id ? trim27(row.card_flow_last_status_id) : null,
+      cardFlowStartedOn: row.card_flow_started_on ? trim27(row.card_flow_started_on) : null,
+      cardFlowVisibility: row.card_flow_visibility === true || row.card_flow_visibility === 1,
+      latestStepId: row.latest_step_id ? trim27(row.latest_step_id) : null,
+      lastCanGetIdentityCard: row.last_can_get_identity_card != null ? Number(row.last_can_get_identity_card) : null,
+      nakhebJoinProvinceName: row.nakheb_join_province_name ? trim27(row.nakheb_join_province_name) : null,
+      nakhebJoinCircleName: row.nakheb_join_circle_name ? trim27(row.nakheb_join_circle_name) : null,
+      nakhebJoinTamvinName: row.nakheb_join_tamvin_name ? trim27(row.nakheb_join_tamvin_name) : null,
+      lastSecurityProfileCanGetIdentityCard: row.last_security_profile_can_get_identity_card != null ? Number(row.last_security_profile_can_get_identity_card) : row.last_can_get_identity_card != null ? Number(row.last_can_get_identity_card) : null,
+      statFieldsCompleted: row.stat_fields_completed != null ? Number(row.stat_fields_completed) : null
     });
     mapHistoryRow = (row) => ({
-      id: trim26(row.id),
-      memberId: row.memberId ? trim26(row.memberId) : null,
-      rfid: row.rfid ? trim26(row.rfid) : null,
-      typeId: row.typeId ? trim26(row.typeId) : null,
-      typeTitle: row.typeTitle ? trim26(row.typeTitle) : null,
-      expirationDate: row.expirationDate ? trim26(row.expirationDate) : null,
-      createdBy: row.createdBy ? trim26(row.createdBy) : null,
-      createdOn: row.createdOn ? trim26(row.createdOn) : null,
-      username: row.username ? trim26(row.username) : null,
-      firstName: row.firstName ? trim26(row.firstName) : null,
-      fatherName: row.fatherName ? trim26(row.fatherName) : null,
-      lastName: row.lastName ? trim26(row.lastName) : null
+      id: trim27(row.id),
+      memberId: row.member_id ? trim27(row.member_id) : null,
+      rfid: row.rfid ? trim27(row.rfid) : null,
+      typeId: row.type_id ? trim27(row.type_id) : null,
+      typeTitle: row.type_title ? trim27(row.type_title) : null,
+      expirationDate: row.expiration_date ? trim27(row.expiration_date) : null,
+      createdBy: row.created_by ? trim27(row.created_by) : null,
+      createdOn: row.created_on ? trim27(row.created_on) : null,
+      username: row.username ? trim27(row.username) : null,
+      firstName: row.first_name ? trim27(row.first_name) : null,
+      fatherName: row.father_name ? trim27(row.father_name) : null,
+      lastName: row.last_name ? trim27(row.last_name) : null
     });
     buildListProcBase = async (input, roleNames, actorUsername2) => {
       const geo = await resolveHwyLegacyOperatorGeoScope(actorUsername2, roleNames);
       return {
         step: input.step,
-        list_type: trim26(input.listType) || null,
-        visibility: trim26(input.visibility) || null,
-        role_id: trim26(input.roleId) || null,
-        username: trim26(input.username) || null,
-        phone: trim26(input.phone) || null,
+        list_type: trim27(input.listType) || null,
+        visibility: trim27(input.visibility) || null,
+        role_id: trim27(input.roleId) || null,
+        username: trim27(input.username) || null,
+        phone: trim27(input.phone) || null,
         scope_unrestricted: geo.unrestricted ? 1 : 0,
         area_limit_id: geo.unrestricted ? null : geo.areaLimitId,
         geo_limits_csv: geo.unrestricted ? null : geo.geoLimitsCsv,
@@ -262098,7 +263470,7 @@ var init_hwyCardFlow_service = __esm({
       const { page, pageSize, offset } = clampPage7(input.page, input.pageSize);
       const edgeReady = await hwyLegacyImportParityReady();
       if (input.step === "printed-history") {
-        const username = trim26(input.username) || null;
+        const username = trim27(input.username) || null;
         if (!edgeReady) {
           const total3 = await queryLegacyCardFlowPrintedHistoryCount(username);
           const legacyRows = await queryLegacyCardFlowPrintedHistoryList(username, offset, pageSize);
@@ -262159,7 +263531,7 @@ var init_hwyCardFlow_service = __esm({
         await assertHwyCardFlowStepAccess(input.step, roleNames);
       }
       await ensureHwyDbObjects();
-      const memberId = trim26(input.memberId);
+      const memberId = trim27(input.memberId);
       if (input.action !== "recalc-can-start" && !memberId) {
         throw new Error("memberId is required.");
       }
@@ -262174,30 +263546,30 @@ var init_hwyCardFlow_service = __esm({
         step: input.step,
         action: input.action,
         member_id: memberId ? Number(memberId) : null,
-        actor: trim26(input.actorUsername) || null,
+        actor: trim27(input.actorUsername) || null,
         reason_id: input.reasonId ? Number(input.reasonId) : null,
-        note: trim26(input.note) || null
+        note: trim27(input.note) || null
       });
     };
     applyHwyCardFlowSecurityRecord = async (input, roleNames) => {
       assertSqlServer14();
       await assertHwyCardFlowStepAccess("security", roleNames);
       await ensureHwyDbObjects();
-      const memberId = trim26(input.memberId);
+      const memberId = trim27(input.memberId);
       if (!memberId) {
         throw new Error("memberId is required.");
       }
       await execHwyProcedure("hwy_candidate_pipeline_security_record", {
         member_id: Number(memberId),
         can_get_identity_card: input.canGetIdentityCard,
-        can_get_identity_card_note: trim26(input.canGetIdentityCardNote) || null,
+        can_get_identity_card_note: trim27(input.canGetIdentityCardNote) || null,
         can_get_masooliat: input.canGetMasooliat,
-        can_get_masooliat_note: trim26(input.canGetMasooliatNote) || null,
+        can_get_masooliat_note: trim27(input.canGetMasooliatNote) || null,
         can_be_member_of_aammeh: input.canBeMemberOfAammeh,
-        can_be_member_of_aammeh_note: trim26(input.canBeMemberOfAammehNote) || null,
+        can_be_member_of_aammeh_note: trim27(input.canBeMemberOfAammehNote) || null,
         allows_responsibility: input.allowsResponsibility,
-        allows_responsibility_note: trim26(input.allowsResponsibilityNote) || null,
-        actor: trim26(input.actorUsername) || null
+        allows_responsibility_note: trim27(input.allowsResponsibilityNote) || null,
+        actor: trim27(input.actorUsername) || null
       });
     };
   }
@@ -262456,6 +263828,659 @@ var init_hwyEmployeesListAccess_middleware = __esm({
   }
 });
 
+// src/domain/hwy/hwyPaymentDocuments.ts
+var init_hwyPaymentDocuments = __esm({
+  "src/domain/hwy/hwyPaymentDocuments.ts"() {
+    init_hwyEnvelopeApi();
+  }
+});
+
+// src/domain/hwy/hwyPaymentDocumentsLegacyAccess.ts
+var HWY_PAYMENT_DOCUMENTS_LEGACY_READ, buildHwyPaymentDocumentsPortalAllowRoles, buildHwyPaymentDocumentsLegacyScopeWhere, buildHwyPaymentDocumentsLegacyFilterWhere, buildHwyPaymentDocumentsProcParams;
+var init_hwyPaymentDocumentsLegacyAccess = __esm({
+  "src/domain/hwy/hwyPaymentDocumentsLegacyAccess.ts"() {
+    init_hwyMemberListLegacyAccess();
+    init_hwyPaymentDocuments();
+    HWY_PAYMENT_DOCUMENTS_LEGACY_READ = {
+      controller: "HWY_PaymentDocuments",
+      method: "Read_List"
+    };
+    buildHwyPaymentDocumentsPortalAllowRoles = (rolesByAction) => {
+      const roles = rolesByAction.get(legacyHwyActionKey(HWY_PAYMENT_DOCUMENTS_LEGACY_READ)) ?? [];
+      return buildHwyMemberListRouteAllowRoles(roles);
+    };
+    buildHwyPaymentDocumentsLegacyScopeWhere = (input, tableAlias = "D") => {
+      if (input.scopeUnrestricted) return "";
+      if (input.areaLimitId === 111321) return "";
+      const geo = String(input.geoLimitsCsv ?? "").trim();
+      const gender = String(input.genderLimitsCsv ?? "").trim();
+      if (!geo || !gender) {
+        return " AND (1=0)";
+      }
+      if (input.areaLimitId === 111322) {
+        return ` AND (${tableAlias}.DocProvinceId IN (${geo}) AND ${tableAlias}.DocGenderId IN (${gender}))`;
+      }
+      if (input.areaLimitId === 111325) {
+        return ` AND (${tableAlias}.DocCircleId IN (${geo}) AND ${tableAlias}.DocGenderId IN (${gender}))`;
+      }
+      return " AND (1=0)";
+    };
+    buildHwyPaymentDocumentsLegacyFilterWhere = (input, tableAlias = "D") => {
+      let where = "";
+      const year = String(input.docYear ?? "").trim();
+      if (year && /^\d{4}$/.test(year)) {
+        where += ` AND ${tableAlias}.doc_year = ${Number(year)}`;
+      }
+      const month = String(input.docMonth ?? "").trim();
+      if (month && /^\d{1,2}$/.test(month)) {
+        where += ` AND ${tableAlias}.doc_month = ${Number(month)}`;
+      }
+      const provinceId = String(input.docProvinceId ?? "").trim();
+      if (provinceId && /^\d+$/.test(provinceId)) {
+        where += ` AND ${tableAlias}.doc_province_id = ${Number(provinceId)}`;
+      }
+      const circleId = String(input.docCircleId ?? "").trim();
+      if (circleId && /^\d+$/.test(circleId)) {
+        where += ` AND ${tableAlias}.doc_circle_id = ${Number(circleId)}`;
+      }
+      const genderId = String(input.docGenderId ?? "").trim();
+      if (genderId && /^\d+$/.test(genderId)) {
+        where += ` AND ${tableAlias}.doc_gender_id = ${Number(genderId)}`;
+      }
+      const vFinalOk = String(input.vFinalOk ?? "").trim();
+      if (vFinalOk === "0" || vFinalOk === "1") {
+        where += ` AND ISNULL(${tableAlias}.final_ok, 0) = ${vFinalOk === "1" ? 1 : 0}`;
+      }
+      const vClosed = String(input.vClosed ?? "").trim();
+      if (vClosed === "0" || vClosed === "1") {
+        where += ` AND ISNULL(${tableAlias}.closed, 0) = ${vClosed === "1" ? 1 : 0}`;
+      }
+      return where;
+    };
+    buildHwyPaymentDocumentsProcParams = (input) => {
+      const pageSize = Math.min(100, Math.max(1, input.pageSize ?? 25));
+      const page = Math.max(1, input.page ?? 1);
+      return { offset: (page - 1) * pageSize, page_size: pageSize };
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyPaymentDocumentsAccess.service.ts
+async function resolveHwyPaymentDocumentsAllowRoles() {
+  const now = Date.now();
+  if (portalRolesCache5 && now - portalRolesCache5.loadedAt < CACHE_MS5) {
+    return portalRolesCache5.roles;
+  }
+  try {
+    const pool = await connectLegacyReadPool();
+    let byAction;
+    try {
+      byAction = await fetchLegacyPlatformRolesByAction(pool, [HWY_PAYMENT_DOCUMENTS_LEGACY_READ]);
+    } finally {
+      await pool.close();
+    }
+    const roles = buildHwyPaymentDocumentsPortalAllowRoles(byAction);
+    portalRolesCache5 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+    return portalRolesCache5.roles;
+  } catch {
+    return ["ADMIN"];
+  }
+}
+async function assertHwyPaymentDocumentsAccess(roleNames) {
+  if (roleNames.includes("ADMIN")) return;
+  const allowed = await resolveHwyPaymentDocumentsAllowRoles();
+  if (allowed.some((role) => roleNames.includes(role))) return;
+  throw new Error("Forbidden.");
+}
+var CACHE_MS5, portalRolesCache5;
+var init_hwyPaymentDocumentsAccess_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocumentsAccess.service.ts"() {
+    init_legacyHwyRoleAuth();
+    init_hwyPaymentDocumentsLegacyAccess();
+    CACHE_MS5 = 3e4;
+    portalRolesCache5 = null;
+  }
+});
+
+// src/server/middleware/hwyPaymentDocumentsAccess.middleware.ts
+var requireHwyPaymentDocumentsAccess;
+var init_hwyPaymentDocumentsAccess_middleware = __esm({
+  "src/server/middleware/hwyPaymentDocumentsAccess.middleware.ts"() {
+    init_hwyPaymentDocumentsAccess_service();
+    init_auth_middleware();
+    requireHwyPaymentDocumentsAccess = (req, res, next) => {
+      void (async () => {
+        try {
+          const authRoles = normalizeAuthRoles(req);
+          if (authRoles.length === 0) {
+            res.status(401).json({ success: false, error: "Unauthorized." });
+            return;
+          }
+          const allowed = await resolveHwyPaymentDocumentsAllowRoles();
+          if (!allowed.some((role) => authRoles.includes(role))) {
+            res.status(403).json({ success: false, message: "Forbidden." });
+            return;
+          }
+          next();
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "Access check failed.";
+          if (!res.headersSent) {
+            res.status(500).json({ success: false, message });
+          }
+        }
+      })();
+    };
+  }
+});
+
+// src/domain/hwy/hwyPaymentDocumentsMembers.ts
+var init_hwyPaymentDocumentsMembers = __esm({
+  "src/domain/hwy/hwyPaymentDocumentsMembers.ts"() {
+    init_hwyEnvelopeApi();
+  }
+});
+
+// src/domain/hwy/hwyPaymentDocumentsMembersLegacyAccess.ts
+var HWY_PAYMENT_DOCUMENTS_MEMBERS_LEGACY_READ, buildHwyPaymentDocumentsMembersPortalAllowRoles, memberScalar, buildHwyPaymentDocumentsMembersLegacyScopeWhere, escSqlLiteral, escLikeFragment, docScalar, buildHwyPaymentDocumentsMembersLegacyFilterWhere, buildHwyPaymentDocumentsMembersProcParams;
+var init_hwyPaymentDocumentsMembersLegacyAccess = __esm({
+  "src/domain/hwy/hwyPaymentDocumentsMembersLegacyAccess.ts"() {
+    init_hwyMemberListLegacyAccess();
+    init_hwyPaymentDocumentsMembers();
+    HWY_PAYMENT_DOCUMENTS_MEMBERS_LEGACY_READ = {
+      controller: "HWY_PaymentDocuments_Members",
+      method: "Read_List"
+    };
+    buildHwyPaymentDocumentsMembersPortalAllowRoles = (rolesByAction) => {
+      const roles = rolesByAction.get(legacyHwyActionKey(HWY_PAYMENT_DOCUMENTS_MEMBERS_LEGACY_READ)) ?? [];
+      return buildHwyMemberListRouteAllowRoles(roles);
+    };
+    memberScalar = (field3, tableAlias) => `(SELECT TOP 1 T.${field3} FROM dbo.vw_hwy_members_legacy_row T WITH (NOLOCK) WHERE T.id = ${tableAlias}.member_id)`;
+    buildHwyPaymentDocumentsMembersLegacyScopeWhere = (input, tableAlias = "V") => {
+      if (input.scopeUnrestricted) return "";
+      if (input.areaLimitId === 111321) return "";
+      const geo = String(input.geoLimitsCsv ?? "").trim();
+      const gender = String(input.genderLimitsCsv ?? "").trim();
+      if (!geo || !gender) {
+        return " AND (1=0)";
+      }
+      const province = memberScalar("nakheb_join_province_id", tableAlias);
+      const circle = memberScalar("nakheb_join_circle_id", tableAlias);
+      const genderId = memberScalar("gender_id", tableAlias);
+      if (input.areaLimitId === 111322) {
+        return ` AND (${province} IN (${geo}) AND ${genderId} IN (${gender}))`;
+      }
+      if (input.areaLimitId === 111325) {
+        return ` AND (${circle} IN (${geo}) AND ${genderId} IN (${gender}))`;
+      }
+      return " AND (1=0)";
+    };
+    escSqlLiteral = (value) => value.replace(/'/g, "''");
+    escLikeFragment = (value) => escSqlLiteral(value).replace(/[%_\[]/g, (ch) => `[${ch}]`);
+    docScalar = (field3, tableAlias) => `(SELECT TOP 1 T.${field3} FROM dbo.hwy_payment_documents T WITH (NOLOCK) WHERE T.id = ${tableAlias}.document_id)`;
+    buildHwyPaymentDocumentsMembersLegacyFilterWhere = (input, tableAlias = "V") => {
+      let where = "";
+      const roleId = String(input.roleId ?? "").trim();
+      if (roleId && /^\d+$/.test(roleId)) {
+        where += ` AND ${tableAlias}.role_id = ${Number(roleId)}`;
+      }
+      const vPayOk = String(input.vPayOk ?? "").trim();
+      if (vPayOk === "Ok") {
+        where += ` AND ISNULL(${tableAlias}.pay_ok, 0) = 1`;
+      } else if (vPayOk === "NotYet") {
+        where += ` AND ISNULL(${tableAlias}.pay_ok, 0) = 0`;
+      }
+      const year = String(input.docYear ?? "").trim();
+      if (year && /^\d{4}$/.test(year)) {
+        where += ` AND ${docScalar("doc_year", tableAlias)} = ${Number(year)}`;
+      }
+      const month = String(input.docMonth ?? "").trim();
+      if (month && /^\d{1,2}$/.test(month)) {
+        where += ` AND ${docScalar("doc_month", tableAlias)} = ${Number(month)}`;
+      }
+      if (String(input.hideZeroAmounts ?? "").trim() === "1") {
+        where += ` AND ISNULL(${tableAlias}.pay_amount, 0) > 0`;
+      }
+      const username = String(input.username ?? "").trim();
+      if (username) {
+        where += ` AND ${memberScalar("UserName", tableAlias)} = '${escSqlLiteral(username)}'`;
+      }
+      const phone = String(input.phone ?? "").trim();
+      if (phone) {
+        where += ` AND ${memberScalar("Phone1", tableAlias)} = '${escSqlLiteral(phone)}'`;
+      }
+      const likeField = (param, field3) => {
+        const raw = String(param ?? "").trim();
+        if (!raw) return;
+        where += ` AND ${memberScalar(field3, tableAlias)} LIKE N'%${escLikeFragment(raw)}%'`;
+      };
+      likeField(input.firstName, "FirstName");
+      likeField(input.fatherName, "FatherName");
+      likeField(input.grandFatherName, "GrandFatherName");
+      likeField(input.lastName, "LastName");
+      const birthYear = String(input.birthYear ?? "").trim();
+      if (birthYear && /^\d+$/.test(birthYear)) {
+        where += ` AND ${memberScalar("BirthYear", tableAlias)} = ${Number(birthYear)}`;
+      }
+      const genderId = String(input.genderId ?? "").trim();
+      if (genderId && genderId !== "-1" && /^\d+$/.test(genderId)) {
+        where += ` AND ${memberScalar("gender_id", tableAlias)} = ${Number(genderId)}`;
+      }
+      const provinceId = String(input.nakhebJoinProvinceId ?? "").trim();
+      if (provinceId && provinceId !== "-1" && /^\d+$/.test(provinceId)) {
+        where += ` AND ${memberScalar("nakheb_join_province_id", tableAlias)} = ${Number(provinceId)}`;
+      }
+      const circleId = String(input.nakhebJoinCircleId ?? "").trim();
+      if (circleId && circleId !== "-1" && /^\d+$/.test(circleId)) {
+        where += ` AND ${memberScalar("nakheb_join_circle_id", tableAlias)} = ${Number(circleId)}`;
+      }
+      const tamvinId = String(input.nakhebJoinTamvinId ?? "").trim();
+      if (tamvinId && tamvinId !== "-1" && /^\d+$/.test(tamvinId)) {
+        where += ` AND ${memberScalar("nakheb_join_tamvin_id", tableAlias)} = ${Number(tamvinId)}`;
+      }
+      const fullId = String(input.vFullId ?? "").trim();
+      if (fullId) {
+        where += ` AND (ISNULL(${tableAlias}.nb_device_os, '') + ISNULL(${tableAlias}.nb_device_id, '')) = '${escSqlLiteral(fullId)}'`;
+      }
+      const sameDevice = String(input.vSameDeviceCount ?? "0").trim();
+      if (sameDevice === "1") {
+        where += ` AND ISNULL(${tableAlias}.SameDeviceCount, 0) > 0`;
+      }
+      return where;
+    };
+    buildHwyPaymentDocumentsMembersProcParams = (input) => {
+      const pageSize = Math.min(100, Math.max(1, input.pageSize ?? 25));
+      const page = Math.max(1, input.page ?? 1);
+      return { offset: (page - 1) * pageSize, page_size: pageSize };
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyPaymentDocumentsMembersAccess.service.ts
+async function resolveHwyPaymentDocumentsMembersAllowRoles() {
+  const now = Date.now();
+  if (portalRolesCache6 && now - portalRolesCache6.loadedAt < CACHE_MS6) {
+    return portalRolesCache6.roles;
+  }
+  try {
+    const pool = await connectLegacyReadPool();
+    let byAction;
+    try {
+      byAction = await fetchLegacyPlatformRolesByAction(pool, [HWY_PAYMENT_DOCUMENTS_MEMBERS_LEGACY_READ]);
+    } finally {
+      await pool.close();
+    }
+    const roles = buildHwyPaymentDocumentsMembersPortalAllowRoles(byAction);
+    portalRolesCache6 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+    return portalRolesCache6.roles;
+  } catch {
+    return ["ADMIN"];
+  }
+}
+async function assertHwyPaymentDocumentsMembersAccess(roleNames) {
+  if (roleNames.includes("ADMIN")) return;
+  const allowed = await resolveHwyPaymentDocumentsMembersAllowRoles();
+  if (allowed.some((role) => roleNames.includes(role))) return;
+  throw new Error("Forbidden.");
+}
+var CACHE_MS6, portalRolesCache6;
+var init_hwyPaymentDocumentsMembersAccess_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocumentsMembersAccess.service.ts"() {
+    init_legacyHwyRoleAuth();
+    init_hwyPaymentDocumentsMembersLegacyAccess();
+    CACHE_MS6 = 3e4;
+    portalRolesCache6 = null;
+  }
+});
+
+// src/server/middleware/hwyPaymentDocumentsMembersAccess.middleware.ts
+var requireHwyPaymentDocumentsMembersAccess;
+var init_hwyPaymentDocumentsMembersAccess_middleware = __esm({
+  "src/server/middleware/hwyPaymentDocumentsMembersAccess.middleware.ts"() {
+    init_hwyPaymentDocumentsMembersAccess_service();
+    init_auth_middleware();
+    requireHwyPaymentDocumentsMembersAccess = (req, res, next) => {
+      void (async () => {
+        try {
+          const authRoles = normalizeAuthRoles(req);
+          if (authRoles.length === 0) {
+            res.status(401).json({ success: false, error: "Unauthorized." });
+            return;
+          }
+          const allowed = await resolveHwyPaymentDocumentsMembersAllowRoles();
+          if (!allowed.some((role) => authRoles.includes(role))) {
+            res.status(403).json({ success: false, message: "Forbidden." });
+            return;
+          }
+          next();
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "Access check failed.";
+          if (!res.headersSent) {
+            res.status(500).json({ success: false, message });
+          }
+        }
+      })();
+    };
+  }
+});
+
+// src/domain/hwy/hwyMasoolinPerformance.ts
+var init_hwyMasoolinPerformance = __esm({
+  "src/domain/hwy/hwyMasoolinPerformance.ts"() {
+    init_hwyEnvelopeApi();
+  }
+});
+
+// src/domain/hwy/hwyMasoolinPerformanceLegacyAccess.ts
+var HWY_MASOOLIN_PERFORMANCE_LEGACY_READ, HWY_MASOOLIN_PERFORMANCE_LEGACY_SET_MAIN_PAYABLE, buildHwyMasoolinPerformancePortalAllowRoles, intOrZero, strOrDefault, buildHwyMasoolinPerformanceProcParams, buildHwyMasoolinPerformanceExecReplacements, formatHwyMasoolinPerformanceProcSql;
+var init_hwyMasoolinPerformanceLegacyAccess = __esm({
+  "src/domain/hwy/hwyMasoolinPerformanceLegacyAccess.ts"() {
+    init_hwyMemberListLegacyAccess();
+    init_hwyMasoolinPerformance();
+    HWY_MASOOLIN_PERFORMANCE_LEGACY_READ = {
+      controller: "HWY_Members",
+      method: "Read_MasoolinPerformance"
+    };
+    HWY_MASOOLIN_PERFORMANCE_LEGACY_SET_MAIN_PAYABLE = {
+      controller: "HWY_Members",
+      method: "Update_SetAsMainPayable"
+    };
+    buildHwyMasoolinPerformancePortalAllowRoles = (rolesByAction) => {
+      const roles = rolesByAction.get(legacyHwyActionKey(HWY_MASOOLIN_PERFORMANCE_LEGACY_READ)) ?? [];
+      return buildHwyMemberListRouteAllowRoles(roles);
+    };
+    intOrZero = (value) => {
+      const trimmed = String(value ?? "").trim();
+      if (!trimmed || !/^-?\d+$/.test(trimmed)) return 0;
+      return Number(trimmed);
+    };
+    strOrDefault = (value, fallback) => {
+      const trimmed = String(value ?? "").trim();
+      return trimmed || fallback;
+    };
+    buildHwyMasoolinPerformanceProcParams = (input, context) => {
+      const selectedProvinces = String(input.selectedProvinces ?? "").trim() || "0";
+      return {
+        userProfileId: Math.max(0, Math.floor(context.userProfileId)),
+        isAdmin: context.isAdmin ? 1 : 0,
+        selectedProvinces,
+        circleId: intOrZero(input.circleId),
+        tamvinId: intOrZero(input.tamvinId),
+        genderId: intOrZero(input.genderId),
+        roleId: intOrZero(input.roleId),
+        levelId1: intOrZero(input.bi1LevelId),
+        levelId2: intOrZero(input.bi2LevelId),
+        levelId3: intOrZero(input.bi3LevelId),
+        levelIdC: intOrZero(input.bicLevelId),
+        moneyAmount1: strOrDefault(input.moneyAmount1, "MoneyAmount1"),
+        moneyAmount2: strOrDefault(input.moneyAmount2, "MoneyAmount2"),
+        moneyAmount3: strOrDefault(input.moneyAmount3, "MoneyAmount3"),
+        userName: String(input.userName ?? "").trim(),
+        payable: String(input.chiefMasool ?? "").trim(),
+        confilictState: String(input.confilictState ?? "").trim() || "0",
+        sameRogheCount: String(input.sameRogheCount ?? "").trim()
+      };
+    };
+    buildHwyMasoolinPerformanceExecReplacements = (params) => ({
+      ActorId: params.userProfileId,
+      IsPublicKey: params.isAdmin,
+      SelectedProvinces: params.selectedProvinces,
+      CircleId: params.circleId,
+      TamvinId: params.tamvinId,
+      GenderId: params.genderId,
+      RoleId: params.roleId,
+      BI1LevelId: params.levelId1,
+      BI2LevelId: params.levelId2,
+      BI3LevelId: params.levelId3,
+      BICLevelId: params.levelIdC,
+      MoneyAmount1: params.moneyAmount1,
+      MoneyAmount2: params.moneyAmount2,
+      MoneyAmount3: params.moneyAmount3,
+      UserName: params.userName,
+      Payable: params.payable,
+      ConfilictState: params.confilictState,
+      SameRogheCount: params.sameRogheCount
+    });
+    formatHwyMasoolinPerformanceProcSql = (params) => {
+      const esc2 = (value) => value.replace(/'/g, "''");
+      return `EXEC [dbo].[HWY_SP_Masoolin_Performance] ${params.userProfileId},${params.isAdmin},'${esc2(params.selectedProvinces)}',${params.circleId},${params.tamvinId},${params.genderId},${params.roleId},${params.levelId1},${params.levelId2},${params.levelId3},${params.levelIdC},'${esc2(params.moneyAmount1)}','${esc2(params.moneyAmount2)}','${esc2(params.moneyAmount3)}','${esc2(params.userName)}','${esc2(params.payable)}','${esc2(params.confilictState)}','${esc2(params.sameRogheCount)}';`;
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyMasoolinPerformanceAccess.service.ts
+async function resolveHwyMasoolinPerformanceAllowRoles() {
+  const now = Date.now();
+  if (portalRolesCache7 && now - portalRolesCache7.loadedAt < CACHE_MS7) {
+    return portalRolesCache7.roles;
+  }
+  try {
+    const pool = await connectLegacyReadPool();
+    let byAction;
+    try {
+      byAction = await fetchLegacyPlatformRolesByAction(pool, [HWY_MASOOLIN_PERFORMANCE_LEGACY_READ]);
+    } finally {
+      await pool.close();
+    }
+    const roles = buildHwyMasoolinPerformancePortalAllowRoles(byAction);
+    portalRolesCache7 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+    return portalRolesCache7.roles;
+  } catch {
+    return ["ADMIN"];
+  }
+}
+async function assertHwyMasoolinPerformanceAccess(roleNames) {
+  if (roleNames.includes("ADMIN")) return;
+  const allowed = await resolveHwyMasoolinPerformanceAllowRoles();
+  if (allowed.some((role) => roleNames.includes(role))) return;
+  throw new Error("Forbidden.");
+}
+async function assertHwyMasoolinSetChiefMasoolAccess(roleNames) {
+  if (roleNames.includes("ADMIN")) return;
+  const now = Date.now();
+  if (!setChiefMasoolRolesCache || now - setChiefMasoolRolesCache.loadedAt >= CACHE_MS7) {
+    try {
+      const pool = await connectLegacyReadPool();
+      try {
+        const byAction = await fetchLegacyPlatformRolesByAction(pool, [
+          HWY_MASOOLIN_PERFORMANCE_LEGACY_SET_MAIN_PAYABLE
+        ]);
+        const roles = byAction.get(legacyHwyActionKey(HWY_MASOOLIN_PERFORMANCE_LEGACY_SET_MAIN_PAYABLE)) ?? [];
+        setChiefMasoolRolesCache = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+      } finally {
+        await pool.close();
+      }
+    } catch {
+      setChiefMasoolRolesCache = { roles: ["ADMIN"], loadedAt: now };
+    }
+  }
+  if (setChiefMasoolRolesCache.roles.some((role) => roleNames.includes(role))) return;
+  throw new Error("Forbidden.");
+}
+var CACHE_MS7, portalRolesCache7, setChiefMasoolRolesCache;
+var init_hwyMasoolinPerformanceAccess_service = __esm({
+  "src/server/domain/hwy/hwyMasoolinPerformanceAccess.service.ts"() {
+    init_legacyHwyRoleAuth();
+    init_hwyMasoolinPerformanceLegacyAccess();
+    init_hwyMemberListLegacyAccess();
+    CACHE_MS7 = 3e4;
+    portalRolesCache7 = null;
+    setChiefMasoolRolesCache = null;
+  }
+});
+
+// src/server/middleware/hwyMasoolinPerformanceAccess.middleware.ts
+var requireHwyMasoolinPerformanceAccess;
+var init_hwyMasoolinPerformanceAccess_middleware = __esm({
+  "src/server/middleware/hwyMasoolinPerformanceAccess.middleware.ts"() {
+    init_hwyMasoolinPerformanceAccess_service();
+    init_auth_middleware();
+    requireHwyMasoolinPerformanceAccess = (req, res, next) => {
+      void (async () => {
+        try {
+          const authRoles = normalizeAuthRoles(req);
+          if (authRoles.length === 0) {
+            res.status(401).json({ success: false, error: "Unauthorized." });
+            return;
+          }
+          const allowed = await resolveHwyMasoolinPerformanceAllowRoles();
+          if (!allowed.some((role) => authRoles.includes(role))) {
+            res.status(403).json({ success: false, message: "Forbidden." });
+            return;
+          }
+          next();
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "Access check failed.";
+          if (!res.headersSent) {
+            res.status(500).json({ success: false, message });
+          }
+        }
+      })();
+    };
+  }
+});
+
+// src/domain/hwy/hwyMembersSocialScreens.ts
+var init_hwyMembersSocialScreens = __esm({
+  "src/domain/hwy/hwyMembersSocialScreens.ts"() {
+    init_hwyEnvelopeApi();
+  }
+});
+
+// src/domain/hwy/hwyMembersSocialScreensLegacyAccess.ts
+var HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_NEXT_PERSON, HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_LIST, HWY_MEMBERS_SOCIAL_SCREENS_LIST_TYPES, buildHwyMembersSocialScreensPortalAllowRoles, intOrZero2, normalizeListType, normalizeMoveDir, buildHwyMembersSocialScreensNextPersonProcParams, formatHwyMembersSocialScreensNextPersonSql, HWY_MEMBERS_SOCIAL_SCREENS_HISTORY_MONTHS_SQL;
+var init_hwyMembersSocialScreensLegacyAccess = __esm({
+  "src/domain/hwy/hwyMembersSocialScreensLegacyAccess.ts"() {
+    init_hwyMemberListLegacyAccess();
+    init_hwyMembersSocialScreens();
+    HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_NEXT_PERSON = {
+      controller: "HWY_Members_SocialScreens",
+      method: "Read_NextPerson"
+    };
+    HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_LIST = {
+      controller: "HWY_Members_SocialScreens",
+      method: "Read_List"
+    };
+    HWY_MEMBERS_SOCIAL_SCREENS_LIST_TYPES = [
+      "ToDecide",
+      "Accepted",
+      "Rejected",
+      "OnGoing"
+    ];
+    buildHwyMembersSocialScreensPortalAllowRoles = (rolesByAction) => {
+      const nextRoles = rolesByAction.get(legacyHwyActionKey(HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_NEXT_PERSON)) ?? [];
+      const listRoles2 = rolesByAction.get(legacyHwyActionKey(HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_LIST)) ?? [];
+      const merged = /* @__PURE__ */ new Set([...nextRoles, ...listRoles2]);
+      return buildHwyMemberListRouteAllowRoles([...merged]);
+    };
+    intOrZero2 = (value) => {
+      const numeric = Number(value);
+      if (!Number.isFinite(numeric)) return 0;
+      return Math.trunc(numeric);
+    };
+    normalizeListType = (value) => {
+      const trimmed = String(value ?? "").trim();
+      return HWY_MEMBERS_SOCIAL_SCREENS_LIST_TYPES.includes(trimmed) ? trimmed : "ToDecide";
+    };
+    normalizeMoveDir = (value) => {
+      const trimmed = String(value ?? "").trim();
+      if (trimmed === "Next" || trimmed === "Prev") return trimmed;
+      return "";
+    };
+    buildHwyMembersSocialScreensNextPersonProcParams = (input, reviewerMemberId) => ({
+      y: Math.max(0, intOrZero2(input.y)),
+      m: Math.max(0, intOrZero2(input.m)),
+      listType: normalizeListType(input.listType),
+      currentMemberId: intOrZero2(input.currentMemberId) || -1,
+      provinceId: Math.max(0, intOrZero2(input.provinceId)),
+      genderId: Math.max(0, intOrZero2(input.genderId)),
+      userName: String(input.userName ?? "").trim(),
+      moveDir: normalizeMoveDir(input.moveDir),
+      reviewerMemberId: Math.max(0, intOrZero2(reviewerMemberId))
+    });
+    formatHwyMembersSocialScreensNextPersonSql = (params) => {
+      const esc2 = (value) => value.replace(/'/g, "''");
+      return `EXEC [dbo].[HWY_SP_Members_SocialScreens_GetNextToCheck] ${params.y},${params.m},'${esc2(params.listType)}',${params.currentMemberId},${params.provinceId},${params.genderId},'${esc2(params.userName)}','${esc2(params.moveDir)}',${params.reviewerMemberId};`;
+    };
+    HWY_MEMBERS_SOCIAL_SCREENS_HISTORY_MONTHS_SQL = `
+  SELECT YEAR(CreatedOn) AS Y, MONTH(CreatedOn) AS M
+  FROM dbo.HWY_Members_SocialScreens WITH (NOLOCK)
+  GROUP BY YEAR(CreatedOn), MONTH(CreatedOn)
+  ORDER BY YEAR(CreatedOn) DESC, MONTH(CreatedOn) DESC;
+`;
+  }
+});
+
+// src/server/domain/hwy/hwyMembersSocialScreensAccess.service.ts
+async function resolveHwyMembersSocialScreensAllowRoles() {
+  const now = Date.now();
+  if (portalRolesCache8 && now - portalRolesCache8.loadedAt < CACHE_MS8) {
+    return portalRolesCache8.roles;
+  }
+  try {
+    const pool = await connectLegacyReadPool();
+    let byAction;
+    try {
+      byAction = await fetchLegacyPlatformRolesByAction(pool, [
+        HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_NEXT_PERSON,
+        HWY_MEMBERS_SOCIAL_SCREENS_LEGACY_LIST
+      ]);
+    } finally {
+      await pool.close();
+    }
+    const roles = buildHwyMembersSocialScreensPortalAllowRoles(byAction);
+    portalRolesCache8 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+    return portalRolesCache8.roles;
+  } catch {
+    return ["ADMIN"];
+  }
+}
+async function assertHwyMembersSocialScreensAccess(roleNames) {
+  if (roleNames.includes("ADMIN")) return;
+  const allowed = await resolveHwyMembersSocialScreensAllowRoles();
+  if (allowed.some((role) => roleNames.includes(role))) return;
+  throw new Error("Forbidden.");
+}
+var CACHE_MS8, portalRolesCache8;
+var init_hwyMembersSocialScreensAccess_service = __esm({
+  "src/server/domain/hwy/hwyMembersSocialScreensAccess.service.ts"() {
+    init_legacyHwyRoleAuth();
+    init_hwyMembersSocialScreensLegacyAccess();
+    CACHE_MS8 = 3e4;
+    portalRolesCache8 = null;
+  }
+});
+
+// src/server/middleware/hwyMembersSocialScreensAccess.middleware.ts
+var requireHwyMembersSocialScreensAccess;
+var init_hwyMembersSocialScreensAccess_middleware = __esm({
+  "src/server/middleware/hwyMembersSocialScreensAccess.middleware.ts"() {
+    init_hwyMembersSocialScreensAccess_service();
+    init_auth_middleware();
+    requireHwyMembersSocialScreensAccess = (req, res, next) => {
+      void (async () => {
+        try {
+          const authRoles = normalizeAuthRoles(req);
+          if (authRoles.length === 0) {
+            res.status(401).json({ success: false, error: "Unauthorized." });
+            return;
+          }
+          const allowed = await resolveHwyMembersSocialScreensAllowRoles();
+          if (!allowed.some((role) => authRoles.includes(role))) {
+            res.status(403).json({ success: false, message: "Forbidden." });
+            return;
+          }
+          next();
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "Access check failed.";
+          if (!res.headersSent) {
+            res.status(500).json({ success: false, message });
+          }
+        }
+      })();
+    };
+  }
+});
+
 // src/domain/hwy/hwyEmployeesListFilterMapping.ts
 var trimOrNull, parseGeoFilterId, parseTriState, buildHwyEmployeesListProcParams, buildHwyEmployeesListLegacyWhereSql;
 var init_hwyEmployeesListFilterMapping = __esm({
@@ -262509,7 +264534,7 @@ var init_hwyEmployeesListFilterMapping = __esm({
       if (params.last_name) w += ` AND ${alias}.LastName LIKE '%${esc2(params.last_name)}%'`;
       if (params.gender_id) w += ` AND CAST(${alias}.GenderId AS VARCHAR(32))='${esc2(params.gender_id)}'`;
       if (params.role_id) {
-        w += ` AND EXISTS (SELECT 1 FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.UserId AND CAST(URR.RoleId AS VARCHAR(32))='${esc2(params.role_id)}')`;
+        w += ` AND EXISTS (SELECT 1 FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.UserId AND CAST(URR.RoleId AS VARCHAR(32))='${esc2(params.role_id)}')`;
       }
       if (params.v_province_id !== -1) {
         w += ` AND (${alias}.AreaLimitProvinceId=${params.v_province_id} OR ${params.v_province_id} IN (SELECT ItemId FROM dbo.HWY_Members_AreaLimits WITH (NOLOCK) WHERE MemberId=${alias}.Id))`;
@@ -262540,7 +264565,7 @@ var init_hwyEmployeesListLegacyRead_service = __esm({
     employeeBaseWhere = `
   M.MembershipStatus=10851
   AND M.UserId IS NOT NULL
-  AND (SELECT COUNT(*) FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId=M.UserId AND URR.Approved=1) >= 1
+  AND (SELECT COUNT(*) FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=M.UserId AND URR.Approved=1) >= 1
 `;
     queryLegacyEmployeesListCount = async (input) => {
       const params = buildHwyEmployeesListProcParams(input);
@@ -262559,7 +264584,7 @@ var init_hwyEmployeesListLegacyRead_service = __esm({
     queryLegacyEmployeesList = async (input) => {
       const params = buildHwyEmployeesListProcParams(input);
       const filterWhere = buildHwyEmployeesListLegacyWhereSql(params);
-      const sql22 = `
+      const sql23 = `
     SELECT
       CAST(M.Id AS VARCHAR(32)) AS id,
       M.UserName AS username,
@@ -262573,8 +264598,8 @@ var init_hwyEmployeesListLegacyRead_service = __esm({
       (SELECT TOP 1 BI.Title FROM dbo.HWY_BaseInformation BI WITH (NOLOCK) WHERE BI.Id = M.GenderId) AS genderIdTitle,
       ISNULL(M.Stat_FieldsCompleted, 0) AS statFieldsCompleted,
       CASE WHEN M.Oath_FileBody IS NOT NULL THEN N'yes' ELSE N'no' END AS statOath,
-      (SELECT TOP 1 URR.CreatedOn FROM dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) WHERE URR.UserId = M.UserId AND URR.Approved = 1 ORDER BY URR.CreatedOn DESC) AS masooliatRoleOn,
-      (SELECT STRING_AGG(R.RoleName, ' , ') FROM dbo.HWY_Members ForAgg WITH (NOLOCK) LEFT JOIN dbo.AppEnd_Users_R_Roles URR WITH (NOLOCK) ON ForAgg.UserId = URR.UserId LEFT JOIN dbo.AppEnd_Roles R WITH (NOLOCK) ON URR.RoleId = R.Id WHERE ForAgg.Id = M.Id AND URR.Approved = 1) AS rolesLimits,
+      (SELECT TOP 1 URR.CreatedOn FROM dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId = M.UserId AND URR.Approved = 1 ORDER BY URR.CreatedOn DESC) AS masooliatRoleOn,
+      (SELECT STRING_AGG(R.RoleName, ' , ') FROM dbo.HWY_Members ForAgg WITH (NOLOCK) LEFT JOIN dbo.vw_hwy_platform_user_roles URR WITH (NOLOCK) ON ForAgg.UserId = URR.UserId LEFT JOIN dbo.vw_hwy_platform_roles R WITH (NOLOCK) ON URR.RoleId = R.Id WHERE ForAgg.Id = M.Id AND URR.Approved = 1) AS rolesLimits,
       (SELECT dbo.HWY_FN_Agg_AreaLimits(M.Id)) AS areasLimits,
       (SELECT STRING_AGG(Title, ' , ') FROM dbo.HWY_Members_GenderLimits WITH (NOLOCK) LEFT JOIN dbo.HWY_BaseInformation ON HWY_BaseInformation.Id = HWY_Members_GenderLimits.ItemId WHERE HWY_Members_GenderLimits.MemberId = M.Id) AS genderLimits,
       (SELECT STRING_AGG(Title, ' , ') FROM dbo.HWY_Members_OrgLimits WITH (NOLOCK) LEFT JOIN dbo.HWY_BaseInformation ON HWY_BaseInformation.Id = HWY_Members_OrgLimits.ItemId WHERE HWY_Members_OrgLimits.MemberId = M.Id) AS orgLimits,
@@ -262597,7 +264622,7 @@ var init_hwyEmployeesListLegacyRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql22);
+        const result = await pool.request().query(sql23);
         return result.recordset;
       } finally {
         await pool.close();
@@ -262607,7 +264632,7 @@ var init_hwyEmployeesListLegacyRead_service = __esm({
 });
 
 // src/server/domain/hwy/hwyEmployeesList.service.ts
-var import_sequelize116, trim27, HWY_EMPLOYEES_LIST_SCOPE, assertSqlServer15, mapRow15, finalizeRows, listHwyEmployees, removeHwyEmployeePlatformRoles;
+var import_sequelize117, trim28, HWY_EMPLOYEES_LIST_SCOPE, assertSqlServer15, mapRow15, finalizeRows, listHwyEmployees, removeHwyEmployeePlatformRoles;
 var init_hwyEmployeesList_service = __esm({
   "src/server/domain/hwy/hwyEmployeesList.service.ts"() {
     init_hwyEmployeesListFilterMapping();
@@ -262620,8 +264645,8 @@ var init_hwyEmployeesList_service = __esm({
     init_hwyMemberDirectoryDetailDisplay();
     init_hwyMemberDirectoryListCache();
     init_controlPlaneSequelize();
-    import_sequelize116 = require("sequelize");
-    trim27 = (value) => String(value ?? "").trim();
+    import_sequelize117 = require("sequelize");
+    trim28 = (value) => String(value ?? "").trim();
     HWY_EMPLOYEES_LIST_SCOPE = "HWY_Members_List_AlMontadhemin";
     assertSqlServer15 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
@@ -262629,39 +264654,39 @@ var init_hwyEmployeesList_service = __esm({
       }
     };
     mapRow15 = (row) => ({
-      id: trim27(row.id),
-      username: row.username ? trim27(row.username) : null,
-      userId: row.userId ? trim27(row.userId) : null,
-      firstName: row.firstName ? trim27(row.firstName) : null,
-      fatherName: row.fatherName ? trim27(row.fatherName) : null,
-      grandFatherName: row.grandFatherName ? trim27(row.grandFatherName) : null,
-      lastName: row.lastName ? trim27(row.lastName) : null,
-      displayFullName: row.displayFullName ? trim27(row.displayFullName) : null,
-      avatarUrl: row.avatarUrl ? trim27(row.avatarUrl) : null,
-      birthYear: row.birthYear != null ? trim27(row.birthYear) : null,
-      genderCode: row.genderCode ? trim27(row.genderCode) : null,
-      trackingCode: row.trackingCode ? trim27(row.trackingCode) : null,
-      phone1: row.phone1 ? trim27(row.phone1) : null,
-      genderId: row.genderId ? trim27(row.genderId) : null,
-      genderIdTitle: row.genderIdTitle ? trim27(row.genderIdTitle) : null,
-      statFieldsCompleted: row.statFieldsCompleted != null ? Number(row.statFieldsCompleted) : null,
-      statOath: row.statOath ? trim27(row.statOath) : null,
-      masooliatRoleOn: row.masooliatRoleOn ? trim27(String(row.masooliatRoleOn)) : null,
-      rolesLimits: row.rolesLimits ? String(row.rolesLimits) : null,
-      areasLimits: row.areasLimits ? String(row.areasLimits) : null,
-      genderLimits: row.genderLimits ? String(row.genderLimits) : null,
-      orgLimits: row.orgLimits ? String(row.orgLimits) : null,
-      uniLimits: row.uniLimits ? String(row.uniLimits) : null,
-      jobL1Limits: row.jobL1Limits ? String(row.jobL1Limits) : null,
-      ettehadLimits: row.ettehadLimits ? String(row.ettehadLimits) : null,
-      nakhebJoinProvinceName: row.nakhebJoinProvinceName ? trim27(row.nakhebJoinProvinceName) : null,
-      nakhebJoinCircleName: row.nakhebJoinCircleName ? trim27(row.nakhebJoinCircleName) : null,
-      nakhebJoinTamvinName: row.nakhebJoinTamvinName ? trim27(row.nakhebJoinTamvinName) : null,
-      nakhebJoinEghteraName: row.nakhebJoinEghteraName ? trim27(row.nakhebJoinEghteraName) : null,
-      educationLevelIdTitle: row.educationLevelIdTitle ? trim27(row.educationLevelIdTitle) : null,
-      jobTypeIdTitle: row.jobTypeIdTitle ? trim27(row.jobTypeIdTitle) : null,
-      membershipOn: row.membershipOn ? trim27(row.membershipOn) : null,
-      updatedOn: row.updatedOn ? trim27(row.updatedOn) : null
+      id: trim28(row.id),
+      username: row.username ? trim28(row.username) : null,
+      userId: row.user_id ? trim28(row.user_id) : null,
+      firstName: row.first_name ? trim28(row.first_name) : null,
+      fatherName: row.father_name ? trim28(row.father_name) : null,
+      grandFatherName: row.grand_father_name ? trim28(row.grand_father_name) : null,
+      lastName: row.last_name ? trim28(row.last_name) : null,
+      displayFullName: row.display_full_name ? trim28(row.display_full_name) : null,
+      avatarUrl: row.avatar_url ? trim28(row.avatar_url) : null,
+      birthYear: row.birth_year != null ? trim28(row.birth_year) : null,
+      genderCode: row.gender_code ? trim28(row.gender_code) : null,
+      trackingCode: row.tracking_code ? trim28(row.tracking_code) : null,
+      phone1: row.phone1 ? trim28(row.phone1) : null,
+      genderId: row.gender_id ? trim28(row.gender_id) : null,
+      genderIdTitle: row.gender_id_title ? trim28(row.gender_id_title) : null,
+      statFieldsCompleted: row.stat_fields_completed != null ? Number(row.stat_fields_completed) : null,
+      statOath: row.stat_oath ? trim28(row.stat_oath) : null,
+      masooliatRoleOn: row.masooliat_role_on ? trim28(String(row.masooliat_role_on)) : null,
+      rolesLimits: row.roles_limits ? String(row.roles_limits) : null,
+      areasLimits: row.areas_limits ? String(row.areas_limits) : null,
+      genderLimits: row.gender_limits ? String(row.gender_limits) : null,
+      orgLimits: row.org_limits ? String(row.org_limits) : null,
+      uniLimits: row.uni_limits ? String(row.uni_limits) : null,
+      jobL1Limits: row.job_l1_limits ? String(row.job_l1_limits) : null,
+      ettehadLimits: row.ettehad_limits ? String(row.ettehad_limits) : null,
+      nakhebJoinProvinceName: row.nakheb_join_province_name ? trim28(row.nakheb_join_province_name) : null,
+      nakhebJoinCircleName: row.nakheb_join_circle_name ? trim28(row.nakheb_join_circle_name) : null,
+      nakhebJoinTamvinName: row.nakheb_join_tamvin_name ? trim28(row.nakheb_join_tamvin_name) : null,
+      nakhebJoinEghteraName: row.nakheb_join_eghtera_name ? trim28(row.nakheb_join_eghtera_name) : null,
+      educationLevelIdTitle: row.education_level_id_title ? trim28(row.education_level_id_title) : null,
+      jobTypeIdTitle: row.job_type_id_title ? trim28(row.job_type_id_title) : null,
+      membershipOn: row.membership_on ? trim28(row.membership_on) : null,
+      updatedOn: row.updated_on ? trim28(row.updated_on) : null
     });
     finalizeRows = async (rows, queryLang) => {
       if (rows.length === 0) return rows;
@@ -262730,7 +264755,7 @@ var init_hwyEmployeesList_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const memberRows = await sequelize.query(
         `SELECT TOP 1 user_id FROM dbo.hwy_members WITH (NOLOCK) WHERE id = :memberId`,
-        { replacements: { memberId: trim27(memberId) }, type: import_sequelize116.QueryTypes.SELECT }
+        { replacements: { memberId: trim28(memberId) }, type: import_sequelize117.QueryTypes.SELECT }
       );
       const userId = memberRows[0]?.user_id;
       if (!userId) {
@@ -262738,23 +264763,1241 @@ var init_hwyEmployeesList_service = __esm({
       }
       await sequelize.query(
         `DELETE FROM dbo.base_user_roles WHERE user_id = :userId AND role_name LIKE 'HWY_R[_]%' ESCAPE '\\'`,
-        { replacements: { userId }, type: import_sequelize116.QueryTypes.RAW }
-      );
-      await sequelize.query(
-        `IF OBJECT_ID(N'dbo.AppEnd_Users_R_Roles', N'U') IS NOT NULL
-     DELETE URR FROM dbo.AppEnd_Users_R_Roles URR
-     WHERE URR.UserId = :userId`,
-        { replacements: { userId }, type: import_sequelize116.QueryTypes.RAW }
+        { replacements: { userId }, type: import_sequelize117.QueryTypes.RAW }
       );
       await invalidateHwyMemberDirectoryListCache();
     };
   }
 });
 
+// src/server/domain/hwy/hwyPaymentDocumentsLegacyRead.service.ts
+var LEGACY_GENDER_PARENT_ID, LEGACY_PROVINCE_PARENT_ID, listSelectSql, resolveLegacyOperatorGenderLimitsCsv, listLegacyHwyPaymentDocumentCircles, listLegacyHwyPaymentDocumentFilterBaseInfo, loadLegacyHwyPaymentDocumentsGenders, loadLegacyHwyPaymentDocumentsProvinces, buildScopeInput, buildWhereClause, toExtraWhere, mapAggregates, queryLegacyPaymentDocumentsCount, queryLegacyPaymentDocumentsAggregates, queryLegacyPaymentDocumentsList;
+var init_hwyPaymentDocumentsLegacyRead_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocumentsLegacyRead.service.ts"() {
+    init_hwyPaymentDocumentsLegacyAccess();
+    init_hwyExecDbObject();
+    init_hwyFinanceParityState_service();
+    LEGACY_GENDER_PARENT_ID = 10010;
+    LEGACY_PROVINCE_PARENT_ID = 10101;
+    listSelectSql = `
+  SELECT
+    CAST(D.id AS VARCHAR(32)) AS id,
+    D.doc_year AS docYear,
+    D.doc_month AS docMonth,
+    CAST(D.doc_gender_id AS VARCHAR(32)) AS docGenderId,
+    (SELECT TOP 1 BI.title FROM dbo.hwy_ref_base_information BI WITH (NOLOCK) WHERE BI.id = D.doc_gender_id) AS docGenderIdTitle,
+    CAST(D.doc_province_id AS VARCHAR(32)) AS docProvinceId,
+    (SELECT TOP 1 BI.title FROM dbo.hwy_ref_base_information BI WITH (NOLOCK) WHERE BI.id = D.doc_province_id) AS docProvinceIdTitle,
+    CAST(D.doc_circle_id AS VARCHAR(32)) AS docCircleId,
+    (SELECT TOP 1 C.circle_name FROM dbo.hwy_ref_h_circles C WITH (NOLOCK) WHERE C.circle_id = D.doc_circle_id) AS docCircleIdTitle,
+    D.total_members_count AS totalMembersCount,
+    D.payable_members_count_ok AS payableMembersCountOk,
+    D.payable_members_count_nok AS payableMembersCountNok,
+    D.not_payable_members_count AS notPayableMembersCount,
+    D.total_amount AS totalAmount,
+    D.payable_amount_ok AS payableAmountOk,
+    D.payable_amount_nok AS payableAmountNok,
+    D.not_payable_amount AS notPayableAmount,
+    D.area_ok AS areaOk,
+    D.area_ok_by AS areaOkBy,
+    CONVERT(VARCHAR(32), D.area_ok_on, 126) AS areaOkOn,
+    D.final_ok AS finalOk,
+    D.final_ok_by AS finalOkBy,
+    CONVERT(VARCHAR(32), D.final_ok_on, 126) AS finalOkOn,
+    D.closed AS closed,
+    D.closed_by AS closedBy,
+    CONVERT(VARCHAR(32), D.closed_on, 126) AS closedOn,
+    D.created_by AS createdBy,
+    CONVERT(VARCHAR(32), D.created_on, 126) AS createdOn
+  FROM dbo.hwy_payment_documents D WITH (NOLOCK)
+`;
+    resolveLegacyOperatorGenderLimitsCsv = async (username) => {
+      if (await hwyFinancePaymentReadsReady()) {
+        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+        const { QueryTypes: QueryTypes88 } = await import("sequelize");
+        const sequelize = getControlPlaneSequelize2();
+        const rows = await sequelize.query(
+          `
+      SELECT STRING_AGG(CAST(GL.item_id AS VARCHAR(20)), ',') AS csv
+      FROM dbo.hwy_members M WITH (NOLOCK)
+      INNER JOIN dbo.hwy_ref_members_gender_limits GL WITH (NOLOCK) ON GL.member_id = M.id
+      WHERE M.user_name = :username
+      `,
+          { replacements: { username }, type: QueryTypes88.SELECT }
+        );
+        const csv = rows[0]?.csv;
+        return csv?.trim() || null;
+      }
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("username", username).query(`
+        SELECT STRING_AGG(CAST(GL.ItemId AS VARCHAR(20)), ',') AS csv
+        FROM dbo.HWY_Members M WITH (NOLOCK)
+        INNER JOIN dbo.HWY_Members_GenderLimits GL WITH (NOLOCK) ON GL.MemberId = M.Id
+        WHERE M.UserName = @username
+      `);
+        const csv = result.recordset[0]?.csv;
+        return csv?.trim() || null;
+      } finally {
+        await pool.close();
+      }
+    };
+    listLegacyHwyPaymentDocumentCircles = async (docProvinceId) => {
+      if (!Number.isFinite(docProvinceId) || docProvinceId <= 0) return [];
+      if (await hwyFinancePaymentReadsReady()) {
+        const { QueryTypes: QueryTypes88 } = await import("sequelize");
+        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+        const rows = await getControlPlaneSequelize2().query(
+          `
+      SELECT circle_id AS id, circle_name AS title
+      FROM dbo.hwy_ref_h_circles WITH (NOLOCK)
+      WHERE hwy_state_id = :provinceId AND ISNULL(deleted, 0) = 0
+      ORDER BY circle_name
+      `,
+          { replacements: { provinceId: docProvinceId }, type: QueryTypes88.SELECT }
+        );
+        return rows.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+      }
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("provinceId", docProvinceId).query(`
+        SELECT CircleId AS id, CircleName AS title
+        FROM dbo.HWY_H_Circles WITH (NOLOCK)
+        WHERE ProvinceId = @provinceId
+        ORDER BY CircleName
+      `);
+        return result.recordset.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+      } finally {
+        await pool.close();
+      }
+    };
+    listLegacyHwyPaymentDocumentFilterBaseInfo = async (parentId) => {
+      if (!Number.isFinite(parentId) || parentId <= 0) return [];
+      if (await hwyFinancePaymentReadsReady()) {
+        const { QueryTypes: QueryTypes88 } = await import("sequelize");
+        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+        const rows = await getControlPlaneSequelize2().query(
+          `
+      SELECT id, title
+      FROM dbo.hwy_ref_base_information WITH (NOLOCK)
+      WHERE parent_id = :parentId AND is_active = 1
+      ORDER BY view_order, id
+      `,
+          { replacements: { parentId }, type: QueryTypes88.SELECT }
+        );
+        return rows.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+      }
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("parentId", parentId).query(`
+        SELECT Id AS id, Title AS title
+        FROM dbo.HWY_BaseInformation WITH (NOLOCK)
+        WHERE ParentId = @parentId AND IsActive = 1
+        ORDER BY ViewOrder, Id
+      `);
+        return result.recordset.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+      } finally {
+        await pool.close();
+      }
+    };
+    loadLegacyHwyPaymentDocumentsGenders = () => listLegacyHwyPaymentDocumentFilterBaseInfo(LEGACY_GENDER_PARENT_ID);
+    loadLegacyHwyPaymentDocumentsProvinces = () => listLegacyHwyPaymentDocumentFilterBaseInfo(LEGACY_PROVINCE_PARENT_ID);
+    buildScopeInput = async (roleNames, actorUsername2) => {
+      const { resolveHwyLegacyOperatorGeoScope: resolveHwyLegacyOperatorGeoScope2 } = await Promise.resolve().then(() => (init_hwyLegacyOperatorGeoScope_service(), hwyLegacyOperatorGeoScope_service_exports));
+      const geo = await resolveHwyLegacyOperatorGeoScope2(actorUsername2, roleNames);
+      if (geo.unrestricted) {
+        return {
+          scopeUnrestricted: true,
+          areaLimitId: null,
+          geoLimitsCsv: null,
+          genderLimitsCsv: null
+        };
+      }
+      const genderLimitsCsv = actorUsername2 ? await resolveLegacyOperatorGenderLimitsCsv(actorUsername2) : null;
+      return {
+        scopeUnrestricted: false,
+        areaLimitId: geo.areaLimitId,
+        geoLimitsCsv: geo.geoLimitsCsv,
+        genderLimitsCsv
+      };
+    };
+    buildWhereClause = async (input, roleNames, actorUsername2) => {
+      const scope = await buildScopeInput(roleNames, actorUsername2);
+      const filterWhere = buildHwyPaymentDocumentsLegacyFilterWhere(input);
+      const scopeWhere = buildHwyPaymentDocumentsLegacyScopeWhere(scope);
+      return `WHERE 1=1${filterWhere}${scopeWhere}`;
+    };
+    toExtraWhere = (whereClause) => whereClause.startsWith("WHERE 1=1") ? whereClause.slice("WHERE 1=1".length) : whereClause;
+    mapAggregates = (row) => ({
+      sumTotalMembersCount: Number(row?.sumTotalMembersCount ?? 0),
+      sumPayableMembersCountOk: Number(row?.sumPayableMembersCountOk ?? 0),
+      sumPayableMembersCountNok: Number(row?.sumPayableMembersCountNok ?? 0),
+      sumNotPayableMembersCount: Number(row?.sumNotPayableMembersCount ?? 0),
+      sumTotalAmount: Number(row?.sumTotalAmount ?? 0),
+      sumPayableAmountOk: Number(row?.sumPayableAmountOk ?? 0),
+      sumPayableAmountNok: Number(row?.sumPayableAmountNok ?? 0),
+      sumNotPayableAmount: Number(row?.sumNotPayableAmount ?? 0)
+    });
+    queryLegacyPaymentDocumentsCount = async (input, roleNames, actorUsername2) => {
+      const where = await buildWhereClause(input, roleNames, actorUsername2);
+      if (await hwyFinancePaymentReadsReady()) {
+        const rows = await execHwyProcedure("hwy_payment_documents_count", {
+          extra_where: toExtraWhere(where)
+        });
+        return Number(rows[0]?.total ?? 0);
+      }
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(
+          `SELECT COUNT(*) AS total FROM dbo.hwy_payment_documents D WITH (NOLOCK) ${where}`
+        );
+        return Number(result.recordset[0].total ?? 0);
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyPaymentDocumentsAggregates = async (input, roleNames, actorUsername2) => {
+      const where = await buildWhereClause(input, roleNames, actorUsername2);
+      if (await hwyFinancePaymentReadsReady()) {
+        const rows = await execHwyProcedure("hwy_payment_documents_aggregates", {
+          extra_where: toExtraWhere(where)
+        });
+        return mapAggregates(rows[0]);
+      }
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(`
+      SELECT
+        ISNULL(SUM(D.TotalMembersCount), 0) AS sumTotalMembersCount,
+        ISNULL(SUM(D.PayableMembersCountOk), 0) AS sumPayableMembersCountOk,
+        ISNULL(SUM(D.PayableMembersCountNok), 0) AS sumPayableMembersCountNok,
+        ISNULL(SUM(D.NotPayableMembersCount), 0) AS sumNotPayableMembersCount,
+        ISNULL(SUM(D.TotalAmount), 0) AS sumTotalAmount,
+        ISNULL(SUM(D.PayableAmountOk), 0) AS sumPayableAmountOk,
+        ISNULL(SUM(D.PayableAmountNok), 0) AS sumPayableAmountNok,
+        ISNULL(SUM(D.NotPayableAmount), 0) AS sumNotPayableAmount
+      FROM dbo.hwy_payment_documents D WITH (NOLOCK)
+      ${where}
+    `);
+        return mapAggregates(result.recordset[0]);
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyPaymentDocumentsList = async (input, roleNames, actorUsername2) => {
+      const where = await buildWhereClause(input, roleNames, actorUsername2);
+      const params = buildHwyPaymentDocumentsProcParams(input);
+      if (await hwyFinancePaymentReadsReady()) {
+        return execHwyProcedure("hwy_payment_documents_list", {
+          extra_where: toExtraWhere(where),
+          offset: params.offset,
+          page_size: params.page_size
+        });
+      }
+      const sql23 = `
+    ${listSelectSql}
+    ${where}
+    ORDER BY D.CreatedOn DESC, D.Id DESC
+    OFFSET ${params.offset} ROWS FETCH NEXT ${params.page_size} ROWS ONLY
+  `;
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(sql23);
+        return result.recordset;
+      } finally {
+        await pool.close();
+      }
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyFinanceDbWrite.service.ts
+var financeObjectsReady, masoolinObjectsReady, execLegacyPaymentSql, legacyCreatePaymentDocuments, dbCreatePaymentDocuments, dbRemovePaymentDocumentById, dbSendPaymentDocumentToArea, dbSendPaymentDocumentToMali, dbMarkPaymentDocumentFinalOk, dbMarkPaymentDocumentClosed, dbSwitchPaymentDocumentsMemberPayability, dbUpdatePaymentDocumentsMemberPayAmount, dbMasoolinStarsCreateOrUpdateMonth, dbMasoolinStarsRecalcMember, dbMasoolinSetAsMainPayable;
+var init_hwyFinanceDbWrite_service = __esm({
+  "src/server/domain/hwy/hwyFinanceDbWrite.service.ts"() {
+    init_hwyExecDbObject();
+    init_hwyFinanceParityState_service();
+    financeObjectsReady = hwyFinancePaymentWritesReady;
+    masoolinObjectsReady = hwyFinanceMasoolinInstallReady;
+    execLegacyPaymentSql = async (statement) => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const sql23 = await import("mssql");
+      const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().query(statement);
+      } finally {
+        await pool.close();
+      }
+    };
+    legacyCreatePaymentDocuments = async (input) => {
+      const esc2 = input.actorUserName.replace(/'/g, "''");
+      await execLegacyPaymentSql(
+        `EXEC [dbo].[HWY_SP_PaymentDocuments_Create] ${input.docYear},${input.docMonth},${input.docProvinceId},${input.docGenderId},'${esc2}'`
+      );
+    };
+    dbCreatePaymentDocuments = async (input) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_create", {
+          DocYear: input.docYear,
+          DocMonth: input.docMonth,
+          DocProvinceId: input.docProvinceId,
+          DocGenderId: input.docGenderId,
+          Actor: input.actorUserName
+        });
+        return;
+      }
+      await legacyCreatePaymentDocuments(input);
+    };
+    dbRemovePaymentDocumentById = async (documentId) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_remove_by_id", { DocumentId: documentId });
+        return;
+      }
+      await execLegacyPaymentSql(`EXEC [dbo].[HWY_SP_PaymentDocuments_RemoveById] ${documentId}`);
+    };
+    dbSendPaymentDocumentToArea = async (documentId) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_send_to_area", { document_id: documentId });
+        return;
+      }
+      await execLegacyPaymentSql(
+        `UPDATE dbo.hwy_payment_documents SET area_ok=0,area_ok_by=NULL,area_ok_on=NULL WHERE id=${documentId}`
+      );
+    };
+    dbSendPaymentDocumentToMali = async (documentId, actorUserName) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_send_to_mali", {
+          document_id: documentId,
+          actor_user_name: actorUserName
+        });
+        return;
+      }
+      const esc2 = actorUserName.replace(/'/g, "''");
+      await execLegacyPaymentSql(
+        `UPDATE dbo.hwy_payment_documents SET area_ok=1,area_ok_by='${esc2}',area_ok_on=GETDATE() WHERE id=${documentId}`
+      );
+    };
+    dbMarkPaymentDocumentFinalOk = async (documentId, actorUserName) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_mark_final_ok", {
+          document_id: documentId,
+          actor_user_name: actorUserName
+        });
+        return;
+      }
+      const esc2 = actorUserName.replace(/'/g, "''");
+      await execLegacyPaymentSql(
+        `UPDATE dbo.hwy_payment_documents SET final_ok=1,final_ok_by='${esc2}',final_ok_on=GETDATE() WHERE id=${documentId}`
+      );
+    };
+    dbMarkPaymentDocumentClosed = async (documentId, actorUserName) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_mark_closed", {
+          document_id: documentId,
+          actor_user_name: actorUserName
+        });
+        return;
+      }
+      const esc2 = actorUserName.replace(/'/g, "''");
+      await execLegacyPaymentSql(
+        `UPDATE dbo.hwy_payment_documents SET closed=1,closed_by='${esc2}',closed_on=GETDATE() WHERE id=${documentId}`
+      );
+    };
+    dbSwitchPaymentDocumentsMemberPayability = async (lineId, actorUserName) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_member_switch_payability", {
+          PaymentId: lineId,
+          Actor: actorUserName
+        });
+        return;
+      }
+      const esc2 = actorUserName.replace(/'/g, "''");
+      await execLegacyPaymentSql(`EXEC [dbo].[HWY_SP_PaymentDocuments_SwitchPayability] ${lineId},'${esc2}'`);
+    };
+    dbUpdatePaymentDocumentsMemberPayAmount = async (input) => {
+      if (await financeObjectsReady()) {
+        await execHwyProcedure("hwy_payment_documents_member_update_pay_amount", {
+          PaymentId: input.lineId,
+          NewPayAmount: input.payAmount,
+          Note: input.note,
+          Actor: input.actorUserName,
+          IsAdmin: input.isAdmin ? 1 : 0
+        });
+        return;
+      }
+      const sql23 = await import("mssql");
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().input("PaymentId", sql23.BigInt, input.lineId).input("NewPayAmount", sql23.Int, input.payAmount).input("Note", sql23.NVarChar, input.note).input("Actor", sql23.NVarChar, input.actorUserName).input("IsAdmin", sql23.Bit, input.isAdmin).query(`EXEC [dbo].[HWY_SP_PaymentDocuments_UpdatePayAmount] @PaymentId,@NewPayAmount,@Note,@Actor,@IsAdmin`);
+      } finally {
+        await pool.close();
+      }
+    };
+    dbMasoolinStarsCreateOrUpdateMonth = async (year, month) => {
+      if (await masoolinObjectsReady()) {
+        await execHwyProcedure("hwy_masoolin_stars_create_or_update_month", {
+          YEAR: year,
+          MONTH: month
+        });
+        return;
+      }
+      await execLegacyPaymentSql(
+        `EXEC [dbo].[HWY_SP_Masoolin_CreateOrUpdateStars] ${Math.floor(year)},${Math.floor(month)}`
+      );
+    };
+    dbMasoolinStarsRecalcMember = async (memberId) => {
+      if (await masoolinObjectsReady()) {
+        await execHwyProcedure("hwy_masoolin_stars_recalc_member", {
+          MemberId: memberId,
+          CalYear: null,
+          CalMonth: null,
+          WriteToDb: 0,
+          ToCurrent: 0
+        });
+        return;
+      }
+      await execLegacyPaymentSql(
+        `EXEC [dbo].[HWY_SP_MasoolinCalcStars] ${Math.floor(memberId)},NULL,NULL,0,0`
+      );
+    };
+    dbMasoolinSetAsMainPayable = async (memberId) => {
+      if (await hwyFinanceMasoolinProcessReady()) {
+        await execHwyProcedure("hwy_masoolin_set_as_main_payable", { MemberId: memberId });
+        return;
+      }
+      await execLegacyPaymentSql(`EXEC [dbo].[HWY_SP_Masoolin_SetAsMainPayable] ${Math.floor(memberId)}`);
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyPaymentDocumentsLegacyWrite.service.ts
+var init_hwyPaymentDocumentsLegacyWrite_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocumentsLegacyWrite.service.ts"() {
+    init_hwyFinanceDbWrite_service();
+  }
+});
+
+// src/server/domain/hwy/hwyPaymentDocuments.service.ts
+var trim29, mapRow16, listHwyPaymentDocuments, loadHwyPaymentDocumentsFilterOptions, createHwyPaymentDocumentsBatch, removeHwyPaymentDocumentById, sendHwyPaymentDocumentToArea, sendHwyPaymentDocumentToMali, markHwyPaymentDocumentFinalOk, markHwyPaymentDocumentClosed;
+var init_hwyPaymentDocuments_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocuments.service.ts"() {
+    init_hwyPaymentDocumentsLegacyAccess();
+    init_hwyPaymentDocumentsAccess_service();
+    init_hwyPaymentDocumentsLegacyRead_service();
+    init_hwyPaymentDocumentsLegacyWrite_service();
+    trim29 = (v) => String(v ?? "").trim();
+    mapRow16 = (row) => ({
+      id: trim29(row.id),
+      docYear: row.doc_year != null ? Number(row.doc_year) : null,
+      docMonth: row.doc_month != null ? Number(row.doc_month) : null,
+      docGenderId: row.doc_gender_id ? trim29(row.doc_gender_id) : null,
+      docGenderIdTitle: row.doc_gender_id_title ? trim29(row.doc_gender_id_title) : null,
+      docProvinceId: row.doc_province_id ? trim29(row.doc_province_id) : null,
+      docProvinceIdTitle: row.doc_province_id_title ? trim29(row.doc_province_id_title) : null,
+      docCircleId: row.doc_circle_id ? trim29(row.doc_circle_id) : null,
+      docCircleIdTitle: row.doc_circle_id_title ? trim29(row.doc_circle_id_title) : null,
+      totalMembersCount: row.total_members_count != null ? Number(row.total_members_count) : null,
+      payableMembersCountOk: row.payable_members_count_ok != null ? Number(row.payable_members_count_ok) : null,
+      payableMembersCountNok: row.payable_members_count_nok != null ? Number(row.payable_members_count_nok) : null,
+      notPayableMembersCount: row.not_payable_members_count != null ? Number(row.not_payable_members_count) : null,
+      totalAmount: row.total_amount != null ? Number(row.total_amount) : null,
+      payableAmountOk: row.payable_amount_ok != null ? Number(row.payable_amount_ok) : null,
+      payableAmountNok: row.payable_amount_nok != null ? Number(row.payable_amount_nok) : null,
+      notPayableAmount: row.not_payable_amount != null ? Number(row.not_payable_amount) : null,
+      areaOk: row.area_ok === true || row.area_ok === 1,
+      areaOkBy: row.area_ok_by ? trim29(row.area_ok_by) : null,
+      areaOkOn: row.area_ok_on ? trim29(row.area_ok_on) : null,
+      finalOk: row.final_ok === true || row.final_ok === 1,
+      finalOkBy: row.final_ok_by ? trim29(row.final_ok_by) : null,
+      finalOkOn: row.final_ok_on ? trim29(row.final_ok_on) : null,
+      closed: row.closed === true || row.closed === 1,
+      closedBy: row.closed_by ? trim29(row.closed_by) : null,
+      closedOn: row.closed_on ? trim29(row.closed_on) : null,
+      createdBy: row.created_by ? trim29(row.created_by) : null,
+      createdOn: row.created_on ? trim29(row.created_on) : null
+    });
+    listHwyPaymentDocuments = async (input, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      const params = buildHwyPaymentDocumentsProcParams(input);
+      const page = Math.max(1, input.page ?? 1);
+      const [total, rawRows, aggregates] = await Promise.all([
+        queryLegacyPaymentDocumentsCount(input, roleNames, actorUsername2),
+        queryLegacyPaymentDocumentsList(input, roleNames, actorUsername2),
+        queryLegacyPaymentDocumentsAggregates(input, roleNames, actorUsername2)
+      ]);
+      return {
+        total,
+        page,
+        pageSize: params.page_size,
+        rows: rawRows.map(mapRow16),
+        aggregates,
+        parityDataSource: "legacy-read"
+      };
+    };
+    loadHwyPaymentDocumentsFilterOptions = async (docProvinceId, roleNames) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      const [genders, provinces] = await Promise.all([
+        loadLegacyHwyPaymentDocumentsGenders(),
+        loadLegacyHwyPaymentDocumentsProvinces()
+      ]);
+      const provinceNum = Number(String(docProvinceId ?? "").trim());
+      const circles = Number.isFinite(provinceNum) && provinceNum > 0 ? await listLegacyHwyPaymentDocumentCircles(provinceNum) : [];
+      const toOptions = (rows) => rows.map((row) => ({ value: String(row.id), label: row.title }));
+      return {
+        genders: toOptions(genders),
+        provinces: toOptions(provinces),
+        circles: toOptions(circles)
+      };
+    };
+    createHwyPaymentDocumentsBatch = async (input, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      await dbCreatePaymentDocuments({ ...input, actorUserName: actorUsername2 });
+    };
+    removeHwyPaymentDocumentById = async (documentId, roleNames) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      const id = Number(trim29(documentId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
+      await dbRemovePaymentDocumentById(id);
+    };
+    sendHwyPaymentDocumentToArea = async (documentId, roleNames) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      const id = Number(trim29(documentId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
+      await dbSendPaymentDocumentToArea(id);
+    };
+    sendHwyPaymentDocumentToMali = async (documentId, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      const actor = trim29(actorUsername2);
+      if (!actor) throw new Error("Actor username is required.");
+      const id = Number(trim29(documentId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
+      await dbSendPaymentDocumentToMali(id, actor);
+    };
+    markHwyPaymentDocumentFinalOk = async (documentId, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      const id = Number(trim29(documentId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
+      await dbMarkPaymentDocumentFinalOk(id, actorUsername2);
+    };
+    markHwyPaymentDocumentClosed = async (documentId, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsAccess(roleNames);
+      const id = Number(trim29(documentId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
+      await dbMarkPaymentDocumentClosed(id, actorUsername2);
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyPaymentDocumentsMembersLegacyRead.service.ts
+var listLegacyHwyPaymentDocumentTamvins, listSelectSql2, buildScopeInput2, buildWhereClause2, toExtraWhere2, paymentDocumentsMembersReadsReady, queryLegacyPaymentDocumentsMembersCount, queryLegacyPaymentDocumentsMembersList, queryLegacyPaymentDocumentsMemberImages;
+var init_hwyPaymentDocumentsMembersLegacyRead_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocumentsMembersLegacyRead.service.ts"() {
+    init_hwyPaymentDocumentsMembersLegacyAccess();
+    init_hwyPaymentDocumentsLegacyRead_service();
+    init_hwyExecDbObject();
+    init_hwyFinanceParityState_service();
+    listLegacyHwyPaymentDocumentTamvins = async (circleId) => {
+      if (!Number.isFinite(circleId) || circleId <= 0) return [];
+      if (await hwyFinancePaymentReadsReady()) {
+        const { QueryTypes: QueryTypes88 } = await import("sequelize");
+        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+        const rows = await getControlPlaneSequelize2().query(
+          `
+      SELECT tamvin_id AS id, tamvin_name AS title
+      FROM dbo.hwy_ref_h_tamvinat WITH (NOLOCK)
+      WHERE circle_id = :circleId
+      ORDER BY tamvin_name
+      `,
+          { replacements: { circleId }, type: QueryTypes88.SELECT }
+        );
+        return rows.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+      }
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("circleId", circleId).query(`
+        SELECT TamvinId AS id, TamvinName AS title
+        FROM dbo.HWY_H_Tamvinat WITH (NOLOCK)
+        WHERE CircleId = @circleId
+        ORDER BY TamvinName
+      `);
+        return result.recordset.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+      } finally {
+        await pool.close();
+      }
+    };
+    listSelectSql2 = `
+  SELECT
+    CAST(V.id AS VARCHAR(32)) AS id,
+    M.UserName AS username,
+    M.FirstName AS firstName,
+    M.FatherName AS fatherName,
+    M.GrandFatherName AS grandFatherName,
+    M.LastName AS lastName,
+    R.RoleName AS roleName,
+    PD.doc_year AS docYear,
+    PD.doc_month AS docMonth,
+    V.pay_amount AS payAmount,
+    (SELECT TOP 1 BI.title FROM dbo.hwy_ref_base_information BI WITH (NOLOCK) WHERE BI.id = V.payable_reason_id) AS payableReasonTitle,
+    V.pay_ok AS payOk,
+    V.payable AS payable
+  FROM dbo.vw_hwy_payment_documents_members V WITH (NOLOCK)
+  INNER JOIN dbo.vw_hwy_members_legacy_row M WITH (NOLOCK) ON M.Id = V.member_id
+  INNER JOIN dbo.hwy_payment_documents PD WITH (NOLOCK) ON PD.id = V.document_id
+  LEFT JOIN dbo.vw_hwy_platform_roles R WITH (NOLOCK) ON R.Id = V.role_id
+`;
+    buildScopeInput2 = async (roleNames, actorUsername2) => {
+      const { resolveHwyLegacyOperatorGeoScope: resolveHwyLegacyOperatorGeoScope2 } = await Promise.resolve().then(() => (init_hwyLegacyOperatorGeoScope_service(), hwyLegacyOperatorGeoScope_service_exports));
+      const geo = await resolveHwyLegacyOperatorGeoScope2(actorUsername2, roleNames);
+      if (geo.unrestricted) {
+        return {
+          scopeUnrestricted: true,
+          areaLimitId: null,
+          geoLimitsCsv: null,
+          genderLimitsCsv: null
+        };
+      }
+      const genderLimitsCsv = actorUsername2 ? await resolveLegacyOperatorGenderLimitsCsv(actorUsername2) : null;
+      return {
+        scopeUnrestricted: false,
+        areaLimitId: geo.areaLimitId,
+        geoLimitsCsv: geo.geoLimitsCsv,
+        genderLimitsCsv
+      };
+    };
+    buildWhereClause2 = async (input, roleNames, actorUsername2) => {
+      const scope = await buildScopeInput2(roleNames, actorUsername2);
+      const filterWhere = buildHwyPaymentDocumentsMembersLegacyFilterWhere(input);
+      const scopeWhere = buildHwyPaymentDocumentsMembersLegacyScopeWhere(scope);
+      return `WHERE 1=1${filterWhere}${scopeWhere}`;
+    };
+    toExtraWhere2 = (whereClause) => whereClause.startsWith("WHERE 1=1") ? whereClause.slice("WHERE 1=1".length) : whereClause;
+    paymentDocumentsMembersReadsReady = async () => await hwyFinancePaymentReadsReady() && await hwyFinancePaymentViewsReady();
+    queryLegacyPaymentDocumentsMembersCount = async (input, roleNames, actorUsername2) => {
+      const where = await buildWhereClause2(input, roleNames, actorUsername2);
+      if (await paymentDocumentsMembersReadsReady()) {
+        const rows = await execHwyProcedure("hwy_payment_documents_members_count", {
+          extra_where: toExtraWhere2(where)
+        });
+        return Number(rows[0]?.total ?? 0);
+      }
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(`
+      SELECT COUNT(*) AS total
+      FROM dbo.HWY_VW_PaymentDocuments_Members V WITH (NOLOCK)
+      ${where}
+    `);
+        return Number(result.recordset[0].total ?? 0);
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyPaymentDocumentsMembersList = async (input, roleNames, actorUsername2) => {
+      const where = await buildWhereClause2(input, roleNames, actorUsername2);
+      const params = buildHwyPaymentDocumentsMembersProcParams(input);
+      if (await paymentDocumentsMembersReadsReady()) {
+        return execHwyProcedure("hwy_payment_documents_members_list", {
+          extra_where: toExtraWhere2(where),
+          offset: params.offset,
+          page_size: params.page_size
+        });
+      }
+      const sql23 = `
+    ${listSelectSql2}
+    ${where}
+    ORDER BY V.Id DESC
+    OFFSET ${params.offset} ROWS FETCH NEXT ${params.page_size} ROWS ONLY
+  `;
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(sql23);
+        return result.recordset;
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyPaymentDocumentsMemberImages = async (lineId) => {
+      const useEdge = await paymentDocumentsMembersReadsReady();
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      let row;
+      if (useEdge) {
+        const { QueryTypes: QueryTypes88 } = await import("sequelize");
+        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+        const rows = await getControlPlaneSequelize2().query(
+          `
+      SELECT pm.nb_selfi_file_body AS selfie, m.Picture_FileBody AS picture
+      FROM dbo.hwy_payment_documents_members pm WITH (NOLOCK)
+      LEFT JOIN dbo.vw_hwy_members_legacy_row m WITH (NOLOCK) ON m.Id = pm.member_id
+      WHERE pm.id = :id
+      `,
+          { replacements: { id: lineId }, type: QueryTypes88.SELECT }
+        );
+        row = rows[0];
+      } else {
+        const pool = await connectLegacyReadPool2();
+        try {
+          const result = await pool.request().input("id", lineId).query(`
+        SELECT pm.NbSelfi_FileBody AS selfie, m.Picture_FileBody AS picture
+        FROM dbo.HWY_PaymentDocuments_Members pm WITH (NOLOCK)
+        LEFT JOIN dbo.HWY_Members m WITH (NOLOCK) ON m.Id = pm.MemberId
+        WHERE pm.Id = @id
+      `);
+          row = result.recordset[0];
+        } finally {
+          await pool.close();
+        }
+      }
+      if (!row) return { selfieBase64: null, memberPictureBase64: null };
+      const selfieBase64 = row.selfie ? Buffer.from(row.selfie).toString("base64") : null;
+      const memberPictureBase64 = row.picture ? Buffer.from(row.picture).toString("base64") : null;
+      return { selfieBase64, memberPictureBase64 };
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyMasoolinPerformanceLegacyRead.service.ts
+var readMemberIdByUsername, resolveLegacyMasoolinPerformanceProcContext, buildLegacyMasoolinPerformanceProcParams, execLegacyMasoolinPerformance, queryLegacyMasoolinPerformance, queryLegacyMasoolinPerformanceExport;
+var init_hwyMasoolinPerformanceLegacyRead_service = __esm({
+  "src/server/domain/hwy/hwyMasoolinPerformanceLegacyRead.service.ts"() {
+    init_hwyMasoolinPerformanceLegacyAccess();
+    init_hwyExecDbObject();
+    init_hwyFinanceDbWrite_service();
+    readMemberIdByUsername = async (username) => {
+      const trimmed = username.trim();
+      if (!trimmed) return 0;
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const byUserName = await pool.request().input("username", trimmed).query(
+          `SELECT TOP 1 Id AS memberId FROM dbo.HWY_Members WITH (NOLOCK) WHERE UserName = @username ORDER BY Id`
+        );
+        const direct = Number(byUserName.recordset[0]?.memberId ?? 0);
+        if (direct > 0) return direct;
+        const byUserId = await pool.request().input("username", trimmed).query(`
+      SELECT TOP 1 M.Id AS memberId
+      FROM dbo.vw_hwy_platform_users U WITH (NOLOCK)
+      INNER JOIN dbo.HWY_Members M WITH (NOLOCK) ON M.UserId = U.Id
+      WHERE U.UserName = @username
+      ORDER BY M.Id
+    `);
+        return Number(byUserId.recordset[0]?.memberId ?? 0);
+      } finally {
+        await pool.close();
+      }
+    };
+    resolveLegacyMasoolinPerformanceProcContext = async (actorUsername2, roleNames) => {
+      const isAdmin4 = roleNames.includes("ADMIN");
+      const userProfileId = actorUsername2 ? await readMemberIdByUsername(actorUsername2) : 0;
+      return { userProfileId, isAdmin: isAdmin4 };
+    };
+    buildLegacyMasoolinPerformanceProcParams = async (input, actorUsername2, roleNames) => {
+      const context = await resolveLegacyMasoolinPerformanceProcContext(actorUsername2, roleNames);
+      return buildHwyMasoolinPerformanceProcParams(input, context);
+    };
+    execLegacyMasoolinPerformance = async (sqlText) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(sqlText);
+        return result.recordset ?? [];
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyMasoolinPerformance = async (input, actorUsername2, roleNames) => {
+      const procParams = await buildLegacyMasoolinPerformanceProcParams(input, actorUsername2, roleNames);
+      if (await masoolinObjectsReady()) {
+        return execHwyProcedure(
+          "hwy_masoolin_performance_list",
+          buildHwyMasoolinPerformanceExecReplacements(procParams)
+        );
+      }
+      return execLegacyMasoolinPerformance(formatHwyMasoolinPerformanceProcSql(procParams));
+    };
+    queryLegacyMasoolinPerformanceExport = async () => {
+      if (await masoolinObjectsReady()) {
+        return execHwyProcedure("hwy_masoolin_performance_export", {});
+      }
+      return execLegacyMasoolinPerformance("EXEC [dbo].[HWY_SP_Masoolin_PerformanceExport];");
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyMasoolinPerformance.service.ts
+var trim30, readRow, readBool2, readNumber2, mapRow17, finalizeResult, listHwyMasoolinPerformance, exportHwyMasoolinPerformance, setHwyMasoolinChiefMasool, loadHwyMasoolinPerformanceFilterOptions;
+var init_hwyMasoolinPerformance_service = __esm({
+  "src/server/domain/hwy/hwyMasoolinPerformance.service.ts"() {
+    init_hwyPaymentDocumentsLegacyRead_service();
+    init_hwyPaymentDocumentsMembersLegacyRead_service();
+    init_hwyMasoolinPerformanceAccess_service();
+    init_hwyFinanceDbWrite_service();
+    init_hwyMasoolinPerformanceLegacyRead_service();
+    trim30 = (value) => String(value ?? "").trim();
+    readRow = (row, keys) => {
+      for (const key of keys) {
+        if (key in row) return row[key];
+        const pascal = key.charAt(0).toUpperCase() + key.slice(1);
+        if (pascal in row) return row[pascal];
+      }
+      return void 0;
+    };
+    readBool2 = (value) => {
+      if (value === true || value === 1 || value === "1") return true;
+      if (value === false || value === 0 || value === "0") return false;
+      return null;
+    };
+    readNumber2 = (value) => {
+      if (value == null || value === "") return null;
+      const numeric = Number(value);
+      return Number.isFinite(numeric) ? numeric : null;
+    };
+    mapRow17 = (row) => {
+      const firstName = trim30(readRow(row, ["first_name", "firstName", "FirstName"]) ?? "");
+      const fatherName = trim30(readRow(row, ["father_name", "fatherName", "FatherName"]) ?? "");
+      const grandFatherName = trim30(readRow(row, ["grand_father_name", "grandFatherName", "GrandFatherName"]) ?? "");
+      const lastName = trim30(readRow(row, ["last_name", "lastName", "LastName"]) ?? "");
+      const fullNameLegacy = trim30(readRow(row, ["full_name", "fullName", "FullName"]) ?? "");
+      return {
+        memberId: trim30(readRow(row, ["member_id", "memberId", "MemberId"]) ?? "") || null,
+        userName: trim30(readRow(row, ["user_name", "userName", "UserName"]) ?? "") || null,
+        genderId: trim30(readRow(row, ["gender_id", "genderId", "GenderId"]) ?? "") || null,
+        firstName: firstName || null,
+        fatherName: fatherName || null,
+        grandFatherName: grandFatherName || null,
+        lastName: lastName || null,
+        roleName: trim30(readRow(row, ["role_name", "roleName", "RoleName"]) ?? "") || null,
+        phone1: trim30(readRow(row, ["phone1", "Phone1"]) ?? "") || null,
+        areaLimitProvince: trim30(readRow(row, ["area_limit_province", "areaLimitProvince", "AreaLimitProvince"]) ?? "") || null,
+        areaLimitCircle: trim30(readRow(row, ["area_limit_circle", "areaLimitCircle", "AreaLimitCircle"]) ?? "") || null,
+        areaLimitTamvin: trim30(readRow(row, ["area_limit_tamvin", "areaLimitTamvin", "AreaLimitTamvin"]) ?? "") || null,
+        areaLimitCenterName: trim30(readRow(row, ["area_limit_center_name", "areaLimitCenterName", "AreaLimitCenterName"]) ?? "") || null,
+        daysInRole: readNumber2(readRow(row, ["days_in_role", "daysInRole", "DaysInRole"])),
+        chiefMasool: readBool2(readRow(row, ["chief_masool", "chiefMasool", "ChiefMasool", "payable", "Payable", "main_masool", "mainMasool", "MainMasool"])),
+        sameRogheCount: readNumber2(readRow(row, ["same_roghe_count", "sameRogheCount", "SameRogheCount"])),
+        hasRemoveRequest: readBool2(readRow(row, ["has_remove_request", "hasRemoveRequest", "HasRemoveRequest"])),
+        scStarsSum: readNumber2(readRow(row, ["sc_stars_sum", "scStarsSum", "SC_StarsSum"])),
+        bicLevelIdTitle: trim30(readRow(row, ["bic_level_id_title", "bicLevelIdTitle", "BICLevelId_Title"]) ?? "") || null,
+        s1StarsSum: readNumber2(readRow(row, ["s1_stars_sum", "s1StarsSum", "S1_StarsSum"])),
+        bi1LevelIdTitle: trim30(readRow(row, ["bi1_level_id_title", "bi1LevelIdTitle", "BI1LevelId_Title"]) ?? "") || null,
+        pm1PayAmount: readNumber2(readRow(row, ["pm1_pay_amount", "pm1PayAmount", "PM1_PayAmount"])),
+        s2StarsSum: readNumber2(readRow(row, ["s2_stars_sum", "s2StarsSum", "S2_StarsSum"])),
+        bi2LevelIdTitle: trim30(readRow(row, ["bi2_level_id_title", "bi2LevelIdTitle", "BI2LevelId_Title"]) ?? "") || null,
+        pm2PayAmount: readNumber2(readRow(row, ["pm2_pay_amount", "pm2PayAmount", "PM2_PayAmount"])),
+        s3StarsSum: readNumber2(readRow(row, ["s3_stars_sum", "s3StarsSum", "S3_StarsSum"])),
+        bi3LevelIdTitle: trim30(readRow(row, ["bi3_level_id_title", "bi3LevelIdTitle", "BI3LevelId_Title"]) ?? "") || null,
+        pm3PayAmount: readNumber2(readRow(row, ["pm3_pay_amount", "pm3PayAmount", "PM3_PayAmount"])),
+        roles: trim30(readRow(row, ["roles", "Roles"]) ?? "") || null,
+        orgs: trim30(readRow(row, ["orgs", "Orgs"]) ?? "") || null,
+        levelTitle: trim30(readRow(row, ["level_title", "levelTitle", "LevelTitle"]) ?? "") || null,
+        gender: trim30(readRow(row, ["gender", "Gender"]) ?? "") || null,
+        fullName: fullNameLegacy || [firstName, fatherName, grandFatherName, lastName].filter(Boolean).join(" ") || null
+      };
+    };
+    finalizeResult = (rawRows) => {
+      const rows = rawRows.map(mapRow17);
+      return { total: rows.length, rows, parityDataSource: "legacy-read" };
+    };
+    listHwyMasoolinPerformance = async (input, roleNames, actorUsername2) => {
+      await assertHwyMasoolinPerformanceAccess(roleNames);
+      const rawRows = await queryLegacyMasoolinPerformance(input, actorUsername2, roleNames);
+      return finalizeResult(rawRows);
+    };
+    exportHwyMasoolinPerformance = async (input, roleNames, actorUsername2, mode) => {
+      await assertHwyMasoolinPerformanceAccess(roleNames);
+      const rawRows = mode === "legacy-sp" ? await queryLegacyMasoolinPerformanceExport() : await queryLegacyMasoolinPerformance(input, actorUsername2, roleNames);
+      return finalizeResult(rawRows);
+    };
+    setHwyMasoolinChiefMasool = async (memberId, roleNames) => {
+      if (!Number.isFinite(memberId) || memberId <= 0) {
+        throw new Error("Valid memberId is required.");
+      }
+      await assertHwyMasoolinSetChiefMasoolAccess(roleNames);
+      await dbMasoolinSetAsMainPayable(memberId);
+    };
+    loadHwyMasoolinPerformanceFilterOptions = async (provinceId, circleId, roleNames) => {
+      await assertHwyMasoolinPerformanceAccess(roleNames);
+      const [genders, provinces] = await Promise.all([
+        loadLegacyHwyPaymentDocumentsGenders(),
+        loadLegacyHwyPaymentDocumentsProvinces()
+      ]);
+      const provinceNum = Number(provinceId);
+      const circleNum = Number(circleId);
+      const circles = Number.isFinite(provinceNum) && provinceNum > 0 ? await listLegacyHwyPaymentDocumentCircles(provinceNum) : [];
+      const tamvins = Number.isFinite(circleNum) && circleNum > 0 ? await listLegacyHwyPaymentDocumentTamvins(circleNum) : [];
+      return {
+        genders: genders.map((row) => ({ id: String(row.id), title: row.title })),
+        provinces: provinces.map((row) => ({ id: String(row.id), title: row.title })),
+        circles: circles.map((row) => ({ id: String(row.id), title: row.title })),
+        tamvins: tamvins.map((row) => ({ id: String(row.id), title: row.title }))
+      };
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyMasoolinStars.service.ts
+var runHwyMasoolinStarsMonthBatch, runHwyMasoolinStarsRecalcMember;
+var init_hwyMasoolinStars_service = __esm({
+  "src/server/domain/hwy/hwyMasoolinStars.service.ts"() {
+    init_hwyFinanceDbWrite_service();
+    runHwyMasoolinStarsMonthBatch = async (year, month) => {
+      if (!Number.isFinite(year) || !Number.isFinite(month) || month < 1 || month > 12) {
+        throw new Error("Valid year and month (1\u201312) are required.");
+      }
+      await dbMasoolinStarsCreateOrUpdateMonth(year, month);
+    };
+    runHwyMasoolinStarsRecalcMember = async (memberId) => {
+      if (!Number.isFinite(memberId) || memberId <= 0) {
+        throw new Error("Valid memberId is required.");
+      }
+      await dbMasoolinStarsRecalcMember(memberId);
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyMembersSocialScreensLegacyWrite.service.ts
+var import_mssql22, legacyFinalAcceptMembersSocialScreen, legacyFinalRejectMembersSocialScreen;
+var init_hwyMembersSocialScreensLegacyWrite_service = __esm({
+  "src/server/domain/hwy/hwyMembersSocialScreensLegacyWrite.service.ts"() {
+    import_mssql22 = __toESM(require("mssql"), 1);
+    legacyFinalAcceptMembersSocialScreen = async (headerId, actorUserName) => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const pool = await new import_mssql22.default.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().input("UserName", import_mssql22.default.NVarChar, actorUserName).input("Id", import_mssql22.default.Int, headerId).query(`
+        UPDATE dbo.HWY_Members_SocialScreensHeaders
+        SET FinalApproved = 1, FinalApprovedBy = @UserName, FinalApprovedOn = GETDATE()
+        WHERE Id = @Id
+      `);
+      } finally {
+        await pool.close();
+      }
+    };
+    legacyFinalRejectMembersSocialScreen = async (headerId, actorUserName) => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const pool = await new import_mssql22.default.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().input("UserName", import_mssql22.default.NVarChar, actorUserName).input("Id", import_mssql22.default.Int, headerId).query(`
+        UPDATE dbo.HWY_Members_SocialScreensHeaders
+        SET FinalApproved = 0, FinalApprovedBy = @UserName, FinalApprovedOn = GETDATE()
+        WHERE Id = @Id
+      `);
+      } finally {
+        await pool.close();
+      }
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyMembersSocialScreensLegacyRead.service.ts
+var readMemberIdByUsername2, resolveLegacyMembersSocialScreensReviewerMemberId, execLegacyReadQuery, queryLegacyMembersSocialScreensHistoryMonths, queryLegacyMembersSocialScreensNextPerson, queryLegacyMembersSocialScreensForMember;
+var init_hwyMembersSocialScreensLegacyRead_service = __esm({
+  "src/server/domain/hwy/hwyMembersSocialScreensLegacyRead.service.ts"() {
+    init_hwyMembersSocialScreensLegacyAccess();
+    readMemberIdByUsername2 = async (username) => {
+      const trimmed = username.trim();
+      if (!trimmed) return 0;
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const byUserName = await pool.request().input("username", trimmed).query(
+          `SELECT TOP 1 Id AS memberId FROM dbo.HWY_Members WITH (NOLOCK) WHERE UserName = @username ORDER BY Id`
+        );
+        const direct = Number(byUserName.recordset[0]?.memberId ?? 0);
+        if (direct > 0) return direct;
+        const byUserId = await pool.request().input("username", trimmed).query(`
+      SELECT TOP 1 M.Id AS memberId
+      FROM dbo.vw_hwy_platform_users U WITH (NOLOCK)
+      INNER JOIN dbo.HWY_Members M WITH (NOLOCK) ON M.UserId = U.Id
+      WHERE U.UserName = @username
+      ORDER BY M.Id
+    `);
+        return Number(byUserId.recordset[0]?.memberId ?? 0);
+      } finally {
+        await pool.close();
+      }
+    };
+    resolveLegacyMembersSocialScreensReviewerMemberId = async (actorUsername2) => actorUsername2 ? readMemberIdByUsername2(actorUsername2) : 0;
+    execLegacyReadQuery = async (sql23) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(sql23);
+        return result.recordset ?? [];
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyMembersSocialScreensHistoryMonths = async () => execLegacyReadQuery(HWY_MEMBERS_SOCIAL_SCREENS_HISTORY_MONTHS_SQL);
+    queryLegacyMembersSocialScreensNextPerson = async (input, actorUsername2) => {
+      const reviewerMemberId = await resolveLegacyMembersSocialScreensReviewerMemberId(actorUsername2);
+      const procParams = buildHwyMembersSocialScreensNextPersonProcParams(input, reviewerMemberId);
+      const sql23 = formatHwyMembersSocialScreensNextPersonSql(procParams);
+      return execLegacyReadQuery(sql23);
+    };
+    queryLegacyMembersSocialScreensForMember = async (memberId, year, month) => {
+      if (!Number.isFinite(memberId) || memberId <= 0) return [];
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("memberId", memberId).input("year", year).input("month", month).query(`
+        SELECT
+          S.Id AS id,
+          S.FileName AS fileName,
+          S.FileMime AS fileMime,
+          S.CreatedOn AS createdOn,
+          CASE
+            WHEN S.FileBody IS NOT NULL THEN S.FileBody
+            ELSE S.FileBody_xs
+          END AS imageBody
+        FROM dbo.HWY_Members_SocialScreens S WITH (NOLOCK)
+        WHERE S.MemberId = @memberId
+          AND YEAR(S.CreatedOn) = @year
+          AND MONTH(S.CreatedOn) = @month
+        ORDER BY S.CreatedOn ASC
+      `);
+        return result.recordset.map((row) => {
+          const imageBody = row.image_body;
+          return {
+            ...row,
+            imageBase64: imageBody ? Buffer.from(imageBody).toString("base64") : null,
+            imageBody: void 0
+          };
+        });
+      } finally {
+        await pool.close();
+      }
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyMembersSocialScreens.service.ts
+var trim31, readRow2, readNumber3, readBool3, mapHistoryMonth, mapMember, mapScreenRow, loadHwyMembersSocialScreensHistoryMonths, loadHwyMembersSocialScreensWorkflow, loadHwyMembersSocialScreensFilterOptions, applyHwyMembersSocialScreensFinalAccept, applyHwyMembersSocialScreensFinalReject, parseMembersSocialScreensListType, parseMembersSocialScreensMoveDir;
+var init_hwyMembersSocialScreens_service = __esm({
+  "src/server/domain/hwy/hwyMembersSocialScreens.service.ts"() {
+    init_hwyPaymentDocumentsLegacyRead_service();
+    init_hwyMembersSocialScreensAccess_service();
+    init_hwyMembersSocialScreensLegacyWrite_service();
+    init_hwyMembersSocialScreensLegacyRead_service();
+    trim31 = (value) => String(value ?? "").trim();
+    readRow2 = (row, keys) => {
+      for (const key of keys) {
+        if (key in row) return row[key];
+        const pascal = key.charAt(0).toUpperCase() + key.slice(1);
+        if (pascal in row) return row[pascal];
+      }
+      return void 0;
+    };
+    readNumber3 = (value) => {
+      if (value == null || value === "") return null;
+      const numeric = Number(value);
+      return Number.isFinite(numeric) ? numeric : null;
+    };
+    readBool3 = (value) => {
+      if (value === true || value === 1 || value === "1") return true;
+      if (value === false || value === 0 || value === "0") return false;
+      return null;
+    };
+    mapHistoryMonth = (row) => ({
+      y: Number(readRow2(row, ["y", "Y"]) ?? 0),
+      m: Number(readRow2(row, ["m", "M"]) ?? 0)
+    });
+    mapMember = (row) => ({
+      memberId: readNumber3(readRow2(row, ["member_id", "memberId", "MemberId"])),
+      headerId: readNumber3(readRow2(row, ["header_id", "headerId", "HeaderId"])),
+      userName: trim31(readRow2(row, ["user_name", "userName", "UserName"]) ?? "") || null,
+      firstName: trim31(readRow2(row, ["first_name", "firstName", "FirstName"]) ?? "") || null,
+      fatherName: trim31(readRow2(row, ["father_name", "fatherName", "FatherName"]) ?? "") || null,
+      grandFatherName: trim31(readRow2(row, ["grand_father_name", "grandFatherName", "GrandFatherName"]) ?? "") || null,
+      lastName: trim31(readRow2(row, ["last_name", "lastName", "LastName"]) ?? "") || null,
+      phone1: trim31(readRow2(row, ["phone1", "Phone1"]) ?? "") || null,
+      roleNames: trim31(readRow2(row, ["role_names", "roleNames", "RoleNames"]) ?? "") || null,
+      areaLimits: trim31(readRow2(row, ["area_limits", "areaLimits", "AreaLimits"]) ?? "") || null,
+      totalCount: readNumber3(readRow2(row, ["total_count", "totalCount", "TotalCount"])),
+      memberApprovedOn: readRow2(row, ["member_approved_on", "memberApprovedOn", "MemberApprovedOn"]) ? String(readRow2(row, ["member_approved_on", "memberApprovedOn", "MemberApprovedOn"])) : null,
+      facebookId: trim31(readRow2(row, ["facebook_id", "facebookId", "FacebookId"]) ?? "") || null,
+      tweeterId: trim31(readRow2(row, ["tweeter_id", "tweeterId", "TweeterId"]) ?? "") || null,
+      tikTokId: trim31(readRow2(row, ["tik_tok_id", "tikTokId", "TikTokId"]) ?? "") || null,
+      finalApproved: readBool3(readRow2(row, ["final_approved", "finalApproved", "FinalApproved"]))
+    });
+    mapScreenRow = (row) => ({
+      id: Number(readRow2(row, ["id", "Id"]) ?? 0),
+      fileName: trim31(readRow2(row, ["file_name", "fileName", "FileName"]) ?? "") || null,
+      fileMime: trim31(readRow2(row, ["file_mime", "fileMime", "FileMime"]) ?? "") || null,
+      createdOn: readRow2(row, ["created_on", "createdOn", "CreatedOn"]) ? String(readRow2(row, ["created_on", "createdOn", "CreatedOn"])) : null,
+      imageBase64: trim31(readRow2(row, ["image_base64", "imageBase64", "ImageBase64"]) ?? "") || null
+    });
+    loadHwyMembersSocialScreensHistoryMonths = async (roleNames) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      const raw = await queryLegacyMembersSocialScreensHistoryMonths();
+      return raw.map(mapHistoryMonth).filter((row) => row.y > 0 && row.m > 0);
+    };
+    loadHwyMembersSocialScreensWorkflow = async (input, roleNames, actorUsername2) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      const [historyMonthsRaw, nextPersonRaw] = await Promise.all([
+        queryLegacyMembersSocialScreensHistoryMonths(),
+        queryLegacyMembersSocialScreensNextPerson(input, actorUsername2)
+      ]);
+      const historyMonths = historyMonthsRaw.map(mapHistoryMonth).filter((row) => row.y > 0 && row.m > 0);
+      const member = nextPersonRaw.length > 0 ? mapMember(nextPersonRaw[0]) : null;
+      const screens = member?.memberId && input.y > 0 && input.m > 0 ? (await queryLegacyMembersSocialScreensForMember(member.memberId, input.y, input.m)).map(mapScreenRow) : [];
+      return {
+        member,
+        screens,
+        historyMonths,
+        parityDataSource: "legacy-read"
+      };
+    };
+    loadHwyMembersSocialScreensFilterOptions = async (roleNames) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      const [genders, provinces] = await Promise.all([
+        loadLegacyHwyPaymentDocumentsGenders(),
+        loadLegacyHwyPaymentDocumentsProvinces()
+      ]);
+      return {
+        genders: genders.map((row) => ({ id: String(row.id), title: row.title })),
+        provinces: provinces.map((row) => ({ id: String(row.id), title: row.title }))
+      };
+    };
+    applyHwyMembersSocialScreensFinalAccept = async (headerId, roleNames, actorUsername2) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      const actor = trim31(actorUsername2);
+      if (!actor) throw new Error("Actor username is required.");
+      if (!Number.isFinite(headerId) || headerId <= 0) throw new Error("headerId is required.");
+      await legacyFinalAcceptMembersSocialScreen(headerId, actor);
+    };
+    applyHwyMembersSocialScreensFinalReject = async (headerId, roleNames, actorUsername2) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      const actor = trim31(actorUsername2);
+      if (!actor) throw new Error("Actor username is required.");
+      if (!Number.isFinite(headerId) || headerId <= 0) throw new Error("headerId is required.");
+      await legacyFinalRejectMembersSocialScreen(headerId, actor);
+    };
+    parseMembersSocialScreensListType = (value) => {
+      const trimmed = String(value ?? "").trim();
+      if (trimmed === "Accepted" || trimmed === "Rejected" || trimmed === "OnGoing") return trimmed;
+      return "ToDecide";
+    };
+    parseMembersSocialScreensMoveDir = (value) => {
+      const trimmed = String(value ?? "").trim();
+      if (trimmed === "Next" || trimmed === "Prev") return trimmed;
+      return "";
+    };
+  }
+});
+
+// src/server/domain/hwy/hwyPaymentDocumentsMembersLegacyWrite.service.ts
+var init_hwyPaymentDocumentsMembersLegacyWrite_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocumentsMembersLegacyWrite.service.ts"() {
+    init_hwyFinanceDbWrite_service();
+  }
+});
+
+// src/server/domain/hwy/hwyPaymentDocumentsMembers.service.ts
+var trim32, mapRow18, listHwyPaymentDocumentsMembers, loadHwyPaymentDocumentsMembersFilterOptions, loadHwyPaymentDocumentsMembersImages, switchHwyPaymentDocumentsMemberPayability, updateHwyPaymentDocumentsMemberPayAmount;
+var init_hwyPaymentDocumentsMembers_service = __esm({
+  "src/server/domain/hwy/hwyPaymentDocumentsMembers.service.ts"() {
+    init_hwyPaymentDocumentsMembersLegacyAccess();
+    init_hwyPaymentDocumentsMembersAccess_service();
+    init_hwyPaymentDocumentsMembersLegacyRead_service();
+    init_hwyPaymentDocumentsMembersLegacyWrite_service();
+    trim32 = (v) => String(v ?? "").trim();
+    mapRow18 = (row) => ({
+      id: trim32(row.id),
+      username: row.username ? trim32(row.username) : null,
+      firstName: row.first_name ? trim32(row.first_name) : null,
+      fatherName: row.father_name ? trim32(row.father_name) : null,
+      grandFatherName: row.grand_father_name ? trim32(row.grand_father_name) : null,
+      lastName: row.last_name ? trim32(row.last_name) : null,
+      roleName: row.role_name ? trim32(row.role_name) : null,
+      docYear: row.doc_year != null ? Number(row.doc_year) : null,
+      docMonth: row.doc_month != null ? Number(row.doc_month) : null,
+      payAmount: row.pay_amount != null ? Number(row.pay_amount) : null,
+      payableReasonTitle: row.payable_reason_title ? trim32(row.payable_reason_title) : null,
+      payOk: row.pay_ok === true || row.pay_ok === 1,
+      payable: row.payable === true || row.payable === 1
+    });
+    listHwyPaymentDocumentsMembers = async (input, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsMembersAccess(roleNames);
+      const params = buildHwyPaymentDocumentsMembersProcParams(input);
+      const page = Math.max(1, input.page ?? 1);
+      const [total, rawRows] = await Promise.all([
+        queryLegacyPaymentDocumentsMembersCount(input, roleNames, actorUsername2),
+        queryLegacyPaymentDocumentsMembersList(input, roleNames, actorUsername2)
+      ]);
+      return {
+        total,
+        page,
+        pageSize: params.page_size,
+        rows: rawRows.map(mapRow18),
+        parityDataSource: "legacy-read"
+      };
+    };
+    loadHwyPaymentDocumentsMembersFilterOptions = async (nakhebJoinProvinceId, nakhebJoinCircleId, roleNames) => {
+      await assertHwyPaymentDocumentsMembersAccess(roleNames);
+      const [genders, provinces] = await Promise.all([
+        loadLegacyHwyPaymentDocumentsGenders(),
+        loadLegacyHwyPaymentDocumentsProvinces()
+      ]);
+      const provinceNum = Number(String(nakhebJoinProvinceId ?? "").trim());
+      const circleNum = Number(String(nakhebJoinCircleId ?? "").trim());
+      const circles = Number.isFinite(provinceNum) && provinceNum > 0 ? await listLegacyHwyPaymentDocumentCircles(provinceNum) : [];
+      const tamvins = Number.isFinite(circleNum) && circleNum > 0 ? await listLegacyHwyPaymentDocumentTamvins(circleNum) : [];
+      const toOptions = (rows) => rows.map((row) => ({ value: String(row.id), label: row.title }));
+      return {
+        genders: toOptions(genders),
+        provinces: toOptions(provinces),
+        circles: toOptions(circles),
+        tamvins: toOptions(tamvins)
+      };
+    };
+    loadHwyPaymentDocumentsMembersImages = async (lineId, roleNames) => {
+      await assertHwyPaymentDocumentsMembersAccess(roleNames);
+      const id = Number(trim32(lineId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid line id.");
+      return queryLegacyPaymentDocumentsMemberImages(id);
+    };
+    switchHwyPaymentDocumentsMemberPayability = async (lineId, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsMembersAccess(roleNames);
+      const actor = trim32(actorUsername2);
+      if (!actor) throw new Error("Actor username is required.");
+      const id = Number(trim32(lineId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid line id.");
+      await dbSwitchPaymentDocumentsMemberPayability(id, actor);
+    };
+    updateHwyPaymentDocumentsMemberPayAmount = async (lineId, input, roleNames, actorUsername2) => {
+      await assertHwyPaymentDocumentsMembersAccess(roleNames);
+      const actor = trim32(actorUsername2);
+      if (!actor) throw new Error("Actor username is required.");
+      const id = Number(trim32(lineId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid line id.");
+      if (!Number.isFinite(input.payAmount)) throw new Error("payAmount is required.");
+      await dbUpdatePaymentDocumentsMemberPayAmount({
+        lineId: id,
+        payAmount: Math.trunc(input.payAmount),
+        note: trim32(input.note),
+        actorUserName: actor,
+        isAdmin: roleNames.includes("ADMIN")
+      });
+    };
+  }
+});
+
 // src/server/domain/hwy/hwyMeetings.service.ts
-var DEFAULT_PAGE_SIZE12, MAX_PAGE_SIZE12, trim28, assertSqlServer16, clampPage8, assertAccess, listHwyMeetingDefinitions, mapInstance, listHwyMeetingInstances, removeHwyMeetingInstance, addHwyMeetingInstance, listHwyMeetingAttendancePivot, mapMeetingMember, mapAttendance, listHwyMeetingMembers, addHwyMeetingMember, removeHwyMeetingMember, listHwyMeetingInstanceAttendance, addHwyMeetingInstanceHazer, removeHwyMeetingInstanceHazer, listHwyMeetingInstanceHazerin;
+var import_sequelize118, DEFAULT_PAGE_SIZE12, MAX_PAGE_SIZE12, trim33, assertSqlServer16, clampPage8, assertAccess, hwyMeetingsEdgeDataReady, useHwyMeetingsLegacyRead, listHwyMeetingDefinitions, mapInstance, listHwyMeetingInstances, removeHwyMeetingInstance, addHwyMeetingInstance, listHwyMeetingAttendancePivot, mapMeetingMember, mapAttendance, listHwyMeetingMembers, addHwyMeetingMember, removeHwyMeetingMember, listHwyMeetingInstanceAttendance, addHwyMeetingInstanceHazer, removeHwyMeetingInstanceHazer, listHwyMeetingInstanceHazerin;
 var init_hwyMeetings_service = __esm({
   "src/server/domain/hwy/hwyMeetings.service.ts"() {
+    import_sequelize118 = require("sequelize");
+    init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyDbObjects();
     init_hwyExecDbObject();
@@ -262763,7 +266006,7 @@ var init_hwyMeetings_service = __esm({
     init_hwyMeetingsAccess_service();
     DEFAULT_PAGE_SIZE12 = 25;
     MAX_PAGE_SIZE12 = 100;
-    trim28 = (v) => String(v ?? "").trim();
+    trim33 = (value) => String(value ?? "").trim();
     assertSqlServer16 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Hwy meetings requires SQL Server control plane.");
@@ -262777,16 +266020,35 @@ var init_hwyMeetings_service = __esm({
     assertAccess = async (roleNames) => {
       await assertHwyMeetingsManagementAccess(roleNames);
     };
+    hwyMeetingsEdgeDataReady = async () => {
+      const sequelize = getControlPlaneSequelize();
+      const rows = await sequelize.query(
+        `
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.HWY_Meetings_Instances', N'U') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+    `,
+        { type: import_sequelize118.QueryTypes.SELECT }
+      );
+      return Number(rows[0]?.ok) === 1;
+    };
+    useHwyMeetingsLegacyRead = async () => {
+      if (!await hwyLegacyImportParityReady()) {
+        return true;
+      }
+      return !await hwyMeetingsEdgeDataReady();
+    };
     listHwyMeetingDefinitions = async (roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      if (!await hwyLegacyImportParityReady()) {
+      if (await useHwyMeetingsLegacyRead()) {
         const legacyRows = await queryLegacyMeetingDefinitions();
         return legacyRows.map((row) => ({
-          id: trim28(row.id),
-          title: trim28(row.title),
-          viewOrder: row.viewOrder != null ? Number(row.viewOrder) : null
+          id: trim33(row.id),
+          title: trim33(row.title),
+          viewOrder: row.view_order != null ? Number(row.view_order) : null
         }));
       }
       const rows = await execHwyProcedure(
@@ -262794,38 +266056,38 @@ var init_hwyMeetings_service = __esm({
         {}
       );
       return rows.map((row) => ({
-        id: trim28(row.id),
-        title: trim28(row.title),
-        viewOrder: row.viewOrder != null ? Number(row.viewOrder) : null
+        id: trim33(row.id),
+        title: trim33(row.title),
+        viewOrder: row.view_order != null ? Number(row.view_order) : null
       }));
     };
     mapInstance = (row) => ({
-      id: trim28(row.id),
-      meetingId: row.meetingId ? trim28(row.meetingId) : null,
-      memberId: row.memberId ? trim28(row.memberId) : null,
-      createdOn: row.createdOn ? trim28(row.createdOn) : null,
-      eventDate: row.eventDate ? trim28(row.eventDate) : null,
-      title: row.title ? trim28(row.title) : null,
-      meetingTitle: row.meetingTitle ? trim28(row.meetingTitle) : null,
-      username: row.username ? trim28(row.username) : null,
-      firstName: row.firstName ? trim28(row.firstName) : null,
-      fatherName: row.fatherName ? trim28(row.fatherName) : null,
-      lastName: row.lastName ? trim28(row.lastName) : null,
-      hazerinCount: Number(row.hazerinCount ?? 0),
-      membersYetCount: Number(row.membersYetCount ?? 0),
-      membersNotCount: Number(row.membersNotCount ?? 0)
+      id: trim33(row.id),
+      meetingId: row.meeting_id ? trim33(row.meeting_id) : null,
+      memberId: row.member_id ? trim33(row.member_id) : null,
+      createdOn: row.created_on ? trim33(row.created_on) : null,
+      eventDate: row.event_date ? trim33(row.event_date) : null,
+      title: row.title ? trim33(row.title) : null,
+      meetingTitle: row.meeting_title ? trim33(row.meeting_title) : null,
+      username: row.username ? trim33(row.username) : null,
+      firstName: row.first_name ? trim33(row.first_name) : null,
+      fatherName: row.father_name ? trim33(row.father_name) : null,
+      lastName: row.last_name ? trim33(row.last_name) : null,
+      hazerinCount: Number(row.hazerin_count ?? 0),
+      membersYetCount: Number(row.members_yet_count ?? 0),
+      membersNotCount: Number(row.members_not_count ?? 0)
     });
     listHwyMeetingInstances = async (input, roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
       const { page, pageSize, offset } = clampPage8(input.page, input.pageSize);
-      const meetingId = trim28(input.meetingId) ? Number(trim28(input.meetingId)) : null;
+      const meetingId = trim33(input.meetingId) ? Number(trim33(input.meetingId)) : null;
       const procBase = {
         meeting_id: meetingId,
-        username: trim28(input.username) || null
+        username: trim33(input.username) || null
       };
-      if (!await hwyLegacyImportParityReady()) {
+      if (await useHwyMeetingsLegacyRead()) {
         const total2 = await queryLegacyMeetingInstancesCount(meetingId, procBase.username);
         const legacyRows = await queryLegacyMeetingInstancesList(
           meetingId,
@@ -262864,62 +266126,62 @@ var init_hwyMeetings_service = __esm({
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
       await execHwyProcedure("hwy_meetings_remove_instance", {
-        instance_id: Number(trim28(instanceId))
+        instance_id: Number(trim33(instanceId))
       });
     };
     addHwyMeetingInstance = async (input, roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const meetingId = Number(trim28(input.meetingId));
-      const instanceDate = trim28(input.instanceDate);
+      const meetingId = Number(trim33(input.meetingId));
+      const instanceDate = trim33(input.instanceDate);
       if (!meetingId || !instanceDate) {
         throw new Error("meetingId and instanceDate are required.");
       }
       await execHwyProcedure("hwy_meetings_add_instance", {
         meeting_id: meetingId,
         instance_date: instanceDate,
-        actor: trim28(input.actorUsername) || null
+        actor: trim33(input.actorUsername) || null
       });
     };
     listHwyMeetingAttendancePivot = async (meetingId, roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim28(meetingId));
+      const id = Number(trim33(meetingId));
       if (!id) throw new Error("meetingId is required.");
       return execHwyProcedure("hwy_meetings_attendance_pivot", {
         meeting_id: id
       });
     };
     mapMeetingMember = (row) => ({
-      id: trim28(row.id),
-      meetingId: row.meetingId ? trim28(row.meetingId) : null,
-      memberId: row.memberId ? trim28(row.memberId) : null,
-      isMemberYet: row.isMemberYet === true || row.isMemberYet === 1,
-      isMemberYetUpdatedOn: row.isMemberYetUpdatedOn ? trim28(row.isMemberYetUpdatedOn) : null,
-      username: row.username ? trim28(row.username) : null,
-      firstName: row.firstName ? trim28(row.firstName) : null,
-      fatherName: row.fatherName ? trim28(row.fatherName) : null,
-      lastName: row.lastName ? trim28(row.lastName) : null
+      id: trim33(row.id),
+      meetingId: row.meeting_id ? trim33(row.meeting_id) : null,
+      memberId: row.member_id ? trim33(row.member_id) : null,
+      isMemberYet: row.is_member_yet === true || row.is_member_yet === 1,
+      isMemberYetUpdatedOn: row.is_member_yet_updated_on ? trim33(row.is_member_yet_updated_on) : null,
+      username: row.username ? trim33(row.username) : null,
+      firstName: row.first_name ? trim33(row.first_name) : null,
+      fatherName: row.father_name ? trim33(row.father_name) : null,
+      lastName: row.last_name ? trim33(row.last_name) : null
     });
     mapAttendance = (row) => ({
-      id: trim28(row.id),
-      instanceId: trim28(row.instanceId),
-      meetingId: row.meetingId ? trim28(row.meetingId) : null,
-      memberId: row.memberId ? trim28(row.memberId) : null,
-      username: row.username ? trim28(row.username) : null,
-      firstName: row.firstName ? trim28(row.firstName) : null,
-      fatherName: row.fatherName ? trim28(row.fatherName) : null,
-      lastName: row.lastName ? trim28(row.lastName) : null,
-      isMemberYet: row.isMemberYet === true || row.isMemberYet === 1,
+      id: trim33(row.id),
+      instanceId: trim33(row.instance_id),
+      meetingId: row.meeting_id ? trim33(row.meeting_id) : null,
+      memberId: row.member_id ? trim33(row.member_id) : null,
+      username: row.username ? trim33(row.username) : null,
+      firstName: row.first_name ? trim33(row.first_name) : null,
+      fatherName: row.father_name ? trim33(row.father_name) : null,
+      lastName: row.last_name ? trim33(row.last_name) : null,
+      isMemberYet: row.is_member_yet === true || row.is_member_yet === 1,
       present: row.present === true || row.present === 1
     });
     listHwyMeetingMembers = async (meetingId, roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim28(meetingId));
+      const id = Number(trim33(meetingId));
       if (!id) throw new Error("meetingId is required.");
       const rows = await execHwyProcedure("hwy_meetings_members_list", {
         meeting_id: id
@@ -262930,10 +266192,10 @@ var init_hwyMeetings_service = __esm({
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const meetingId = Number(trim28(input.meetingId));
+      const meetingId = Number(trim33(input.meetingId));
       if (!meetingId) throw new Error("meetingId is required.");
-      const memberId = trim28(input.memberId) ? Number(trim28(input.memberId)) : null;
-      const username = trim28(input.username) || null;
+      const memberId = trim33(input.memberId) ? Number(trim33(input.memberId)) : null;
+      const username = trim33(input.username) || null;
       if (memberId == null && !username) {
         throw new Error("memberId or username is required.");
       }
@@ -262941,25 +266203,25 @@ var init_hwyMeetings_service = __esm({
         meeting_id: meetingId,
         member_id: memberId,
         username,
-        actor: trim28(input.actorUsername) || null
+        actor: trim33(input.actorUsername) || null
       });
     };
     removeHwyMeetingMember = async (input, roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const rowId = Number(trim28(input.rowId));
+      const rowId = Number(trim33(input.rowId));
       if (!rowId) throw new Error("rowId is required.");
       await execHwyProcedure("hwy_meetings_members_remove", {
         row_id: rowId,
-        actor: trim28(input.actorUsername) || null
+        actor: trim33(input.actorUsername) || null
       });
     };
     listHwyMeetingInstanceAttendance = async (instanceId, roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim28(instanceId));
+      const id = Number(trim33(instanceId));
       if (!id) throw new Error("instanceId is required.");
       const rows = await execHwyProcedure("hwy_meetings_instance_attendance_list", {
         instance_id: id
@@ -262970,25 +266232,25 @@ var init_hwyMeetings_service = __esm({
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const instanceId = Number(trim28(input.instanceId));
+      const instanceId = Number(trim33(input.instanceId));
       if (!instanceId) throw new Error("instanceId is required.");
       await execHwyProcedure("hwy_meetings_hazerin_add", {
         instance_id: instanceId,
-        member_id: trim28(input.memberId) ? Number(trim28(input.memberId)) : null,
-        username: trim28(input.username) || null,
-        device_lat: trim28(input.deviceLat) || null,
-        device_lon: trim28(input.deviceLon) || null,
-        device_datetime: trim28(input.deviceDateTime) || null,
-        device_id: trim28(input.deviceId) || null,
-        actor: trim28(input.actorUsername) || null
+        member_id: trim33(input.memberId) ? Number(trim33(input.memberId)) : null,
+        username: trim33(input.username) || null,
+        device_lat: trim33(input.deviceLat) || null,
+        device_lon: trim33(input.deviceLon) || null,
+        device_datetime: trim33(input.deviceDateTime) || null,
+        device_id: trim33(input.deviceId) || null,
+        actor: trim33(input.actorUsername) || null
       });
     };
     removeHwyMeetingInstanceHazer = async (input, roleNames) => {
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const instanceId = Number(trim28(input.instanceId));
-      const memberId = Number(trim28(input.memberId));
+      const instanceId = Number(trim33(input.instanceId));
+      const memberId = Number(trim33(input.memberId));
       if (!instanceId || !memberId) throw new Error("instanceId and memberId are required.");
       await execHwyProcedure("hwy_meetings_hazerin_remove", {
         instance_id: instanceId,
@@ -262999,17 +266261,17 @@ var init_hwyMeetings_service = __esm({
       assertSqlServer16();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim28(instanceId));
+      const id = Number(trim33(instanceId));
       if (!id) throw new Error("instanceId is required.");
       const rows = await execHwyProcedure("hwy_meetings_instance_hazerin_list", {
         instance_id: id
       });
       return rows.map((row) => ({
-        memberId: trim28(row.memberId),
-        username: row.username ? trim28(row.username) : null,
-        firstName: row.firstName ? trim28(row.firstName) : null,
-        fatherName: row.fatherName ? trim28(row.fatherName) : null,
-        lastName: row.lastName ? trim28(row.lastName) : null
+        memberId: trim33(row.member_id),
+        username: row.username ? trim33(row.username) : null,
+        firstName: row.first_name ? trim33(row.first_name) : null,
+        fatherName: row.father_name ? trim33(row.father_name) : null,
+        lastName: row.last_name ? trim33(row.last_name) : null
       }));
     };
   }
@@ -263186,7 +266448,7 @@ var init_hwyMemberTarghinAdmin = __esm({
 
 // src/server/domain/hwy/hwyMemberTarghinDossierFaceFinalize.service.ts
 async function loadCpMemberFacesByActorKeys(actorKeys) {
-  const keys = [...new Set(actorKeys.map(trim29).filter(Boolean))];
+  const keys = [...new Set(actorKeys.map(trim34).filter(Boolean))];
   const result = /* @__PURE__ */ new Map();
   if (!keys.length) {
     return result;
@@ -263209,15 +266471,15 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       WHERE id IN (${idPlaceholders})
          OR username IN (${usernamePlaceholders})
       `,
-      { replacements, type: import_sequelize117.QueryTypes.SELECT }
+      { replacements, type: import_sequelize119.QueryTypes.SELECT }
     );
     for (const row of rows) {
       const face = mapVmRowToFace2(row);
       if (!negoAuthorHasLabel(face)) {
         continue;
       }
-      const memberId = trim29(row.id);
-      const username = trim29(row.username);
+      const memberId = trim34(row.id);
+      const username = trim34(row.username);
       for (const key of keys) {
         if (key === memberId || key === username) {
           result.set(key, face);
@@ -263235,18 +266497,18 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       FROM dbo.vw_hwy_members WITH (NOLOCK)
       WHERE username IN (${unPlaceholders})
       `,
-      { replacements: unReplacements, type: import_sequelize117.QueryTypes.SELECT }
+      { replacements: unReplacements, type: import_sequelize119.QueryTypes.SELECT }
     );
     for (const row of rows) {
       const face = mapVmRowToFace2(row);
       if (!negoAuthorHasLabel(face)) {
         continue;
       }
-      const username = trim29(row.username);
+      const username = trim34(row.username);
       if (username) {
         result.set(username, face);
       }
-      result.set(trim29(row.id), face);
+      result.set(trim34(row.id), face);
     }
   }
   return result;
@@ -263317,36 +266579,36 @@ async function finalizeTarghinMemberFacesForDossier(rows, readFace, writeFace) {
     }
   }
 }
-var import_sequelize117, trim29, mapVmRowToFace2, collectLookupKeysFromFace, mergeCpFaceOntoTarghinFace;
+var import_sequelize119, trim34, mapVmRowToFace2, collectLookupKeysFromFace, mergeCpFaceOntoTarghinFace;
 var init_hwyMemberTarghinDossierFaceFinalize_service = __esm({
   "src/server/domain/hwy/hwyMemberTarghinDossierFaceFinalize.service.ts"() {
-    import_sequelize117 = require("sequelize");
+    import_sequelize119 = require("sequelize");
     init_hwyMemberTarghinAdmin();
     init_hwyGeoResponsibilityMemberDisplay();
     init_hwyMemberPersonDisplayName();
     init_controlPlaneSequelize();
     init_hwyMemberTarghinNegoAuthorResolve();
-    trim29 = (value) => String(value ?? "").trim();
+    trim34 = (value) => String(value ?? "").trim();
     mapVmRowToFace2 = (row) => ({
-      id: trim29(row.id),
-      username: trim29(row.username) || null,
-      displayFullName: formatHwyMemberPersonDisplayName(trim29(row.display_full_name)) || null,
-      genderCode: trim29(row.gender_code) || null,
+      id: trim34(row.id),
+      username: trim34(row.username) || null,
+      displayFullName: formatHwyMemberPersonDisplayName(trim34(row.display_full_name)) || null,
+      genderCode: trim34(row.gender_code) || null,
       avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-        avatarUrl: trim29(row.avatar_url) || null,
+        avatarUrl: trim34(row.avatar_url) || null,
         hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1,
         userId: row.user_id != null ? Number(row.user_id) : null
       }),
-      phone: trim29(row.phone1) || null,
-      electoralDivisionPath: trim29(row.electoral_division_path) || null
+      phone: trim34(row.phone1) || null,
+      electoralDivisionPath: trim34(row.electoral_division_path) || null
     });
     collectLookupKeysFromFace = (face) => {
       const keys = [];
-      const id = trim29(face.id);
+      const id = trim34(face.id);
       if (id) {
         keys.push(id);
       }
-      const username = trim29(face.username);
+      const username = trim34(face.username);
       if (username) {
         keys.push(username);
       }
@@ -263408,7 +266670,7 @@ async function listHwyMemberIdsByUserIds(userIds) {
     `SELECT id, user_id
      FROM dbo.hwy_members
      WHERE user_id IN (:userIds)`,
-    { replacements: { userIds: uniqueUserIds }, type: import_sequelize118.QueryTypes.SELECT }
+    { replacements: { userIds: uniqueUserIds }, type: import_sequelize120.QueryTypes.SELECT }
   );
   for (const row of rows) {
     const memberId = Number(row.id);
@@ -263433,7 +266695,7 @@ async function listPlatformUserIdsByHwyMemberIds(memberIds) {
      FROM dbo.hwy_members
      WHERE id IN (:memberIds)
        AND user_id IS NOT NULL`,
-    { replacements: { memberIds: uniqueMemberIds }, type: import_sequelize118.QueryTypes.SELECT }
+    { replacements: { memberIds: uniqueMemberIds }, type: import_sequelize120.QueryTypes.SELECT }
   );
   for (const row of rows) {
     const memberId = Number(row.id);
@@ -263488,10 +266750,10 @@ async function listHwyMemberTarghinExecutorRoleTitlesByMemberId(memberIds) {
 function parseHwyTarghinExecutorMemberId(executorMemberId) {
   return parseMemberId14(executorMemberId);
 }
-var import_sequelize118, parseMemberId14;
+var import_sequelize120, parseMemberId14;
 var init_hwyMemberTarghinExecutorRoles = __esm({
   "src/server/domain/hwy/hwyMemberTarghinExecutorRoles.ts"() {
-    import_sequelize118 = require("sequelize");
+    import_sequelize120 = require("sequelize");
     init_hwyPlatformRoleDisplay();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -263538,7 +266800,7 @@ async function enrichTarghinAdminRequesterMemberIdsFromAccounts(rows) {
   }
 }
 async function attachHwyMemberTarghinAdminRequesters(rows) {
-  const rowsWithIds = rows.filter((row) => trim30(row.id));
+  const rowsWithIds = rows.filter((row) => trim35(row.id));
   if (!rowsWithIds.length) {
     await enrichTarghinAdminRequesterMemberIdsFromAccounts(rows);
     await finalizeTarghinMemberFacesForDossier(
@@ -263559,12 +266821,12 @@ async function attachHwyMemberTarghinAdminRequesters(rows) {
     FROM dbo.hwy_member_targhin_requests WITH (NOLOCK)
     WHERE id IN (${placeholders})
     `,
-    { replacements, type: import_sequelize119.QueryTypes.SELECT }
+    { replacements, type: import_sequelize121.QueryTypes.SELECT }
   );
   const actorsByRequestId = /* @__PURE__ */ new Map();
   for (const row of historyRows) {
-    const requestId = trim30(row.id);
-    const requestBy = trim30(row.requestByLegacy);
+    const requestId = trim35(row.id);
+    const requestBy = trim35(row.requestByLegacy);
     if (requestId && requestBy) {
       actorsByRequestId.set(requestId, requestBy);
     }
@@ -263590,17 +266852,17 @@ async function attachHwyMemberTarghinAdminRequesters(rows) {
     }
   );
 }
-var import_sequelize119, trim30, parseRequesterAccountUserId;
+var import_sequelize121, trim35, parseRequesterAccountUserId;
 var init_hwyMemberTarghinAdminRequesterAttach_service = __esm({
   "src/server/domain/hwy/hwyMemberTarghinAdminRequesterAttach.service.ts"() {
-    import_sequelize119 = require("sequelize");
+    import_sequelize121 = require("sequelize");
     init_hwyMemberTarghinAdmin();
     init_controlPlaneSequelize();
     init_hwyMemberTarghinDossierFaceFinalize_service();
     init_hwyMemberTarghinExecutorRoles();
-    trim30 = (value) => String(value ?? "").trim();
+    trim35 = (value) => String(value ?? "").trim();
     parseRequesterAccountUserId = (face) => {
-      const id = trim30(face?.id);
+      const id = trim35(face?.id);
       const match = /^user-(\d+)$/.exec(id);
       if (!match) {
         return null;
@@ -263623,36 +266885,36 @@ async function resolveHwyTarghinNegoActorLegacyUsername(actorUserId2) {
     FROM dbo.vw_hwy_members WITH (NOLOCK)
     WHERE user_id = :actorUserId
     `,
-    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize120.QueryTypes.SELECT }
+    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize122.QueryTypes.SELECT }
   );
-  const memberUsername = trim31(memberRows[0]?.username);
+  const memberUsername = trim36(memberRows[0]?.username);
   if (memberUsername) {
     return memberUsername;
   }
   const userRows = await sequelize.query(
     `SELECT username FROM dbo.base_users WHERE id = :actorUserId`,
-    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize120.QueryTypes.SELECT }
+    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize122.QueryTypes.SELECT }
   );
-  const baseUsername = trim31(userRows[0]?.username);
+  const baseUsername = trim36(userRows[0]?.username);
   if (baseUsername) {
     return baseUsername;
   }
   return "";
 }
-var import_sequelize120, trim31;
+var import_sequelize122, trim36;
 var init_hwyMemberTarghinNegoActor = __esm({
   "src/server/domain/hwy/hwyMemberTarghinNegoActor.ts"() {
-    import_sequelize120 = require("sequelize");
+    import_sequelize122 = require("sequelize");
     init_controlPlaneSequelize();
-    trim31 = (value) => String(value ?? "").trim();
+    trim36 = (value) => String(value ?? "").trim();
   }
 });
 
 // src/server/domain/hwy/hwyMemberTarghinAdmin.service.ts
-var import_sequelize121, DEFAULT_PAGE_SIZE13, MAX_PAGE_SIZE13, FINAL_NOTE_MAX_LENGTH, trim32, assertSqlServer17, clampPage9, mapMemberFace, mapRequesterFace, mapAdminRow2, listHwyMemberTarghinAdmin, resolveActorUserId, decideHwyMemberTarghinRequest, decideHwyMemberTarghinRequestsBulk;
+var import_sequelize123, DEFAULT_PAGE_SIZE13, MAX_PAGE_SIZE13, FINAL_NOTE_MAX_LENGTH, trim37, assertSqlServer17, clampPage9, mapMemberFace, mapRequesterFace, mapAdminRow2, listHwyMemberTarghinAdmin, resolveActorUserId, decideHwyMemberTarghinRequest, decideHwyMemberTarghinRequestsBulk;
 var init_hwyMemberTarghinAdmin_service = __esm({
   "src/server/domain/hwy/hwyMemberTarghinAdmin.service.ts"() {
-    import_sequelize121 = require("sequelize");
+    import_sequelize123 = require("sequelize");
     init_hwyMemberTarghinRequestStatus();
     init_hwyGeoResponsibilityMemberDisplay();
     init_hwyMemberPersonDisplayName();
@@ -263673,7 +266935,7 @@ var init_hwyMemberTarghinAdmin_service = __esm({
     DEFAULT_PAGE_SIZE13 = 25;
     MAX_PAGE_SIZE13 = 100;
     FINAL_NOTE_MAX_LENGTH = 1024;
-    trim32 = (value) => String(value ?? "").trim();
+    trim37 = (value) => String(value ?? "").trim();
     assertSqlServer17 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Targhin request administration requires SQL Server control plane.");
@@ -263691,7 +266953,7 @@ var init_hwyMemberTarghinAdmin_service = __esm({
       };
     };
     mapMemberFace = (row, prefix) => {
-      const id = trim32(row[`${prefix}Id`]);
+      const id = trim37(row[`${prefix}Id`]);
       if (!id) {
         return {
           id: "",
@@ -263705,18 +266967,18 @@ var init_hwyMemberTarghinAdmin_service = __esm({
       }
       return {
         id,
-        username: trim32(row[`${prefix}Username`]) || null,
+        username: trim37(row[`${prefix}Username`]) || null,
         displayFullName: formatHwyMemberPersonDisplayName(
-          trim32(row[`${prefix}DisplayFullName`])
+          trim37(row[`${prefix}DisplayFullName`])
         ) || null,
-        genderCode: trim32(row[`${prefix}GenderCode`]) || null,
+        genderCode: trim37(row[`${prefix}GenderCode`]) || null,
         avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-          avatarUrl: trim32(row[`${prefix}AvatarUrl`]) || null,
+          avatarUrl: trim37(row[`${prefix}AvatarUrl`]) || null,
           hasProfileImage: row[`${prefix}HasProfileImage`] === true || row[`${prefix}HasProfileImage`] === 1,
           userId: row[`${prefix}UserId`] != null ? Number(row[`${prefix}UserId`]) : null
         }),
-        phone: trim32(row[`${prefix}Phone`]) || null,
-        electoralDivisionPath: trim32(row[`${prefix}ElectoralDivisionPath`]) || null
+        phone: trim37(row[`${prefix}Phone`]) || null,
+        electoralDivisionPath: trim37(row[`${prefix}ElectoralDivisionPath`]) || null
       };
     };
     mapRequesterFace = (row) => {
@@ -263724,8 +266986,8 @@ var init_hwyMemberTarghinAdmin_service = __esm({
       if (fromMember.id) {
         return fromMember;
       }
-      const accountUserId = trim32(row.requesterAccountUserId);
-      const accountUsername = trim32(row.requesterAccountUsername);
+      const accountUserId = trim37(row.requester_account_user_id);
+      const accountUsername = trim37(row.requester_account_username);
       if (!accountUserId && !accountUsername) {
         return null;
       }
@@ -263745,26 +267007,26 @@ var init_hwyMemberTarghinAdmin_service = __esm({
     };
     mapAdminRow2 = (row, viewerNegoActorLegacy) => {
       const member = mapMemberFace(row, "member");
-      const deciderId = trim32(row.deciderId);
-      const lastNegoNoteWriterLegacy = trim32(row.lastNegoNoteWriterLegacy) || null;
+      const deciderId = trim37(row.decider_id);
+      const lastNegoNoteWriterLegacy = trim37(row.last_nego_note_writer_legacy) || null;
       return {
-        id: trim32(row.id),
+        id: trim37(row.id),
         memberId: member.id,
         member,
-        requestReasonCode: trim32(row.requestReasonCode) || null,
-        requestReasonCodeTitle: trim32(row.requestReasonCodeTitle) || void 0,
-        requestNote: trim32(row.requestNote) || null,
-        createdAt: String(row.createdAt ?? ""),
-        statusCode: trim32(row.statusCode),
+        requestReasonCode: trim37(row.request_reason_code) || null,
+        requestReasonCodeTitle: trim37(row.request_reason_code_title) || void 0,
+        requestNote: trim37(row.request_note) || null,
+        createdAt: String(row.created_at ?? ""),
+        statusCode: trim37(row.status_code),
         requester: mapRequesterFace(row),
         requesterMemberId: null,
-        finalReasonCode: trim32(row.finalReasonCode) || null,
-        finalReasonCodeTitle: trim32(row.finalReasonCodeTitle) || void 0,
-        finalNote: trim32(row.finalNote) || null,
-        finalAt: row.finalAt ? String(row.finalAt) : null,
+        finalReasonCode: trim37(row.final_reason_code) || null,
+        finalReasonCodeTitle: trim37(row.final_reason_code_title) || void 0,
+        finalNote: trim37(row.final_note) || null,
+        finalAt: row.final_at ? String(row.final_at) : null,
         decider: deciderId ? mapMemberFace(row, "decider") : null,
         deciderMemberId: null,
-        lastNegoNote: trim32(row.lastNegoNote) || null,
+        lastNegoNote: trim37(row.last_nego_note) || null,
         lastNegoNoteWriterLegacy,
         lastNegoNoteIsByViewer: Boolean(
           lastNegoNoteWriterLegacy && viewerNegoActorLegacy && lastNegoNoteWriterLegacy === viewerNegoActorLegacy
@@ -263772,7 +267034,7 @@ var init_hwyMemberTarghinAdmin_service = __esm({
         negoNoteCount: Math.max(
           0,
           Number(
-            row.negoNoteCount ?? row.NegoNoteCount ?? row.negonotecount ?? 0
+            row.nego_note_count ?? row.NegoNoteCount ?? row.negonotecount ?? 0
           )
         )
       };
@@ -263784,7 +267046,7 @@ var init_hwyMemberTarghinAdmin_service = __esm({
       const viewerNegoActorLegacy = await resolveHwyTarghinNegoActorLegacyUsername(input.actorUserId ?? null);
       const { page, pageSize, offset } = clampPage9(input.page, input.pageSize);
       const statusCode = queue2 === "pending" ? HWY_MEMBER_TARGHIN_REQUEST_STATUS.pending : queue2 === "approved" ? HWY_MEMBER_TARGHIN_REQUEST_STATUS.approved : queue2 === "rejected" ? HWY_MEMBER_TARGHIN_REQUEST_STATUS.rejected : null;
-      const search = trim32(input.search);
+      const search = trim37(input.search);
       const procArgs = {
         status_code: statusCode,
         nego_state: negoState || null,
@@ -263877,18 +267139,18 @@ var init_hwyMemberTarghinAdmin_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT id FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId: actorUserId2 }, type: import_sequelize121.QueryTypes.SELECT }
+        { replacements: { userId: actorUserId2 }, type: import_sequelize123.QueryTypes.SELECT }
       );
       return rows.length ? actorUserId2 : null;
     };
     decideHwyMemberTarghinRequest = async (input) => {
       await assertSqlServer17();
-      const requestId = trim32(input.requestId);
+      const requestId = trim37(input.requestId);
       if (!requestId) {
         throw new Error("Request id is required.");
       }
       const finalReasonCode = await assertHwyMemberTarghinFinalReasonCode(input.decision, input.finalReasonCode);
-      const finalNote = trim32(input.finalNote);
+      const finalNote = trim37(input.finalNote);
       if (!finalNote) {
         throw new Error("Decision note is required.");
       }
@@ -263912,9 +267174,9 @@ var init_hwyMemberTarghinAdmin_service = __esm({
           throw new Error("Could not save targhin decision.");
         }
         return {
-          requestId: String(row.requestId),
-          memberId: String(row.memberId),
-          statusCode: String(row.statusCode)
+          requestId: String(row.request_id),
+          memberId: String(row.member_id),
+          statusCode: String(row.status_code)
         };
       } catch (error) {
         const message = error instanceof Error ? error.message : "";
@@ -263928,7 +267190,7 @@ var init_hwyMemberTarghinAdmin_service = __esm({
       }
     };
     decideHwyMemberTarghinRequestsBulk = async (input) => {
-      const uniqueIds = [...new Set(input.requestIds.map((id) => trim32(id)).filter(Boolean))];
+      const uniqueIds = [...new Set(input.requestIds.map((id) => trim37(id)).filter(Boolean))];
       if (uniqueIds.length === 0) {
         throw new Error("Select at least one targhin request.");
       }
@@ -263949,7 +267211,7 @@ var init_hwyMemberTarghinAdmin_service = __esm({
 
 // src/server/domain/hwy/hwyMemberTarghinMembersListExecutorAttach.service.ts
 async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
-  const keys = [...new Set(legacyKeys.map(trim33).filter(Boolean))];
+  const keys = [...new Set(legacyKeys.map(trim38).filter(Boolean))];
   const result = /* @__PURE__ */ new Map();
   if (!keys.length) {
     return { faces: result, stillMissingKeys: [] };
@@ -263974,7 +267236,7 @@ async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
       FROM dbo.vw_hwy_members WITH (NOLOCK)
       WHERE id IN (${idPlaceholders})
       `,
-      { replacements: idReplacements, type: import_sequelize122.QueryTypes.SELECT }
+      { replacements: idReplacements, type: import_sequelize124.QueryTypes.SELECT }
     );
     for (const row of byIdRows) {
       const face = mapVmRowToFace3(row);
@@ -264006,7 +267268,7 @@ async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
       FROM dbo.vw_hwy_members WITH (NOLOCK)
       WHERE username IN (${unPlaceholders})
       `,
-      { replacements: unReplacements, type: import_sequelize122.QueryTypes.SELECT }
+      { replacements: unReplacements, type: import_sequelize124.QueryTypes.SELECT }
     );
     for (const row of byUsernameRows) {
       const face = mapVmRowToFace3(row);
@@ -264056,7 +267318,7 @@ async function loadFinalByLegacyFromControlPlane(memberIds) {
     WHERE rn = 1
       AND final_by_legacy IS NOT NULL
     `,
-    { replacements, type: import_sequelize122.QueryTypes.SELECT }
+    { replacements, type: import_sequelize124.QueryTypes.SELECT }
   );
   for (const row of rows) {
     const memberId = String(row.member_id ?? "").trim();
@@ -264098,29 +267360,29 @@ async function attachHwyTarghinMembersListExecutors(rows) {
   }
   return legacyRoleTitlesByUsername;
 }
-var import_sequelize122, trim33, mapVmRowToFace3, parseMemberId15;
+var import_sequelize124, trim38, mapVmRowToFace3, parseMemberId15;
 var init_hwyMemberTarghinMembersListExecutorAttach_service = __esm({
   "src/server/domain/hwy/hwyMemberTarghinMembersListExecutorAttach.service.ts"() {
-    import_sequelize122 = require("sequelize");
+    import_sequelize124 = require("sequelize");
     init_hwyMemberTarghinAdmin();
     init_hwyMemberTarghinRequestStatus();
     init_controlPlaneSequelize();
     init_hwyGeoResponsibilityMemberDisplay();
     init_hwyMemberPersonDisplayName();
     init_hwyMemberTarghinNegoAuthorResolve();
-    trim33 = (value) => String(value ?? "").trim();
+    trim38 = (value) => String(value ?? "").trim();
     mapVmRowToFace3 = (row) => ({
-      id: trim33(row.id),
-      username: trim33(row.username) || null,
-      displayFullName: formatHwyMemberPersonDisplayName(trim33(row.display_full_name)) || null,
-      genderCode: trim33(row.gender_code) || null,
+      id: trim38(row.id),
+      username: trim38(row.username) || null,
+      displayFullName: formatHwyMemberPersonDisplayName(trim38(row.display_full_name)) || null,
+      genderCode: trim38(row.gender_code) || null,
       avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-        avatarUrl: trim33(row.avatar_url) || null,
+        avatarUrl: trim38(row.avatar_url) || null,
         hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1,
         userId: row.user_id != null ? Number(row.user_id) : null
       }),
-      phone: trim33(row.phone1) || null,
-      electoralDivisionPath: trim33(row.electoral_division_path) || null
+      phone: trim38(row.phone1) || null,
+      electoralDivisionPath: trim38(row.electoral_division_path) || null
     });
     parseMemberId15 = (memberId) => {
       const trimmed = String(memberId ?? "").trim();
@@ -264189,7 +267451,7 @@ var init_hwyTarghinExecutorRoleTitles = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberTarghinMembersList.service.ts
-var DEFAULT_PAGE_SIZE14, MAX_PAGE_SIZE14, trim34, assertSqlServer18, clampPage10, mapFace, listHwyMemberTarghinMembers;
+var DEFAULT_PAGE_SIZE14, MAX_PAGE_SIZE14, trim39, assertSqlServer18, clampPage10, mapFace, listHwyMemberTarghinMembers;
 var init_hwyMemberTarghinMembersList_service = __esm({
   "src/server/domain/hwy/hwyMemberTarghinMembersList.service.ts"() {
     init_hwyGeoResponsibilityMemberDisplay();
@@ -264209,7 +267471,7 @@ var init_hwyMemberTarghinMembersList_service = __esm({
     init_hwyTarghinExecutorRoleTitles();
     DEFAULT_PAGE_SIZE14 = 25;
     MAX_PAGE_SIZE14 = 100;
-    trim34 = (value) => String(value ?? "").trim();
+    trim39 = (value) => String(value ?? "").trim();
     assertSqlServer18 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Targhined member list requires SQL Server control plane.");
@@ -264227,21 +267489,21 @@ var init_hwyMemberTarghinMembersList_service = __esm({
       };
     };
     mapFace = (row, prefix) => {
-      const id = trim34(row[`${prefix}Id`]);
+      const id = trim39(row[`${prefix}Id`]);
       return {
         id,
-        username: trim34(row[`${prefix}Username`]) || null,
+        username: trim39(row[`${prefix}Username`]) || null,
         displayFullName: formatHwyMemberPersonDisplayName(
-          trim34(row[`${prefix}DisplayFullName`])
+          trim39(row[`${prefix}DisplayFullName`])
         ) || null,
-        genderCode: trim34(row[`${prefix}GenderCode`]) || null,
+        genderCode: trim39(row[`${prefix}GenderCode`]) || null,
         avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-          avatarUrl: trim34(row[`${prefix}AvatarUrl`]) || null,
+          avatarUrl: trim39(row[`${prefix}AvatarUrl`]) || null,
           hasProfileImage: row[`${prefix}HasProfileImage`] === true || row[`${prefix}HasProfileImage`] === 1,
           userId: row[`${prefix}UserId`] != null ? Number(row[`${prefix}UserId`]) : null
         }),
-        phone: trim34(row[`${prefix}Phone`]) || null,
-        electoralDivisionPath: trim34(row[`${prefix}ElectoralDivisionPath`]) || null
+        phone: trim39(row[`${prefix}Phone`]) || null,
+        electoralDivisionPath: trim39(row[`${prefix}ElectoralDivisionPath`]) || null
       };
     };
     listHwyMemberTarghinMembers = async (input, queryLang = "ar") => {
@@ -264251,7 +267513,7 @@ var init_hwyMemberTarghinMembersList_service = __esm({
         "pending_cancellation"
       );
       const { page, pageSize, offset } = clampPage10(input.page, input.pageSize);
-      const search = trim34(input.search);
+      const search = trim39(input.search);
       const searchLike = search ? `%${search}%` : null;
       const countRows = await execHwyProcedure("hwy_targhin_members_count", {
         targhin_status_code: targhinStatusCode,
@@ -264276,20 +267538,20 @@ var init_hwyMemberTarghinMembersList_service = __esm({
       );
       const mappedRows = rows.map((row) => {
         const member = mapFace(row, "member");
-        const executorId = trim34(row.executorId);
+        const executorId = trim39(row.executor_id);
         const executorMemberId = parseHwyTarghinExecutorMemberId(executorId);
         return {
           memberId: member.id,
           member,
-          membershipStatusUpdatedOn: row.membershipStatusUpdatedOn ? String(row.membershipStatusUpdatedOn) : null,
-          membershipOn: row.membershipOn ? String(row.membershipOn) : null,
-          latestRequestReasonCodeTitle: trim34(row.latestRequestReasonCodeTitle) || void 0,
-          latestRequestNote: trim34(row.latestRequestNote) || null,
-          latestFinalReasonCodeTitle: trim34(row.latestFinalReasonCodeTitle) || void 0,
-          latestFinalNote: trim34(row.latestFinalNote) || null,
-          latestFinalAt: row.latestFinalAt ? String(row.latestFinalAt) : null,
-          latestProcessNegoNote: trim34(row.latestProcessNegoNote) || null,
-          executor: executorId || trim34(row.executorUsername) ? mapFace(row, "executor") : null,
+          membershipStatusUpdatedOn: row.membership_status_updated_on ? String(row.membership_status_updated_on) : null,
+          membershipOn: row.membership_on ? String(row.membership_on) : null,
+          latestRequestReasonCodeTitle: trim39(row.latest_request_reason_code_title) || void 0,
+          latestRequestNote: trim39(row.latest_request_note) || null,
+          latestFinalReasonCodeTitle: trim39(row.latest_final_reason_code_title) || void 0,
+          latestFinalNote: trim39(row.latest_final_note) || null,
+          latestFinalAt: row.latest_final_at ? String(row.latest_final_at) : null,
+          latestProcessNegoNote: trim39(row.latest_process_nego_note) || null,
+          executor: executorId || trim39(row.executor_username) ? mapFace(row, "executor") : null,
           executorMemberId,
           executorAccountUserId: readHwyProcedureRowUserId(
             row,
@@ -264307,7 +267569,7 @@ var init_hwyMemberTarghinMembersList_service = __esm({
           if (row.executorMemberId != null) {
             return row.executorMemberId;
           }
-          const executorId = trim34(row.executor?.id);
+          const executorId = trim39(row.executor?.id);
           return parseHwyTarghinExecutorMemberId(executorId);
         }).filter((id) => id != null)
       );
@@ -264315,7 +267577,7 @@ var init_hwyMemberTarghinMembersList_service = __esm({
         if (row.executorAccountUserId != null && row.executorAccountUserId > 0) {
           return row.executorAccountUserId;
         }
-        const faceId = trim34(row.executor?.id);
+        const faceId = trim39(row.executor?.id);
         const userPrefix = faceId.startsWith("user-") ? faceId.slice("user-".length) : "";
         if (/^\d+$/.test(userPrefix)) {
           return Number(userPrefix);
@@ -264359,7 +267621,7 @@ var init_hwyMemberTarghinMembersList_service = __esm({
           return {
             ...row,
             executorRoleTitles,
-            executorMemberId: resolveTarghinRowFaceDossierMemberId(row.executorMemberId, row.executor) || null
+            executorMemberId: resolveTarghinRowFaceDossierMemberId(executorMemberId, row.executor) || null
           };
         })
       };
@@ -264411,10 +267673,10 @@ var init_hwyMemberPhoneRequests = __esm({
 });
 
 // src/server/domain/hwy/hwyMemberTarghinNegoNotes.service.ts
-var import_sequelize123, NOTE_MAX_LENGTH, trim35, assertSqlServer19, mapAuthorFace, listHwyMemberTarghinNegoNotes, createHwyMemberTarghinNegoNote;
+var import_sequelize125, NOTE_MAX_LENGTH, trim40, assertSqlServer19, mapAuthorFace, listHwyMemberTarghinNegoNotes, createHwyMemberTarghinNegoNote;
 var init_hwyMemberTarghinNegoNotes_service = __esm({
   "src/server/domain/hwy/hwyMemberTarghinNegoNotes.service.ts"() {
-    import_sequelize123 = require("sequelize");
+    import_sequelize125 = require("sequelize");
     init_hwyGeoResponsibilityMemberDisplay();
     init_hwyMemberPersonDisplayName();
     init_controlPlaneSequelize();
@@ -264426,7 +267688,7 @@ var init_hwyMemberTarghinNegoNotes_service = __esm({
     init_hwyMemberTarghinNegoAuthorResolve();
     init_hwyMemberTarghinNegoActor();
     NOTE_MAX_LENGTH = 4e3;
-    trim35 = (value) => String(value ?? "").trim();
+    trim40 = (value) => String(value ?? "").trim();
     assertSqlServer19 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Targhin negotiation notes require SQL Server control plane.");
@@ -264435,29 +267697,29 @@ var init_hwyMemberTarghinNegoNotes_service = __esm({
       await ensureHwyDbObjects();
     };
     mapAuthorFace = (row) => {
-      const memberAuthorId = trim35(row.authorId);
-      const memberDisplay = trim35(row.authorDisplayFullName);
-      const memberUsername = trim35(row.authorUsername);
-      const accountUserId = row.createdByUserId != null ? Number(row.createdByUserId) : null;
-      const accountUsername = trim35(row.accountUsername);
+      const memberAuthorId = trim40(row.author_id);
+      const memberDisplay = trim40(row.author_display_full_name);
+      const memberUsername = trim40(row.author_username);
+      const accountUserId = row.created_by_user_id != null ? Number(row.created_by_user_id) : null;
+      const accountUsername = trim40(row.account_username);
       const accountDisplay = formatProfileDisplayName({
-        firstname: row.accountFirstname,
-        lastname: row.accountLastname,
-        companyName: row.accountCompanyName,
-        personTypeCode: row.accountPersonTypeCode
+        firstname: row.account_firstname,
+        lastname: row.account_lastname,
+        companyName: row.account_company_name,
+        personTypeCode: row.account_person_type_code
       });
       if (memberAuthorId && (memberDisplay || memberUsername)) {
         return {
           id: memberAuthorId,
           username: memberUsername || null,
           displayFullName: formatHwyMemberPersonDisplayName(memberDisplay) || memberUsername || null,
-          genderCode: trim35(row.authorGenderCode) || null,
+          genderCode: trim40(row.author_gender_code) || null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: trim35(row.authorAvatarUrl) || null,
-            hasProfileImage: row.authorHasProfileImage === true || row.authorHasProfileImage === 1,
-            userId: row.authorUserId != null ? Number(row.authorUserId) : null
+            avatarUrl: trim40(row.author_avatar_url) || null,
+            hasProfileImage: row.author_has_profile_image === true || row.author_has_profile_image === 1,
+            userId: row.author_user_id != null ? Number(row.author_user_id) : null
           }),
-          phone: trim35(row.authorPhone) || null,
+          phone: trim40(row.author_phone) || null,
           electoralDivisionPath: null
         };
       }
@@ -264476,7 +267738,7 @@ var init_hwyMemberTarghinNegoNotes_service = __esm({
           electoralDivisionPath: null
         };
       }
-      const legacy = trim35(row.createdByLegacy);
+      const legacy = trim40(row.created_by_legacy);
       if (legacy && !/^\d+$/.test(legacy)) {
         return {
           id: legacy,
@@ -264492,7 +267754,7 @@ var init_hwyMemberTarghinNegoNotes_service = __esm({
     };
     listHwyMemberTarghinNegoNotes = async (memberIdRaw) => {
       await assertSqlServer19();
-      const memberId = trim35(memberIdRaw);
+      const memberId = trim40(memberIdRaw);
       if (!memberId) {
         throw new Error("Member id is required.");
       }
@@ -264534,18 +267796,18 @@ var init_hwyMemberTarghinNegoNotes_service = __esm({
     WHERE n.member_id = :memberId
     ORDER BY n.created_at DESC, n.id DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize123.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize125.QueryTypes.SELECT }
       );
       const mapped = rows.map((row) => {
-        const createdByUserIdRaw = row.createdByUserId ?? row.createdbyuserid;
+        const createdByUserIdRaw = row.created_by_user_id ?? row.createdbyuserid;
         const createdByUserId = createdByUserIdRaw != null ? Number(createdByUserIdRaw) : null;
         const author = mapAuthorFace(row);
         return {
-          id: trim35(row.id),
-          memberId: trim35(row.memberId),
-          note: trim35(row.note),
-          createdAt: String(row.createdAt ?? ""),
-          createdByLegacy: trim35(row.createdByLegacy),
+          id: trim40(row.id),
+          memberId: trim40(row.member_id),
+          note: trim40(row.note),
+          createdAt: String(row.created_at ?? ""),
+          createdByLegacy: trim40(row.created_by_legacy),
           createdByUserId: Number.isFinite(createdByUserId) && createdByUserId > 0 ? createdByUserId : null,
           author
         };
@@ -264565,8 +267827,8 @@ var init_hwyMemberTarghinNegoNotes_service = __esm({
     };
     createHwyMemberTarghinNegoNote = async (input) => {
       await assertSqlServer19();
-      const memberId = trim35(input.memberId);
-      const note = trim35(input.note);
+      const memberId = trim40(input.memberId);
+      const note = trim40(input.note);
       if (!memberId) {
         throw new Error("Member id is required.");
       }
@@ -264578,7 +267840,7 @@ var init_hwyMemberTarghinNegoNotes_service = __esm({
       }
       const memberExists = await getControlPlaneSequelize().query(
         `SELECT id FROM dbo.hwy_members WHERE id = :memberId`,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize123.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize125.QueryTypes.SELECT }
       );
       if (!memberExists.length) {
         throw new Error("Member not found.");
@@ -264795,7 +268057,16 @@ var init_hwy_routes = __esm({
     init_hwyCandidatePipelineAccess_middleware();
     init_hwyMeetingsAccess_middleware();
     init_hwyEmployeesListAccess_middleware();
+    init_hwyPaymentDocumentsAccess_middleware();
+    init_hwyPaymentDocumentsMembersAccess_middleware();
+    init_hwyMasoolinPerformanceAccess_middleware();
+    init_hwyMembersSocialScreensAccess_middleware();
     init_hwyEmployeesList_service();
+    init_hwyPaymentDocuments_service();
+    init_hwyMasoolinPerformance_service();
+    init_hwyMasoolinStars_service();
+    init_hwyMembersSocialScreens_service();
+    init_hwyPaymentDocumentsMembers_service();
     init_hwyMeetings_service();
     init_hwyMemberTarghinAdmin_service();
     init_hwyMemberTarghinMembersList_service();
@@ -265820,7 +269091,19 @@ var init_hwy_routes = __esm({
           const page = Number(readQueryString2(req.query, "page") || "1") || 1;
           const pageSize = Number(readQueryString2(req.query, "pageSize") || "25") || 25;
           try {
-            const data = await listHwyCoursesAdmin({ queue: queue2, search, page, pageSize, queryLang });
+            const data = await listHwyCoursesAdmin({
+              queue: queue2,
+              search,
+              recordId: readQueryString2(req.query, "recordId"),
+              note: readQueryString2(req.query, "note"),
+              dateFrom: readQueryString2(req.query, "dateFrom"),
+              dateTo: readQueryString2(req.query, "dateTo"),
+              participantUsername: readQueryString2(req.query, "participantUsername"),
+              trainerUsername: readQueryString2(req.query, "trainerUsername"),
+              page,
+              pageSize,
+              queryLang
+            });
             res.json({ success: true, data, meta: { queue: queue2, lang: queryLang } });
           } catch (error) {
             const message = error instanceof Error ? error.message : "Could not load courses.";
@@ -267801,6 +271084,538 @@ var init_hwy_routes = __esm({
             res.json({ success: true });
           } catch (error) {
             const message = error instanceof Error ? error.message : "Remove failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/payment-documents",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        async (req, res) => {
+          try {
+            const data = await listHwyPaymentDocuments(
+              {
+                docYear: readQueryString2(req.query, "docYear"),
+                docMonth: readQueryString2(req.query, "docMonth"),
+                docProvinceId: readQueryString2(req.query, "docProvinceId"),
+                docCircleId: readQueryString2(req.query, "docCircleId"),
+                docGenderId: readQueryString2(req.query, "docGenderId"),
+                vFinalOk: readQueryString2(req.query, "vFinalOk"),
+                vClosed: readQueryString2(req.query, "vClosed"),
+                page: Number(readQueryString2(req.query, "page") || "1"),
+                pageSize: Number(readQueryString2(req.query, "pageSize") || "25")
+              },
+              normalizeAuthRoles(req),
+              req.user?.username ?? req.user?.email ?? null
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load payment documents.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/payment-documents/filter-options",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        async (req, res) => {
+          try {
+            const data = await loadHwyPaymentDocumentsFilterOptions(
+              readQueryString2(req.query, "docProvinceId"),
+              normalizeAuthRoles(req)
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load payment document filters.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/payment-documents/create",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        async (req, res) => {
+          const body = req.body;
+          const docYear = Number(body.docYear);
+          const docMonth = Number(body.docMonth);
+          const docProvinceId = Number(body.docProvinceId);
+          const docGenderId = Number(body.docGenderId);
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim();
+          if (!actorUsername2 || !Number.isFinite(docYear) || !Number.isFinite(docMonth) || !Number.isFinite(docProvinceId) || !Number.isFinite(docGenderId)) {
+            res.status(400).json({ success: false, message: "docYear, docMonth, docProvinceId, and docGenderId are required." });
+            return;
+          }
+          try {
+            await createHwyPaymentDocumentsBatch(
+              { docYear, docMonth, docProvinceId, docGenderId },
+              normalizeAuthRoles(req),
+              actorUsername2
+            );
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Create failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      const paymentDocumentAction = (handler, failureMessage) => async (req, res) => {
+        const documentId = req.params.documentId?.trim();
+        if (!documentId) {
+          res.status(400).json({ success: false, message: "documentId is required." });
+          return;
+        }
+        try {
+          await handler(documentId, normalizeAuthRoles(req), req.user?.username ?? req.user?.email ?? null);
+          res.json({ success: true });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : failureMessage;
+          const status2 = message === "Forbidden." ? 403 : 500;
+          res.status(status2).json({ success: false, message });
+        }
+      };
+      router.post(
+        "/payment-documents/:documentId/remove",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        paymentDocumentAction(
+          (documentId, roles) => removeHwyPaymentDocumentById(documentId, roles),
+          "Remove failed."
+        )
+      );
+      router.post(
+        "/payment-documents/:documentId/send-to-area",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        paymentDocumentAction(
+          (documentId, roles) => sendHwyPaymentDocumentToArea(documentId, roles),
+          "Send to area failed."
+        )
+      );
+      router.post(
+        "/payment-documents/:documentId/send-to-mali",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        paymentDocumentAction(
+          (documentId, roles, actorUsername2) => sendHwyPaymentDocumentToMali(documentId, roles, String(actorUsername2 ?? "").trim()),
+          "Send to finance failed."
+        )
+      );
+      router.post(
+        "/payment-documents/:documentId/mark-final-ok",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        paymentDocumentAction(
+          (documentId, roles, actorUsername2) => markHwyPaymentDocumentFinalOk(documentId, roles, String(actorUsername2 ?? "").trim()),
+          "Mark paid failed."
+        )
+      );
+      router.post(
+        "/payment-documents/:documentId/mark-closed",
+        requireAuth,
+        requireHwyPaymentDocumentsAccess,
+        paymentDocumentAction(
+          (documentId, roles, actorUsername2) => markHwyPaymentDocumentClosed(documentId, roles, String(actorUsername2 ?? "").trim()),
+          "Close failed."
+        )
+      );
+      router.get(
+        "/payment-documents-members",
+        requireAuth,
+        requireHwyPaymentDocumentsMembersAccess,
+        async (req, res) => {
+          try {
+            const data = await listHwyPaymentDocumentsMembers(
+              {
+                roleId: readQueryString2(req.query, "roleId"),
+                vPayOk: readQueryString2(req.query, "vPayOk"),
+                docYear: readQueryString2(req.query, "docYear"),
+                docMonth: readQueryString2(req.query, "docMonth"),
+                hideZeroAmounts: readQueryString2(req.query, "hideZeroAmounts"),
+                username: readQueryString2(req.query, "username"),
+                phone: readQueryString2(req.query, "phone"),
+                firstName: readQueryString2(req.query, "firstName"),
+                fatherName: readQueryString2(req.query, "fatherName"),
+                grandFatherName: readQueryString2(req.query, "grandFatherName"),
+                lastName: readQueryString2(req.query, "lastName"),
+                birthYear: readQueryString2(req.query, "birthYear"),
+                genderId: readQueryString2(req.query, "genderId"),
+                nakhebJoinProvinceId: readQueryString2(req.query, "nakhebJoinProvinceId"),
+                nakhebJoinCircleId: readQueryString2(req.query, "nakhebJoinCircleId"),
+                nakhebJoinTamvinId: readQueryString2(req.query, "nakhebJoinTamvinId"),
+                vFullId: readQueryString2(req.query, "vFullId"),
+                vSameDeviceCount: readQueryString2(req.query, "vSameDeviceCount"),
+                page: Number(readQueryString2(req.query, "page") || "1"),
+                pageSize: Number(readQueryString2(req.query, "pageSize") || "25")
+              },
+              normalizeAuthRoles(req),
+              req.user?.username ?? req.user?.email ?? null
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load grant receipt lines.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/payment-documents-members/filter-options",
+        requireAuth,
+        requireHwyPaymentDocumentsMembersAccess,
+        async (req, res) => {
+          try {
+            const data = await loadHwyPaymentDocumentsMembersFilterOptions(
+              readQueryString2(req.query, "nakhebJoinProvinceId"),
+              readQueryString2(req.query, "nakhebJoinCircleId"),
+              normalizeAuthRoles(req)
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load grant receipt filters.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/payment-documents-members/:lineId/images",
+        requireAuth,
+        requireHwyPaymentDocumentsMembersAccess,
+        async (req, res) => {
+          const lineId = req.params.lineId?.trim();
+          if (!lineId) {
+            res.status(400).json({ success: false, message: "lineId is required." });
+            return;
+          }
+          try {
+            const data = await loadHwyPaymentDocumentsMembersImages(lineId, normalizeAuthRoles(req));
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load images.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/payment-documents-members/:lineId/switch-payability",
+        requireAuth,
+        requireHwyPaymentDocumentsMembersAccess,
+        async (req, res) => {
+          const lineId = req.params.lineId?.trim();
+          if (!lineId) {
+            res.status(400).json({ success: false, message: "lineId is required." });
+            return;
+          }
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim();
+          if (!actorUsername2) {
+            res.status(400).json({ success: false, message: "Actor username is required." });
+            return;
+          }
+          try {
+            await switchHwyPaymentDocumentsMemberPayability(lineId, normalizeAuthRoles(req), actorUsername2);
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Switch payability failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/payment-documents-members/:lineId/update-pay-amount",
+        requireAuth,
+        requireHwyPaymentDocumentsMembersAccess,
+        async (req, res) => {
+          const lineId = req.params.lineId?.trim();
+          if (!lineId) {
+            res.status(400).json({ success: false, message: "lineId is required." });
+            return;
+          }
+          const body = req.body;
+          const payAmount = Number(body.payAmount);
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim();
+          if (!actorUsername2 || !Number.isFinite(payAmount)) {
+            res.status(400).json({ success: false, message: "payAmount and actor are required." });
+            return;
+          }
+          try {
+            await updateHwyPaymentDocumentsMemberPayAmount(
+              lineId,
+              { payAmount, note: String(body.note ?? "") },
+              normalizeAuthRoles(req),
+              actorUsername2
+            );
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Update pay amount failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/masoolin-performance",
+        requireAuth,
+        requireHwyMasoolinPerformanceAccess,
+        async (req, res) => {
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim() || null;
+          try {
+            const data = await listHwyMasoolinPerformance(
+              {
+                selectedProvinces: readQueryString2(req.query, "selectedProvinces"),
+                circleId: readQueryString2(req.query, "circleId"),
+                tamvinId: readQueryString2(req.query, "tamvinId"),
+                genderId: readQueryString2(req.query, "genderId"),
+                roleId: readQueryString2(req.query, "roleId"),
+                bi1LevelId: readQueryString2(req.query, "bi1LevelId"),
+                bi2LevelId: readQueryString2(req.query, "bi2LevelId"),
+                bi3LevelId: readQueryString2(req.query, "bi3LevelId"),
+                bicLevelId: readQueryString2(req.query, "bicLevelId"),
+                userName: readQueryString2(req.query, "userName"),
+                moneyAmount1: readQueryString2(req.query, "moneyAmount1"),
+                moneyAmount2: readQueryString2(req.query, "moneyAmount2"),
+                moneyAmount3: readQueryString2(req.query, "moneyAmount3"),
+                chiefMasool: readQueryString2(req.query, "chiefMasool"),
+                confilictState: readQueryString2(req.query, "confilictState"),
+                sameRogheCount: readQueryString2(req.query, "sameRogheCount")
+              },
+              normalizeAuthRoles(req),
+              actorUsername2
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load masoolin performance.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/masoolin-performance/export",
+        requireAuth,
+        requireHwyMasoolinPerformanceAccess,
+        async (req, res) => {
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim() || null;
+          const mode = readQueryString2(req.query, "mode") === "legacy-sp" ? "legacy-sp" : "filtered";
+          try {
+            const data = await exportHwyMasoolinPerformance(
+              {
+                selectedProvinces: readQueryString2(req.query, "selectedProvinces"),
+                circleId: readQueryString2(req.query, "circleId"),
+                tamvinId: readQueryString2(req.query, "tamvinId"),
+                genderId: readQueryString2(req.query, "genderId"),
+                roleId: readQueryString2(req.query, "roleId"),
+                bi1LevelId: readQueryString2(req.query, "bi1LevelId"),
+                bi2LevelId: readQueryString2(req.query, "bi2LevelId"),
+                bi3LevelId: readQueryString2(req.query, "bi3LevelId"),
+                bicLevelId: readQueryString2(req.query, "bicLevelId"),
+                userName: readQueryString2(req.query, "userName"),
+                moneyAmount1: readQueryString2(req.query, "moneyAmount1"),
+                moneyAmount2: readQueryString2(req.query, "moneyAmount2"),
+                moneyAmount3: readQueryString2(req.query, "moneyAmount3"),
+                chiefMasool: readQueryString2(req.query, "chiefMasool"),
+                confilictState: readQueryString2(req.query, "confilictState"),
+                sameRogheCount: readQueryString2(req.query, "sameRogheCount")
+              },
+              normalizeAuthRoles(req),
+              actorUsername2,
+              mode
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not export masoolin performance.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/masoolin-performance/filter-options",
+        requireAuth,
+        requireHwyMasoolinPerformanceAccess,
+        async (req, res) => {
+          try {
+            const data = await loadHwyMasoolinPerformanceFilterOptions(
+              readQueryString2(req.query, "provinceId"),
+              readQueryString2(req.query, "circleId"),
+              normalizeAuthRoles(req)
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load masoolin performance filters.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/masoolin-performance/set-chief-masool",
+        requireAuth,
+        requireHwyMasoolinPerformanceAccess,
+        async (req, res) => {
+          const body = req.body;
+          const memberId = Number(body.memberId);
+          try {
+            await setHwyMasoolinChiefMasool(memberId, normalizeAuthRoles(req));
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Set chief masool failed.";
+            const status2 = message === "Forbidden." ? 403 : message.includes("required") ? 400 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/masoolin-stars/calc-month",
+        requireAuth,
+        async (req, res) => {
+          if (!normalizeAuthRoles(req).includes("ADMIN")) {
+            res.status(403).json({ success: false, message: "Forbidden." });
+            return;
+          }
+          const body = req.body;
+          const year = Number(body.year);
+          const month = Number(body.month);
+          try {
+            await runHwyMasoolinStarsMonthBatch(year, month);
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Masoolin stars batch failed.";
+            const status2 = message.includes("required") ? 400 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/masoolin-stars/recalc-member",
+        requireAuth,
+        async (req, res) => {
+          if (!normalizeAuthRoles(req).includes("ADMIN")) {
+            res.status(403).json({ success: false, message: "Forbidden." });
+            return;
+          }
+          const body = req.body;
+          const memberId = Number(body.memberId);
+          try {
+            await runHwyMasoolinStarsRecalcMember(memberId);
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Masoolin stars recalc failed.";
+            const status2 = message.includes("required") ? 400 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/members-social-screens/history-months",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          try {
+            const months = await loadHwyMembersSocialScreensHistoryMonths(normalizeAuthRoles(req));
+            res.json({ success: true, data: { months } });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load history months.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/members-social-screens/filter-options",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          try {
+            const data = await loadHwyMembersSocialScreensFilterOptions(normalizeAuthRoles(req));
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load social screen filters.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/members-social-screens/workflow",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim() || null;
+          const year = Number(readQueryString2(req.query, "year"));
+          const month = Number(readQueryString2(req.query, "month"));
+          if (!Number.isFinite(year) || !Number.isFinite(month) || year <= 0 || month <= 0) {
+            res.status(400).json({ success: false, message: "year and month are required." });
+            return;
+          }
+          try {
+            const data = await loadHwyMembersSocialScreensWorkflow(
+              {
+                y: year,
+                m: month,
+                listType: parseMembersSocialScreensListType(readQueryString2(req.query, "listType")),
+                currentMemberId: Number(readQueryString2(req.query, "currentMemberId")) || -1,
+                provinceId: Number(readQueryString2(req.query, "provinceId")) || 0,
+                genderId: Number(readQueryString2(req.query, "genderId")) || 0,
+                userName: readQueryString2(req.query, "userName"),
+                moveDir: parseMembersSocialScreensMoveDir(readQueryString2(req.query, "moveDir"))
+              },
+              normalizeAuthRoles(req),
+              actorUsername2
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load social screen workflow.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/members-social-screens/final-accept",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim();
+          const headerId = Number(req.body?.headerId);
+          if (!actorUsername2 || !Number.isFinite(headerId) || headerId <= 0) {
+            res.status(400).json({ success: false, message: "headerId and actor are required." });
+            return;
+          }
+          try {
+            await applyHwyMembersSocialScreensFinalAccept(headerId, normalizeAuthRoles(req), actorUsername2);
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Final accept failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/members-social-screens/final-reject",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim();
+          const headerId = Number(req.body?.headerId);
+          if (!actorUsername2 || !Number.isFinite(headerId) || headerId <= 0) {
+            res.status(400).json({ success: false, message: "headerId and actor are required." });
+            return;
+          }
+          try {
+            await applyHwyMembersSocialScreensFinalReject(headerId, normalizeAuthRoles(req), actorUsername2);
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Final reject failed.";
             const status2 = message === "Forbidden." ? 403 : 500;
             res.status(status2).json({ success: false, message });
           }

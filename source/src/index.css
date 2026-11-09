@@ -2137,20 +2137,22 @@ header.admin-shell-chrome::before,
 	overflow: hidden;
 	padding-inline: 0.25rem;
 	padding-block: 0;
-	/* Same top inset in LTR and RTL (LTR is the reference). */
-	padding-top: 12px;
 }
 
+/* Logo lockup shares the collapse toggle’s 24px seam (top: 17px, h-6). */
 [data-sidebar-collapsed='true'] .admin-shell-sidebar-logo-region > * {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	max-width: 100%;
+	height: 1.5rem;
+	margin-top: 17px;
 }
 
 [data-sidebar-collapsed='true'] .admin-shell-sidebar-logo-region .appendo-logo-themed,
 [data-sidebar-collapsed='true'] .admin-shell-sidebar-logo-region img {
 	display: block;
 	margin-inline: auto;
-	/* One nudge for LTR/RTL — vertical band uses padding-top on the logo region. */
-	transform: translateY(-1px);
 }
 
 [data-sidebar-collapsed='true'] #admin-shell-sidebar nav,

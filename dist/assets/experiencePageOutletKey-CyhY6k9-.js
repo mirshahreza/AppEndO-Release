@@ -1,0 +1,1 @@
+import{y8 as o}from"./AiFieldAssistSectionContext-Dc3GTQMY.js";function m(r,e){const s=o(e);return s?`${r}:member-dossier:${s.mode}:${s.memberId}`:`${r}:${e}`}function i(r){const e=o(r);return e?`member-dossier:${e.mode}:${e.memberId}`:r}export{i as a,m as r};

@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-CFnES02-.js","assets/react-vendor-CsZD9bLw.js"])))=>i.map(i=>d[i]);
-import{j0 as c}from"./index-Dw8RVZLs.js";import{c as i}from"./lazyNavigationIconMap-DcdW57gY.js";import"./react-vendor-CsZD9bLw.js";import"./tanstack-query-BjZ08O4H.js";let t=null;async function p(){if(t)return t;const e=await c(()=>import("./index-CFnES02-.js"),__vite__mapDeps([0,1])),a=Object.keys(e).filter(o=>o.endsWith("Icon")).sort((o,r)=>o.localeCompare(r));return t={iconNames:a,entries:[],map:i(a,o=>e[o])},t}export{p as default};

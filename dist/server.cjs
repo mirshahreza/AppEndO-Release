@@ -121139,7 +121139,7 @@ var init_verticalPackage = __esm({
     init_verticalApp();
     VERTICAL_PACKAGE_ID = "vertical";
     VERTICAL_PACKAGE_NAME = "Vertical";
-    VERTICAL_PACKAGE_VERSION = "0.3.9";
+    VERTICAL_PACKAGE_VERSION = "0.3.10";
     VERTICAL_PORTAL_SEGMENT = "vertical";
     VERTICAL_MOUNT_PATH_PREFIX = "/vertical";
     VERTICAL_HOST_PAGE_KEYS = [

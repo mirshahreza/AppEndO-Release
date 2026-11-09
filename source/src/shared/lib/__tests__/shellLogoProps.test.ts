@@ -15,7 +15,7 @@ describe('shellLogoProps', () => {
   it('resolves custom logo src and falls back to default asset', () => {
     expect(resolveShellLogoImageSrc({ src: 'https://example.com/logo.png' }))
       .toBe('https://example.com/logo.png');
-    expect(resolveShellLogoImageSrc(null)).toBe('/assets/appendo-logo.png');
+    expect(resolveShellLogoImageSrc(null)).toContain('/assets/appendo/brand/');
   });
 
   it('reads logo config from slot props', () => {

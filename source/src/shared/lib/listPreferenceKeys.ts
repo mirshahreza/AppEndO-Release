@@ -43,6 +43,7 @@ export const APP_LIST_PREFERENCE_KEYS = {
   vxActivitiesAdmin: 'vx-activities-admin',
   vxActivitiesAdminCentral: 'vx-activities-admin-central',
   vxCoursesAdmin: 'vx-courses-admin',
+  vxMeetingsManagement: 'vx-meetings-management-v2',
   vxCoursesParticipants: 'vx-courses-participants',
   vxTarghinAdmin: 'vx-targhin-requests-admin-v6',
   vxMembersTarghin: 'vx-members-targhin-v4',

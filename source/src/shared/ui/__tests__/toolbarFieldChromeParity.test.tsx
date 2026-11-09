@@ -8,6 +8,8 @@ import { ToolbarSearchInput } from '../ToolbarSearchInput';
 
 vi.mock('../../../core/culture/CultureContext', () => ({
   useCultureT: () => (key: string) => key,
+  useOptionalCulture: () => ({ direction: 'ltr' as const }),
+  useOptionalCultureT: () => (key: string) => key,
 }));
 
 const sharedChromeTokens = [

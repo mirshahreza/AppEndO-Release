@@ -3,16 +3,22 @@ import { cn } from '../lib/utils';
 import { useCultureT } from '../core/culture/CultureContext';
 import { isCompactChromeTier } from '../shared/lib/viewportTokens';
 import { useViewportTier } from '../shared/lib/useViewportTier';
+import {
+  APPENDO_LOGO_ONLY_SRC,
+  APPENDO_LOGO_SRC,
+  APPENDO_BRAND_MARK_ASPECT,
+  APPENDO_BRAND_WORDMARK_ASPECT,
+  isBuiltinAppEndBrandLogoUrl,
+} from '../config/appendoBrandAssets';
 
-export const APPENDO_LOGO_SRC = '/assets/appendo-logo.png';
-export const APPENDO_LOGO_ONLY_SRC = '/assets/appendo-logo-only.png';
+export { APPENDO_LOGO_SRC, APPENDO_LOGO_ONLY_SRC } from '../config/appendoBrandAssets';
 
 export interface AppEndLogoProps {
   collapsed?: boolean;
   /** Sidebar rail uses a larger expanded logo; other surfaces keep the default size. */
   variant?: 'default' | 'sidebar';
   /**
-   * Built-in mark-only asset (`appendo-logo-only.png`).
+   * Built-in mark-only asset (`appendo-mark-currentColor.svg`).
    * Omit to auto-use the mark on sidebar chrome at tablet and below.
    */
   mark?: boolean;
@@ -25,10 +31,8 @@ export interface AppEndLogoProps {
   onClick?: () => void;
 }
 
-/** Intrinsic pixel ratio of `/assets/appendo-logo.png` (852×600). */
-const APPENDO_LOGO_ASPECT_RATIO = '852 / 600';
-/** Intrinsic pixel ratio of `/assets/appendo-logo-only.png` (852×384). */
-const APPENDO_LOGO_ONLY_ASPECT_RATIO = '852 / 384';
+const APPENDO_LOGO_ASPECT_RATIO = `${APPENDO_BRAND_WORDMARK_ASPECT}`;
+const APPENDO_LOGO_ONLY_ASPECT_RATIO = `${APPENDO_BRAND_MARK_ASPECT}`;
 
 const SIDEBAR_LOGO_TRANSITION_CLASS =
   'transition-[height,transform] duration-300 ease-out';
@@ -37,7 +41,7 @@ const resolveLogoSrc = (src?: string): string => src?.trim() || APPENDO_LOGO_SRC
 
 const isBuiltInAppEndLogo = (src?: string): boolean => {
   const resolved = resolveLogoSrc(src);
-  return resolved === APPENDO_LOGO_SRC || resolved === APPENDO_LOGO_ONLY_SRC;
+  return isBuiltinAppEndBrandLogoUrl(resolved);
 };
 
 export function resolveAppEndLogoMark(options: {

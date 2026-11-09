@@ -3,7 +3,7 @@ import { useHwyNavPageShellHeader } from '../../../domain/vx/vxNavPageShellHeade
 
 const PAGE_KEY = 'my-inbox';
 
-/** Shell header parity with Vertical list pages — title + nav description, no studio nav group prefix. */
+/** Shell header parity with Vertical list pages — culture label + nav description; nav group comes from shell merge. */
 export function usePersonalInboxShellHeader(): void {
   const culture = useCulture();
   useHwyNavPageShellHeader({

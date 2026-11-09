@@ -12,6 +12,7 @@ import {
 } from '../../../scripts/vx-phase3/culture/memberDossierChangeLogTranslations';
 import { buildHwyMemberDirectoryLegacyFilterCultureKeysEn, buildHwyMemberDirectoryLegacyFilterCultureKeysIq } from '../../domain/vx/vxMemberDirectoryLegacyFilterLabels';
 import { buildHwyMemberListScopedEditCultureKeysEn, buildHwyMemberListScopedEditCultureKeysIq } from '../../domain/vx/vxMemberListScopedEditLabels';
+import { buildHwyIdentityComponentsCultureKeysEn, buildHwyIdentityComponentsCultureKeysIq } from '../../../scripts/vx-phase3/culture/vxIdentityComponentsTranslations';
 
 /**
  * Built-in English catalog shipped with the client bundle.
@@ -44,6 +45,11 @@ const VX_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE: Partial<Record<string, Record<string
   us: buildHwyMemberListScopedEditCultureKeysEn(),
 };
 
+const VX_IDENTITY_COMPONENTS_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
+  iq: buildHwyIdentityComponentsCultureKeysIq(),
+  us: buildHwyIdentityComponentsCultureKeysEn(),
+};
+
 /** Merges shipped package overlays (e.g. Vertical) onto API or builtin culture bundles. */
 export function mergePackageCultureOverlay(
   bundleId: string,
@@ -58,6 +64,10 @@ export function mergePackageCultureOverlay(
   const listScopedEdit = VX_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE[bundleId];
   if (listScopedEdit) {
     merged = { ...merged, ...listScopedEdit };
+  }
+  const identityComponents = VX_IDENTITY_COMPONENTS_BY_BUNDLE[bundleId];
+  if (identityComponents) {
+    merged = { ...merged, ...identityComponents };
   }
   const overlay = PACKAGE_CULTURE_OVERLAYS[bundleId];
   return overlay ? { ...merged, ...overlay } : merged;

@@ -84,7 +84,7 @@ Domain rules (deep links, record policy, workflow-engine testing, package UI) ar
 | Vertical UI words (region / maktab, not eghtera / tamvin) | [`package-vertical-ui-vocab.md`](docs/standards/package-vertical-ui-vocab.md) |
 | Vertical member list avatar caption (username blue / tracking red; queue lists) | [`package-vertical-member-face-caption.md`](docs/standards/package-vertical-member-face-caption.md) |
 | Vertical member-list field-by-field filter rows (toolbar mode 2) | [`package-vertical-member-list-legacy-filters.md`](docs/standards/package-vertical-member-list-legacy-filters.md) |
-| Vertical domain invariants (single electoral-tree anchor per role) | [`package-vertical-domain-invariants.md`](docs/standards/package-vertical-domain-invariants.md) |
+| Vertical domain invariants (electoral geo: process vs direct) | [`package-vertical-domain-invariants.md`](docs/standards/package-vertical-domain-invariants.md) |
 | Custom skill index (`appendo-build-*` · `appendo-qa-*` · `appendo-perf-*`) | [`.claude/skills/SKILLS-CATALOG.md`](.claude/skills/SKILLS-CATALOG.md) |
 
 ## Change management

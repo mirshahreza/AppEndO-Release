@@ -122,7 +122,6 @@ export type SectionId =
   | 'range-calendar-grid'
   | 'kbd'
   | 'user-card'
-  | 'vx-member-face'
   | 'snippet'
   | 'hover-card'
   | 'context-menu'

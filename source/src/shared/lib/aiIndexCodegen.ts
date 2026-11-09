@@ -60,6 +60,7 @@ export const PAGE_KEY_TO_FEATURE: Record<string, string> = {
   'package-manager': 'packages',
   libraries: 'libraries',
   'base-components': 'base-components',
+  'vx-identity-components': 'vx-identity-components',
   'dev-reference': 'dev-reference',
   settings: 'settings',
   'platform-transfer': 'platform-transfer',
@@ -135,6 +136,7 @@ const LOADER_REF_TO_FEATURE_PAGE: Record<string, string> = {
   'vertical:vx-geo-responsibility': 'src/features/vx-geo-responsibility/VxGeoResponsibilityPage.tsx',
   'vertical:vx-etl-console': 'src/features/vx-etl-console/VxEtlConsolePage.tsx',
   'vertical:vx-business-rules-reference': 'src/features/vx-business-rules-reference/VxBusinessRulesReferencePage.tsx',
+  'vertical:vx-identity-components': 'src/features/vx-identity-components/VxIdentityComponentsPage.tsx',
 };
 
 type PageApiEntry = {

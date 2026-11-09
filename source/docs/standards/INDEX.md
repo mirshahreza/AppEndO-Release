@@ -87,7 +87,7 @@ Machine index of the same constraints: [`src/config/projectStandards.ts`](../../
 | Vertical Arabic UI + English repo copy (no Persian in product / AppEndO-Vertical) | [`package-vertical-locale-policy.md`](./package-vertical-locale-policy.md) | `package-vertical-locale-policy` |
 | Vertical member list avatar code (blue username / red tracking; Waited queues) | [`package-vertical-member-face-caption.md`](./package-vertical-member-face-caption.md) | `package-vertical-member-face-caption` |
 | Vertical member-list field-by-field filter rows (mode 2 toolbar) | [`package-vertical-member-list-legacy-filters.md`](./package-vertical-member-list-legacy-filters.md) | `package-vertical-member-list-legacy-filters` |
-| Vertical domain invariants (electoral-tree single anchor per role) | [`package-vertical-domain-invariants.md`](./package-vertical-domain-invariants.md) | `package-vertical-domain-invariants` |
+| Vertical domain invariants (electoral geo: process vs direct, one level) | [`package-vertical-domain-invariants.md`](./package-vertical-domain-invariants.md) | `package-vertical-domain-invariants` |
 
 ### Agent hub (`agent.*`)
 

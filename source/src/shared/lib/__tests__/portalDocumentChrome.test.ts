@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from 'vitest';
 
+import { DEFAULT_PORTAL_LOGO_URL } from '../../api/contracts/platform/portalBrand';
 import {
   applyPortalDocumentFavicon,
   isPortalOwnedDocumentChrome,
@@ -18,7 +19,7 @@ describe('portalDocumentChrome', () => {
   });
 
   it('falls back to bundled Vertical mark for favicon', () => {
-    expect(resolveVerticalPublicPortalFaviconUrl('/assets/appendo-logo.png')).toBe(
+    expect(resolveVerticalPublicPortalFaviconUrl(DEFAULT_PORTAL_LOGO_URL)).toBe(
       '/assets/vertical/mark-blue.png',
     );
     expect(resolveVerticalPublicPortalFaviconUrl('/assets/workspace/portals/vertical/logo.png')).toBe(

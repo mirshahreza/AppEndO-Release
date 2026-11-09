@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeaderToolbar } from '../../../shared/ui';
+import { CatalogSpecimenCodeBadge, PageHeaderToolbar, formatStudioBcSpecimenCode } from '../../../shared/ui';
 import type { BaseComponentsPageModel } from '../hooks/useBaseComponentsPage';
 import { BaseComponentsSectionIcon } from '../baseComponentsSectionIcons';
 import { getBaseComponentsSectionGuideHint, getBaseComponentsSectionLabel } from '../baseComponentsSections';
@@ -16,13 +16,20 @@ export const BaseComponentsHeader: React.FC<BaseComponentsHeaderProps> = ({ page
   const theme = getBaseComponentsSectionTheme(page.activeSection);
   const sectionLabel = getBaseComponentsSectionLabel(page.activeSection);
 
+  const sectionSpecimenCode = formatStudioBcSpecimenCode(page.activeSection);
+
   return (
     <PageHeaderToolbar
       icon={<BaseComponentsSectionIcon sectionId={page.activeSection} className={theme.iconClass} />}
       title={sectionLabel}
       titleClassName={BASE_COMPONENTS_TITLE_CLASS}
       description={getBaseComponentsSectionGuideHint(page.activeSection)}
-      actions={actions}
+      actions={(
+        <span className="flex flex-wrap items-center gap-2">
+          <CatalogSpecimenCodeBadge code={sectionSpecimenCode} />
+          {actions}
+        </span>
+      )}
     />
   );
 };

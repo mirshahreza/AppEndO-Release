@@ -396,11 +396,6 @@ export const PRIMITIVE_SECTION_DEFINITIONS: readonly PrimitiveSectionDefinition[
     ['userCard.fallback', 'content', 'public-prop', 'text', 'AL', undefined, 'fallback'],
     ['userCard.size', 'layout', 'public-prop', 'select', 'md', sizes, 'size'],
   ]),
-  opt('vx-member-face', 'Vertical member face', 'identity', 'Member-directory list avatar with blue username or red tracking code under the photo.', [
-    ['vxMemberFace.username', 'content', 'public-prop', 'text', '710093', undefined, 'username'],
-    ['vxMemberFace.trackingCode', 'content', 'public-prop', 'text', '1190786', undefined, 'trackingCode'],
-    ['vxMemberFace.displayName', 'content', 'public-prop', 'text', 'Sample member', undefined, 'displayName'],
-  ]),
   opt('snippet', 'Snippet', 'data', 'Read-only code chrome with an optional copy control.', [
     ['snippet.code', 'content', 'public-prop', 'text', 'npm run test:critical', undefined, 'code'],
     ['snippet.language', 'content', 'public-prop', 'text', 'bash', undefined, 'language'],

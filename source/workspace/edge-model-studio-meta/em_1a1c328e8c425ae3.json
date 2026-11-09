@@ -71,19 +71,19 @@
       "sortOrder": 80
     },
     {
-      "columnName": "has_dedicated_list",
-      "icon": "lucide:list",
-      "formWidget": "switch",
-      "group": "Presentation",
-      "sortOrder": 90
-    },
-    {
       "columnName": "allows_list_scoped_edit",
       "icon": "lucide:pencil-line",
       "formWidget": "switch",
       "developerNotes": "When on, institute registered member lists expose list-scoped character/employment edit (legacy Update_By*).",
       "group": "Policy",
-      "sortOrder": 85
+      "sortOrder": 90
+    },
+    {
+      "columnName": "has_dedicated_list",
+      "icon": "lucide:list",
+      "formWidget": "switch",
+      "group": "Presentation",
+      "sortOrder": 100
     },
     {
       "columnName": "show_institute_character_in_dossier",
@@ -91,7 +91,29 @@
       "formWidget": "switch",
       "developerNotes": "When on, member dossier shows institute-specific character block for this institute.",
       "group": "Presentation",
-      "sortOrder": 95
+      "sortOrder": 110
+    },
+    {
+      "columnName": "logo_url",
+      "icon": "lucide:image",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Presentation",
+      "sortOrder": 120
+    },
+    {
+      "columnName": "logo_content",
+      "formWidget": "hidden",
+      "developerNotes": "VARBINARY logo blob.",
+      "group": "Presentation",
+      "sortOrder": 130
+    },
+    {
+      "columnName": "logo_content_type",
+      "formWidget": "text",
+      "searchRole": "none",
+      "group": "Presentation",
+      "sortOrder": 140
     },
     {
       "columnName": "note",
@@ -100,7 +122,7 @@
         "rows": 3
       },
       "group": "Presentation",
-      "sortOrder": 100
+      "sortOrder": 150
     },
     {
       "columnName": "created_by",
@@ -108,28 +130,28 @@
       "formWidget": "lookup",
       "searchRole": "none",
       "group": "Audit",
-      "sortOrder": 110
+      "sortOrder": 160
     },
     {
       "columnName": "created_at",
       "formWidget": "datetime",
       "searchRole": "advanced",
       "group": "Audit",
-      "sortOrder": 120
+      "sortOrder": 170
     },
     {
       "columnName": "updated_by",
       "formWidget": "lookup",
       "searchRole": "none",
       "group": "Audit",
-      "sortOrder": 130
+      "sortOrder": 180
     },
     {
       "columnName": "updated_at",
       "formWidget": "datetime",
       "searchRole": "advanced",
       "group": "Audit",
-      "sortOrder": 140
+      "sortOrder": 190
     }
   ],
   "associationMeta": [
@@ -190,5 +212,5 @@
     }
   },
   "created_at": "2026-09-16T13:15:04.879Z",
-  "updated_at": "2026-11-03T08:44:20.572Z"
+  "updated_at": "2026-11-08T18:48:29.181Z"
 }

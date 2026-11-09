@@ -14,6 +14,7 @@ import {
   listPrismaMappedTableNames,
   readSchemaDiffTableNameListsFromEnv,
 } from './controlPlaneSchemaDiff';
+import { resolveControlPlaneSchemaProtectedTables } from './controlPlaneSchemaProtectedTables';
 import { compileGeneratedPrismaClientForNode } from './generatedPrismaClientRuntime';
 
 const SCHEMA_PATH = path.join(process.cwd(), 'prisma', 'schema.prisma');
@@ -328,9 +329,13 @@ export const applyAdditiveControlPlaneSchema = (
 
     const prismaTables = listPrismaMappedTableNames(fs.readFileSync(schemaPath, 'utf8'));
     const extraNames = readSchemaDiffTableNameListsFromEnv();
+    const protectedTables = resolveControlPlaneSchemaProtectedTables();
+    for (const name of extraNames.protectedTables) {
+      protectedTables.add(name);
+    }
     const filtered = filterControlPlaneSchemaDiffSql(script, {
       prismaTables,
-      protectedTables: extraNames.protectedTables,
+      protectedTables,
       allowDropTables: extraNames.allowDropTables,
     });
 

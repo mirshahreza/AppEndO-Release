@@ -29,8 +29,8 @@ vi.mock('../../components/AboutAppModal', () => ({
 }));
 
 vi.mock('../../components/AppEndLogo', () => ({
-  APPENDO_LOGO_SRC: '/assets/appendo-logo.png',
-  APPENDO_LOGO_ONLY_SRC: '/assets/appendo-logo-only.png',
+  APPENDO_LOGO_SRC: '/assets/appendo/brand/transparent/appendo-wordmark-currentColor.svg',
+  APPENDO_LOGO_ONLY_SRC: '/assets/appendo/brand/transparent/appendo-mark-currentColor.svg',
   AppEndLogo: () => <div data-testid="appendo-logo" />,
 }));
 

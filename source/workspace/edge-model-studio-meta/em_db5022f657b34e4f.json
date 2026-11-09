@@ -46,7 +46,7 @@
     {
       "columnName": "invited_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Invite",
       "sortOrder": 60
     },
@@ -60,6 +60,7 @@
     {
       "columnName": "member_responded_at",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Invite",
       "sortOrder": 80
     },
@@ -73,6 +74,7 @@
     {
       "columnName": "activated_at",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Invite",
       "sortOrder": 100
     },
@@ -102,20 +104,20 @@
     {
       "columnName": "institute_state_updated_on",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Character & affairs",
       "sortOrder": 140
     },
     {
       "columnName": "institute_state_updated_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Character & affairs",
       "sortOrder": 150
     },
     {
       "columnName": "current_org_employment_id",
       "formWidget": "number",
-      "searchRole": "advanced",
       "developerNotes": "Only for institute_id=1 (General Assembly).",
       "group": "General Assembly",
       "sortOrder": 160
@@ -132,7 +134,7 @@
     {
       "columnName": "created_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 180
     },
@@ -146,43 +148,27 @@
     {
       "columnName": "updated_by",
       "formWidget": "lookup",
-      "searchRole": "advanced",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 200
     },
     {
       "columnName": "updated_at",
       "formWidget": "datetime",
+      "searchRole": "none",
       "group": "Audit",
       "sortOrder": 210
     }
   ],
   "associationMeta": [
     {
-      "relationKey": "ea_20d1f7364b43496a",
-      "displayLabel": "Affairs state",
-      "formWidget": "lookup",
-      "targetFilter": [
-        {
-          "column": "parent_id",
-          "op": "eq",
-          "value": "220.010"
-        },
-        {
-          "column": "is_active",
-          "op": "eq",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "relationKey": "ea_2c0fa2a4287e4ec1",
+      "relationKey": "ea_0e61fb29e5ed4280",
       "displayLabel": "Invited by",
       "icon": "lucide:user",
       "formWidget": "lookup"
     },
     {
-      "relationKey": "ea_2f8951e06e85401b",
+      "relationKey": "ea_25d18c2326ac4ac4",
       "displayLabel": "Character",
       "formWidget": "lookup",
       "targetFilter": [
@@ -199,51 +185,7 @@
       ]
     },
     {
-      "relationKey": "ea_62ca84002832469a",
-      "displayLabel": "Updated by",
-      "icon": "lucide:user",
-      "formWidget": "lookup"
-    },
-    {
-      "relationKey": "ea_8f9cf1ee1bef4e37",
-      "displayLabel": "Created by",
-      "icon": "lucide:user",
-      "formWidget": "lookup"
-    },
-    {
-      "relationKey": "ea_9197cdc847ad4330",
-      "displayLabel": "Affairs state updated by",
-      "icon": "lucide:user",
-      "formWidget": "lookup"
-    },
-    {
-      "relationKey": "ea_9c5ae9f6c60e45b1",
-      "displayLabel": "Institute",
-      "formWidget": "lookup",
-      "attachedFields": [
-        {
-          "sourceColumn": "title_ar",
-          "as": "institute_id_title_ar"
-        }
-      ]
-    },
-    {
-      "relationKey": "ea_bb2a2e5081d84a54",
-      "displayLabel": "Member",
-      "formWidget": "lookup",
-      "attachedFields": [
-        {
-          "sourceColumn": "first_name",
-          "as": "member_id_first_name"
-        },
-        {
-          "sourceColumn": "family_name",
-          "as": "member_id_family_name"
-        }
-      ]
-    },
-    {
-      "relationKey": "ea_c18cdacc4d6e4097",
+      "relationKey": "ea_37176359bb114713",
       "displayLabel": "Status",
       "formWidget": "lookup",
       "targetFilter": [
@@ -260,7 +202,39 @@
       ]
     },
     {
-      "relationKey": "ea_cb9dd1b5d4784c38",
+      "relationKey": "ea_407976117f624d00",
+      "displayLabel": "Updated by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_57deb2ec8cd34ca6",
+      "displayLabel": "Member",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "first_name",
+          "as": "member_id_first_name"
+        },
+        {
+          "sourceColumn": "family_name",
+          "as": "member_id_family_name"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_77047be2795e43c4",
+      "displayLabel": "Institute",
+      "formWidget": "lookup",
+      "attachedFields": [
+        {
+          "sourceColumn": "title_ar",
+          "as": "institute_id_title_ar"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_a034f507f5584ad2",
       "displayLabel": "Join path",
       "formWidget": "lookup",
       "targetFilter": [
@@ -268,6 +242,35 @@
           "column": "parent_id",
           "op": "eq",
           "value": "220.004"
+        },
+        {
+          "column": "is_active",
+          "op": "eq",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "relationKey": "ea_d74f0d71dcba4b80",
+      "displayLabel": "Affairs state updated by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_dbdff95647c9498f",
+      "displayLabel": "Created by",
+      "icon": "lucide:user",
+      "formWidget": "lookup"
+    },
+    {
+      "relationKey": "ea_f61b12c16601444a",
+      "displayLabel": "Affairs state",
+      "formWidget": "lookup",
+      "targetFilter": [
+        {
+          "column": "parent_id",
+          "op": "eq",
+          "value": "220.010"
         },
         {
           "column": "is_active",
@@ -314,5 +317,5 @@
     }
   },
   "created_at": "2026-09-16T13:15:04.924Z",
-  "updated_at": "2026-09-17T15:29:40.088Z"
+  "updated_at": "2026-11-08T18:48:31.018Z"
 }

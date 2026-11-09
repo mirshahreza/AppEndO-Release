@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "generatedAt": "2026-11-04T16:54:02.736Z",
+  "generatedAt": "2026-11-08T15:11:24.053Z",
   "source": {
     "navigation": "src/config/platform-registry/navigation/studio.json",
     "pageModulesDir": "src/config/platform-registry/page-modules"
@@ -379,6 +379,29 @@
         ]
       },
       "tests": "src/features/git/__tests__/",
+      "notes": null
+    },
+    {
+      "pageKey": "vx-identity-components",
+      "label": "vx-identity-components",
+      "menuGroup": null,
+      "routePattern": "vx-identity-components",
+      "inStudioMenu": false,
+      "ui": {
+        "pageModule": "src/config/platform-registry/page-modules/vx-identity-components.json",
+        "loaderRef": "vertical:vx-identity-components",
+        "page": "src/features/vx-identity-components/VxIdentityComponentsPage.tsx",
+        "feature": "src/features/vx-identity-components/",
+        "domain": null,
+        "workspace": "VxIdentityComponentsWorkspace"
+      },
+      "api": {
+        "routes": [],
+        "apiPrefixes": [],
+        "contracts": null,
+        "services": []
+      },
+      "tests": null,
       "notes": null
     },
     {

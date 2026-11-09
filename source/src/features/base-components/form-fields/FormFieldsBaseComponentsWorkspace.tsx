@@ -5,9 +5,11 @@ import {
   AiPublishedFormAssistToolbar,
   AiFieldAssistSectionProvider,
   AppButton,
+  CatalogSpecimenCodeBadge,
   DesignerMaskInputField,
   DirectionalText,
   FeatureToggleField,
+  formatStudioBcSpecimenCode,
   FormField,
   FormSection,
   PasswordStrengthHints,
@@ -1239,6 +1241,7 @@ const FormFieldsBaseComponentsWorkspace: React.FC<{ group: FormFieldsFieldGroup 
   return (
     <div className="flex h-full min-h-0 flex-col bg-white">
       <BaseComponentsHeaderActions>
+        <CatalogSpecimenCodeBadge code={formatStudioBcSpecimenCode(sectionId, group)} />
         <BaseComponentsConfigToolbarControls sectionId={sectionId} json={configJson}>
           <BaseComponentsResetButton onClick={resetAll} />
         </BaseComponentsConfigToolbarControls>

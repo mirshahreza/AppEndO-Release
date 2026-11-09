@@ -1,8 +1,8 @@
 {
   "version": "1",
-  "generatedAt": "2026-11-04T16:54:02.776Z",
+  "generatedAt": "2026-11-08T15:11:24.170Z",
   "policy": "all-locked",
-  "pageCount": 98,
+  "pageCount": 103,
   "pages": [
     {
       "pageKey": "api-talk",
@@ -292,6 +292,15 @@
       "source": "package-ui"
     },
     {
+      "pageKey": "vx-identity-components",
+      "label": "vx-identity-components",
+      "routePattern": "vx-identity-components",
+      "searchRoots": [
+        "src/features/vx-identity-components"
+      ],
+      "source": "feature-graph"
+    },
+    {
       "pageKey": "vx-institutes",
       "label": "vx-institutes",
       "routePattern": "vertical/institutes",
@@ -304,6 +313,15 @@
         "scripts/vx-phase3"
       ],
       "source": "route-binding"
+    },
+    {
+      "pageKey": "vx-masoolin-performance",
+      "label": "Masoolin performance",
+      "routePattern": "vertical/masoolin-performance",
+      "searchRoots": [
+        "src/features/vx-masoolin-performance"
+      ],
+      "source": "package-ui"
     },
     {
       "pageKey": "vx-meetings-management",
@@ -594,6 +612,15 @@
       "source": "route-binding"
     },
     {
+      "pageKey": "vx-members-social-screens",
+      "label": "Social screens",
+      "routePattern": "vertical/members-social-screens",
+      "searchRoots": [
+        "src/features/vx-members-social-screens"
+      ],
+      "source": "package-ui"
+    },
+    {
       "pageKey": "vx-members-taleb-jameee",
       "label": "vx-members-taleb-jameee",
       "routePattern": "vertical/members-taleb-jameee",
@@ -776,6 +803,24 @@
       "routePattern": "vertical/members-org-membership-transfer",
       "searchRoots": [
         "src/features/vx-org-membership-transfer"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "vx-payment-documents",
+      "label": "Payment documents",
+      "routePattern": "vertical/finance/payment-documents",
+      "searchRoots": [
+        "src/features/vx-payment-documents"
+      ],
+      "source": "package-ui"
+    },
+    {
+      "pageKey": "vx-payment-documents-members",
+      "label": "Grant receipt details",
+      "routePattern": "vertical/finance/payment-documents-members",
+      "searchRoots": [
+        "src/features/vx-payment-documents-members"
       ],
       "source": "package-ui"
     },

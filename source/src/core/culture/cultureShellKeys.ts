@@ -5,20 +5,32 @@ export function navLabelKey(pageKey: string): string {
   return `nav.${pageKey}`;
 }
 
+/** Culture `nav.{pageKey}` when present; otherwise `null` (keep manifest nav label in shell merge). */
+export function tryResolveNavLabel(
+  t: TranslationFn | undefined,
+  pageKey: string,
+): string | null {
+  if (!t) {
+    return null;
+  }
+
+  const key = navLabelKey(pageKey);
+  const translated = t(key, { missing: 'silent' });
+  const text = translated != null ? String(translated).trim() : '';
+  return text !== '' && text !== key ? text : null;
+}
+
 /** Culture `nav.{pageKey}`, or `fallback` when the key is missing (t returns the key). */
 export function resolveNavLabel(
   t: TranslationFn | undefined,
   pageKey: string,
   fallback: string,
 ): string {
-  if (!t) {
-    return fallback;
+  const cultureLabel = tryResolveNavLabel(t, pageKey);
+  if (cultureLabel) {
+    return cultureLabel;
   }
-
-  const key = navLabelKey(pageKey);
-  const translated = t(key, { missing: 'silent' });
-  const text = translated != null ? String(translated).trim() : '';
-  return text !== '' && text !== key ? text : fallback;
+  return fallback;
 }
 
 /** Culture lookup with English fallback when the key is missing (t would echo the key). */

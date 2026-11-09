@@ -223,7 +223,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'ui.form.select.heroui-menu',
       title: 'Closed-Set Pickers Use UiSelect Menu',
       value:
-        'fixed option lists on product forms use UiSelect with HeroUI trigger and listbox menu (Base Components selection-fields living sample) — not native HTML select and not UiSelect preferNativeSelect; use placeholder for empty state; when inside clipped wizards/cards/dialogs pass clipSafePopover (or nested on bordered nested surfaces) plus popoverPlacement/shouldFlip so the portaled menu stays visible; typeable filterable enums use UiCombobox; only Appearance shell preferences may keep preferNativeSelect — see docs/standards/ui-core.md §Closed-set pickers',
+        'fixed option lists on product forms use UiSelect with HeroUI trigger and listbox menu (Base Components selection-fields living sample) — not native HTML select and not UiSelect preferNativeSelect; use placeholder for empty state; when inside clipped wizards/cards/dialogs pass clipSafePopover (or nested on bordered nested surfaces) plus popoverPlacement/shouldFlip so the portaled menu stays visible; typeable filterable enums use UiCombobox; enforce with npm run hygiene:prefer-native-select — see docs/standards/ui-core.md §Closed-set pickers',
       appliesTo: ['UiSelect', 'UiCombobox', 'form fields', 'wizards', 'public portals', 'Base Components'],
     },
     {
@@ -695,7 +695,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
     {
       id: 'ui.responsive.selective',
       title: 'Selective Responsive Platform',
-      value: 'desktop-first chrome, all studio pages work on phone and tablet: stacked toolbars, presentation=auto grids, CreateEditModalShell near-fullscreen on phone and tablet; do not set minViewport:"desktop" on studio route nav or pageKeys (Server Functions, Git, Data Studio, File Manager, SSH/RDP/Sftp stay reachable below 1024px); optional minViewport on a custom/published binding still hides that nav item via filterAdminShellNavByViewport and renders DesktopOnlyGate on deep link; studio chrome: phone and tablet hamburger overlay drawer (no docked rail, no hover flyouts); desktop >=1024 expandable docked rail — do not change desktop >=1024; compact chrome keeps the AppEnd mark-only logo (appendo-logo-only.png) in the header and overlay drawer on phone and tablet; desktop lockup stays appendo-logo.png; page guide hidden on phone, available on tablet+; use viewportTokens.ts + useViewportTier + isOverlayNavTier + isCompactChromeTier (phone <=399, tablet 400-1023, desktop >=1024); AI panel overlay full-screen on phone and tablet (not docked); settings section select on phone; see docs/standards/ui-responsive.md',
+      value: 'desktop-first chrome, all studio pages work on phone and tablet: stacked toolbars, presentation=auto grids, CreateEditModalShell near-fullscreen on phone and tablet; do not set minViewport:"desktop" on studio route nav or pageKeys (Server Functions, Git, Data Studio, File Manager, SSH/RDP/Sftp stay reachable below 1024px); optional minViewport on a custom/published binding still hides that nav item via filterAdminShellNavByViewport and renders DesktopOnlyGate on deep link; studio chrome: phone and tablet hamburger overlay drawer (no docked rail, no hover flyouts); desktop >=1024 expandable docked rail — do not change desktop >=1024; compact chrome keeps the AppEnd mark-only logo (appendo-mark-currentColor.svg) in the header and overlay drawer on phone and tablet; desktop lockup stays appendo-wordmark-currentColor.svg under `/assets/appendo/brand/`; page guide hidden on phone, available on tablet+; use viewportTokens.ts + useViewportTier + isOverlayNavTier + isCompactChromeTier (phone <=399, tablet 400-1023, desktop >=1024); AI panel overlay full-screen on phone and tablet (not docked); settings section select on phone; see docs/standards/ui-responsive.md',
       appliesTo: ['admin shell', 'route bindings', 'nav registry', 'mobile layouts', 'new routes'],
     },
     {
@@ -1077,6 +1077,18 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
         'prisma db push',
         'platform upgrade',
         'domain package tables',
+      ],
+    },
+    {
+      id: 'data.control-plane.schema-ownership',
+      title: 'Control-Plane Schema Ownership Layers',
+      value:
+        'Non-Prisma schema has canonical upgrade commands per layer (controlPlaneSchemaOwnership.ts): db:sync-schema for prisma/schema.prisma; schema:install-extensions for Sequelize feature base_* tables; schema:install-extensions --vx for Vertical DDL + satellites + vx:db-objects; schema:ownership-report for live classification; default protected-table merge includes vx_/cms_/zz_ prefixes; Vertical schema-ownership dev closeout CLOSED 2026-11-09 — scripts/schema/schema-ownership-closeout.md',
+      appliesTo: [
+        'control plane',
+        'schema sync',
+        'vertical package',
+        'platform upgrade',
       ],
     },
     {
@@ -1523,7 +1535,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'package.vertical.member-face-caption',
       title: 'Vertical member-directory avatar caption (username vs tracking)',
       value:
-        'member-directory list avatar code line MUST use VxMemberAvatarWithMembershipCode / VxMemberDirectoryListFaceCard / VxMemberDirectoryGridFaceCell (Base Components vx-member-face) and resolveHwyMemberDirectoryListFaceCaptionForScope(row, listScopeLegacy) — never resolveHwyMemberFaceCaptionFromIdentity on list rows; six-digit allocated username blue else tracking red; Waited/Marfoozeh/pending-institute scopes tracking-only (never blue); server lists MUST finish with applyHwyMemberDirectoryListFaceCaptionUsernames(rows, { listScopeLegacy }); npm run test:vx-member-face-caption; shard package-vertical-member-face-caption; barrel vxMemberDirectoryFaceCaptionContract.ts',
+        'member-directory list avatar code line MUST use VxMemberAvatarWithMembershipCode / VxMemberDirectoryListFaceCard / VxMemberDirectoryGridFaceCell (Vertical /vertical/identity-components, section member-directory-face) and resolveHwyMemberDirectoryListFaceCaptionForScope(row, listScopeLegacy) — never resolveHwyMemberFaceCaptionFromIdentity on list rows; six-digit allocated username blue else tracking red; Waited/Marfoozeh/pending-institute scopes tracking-only (never blue); server lists MUST finish with applyHwyMemberDirectoryListFaceCaptionUsernames(rows, { listScopeLegacy }); npm run test:vx-member-face-caption; shard package-vertical-member-face-caption; barrel vxMemberDirectoryFaceCaptionContract.ts',
       appliesTo: [
         'Vertical member-directory lists',
         'GET /api/vx/member-directory',
@@ -1549,9 +1561,9 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
     },
     {
       id: 'package.vertical.domain-invariants',
-      title: 'Vertical — electoral tree single anchor per role holder',
+      title: 'Vertical — electoral tree geo assignment (process vs direct)',
       value:
-        'One member MAY hold multiple Vertical operational roles; all electoral-tree-scoped roles for that person MUST share exactly one geo_level and one node (legacy_geo_id / geo_base_info_id) — never two approved anchors on different levels or nodes; moves via nomination/removal not additive second anchor; nakhebin join and plain membership are out of scope; enforce in vx_geo_responsibility_* / vx_member_area_limits / geo scope writes when extending role assignment; operator mirror section electoral-tree-role-anchor in business-rules reference + npm run vx:business-rules:seed; shard package-vertical-domain-invariants',
+        'One member MAY hold multiple roles; one geo_level at a time — process path (geo responsibility) = exactly one node; direct path (employees list role+region) MAY assign multiple approved nodes on the same level; cross-level approved anchors are drift — skipped in vx:etl:legacy-edge-parity and geo-responsibility ETL (vxMemberAreaLimitsCrossLevelEtl), purge via vx:etl:purge-cross-level-area-limits; same-level multi-row expected; nakhebin join and plain membership out of scope; operator mirror electoral-tree-role-anchor + vx:business-rules:seed; shard package-vertical-domain-invariants; probe schema:area-limits-invariant fails on cross-level only',
       appliesTo: [
         'Vertical package',
         'vx-geo-responsibility',

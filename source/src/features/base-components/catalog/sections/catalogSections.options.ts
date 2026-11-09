@@ -1150,7 +1150,6 @@ const KNOWN_PUBLIC_EXPORTS_BY_SECTION: Readonly<Record<string, readonly string[]
   'range-calendar-grid': ['UiRangeCalendar'],
   kbd: ['UiKbd'],
   'user-card': ['UiUserCard'],
-  'vx-member-face': ['VxMemberAvatarWithMembershipCode', 'VxMemberDirectoryListFaceCard'],
   snippet: ['UiSnippet'],
   'hover-card': ['UiHoverCard'],
   'context-menu': ['UiContextMenu'],

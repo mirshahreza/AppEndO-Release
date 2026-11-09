@@ -121139,7 +121139,7 @@ var init_hawietyPackage = __esm({
     init_verticalApp();
     HAWIETY_PACKAGE_ID = "hawiety";
     HAWIETY_PACKAGE_NAME = "Hawiety";
-    HAWIETY_PACKAGE_VERSION = "0.3.9";
+    HAWIETY_PACKAGE_VERSION = "0.3.10";
     HAWIETY_PORTAL_SEGMENT = "hawiety";
     HAWIETY_MOUNT_PATH_PREFIX = "/hawiety";
     HAWIETY_HOST_PAGE_KEYS = [

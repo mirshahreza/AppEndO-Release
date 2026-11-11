@@ -1,7 +1,7 @@
 {
   "database": {
     "provider": "sqlserver",
-    "url": "sqlserver://localhost;database=AppEndOHawiety;user=sa;encrypt=true;trustServerCertificate=true",
+    "url": "sqlserver://localhost\\SQL2025;database=AppEndOHawiety;user=sa;encrypt=true;trustServerCertificate=true",
     "engine": "prisma"
   },
   "runtime": {
@@ -25,8 +25,8 @@
       "id": "ds_clone_hawiety",
       "name": "clone-hawiety-control-plane",
       "type": "SQL Server",
-      "host": "localhost",
-      "port": 1433,
+      "host": "localhost\\SQL2025",
+      "port": 0,
       "database": "AppEndOHawiety",
       "username": "sa",
       "encrypt": true,

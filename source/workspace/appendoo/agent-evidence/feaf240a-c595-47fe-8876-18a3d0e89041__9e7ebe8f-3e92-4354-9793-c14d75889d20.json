@@ -1,0 +1,84 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "fb38e41d-faa7-4e3b-aa77-54dbc086b0b6",
+      "taskId": "feaf240a-c595-47fe-8876-18a3d0e89041",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/agent/AgentOrchestrator.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T21:35:08.436Z"
+    },
+    {
+      "evidenceId": "00865f91-a9ff-4ddb-8ea5-537063a2a38f",
+      "taskId": "feaf240a-c595-47fe-8876-18a3d0e89041",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/tools/ToolRegistry.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T21:35:08.468Z"
+    },
+    {
+      "evidenceId": "59f46c4f-e685-4ae4-87bd-58539cf59856",
+      "taskId": "feaf240a-c595-47fe-8876-18a3d0e89041",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/semanticPlanBuilder.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T21:35:08.498Z"
+    },
+    {
+      "evidenceId": "e1fc8a7f-36a2-4f4c-b574-5b3337e1eafe",
+      "taskId": "feaf240a-c595-47fe-8876-18a3d0e89041",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/validation/changeSetBuilder.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T21:35:08.536Z"
+    },
+    {
+      "evidenceId": "5cc503a6-5a7c-42a5-84c0-2dd61aa893f6",
+      "taskId": "feaf240a-c595-47fe-8876-18a3d0e89041",
+      "type": "RUNTIME",
+      "subjectRefs": [],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "orchestrator:no_mutation_attempted"
+      ],
+      "producedAt": "2026-07-17T21:35:08.565Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "37dee1c3-868f-4d98-a430-056cf5479ee0",
+      "taskId": "feaf240a-c595-47fe-8876-18a3d0e89041",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "5cc503a6-5a7c-42a5-84c0-2dd61aa893f6"
+      ],
+      "finalized": true
+    }
+  ]
+}

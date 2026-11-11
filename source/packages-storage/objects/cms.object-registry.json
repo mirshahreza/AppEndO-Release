@@ -1,0 +1,221 @@
+{
+  "schema": "package-object-registry",
+  "schemaVersion": "1.0.0",
+  "packageId": "cms",
+  "activeVersion": "1.3.9",
+  "records": {
+    "apis": [],
+    "uiComponents": [
+      {
+        "conflictKey": "cms.site.brand::cms-site-brand",
+        "slotId": "cms.site.brand",
+        "componentKey": "cms-site-brand",
+        "entry": "ui/cms-site-brand.tsx",
+        "order": 10,
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "cms.site.nav::cms-site-nav",
+        "slotId": "cms.site.nav",
+        "componentKey": "cms-site-nav",
+        "entry": "ui/cms-site-nav.tsx",
+        "order": 11,
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "cms.site.cta::cms-site-cta",
+        "slotId": "cms.site.cta",
+        "componentKey": "cms-site-cta",
+        "entry": "ui/cms-site-cta.tsx",
+        "order": 12,
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "cms.site.footer::cms-site-footer",
+        "slotId": "cms.site.footer",
+        "componentKey": "cms-site-footer",
+        "entry": "ui/cms-site-footer.tsx",
+        "order": 13,
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      }
+    ],
+    "uiRoutes": [
+      {
+        "conflictKey": "ui_route::cms-vocab-languages",
+        "pageKey": "cms-vocab-languages",
+        "entry": "ui/general/cms-vocab-languages.tsx",
+        "suggestedRoutePattern": "cms/settings/languages",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-vocab-statuses",
+        "pageKey": "cms-vocab-statuses",
+        "entry": "ui/general/cms-vocab-statuses.tsx",
+        "suggestedRoutePattern": "cms/settings/statuses",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-vocab-content-types",
+        "pageKey": "cms-vocab-content-types",
+        "entry": "ui/general/cms-vocab-content-types.tsx",
+        "suggestedRoutePattern": "cms/settings/content-types",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-vocab-content-tags",
+        "pageKey": "cms-vocab-content-tags",
+        "entry": "ui/general/cms-vocab-content-tags.tsx",
+        "suggestedRoutePattern": "cms/settings/content-tags",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-contents-list",
+        "pageKey": "cms-contents-list",
+        "entry": "ui/general/cms-contents-list.tsx",
+        "suggestedRoutePattern": "cms/contents",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-contents-editor",
+        "pageKey": "cms-contents-editor",
+        "entry": "ui/general/cms-contents-editor.tsx",
+        "suggestedRoutePattern": "cms/contents/edit/*",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-settings",
+        "pageKey": "cms-settings",
+        "entry": "ui/general/cms-settings.tsx",
+        "suggestedRoutePattern": "cms/settings/*",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-site-home",
+        "pageKey": "cms-site-home",
+        "entry": "ui/cms-site-home.tsx",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "ui_route::cms-site-article",
+        "pageKey": "cms-site-article",
+        "entry": "ui/cms-site-article.tsx",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      }
+    ],
+    "dbObjects": [
+      {
+        "conflictKey": "seed::cms_install::default",
+        "objectType": "seed",
+        "objectName": "cms_install",
+        "targetDataSource": "default",
+        "installScript": "db/install/schema.sql",
+        "uninstallScript": "db/uninstall/schema.sql",
+        "seedScript": null,
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "seed::cms_initial_records::default",
+        "objectType": "seed",
+        "objectName": "cms_initial_records",
+        "targetDataSource": "default",
+        "installScript": "db/seed/optional-records.sql",
+        "uninstallScript": "db/uninstall/optional-records.sql",
+        "seedScript": null,
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      }
+    ],
+    "mcpServers": [],
+    "edgeModels": [
+      {
+        "conflictKey": "edge_model::em_3d506ad601658aab",
+        "edgeModelId": "em_3d506ad601658aab",
+        "entry": "edge/models/em_3d506ad601658aab.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_model::em_95213b3d9a76be40",
+        "edgeModelId": "em_95213b3d9a76be40",
+        "entry": "edge/models/em_95213b3d9a76be40.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_model::em_1cd186b841dd21d7",
+        "edgeModelId": "em_1cd186b841dd21d7",
+        "entry": "edge/models/em_1cd186b841dd21d7.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_model::em_90b8b65918bfc15c",
+        "edgeModelId": "em_90b8b65918bfc15c",
+        "entry": "edge/models/em_90b8b65918bfc15c.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_model::em_0033c2db1f0bdc7f",
+        "edgeModelId": "em_0033c2db1f0bdc7f",
+        "entry": "edge/models/em_0033c2db1f0bdc7f.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_model::em_de1dc90b9e9d7626",
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "edge/models/em_de1dc90b9e9d7626.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      }
+    ],
+    "edgeApis": [
+      {
+        "conflictKey": "edge_api::ea_41c8bcea5934c03c",
+        "edgeApiId": "ea_41c8bcea5934c03c",
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "edge/apis/ea_41c8bcea5934c03c.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_api::ea_579348c45cab4d2b",
+        "edgeApiId": "ea_579348c45cab4d2b",
+        "edgeModelId": "em_0033c2db1f0bdc7f",
+        "entry": "edge/apis/ea_579348c45cab4d2b.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_api::ea_e659dcd57b82a6c3",
+        "edgeApiId": "ea_e659dcd57b82a6c3",
+        "edgeModelId": "em_1cd186b841dd21d7",
+        "entry": "edge/apis/ea_e659dcd57b82a6c3.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_api::ea_05b12027ede0236a",
+        "edgeApiId": "ea_05b12027ede0236a",
+        "edgeModelId": "em_90b8b65918bfc15c",
+        "entry": "edge/apis/ea_05b12027ede0236a.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_api::ea_f3ffdfb8d9ecbb33",
+        "edgeApiId": "ea_f3ffdfb8d9ecbb33",
+        "edgeModelId": "em_95213b3d9a76be40",
+        "entry": "edge/apis/ea_f3ffdfb8d9ecbb33.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      },
+      {
+        "conflictKey": "edge_api::ea_9f6cda875187b0ec",
+        "edgeApiId": "ea_9f6cda875187b0ec",
+        "edgeModelId": "em_3d506ad601658aab",
+        "entry": "edge/apis/ea_9f6cda875187b0ec.json",
+        "registeredAt": "2026-11-06T20:28:53.287Z"
+      }
+    ],
+    "workflows": [],
+    "workflowActions": []
+  },
+  "updatedAt": "2026-11-06T20:28:53.287Z"
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:069c891ee629",
+    "toolCallId": "call_pUVrhw9cImB3wyaD3a20uuzk",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2320,
+    "digest": "0382beb444982de5c511b75131337b6e9c1619dead5c546ac509e4e33b4a02ff",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T16:18:42.794Z"
+  },
+  "content": "{\n  \"query\": \"buildServerFunctionTemplate\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/templates.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/server-functions/buildFunctionDerivedMetadata.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/createServerFunctionPlanner.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/serverFunctionUiDesignerRecord.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/serverFunctionUiPlanner.ts\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/createServerFunctionPlanner.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/serverFunctionUiDraftScaffold.ts\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/serverFunctionUiDraftScaffold.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/server-functions/runtimeConfig.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/detectCodingIntent.ts\",\n      \"line\": 145,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

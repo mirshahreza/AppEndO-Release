@@ -1,0 +1,29 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "2d99f125-7586-4155-9816-d4bc72137315",
+      "taskId": "67c7bc9e-c77b-4335-bdb6-dcdde11cf803",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:30:06.628Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "9541c1b6-9bbf-4e20-8378-f63554759972",
+      "taskId": "67c7bc9e-c77b-4335-bdb6-dcdde11cf803",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [],
+      "finalized": false
+    }
+  ]
+}

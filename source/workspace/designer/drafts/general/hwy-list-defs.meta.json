@@ -1,0 +1,1319 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-list-defs",
+    "name": "hwy-list-defs",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1793645605494-h0y9c",
+          "node-943fb219-9f97-40e0-8f04-ae722b08dfbf",
+          "node-39f38a81-3d6d-48fc-b825-70740ee19c3e",
+          "node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913"
+        ]
+      },
+      "heroui-app-table-grid-1793645605494-h0y9c": {
+        "id": "heroui-app-table-grid-1793645605494-h0y9c",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"code\",\"label\":\"Code\",\"sort\":true,\"cardRole\":\"title\"},{\"key\":\"titleAr\",\"label\":\"Title\",\"sort\":true,\"cardRole\":\"subtitle\"},{\"key\":\"listLogicCode\",\"label\":\"Logic\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"predicateRef\",\"label\":\"Predicate ref\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"isActive\",\"label\":\"Active\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\"},{\"key\":\"sortOrder\",\"label\":\"Order\",\"sort\":true,\"cardRole\":\"hidden\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-39f38a81-3d6d-48fc-b825-70740ee19c3e\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},{\"actionId\":\"delete\",\"icon\":\"Trash2\",\"intent\":\"delete\",\"tooltip\":\"Delete\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"layoutPinned\":\"right\",\"width\":\"57px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "sortOrder",
+          "sortOptions": "[{\"value\":\"code\",\"label\":\"Code\"},{\"value\":\"titleAr\",\"label\":\"Title\"},{\"value\":\"listLogicCode\",\"label\":\"Logic\"},{\"value\":\"predicateRef\",\"label\":\"Predicate ref\"},{\"value\":\"isActive\",\"label\":\"Active\"},{\"value\":\"sortOrder\",\"label\":\"Order\"}]",
+          "loadingMessage": "Loading member list definitions…",
+          "emptyContent": "No member list definitions found.",
+          "errorContent": "Could not load member list definitions.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search member list definitions…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"Create\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-943fb219-9f97-40e0-8f04-ae722b08dfbf\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwymemberlistdefsList",
+            "sourcePath": "hwymemberlistdefsList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-943fb219-9f97-40e0-8f04-ae722b08dfbf": {
+        "id": "node-943fb219-9f97-40e0-8f04-ae722b08dfbf",
+        "type": "container",
+        "parentId": "root",
+        "order": 1,
+        "props": {
+          "title": "Create Member List Definition",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-943fb219-9f97-40e0-8f04-ae722b08dfbf === true"
+        },
+        "binding": {},
+        "children": [
+          "node-f33fd182-0116-454d-82a3-37e43c72a4bc",
+          "node-c69bdcc1-dbb9-40ef-ba6e-be7dacadcd0c"
+        ]
+      },
+      "node-69356dfe-e50d-489b-b83e-bea81eb40824": {
+        "id": "node-69356dfe-e50d-489b-b83e-bea81eb40824",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 0,
+        "props": {
+          "name": "code",
+          "label": "Code",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Code",
+          "hint": "Required. Enter code.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "code",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-663c6804-953d-4bc6-9f58-635393ad9b66": {
+        "id": "node-663c6804-953d-4bc6-9f58-635393ad9b66",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 1,
+        "props": {
+          "name": "titleAr",
+          "label": "Title (Arabic)",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Title (Arabic)",
+          "hint": "Required. Enter title (Arabic).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "titleAr",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-bb64f4bd-13bc-444e-9024-19add485a26c": {
+        "id": "node-bb64f4bd-13bc-444e-9024-19add485a26c",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 2,
+        "props": {
+          "name": "listLogicCode",
+          "label": "List logic code",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "List logic code",
+          "hint": "Required. Enter list logic code.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "listLogicCode",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-c284084e-99be-43b2-aadc-2edb133985fa": {
+        "id": "node-c284084e-99be-43b2-aadc-2edb133985fa",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 3,
+        "props": {
+          "name": "instituteId",
+          "label": "Institute id",
+          "size": "sm",
+          "placeholder": "Institute id",
+          "hint": "Enter institute id.",
+          "_designerPaletteItemId": "heroui.number-input"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "instituteId",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-39976218-7555-4ff1-b3c9-4e1def6629c7": {
+        "id": "node-39976218-7555-4ff1-b3c9-4e1def6629c7",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 4,
+        "props": {
+          "name": "predicateRef",
+          "label": "Predicate ref",
+          "size": "sm",
+          "placeholder": "Predicate ref",
+          "hint": "Enter predicate ref.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "predicateRef",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-bcd6009c-8105-4f39-8caf-181dbab8fa31": {
+        "id": "node-bcd6009c-8105-4f39-8caf-181dbab8fa31",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 5,
+        "props": {
+          "name": "sortOrder",
+          "label": "Sort order",
+          "size": "sm",
+          "placeholder": "Sort order",
+          "hint": "Enter sort order.",
+          "_designerPaletteItemId": "heroui.number-input"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "sortOrder",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-c7924e92-9a0e-4571-a0d4-de09b5271c20": {
+        "id": "node-c7924e92-9a0e-4571-a0d4-de09b5271c20",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 6,
+        "props": {
+          "name": "isActive",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "isActive",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-d7279dcd-dfc4-4b6a-b6f2-d7f83dc686a7": {
+        "id": "node-d7279dcd-dfc4-4b6a-b6f2-d7f83dc686a7",
+        "type": "container",
+        "parentId": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "order": 7,
+        "props": {
+          "name": "note",
+          "label": "Note",
+          "size": "sm",
+          "placeholder": "Note",
+          "hint": "Enter note.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "note",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-e22e1662-1cd7-4e43-860d-781a22c7da01": {
+        "id": "node-e22e1662-1cd7-4e43-860d-781a22c7da01",
+        "type": "container",
+        "parentId": "node-f33fd182-0116-454d-82a3-37e43c72a4bc",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-69356dfe-e50d-489b-b83e-bea81eb40824",
+          "node-663c6804-953d-4bc6-9f58-635393ad9b66",
+          "node-bb64f4bd-13bc-444e-9024-19add485a26c",
+          "node-c284084e-99be-43b2-aadc-2edb133985fa",
+          "node-39976218-7555-4ff1-b3c9-4e1def6629c7",
+          "node-bcd6009c-8105-4f39-8caf-181dbab8fa31",
+          "node-c7924e92-9a0e-4571-a0d4-de09b5271c20",
+          "node-d7279dcd-dfc4-4b6a-b6f2-d7f83dc686a7"
+        ]
+      },
+      "node-7104434e-d2fe-48b1-a972-9ef480cc33e4": {
+        "id": "node-7104434e-d2fe-48b1-a972-9ef480cc33e4",
+        "type": "link",
+        "parentId": "node-c69bdcc1-dbb9-40ef-ba6e-be7dacadcd0c",
+        "order": 1,
+        "props": {
+          "text": "Create Member List Definition",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-f33fd182-0116-454d-82a3-37e43c72a4bc",
+          "icon": "Plus"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mvzma6pj_1h6cj",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-943fb219-9f97-40e0-8f04-ae722b08dfbf"
+              },
+              {
+                "id": "da_mvzma6pj_logck",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mvzma6pj_sdzpt",
+                "type": "refreshDataSource",
+                "dataSourceRef": "hwymemberlistdefsList"
+              },
+              {
+                "id": "da_mvzma6pj_runy5",
+                "type": "resetForm",
+                "targetNodeId": "node-f33fd182-0116-454d-82a3-37e43c72a4bc"
+              }
+            ],
+            "invalidateQueries": [
+              "region:hwymemberlistdefsList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-f33fd182-0116-454d-82a3-37e43c72a4bc": {
+        "id": "node-f33fd182-0116-454d-82a3-37e43c72a4bc",
+        "type": "container",
+        "parentId": "node-943fb219-9f97-40e0-8f04-ae722b08dfbf",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-f33fd182-0116-454d-82a3-37e43c72a4bc"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwymemberlistdefsList",
+            "sourcePath": "hwymemberlistdefsList"
+          }
+        },
+        "children": [
+          "node-e22e1662-1cd7-4e43-860d-781a22c7da01"
+        ]
+      },
+      "node-3cdb2b39-af8e-456e-ac2a-cf2dc088e7dd": {
+        "id": "node-3cdb2b39-af8e-456e-ac2a-cf2dc088e7dd",
+        "type": "link",
+        "parentId": "node-c69bdcc1-dbb9-40ef-ba6e-be7dacadcd0c",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mvzma6pj_1to1q",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-943fb219-9f97-40e0-8f04-ae722b08dfbf"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-c69bdcc1-dbb9-40ef-ba6e-be7dacadcd0c": {
+        "id": "node-c69bdcc1-dbb9-40ef-ba6e-be7dacadcd0c",
+        "type": "container",
+        "parentId": "node-943fb219-9f97-40e0-8f04-ae722b08dfbf",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-3cdb2b39-af8e-456e-ac2a-cf2dc088e7dd",
+          "node-7104434e-d2fe-48b1-a972-9ef480cc33e4"
+        ]
+      },
+      "node-39f38a81-3d6d-48fc-b825-70740ee19c3e": {
+        "id": "node-39f38a81-3d6d-48fc-b825-70740ee19c3e",
+        "type": "container",
+        "parentId": "root",
+        "order": 2,
+        "props": {
+          "title": "Edit Member List Definition",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-39f38a81-3d6d-48fc-b825-70740ee19c3e === true"
+        },
+        "binding": {},
+        "children": [
+          "node-8683b237-5d85-42e6-9c73-1521041ac1e1",
+          "node-82862050-a98d-47b7-85b6-ac364caec6f4"
+        ]
+      },
+      "node-d28684ec-1b8e-49dd-a596-6d309d8fc7a0": {
+        "id": "node-d28684ec-1b8e-49dd-a596-6d309d8fc7a0",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 0,
+        "props": {
+          "name": "code",
+          "label": "Code",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Code",
+          "hint": "Required. Enter code.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "code",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-cf208246-5223-4453-9c64-6b7a67881d60": {
+        "id": "node-cf208246-5223-4453-9c64-6b7a67881d60",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 1,
+        "props": {
+          "name": "titleAr",
+          "label": "Title (Arabic)",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Title (Arabic)",
+          "hint": "Required. Enter title (Arabic).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "titleAr",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-323b1aa8-ca2a-4189-885e-be04600c4fbb": {
+        "id": "node-323b1aa8-ca2a-4189-885e-be04600c4fbb",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 2,
+        "props": {
+          "name": "listLogicCode",
+          "label": "List logic code",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "List logic code",
+          "hint": "Required. Enter list logic code.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "listLogicCode",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-4cbc4f99-e9be-41c9-9105-3629f67d93e2": {
+        "id": "node-4cbc4f99-e9be-41c9-9105-3629f67d93e2",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 3,
+        "props": {
+          "name": "instituteId",
+          "label": "Institute id",
+          "size": "sm",
+          "placeholder": "Institute id",
+          "hint": "Enter institute id.",
+          "_designerPaletteItemId": "heroui.number-input"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "instituteId",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-7630a4b5-5373-4f71-9560-5151da63416d": {
+        "id": "node-7630a4b5-5373-4f71-9560-5151da63416d",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 4,
+        "props": {
+          "name": "predicateRef",
+          "label": "Predicate ref",
+          "size": "sm",
+          "placeholder": "Predicate ref",
+          "hint": "Enter predicate ref.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "predicateRef",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-a39d736e-ba64-49c7-85f0-1735d98fe259": {
+        "id": "node-a39d736e-ba64-49c7-85f0-1735d98fe259",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 5,
+        "props": {
+          "name": "sortOrder",
+          "label": "Sort order",
+          "size": "sm",
+          "placeholder": "Sort order",
+          "hint": "Enter sort order.",
+          "_designerPaletteItemId": "heroui.number-input"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "sortOrder",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-c5d2c207-517e-4aaa-b546-a4a1c16cf1a8": {
+        "id": "node-c5d2c207-517e-4aaa-b546-a4a1c16cf1a8",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 6,
+        "props": {
+          "name": "isActive",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "isActive",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-295ae701-3b05-4f5d-8357-94b292f07caa": {
+        "id": "node-295ae701-3b05-4f5d-8357-94b292f07caa",
+        "type": "container",
+        "parentId": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "order": 7,
+        "props": {
+          "name": "note",
+          "label": "Note",
+          "size": "sm",
+          "placeholder": "Note",
+          "hint": "Enter note.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "note",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-3ec77c5f-d817-402f-a263-277cb3185eaa": {
+        "id": "node-3ec77c5f-d817-402f-a263-277cb3185eaa",
+        "type": "container",
+        "parentId": "node-8683b237-5d85-42e6-9c73-1521041ac1e1",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-d28684ec-1b8e-49dd-a596-6d309d8fc7a0",
+          "node-cf208246-5223-4453-9c64-6b7a67881d60",
+          "node-323b1aa8-ca2a-4189-885e-be04600c4fbb",
+          "node-4cbc4f99-e9be-41c9-9105-3629f67d93e2",
+          "node-7630a4b5-5373-4f71-9560-5151da63416d",
+          "node-a39d736e-ba64-49c7-85f0-1735d98fe259",
+          "node-c5d2c207-517e-4aaa-b546-a4a1c16cf1a8",
+          "node-295ae701-3b05-4f5d-8357-94b292f07caa"
+        ]
+      },
+      "node-52e47f23-903e-4dda-b083-c7715b49d33b": {
+        "id": "node-52e47f23-903e-4dda-b083-c7715b49d33b",
+        "type": "link",
+        "parentId": "node-82862050-a98d-47b7-85b6-ac364caec6f4",
+        "order": 1,
+        "props": {
+          "text": "Save",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-8683b237-5d85-42e6-9c73-1521041ac1e1",
+          "icon": "Save"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mvzma6pj_9tz3u",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-39f38a81-3d6d-48fc-b825-70740ee19c3e"
+              },
+              {
+                "id": "da_mvzma6pj_hqjz0",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mvzma6pj_2jj11",
+                "type": "refreshDataSource",
+                "dataSourceRef": "hwymemberlistdefsList"
+              }
+            ],
+            "invalidateQueries": [
+              "region:hwymemberlistdefsList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-8683b237-5d85-42e6-9c73-1521041ac1e1": {
+        "id": "node-8683b237-5d85-42e6-9c73-1521041ac1e1",
+        "type": "container",
+        "parentId": "node-39f38a81-3d6d-48fc-b825-70740ee19c3e",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-8683b237-5d85-42e6-9c73-1521041ac1e1"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwymemberlistdefsList",
+            "sourcePath": "hwymemberlistdefsList",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "selection.id"
+            }
+          }
+        },
+        "children": [
+          "node-3ec77c5f-d817-402f-a263-277cb3185eaa"
+        ]
+      },
+      "node-9e3edfd9-c339-43cd-9e87-359fc4ccb0ed": {
+        "id": "node-9e3edfd9-c339-43cd-9e87-359fc4ccb0ed",
+        "type": "link",
+        "parentId": "node-82862050-a98d-47b7-85b6-ac364caec6f4",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mvzma6pj_4pk8c",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-39f38a81-3d6d-48fc-b825-70740ee19c3e"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-82862050-a98d-47b7-85b6-ac364caec6f4": {
+        "id": "node-82862050-a98d-47b7-85b6-ac364caec6f4",
+        "type": "container",
+        "parentId": "node-39f38a81-3d6d-48fc-b825-70740ee19c3e",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-9e3edfd9-c339-43cd-9e87-359fc4ccb0ed",
+          "node-52e47f23-903e-4dda-b083-c7715b49d33b"
+        ]
+      },
+      "node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913": {
+        "id": "node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913",
+        "type": "container",
+        "parentId": "root",
+        "order": 3,
+        "props": {
+          "title": "Delete Member List Definition?",
+          "size": "sm",
+          "isOpen": false,
+          "tone": "danger",
+          "_designerPaletteItemId": "heroui.alert-dialog",
+          "_isBuiltInTemplateRoot": true
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-2c1d2d8b-a48a-4862-a3b0-1ad22bb69d92",
+          "node-bb034421-8cb4-4d9c-a354-ac7f3482c177"
+        ]
+      },
+      "node-2c1d2d8b-a48a-4862-a3b0-1ad22bb69d92": {
+        "id": "node-2c1d2d8b-a48a-4862-a3b0-1ad22bb69d92",
+        "type": "text",
+        "parentId": "node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913",
+        "order": 0,
+        "props": {
+          "text": "Delete this member list definition? This cannot be undone.",
+          "className": "block p-[15px] text-sm text-slate-700",
+          "_designerPaletteItemId": "html.text",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "block",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "node-e222c67f-5918-4908-aef5-83526aa17429": {
+        "id": "node-e222c67f-5918-4908-aef5-83526aa17429",
+        "type": "link",
+        "parentId": "node-bb034421-8cb4-4d9c-a354-ac7f3482c177",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mvzma6pk_9agki",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-ef68c3d5-6c48-4495-b16b-d1499115b1c8": {
+        "id": "node-ef68c3d5-6c48-4495-b16b-d1499115b1c8",
+        "type": "link",
+        "parentId": "node-bb034421-8cb4-4d9c-a354-ac7f3482c177",
+        "order": 1,
+        "props": {
+          "text": "Delete",
+          "icon": "Trash2",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-rose-600 hover:bg-rose-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mvzma6pk_vpmlu",
+                "type": "callMutation",
+                "mutationOperation": "delete",
+                "dataSourceRef": "hwymemberlistdefsList",
+                "mutationRecordIdStorePath": "selection.id"
+              },
+              {
+                "id": "da_mvzma6pk_2f8rg",
+                "type": "refreshDataSource",
+                "dataSourceRef": "hwymemberlistdefsList"
+              },
+              {
+                "id": "da_mvzma6pk_agatz",
+                "type": "showToast",
+                "toastTitle": "Deleted",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mvzma6pk_k7is0",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-bb034421-8cb4-4d9c-a354-ac7f3482c177": {
+        "id": "node-bb034421-8cb4-4d9c-a354-ac7f3482c177",
+        "type": "container",
+        "parentId": "node-50f2b3b4-c8f2-4a56-acd3-ba0077bda913",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-e222c67f-5918-4908-aef5-83526aa17429",
+          "node-ef68c3d5-6c48-4495-b16b-d1499115b1c8"
+        ]
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-16T13:40:49.759Z",
+      "updatedAt": "2026-11-02T18:53:25.620Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "selection": {
+        "id": "selection",
+        "initialValue": {
+          "id": null
+        },
+        "persist": "none"
+      }
+    },
+    "dataSources": {
+      "hwymemberlistdefsList": {
+        "id": "hwymemberlistdefsList",
+        "name": "Member List Definitions",
+        "endpoint": "/api/hwy/member-list-defs",
+        "fields": [
+          "id",
+          "code",
+          "titleAr",
+          "listLogicCode",
+          "predicateRef",
+          "isActive",
+          "sortOrder",
+          "instituteId",
+          "note"
+        ],
+        "primaryKey": "id",
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-list-defs"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-list-defs/:id"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/hwy/member-list-defs"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/hwy/member-list-defs/:id"
+          },
+          "delete": {
+            "method": "DELETE",
+            "endpoint": "/api/hwy/member-list-defs/:id"
+          }
+        },
+        "responseMapping": {
+          "dataPath": "data",
+          "arrayPath": "data",
+          "totalPath": "count"
+        }
+      }
+    },
+    "lovs": {}
+  }
+}

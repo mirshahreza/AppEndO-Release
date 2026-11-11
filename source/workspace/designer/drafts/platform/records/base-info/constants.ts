@@ -1,0 +1,36 @@
+import type { BaseInfoEditForm } from './types';
+
+export const ROOT_KEY = '__root__';
+
+export const EMPTY_EDIT_FORM: BaseInfoEditForm = {
+  parentId: '',
+  childDigits: '3',
+  title: '',
+  titleEn: '',
+  titleFa: '',
+  titleAr: '',
+  shortName: '',
+  note: '',
+  noteEn: '',
+  noteFa: '',
+  noteAr: '',
+  viewOrder: '',
+  value: '',
+  metadata: '',
+  uiColor: '',
+  uiHtml: '',
+  isActive: true,
+};
+
+export const UI_HTML_EDITOR_LINE_HEIGHT = 18;
+export const UI_HTML_EDITOR_LINES = 4;
+export const UI_HTML_EDITOR_HEIGHT = (UI_HTML_EDITOR_LINE_HEIGHT * UI_HTML_EDITOR_LINES) + 12;
+
+export const ACTION_TOOL_COUNT = 3;
+export const ACTION_SLOT_WIDTH = 20;
+export const ACTION_SEPARATOR_SLOT_WIDTH = 7;
+export const ACTION_CELL_HORIZONTAL_PADDING = 3;
+export const ACTION_COLUMN_WIDTH =
+  ACTION_CELL_HORIZONTAL_PADDING * 2 +
+  (ACTION_SLOT_WIDTH * ACTION_TOOL_COUNT) +
+  (ACTION_SEPARATOR_SLOT_WIDTH * (ACTION_TOOL_COUNT - 1));

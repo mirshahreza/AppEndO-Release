@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:a263c8a780da",
+    "toolCallId": "call_voe4dSbd3xYgTA0sX2qC9orG",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1729,
+    "digest": "28a5c3113104e1f73e752ec9ea9bba77e603bcfb31ad9f2029444505cd883801",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-16T00:36:17.496Z"
+  },
+  "content": "{\n  \"path\": \"runtime/server-functions/custom/math.sum-two-numbers.metadata.json\",\n  \"startLine\": 1,\n  \"endLine\": 34,\n  \"totalLines\": 34,\n  \"truncated\": false,\n  \"content\": \"1|{\\n2|  \\\"schema\\\": \\\"append-server-function-metadata\\\",\\n3|  \\\"schemaVersion\\\": \\\"2.0.0\\\",\\n4|  \\\"id\\\": \\\"math.sum-two-numbers\\\",\\n5|  \\\"name\\\": \\\"sum-two-numbers\\\",\\n6|  \\\"folder\\\": \\\"math\\\",\\n7|  \\\"method\\\": \\\"POST\\\",\\n8|  \\\"path\\\": \\\"/api/math/sum-two-numbers\\\",\\n9|  \\\"sourceFile\\\": \\\"math.sum-two-numbers.ts\\\",\\n10|  \\\"language\\\": \\\"ts\\\",\\n11|  \\\"testPayload\\\": \\\"{\\\\n  \\\\\\\"a\\\\\\\": \\\\\\\"\\\\\\\",\\\\n  \\\\\\\"b\\\\\\\": \\\\\\\"\\\\\\\"\\\\n}\\\",\\n12|  \\\"runtimeVersion\\\": \\\"v20.x\\\",\\n13|  \\\"memoryLimit\\\": 128,\\n14|  \\\"timeoutMs\\\": 1500,\\n15|  \\\"useGlobalConfig\\\": true,\\n16|  \\\"enableLogs\\\": true,\\n17|  \\\"cacheEnabled\\\": false,\\n18|  \\\"cacheTtlMs\\\": 180000,\\n19|  \\\"cacheByParam\\\": false,\\n20|  \\\"cacheByUser\\\": false,\\n21|  \\\"engineType\\\": \\\"SANDBOX_JS\\\",\\n22|  \\\"metadataJson\\\": \\\"{\\\\\\\"derived\\\\\\\":{\\\\\\\"codeFingerprint\\\\\\\":\\\\\\\"fnv1a:8095a63\\\\\\\",\\\\\\\"generatedAt\\\\\\\":\\\\\\\"2026-07-11T15:51:27.602Z\\\\\\\",\\\\\\\"requestExample\\\\\\\":{\\\\\\\"a\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"b\\\\\\\":\\\\\\\"\\\\\\\"},\\\\\\\"docHints\\\\\\\":{\\\\\\\"summary\\\\\\\":\\\\\\\"POST /api/math/sum-two-numbers\\\\\\\",\\\\\\\"validationFields\\\\\\\":[\\\\\\\"a\\\\\\\",\\\\\\\"b\\\\\\\"],\\\\\\\"outputFields\\\\\\\":[],\\\\\\\"queryFields\\\\\\\":[],\\\\\\\"paramFields\\\\\\\":[]}},\\\\\\\"testPayloadSource\\\\\\\":\\\\\\\"manual\\\\\\\"}\\\",\\n23|  \\\"accessControl\\\": {\\n24|    \\\"accessMode\\\": \\\"authenticated\\\",\\n25|    \\\"allowRoles\\\": [],\\n26|    \\\"allowUsers\\\": [],\\n27|    \\\"denyRoles\\\": [],\\n28|    \\\"denyUsers\\\": []\\n29|  },\\n30|  \\\"createdAt\\\": \\\"2026-07-10T16:51:47.246Z\\\",\\n31|  \\\"updatedAt\\\": \\\"2026-07-11T15:51:27.612Z\\\",\\n32|  \\\"createdBy\\\": null,\\n33|  \\\"updatedBy\\\": \\\"m.mirshahreza@son.ir\\\"\\n34|}\"\n}"
+}

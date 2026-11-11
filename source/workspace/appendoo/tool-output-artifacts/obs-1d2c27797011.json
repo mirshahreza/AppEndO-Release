@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:1d2c27797011",
+    "toolCallId": "call_ZfryyQ61muKl1smv7ev1I1pi",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2893,
+    "digest": "81ad2c8f00c924ec1b52795e10403f5081e0364dd5568adb7af0e6850c773c8e",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-18T22:39:54.894Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/api/contracts/server-functions/initialFunctions.ts\",\n  \"startLine\": 330,\n  \"endLine\": 399,\n  \"totalLines\": 1132,\n  \"truncated\": false,\n  \"content\": \"330|  const users = await db.query('SELECT id, is_builtin FROM base_users WHERE id = ? LIMIT 1', [actorUserId]);\\n331|  const user = users?.[0] || null;\\n332|  if (!user) {\\n333|    return res.status(404).json({ success: false, error: 'User not found.' });\\n334|  }\\n335|  if (user.is_builtin) {\\n336|    return res.status(400).json({ success: false, error: 'Built-in accounts cannot be deleted.' });\\n337|  }\\n338|\\n339|  const roleRows = await db.query('SELECT role_name FROM base_user_roles WHERE user_id = ?', [actorUserId]);\\n340|  const roleNames = (roleRows || []).map((row) => String(row.role_name || '').trim().toUpperCase());\\n341|  if (roleNames.some((name) => name === 'ADMIN' || name === 'DEVELOPER')) {\\n342|    return res.status(400).json({ success: false, error: 'Accounts with ADMIN or DEVELOPER roles cannot be deleted.' });\\n343|  }\\n344|\\n345|  await db.query('DELETE FROM base_user_profiles WHERE user_id = ?', [actorUserId]);\\n346|  await db.query('DELETE FROM base_users WHERE id = ?', [actorUserId]);\\n347|\\n348|  return res.json({ success: true, message: 'Your account and all associated data have been permanently deleted.' });\\n349|}\\n350|\\n351|handler();`,\\n352|    testPayload: `{\\n353|  \\\"password\\\": \\\"current-password\\\"\\n354|}`,\\n355|    memoryLimit: 128,\\n356|    timeoutMs: 1500,\\n357|    runtimeVersion: 'v20.x',\\n358|    useGlobalConfig: true,\\n359|    enableLogs: true,\\n360|    isBuiltIn: true,\\n361|    accessControl: BUILTIN_AUTHENTICATED_ACCESS_CONTROL\\n362|  },\\n363|  {\\n364|    id: 'fn-users-list',\\n365|    name: 'list-users',\\n366|    folder: 'users',\\n367|    method: 'GET',\\n368|    path: '/api/users',\\n369|    code: `// GET /api/users\\n370|async function handler() {\\n371|  const users = await db.query(\\n372|    \\\"SELECT u.id, u.email, u.created_at, \\\" +\\n373|    \\\"COALESCE(array_agg(ur.role_name ORDER BY ur.role_name) FILTER (WHERE ur.role_name IS NOT NULL), ARRAY[]::TEXT[]) AS roles \\\" +\\n374|    \\\"FROM base_users u \\\" +\\n375|    \\\"LEFT JOIN base_user_roles ur ON ur.user_id = u.id \\\" +\\n376|    \\\"GROUP BY u.id, u.email, u.created_at \\\" +\\n377|    \\\"ORDER BY u.id DESC\\\"\\n378|  );\\n379|  return res.json({ success: true, items: users || [] });\\n380|}\\n381|\\n382|handler();`,\\n383|    testPayload: `{}`,\\n384|    memoryLimit: 128,\\n385|    timeoutMs: 1500,\\n386|    runtimeVersion: 'v20.x',\\n387|    useGlobalConfig: true,\\n388|    enableLogs: true,\\n389|    isBuiltIn: true,\\n390|    accessControl: BUILTIN_DEVELOPER_ACCESS_CONTROL\\n391|  },\\n392|  {\\n393|    id: 'fn-users-create',\\n394|    name: 'create-user',\\n395|    folder: 'users',\\n396|    method: 'POST',\\n397|    path: '/api/users',\\n398|    code: `// POST /api/users\\n399|async function handler() {\"\n}"
+}

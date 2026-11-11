@@ -13,6 +13,31 @@
 
 Export **reuses** `runtime/package-artifacts/hawiety/hawiety-*.zip`. Run `hawiety:pack` only on `release:cut` when the Hawiety version changes.
 
+## Isolated development (separate database)
+
+Do **not** point this clone at the private monorepo `AppEnd` database. Each git line uses its own control-plane database:
+
+| Item | Value |
+| --- | --- |
+| Recommended database | `AppEndOHawiety` |
+| Dev port (run beside monorepo) | `3001` |
+| Starter settings | `source/settings.recommended.json` |
+| Operator guide | `source/CLONE_PROFILE.md` |
+
+From **`source/`**:
+
+```bash
+npm run clone:bootstrap -- --profile hawiety
+npm install
+npm run schema:install-extensions
+npm run schema:install-extensions:hwy
+npm run dev
+```
+
+Install **`hawiety-*.zip`** from `packages/` in Package Manager. Member data: **ETL Console** (no member seed on package install).
+
+**Never commit** `settings.json`, `.env`, or `settings.json.*.tmp` to this repo.
+
 ## Security
 
 Keep this repo **private**. Rotate production secrets on the server.

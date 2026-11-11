@@ -1,0 +1,231 @@
+{
+  "schema": "component-designer-draft",
+  "id": "draft-hwy-members-montadhemin",
+  "name": "hwy-members-montadhemin",
+  "folder": "general",
+  "catalogKind": "custom",
+  "tags": [],
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-members-montadhemin",
+    "name": "hwy-members-montadhemin",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1793680952980-8vndm"
+        ]
+      },
+      "heroui-app-table-grid-1793680952980-8vndm": {
+        "id": "heroui-app-table-grid-1793680952980-8vndm",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"displayFullName\",\"label\":\"Member\",\"labelTranslationKey\":\"hwy.members.column.member\",\"cardRole\":\"title\",\"cellKind\":\"hwy-member-face\",\"cellFields\":{\"imageUrlField\":\"avatarUrl\",\"fallbackTextField\":\"displayFullName\",\"captionField\":\"username\",\"captionFallbackField\":\"trackingCode\",\"genderCodeField\":\"genderCode\",\"avatarSizePx\":43,\"primaryField\":\"displayFullName\",\"secondaryField\":\"birthYear\"},\"width\":\"263px\",\"layoutResizable\":false,\"layoutHideable\":false,\"headerClassName\":\"text-start [&>div]:justify-start whitespace-nowrap\",\"cellClassName\":\"min-w-0 max-w-[263px] whitespace-normal leading-snug px-0.5\",\"cellClickBehavior\":{\"kind\":\"navigate\",\"navigateTarget\":\"/hawiety/members-all/view/{selection.id}\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"},\"sort\":true,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"phone1\",\"label\":\"Phone\",\"labelTranslationKey\":\"hwy.members.column.phone\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"phone1\",\"secondaryField\":\"phone2\",\"accountLayout\":\"stacked-text-center\"},\"width\":\"9.5rem\",\"layoutResizable\":false,\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center text-[13px] tabular-nums\",\"sort\":false,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"nakhebinJoinTasjilStateCodeTitle\",\"label\":\"Registered\",\"labelTranslationKey\":\"hwy.family.column.cardStatus\",\"width\":\"64px\",\"layoutResizable\":false,\"sort\":false,\"filter\":false,\"cellKind\":\"hwy-registered-icon\",\"cellFields\":{\"primaryField\":\"nakhebinJoinTasjilStateCodeTitle\",\"secondaryField\":\"nakhebinJoinTasjilStateCode\"},\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center\"},{\"key\":\"nakhebinId\",\"label\":\"Family record\",\"labelTranslationKey\":\"hwy.members.column.nakhebin\",\"sort\":false,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"hidden\",\"width\":\"78px\",\"layoutResizable\":false,\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"nakhebinId\",\"secondaryField\":\"nakhebinFamilyCode\",\"accountLayout\":\"stacked-text-center\"},\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center min-w-0 text-xs tabular-nums leading-snug\",\"cellClickBehavior\":{\"kind\":\"hwy-family-household\"}},{\"key\":\"electoralDivisionPath\",\"label\":\"Electoral division\",\"labelTranslationKey\":\"hwy.members.column.electoralDivision\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"electoralDivisionLine1\",\"secondaryField\":\"electoralDivisionLine2\",\"accountLayout\":\"stacked-text\",\"electoralFallbackField\":\"addrProvinceTitle\"},\"cellClassName\":\"min-w-0 whitespace-normal text-xs leading-snug hwy-electoral-division-grid-cell align-middle\"},{\"key\":\"memberInstitutesSummary\",\"label\":\"Institute\",\"labelTranslationKey\":\"hwy.members.column.institute\",\"sort\":false,\"filter\":false,\"cardRole\":\"meta\",\"headerClassName\":\"text-center [&>div]:justify-center\",\"cellClassName\":\"min-w-0 whitespace-normal text-center text-xs leading-snug\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": true,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "updatedAt",
+          "sortOptions": "[{\"value\":\"updatedAt\",\"label\":\"Modified on\",\"labelTranslationKey\":\"hwy.members.column.updatedAt\"},{\"value\":\"createdAt\",\"label\":\"Created on\",\"labelTranslationKey\":\"hwy.members.column.createdAt\"},{\"value\":\"membershipOn\",\"label\":\"Membership on\",\"labelTranslationKey\":\"hwy.members.column.membershipOn\"},{\"value\":\"displayFullName\",\"label\":\"Member\",\"labelTranslationKey\":\"hwy.members.column.member\"},{\"value\":\"electoralDivisionPath\",\"label\":\"Electoral division\",\"labelTranslationKey\":\"hwy.members.column.electoralDivision\"}]",
+          "loadingMessage": "Loading members…",
+          "emptyContent": "No members found.",
+          "errorContent": "Could not load members.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search registered members…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"fieldFilters\":[{\"id\":\"montadheminInstituteId\",\"field\":\"montadheminInstituteId\",\"label\":\"Institutes\",\"labelTranslationKey\":\"hwy.members.filter.institutes\",\"controlType\":\"select\",\"optionsSource\":\"static\",\"options\":[{\"value\":\"100\",\"label\":\"General Board\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.ammah\"},{\"value\":\"101\",\"label\":\"State Affairs\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.gov\"},{\"value\":\"103\",\"label\":\"Hemam\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.hemam\"},{\"value\":\"102\",\"label\":\"Professional Office\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.mehani\"},{\"value\":\"108\",\"label\":\"Tribal Office\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.ashaaer\"},{\"value\":\"113\",\"label\":\"Mithaaq\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.mithaaq\"},{\"value\":\"109\",\"label\":\"Youth Office\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.shabab\"},{\"value\":\"111\",\"label\":\"Protectors\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.protectors\"},{\"value\":\"112\",\"label\":\"Elite & Competencies\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.nokhab\"},{\"value\":\"114\",\"label\":\"Al-Forat\",\"labelTranslationKey\":\"hwy.members.filter.instituteOption.alforat\"}],\"matchLogic\":\"or\",\"matchLogicApiParam\":\"montadheminInstituteMatch\",\"matchLogicStorePath\":\"gridToolbar.filters.montadheminInstituteIdMatch\",\"multiple\":true,\"apiParam\":\"filter[montadheminInstituteId][in]\",\"storePath\":\"gridToolbar.filters.montadheminInstituteId\"}],\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}",
+          "gridId": "hwy-hwy-members-montadhemin-member-dir-v39",
+          "loadingMessageTranslationKey": "hwy.members.loading",
+          "emptyContentTranslationKey": "hwy.members.empty",
+          "errorContentTranslationKey": "hwy.members.error",
+          "searchPlaceholderTranslationKey": "hwy.members.search.placeholder",
+          "refreshLabelTranslationKey": "hwy.members.toolbar.refresh",
+          "density": "compact",
+          "compactTabletLayout": "cards",
+          "compactPhoneLayout": "cards"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwymemberdirectoryList",
+            "sourcePath": "hwymemberdirectoryList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "filter[montadheminInstituteId][in]": "gridToolbar.filters.montadheminInstituteId",
+              "montadheminInstituteMatch": "gridToolbar.filters.montadheminInstituteIdMatch",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere",
+              "lang": "static:ar",
+              "listScope": "static:HWY_Members_List_AlMontadhemin"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-10-03T09:04:53.626Z",
+      "updatedAt": "2026-11-03T04:42:33.129Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "gridQuery": {
+        "id": "gridQuery",
+        "persist": "local",
+        "initialValue": {
+          "page": 1,
+          "pageSize": 50,
+          "sortBy": "updatedAt",
+          "sortDir": "desc",
+          "search": "",
+          "filters": {}
+        }
+      },
+      "gridToolbar": {
+        "id": "gridToolbar",
+        "persist": "local",
+        "initialValue": {
+          "search": "",
+          "filters": {
+            "membershipStatusCode": ""
+          }
+        }
+      }
+    },
+    "dataSources": {
+      "hwymemberdirectoryList": {
+        "id": "hwymemberdirectoryList",
+        "name": "Registered members",
+        "endpoint": "/api/hwy/member-directory",
+        "primaryKey": "id",
+        "kind": "collection",
+        "fields": [
+          "id",
+          "trackingCode",
+          "createdAt",
+          "updatedAt",
+          "displayFullName",
+          "avatarUrl",
+          "username",
+          "genderCode",
+          "birthYear",
+          "phone1",
+          "phone2",
+          "stacked-text-center",
+          "nakhebinJoinTasjilStateCode",
+          "nakhebinJoinTasjilStateCodeTitle",
+          "nakhebinId",
+          "nakhebinFamilyCode",
+          "electoralDivisionPath",
+          "electoralDivisionLine1",
+          "electoralDivisionLine2",
+          "stacked-text",
+          "addrProvinceTitle",
+          "memberInstitutesSummary",
+          "membershipOn",
+          "membershipStatusCode",
+          "membershipStatusCodeTitle",
+          "registrationChannelCodeTitle",
+          "nakhebinRegionId",
+          "nakhebinLinkRegionId",
+          "family_code",
+          "familyCode"
+        ],
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      }
+    },
+    "lovs": {}
+  },
+  "metadata": {
+    "createdAt": "2026-10-03T09:04:53.806Z",
+    "updatedAt": "2026-11-03T04:42:33.129Z",
+    "createdBy": "hwy-member-lists",
+    "updatedBy": "hwy-member-lists"
+  }
+}

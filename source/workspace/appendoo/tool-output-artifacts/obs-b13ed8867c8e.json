@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:b13ed8867c8e",
+    "toolCallId": "call_ol4jbU9NLHFHoeuSslYbuQl1",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2282,
+    "digest": "ff1395feeb77d77fc8e213ccd8ded7d87605d5ea84dc9af41c2c856d733ddaab",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:24:40.124Z"
+  },
+  "content": "{\n  \"query\": \"/api/math/add-two-numbers\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": null,\n  \"scopePaths\": null,\n  \"includeText\": true,\n  \"matchCount\": 11,\n  \"matches\": [\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 217,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 433,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 361,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 505,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/server-functions/custom/math.add-two-numbers.metadata.json\",\n      \"line\": 8,\n      \"column\": 12,\n      \"text\": \"\\\"path\\\": \\\"/api/math/add-two-numbers\\\",\"\n    },\n    {\n      \"path\": \"runtime/server-functions/custom/math.add-two-numbers.metadata.json\",\n      \"line\": 22,\n      \"column\": 194,\n      \"text\": \"\\\"metadataJson\\\": \\\"{\\\\\\\"derived\\\\\\\":{\\\\\\\"codeFingerprint\\\\\\\":\\\\\\\"fnv1a:cf1a8e70\\\\\\\",\\\\\\\"generatedAt\\\\\\\":\\\\\\\"2026-07-17T23:01:18.339Z\\\\\\\",\\\\\\\"requestExample\\\\\\\":{\\\\\\\"a\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"b\\\\\\\":\\\\\\\"\\\\\\\"},\\\\\\\"docHints\\\\\\\":{\\\\\\\"summary\\\\\\\":\\\\\\\"POST /api/math/add-two-numbers\\\\\\\",\\\\\\\"validationFields\\\\\\\":[\\\\\\\"a\\\\\\\",\\\\\\\"b\\\\\\\"],\\\\\\\"outputFields\\\\\\\":[],\\\\\\\"queryFields\\\\\\\":[],\\\\\\\"paramFields\\\\\\\":[]}},\\\\\\\"testPayloadSource\\\\\\\":\\\\\\\"generated\\\\\\\"}\\\",\"\n    },\n    {\n      \"path\": \"runtime/server-functions/index.json\",\n      \"line\": 22,\n      \"column\": 16,\n      \"text\": \"\\\"path\\\": \\\"/api/math/add-two-numbers\\\",\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

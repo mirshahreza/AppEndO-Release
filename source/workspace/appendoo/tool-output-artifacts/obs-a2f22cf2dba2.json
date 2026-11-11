@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:a2f22cf2dba2",
+    "toolCallId": "call_fHfIqdOZNMsG1Z3VLpmFYjdc",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2004,
+    "digest": "3beb7fc1dd441df8ab84bedf051e33b11fcbaefe53e3573dba57d2e73493f478",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:51:54.084Z"
+  },
+  "content": "{\n  \"query\": \"validateAiWebSearchPayload provider apiKey maxResults\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"src/server\",\n  \"scopePaths\": [\n    \"src/server\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 145,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/webActions.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 217,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 289,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/services/ai/aiSettings.service.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/db/aiSettingsStore.ts\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/inbound/mcpInboundAuth.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/services/ai/aiSettings.service.ts\",\n      \"line\": 289,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"settings\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

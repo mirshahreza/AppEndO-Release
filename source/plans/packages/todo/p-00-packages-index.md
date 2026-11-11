@@ -30,7 +30,7 @@
 <tr><td><strong>Packages (design only)</strong></td><td><a href="infra-management/README.md">Infra Management</a> · <a href="bigdata-development/README.md">Big Data Development</a></td></tr>
 <tr><td><strong>Platform AI</strong></td><td>AppEndoo shipped · backlog <a href="../../core/next/p-72-ai-backlog.md"><code dir="ltr" style="unicode-bidi: embed;">p-72</code></a></td></tr>
 <tr><td><strong>کار بعدی</strong></td><td>فاز ۱ — Data Studio + Base Info + گروه nav <code dir="ltr" style="unicode-bidi: embed;">Tasks</code> · <a href="tsk-package/tsk-phase-execution-prompts.md"><code dir="ltr" style="unicode-bidi: embed;">tsk-phase-execution-prompts.md</code></a></td></tr>
-<tr><td><strong>مسیر موازی</strong></td><td><a href="crm-package/p-packages-crm.md">CRM v2</a> · <a href="hawiety-package/hwy-legacy-vs-appendo-feature-parity.md">Hawiety parity §۰</a> · <a href="hawiety-package/p-packages-hawiety-extraction.md">extraction ✅</a> · <a href="hawiety-package/README.md">README هویتی</a></td></tr>
+<tr><td><strong>مسیر موازی</strong></td><td><a href="crm-package/p-packages-crm.md">CRM v2</a> · <a href="hawiety-package/hwy-legacy-vs-appendo-feature-parity.md">Hawiety parity §۰</a> · <a href="hawiety-package/p-packages-hawiety-extraction.md">extraction ✅</a> · <a href="hawiety-package/README.md">README هویتی</a> · <a href="voting-package/p-packages-voting.md">Voting #118</a> (design)</td></tr>
 <tr><td><strong>blocker</strong></td><td>—</td></tr>
 </tbody></table>
 
@@ -52,6 +52,7 @@
 <tr><td>115</td><td><a href="hawiety-package/p-packages-hawiety-extraction.md">Hawiety — extraction + members</a></td><td>✅</td><td>vertical-app gated · <code dir="ltr" style="unicode-bidi: embed;">hawiety:install</code> / <code dir="ltr" style="unicode-bidi: embed;">hawiety:rollback</code> · ETL-not-seed</td></tr>
 <tr><td>116</td><td><a href="p-packages-llm-studio.md">p-packages-llm-studio</a></td><td>⬜</td><td>design only — مدل محلی · Playground · dev API شبیه LM Studio</td></tr>
 <tr><td>117</td><td><a href="bases-package/p-packages-bases.md">p-packages-bases</a></td><td>⬜</td><td>design only — Base/Collection/View روی Edge · Grid/Kanban/Calendar/Gallery</td></tr>
+<tr><td>118</td><td><a href="voting-package/p-packages-voting.md">p-packages-voting</a></td><td>⬜</td><td>design only — Elections vertical-app مثل CMS · cutover هویتی بعد از ship</td></tr>
 </tbody></table>
 
 ---
@@ -60,7 +61,8 @@
 
 <table dir="rtl">
 <thead><tr><th>تاریخ</th><th>خلاصه</th></tr></thead>
-<tbody><tr><td>۲۰۲۶-۰۹-۱۷</td><td><strong>Bases phase plans split</strong> — <a href="bases-package/README.md">bases-package/README</a> · فاز ۱–۲ + 3a–3d executable docs + <a href="bases-package/bases-phase-execution-prompts.md">execution prompts</a></td></tr>
+<tbody><tr><td>۲۰۲۶-۱۱-۰۹</td><td><strong>Voting package plan drafted</strong> — <a href="voting-package/p-packages-voting.md">voting-package</a> · #118 operational vertical-app (Elections/W voting) · مستقل از hawiety مثل CMS · execution prompts</td></tr>
+<tr><td>۲۰۲۶-۰۹-۱۷</td><td><strong>Bases phase plans split</strong> — <a href="bases-package/README.md">bases-package/README</a> · فاز ۱–۲ + 3a–3d executable docs + <a href="bases-package/bases-phase-execution-prompts.md">execution prompts</a></td></tr>
 <tr><td>۲۰۲۶-۰۹-۱۷</td><td><strong>Bases plan drafted</strong> — <a href="bases-package/p-packages-bases.md">p-packages-bases</a> · design only, not implemented · #117 Studio tool · Airtable-like views on Edge</td></tr>
 <tr><td>۲۰۲۶-۰۹-۱۷</td><td><strong>LLM Studio plan drafted</strong> — <a href="p-packages-llm-studio.md">p-packages-llm-studio</a> · design only, not implemented · #116 Studio tool</td></tr>
 <tr><td>۲۰۲۶-۰۹-۱۶</td><td><strong>Hawiety members phase 1 enriched</strong> — <a href="hawiety-package/p-packages-hawiety-members-phase1.md">hawiety-package</a> · سناریو + مدل غنی از migration</td></tr>

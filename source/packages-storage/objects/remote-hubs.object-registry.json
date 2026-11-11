@@ -1,0 +1,43 @@
+{
+  "schema": "package-object-registry",
+  "schemaVersion": "1.0.0",
+  "packageId": "remote-hubs",
+  "activeVersion": "1.0.6",
+  "records": {
+    "apis": [],
+    "uiComponents": [],
+    "uiRoutes": [
+      {
+        "conflictKey": "ui_route::file-hub",
+        "pageKey": "file-hub",
+        "entry": "ui/sftp.tsx",
+        "suggestedRoutePattern": "sftp/*",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:27.829Z"
+      },
+      {
+        "conflictKey": "ui_route::ssh-hub",
+        "pageKey": "ssh-hub",
+        "entry": "ui/ssh.tsx",
+        "suggestedRoutePattern": "ssh/*",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:27.829Z"
+      },
+      {
+        "conflictKey": "ui_route::rdp-hub",
+        "pageKey": "rdp-hub",
+        "entry": "ui/rdp.tsx",
+        "suggestedRoutePattern": "rdp/*",
+        "suggestedMountId": "studio",
+        "registeredAt": "2026-11-06T20:28:27.829Z"
+      }
+    ],
+    "dbObjects": [],
+    "mcpServers": [],
+    "edgeModels": [],
+    "edgeApis": [],
+    "workflows": [],
+    "workflowActions": []
+  },
+  "updatedAt": "2026-11-06T20:28:27.829Z"
+}

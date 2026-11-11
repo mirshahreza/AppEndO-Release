@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:d3c8f7051ca0",
+    "toolCallId": "call_xgGSRAw9XFdLNq6x5kdcBWyT",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1505,
+    "digest": "dcf1392406e75fa9c297ab34d8c960dd5409e8f8dbfad79b18b390b688ee3fef",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T20:54:59.971Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/layout-presets/presetMiniPreviews.tsx\",\n  \"startLine\": 500,\n  \"endLine\": 530,\n  \"totalLines\": 700,\n  \"truncated\": false,\n  \"content\": \"500|          <MiniBar width=\\\"55%\\\" />\\n501|          <MiniBar width=\\\"72%\\\" className=\\\"h-[2px]\\\" />\\n502|        </div>\\n503|      </div>\\n504|      <div className=\\\"grid flex-1 grid-cols-3 gap-[2px]\\\">\\n505|        {Array.from({ length: 3 }).map((_, i) => (\\n506|          <MiniBox key={i} className=\\\"p-[1px]\\\"><MiniBar width=\\\"70%\\\" className=\\\"h-[2px]\\\" /><MiniBar width=\\\"55%\\\" className=\\\"mt-[1px] h-[3px]\\\" /></MiniBox>\\n507|        ))}\\n508|      </div>\\n509|    </PreviewFrame>\\n510|  ),\\n511|  'mobile-app-promo': () => (\\n512|    <PreviewFrame>\\n513|      <div className=\\\"grid h-full grid-cols-[34%,1fr] gap-[2px]\\\">\\n514|        <div className=\\\"rounded-sm border-2 border-slate-300/80 bg-white p-[2px]\\\">\\n515|          <div className={`h-full min-h-0 ${media}`} />\\n516|        </div>\\n517|        <MiniBox className=\\\"flex flex-col gap-[2px] p-[2px]\\\">\\n518|          <MiniBar width=\\\"72%\\\" />\\n519|          <MiniBar width=\\\"86%\\\" className=\\\"h-[2px]\\\" />\\n520|          <div className=\\\"mt-auto flex gap-[2px]\\\">\\n521|            <MiniBtn />\\n522|            <MiniBtn accent />\\n523|          </div>\\n524|        </MiniBox>\\n525|      </div>\\n526|    </PreviewFrame>\\n527|  ),\\n528|  'docs-detail': () => (\\n529|    <PreviewFrame>\\n530|      <div className=\\\"grid h-full grid-cols-[24%,1fr] gap-[2px]\\\">\"\n}"
+}

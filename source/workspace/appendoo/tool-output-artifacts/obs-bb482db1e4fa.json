@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:bb482db1e4fa",
+    "toolCallId": "call_uRYq9ivPypi94ocg0mWBzucB",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1062,
+    "digest": "2898dcc3e83420042b4533d422b4c064b4327f84e6b9b4cf52526ff56a933268",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-16T00:35:59.948Z"
+  },
+  "content": "{\n  \"query\": \"\\\"math-sum-two-numbers-calculator\\\"\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 0,\n  \"matches\": [],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

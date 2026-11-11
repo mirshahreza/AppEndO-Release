@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:c19f87b721a0",
+    "toolCallId": "call_W0Dj6Wx8TEBnlQpsDYcUdkqx",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 2382,
+    "digest": "d60e54741435588afdc802e8860c667f8047d6092df30531fee9bfa2ad14cfe9",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T20:55:06.637Z"
+  },
+  "content": "{\n  \"version\": \"1.70.73\",\n  \"updatedAt\": \"2026-08-31\",\n  \"standards\": [\n    {\n      \"id\": \"component-designer.editor.ai-panel\",\n      \"title\": \"Live Designer AI Chat Panel\",\n      \"value\": \"Client Components Live Designer docks the same UiContextChatPanel as Server Functions (Sparkles toggle, Ask vs Agent); Ask proposes a layout document for Apply; Agent drafts via draft_component_layout / designer tools and auto-applies onto the canvas; nothing is saved until Save; see docs/standards/component-designer.md and vibe-designer-edit\",\n      \"appliesTo\": [\n        \"Component Designer\",\n        \"Live Designer\",\n        \"Client Components\",\n        \"UiContextChatPanel\",\n        \"vibe-designer-edit\"\n      ],\n      \"shard\": \"component-designer\"\n    },\n    {\n      \"id\": \"ai.vibe.manual-operator-parity\",\n      \"title\": \"Vibe Coding Manual Operator Parity\",\n      \"value\": \"AppEndO Agent must simulate admin UI paths — Server Functions via draft_server_function only (canonical functionId folder.name, path /api/{folder}/{name}, disk workspace/server-functions/custom/{folder}.{name}.ts); the Server Functions editor AI panel writes that draft source into Monaco (Agent auto-applies, unsaved until Save); Component Designer via draft_component_layout (and designer_set_prop / designer_insert_palette_item); the Client Components Live Designer AI panel writes that drafted layout onto the canvas (Agent auto-applies, unsaved until Save); never draft_file_patch under workspace/server-functions/ or workspace/designer/; platform source only via allowlisted draft_file_patch; manual parity rules in vibe-operator-playbook, vibe-server-function, and vibe-designer-edit shards plus contextAssembly APPENDO_VIBE_PLATFORM_RULES\",\n      \"appliesTo\": [\n        \"draft_server_function\",\n        \"draft_component_layout\",\n        \"changeSet.service\",\n        \"contextAssembly\",\n        \"vibe-operator-playbook\",\n        \"vibe-server-function\",\n        \"vibe-designer-edit\",\n        \"vibe-coding\"\n      ],\n      \"shard\": \"vibe-coding-workflows\"\n    }\n  ],\n  \"matchCount\": 2,\n  \"truncated\": false,\n  \"maxRules\": 5,\n  \"knowledgeKinds\": [\n    \"STANDARD\",\n    \"BUILDER_GUIDANCE\"\n  ],\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic shards.\",\n  \"runtimeApi\": \"/api/project-standards\",\n  \"shardHint\": \"Pass shard (e.g. ui-grid) to load the full markdown topic file.\"\n}"
+}

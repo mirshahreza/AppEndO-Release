@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:fbcb9cb1fb17",
+    "toolCallId": "call_CPTOSFLOsVT9ihxAf4k6TYld",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1551,
+    "digest": "caef70f604351eae3ac82508e355db3729503afe71f5a5d79596d8a2d1e96f04",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:40:56.588Z"
+  },
+  "content": "{\n  \"path\": \"runtime/server-functions/custom/math.subtract-two-numbers.ts\",\n  \"startLine\": 1,\n  \"endLine\": 50,\n  \"totalLines\": 50,\n  \"truncated\": false,\n  \"content\": \"1|// POST /api/math/subtract-two-numbers\\n2|// Subtracts two finite numbers and returns a - b.\\n3|type EdgeReq = {\\n4|  body: Record<string, unknown>;\\n5|  query: Record<string, unknown>;\\n6|  params: Record<string, string>;\\n7|  method: string;\\n8|  headers: Record<string, string | undefined>;\\n9|};\\n10|\\n11|type EdgeRes = {\\n12|  json: (data: unknown) => unknown;\\n13|  send: (data: unknown) => unknown;\\n14|  status: (code: number) => EdgeRes;\\n15|};\\n16|\\n17|const edgeReq = req as EdgeReq;\\n18|const edgeRes = res as EdgeRes;\\n19|\\n20|function readFiniteNumber(value: unknown): number | null {\\n21|  if (value === null || value === undefined || value === '') {\\n22|    return null;\\n23|  }\\n24|\\n25|  const numberValue = typeof value === 'number' ? value : Number(value);\\n26|  return Number.isFinite(numberValue) ? numberValue : null;\\n27|}\\n28|\\n29|async function handler(): Promise<void> {\\n30|  const payload = edgeReq.body || {};\\n31|  const a = readFiniteNumber(payload.a);\\n32|  const b = readFiniteNumber(payload.b);\\n33|\\n34|  if (a === null || b === null) {\\n35|    edgeRes.status(400).json({\\n36|      success: false,\\n37|      error: 'Both \\\"a\\\" and \\\"b\\\" are required finite numbers.'\\n38|    });\\n39|    return;\\n40|  }\\n41|\\n42|  edgeRes.json({\\n43|    success: true,\\n44|    data: {\\n45|      a,\\n46|      b,\\n47|      result: a - b\\n48|    }\\n49|  });\\n50|}\"\n}"
+}

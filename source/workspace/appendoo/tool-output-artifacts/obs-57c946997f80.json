@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:57c946997f80",
+    "toolCallId": "call_eOhudkUuDY1qGGJdpkQu7yaB",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 2916,
+    "digest": "9b4ad9bd31db0577f280ec78cc427a7702541a3d4e452a9485d6adbfc7e42f9d",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-09-01T10:28:25.721Z"
+  },
+  "content": "{\n  \"version\": \"1.70.73\",\n  \"updatedAt\": \"2026-08-31\",\n  \"shard\": \"vibe-designer-edit\",\n  \"path\": \"docs/standards/vibe-designer-edit.md\",\n  \"content\": \"# WF-3 — Edit existing layout (vibe shard)\\r\\n\\r\\n> **Shard key:** `get_project_standards({ shard: \\\"vibe-designer-edit\\\" })`  \\r\\n> **Workflow:** [`vibe-coding-workflows.md`](./vibe-coding-workflows.md) § WF-3  \\r\\n> **Playbook:** [`vibe-operator-playbook.md`](./vibe-operator-playbook.md)\\r\\n\\r\\n---\\r\\n\\r\\n## When to use\\r\\n\\r\\n`layoutId` or `selectedNodeId` is in page context — user is editing an open Component Designer layout (Live Designer).\\r\\n\\r\\n## Manual UI parity (mandatory)\\r\\n\\r\\nSimulate **Client Components → Live Designer**. The editor AI panel writes a drafted layout onto the canvas (Agent auto-applies). Catalog persist is still **Save**.\\r\\n\\r\\n| Manual step | Agent equivalent |\\r\\n|-------------|------------------|\\r\\n| Canvas tree | `draft_component_layout` with `layoutId` from page context (and the full `document` from the snapshot when editing unsaved canvas) |\\r\\n| Inspector property | `designer_set_prop` |\\r\\n| Toolbox insert | `designer_insert_palette_item` |\\r\\n| Save | Proposal → this editor panel hydrates the document onto the canvas (Agent auto-applies). Catalog persist is still **Save** |\\r\\n\\r\\n**Never:** `draft_file_patch` under `workspace/designer/` — use `draft_component_layout` / designer tools only.\\r\\n\\r\\n## Execute — do not re-ask\\r\\n\\r\\nIf the user message already states what to change, **do not** respond with \\\"tell me what to edit\\\". After retrieve:\\r\\n\\r\\n1. `get_page_context` — `layoutId`, `selectedNodeId`\\r\\n2. `read_file` on generated/preview if needed\\r\\n3. `designer_set_prop` / `designer_insert_palette_item` **or** `draft_component_layout` with `layoutId` / `document` from the snapshot\\r\\n4. Proposal → the Live Designer AI panel writes that document onto the canvas (Agent auto-applies). Catalog Save is still the operator Save button. Do not claim the canvas changed without that apply.\\r\\n\\r\\n## Tool order\\r\\n\\r\\n1. `get_page_context` — `layoutId`, `selectedNodeId`\\r\\n2. `read_file` on generated/preview if needed\\r\\n3. `designer_set_prop` / `designer_insert_palette_item` **or** `draft_component_layout` with `baseLayoutId`\\r\\n4. `validateProposal` → confirm → apply → Designer handoff (AppEndO Agent). On the Live Designer AI column, Agent auto-applies onto the canvas — unsaved until Save.\\r\\n\\r\\n## UI rules\\r\\n\\r\\nSame as WF-2 — see `vibe-crud` shard + [`component-designer.md`](./component-designer.md) + [`ui-dialog.md`](./ui-dialog.md).\\r\\n\\r\\nWhen inserting or editing form controls, set `label` and `hint`. The page guide only explains nodes that have both. Do not ship generated visual pieces without that sidecar.\\r\\n\",\n  \"truncated\": false,\n  \"maxChars\": 6000,\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic map.\"\n}"
+}

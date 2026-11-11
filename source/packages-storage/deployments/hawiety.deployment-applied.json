@@ -1,0 +1,207 @@
+{
+  "schema": "package-deployment-applied",
+  "schemaVersion": "1.0.0",
+  "packageId": "hawiety",
+  "version": "0.3.8",
+  "appliedAt": "2026-11-08T15:17:42.300Z",
+  "kind": "vertical-app",
+  "deployment": {
+    "applyPolicy": "propose",
+    "mount": {
+      "id": "hawiety",
+      "pathPrefix": "/hawiety",
+      "name": "Hawiety",
+      "defaultRoute": "members-all",
+      "authProfile": {
+        "requireAuth": true
+      },
+      "experienceConfig": {
+        "locale": "iq",
+        "calendar": "gregorian",
+        "direction": "rtl",
+        "timezone": "Asia/Baghdad"
+      }
+    },
+    "shellRule": {
+      "pathPrefix": "/hawiety",
+      "shellKey": "hawiety-shell",
+      "priority": 10
+    },
+    "routes": [
+      {
+        "routePattern": "business-rules/*",
+        "pageKey": "hwy-business-rules-reference"
+      },
+      {
+        "routePattern": "card-flow/*",
+        "pageKey": "hwy-card-flow"
+      },
+      {
+        "routePattern": "courses-activities/*",
+        "pageKey": "hwy-courses-activities"
+      },
+      {
+        "routePattern": "employees-list",
+        "pageKey": "hwy-employees-list"
+      },
+      {
+        "routePattern": "etl-console",
+        "pageKey": "hwy-etl-console"
+      },
+      {
+        "routePattern": "finance/payment-documents",
+        "pageKey": "hwy-payment-documents"
+      },
+      {
+        "routePattern": "finance/payment-documents-members",
+        "pageKey": "hwy-payment-documents-members"
+      },
+      {
+        "routePattern": "geo-responsibility/*",
+        "pageKey": "hwy-geo-responsibility"
+      },
+      {
+        "routePattern": "identity-components/*",
+        "pageKey": "hwy-identity-components"
+      },
+      {
+        "routePattern": "masoolin-performance",
+        "pageKey": "hwy-masoolin-performance"
+      },
+      {
+        "routePattern": "meetings-management",
+        "pageKey": "hwy-meetings-management"
+      },
+      {
+        "routePattern": "members-all/edit/*",
+        "pageKey": "hwy-member-dossier-edit"
+      },
+      {
+        "routePattern": "members-all/view/*",
+        "pageKey": "hwy-member-dossier-view"
+      },
+      {
+        "routePattern": "members-org-membership-transfer",
+        "pageKey": "hwy-org-membership-transfer"
+      },
+      {
+        "routePattern": "members-social-screens",
+        "pageKey": "hwy-members-social-screens"
+      },
+      {
+        "routePattern": "members-targhin",
+        "pageKey": "hwy-members-targhin"
+      },
+      {
+        "routePattern": "targhin-requests",
+        "pageKey": "hwy-targhin-requests"
+      }
+    ]
+  },
+  "capabilities": {
+    "shell": {
+      "key": "hawiety-shell",
+      "name": "Hawiety Shell",
+      "entry": "ui/shell/AppShell.js",
+      "surface": "portal"
+    },
+    "pages": [
+      {
+        "pageKey": "hwy-etl-console",
+        "title": "ETL Console",
+        "entry": "ui/pages/hwy_etl_console.bundle.js"
+      },
+      {
+        "pageKey": "hwy-business-rules-reference",
+        "title": "Business rules reference",
+        "entry": "ui/pages/hwy_business_rules_reference.bundle.js"
+      },
+      {
+        "pageKey": "hwy-identity-components",
+        "title": "Identity components catalog",
+        "entry": "ui/pages/hwy_identity_components.bundle.js"
+      },
+      {
+        "pageKey": "hwy-org-membership-transfer",
+        "title": "Org membership transfer",
+        "entry": "ui/pages/hwy_org_membership_transfer.bundle.js"
+      },
+      {
+        "pageKey": "hwy-geo-responsibility",
+        "title": "Geo responsibility",
+        "entry": "ui/pages/hwy_geo_responsibility.bundle.js"
+      },
+      {
+        "pageKey": "hwy-card-flow",
+        "title": "Badge management",
+        "entry": "ui/pages/hwy_card_flow.bundle.js"
+      },
+      {
+        "pageKey": "hwy-meetings-management",
+        "title": "Meetings management",
+        "entry": "ui/pages/hwy_meetings_management.bundle.js"
+      },
+      {
+        "pageKey": "hwy-employees-list",
+        "title": "Employees list",
+        "entry": "ui/pages/hwy_employees_list.bundle.js"
+      },
+      {
+        "pageKey": "hwy-payment-documents",
+        "title": "Payment documents",
+        "entry": "ui/pages/hwy_payment_documents.bundle.js"
+      },
+      {
+        "pageKey": "hwy-payment-documents-members",
+        "title": "Grant receipt details",
+        "entry": "ui/pages/hwy_payment_documents_members.bundle.js"
+      },
+      {
+        "pageKey": "hwy-masoolin-performance",
+        "title": "Masoolin performance",
+        "entry": "ui/pages/hwy_masoolin_performance.bundle.js"
+      },
+      {
+        "pageKey": "hwy-members-social-screens",
+        "title": "Social screens",
+        "entry": "ui/pages/hwy_members_social_screens.bundle.js"
+      },
+      {
+        "pageKey": "hwy-courses-activities",
+        "title": "Courses & activities",
+        "entry": "ui/pages/hwy_courses_activities.bundle.js"
+      },
+      {
+        "pageKey": "hwy-targhin-requests",
+        "title": "Targhin admin",
+        "entry": "ui/pages/hwy_targhin_requests.bundle.js"
+      },
+      {
+        "pageKey": "hwy-phone-requests",
+        "title": "Phone requests",
+        "entry": "ui/pages/hwy_phone_requests.bundle.js"
+      },
+      {
+        "pageKey": "hwy-members-targhin",
+        "title": "Targhin members",
+        "entry": "ui/pages/hwy_members_targhin.bundle.js"
+      },
+      {
+        "pageKey": "hwy-member-dossier",
+        "title": "Member dossier",
+        "entry": "ui/pages/hwy_member_dossier.bundle.js"
+      },
+      {
+        "pageKey": "hwy-member-dossier-view",
+        "title": "Member dossier (view)",
+        "entry": "ui/pages/hwy_member_dossier_view.bundle.js"
+      },
+      {
+        "pageKey": "hwy-member-dossier-edit",
+        "title": "Member dossier (edit)",
+        "entry": "ui/pages/hwy_member_dossier_edit.bundle.js"
+      }
+    ]
+  },
+  "includeMount": true
+}

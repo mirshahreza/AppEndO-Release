@@ -1,0 +1,181 @@
+{
+  "$schemaVersion": "1.0",
+  "id": "cms",
+  "name": "CMS",
+  "version": "1.1.0",
+  "description": "Editorial content management: contents, revisions, assets, tags, relations, settings, comments.",
+  "requiredAppVersion": ">=1.0.0",
+  "dependencies": [],
+  "capabilities": {
+    "apis": [],
+    "ui_components": [],
+    "ui_routes": [
+      {
+        "pageKey": "cms-contents-list",
+        "entry": "ui/cms/cms-contents-list.tsx",
+        "suggestedRoutePattern": "cms/contents",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "cms-contents-editor",
+        "entry": "ui/cms/cms-contents-editor.tsx",
+        "suggestedRoutePattern": "cms/contents/edit/*",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "cms-comments",
+        "entry": "ui/cms/cms-comments.tsx",
+        "suggestedRoutePattern": "cms/comments",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "cms-settings",
+        "entry": "ui/cms/cms-settings.tsx",
+        "suggestedRoutePattern": "cms/settings",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "cms-vocab-content-types",
+        "entry": "ui/cms/cms-vocab-content-types.tsx",
+        "suggestedRoutePattern": "cms/vocabulary/content-types",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "cms-vocab-languages",
+        "entry": "ui/cms/cms-vocab-languages.tsx",
+        "suggestedRoutePattern": "cms/vocabulary/languages",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "cms-vocab-content-tags",
+        "entry": "ui/cms/cms-vocab-content-tags.tsx",
+        "suggestedRoutePattern": "cms/vocabulary/content-tags",
+        "suggestedMountId": "studio"
+      }
+    ],
+    "db_objects": [
+      {
+        "objectType": "table",
+        "objectName": "cms_schema",
+        "installScript": "db/install/cms_schema.sql",
+        "uninstallScript": "db/uninstall/cms_schema.sql"
+      }
+    ],
+    "mcp_servers": [],
+    "edge_models": [
+      {
+        "id": "em_4faada9793031477",
+        "entry": "edge/models/em_4faada9793031477.json"
+      },
+      {
+        "id": "em_3d506ad601658aab",
+        "entry": "edge/models/em_3d506ad601658aab.json"
+      },
+      {
+        "id": "em_95213b3d9a76be40",
+        "entry": "edge/models/em_95213b3d9a76be40.json"
+      },
+      {
+        "id": "em_1cd186b841dd21d7",
+        "entry": "edge/models/em_1cd186b841dd21d7.json"
+      },
+      {
+        "id": "em_90b8b65918bfc15c",
+        "entry": "edge/models/em_90b8b65918bfc15c.json"
+      },
+      {
+        "id": "em_0033c2db1f0bdc7f",
+        "entry": "edge/models/em_0033c2db1f0bdc7f.json"
+      },
+      {
+        "id": "em_de1dc90b9e9d7626",
+        "entry": "edge/models/em_de1dc90b9e9d7626.json"
+      }
+    ],
+    "edge_apis": [
+      {
+        "id": "ea_45d99ec1ef910de6",
+        "edgeModelId": "em_4faada9793031477",
+        "entry": "edge/apis/ea_45d99ec1ef910de6.json"
+      },
+      {
+        "id": "ea_4bb5fe4a0696c3db",
+        "edgeModelId": "em_1cd186b841dd21d7",
+        "entry": "edge/apis/ea_4bb5fe4a0696c3db.json"
+      },
+      {
+        "id": "ea_7ae970813151cd99",
+        "edgeModelId": "em_0033c2db1f0bdc7f",
+        "entry": "edge/apis/ea_7ae970813151cd99.json"
+      },
+      {
+        "id": "ea_8c3da2dd5d43f2c2",
+        "edgeModelId": "em_90b8b65918bfc15c",
+        "entry": "edge/apis/ea_8c3da2dd5d43f2c2.json"
+      },
+      {
+        "id": "ea_b7f3061ef1db14e5",
+        "edgeModelId": "em_95213b3d9a76be40",
+        "entry": "edge/apis/ea_b7f3061ef1db14e5.json"
+      },
+      {
+        "id": "ea_ed1387bd0113b3ca",
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "edge/apis/ea_ed1387bd0113b3ca.json"
+      },
+      {
+        "id": "ea_f2b91378e7b633f4",
+        "edgeModelId": "em_3d506ad601658aab",
+        "entry": "edge/apis/ea_f2b91378e7b633f4.json"
+      }
+    ],
+    "edge_model_studio_meta": [
+      {
+        "edgeModelId": "em_4faada9793031477",
+        "entry": "edge/studio-meta/em_4faada9793031477.json"
+      },
+      {
+        "edgeModelId": "em_3d506ad601658aab",
+        "entry": "edge/studio-meta/em_3d506ad601658aab.json"
+      },
+      {
+        "edgeModelId": "em_95213b3d9a76be40",
+        "entry": "edge/studio-meta/em_95213b3d9a76be40.json"
+      },
+      {
+        "edgeModelId": "em_1cd186b841dd21d7",
+        "entry": "edge/studio-meta/em_1cd186b841dd21d7.json"
+      },
+      {
+        "edgeModelId": "em_90b8b65918bfc15c",
+        "entry": "edge/studio-meta/em_90b8b65918bfc15c.json"
+      },
+      {
+        "edgeModelId": "em_0033c2db1f0bdc7f",
+        "entry": "edge/studio-meta/em_0033c2db1f0bdc7f.json"
+      },
+      {
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "edge/studio-meta/em_de1dc90b9e9d7626.json"
+      }
+    ],
+    "install_hooks": [
+      {
+        "id": "install_nav",
+        "entry": "hooks/install.ts"
+      }
+    ]
+  },
+  "overridePolicy": {
+    "apis": "deny",
+    "ui_components": "deny",
+    "db_objects": "deny",
+    "mcp_servers": "deny"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "artifactHash": "cf00c430822d903ac691e4f9fc971871440b3686120e0901ea84f60a79e0c087"
+  },
+  "createdAt": "2026-08-01T08:35:25.854Z",
+  "createdBy": "nav-fix-test"
+}

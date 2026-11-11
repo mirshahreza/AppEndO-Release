@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:47988dc83f18",
+    "toolCallId": "call_MnFfW5MHcaMHjfvc15HpmwB6",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1854,
+    "digest": "dc702689d267c0785072996cc33d09a86fd4b0c135d9be768b7351e642744bee",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:12:19.660Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/server-functions/runtimeConfig.ts\",\n  \"startLine\": 1,\n  \"endLine\": 45,\n  \"totalLines\": 45,\n  \"truncated\": false,\n  \"content\": \"1|export type ServerFunctionRuntimeVersion = 'v18.x' | 'v20.x';\\n2|export type ServerFunctionLanguage = 'ts' | 'js';\\n3|\\n4|const ALLOWED_MEMORY_MB = [64, 128, 256] as const;\\n5|const MIN_TIMEOUT_MS = 100;\\n6|const MAX_TIMEOUT_MS = 15000;\\n7|const DEFAULT_TIMEOUT_MS = 3000;\\n8|const DEFAULT_MEMORY_MB = 128;\\n9|\\n10|export const clampMemoryLimitMb = (value: unknown): number => {\\n11|  const numeric = Number(value);\\n12|  if (!Number.isFinite(numeric)) {\\n13|    return DEFAULT_MEMORY_MB;\\n14|  }\\n15|  const rounded = Math.round(numeric);\\n16|  if ((ALLOWED_MEMORY_MB as readonly number[]).includes(rounded)) {\\n17|    return rounded;\\n18|  }\\n19|  return (ALLOWED_MEMORY_MB as readonly number[]).reduce((closest, candidate) => (\\n20|    Math.abs(candidate - rounded) < Math.abs(closest - rounded) ? candidate : closest\\n21|  ));\\n22|};\\n23|\\n24|export const clampTimeoutMs = (value: unknown): number => {\\n25|  const numeric = Number(value);\\n26|  if (!Number.isFinite(numeric)) {\\n27|    return DEFAULT_TIMEOUT_MS;\\n28|  }\\n29|  return Math.min(MAX_TIMEOUT_MS, Math.max(MIN_TIMEOUT_MS, Math.floor(numeric)));\\n30|};\\n31|\\n32|export const normalizeRuntimeVersion = (value: unknown): ServerFunctionRuntimeVersion => (\\n33|  value === 'v18.x' ? 'v18.x' : 'v20.x'\\n34|);\\n35|\\n36|export const normalizeServerFunctionLanguage = (value: unknown): ServerFunctionLanguage => (\\n37|  value === 'js' ? 'js' : 'ts'\\n38|);\\n39|\\n40|export const readUseGlobalConfig = (value: unknown): boolean => value !== false;\\n41|\\n42|export const esbuildTargetForRuntimeVersion = (runtimeVersion: ServerFunctionRuntimeVersion): 'node18' | 'node20' => (\\n43|  runtimeVersion === 'v18.x' ? 'node18' : 'node20'\\n44|);\\n45|\"\n}"
+}

@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:bab457b421a1",
+    "toolCallId": "call_6vQOvQ3fSNbScIcFVpHoApeg",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2025,
+    "digest": "ee0c3280ed7f49a4c25c8be8ebe958c814e829a1d92f65a9bc0895e8a0253152",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:38:34.126Z"
+  },
+  "content": "{\n  \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n  \"startLine\": 470,\n  \"endLine\": 515,\n  \"totalLines\": 533,\n  \"truncated\": false,\n  \"content\": \"470|    }\\n471|  }, [entityRef, searchParam]);\\n472|\\n473|  React.useEffect(() => {\\n474|    void loadOptions(\\\"\\\");\\n475|  }, [loadOptions]);\\n476|\\n477|  return { items, isLoading, loadOptions };\\n478|}\\n479|\\n480|export const GeneratedComponent: React.FC = () => {\\n481|  const [isSubmitting, setIsSubmitting] = React.useState(false);\\n482|  const [mutationError, setMutationError] = React.useState<string | null>(null);\\n483|  const handleonClick_heroui_button_solid_1784327521580_rw1xq = React.useCallback(async (event: React.MouseEvent<HTMLButtonElement>) => {\\n484|    event.preventDefault();\\n485|    let formData: FormData;\\n486|    const form = event.currentTarget instanceof HTMLFormElement ? event.currentTarget : event.currentTarget.closest('form');\\n487|    if (form) {\\n488|      formData = new FormData(form);\\n489|    } else {\\n490|      const regionRoot = document.querySelector(\\\"[data-designer-node-id=\\\\\\\"html-form-1784327521579-i0rvy\\\\\\\"]\\\");\\n491|      if (!regionRoot) {\\n492|        return;\\n493|      }\\n494|      formData = collectRegionFormDataFromContainer(regionRoot, []);\\n495|    }\\n496|    setIsSubmitting(true);\\n497|    setMutationError(null);\\n498|    try {\\n499|      const payload: Record<string, unknown> = {};\\n500|      const method = 'POST';\\n501|      const url = \\\"/api/math/sum-two-numbers\\\";\\n502|      const response = await designerFetch(url, {\\n503|        method: method,\\n504|        headers: { 'Content-Type': 'application/json' },\\n505|        body: JSON.stringify(payload),\\n506|      });\\n507|      if (!response.ok) {\\n508|        throw new Error(await parseApiErrorMessage(response));\\n509|      }\\n510|    } catch (mutationFailure) {\\n511|      setMutationError(\\n512|        mutationFailure instanceof Error ? mutationFailure.message : 'Request failed',\\n513|      );\\n514|    }\\n515|    finally {\"\n}"
+}

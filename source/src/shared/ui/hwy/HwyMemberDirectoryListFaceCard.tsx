@@ -13,6 +13,7 @@ import { resolveMemberDirectoryFaceImageUrl } from '../../../domain/hwy/hwyMembe
 import { isHwyMemberDirectoryFacePhoneUnderNameLayout } from '../../../domain/hwy/hwyCandidatePipelineListParity';
 import { isHwyMemberRejectionListCompactMemberColumnLayout } from '../../../domain/hwy/hwyMemberRejectionListParity';
 import { cn } from '../../../lib/utils';
+import { CATALOG_INTERACTION_MARKER_FACE } from '../catalog/catalogInteractionState';
 import { PhoneNumberDisplay } from '../PhoneNumberDisplay';
 import { HwyMemberAvatarWithMembershipCode } from './HwyMemberAvatarWithMembershipCode';
 
@@ -192,5 +193,7 @@ export const HWY_MEMBER_DIRECTORY_LIST_FACE_CARD_BUTTON_CLASS = cn(
   'flex w-full min-w-0 items-stretch gap-1.5 text-start',
   'rounded-md border border-transparent px-1.5 py-1 transition-[background-color,box-shadow,border-color] duration-150 ease-out',
   'hover:border-slate-200/90 hover:bg-white hover:shadow-[0_2px_8px_rgba(15,23,42,0.08)]',
+  'active:border-slate-300/95 active:bg-white active:shadow-[0_1px_4px_rgba(15,23,42,0.14)]',
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-sky-500',
+  CATALOG_INTERACTION_MARKER_FACE,
 );

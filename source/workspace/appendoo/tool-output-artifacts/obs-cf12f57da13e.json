@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:cf12f57da13e",
+    "toolCallId": "call_uV7F8lXI468kHGT9u5hrOg3A",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1171,
+    "digest": "d742e8b82c54b1b3f64393fc0ca0c20281cb14f1aa5fa87faa941d92e46d9c5f",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-09-01T06:58:06.952Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/layout-presets/expandedPageStarterTemplates.ts\",\n  \"startLine\": 217,\n  \"endLine\": 239,\n  \"totalLines\": 239,\n  \"truncated\": false,\n  \"content\": \"217|          name: 'email',\\n218|          placeholder: 'you@company.com',\\n219|          inputType: 'email',\\n220|          size: 'sm',\\n221|          className: 'min-w-0 flex-1',\\n222|        },\\n223|      },\\n224|      actionButton('Subscribe', 'inline-flex h-8 items-center rounded-md bg-primary px-3 text-xs font-medium text-white no-underline'),\\n225|    ]),\\n226|  ]),\\n227|];\\n228|\\n229|export const expandedEmptyStateTemplate = (): TemplateNodeSeed[] => [\\n230|  box(\\n231|    'mx-auto flex w-full max-w-lg flex-col items-center gap-2 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center',\\n232|    [\\n233|      heading('No Data Yet', 'text-base font-semibold text-slate-800'),\\n234|      text('Create your first item to populate this view.', 'max-w-md text-sm text-slate-600'),\\n235|      actionButton('Create Item', 'mt-2 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-white no-underline'),\\n236|    ],\\n237|  ),\\n238|];\\n239|\"\n}"
+}

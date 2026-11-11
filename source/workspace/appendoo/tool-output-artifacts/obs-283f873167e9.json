@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:283f873167e9",
+    "toolCallId": "call_XLW2ERhEoNf59IsiC6X39CHG",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2039,
+    "digest": "8de14b393eb73d2772d1651be2c7c778fae932bfbec064ff7eb24196a2d738cb",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T20:55:21.948Z"
+  },
+  "content": "{\n  \"query\": \"AppTableGrid\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": false,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 1009,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appTableGridCardView.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appTableGridShell.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appTableGridShell.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGridRow.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGridRow.tsx\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 217,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 937,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 865,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

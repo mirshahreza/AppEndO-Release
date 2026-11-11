@@ -1716,6 +1716,25 @@
           }
         },
         {
+          "pageKey": "hwy-message-audit",
+          "routePattern": "message-audit",
+          "label": "Message audit",
+          "icon": "Mail",
+          "description": "Review all user message dispatches (admin audit).",
+          "iconColor": "text-violet-700",
+          "order": 4.5,
+          "separatorBefore": true,
+          "auth": {
+            "accessMode": "specific",
+            "allowRoles": [
+              "ADMIN"
+            ],
+            "allowUsers": [],
+            "denyRoles": [],
+            "denyUsers": []
+          }
+        },
+        {
           "pageKey": "hwy-business-rules-reference",
           "routePattern": "business-rules/*",
           "label": "Identity business rules",

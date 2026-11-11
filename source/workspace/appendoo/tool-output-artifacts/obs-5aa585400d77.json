@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:5aa585400d77",
+    "toolCallId": "call_0y0MazfZ2AsRo5DOI8ZvL7R5",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2956,
+    "digest": "d03754af13346108624004aaaf37f5a75a79cf91a3ccc1c422912384d5cb1061",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T16:24:46.774Z"
+  },
+  "content": "{\n  \"path\": \"src/features/component-designer/components/AutoFormWizardDialog.tsx\",\n  \"startLine\": 640,\n  \"endLine\": 690,\n  \"totalLines\": 888,\n  \"truncated\": false,\n  \"content\": \"640|                    className=\\\"min-w-0 flex-1\\\"\\n641|                    placeholder=\\\"Add a field by name (e.g. notes)\\\"\\n642|                    value={manualFieldName}\\n643|                    onChange={(event) => setManualFieldName(event.target.value)}\\n644|                    onKeyDown={(event) => {\\n645|                      if (event.key === 'Enter') {\\n646|                        event.preventDefault();\\n647|                        handleAddManualField();\\n648|                      }\\n649|                    }}\\n650|                  />\\n651|                  <AppButton type=\\\"button\\\" intent=\\\"secondary\\\" size=\\\"sm\\\" className=\\\"h-8 px-2.5\\\" onClick={handleAddManualField}>\\n652|                    <Plus className=\\\"mr-1 h-3.5 w-3.5\\\" strokeWidth={2} /> Add\\n653|                  </AppButton>\\n654|                </div>\\n655|              </div>\\n656|            </div>\\n657|          </AppSurfaceBox>\\n658|        ) : null}\\n659|\\n660|        {visibleStep === 2 ? (\\n661|          <div className=\\\"flex flex-col gap-3\\\">\\n662|            {showStandaloneEditWarning ? (\\n663|              <div\\n664|                className=\\\"flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs text-amber-900\\\"\\n665|                data-testid=\\\"auto-form-standalone-edit-warning\\\"\\n666|                role=\\\"alert\\\"\\n667|              >\\n668|                <AlertTriangle className=\\\"mt-0.5 h-3.5 w-3.5 shrink-0\\\" />\\n669|                <div className=\\\"flex flex-col gap-1\\\">\\n670|                  <span className=\\\"font-semibold\\\">Record selection required</span>\\n671|                  <span className=\\\"leading-relaxed\\\">\\n672|                    This form loads/edits a single record and needs a selection mechanism\\n673|                    (for example a Grid detail action that writes{' '}\\n674|                    <span className=\\\"font-mono text-[10px]\\\">selection.id</span>\\n675|                    ). Alone, it will stay empty unless you read the id from the URL below.\\n676|                  </span>\\n677|                </div>\\n678|              </div>\\n679|            ) : null}\\n680|\\n681|            <AppSurfaceBox tone=\\\"violet\\\" title=\\\"Form basics\\\">\\n682|              <div className=\\\"flex flex-col gap-3\\\">\\n683|                <div className=\\\"flex flex-col gap-[2px]\\\">\\n684|                  <span className=\\\"ps-[4px] text-xs text-slate-500\\\">Title</span>\\n685|                  <UiInput size=\\\"sm\\\" className=\\\"w-full\\\" value={title} onChange={(event) => setTitle(event.target.value)} />\\n686|                </div>\\n687|                <UiCheckboxChoice\\n688|                  checked={includeTitle}\\n689|                  onChange={(checked) => setIncludeTitle(checked)}\\n690|                >\"\n}"
+}

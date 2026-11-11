@@ -1,0 +1,173 @@
+{
+  "id": "ea_6adb1da9997f7289",
+  "edgeModelId": "em_ac3be3baf6bf1b75",
+  "key": "vote-polling-stations",
+  "label": "Voting Polling Stations",
+  "basePath": "/api/voting/polling-stations",
+  "operations": [
+    {
+      "id": "op_list_3lxu1o",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/voting/polling-stations",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "geoNodeId",
+          "legacyCarId",
+          "isActive",
+          "operatorNote",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_3lxu1o",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/voting/polling-stations/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "geoNodeId",
+          "legacyCarId",
+          "isActive",
+          "operatorNote",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_3lxu1o",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/voting/polling-stations",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "geoNodeId",
+          "legacyCarId",
+          "isActive",
+          "operatorNote",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "votingId",
+          "title",
+          "geoNodeId",
+          "legacyCarId",
+          "isActive",
+          "operatorNote",
+          "createdAt",
+          "updatedAt"
+        ],
+        "required": [
+          "votingId",
+          "title",
+          "isActive",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_3lxu1o",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/voting/polling-stations/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "geoNodeId",
+          "legacyCarId",
+          "isActive",
+          "operatorNote",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "votingId",
+          "title",
+          "geoNodeId",
+          "legacyCarId",
+          "isActive",
+          "operatorNote",
+          "createdAt",
+          "updatedAt"
+        ],
+        "required": [
+          "votingId",
+          "title",
+          "isActive",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_3lxu1o",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/voting/polling-stations/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "geoNodeId",
+          "legacyCarId",
+          "isActive",
+          "operatorNote",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-10T13:08:11.766Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "vote-polling-stations.vote-polling-stations-list"
+}

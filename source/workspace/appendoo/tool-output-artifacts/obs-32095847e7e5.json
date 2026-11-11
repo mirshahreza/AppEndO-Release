@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:32095847e7e5",
+    "toolCallId": "call_551j0s8YcRHsyBNET3aJvtLg",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2124,
+    "digest": "e18d604d6bedadd4236e92a4ddc04d5777d54c377935d74b83d54ca2fd8e315e",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:12:02.545Z"
+  },
+  "content": "{\n  \"query\": \"serpapi api key fetch secret environment header x-serpapi-key Authorization Bearer\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": true,\n  \"pageKey\": \"server-functions\",\n  \"scopePath\": \"pageKey:server-functions\",\n  \"scopePaths\": [\n    \"src/features/server-functions\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/server-functions\",\n    \"src/server/services/functions.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/lib/postmanCollectionImporter.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/edgeApiOperations.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/routes/api-talk.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"api-talk\",\n      \"label\": \"api-talk\"\n    },\n    {\n      \"path\": \"src/shared/ui/landing-widgets/components.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/my-apis.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/api-endpoint-schema.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/ssh-hub.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/api-talk.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/openapi/buildManagedFunctionOpenApi.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/modelGatewayTelemetry.ts\",\n      \"line\": 1,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"server-functions\",\n    \"label\": \"Server Functions\",\n    \"routePattern\": \"server-functions\",\n    \"searchRoots\": [\n      \"src/features/server-functions\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/server-functions\",\n      \"src/server/services/functions.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

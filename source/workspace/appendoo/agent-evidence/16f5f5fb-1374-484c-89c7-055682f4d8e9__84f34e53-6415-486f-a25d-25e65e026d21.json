@@ -1,0 +1,75 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "1ef8a512-7976-4dc6-932d-79da98a06685",
+      "taskId": "16f5f5fb-1374-484c-89c7-055682f4d8e9",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:search_codebase",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T20:55:06.603Z"
+    },
+    {
+      "evidenceId": "ba712b56-bb60-46aa-a678-c46dc4bf05d7",
+      "taskId": "16f5f5fb-1374-484c-89c7-055682f4d8e9",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T20:55:06.625Z"
+    },
+    {
+      "evidenceId": "f034d554-cae1-42c7-954b-68e1a022ea0b",
+      "taskId": "16f5f5fb-1374-484c-89c7-055682f4d8e9",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/tools/native/draftComponentLayout.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T20:55:08.314Z"
+    },
+    {
+      "evidenceId": "7249c78f-a93a-4a7a-ba24-28d4967ce47f",
+      "taskId": "16f5f5fb-1374-484c-89c7-055682f4d8e9",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/tools/native/draftApplicationScaffold.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T20:55:08.337Z"
+    },
+    {
+      "evidenceId": "a5026b3f-d312-4169-8ee9-326cbff09f15",
+      "taskId": "16f5f5fb-1374-484c-89c7-055682f4d8e9",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/tools/native/draftApplicationScaffold.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T20:55:09.326Z"
+    }
+  ],
+  "claims": []
+}

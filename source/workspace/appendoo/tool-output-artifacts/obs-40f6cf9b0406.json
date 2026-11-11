@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:40f6cf9b0406",
+    "toolCallId": "call_aRlZ3BpMwqJM1th554OOe55h",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2146,
+    "digest": "47a0f86d5d5a15217a9ee359d2d0b4396992623b4a68394c934e51805d0873b2",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:12:03.191Z"
+  },
+  "content": "{\n  \"query\": \"organic_results serpapi search.json /api/test Missing SerpAPI key\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": true,\n  \"pageKey\": null,\n  \"scopePath\": null,\n  \"scopePaths\": null,\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"workspace/server-functions/custom/general.test.metadata.json\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/webActions.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 433,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 577,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/features/workflows/components/actionCatalogUtils.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"workflows\",\n      \"label\": \"Workflows\"\n    },\n    {\n      \"path\": \"src/features/data-studio/components/DataApiOperationTestPanel.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"data-studio\",\n      \"label\": \"Data Studio\"\n    },\n    {\n      \"path\": \"src/features/my-apis/components/MyApiTestModal.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"my-apis\",\n      \"label\": \"my-apis\"\n    },\n    {\n      \"path\": \"src/features/workflows/components/internalApiCallFormUtils.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"workflows\",\n      \"label\": \"Workflows\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"settings\",\n    \"chat-history\",\n    \"workflows\",\n    \"data-studio\",\n    \"my-apis\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

@@ -1,0 +1,123 @@
+{
+  "taskId": "7cc8c50bccba8a66",
+  "scenarioId": "v5-p00-permission-change",
+  "category": "permission_change",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:51.155Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Add an export role with view access to REPORTS_ROLE_PERMISSIONS.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "gate",
+          "name": "get_project_standards",
+          "args": {
+            "shard": "vibe-coding-workflows"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "read_file",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/permissionSample.ts"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c2",
+          "name": "draft_file_patch",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/permissionSample.ts",
+            "content": "/**\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`permission_change`\n * scenario). Not wired into any real authorization path — a minimal, isolated target so a\n * scripted agent trajectory can propose a real `draft_file_patch` for a permission-shaped edit.\n */\nexport const REPORTS_ROLE_PERMISSIONS: Record<string, string[]> = {\n  admin: ['view', 'edit'],\n  viewer: ['view'],\n  export: ['view'],\n};\n"
+          }
+        }
+      ]
+    },
+    {
+      "text": "Added export role with view access."
+    }
+  ],
+  "toolOrder": [
+    "get_project_standards",
+    "read_file",
+    "draft_file_patch"
+  ],
+  "result": {
+    "text": "Added export role with view access.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 4,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "get_project_standards",
+        "argsHash": "70ecb22a4d391191",
+        "durationMs": 4,
+        "tokensEstimate": 1331,
+        "ok": true,
+        "summary": "Loaded standards shard \"docs/standards/vibe-coding-workflows.md\" (truncated to 6000 chars)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "c580b6c0b3ac6e4b",
+        "durationMs": 6,
+        "tokensEstimate": 2940,
+        "ok": true,
+        "summary": "Read 10 line(s) from src/shared/lib/appendoo/v5Baseline/permissionSample.ts (10 total)."
+      },
+      {
+        "iteration": 3,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "draft_file_patch",
+        "argsHash": "ef5c7c5ac163b0fe",
+        "durationMs": 10,
+        "tokensEstimate": 3120,
+        "ok": true,
+        "summary": "Drafted file patch for src/shared/lib/appendoo/v5Baseline/permissionSample.ts (11 lines, full content)."
+      },
+      {
+        "iteration": 4,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 3207,
+        "ok": true
+      }
+    ],
+    "proposalId": "2b8f580a-f68e-45ee-8070-700df8e61577",
+    "changeSets": [
+      {
+        "id": "cs-9142dc1b-60b7-40f9-9a92-dd2df17d9229",
+        "kind": "file_patch",
+        "title": "File patch: src/shared/lib/appendoo/v5Baseline/permissionSample.ts",
+        "path": "src/shared/lib/appendoo/v5Baseline/permissionSample.ts",
+        "beforeHash": "412ad3fd654dd6dc",
+        "beforeContent": "/**\r\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`permission_change`\r\n * scenario). Not wired into any real authorization path — a minimal, isolated target so a\r\n * scripted agent trajectory can propose a real `draft_file_patch` for a permission-shaped edit.\r\n */\r\nexport const REPORTS_ROLE_PERMISSIONS: Record<string, string[]> = {\r\n  admin: ['view', 'edit'],\r\n  viewer: ['view'],\r\n};\r\n",
+        "diffZones": [
+          {
+            "startLine": 9,
+            "endLine": 11
+          }
+        ],
+        "content": "/**\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`permission_change`\n * scenario). Not wired into any real authorization path — a minimal, isolated target so a\n * scripted agent trajectory can propose a real `draft_file_patch` for a permission-shaped edit.\n */\nexport const REPORTS_ROLE_PERMISSIONS: Record<string, string[]> = {\n  admin: ['view', 'edit'],\n  viewer: ['view'],\n  export: ['view'],\n};\n"
+      }
+    ],
+    "validationOk": true,
+    "validationViolations": [],
+    "retrievalOperationCount": 2,
+    "draftToolCount": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:610ae92ed029",
+    "toolCallId": "call_rBr8Gs8cOYaS3Z1IOB3WO1jO",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1813,
+    "digest": "696dd607a2fdf3d591c6ddca9119db90adcb54749f890576c9b0d025286632e5",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:19:22.387Z"
+  },
+  "content": "{\n  \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n  \"startLine\": 480,\n  \"endLine\": 515,\n  \"totalLines\": 533,\n  \"truncated\": false,\n  \"content\": \"480|export const GeneratedComponent: React.FC = () => {\\n481|  const [isSubmitting, setIsSubmitting] = React.useState(false);\\n482|  const [mutationError, setMutationError] = React.useState<string | null>(null);\\n483|  const handleonClick_heroui_button_solid_1784327521580_rw1xq = React.useCallback(async (event: React.MouseEvent<HTMLButtonElement>) => {\\n484|    event.preventDefault();\\n485|    let formData: FormData;\\n486|    const form = event.currentTarget instanceof HTMLFormElement ? event.currentTarget : event.currentTarget.closest('form');\\n487|    if (form) {\\n488|      formData = new FormData(form);\\n489|    } else {\\n490|      const regionRoot = document.querySelector(\\\"[data-designer-node-id=\\\\\\\"html-form-1784327521579-i0rvy\\\\\\\"]\\\");\\n491|      if (!regionRoot) {\\n492|        return;\\n493|      }\\n494|      formData = collectRegionFormDataFromContainer(regionRoot, []);\\n495|    }\\n496|    setIsSubmitting(true);\\n497|    setMutationError(null);\\n498|    try {\\n499|      const payload: Record<string, unknown> = {};\\n500|      const method = 'POST';\\n501|      const url = \\\"/api/math/sum-two-numbers\\\";\\n502|      const response = await designerFetch(url, {\\n503|        method: method,\\n504|        headers: { 'Content-Type': 'application/json' },\\n505|        body: JSON.stringify(payload),\\n506|      });\\n507|      if (!response.ok) {\\n508|        throw new Error(await parseApiErrorMessage(response));\\n509|      }\\n510|    } catch (mutationFailure) {\\n511|      setMutationError(\\n512|        mutationFailure instanceof Error ? mutationFailure.message : 'Request failed',\\n513|      );\\n514|    }\\n515|    finally {\"\n}"
+}

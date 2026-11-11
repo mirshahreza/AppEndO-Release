@@ -1,0 +1,152 @@
+{
+  "$schemaVersion": "1.0",
+  "id": "cms",
+  "name": "CMS",
+  "version": "1.0.0",
+  "description": "CMS Studio module packed from the live node (schema, vocab, content, files, Designer pages).",
+  "createdBy": "pack-cms-package",
+  "requiredAppVersion": ">=1.0.0",
+  "dependencies": [],
+  "capabilities": {
+    "apis": [],
+    "ui_components": [],
+    "db_objects": [
+      {
+        "objectType": "seed",
+        "objectName": "cms_install",
+        "installScript": "db/install.sql",
+        "uninstallScript": "db/uninstall.sql",
+        "installMode": "required"
+      },
+      {
+        "objectType": "seed",
+        "objectName": "cms_initial_records",
+        "installScript": "db/optional-records.sql",
+        "uninstallScript": "db/optional-records-uninstall.sql",
+        "installMode": "optional"
+      }
+    ],
+    "mcp_servers": [],
+    "edge_models": [
+      {
+        "id": "em_4faada9793031477",
+        "entry": "edge/models/em_4faada9793031477.json"
+      },
+      {
+        "id": "em_3d506ad601658aab",
+        "entry": "edge/models/em_3d506ad601658aab.json"
+      },
+      {
+        "id": "em_95213b3d9a76be40",
+        "entry": "edge/models/em_95213b3d9a76be40.json"
+      },
+      {
+        "id": "em_1cd186b841dd21d7",
+        "entry": "edge/models/em_1cd186b841dd21d7.json"
+      },
+      {
+        "id": "em_90b8b65918bfc15c",
+        "entry": "edge/models/em_90b8b65918bfc15c.json"
+      },
+      {
+        "id": "em_0033c2db1f0bdc7f",
+        "entry": "edge/models/em_0033c2db1f0bdc7f.json"
+      },
+      {
+        "id": "em_de1dc90b9e9d7626",
+        "entry": "edge/models/em_de1dc90b9e9d7626.json"
+      }
+    ],
+    "edge_apis": [
+      {
+        "id": "ea_41c8bcea5934c03c",
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "edge/apis/ea_41c8bcea5934c03c.json"
+      },
+      {
+        "id": "ea_579348c45cab4d2b",
+        "edgeModelId": "em_0033c2db1f0bdc7f",
+        "entry": "edge/apis/ea_579348c45cab4d2b.json"
+      },
+      {
+        "id": "ea_e659dcd57b82a6c3",
+        "edgeModelId": "em_1cd186b841dd21d7",
+        "entry": "edge/apis/ea_e659dcd57b82a6c3.json"
+      },
+      {
+        "id": "ea_05b12027ede0236a",
+        "edgeModelId": "em_90b8b65918bfc15c",
+        "entry": "edge/apis/ea_05b12027ede0236a.json"
+      },
+      {
+        "id": "ea_f3ffdfb8d9ecbb33",
+        "edgeModelId": "em_95213b3d9a76be40",
+        "entry": "edge/apis/ea_f3ffdfb8d9ecbb33.json"
+      },
+      {
+        "id": "ea_9f6cda875187b0ec",
+        "edgeModelId": "em_3d506ad601658aab",
+        "entry": "edge/apis/ea_9f6cda875187b0ec.json"
+      }
+    ],
+    "edge_model_studio_meta": [
+      {
+        "edgeModelId": "em_4faada9793031477",
+        "entry": "edge/studio-meta/em_4faada9793031477.json"
+      },
+      {
+        "edgeModelId": "em_3d506ad601658aab",
+        "entry": "edge/studio-meta/em_3d506ad601658aab.json"
+      },
+      {
+        "edgeModelId": "em_95213b3d9a76be40",
+        "entry": "edge/studio-meta/em_95213b3d9a76be40.json"
+      },
+      {
+        "edgeModelId": "em_1cd186b841dd21d7",
+        "entry": "edge/studio-meta/em_1cd186b841dd21d7.json"
+      },
+      {
+        "edgeModelId": "em_90b8b65918bfc15c",
+        "entry": "edge/studio-meta/em_90b8b65918bfc15c.json"
+      },
+      {
+        "edgeModelId": "em_0033c2db1f0bdc7f",
+        "entry": "edge/studio-meta/em_0033c2db1f0bdc7f.json"
+      },
+      {
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "edge/studio-meta/em_de1dc90b9e9d7626.json"
+      }
+    ],
+    "record_policies": [
+      {
+        "id": "rp_msr6htsa",
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "record-policy/policies/rp_msr6htsa.json"
+      },
+      {
+        "id": "rp_msr6kjxp",
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "record-policy/policies/rp_msr6kjxp.json"
+      },
+      {
+        "id": "rp_msr6nkik",
+        "edgeModelId": "em_de1dc90b9e9d7626",
+        "entry": "record-policy/policies/rp_msr6nkik.json"
+      }
+    ],
+    "install_hooks": []
+  },
+  "overridePolicy": {
+    "apis": "deny",
+    "ui_components": "deny",
+    "db_objects": "deny",
+    "mcp_servers": "deny"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "artifactHash": "ab2176d1f529c341ecd7295480b8980629b15b6bbf70512329ca9eafd65c419d"
+  },
+  "createdAt": "2026-08-24T12:53:01.331Z"
+}

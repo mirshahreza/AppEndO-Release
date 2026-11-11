@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:7e3639495c61",
+    "toolCallId": "call_lti0HIzw9Sdf6e6NAkRknDaE",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 2898,
+    "digest": "ae5cc75c4a0552cb44949bc2f8b0f67e036f3625e81a88a2eb849033758f5dd9",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T16:18:33.172Z"
+  },
+  "content": "{\n  \"version\": \"1.70.73\",\n  \"updatedAt\": \"2026-08-31\",\n  \"shard\": \"vibe-crud\",\n  \"path\": \"docs/standards/vibe-crud.md\",\n  \"content\": \"# WF-2 — Client CRUD UI (vibe shard)\\r\\n\\r\\n> **Shard key:** `get_project_standards({ shard: \\\"vibe-crud\\\" })`  \\r\\n> **Workflow:** [`vibe-coding-workflows.md`](./vibe-coding-workflows.md) § WF-2  \\r\\n> **Playbook:** [`vibe-operator-playbook.md`](./vibe-operator-playbook.md)\\r\\n\\r\\n---\\r\\n\\r\\n## When to use\\r\\n\\r\\nUser is on **Client Components** (`pageKey: client-components`) and wants a new grid + form CRUD bound to an API.\\r\\n\\r\\n**CRUD Set** (one `CrudSet`: list + creates + purpose/content patches + delete, Users-like): load shard `crud-set` and skill `.claude/skills/appendo-build-crud-set`. Ask `CRUD_SET_FIRST_QUESTION`, fill `CrudSetSpec`, then render one `CrudSet`. This vibe shard is the leftover path for a one-off grid/form that is **not** a CRUD Set.\\r\\n\\r\\n## Execute — do not re-ask\\r\\n\\r\\nIf the user already described the CRUD (entity, columns, API), after retrieve call **`draft_component_layout`** — do not ask them to repeat. For a **multi-page application** (list+detail, portal with several screens), call **`draft_application_scaffold`** instead (orchestrates shell + pages + menu via `draft_component_layout`).\\r\\n\\r\\n## Tool order\\r\\n\\r\\n1. `get_feature_graph({ pageKey: \\\"client-components\\\" })`\\r\\n2. `search_codebase` + `read_file` — similar layout/template\\r\\n3. **`draft_component_layout`** (single screen) **or** **`draft_application_scaffold`** (multi-page + shell + menu)\\r\\n4. Proposal → confirm → apply → **Designer handoff**\\r\\n\\r\\n## UI rules (mandatory)\\r\\n\\r\\n| Control | Use |\\r\\n|---------|-----|\\r\\n| Grids | `AppTableGrid` |\\r\\n| Booleans | `UiCheckbox` — never native checkbox |\\r\\n| Buttons | `AppButton` intents from `buttonSemantics.ts` |\\r\\n| Modals | `CreateEditModalShell` |\\r\\n| Labels | `ps-[4px]` + 2px gap to control |\\r\\n| Page guide | Every generated field must have `label` + `hint` (plain-language sentence). Auto-form/CRUD builders emit `hint`; canvas/export wrap the control with `data-page-guide*`. After a manual `designer_insert_palette_item`, set `hint` via `designer_set_prop`. |\\r\\n\\r\\n## Related shards\\r\\n\\r\\n- `crud-set` — unified `CrudSet` (`CrudSetSpec` as props); prefer this over this shard\\r\\n- `crud-pages` — CRUD page patterns\\r\\n- `ui-grid` — columns, paging, actions\\r\\n- `ui-core` — forms, shell, typography\\r\\n- `data-studio` — when the API is generated from a Data Studio model\\r\\n- **`package-ui`** — operational package Phase 3 gate (lists · main/rail editors · vocab · scaffold); use for CMS/CRM-style packages instead of inventing chrome\\r\\n- `package-base-info-vocab` — shared Base Info vocab form for package settings\\r\\n\",\n  \"truncated\": false,\n  \"maxChars\": 6000,\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic map.\"\n}"
+}

@@ -1,0 +1,185 @@
+{
+  "id": "em_efa8e9859bf37d3c",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_candidates",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VoteCandidates",
+    "tableName": "vote_candidates"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "voting_id",
+      "field": "votingId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_3bc12e270160de98",
+        "column": "id"
+      }
+    },
+    {
+      "name": "ballot_id",
+      "field": "ballotId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_16aba77c7faa9d8d",
+        "column": "id"
+      }
+    },
+    {
+      "name": "display_name",
+      "field": "displayName",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "hwy_member_id",
+      "field": "hwyMemberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "hwy_nakheb_id",
+      "field": "hwyNakhebId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "geo_scope_id",
+      "field": "geoScopeId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status_code",
+      "field": "statusCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "list_scope_legacy",
+      "field": "listScopeLegacy",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "operator_note",
+      "field": "operatorNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "sort_order",
+      "field": "sortOrder",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_d2f6a598d6824070",
+      "targetModelId": "em_3bc12e270160de98",
+      "foreignKey": "voting_id",
+      "as": "voting",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_f9eff734fd5b4ff4",
+      "targetModelId": "em_16aba77c7faa9d8d",
+      "foreignKey": "ballot_id",
+      "as": "ballot",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_6a86a08c04584127",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "status_code",
+      "as": "status",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_1eed1068d7624998",
+      "targetModelId": "em_c08c062973da7869",
+      "foreignKey": "candidate_id",
+      "as": "castEvents",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "59dd84963cc3ac28",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_candidates"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:11:15.471Z",
+  "updated_at": "2026-11-10T13:06:43.769Z"
+}

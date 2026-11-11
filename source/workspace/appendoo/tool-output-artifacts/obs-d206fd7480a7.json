@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:d206fd7480a7",
+    "toolCallId": "call_Ptb1zi4Lrbq680FjjS6xEBJc",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 1698,
+    "digest": "2829c008a14cffcda1733b851649798909bd2132ef24f68cad180d8f0768cc2d",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-09-01T08:55:30.613Z"
+  },
+  "content": "{\n  \"version\": \"1.70.73\",\n  \"updatedAt\": \"2026-08-31\",\n  \"standards\": [\n    {\n      \"id\": \"ui.form.label-over-input.spacing\",\n      \"title\": \"Label Over Input Spacing\",\n      \"value\": \"label start padding must be ps-[4px], and label-to-control spacing must be exactly 2px via gap-[2px], mt-[2px], or mb-[2px]\",\n      \"appliesTo\": [\n        \"form labels\",\n        \"form field spacing\"\n      ],\n      \"shard\": \"ui-core\"\n    },\n    {\n      \"id\": \"ui.form.settings.section-spacing\",\n      \"title\": \"Settings Section and Field Spacing\",\n      \"value\": \"Settings config forms: inter-section spacing via SettingsFormGroup divided (FORM_SECTION_DIVIDED_CLASS / pt-3); stack fields inside one section with SETTINGS_FORM_GROUP_BODY_STACK_CLASS (space-y-2); multi-column rows use SETTINGS_FORM_GRID_GAP_CLASS (gap-2); label-to-control stays gap-[2px]; never apply space-y-* or gap-* stack utilities directly on fieldset — use SettingsDisabledFieldset which wraps children in an inner div; full-width fields below grids (Description, Message textarea, etc.) use SettingsField labelBand={false}; reference PwaSettingsSection.tsx and docs/standards/ui-core.md\",\n      \"appliesTo\": [\n        \"settings forms\",\n        \"SettingsFormGroup\",\n        \"SettingsField\",\n        \"SettingsDisabledFieldset\",\n        \"PwaSettingsSection\",\n        \"config forms\"\n      ],\n      \"shard\": \"ui-core\"\n    }\n  ],\n  \"matchCount\": 2,\n  \"truncated\": false,\n  \"maxRules\": 20,\n  \"knowledgeKinds\": [\n    \"STANDARD\"\n  ],\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic shards.\",\n  \"runtimeApi\": \"/api/project-standards\",\n  \"shardHint\": \"Pass shard (e.g. ui-grid) to load the full markdown topic file.\"\n}"
+}

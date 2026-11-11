@@ -1,0 +1,19 @@
+{
+  "profileId": "oss",
+  "title": "AppEndO public OSS (AppEndO-Release)",
+  "recommendedControlPlaneDatabase": "AppEndORelease",
+  "recommendedDevPort": 3000,
+  "forbiddenInGit": [
+    "settings.json",
+    ".env",
+    "settings.json.install-backup",
+    "settings.json.*.tmp"
+  ],
+  "bootstrap": {
+    "npmScript": "clone:bootstrap",
+    "args": [
+      "--profile",
+      "oss"
+    ]
+  }
+}

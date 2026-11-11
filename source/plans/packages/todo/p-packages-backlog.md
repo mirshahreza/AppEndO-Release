@@ -67,6 +67,7 @@
 <tr><td>14</td><td>Calendar &amp; AMS</td><td>تقویم · رزرو · قرار</td><td>3</td><td>خیلی سنگین</td></tr>
 <tr><td>15</td><td>Commerce</td><td>فروش · انبار · فاکتور</td><td>3</td><td>خیلی سنگین</td></tr>
 <tr><td>17</td><td><strong>DMS</strong></td><td>مدیریت اسناد · کتابخانه · پوشه · نسخه · کنترل وضعیت</td><td>—</td><td>خیلی سنگین → <a href="p-packages-dms.md">p-packages-dms</a></td></tr>
+<tr><td>118</td><td><strong>Voting &amp; Elections</strong></td><td>انتخابات/ووتینگ (مرتكزین · صندوق · رأی) — <strong>پکیج مستقل</strong> مثل CMS؛ ادغام بعدی با hawiety</td><td>Hawiety (نرم) · Geographic Divisions</td><td>خیلی سنگین → <a href="voting-package/p-packages-voting.md">voting-package</a></td></tr>
 <tr><td>16–47</td><td>*(ماژول‌های عملیاتی دیگر)*</td><td>Procurement · Warehouse · Workflow · Fleet · Accounting · … *(Email unified inbox → #52 Mail Hub)*</td><td>متغیر</td><td>سنگین</td></tr>
 </tbody></table>
 
@@ -97,6 +98,7 @@
 <tr><td>114</td><td><a href="bigdata-development/p-114-bigdata-development-platform.md">bigdata-development</a></td><td>⬜ design only · deferred</td></tr>
 <tr><td>116</td><td><a href="p-packages-llm-studio.md">p-packages-llm-studio</a></td><td>⬜ design only</td></tr>
 <tr><td>117</td><td><a href="bases-package/p-packages-bases.md">p-packages-bases</a></td><td>⬜ design only</td></tr>
+<tr><td>118</td><td><a href="voting-package/p-packages-voting.md">p-packages-voting</a></td><td>⬜ design only</td></tr>
 </tbody></table>
 
 

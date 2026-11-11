@@ -1,0 +1,56 @@
+{
+  "taskId": "614cc93394656370",
+  "scenarioId": "v5-p00-already-fixed-no-change",
+  "category": "already_fixed_no_change",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:51.852Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Make sure clampPercentage always returns 100 for values greater than 100.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "read_file",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/bugFixSample.ts"
+          }
+        }
+      ]
+    },
+    {
+      "text": "Code review shows this behavior is already implemented correctly; no change is needed."
+    }
+  ],
+  "toolOrder": [
+    "read_file"
+  ],
+  "result": {
+    "text": "Code review shows this behavior is already implemented correctly; no change is needed.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 2,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "1bf1ec4193b004ae",
+        "durationMs": 5,
+        "tokensEstimate": 1333,
+        "ok": true,
+        "summary": "Read 11 line(s) from src/shared/lib/appendoo/v5Baseline/bugFixSample.ts (11 total)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 1529,
+        "ok": true
+      }
+    ],
+    "retrievalOperationCount": 1,
+    "draftToolCount": 0
+  }
+}

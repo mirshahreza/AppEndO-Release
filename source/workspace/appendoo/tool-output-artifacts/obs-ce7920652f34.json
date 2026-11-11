@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ce7920652f34",
+    "toolCallId": "call_SSlBTox94VnmFyIj4VnijVPq",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 1188,
+    "digest": "91ad7f8c23e236d6d645c3decbed01c03a8cadf41b42f52189853887ca8d2a47",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:14:34.819Z"
+  },
+  "content": "{\n  \"version\": \"1.50.0\",\n  \"updatedAt\": \"2026-07-16\",\n  \"shard\": \"vibe-designer-edit\",\n  \"path\": \"docs/standards/vibe-designer-edit.md\",\n  \"content\": \"# WF-3 — Edit existing layout (vibe shard)\\r\\n\\r\\n> **Shard key:** `get_project_standards({ shard: \\\"vibe-designer-edit\\\" })`  \\r\\n> **Workflow:** [`vibe-coding-workflows.md`](./vibe-coding-workflows.md) § WF-3  \\r\\n> **Playbook:** [`vibe-operator-playbook.md`](./vibe-operator-playbook.md)\\r\\n\\r\\n---\\r\\n\\r\\n## When to use\\r\\n\\r\\n`layoutId` or `selectedNodeId` is in page context — user is editing an open Component Designer layout.\\r\\n\\r\\n## Tool order\\r\\n\\r\\n1. `get_page_context` — `layoutId`, `selectedNodeId`\\r\\n2. `read_file` on generated/preview if needed\\r\\n3. `designer_set_prop` / `designer_insert_palette_item` **or** `draft_component_layout` with `baseLayoutId`\\r\\n4. `validateProposal` → confirm → apply → Designer handoff\\r\\n\\r\\n## UI rules\\r\\n\\r\\nSame as WF-2 — see `vibe-crud` shard + [`component-designer.md`](./component-designer.md) + [`ui-dialog.md`](./ui-dialog.md).\\r\\n\",\n  \"truncated\": false,\n  \"maxChars\": 4000,\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic map.\"\n}"
+}

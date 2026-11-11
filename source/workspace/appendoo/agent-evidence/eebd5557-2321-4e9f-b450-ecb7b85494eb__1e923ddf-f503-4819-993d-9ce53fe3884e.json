@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "cbba380d-c192-4c1e-88bf-d5c0ee0f339e",
+      "taskId": "eebd5557-2321-4e9f-b450-ecb7b85494eb",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:09:00.587Z"
+    },
+    {
+      "evidenceId": "eef7e8a3-708a-45f7-9e1b-689ff1a3fd2f",
+      "taskId": "eebd5557-2321-4e9f-b450-ecb7b85494eb",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "workspace/server-functions/custom/general.list-users.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:09:01.374Z"
+    },
+    {
+      "evidenceId": "07849ea3-392e-4b84-aa0c-ec35db544aae",
+      "taskId": "eebd5557-2321-4e9f-b450-ecb7b85494eb",
+      "type": "TEST",
+      "subjectRefs": [
+        "general.list-users"
+      ],
+      "result": "CONTRADICTING",
+      "sourceRefs": [
+        "tool:test_server_function",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:09:02.757Z"
+    },
+    {
+      "evidenceId": "a431dcaf-ad21-40a5-8c8f-996fa66b0b25",
+      "taskId": "eebd5557-2321-4e9f-b450-ecb7b85494eb",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "7660a99b-05ab-4db6-bbcf-00fac752fa69"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:09:03.285Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "fba1d6e4-f484-4383-86d3-db68b5eda2cd",
+      "taskId": "eebd5557-2321-4e9f-b450-ecb7b85494eb",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "a431dcaf-ad21-40a5-8c8f-996fa66b0b25"
+      ],
+      "finalized": true
+    }
+  ]
+}

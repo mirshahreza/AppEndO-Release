@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:464893c38f7f",
+    "toolCallId": "call_qDy65wCfwnmrveWuead35E1n",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1994,
+    "digest": "9e5d08555499b2c8b71fca692e5aeb685675f0ac2adeb75c02c2d6fd1e37473d",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:58:51.041Z"
+  },
+  "content": "{\n  \"query\": \"\\\"/api/ai/web-search\\\"\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": null,\n  \"scopePaths\": null,\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/api/queries/aiWebSearch.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"workspace/server-functions/builtin/sys-put-api-ai-web-search.metadata.json\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 433,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 577,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/features/settings/components/mcpServers/McpWebSearchModal.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/features/workflows/components/actionCatalogUtils.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"workflows\",\n      \"label\": \"Workflows\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/webActions.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"chat-history\",\n    \"settings\",\n    \"workflows\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

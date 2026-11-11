@@ -222,6 +222,16 @@ export const HwyPublicLoginPage = lazyNamed(
   'HwyPublicLogin',
 );
 
+export const HwyPublicMyProfilePage = lazyNamed(
+  () => import('../../pages/HwyPublicMyProfile'),
+  'HwyPublicMyProfile',
+);
+
+export const HwyPublicInquiryPage = lazyNamed(
+  () => import('../../pages/HwyPublicInquiry'),
+  'HwyPublicInquiry',
+);
+
 export const HwyRegistrationDevPortalPage = lazyNamed(
   () => import('../../pages/HwyRegistrationDevPortal'),
   'HwyRegistrationDevPortal',

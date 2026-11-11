@@ -1,0 +1,54 @@
+{
+  "taskId": "fbc7834ad7eeee83",
+  "scenarioId": "v5-p00-package-capability-request",
+  "category": "package_capability_request",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:51.591Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Is a reporting package installed? If so, tell me the details.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "list_packages",
+          "args": {}
+        }
+      ]
+    },
+    {
+      "text": "Based on installed packages in the current environment, here is the result."
+    }
+  ],
+  "toolOrder": [
+    "list_packages"
+  ],
+  "result": {
+    "text": "Based on installed packages in the current environment, here is the result.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 2,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "list_packages",
+        "argsHash": "44136fa355b3678a",
+        "durationMs": 173,
+        "tokensEstimate": 1330,
+        "ok": true,
+        "summary": "Listed 4 package artifact(s)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 1624,
+        "ok": true
+      }
+    ],
+    "retrievalOperationCount": 0,
+    "draftToolCount": 0
+  }
+}

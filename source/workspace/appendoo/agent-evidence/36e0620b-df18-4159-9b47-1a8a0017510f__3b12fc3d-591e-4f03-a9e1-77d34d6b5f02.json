@@ -1,0 +1,59 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "0e5ffae1-dd8b-4e4c-9ea7-2774b74e261b",
+      "taskId": "36e0620b-df18-4159-9b47-1a8a0017510f",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-15T14:48:39.292Z"
+    },
+    {
+      "evidenceId": "0e47c6f6-79da-456d-a57c-5ff6e0c0a0ee",
+      "taskId": "36e0620b-df18-4159-9b47-1a8a0017510f",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/permissionSample.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-15T14:48:39.296Z"
+    },
+    {
+      "evidenceId": "4aef7f5e-7615-45c1-b4c1-cb23b4427c92",
+      "taskId": "36e0620b-df18-4159-9b47-1a8a0017510f",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "e9ac57ca-66e7-494a-9221-839b71739b9f"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-15T14:48:39.302Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "d39dc6ff-6c96-41f4-8c1c-6dfd1c873696",
+      "taskId": "36e0620b-df18-4159-9b47-1a8a0017510f",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "4aef7f5e-7615-45c1-b4c1-cb23b4427c92"
+      ],
+      "finalized": true
+    }
+  ]
+}

@@ -1,0 +1,973 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-vocab-nakhebin-join-tasjil",
+    "name": "hwy-vocab-nakhebin-join-tasjil",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1789770379410-16wf0",
+          "node-b26a1078-d9cd-492b-98f0-09161e29a3bd",
+          "node-87ab6b50-831b-4fa7-9b9a-d8574318dd05",
+          "node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5"
+        ]
+      },
+      "heroui-app-table-grid-1789770379410-16wf0": {
+        "id": "heroui-app-table-grid-1789770379410-16wf0",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"ui_color\",\"label\":\"\",\"cellKind\":\"color-swatch\",\"cardRole\":\"meta\",\"cardPriority\":-1},{\"key\":\"title\",\"label\":\"Title\",\"sort\":true,\"cardRole\":\"title\"},{\"key\":\"short_name\",\"label\":\"Short name\",\"sort\":true,\"cardRole\":\"hidden\"},{\"key\":\"view_order\",\"label\":\"Order\",\"sort\":true,\"cardRole\":\"hidden\"},{\"key\":\"is_active\",\"label\":\"Active\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-87ab6b50-831b-4fa7-9b9a-d8574318dd05\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},{\"actionId\":\"delete\",\"icon\":\"Trash2\",\"intent\":\"delete\",\"tooltip\":\"Delete\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"width\":\"57px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 1000,
+          "page": 1,
+          "total": 0,
+          "presentation": "cards",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": false,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "view_order",
+          "sortOptions": "[{\"value\":\"title\",\"label\":\"Title\"},{\"value\":\"short_name\",\"label\":\"Short name\"},{\"value\":\"view_order\",\"label\":\"Order\"},{\"value\":\"is_active\",\"label\":\"Active\"}]",
+          "loadingMessage": "Loading nakhebin join tasjil state…",
+          "emptyContent": "No nakhebin join tasjil state found.",
+          "errorContent": "Could not load nakhebin join tasjil state.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": false,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search nakhebin join tasjil state…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"Create nakhebin join tasjil state\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-b26a1078-d9cd-492b-98f0-09161e29a3bd\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "vocabItems",
+            "sourcePath": "vocabItems",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "where": "gridToolbar.listWhere"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-b26a1078-d9cd-492b-98f0-09161e29a3bd": {
+        "id": "node-b26a1078-d9cd-492b-98f0-09161e29a3bd",
+        "type": "container",
+        "parentId": "root",
+        "order": 1,
+        "props": {
+          "title": "Create Nakhebin Join Tasjil State",
+          "size": "5xl",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-b26a1078-d9cd-492b-98f0-09161e29a3bd === true"
+        },
+        "binding": {},
+        "children": [
+          "node-654dc4a5-3f9a-45d0-820f-9df744765814",
+          "node-fd21565a-7c53-46f0-8fc2-7326d3eb7027"
+        ]
+      },
+      "node-3578a33b-747e-4e85-ac41-1b7010a18eb7": {
+        "id": "node-3578a33b-747e-4e85-ac41-1b7010a18eb7",
+        "type": "container",
+        "parentId": "node-654dc4a5-3f9a-45d0-820f-9df744765814",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "form-base-info-record-1789770379424-swvt3"
+        ]
+      },
+      "node-57a40beb-1f68-4115-9046-209a8f58737b": {
+        "id": "node-57a40beb-1f68-4115-9046-209a8f58737b",
+        "type": "link",
+        "parentId": "node-fd21565a-7c53-46f0-8fc2-7326d3eb7027",
+        "order": 1,
+        "props": {
+          "text": "Create Nakhebin Join Tasjil State",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-654dc4a5-3f9a-45d0-820f-9df744765814",
+          "icon": "Plus"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mu7j2n4r_grlug",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-b26a1078-d9cd-492b-98f0-09161e29a3bd"
+              },
+              {
+                "id": "da_mu7j2n4r_nvf8j",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mu7j2n4r_wlkfi",
+                "type": "refreshDataSource",
+                "dataSourceRef": "vocabItems"
+              },
+              {
+                "id": "da_mu7j2n4r_5a2tb",
+                "type": "resetForm",
+                "targetNodeId": "node-654dc4a5-3f9a-45d0-820f-9df744765814"
+              }
+            ],
+            "invalidateQueries": [
+              "region:vocabItems"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-654dc4a5-3f9a-45d0-820f-9df744765814": {
+        "id": "node-654dc4a5-3f9a-45d0-820f-9df744765814",
+        "type": "container",
+        "parentId": "node-b26a1078-d9cd-492b-98f0-09161e29a3bd",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-654dc4a5-3f9a-45d0-820f-9df744765814"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "vocabItems",
+            "sourcePath": "vocabItems"
+          }
+        },
+        "children": [
+          "node-3578a33b-747e-4e85-ac41-1b7010a18eb7"
+        ]
+      },
+      "node-41f9053d-d5d6-4ba4-89d4-7f702c5e1ccb": {
+        "id": "node-41f9053d-d5d6-4ba4-89d4-7f702c5e1ccb",
+        "type": "link",
+        "parentId": "node-fd21565a-7c53-46f0-8fc2-7326d3eb7027",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mu7j2n4s_zhaes",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-b26a1078-d9cd-492b-98f0-09161e29a3bd"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-fd21565a-7c53-46f0-8fc2-7326d3eb7027": {
+        "id": "node-fd21565a-7c53-46f0-8fc2-7326d3eb7027",
+        "type": "container",
+        "parentId": "node-b26a1078-d9cd-492b-98f0-09161e29a3bd",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-41f9053d-d5d6-4ba4-89d4-7f702c5e1ccb",
+          "node-57a40beb-1f68-4115-9046-209a8f58737b"
+        ]
+      },
+      "node-87ab6b50-831b-4fa7-9b9a-d8574318dd05": {
+        "id": "node-87ab6b50-831b-4fa7-9b9a-d8574318dd05",
+        "type": "container",
+        "parentId": "root",
+        "order": 2,
+        "props": {
+          "title": "Edit Nakhebin Join Tasjil State",
+          "size": "5xl",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-87ab6b50-831b-4fa7-9b9a-d8574318dd05 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-aec6a1a2-57e6-448f-b382-21731b8ae4b6",
+          "node-5a07f25f-e998-4bde-982b-5665be40ee4e"
+        ]
+      },
+      "node-d9f081f6-b43e-478c-be67-d3ce225bf6ad": {
+        "id": "node-d9f081f6-b43e-478c-be67-d3ce225bf6ad",
+        "type": "container",
+        "parentId": "node-aec6a1a2-57e6-448f-b382-21731b8ae4b6",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "form-base-info-record-1789770379429-pfllh"
+        ]
+      },
+      "node-c49e2eb4-8ec9-4f6b-9fce-55ac4aba29ff": {
+        "id": "node-c49e2eb4-8ec9-4f6b-9fce-55ac4aba29ff",
+        "type": "link",
+        "parentId": "node-5a07f25f-e998-4bde-982b-5665be40ee4e",
+        "order": 1,
+        "props": {
+          "text": "Save",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-aec6a1a2-57e6-448f-b382-21731b8ae4b6",
+          "icon": "Save"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mu7j2n4t_8r2ej",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-87ab6b50-831b-4fa7-9b9a-d8574318dd05"
+              },
+              {
+                "id": "da_mu7j2n4t_ciq8m",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mu7j2n4t_kv0ly",
+                "type": "refreshDataSource",
+                "dataSourceRef": "vocabItems"
+              }
+            ],
+            "invalidateQueries": [
+              "region:vocabItems"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-aec6a1a2-57e6-448f-b382-21731b8ae4b6": {
+        "id": "node-aec6a1a2-57e6-448f-b382-21731b8ae4b6",
+        "type": "container",
+        "parentId": "node-87ab6b50-831b-4fa7-9b9a-d8574318dd05",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-aec6a1a2-57e6-448f-b382-21731b8ae4b6"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "vocabItems",
+            "sourcePath": "vocabItems",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "selection.id"
+            }
+          }
+        },
+        "children": [
+          "node-d9f081f6-b43e-478c-be67-d3ce225bf6ad"
+        ]
+      },
+      "node-43b31ce4-367e-428e-90d6-5154bff5da17": {
+        "id": "node-43b31ce4-367e-428e-90d6-5154bff5da17",
+        "type": "link",
+        "parentId": "node-5a07f25f-e998-4bde-982b-5665be40ee4e",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mu7j2n4t_pmjzj",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-87ab6b50-831b-4fa7-9b9a-d8574318dd05"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-5a07f25f-e998-4bde-982b-5665be40ee4e": {
+        "id": "node-5a07f25f-e998-4bde-982b-5665be40ee4e",
+        "type": "container",
+        "parentId": "node-87ab6b50-831b-4fa7-9b9a-d8574318dd05",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-43b31ce4-367e-428e-90d6-5154bff5da17",
+          "node-c49e2eb4-8ec9-4f6b-9fce-55ac4aba29ff"
+        ]
+      },
+      "node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5": {
+        "id": "node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5",
+        "type": "container",
+        "parentId": "root",
+        "order": 3,
+        "props": {
+          "title": "Delete Nakhebin Join Tasjil State?",
+          "size": "sm",
+          "isOpen": false,
+          "tone": "danger",
+          "_designerPaletteItemId": "heroui.alert-dialog",
+          "_isBuiltInTemplateRoot": true
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-2c1ce50c-3c68-4b98-894f-f22e8bf63b94",
+          "node-b38f9a06-85aa-4dfb-9492-21c0be5a617c"
+        ]
+      },
+      "node-2c1ce50c-3c68-4b98-894f-f22e8bf63b94": {
+        "id": "node-2c1ce50c-3c68-4b98-894f-f22e8bf63b94",
+        "type": "text",
+        "parentId": "node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5",
+        "order": 0,
+        "props": {
+          "text": "Delete this nakhebin join tasjil state? This cannot be undone.",
+          "className": "block p-[15px] text-sm text-slate-700",
+          "_designerPaletteItemId": "html.text",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "block",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "node-7c993faa-3676-42e2-a1be-ebba0a714d3a": {
+        "id": "node-7c993faa-3676-42e2-a1be-ebba0a714d3a",
+        "type": "link",
+        "parentId": "node-b38f9a06-85aa-4dfb-9492-21c0be5a617c",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mu7j2n4u_puto9",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-76214fb9-8dfe-451f-95b3-d40754f7f66b": {
+        "id": "node-76214fb9-8dfe-451f-95b3-d40754f7f66b",
+        "type": "link",
+        "parentId": "node-b38f9a06-85aa-4dfb-9492-21c0be5a617c",
+        "order": 1,
+        "props": {
+          "text": "Delete",
+          "icon": "Trash2",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-rose-600 hover:bg-rose-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mu7j2n4u_dcymi",
+                "type": "callMutation",
+                "mutationOperation": "delete",
+                "dataSourceRef": "vocabItems",
+                "mutationRecordIdStorePath": "selection.id"
+              },
+              {
+                "id": "da_mu7j2n4u_pkint",
+                "type": "refreshDataSource",
+                "dataSourceRef": "vocabItems"
+              },
+              {
+                "id": "da_mu7j2n4u_pzawt",
+                "type": "showToast",
+                "toastTitle": "Deleted",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mu7j2n4u_vrkmz",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-b38f9a06-85aa-4dfb-9492-21c0be5a617c": {
+        "id": "node-b38f9a06-85aa-4dfb-9492-21c0be5a617c",
+        "type": "container",
+        "parentId": "node-a6ca5c64-9dfe-44eb-be11-4815821dc5b5",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-7c993faa-3676-42e2-a1be-ebba0a714d3a",
+          "node-76214fb9-8dfe-451f-95b3-d40754f7f66b"
+        ]
+      },
+      "form-base-info-record-1789770379424-swvt3": {
+        "id": "form-base-info-record-1789770379424-swvt3",
+        "type": "container",
+        "parentId": "node-3578a33b-747e-4e85-ac41-1b7010a18eb7",
+        "order": 0,
+        "props": {
+          "baseInfoRecordDataSourceRef": "vocabItems",
+          "baseInfoRecordFixedParentId": "220.015",
+          "baseInfoRecordParentLabel": "Nakhebin Join Tasjil State",
+          "className": "w-full min-w-0",
+          "_designerPaletteItemId": "form.base-info-record",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "form-base-info-record-1789770379429-pfllh": {
+        "id": "form-base-info-record-1789770379429-pfllh",
+        "type": "container",
+        "parentId": "node-d9f081f6-b43e-478c-be67-d3ce225bf6ad",
+        "order": 0,
+        "props": {
+          "baseInfoRecordDataSourceRef": "vocabItems",
+          "baseInfoRecordFixedParentId": "220.015",
+          "baseInfoRecordParentLabel": "Nakhebin Join Tasjil State",
+          "className": "w-full min-w-0",
+          "_designerPaletteItemId": "form.base-info-record",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-18T21:59:23.882Z",
+      "updatedAt": "2026-09-18T22:26:19.689Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "selection": {
+        "id": "selection",
+        "initialValue": {
+          "id": null
+        },
+        "persist": "none"
+      }
+    },
+    "dataSources": {
+      "vocabItems": {
+        "id": "vocabItems",
+        "name": "Nakhebin Join Tasjil State",
+        "endpoint": "/api/base-info",
+        "fields": [
+          "id",
+          "title",
+          "short_name",
+          "view_order",
+          "is_active",
+          "parent_id",
+          "ui_color"
+        ],
+        "primaryKey": "id",
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/base-info/children?parentId=220.015&includeInactive=true"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/base-info/:id"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/base-info"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/base-info/:id"
+          },
+          "delete": {
+            "method": "DELETE",
+            "endpoint": "/api/base-info/:id"
+          },
+          "custom": {
+            "move": {
+              "method": "POST",
+              "endpoint": "/api/base-info/:id/move",
+              "label": "Reorder sibling"
+            }
+          }
+        },
+        "responseMapping": {
+          "dataPath": "items",
+          "arrayPath": "items",
+          "totalPath": "count"
+        }
+      }
+    },
+    "lovs": {}
+  }
+}

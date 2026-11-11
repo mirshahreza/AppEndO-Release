@@ -364,7 +364,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
     {
       id: 'ui.inspector-rail.values',
       title: 'Inspector Rail Values And Empty State',
-      value: 'inspector glyphs render NavigationIcon never lucide:Name text; compact badges bg-slate-100 text-slate-700; people/model chips flex h-8 w-full in the value column; empty is English None selected not an em dash; people vs models separated by col-span-3 border-t border-slate-100; audit value is username • Mon D, YYYY en-US UTC muted caption; History icon sits beside Created when history.enabled and opens the maximized History grid; see docs/standards/ui-inspector-rail.md',
+      value: 'inspector glyphs render NavigationIcon never lucide:Name text; compact badges bg-slate-100 text-slate-700; people/model chips flex h-8 w-full in the value column; empty is English None selected not an em dash; people vs models separated by col-span-3 border-t border-slate-100; audit value is username • Mon D, YYYY en-US UTC muted caption; RecordEventHistoryIcon sits beside Created when history.enabled and opens RecordEventHistoryDialog record timeline spine; see docs/standards/ui-inspector-rail.md',
       appliesTo: ['inspector rail', 'side panel', 'chips', 'audit', 'None selected'],
     },
     {
@@ -1749,7 +1749,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'platform.release-cut',
       title: 'Local Release Cut (no cloud CI)',
       value:
-        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default hawiety) in P4 only when versions change; public AppEndO-Release (cms + remote-hubs) and private AppEndO-Hawiety (full source + dist + promoted hawiety zip, no pack on hawiety export); see docs/standards/release-cut.md',
+        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default hawiety) in P4 only when versions change; public AppEndO-Release (cms + remote-hubs) and private AppEndO-Hawiety (full source + dist + promoted hawiety zip, no pack on hawiety export); clone exports sanitize operator settings.json and ship settings.recommended.json + CLONE_PROFILE per releaseCutCloneProfiles (oss AppEndORelease / hawiety AppEndOHawiety); npm run clone:bootstrap; extend releaseCutPackageDeployLines for new package git lines; see docs/standards/release-cut.md',
       appliesTo: ['release', 'packages', 'CI', 'hawiety pack', 'open source bundle'],
     },
     {
@@ -1957,6 +1957,21 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       appliesTo: ['record events', 'timeline', 'Users', 'Data API', 'audit'],
     },
     {
+      id: 'record-event-log.prefer-over-sidecar-tables',
+      title: 'Record-Scoped Tracking Uses Record Events Not Side Tables',
+      value:
+        'when audit or change history is anchored on subject_kind plus subject_id and fits Timeline, History, reason, or client metadata on writes, emit into base_record_events (emitRecordEvent, PLATFORM_HISTORY_MARKS, documented payload kinds) — do not add new per-entity *_history, *_change_log, or audit tables; legacy side tables are ETL-in only; HTTP logs, auth audit, and non-record ledgers from their own shards stay separate; see docs/standards/record-event-log.md and AGENTS.md always-on rule 11',
+      appliesTo: [
+        'record events',
+        'audit',
+        'history',
+        'Data API',
+        'Hawiety',
+        'database',
+        'Sequelize',
+      ],
+    },
+    {
       id: 'record-event-log.studio-meta',
       title: 'Record History Is Defined In Studio-Meta',
       value:
@@ -1988,7 +2003,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'record-event-log.hwy-members',
       title: 'Hawiety Members Emit Field History On Dossier Patch',
       value:
-        'PLATFORM_HISTORY_MARKS.hwy_members tracks dossier PATCH fields (redact phone1, phone2, email); legacy HWY_Members_ChangeHistory ETL imports to base_record_events with idempotency_key hwy-etl:ch:*; see docs/standards/record-event-log.md',
+        'PLATFORM_HISTORY_MARKS.hwy_members tracks dossier PATCH fields (redact phone1, phone2, email); dossier satellites emit with payload.hwyDossierKind (idempotency hwy-dossier:*); change log reads those events plus member summary procs; legacy change history ETL hwy-etl:ch:*; backfill hwy:etl:backfill-dossier-record-events and gap pass hwy:etl:backfill-dossier-record-gaps; see docs/standards/record-event-log.md § Hawiety dossier satellites',
       appliesTo: ['record events', 'Hawiety', 'hwy_members', 'member dossier'],
     },
     {
@@ -2016,7 +2031,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'record-event-log.form-surfaces',
       title: 'Record History On Forms Is Button-Only Retrieve',
       value:
-        'when history.enabled: list-row History opens the maximized grid; Edit/View headerExtra only toggles field History icons (off until pressed); those labelExtra / association-label icons then GET the field-filtered grid; inspector Created label shows History (whole-record grid) only when that model history.enabled (Idea Foundry stamps stay Created/Edited without the icon); Actor/Reason cells show read-time display name plus username · #id and reason title plus text (names are not stored on the event); never paint events, provenance, Timeline, Devices, or a History accordion on the form; never on Create; no form-load GET; do not replace inspector Created/Edited with events; see docs/standards/record-event-log.md',
+        'when history.enabled: list-row Record timeline (RecordEventHistoryIcon + platform.recordSubjectTimeline.*) opens RecordEventHistoryDialog maximized spine; Edit/View headerExtra only toggles field timeline icons (off until pressed); those labelExtra / association-label icons then GET the field-filtered timeline; inspector Created label shows the timeline trigger only when that model history.enabled (Idea Foundry stamps stay Created/Edited without the icon); event detail dialog carries Actor/Reason/from/to and optional restore; never paint events, provenance, embedded timeline, Devices, or a History accordion on the form; never on Create; no form-load GET; do not replace inspector Created/Edited with events; auditee record-events page stays grid; see docs/standards/record-event-log.md',
       appliesTo: ['record events', 'RecordForm', 'CRUD Set', 'Users', 'inspector', 'auditee'],
     },
     {

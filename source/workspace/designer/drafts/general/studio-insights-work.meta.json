@@ -1,0 +1,960 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "studio-insights-work",
+    "name": "studio-insights-work",
+    "rootNodeId": "root",
+    "pageAccess": {
+      "accessMode": "specific",
+      "allowRoles": [
+        "ADMIN"
+      ],
+      "allowUsers": [],
+      "denyRoles": [],
+      "denyUsers": []
+    },
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "dashboardCanvasConfig": "{\"personalizable\":true,\"domain\":[{\"id\":\"ops_work_queue\",\"label\":\"Work queue\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_work_queue\"},\"exposedFields\":[\"id\",\"status\",\"work_item_type\",\"priority\",\"claimed_by_user_id\",\"claimed_by_username\",\"due_at\",\"created_at\",\"completed_at\",\"claimed_at\",\"workflow_instance_id\",\"workflow_instance_status\",\"workflow_key\",\"workflow_lifecycle_status\",\"is_overdue\"]},{\"id\":\"ops_workflow_instances\",\"label\":\"Workflow instances\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_35584ec12816b716\"},\"exposedFields\":[\"id\",\"status\",\"start_type\",\"started_by_type\",\"created_at\",\"updated_at\"]},{\"id\":\"ops_workflow_defs\",\"label\":\"Workflow definitions\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_5282477fc36a2a52\"},\"exposedFields\":[\"id\",\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"]},{\"id\":\"ops_dead_letters\",\"label\":\"Dead letters\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_e6eb8be71ec07c48\"},\"exposedFields\":[\"id\",\"status\",\"error_class\",\"error_code\",\"node_key\",\"created_at\",\"resolved_at\"]},{\"id\":\"ops_feedback\",\"label\":\"Feedback\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_f186ade9fbfe1ad0\"},\"exposedFields\":[\"id\",\"type\",\"status\",\"priority\",\"submitted_at\",\"page_key\",\"portal_slug\",\"assignee_role_name\",\"message_count\"]}],\"filters\":[{\"id\":\"work-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_work_queue\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"wk-q-kpi-open\",\"wk-q-kpi-claimed\",\"wk-q-kpi-overdue\",\"wk-q-chart-status\",\"wk-q-chart-wf\",\"wk-q-chart-type\",\"wk-q-chart-claimant\",\"wk-q-table-wf-status\"],\"defaultValue\":\"last:7d\"},{\"id\":\"work-status\",\"label\":\"Work item status\",\"domainEntryId\":\"ops_work_queue\",\"field\":\"status\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"wk-q-chart-status\",\"wk-q-chart-wf\",\"wk-q-chart-type\",\"wk-q-chart-claimant\",\"wk-q-table-wf-status\"]},{\"id\":\"work-wf\",\"label\":\"Workflow\",\"domainEntryId\":\"ops_work_queue\",\"field\":\"workflow_key\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"wk-q-kpi-open\",\"wk-q-kpi-claimed\",\"wk-q-kpi-overdue\",\"wk-q-kpi-dl\",\"wk-q-chart-status\",\"wk-q-chart-wf\",\"wk-q-chart-type\",\"wk-q-chart-claimant\",\"wk-q-table-wf-status\"]},{\"id\":\"wf-inst-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_workflow_instances\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"wk-w-kpi-running\",\"wk-w-kpi-suspended\",\"wk-w-kpi-failed\",\"wk-w-chart-inst-status\",\"wk-w-chart-inst-day\",\"wk-w-chart-start\"],\"defaultValue\":\"last:7d\"},{\"id\":\"fb-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_feedback\",\"field\":\"submitted_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"wk-f-kpi-new\",\"wk-f-kpi-wip\",\"wk-f-kpi-crit\",\"wk-f-kpi-resolved\",\"wk-f-chart-status\",\"wk-f-chart-type\",\"wk-f-chart-priority\",\"wk-f-chart-page\",\"wk-f-chart-day\"],\"defaultValue\":\"last:7d\"},{\"id\":\"fb-status\",\"label\":\"Feedback status\",\"domainEntryId\":\"ops_feedback\",\"field\":\"status\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"wk-f-chart-status\",\"wk-f-chart-type\",\"wk-f-chart-priority\",\"wk-f-chart-page\",\"wk-f-chart-day\"]}],\"tabs\":[{\"id\":\"queue\",\"label\":\"Queue\"},{\"id\":\"workflows\",\"label\":\"Workflows\"},{\"id\":\"feedback\",\"label\":\"Feedback\"}],\"dashboardLinks\":[{\"label\":\"Workflows\",\"target\":{\"url\":\"/studio/workflows\"}},{\"label\":\"My work items\",\"target\":{\"url\":\"/studio/my-inbox\"}},{\"label\":\"Feedback inbox\",\"target\":{\"url\":\"/studio/feedback\"}},{\"label\":\"Studio operations\",\"target\":{\"pageId\":\"studio-insights-ops\"}}]}",
+          "dashboardPersonalizable": true
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "canvas"
+        ]
+      },
+      "canvas": {
+        "id": "canvas",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "_designerPaletteItemId": "viz.dashboard-canvas",
+          "dashboardCanvasConfig": "{\"personalizable\":true,\"domain\":[{\"id\":\"ops_work_queue\",\"label\":\"Work queue\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_ops_work_queue\"},\"exposedFields\":[\"id\",\"status\",\"work_item_type\",\"priority\",\"claimed_by_user_id\",\"claimed_by_username\",\"due_at\",\"created_at\",\"completed_at\",\"claimed_at\",\"workflow_instance_id\",\"workflow_instance_status\",\"workflow_key\",\"workflow_lifecycle_status\",\"is_overdue\"]},{\"id\":\"ops_workflow_instances\",\"label\":\"Workflow instances\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_35584ec12816b716\"},\"exposedFields\":[\"id\",\"status\",\"start_type\",\"started_by_type\",\"created_at\",\"updated_at\"]},{\"id\":\"ops_workflow_defs\",\"label\":\"Workflow definitions\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_5282477fc36a2a52\"},\"exposedFields\":[\"id\",\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"]},{\"id\":\"ops_dead_letters\",\"label\":\"Dead letters\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_e6eb8be71ec07c48\"},\"exposedFields\":[\"id\",\"status\",\"error_class\",\"error_code\",\"node_key\",\"created_at\",\"resolved_at\"]},{\"id\":\"ops_feedback\",\"label\":\"Feedback\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_f186ade9fbfe1ad0\"},\"exposedFields\":[\"id\",\"type\",\"status\",\"priority\",\"submitted_at\",\"page_key\",\"portal_slug\",\"assignee_role_name\",\"message_count\"]}],\"filters\":[{\"id\":\"work-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_work_queue\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"wk-q-kpi-open\",\"wk-q-kpi-claimed\",\"wk-q-kpi-overdue\",\"wk-q-chart-status\",\"wk-q-chart-wf\",\"wk-q-chart-type\",\"wk-q-chart-claimant\",\"wk-q-table-wf-status\"],\"defaultValue\":\"last:7d\"},{\"id\":\"work-status\",\"label\":\"Work item status\",\"domainEntryId\":\"ops_work_queue\",\"field\":\"status\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"wk-q-chart-status\",\"wk-q-chart-wf\",\"wk-q-chart-type\",\"wk-q-chart-claimant\",\"wk-q-table-wf-status\"]},{\"id\":\"work-wf\",\"label\":\"Workflow\",\"domainEntryId\":\"ops_work_queue\",\"field\":\"workflow_key\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"wk-q-kpi-open\",\"wk-q-kpi-claimed\",\"wk-q-kpi-overdue\",\"wk-q-kpi-dl\",\"wk-q-chart-status\",\"wk-q-chart-wf\",\"wk-q-chart-type\",\"wk-q-chart-claimant\",\"wk-q-table-wf-status\"]},{\"id\":\"wf-inst-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_workflow_instances\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"wk-w-kpi-running\",\"wk-w-kpi-suspended\",\"wk-w-kpi-failed\",\"wk-w-chart-inst-status\",\"wk-w-chart-inst-day\",\"wk-w-chart-start\"],\"defaultValue\":\"last:7d\"},{\"id\":\"fb-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_feedback\",\"field\":\"submitted_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"wk-f-kpi-new\",\"wk-f-kpi-wip\",\"wk-f-kpi-crit\",\"wk-f-kpi-resolved\",\"wk-f-chart-status\",\"wk-f-chart-type\",\"wk-f-chart-priority\",\"wk-f-chart-page\",\"wk-f-chart-day\"],\"defaultValue\":\"last:7d\"},{\"id\":\"fb-status\",\"label\":\"Feedback status\",\"domainEntryId\":\"ops_feedback\",\"field\":\"status\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"wk-f-chart-status\",\"wk-f-chart-type\",\"wk-f-chart-priority\",\"wk-f-chart-page\",\"wk-f-chart-day\"]}],\"tabs\":[{\"id\":\"queue\",\"label\":\"Queue\"},{\"id\":\"workflows\",\"label\":\"Workflows\"},{\"id\":\"feedback\",\"label\":\"Feedback\"}],\"dashboardLinks\":[{\"label\":\"Workflows\",\"target\":{\"url\":\"/studio/workflows\"}},{\"label\":\"My work items\",\"target\":{\"url\":\"/studio/my-inbox\"}},{\"label\":\"Feedback inbox\",\"target\":{\"url\":\"/studio/feedback\"}},{\"label\":\"Studio operations\",\"target\":{\"pageId\":\"studio-insights-ops\"}}]}",
+          "dashboardPersonalizable": true
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "wk-q-kpi-open",
+          "wk-q-kpi-claimed",
+          "wk-q-kpi-overdue",
+          "wk-q-kpi-dl",
+          "wk-q-chart-status",
+          "wk-q-chart-wf",
+          "wk-q-chart-type",
+          "wk-q-chart-claimant",
+          "wk-q-table-wf-status",
+          "wk-w-kpi-running",
+          "wk-w-kpi-suspended",
+          "wk-w-kpi-failed",
+          "wk-w-kpi-active-def",
+          "wk-w-chart-inst-status",
+          "wk-w-chart-def-life",
+          "wk-w-chart-inst-day",
+          "wk-w-chart-dl-class",
+          "wk-w-chart-start",
+          "wk-w-chart-dl-code",
+          "wk-f-kpi-new",
+          "wk-f-kpi-wip",
+          "wk-f-kpi-crit",
+          "wk-f-kpi-resolved",
+          "wk-f-chart-status",
+          "wk-f-chart-type",
+          "wk-f-chart-priority",
+          "wk-f-chart-page",
+          "wk-f-chart-day"
+        ]
+      },
+      "wk-q-kpi-open": {
+        "id": "wk-q-kpi-open",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 0,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Open",
+          "chartFieldMapping": {
+            "title": "Open",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "OPEN"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No work items in this date range. Run a workflow with a human task to populate this queue."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-kpi-claimed": {
+        "id": "wk-q-kpi-claimed",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 1,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Claimed",
+          "chartFieldMapping": {
+            "title": "Claimed",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "CLAIMED"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-kpi-overdue": {
+        "id": "wk-q-kpi-overdue",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 2,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Overdue",
+          "chartFieldMapping": {
+            "title": "Overdue",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "is_overdue": {
+                "eq": 1
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-kpi-dl": {
+        "id": "wk-q-kpi-dl",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 3,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_dead_letters",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Open dead letters",
+          "chartFieldMapping": {
+            "title": "Open dead letters",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "OPEN"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No dead letters."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-chart-status": {
+        "id": "wk-q-chart-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 4,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Work items by status",
+          "chartFieldMapping": {
+            "title": "Work items by status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "status",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No work items in this date range. Run a workflow with a human task to populate this queue."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-chart-wf": {
+        "id": "wk-q-chart-wf",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 5,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Work items by workflow",
+          "chartFieldMapping": {
+            "title": "Work items by workflow",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "workflow_key",
+            "chartKind": "bar"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-chart-type": {
+        "id": "wk-q-chart-type",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 6,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Work items by type",
+          "chartFieldMapping": {
+            "title": "Work items by type",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "work_item_type",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-chart-claimant": {
+        "id": "wk-q-chart-claimant",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 7,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Claimed by user",
+          "chartFieldMapping": {
+            "title": "Claimed by user",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "claimed_by_username",
+            "chartKind": "bar"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-q-table-wf-status": {
+        "id": "wk-q-table-wf-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 8,
+        "props": {
+          "_designerPaletteItemId": "viz.sheet",
+          "dashboardDomainEntryId": "ops_work_queue",
+          "dashboardTabId": "queue",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 19,
+            "w": 12,
+            "h": 8
+          },
+          "title": "Queue by workflow and status",
+          "chartFieldMapping": {
+            "title": "Queue by workflow and status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "workflow_key",
+            "dimensionB": "status"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-kpi-running": {
+        "id": "wk-w-kpi-running",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 9,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_workflow_instances",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Running instances",
+          "chartFieldMapping": {
+            "title": "Running instances",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "RUNNING"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No workflow instances in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-kpi-suspended": {
+        "id": "wk-w-kpi-suspended",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 10,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_workflow_instances",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Suspended",
+          "chartFieldMapping": {
+            "title": "Suspended",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "SUSPENDED"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-kpi-failed": {
+        "id": "wk-w-kpi-failed",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 11,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_workflow_instances",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Failed instances",
+          "chartFieldMapping": {
+            "title": "Failed instances",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "FAILED"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-kpi-active-def": {
+        "id": "wk-w-kpi-active-def",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 12,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_workflow_defs",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Active definitions",
+          "chartFieldMapping": {
+            "title": "Active definitions",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "lifecycle_status": {
+                "eq": "ACTIVE"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No workflow definitions yet."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-chart-inst-status": {
+        "id": "wk-w-chart-inst-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 13,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_workflow_instances",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Instances by status",
+          "chartFieldMapping": {
+            "title": "Instances by status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "status",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No workflow instances in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-chart-def-life": {
+        "id": "wk-w-chart-def-life",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 14,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_workflow_defs",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Definitions by lifecycle",
+          "chartFieldMapping": {
+            "title": "Definitions by lifecycle",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "lifecycle_status",
+            "chartKind": "pie"
+          },
+          "vizConfig": {
+            "emptyText": "No workflow definitions yet."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-chart-inst-day": {
+        "id": "wk-w-chart-inst-day",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 15,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_workflow_instances",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Instances per day",
+          "chartFieldMapping": {
+            "title": "Instances per day",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "created_at",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-chart-dl-class": {
+        "id": "wk-w-chart-dl-class",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 16,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_dead_letters",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Dead letters by error class",
+          "chartFieldMapping": {
+            "title": "Dead letters by error class",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "error_class",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No dead letters."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-chart-start": {
+        "id": "wk-w-chart-start",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 17,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_workflow_instances",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 19,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Instances by start type",
+          "chartFieldMapping": {
+            "title": "Instances by start type",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "start_type",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-w-chart-dl-code": {
+        "id": "wk-w-chart-dl-code",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 18,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_dead_letters",
+          "dashboardTabId": "workflows",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 19,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Dead letters by error code",
+          "chartFieldMapping": {
+            "title": "Dead letters by error code",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "error_code",
+            "chartKind": "bar"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-kpi-new": {
+        "id": "wk-f-kpi-new",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 19,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "New",
+          "chartFieldMapping": {
+            "title": "New",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "NEW"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No feedback in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-kpi-wip": {
+        "id": "wk-f-kpi-wip",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 20,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "In progress",
+          "chartFieldMapping": {
+            "title": "In progress",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "IN_PROGRESS"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-kpi-crit": {
+        "id": "wk-f-kpi-crit",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 21,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Critical",
+          "chartFieldMapping": {
+            "title": "Critical",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "priority": {
+                "eq": "CRITICAL"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-kpi-resolved": {
+        "id": "wk-f-kpi-resolved",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 22,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Resolved",
+          "chartFieldMapping": {
+            "title": "Resolved",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "RESOLVED"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-chart-status": {
+        "id": "wk-f-chart-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 23,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Feedback by status",
+          "chartFieldMapping": {
+            "title": "Feedback by status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "status",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No feedback in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-chart-type": {
+        "id": "wk-f-chart-type",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 24,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Feedback by subject",
+          "chartFieldMapping": {
+            "title": "Feedback by subject",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "type",
+            "chartKind": "pie"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-chart-priority": {
+        "id": "wk-f-chart-priority",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 25,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Feedback by priority",
+          "chartFieldMapping": {
+            "title": "Feedback by priority",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "priority",
+            "chartKind": "bar"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-chart-page": {
+        "id": "wk-f-chart-page",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 26,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Feedback by page",
+          "chartFieldMapping": {
+            "title": "Feedback by page",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "page_key",
+            "chartKind": "bar"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "wk-f-chart-day": {
+        "id": "wk-f-chart-day",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 27,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_feedback",
+          "dashboardTabId": "feedback",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 19,
+            "w": 12,
+            "h": 8
+          },
+          "title": "Feedback submitted per day",
+          "chartFieldMapping": {
+            "title": "Feedback submitted per day",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "submitted_at",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-14T03:26:55.417Z",
+      "updatedAt": "2026-09-14T03:26:55.569Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {},
+    "storeSegments": {},
+    "dataSources": {},
+    "lovs": {}
+  }
+}

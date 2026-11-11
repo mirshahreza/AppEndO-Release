@@ -1,0 +1,54 @@
+{
+  "taskId": "78a30fe3985e2a3f",
+  "scenarioId": "v5-p00-simple-repository-question",
+  "category": "simple_repository_question",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:12.026Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "How many Server Functions are in this project?",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "list_server_functions",
+          "args": {}
+        }
+      ]
+    },
+    {
+      "text": "Based on the list, this is how many Server Functions are registered in the project."
+    }
+  ],
+  "toolOrder": [
+    "list_server_functions"
+  ],
+  "result": {
+    "text": "Based on the list, this is how many Server Functions are registered in the project.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 2,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "list_server_functions",
+        "argsHash": "44136fa355b3678a",
+        "durationMs": 555,
+        "tokensEstimate": 1326,
+        "ok": true,
+        "summary": "Listed 91 managed server function(s)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 3663,
+        "ok": true
+      }
+    ],
+    "retrievalOperationCount": 0,
+    "draftToolCount": 0
+  }
+}

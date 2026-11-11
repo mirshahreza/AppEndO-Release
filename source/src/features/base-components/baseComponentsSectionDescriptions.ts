@@ -47,6 +47,8 @@ export const BASE_COMPONENTS_SECTION_DESCRIPTIONS: Record<SectionId, string> = {
   'date-time': 'Date and time fields with calendar system, locale, granularity, constraints, timezone, state, and direction controls.',
   'file-media-input': 'Local-only file selection patterns for buttons, drop zones, images, avatars, and queues with validation and preview states.',
   'loading-error-empty': 'Loading, error, and empty-state recipes — including SectionEmptyState for panel sections — plus retry, details, and primary actions.',
+  'record-subject-timeline':
+    'Record-subject spine timeline — year dividers, alternating cards, unified History icon, and maximized dialog chrome for append-only record events.',
   chart: 'UiBarChart/UiLineChart/UiPieChart/UiSparkline/UiChartGauge/UiAdvancedChart — Apache ECharts primitives. Title, legend, grid, tooltip, dataZoom, visualMap, toolbox, brush, series, animation, aria, ready templates, events, and instance ref (`UiEchartsHandle`) are public.',
   kanban: 'UiKanbanBoard — multi-column drag-and-drop board over @dnd-kit; height (auto/100%), tone, column width, density, card count, and descriptions.',
   spreadsheet: 'UiSpreadsheet — FortuneSheet Workbook Settings (toolbar, formula bar, sheet tabs, lang, currency, rows/columns, headers, grid lines, context menus) plus cell/sheet actions.',

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:a7a6e28295ef",
+    "toolCallId": "call_SI5FNsKt4xAYB7P2UhHWaDSc",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2233,
+    "digest": "0530e31661d5806255c91ba22ada42bf81106a58852e527012523aacb4abeda5",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T16:24:46.746Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/layout-presets/presetMiniPreviews.tsx\",\n  \"startLine\": 140,\n  \"endLine\": 190,\n  \"totalLines\": 700,\n  \"truncated\": false,\n  \"content\": \"140|      <div className=\\\"flex flex-1 flex-col gap-[3px]\\\">\\n141|        {Array.from({ length: 3 }).map((_, i) => (\\n142|          <div key={i} className=\\\"flex items-start gap-[2px]\\\">\\n143|            <MiniDot />\\n144|            <div className=\\\"flex flex-1 flex-col gap-[1px]\\\">\\n145|              <MiniBar width=\\\"42%\\\" />\\n146|              <MiniBar width=\\\"78%\\\" className=\\\"h-[2px]\\\" />\\n147|            </div>\\n148|          </div>\\n149|        ))}\\n150|      </div>\\n151|    </PreviewFrame>\\n152|  ),\\n153|  'blog-list': () => (\\n154|    <PreviewFrame>\\n155|      <MiniBar width=\\\"44%\\\" />\\n156|      <div className=\\\"flex flex-1 flex-col gap-[2px]\\\">\\n157|        {Array.from({ length: 3 }).map((_, i) => (\\n158|          <MiniBox key={i} className=\\\"flex flex-col gap-[1px] p-[2px]\\\">\\n159|            <MiniBar width=\\\"62%\\\" />\\n160|            <MiniBar width=\\\"90%\\\" className=\\\"h-[2px]\\\" />\\n161|          </MiniBox>\\n162|        ))}\\n163|      </div>\\n164|    </PreviewFrame>\\n165|  ),\\n166|  'testimonial-wall': () => (\\n167|    <PreviewFrame>\\n168|      <div className=\\\"grid h-full grid-cols-3 gap-[2px]\\\">\\n169|        {Array.from({ length: 3 }).map((_, i) => (\\n170|          <MiniBox key={i} className=\\\"flex flex-col justify-between p-[2px]\\\">\\n171|            <MiniBar width=\\\"92%\\\" />\\n172|            <MiniBar width=\\\"92%\\\" className=\\\"h-[2px]\\\" />\\n173|            <MiniBar width=\\\"45%\\\" className=\\\"mt-[2px] h-[2px]\\\" />\\n174|          </MiniBox>\\n175|        ))}\\n176|      </div>\\n177|    </PreviewFrame>\\n178|  ),\\n179|  'stats-strip': () => (\\n180|    <PreviewFrame>\\n181|      <div className=\\\"grid h-full grid-cols-6 gap-[2px]\\\">\\n182|        {Array.from({ length: 6 }).map((_, i) => (\\n183|          <MiniBox key={i} className=\\\"flex flex-col items-center justify-center gap-[1px] p-[1px]\\\">\\n184|            <MiniBar width=\\\"70%\\\" className=\\\"h-[2px]\\\" />\\n185|            <MiniBar width=\\\"55%\\\" className=\\\"h-[3px]\\\" />\\n186|          </MiniBox>\\n187|        ))}\\n188|      </div>\\n189|    </PreviewFrame>\\n190|  ),\"\n}"
+}

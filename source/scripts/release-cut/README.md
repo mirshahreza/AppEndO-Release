@@ -21,3 +21,5 @@ npm run release:push-appendo-release
 Staging (gitignored in private repo): `.appendo-release-staging/vX.Y.Z/`.
 
 **Hawiety (private):** `npm run release:export-appendo-hawiety` · `npm run release:push-appendo-hawiety` → **`AppEndO-Hawiety`**. ZIP **promoted**, not re-packed on export.
+
+**Clone profiles (isolated DB):** exports strip `settings.json` and emit `source/settings.recommended.json` + `CLONE_PROFILE.md`. Registry: `releaseCutCloneProfiles.ts` · package deploy lines: `releaseCutPackageDeployLines.ts`. Bootstrap: `npm run clone:bootstrap -- --profile oss|hawiety`.

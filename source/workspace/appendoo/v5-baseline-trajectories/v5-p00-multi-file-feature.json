@@ -1,0 +1,146 @@
+{
+  "taskId": "856e0a846f565ee9",
+  "scenarioId": "v5-p00-multi-file-feature",
+  "category": "multi_file_feature",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:50.767Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Add a simple feature flag: set FEATURE_FLAG_ENABLED to true in multiFileFeatureSampleB.ts and first review multiFileFeatureSampleA.ts for consistency.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "gate",
+          "name": "get_project_standards",
+          "args": {
+            "shard": "vibe-coding-workflows"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "read_file",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleA.ts"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c2",
+          "name": "read_file",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c3",
+          "name": "draft_file_patch",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts",
+            "content": "/**\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`multi_file_feature`\n * scenario, file B of 2). See `multiFileFeatureSampleA.ts` for the paired file.\n */\nexport const FEATURE_FLAG_ENABLED = true;\n"
+          }
+        }
+      ]
+    },
+    {
+      "text": "FEATURE_FLAG_ENABLED is now true in file B; file A did not need changes because it only holds the label."
+    }
+  ],
+  "toolOrder": [
+    "get_project_standards",
+    "read_file",
+    "read_file",
+    "draft_file_patch"
+  ],
+  "result": {
+    "text": "FEATURE_FLAG_ENABLED is now true in file B; file A did not need changes because it only holds the label.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 5,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "get_project_standards",
+        "argsHash": "70ecb22a4d391191",
+        "durationMs": 9,
+        "tokensEstimate": 1351,
+        "ok": true,
+        "summary": "Loaded standards shard \"docs/standards/vibe-coding-workflows.md\" (truncated to 6000 chars)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "9582a5ba055fd5fe",
+        "durationMs": 9,
+        "tokensEstimate": 2960,
+        "ok": true,
+        "summary": "Read 6 line(s) from src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleA.ts (6 total)."
+      },
+      {
+        "iteration": 3,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "4dca8c99e181eacb",
+        "durationMs": 8,
+        "tokensEstimate": 3101,
+        "ok": true,
+        "summary": "Read 6 line(s) from src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts (6 total)."
+      },
+      {
+        "iteration": 4,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "draft_file_patch",
+        "argsHash": "f176b6c5885cb58b",
+        "durationMs": 9,
+        "tokensEstimate": 3237,
+        "ok": true,
+        "summary": "Drafted file patch for src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts (6 lines, full content)."
+      },
+      {
+        "iteration": 5,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 3327,
+        "ok": true
+      }
+    ],
+    "proposalId": "475a508f-b347-46a2-b6c3-c46b4600b379",
+    "changeSets": [
+      {
+        "id": "cs-3fe23c9a-c6d1-4d74-a61c-cf5ccc7bb812",
+        "kind": "file_patch",
+        "title": "File patch: src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts",
+        "path": "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts",
+        "beforeHash": "1a7c350021c522e9",
+        "beforeContent": "/**\r\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`multi_file_feature`\r\n * scenario, file B of 2). See `multiFileFeatureSampleA.ts` for the paired file.\r\n */\r\nexport const FEATURE_FLAG_ENABLED = false;\r\n",
+        "diffZones": [
+          {
+            "startLine": 5,
+            "endLine": 5
+          }
+        ],
+        "content": "/**\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`multi_file_feature`\n * scenario, file B of 2). See `multiFileFeatureSampleA.ts` for the paired file.\n */\nexport const FEATURE_FLAG_ENABLED = true;\n"
+      }
+    ],
+    "validationOk": true,
+    "validationViolations": [],
+    "retrievalOperationCount": 3,
+    "draftToolCount": 1
+  }
+}

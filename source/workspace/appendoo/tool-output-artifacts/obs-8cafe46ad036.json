@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:8cafe46ad036",
+    "toolCallId": "call_GWgzFaqaR7plj1tl1rrniMts",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2470,
+    "digest": "003a5270034c6935ea7db6bd60d93201deabd2e07d7932b91255124d3b1b7580",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-08-30T20:25:17.149Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/ui/FormSection.tsx\",\n  \"startLine\": 140,\n  \"endLine\": 190,\n  \"totalLines\": 324,\n  \"truncated\": false,\n  \"content\": \"140|                  <FieldHintTooltip hint={trimmedHint} label={title} ink={ink} />\\n141|                </span>\\n142|              ) : null}\\n143|            </div>\\n144|            {titleExtra ? <div className=\\\"min-w-0 flex items-center\\\">{titleExtra}</div> : null}\\n145|          </div>\\n146|          {headerExtra ? <div className=\\\"shrink-0 flex items-center\\\">{headerExtra}</div> : null}\\n147|        </div>\\n148|        {!trimmedHint && description ? (\\n149|          <p className={cn(FORM_SECTION_DESC_CLASS, descriptionClassName)}>{description}</p>\\n150|        ) : null}\\n151|      </div>\\n152|      {children}\\n153|    </section>\\n154|    </FormSectionInkContext.Provider>\\n155|  );\\n156|};\\n157|\\n158|/** Label-over-input (product forms) vs label-beside-control (dense inspectors). */\\n159|export type FormFieldLayout = 'stack' | 'side';\\n160|\\n161|const FormFieldLayoutContext = React.createContext<FormFieldLayout>('stack');\\n162|\\n163|export const FormFieldLayoutProvider: React.FC<{\\n164|  layout: FormFieldLayout;\\n165|  children: React.ReactNode;\\n166|}> = ({ layout, children }) => (\\n167|  <FormFieldLayoutContext.Provider value={layout}>{children}</FormFieldLayoutContext.Provider>\\n168|);\\n169|\\n170|/** Fixed label column for `layout=\\\"side\\\"` — aligns inputs in a narrow options rail. */\\n171|export const FORM_FIELD_SIDE_LABEL_CLASS =\\n172|  'min-w-0 flex-1 ps-[4px] text-[11px] font-semibold leading-snug text-slate-600';\\n173|\\n174|export const FORM_FIELD_SIDE_LABEL_COLUMN_CLASS =\\n175|  'flex min-h-8 w-[6.75rem] shrink-0 items-center gap-0.5';\\n176|\\n177|export type FormFieldProps = {\\n178|  label: string;\\n179|  required?: boolean;\\n180|  error?: string | null;\\n181|  /** When true, passes isInvalid to the child control (UiInput, UiSelect, SemVerInput, …). */\\n182|  invalid?: boolean;\\n183|  /** When false, invalid border still applies but helper error text is hidden. Default true. */\\n184|  showError?: boolean;\\n185|  /** Validation hint placement — default overlay (prefer above, flip below when tight). */\\n186|  feedbackPlacement?: FieldFeedbackPlacement;\\n187|  className?: string;\\n188|  /**\\n189|   * Operator hint shown via HeroUI `FieldHintTooltip` (info icon after the label).\\n190|   * Do not put ordinary under-field helper paragraphs or native `title` hints instead.\"\n}"
+}

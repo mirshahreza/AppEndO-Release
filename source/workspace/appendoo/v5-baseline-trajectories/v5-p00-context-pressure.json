@@ -1,0 +1,125 @@
+{
+  "taskId": "50c23ca4c2194b9c",
+  "scenarioId": "v5-p00-context-pressure",
+  "category": "context_pressure",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:57.910Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Summarize these core agent runtime files for me: AgentOrchestrator, ToolRegistry, semanticPlanBuilder, changeSetBuilder.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "read_file",
+          "args": {
+            "path": "src/core/ai/agent/AgentOrchestrator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c2",
+          "name": "read_file",
+          "args": {
+            "path": "src/core/ai/tools/ToolRegistry.ts"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c3",
+          "name": "read_file",
+          "args": {
+            "path": "src/shared/lib/appendoo/semanticPlanBuilder.ts"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c4",
+          "name": "read_file",
+          "args": {
+            "path": "src/core/ai/validation/changeSetBuilder.ts"
+          }
+        }
+      ]
+    },
+    {
+      "text": "Summary of all four files is ready."
+    }
+  ],
+  "toolOrder": [
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file"
+  ],
+  "result": {
+    "text": "Summary of all four files is ready.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 5,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "b6b4e05c8584837b",
+        "durationMs": 3,
+        "tokensEstimate": 1344,
+        "ok": true,
+        "summary": "Read 120 line(s) from src/core/ai/agent/AgentOrchestrator.ts (1147 total)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "11f8bfe47d6c2e4a",
+        "durationMs": 7,
+        "tokensEstimate": 2696,
+        "ok": true,
+        "summary": "Read 120 line(s) from src/core/ai/tools/ToolRegistry.ts (203 total)."
+      },
+      {
+        "iteration": 3,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "691b4ed0845b8fc5",
+        "durationMs": 7,
+        "tokensEstimate": 3877,
+        "ok": true,
+        "summary": "Read 120 line(s) from src/shared/lib/appendoo/semanticPlanBuilder.ts (185 total)."
+      },
+      {
+        "iteration": 4,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "0c404e327eecdfaa",
+        "durationMs": 5,
+        "tokensEstimate": 5215,
+        "ok": true,
+        "summary": "Read 120 line(s) from src/core/ai/validation/changeSetBuilder.ts (213 total)."
+      },
+      {
+        "iteration": 5,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 6373,
+        "ok": true
+      }
+    ],
+    "retrievalOperationCount": 4,
+    "draftToolCount": 0
+  }
+}

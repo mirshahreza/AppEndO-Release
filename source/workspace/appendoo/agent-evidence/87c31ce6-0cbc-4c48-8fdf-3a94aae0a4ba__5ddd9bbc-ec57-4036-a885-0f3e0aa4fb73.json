@@ -1,0 +1,140 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "6234136b-705e-4102-b73b-e146159fab96",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.742Z"
+    },
+    {
+      "evidenceId": "cf931cd4-72be-4da8-bff0-a82ac1a9c3d9",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/agent/AgentOrchestrator.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.761Z"
+    },
+    {
+      "evidenceId": "9d8299fd-51ab-4089-9a62-eebfd0542edf",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/tools/ToolRegistry.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.777Z"
+    },
+    {
+      "evidenceId": "12113934-5a40-403e-a91f-bfdeca843499",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/agent/operationalState.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.794Z"
+    },
+    {
+      "evidenceId": "47165791-7f6a-4fb0-a852-791d31a2f9a8",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/agent/evidence.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.811Z"
+    },
+    {
+      "evidenceId": "f0975836-b51e-4f90-9e65-ed8de5e3721d",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/agent/hypothesisLedger.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.831Z"
+    },
+    {
+      "evidenceId": "f06857fb-ec84-4000-b20a-f91e43657d6e",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/agent/taskContract.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.851Z"
+    },
+    {
+      "evidenceId": "bb23feb0-a354-4943-b5f5-995454828b35",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/agent/operationalPolicyEngine.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T22:32:02.870Z"
+    },
+    {
+      "evidenceId": "13d54924-aae8-4b27-b29c-6cdfffd68a6d",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "type": "RUNTIME",
+      "subjectRefs": [],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "orchestrator:no_mutation_attempted"
+      ],
+      "producedAt": "2026-07-17T22:32:02.887Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "1473357c-aa14-488e-8b93-a96f7feac6d8",
+      "taskId": "87c31ce6-0cbc-4c48-8fdf-3a94aae0a4ba",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "13d54924-aae8-4b27-b29c-6cdfffd68a6d"
+      ],
+      "finalized": true
+    }
+  ]
+}

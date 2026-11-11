@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:cce2a7566b0d",
+    "toolCallId": "call_7bjwS4opkqcBj0qqVufceG6h",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1240,
+    "digest": "1d0b36a120d5dd932f9f04b5676e402c1dc0b045f698daaa94403dc6c477265d",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:53:22.877Z"
+  },
+  "content": "{\n  \"query\": \"executeWebSearch\",\n  \"mode\": \"exact\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"src/server\",\n  \"scopePaths\": [\n    \"src/server\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 4,\n  \"matches\": [\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/webActions.ts\",\n      \"line\": 5,\n      \"column\": 1,\n      \"text\": \"  executeWebSearch,\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/webActions.ts\",\n      \"line\": 193,\n      \"column\": 1,\n      \"text\": \"    const result = await executeWebSearch(asRecord(input), defaultWebDeps());\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 112,\n      \"column\": 1,\n      \"text\": \"export const executeWebSearch = async (\",\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 348,\n      \"column\": 1,\n      \"text\": \"    execute: async (args) => executeWebSearch(args, deps),\",\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"settings\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

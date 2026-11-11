@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:e8350b7a2398",
+    "toolCallId": "call_CX66ar5tcTv2czwJoQ0LaLCO",
+    "toolName": "get_feature_graph",
+    "contentType": "json",
+    "byteLength": 1511,
+    "digest": "fea9c5bf14a4938c654db768324393ae4989dc8701b2b25e90ea7c07f0a0c305",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:35:29.065Z"
+  },
+  "content": "{\n  \"version\": \"1\",\n  \"generatedAt\": \"2026-08-30T21:52:50.342Z\",\n  \"node\": {\n    \"pageKey\": \"server-functions\",\n    \"label\": \"Server Functions\",\n    \"menuGroup\": \"Development\",\n    \"routePattern\": \"server-functions\",\n    \"inStudioMenu\": true,\n    \"ui\": {\n      \"pageModule\": \"src/config/platform-registry/page-modules/server-functions.json\",\n      \"loaderRef\": \"core:ServerFunctions\",\n      \"page\": \"src/features/server-functions/ServerFunctionsPage.tsx\",\n      \"feature\": \"src/features/server-functions/\",\n      \"domain\": null,\n      \"workspace\": \"ServerFunctionsWorkspace\"\n    },\n    \"api\": {\n      \"routes\": [\n        \"src/server/routes/server-functions.routes.ts\",\n        \"src/server/routes/functions.routes.ts\"\n      ],\n      \"apiPrefixes\": [\n        \"/api/core/server-functions\",\n        \"/api/functions\"\n      ],\n      \"contracts\": \"src/shared/api/contracts/server-functions/\",\n      \"services\": [\n        \"src/server/services/functions.service.ts\"\n      ]\n    },\n    \"tests\": \"src/features/server-functions/__tests__/\",\n    \"notes\": null\n  },\n  \"searchContext\": {\n    \"pageKey\": \"server-functions\",\n    \"label\": \"Server Functions\",\n    \"routePattern\": \"server-functions\",\n    \"searchRoots\": [\n      \"src/features/server-functions\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/server-functions\",\n      \"src/server/services/functions.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\"\n}"
+}

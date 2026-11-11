@@ -1,0 +1,137 @@
+{
+  "id": "em_a3f3ec89a1f7d05b",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_voter_registrations",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VoteVoterRegistrations",
+    "tableName": "vote_voter_registrations"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "voting_id",
+      "field": "votingId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_3bc12e270160de98",
+        "column": "id"
+      }
+    },
+    {
+      "name": "hwy_member_id",
+      "field": "hwyMemberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "hwy_nakheb_id",
+      "field": "hwyNakhebId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "invited_by_member_id",
+      "field": "invitedByMemberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status_code",
+      "field": "statusCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "tracking_code",
+      "field": "trackingCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_014ede37b5704cf9",
+      "targetModelId": "em_3bc12e270160de98",
+      "foreignKey": "voting_id",
+      "as": "voting",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_fc631225be82488b",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "status_code",
+      "as": "status",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_0d958a3f5bcb48ad",
+      "targetModelId": "em_c08c062973da7869",
+      "foreignKey": "voter_registration_id",
+      "as": "castEvents",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "8776c7ab95e8c3c9",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_voter_registrations"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:11:16.284Z",
+  "updated_at": "2026-11-10T13:06:43.773Z"
+}

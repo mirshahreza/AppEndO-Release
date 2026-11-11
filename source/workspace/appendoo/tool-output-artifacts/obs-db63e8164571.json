@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:db63e8164571",
+    "toolCallId": "call_FXtrNvw2MhCCJ8X9eOYHkxGi",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2304,
+    "digest": "f089c6749bf0de936e13291d07c77533fbb4d435d9331623e44cf4daf28a84a3",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T22:39:21.697Z"
+  },
+  "content": "{\n  \"path\": \"src/server/routes/users.routes.ts\",\n  \"startLine\": 1,\n  \"endLine\": 42,\n  \"totalLines\": 42,\n  \"truncated\": false,\n  \"content\": \"1|import { Router, type Express } from 'express';\\n2|import { UsersController } from '../controllers/users.controller';\\n3|import { createBuiltInRouteGuard } from '../middleware/builtInFunctionAccess.middleware';\\n4|import { requireUsersListAccess } from '../middleware/usersListAccess.middleware';\\n5|import { UsersService } from '../services/users.service';\\n6|\\n7|export const mountUsersRoutes = (app: Express): void => {\\n8|  const service = new UsersService();\\n9|  const controller = new UsersController(service);\\n10|  const routeGuard = createBuiltInRouteGuard('ADMIN');\\n11|\\n12|  app.get('/api/users/:id/avatar-xs', requireUsersListAccess, controller.getUserAvatarXs);\\n13|\\n14|  const usersRouter = Router();\\n15|  usersRouter.get('/', controller.listUsers);\\n16|  usersRouter.post('/', controller.createUser);\\n17|  usersRouter.post('/:id/change-password', controller.changePassword);\\n18|  usersRouter.post('/:id/reset-password', controller.resetPassword);\\n19|  usersRouter.put('/:id', controller.updateUser);\\n20|  usersRouter.put('/:id/profile', controller.updateUserProfile);\\n21|  usersRouter.put('/:id/roles', controller.updateUserRoles);\\n22|  usersRouter.get('/:id/attributes', controller.getUserAttributes);\\n23|  usersRouter.put('/:id/attributes', controller.updateUserAttributes);\\n24|  usersRouter.get('/:id/session-preview', controller.getUserSessionPreview);\\n25|  usersRouter.delete('/:id', controller.deleteUser);\\n26|  usersRouter.patch('/:id/lock', controller.lockUser);\\n27|  usersRouter.patch('/:id/unlock', controller.unlockUser);\\n28|  usersRouter.patch('/:id/locked', controller.setUserLocked);\\n29|\\n30|  app.use('/api/users', routeGuard, usersRouter);\\n31|\\n32|  const rolesRouter = Router();\\n33|  rolesRouter.get('/', controller.listRoles);\\n34|  rolesRouter.post('/', controller.createRole);\\n35|  rolesRouter.put('/:id', controller.updateRole);\\n36|  rolesRouter.get('/:id/attributes', controller.getRoleAttributes);\\n37|  rolesRouter.put('/:id/attributes', controller.updateRoleAttributes);\\n38|  rolesRouter.delete('/:id', controller.deleteRole);\\n39|\\n40|  app.use('/api/roles', routeGuard, rolesRouter);\\n41|};\\n42|\"\n}"
+}

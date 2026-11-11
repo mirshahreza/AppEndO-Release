@@ -6,11 +6,15 @@ import {
   hwyMemberFaceCaptionTextClass,
   resolveHwyMemberFaceCaptionFromMemberFields,
 } from '../../../domain/hwy/hwyMemberFaceCaptionDisplay';
+import { catalogFaceAppliedStateClass } from '../catalog/catalogInteractionApplied';
+import type { CatalogInteractionPreviewProps } from '../catalog/catalogInteractionState';
+import { CATALOG_INTERACTION_MARKER_FACE } from '../catalog/catalogInteractionState';
+import { HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS } from './hwyMemberFaceInteraction';
 import { HwyGeoResponsibilityElectoralJoinMismatchBadge } from './HwyGeoResponsibilityElectoralJoinMismatchBadge';
 
 export type HwyGeoResponsibilityMemberFaceVariant = 'official' | 'nominee' | 'candidate';
 
-export type HwyGeoResponsibilityMemberFaceProps = {
+export type HwyGeoResponsibilityMemberFaceProps = CatalogInteractionPreviewProps & {
   displayName: string | null | undefined;
   username?: string | null;
   /** Shown in red under the avatar when `username` is not allocated. */
@@ -27,6 +31,8 @@ export type HwyGeoResponsibilityMemberFaceProps = {
   showName?: boolean;
   joinMismatchLabel?: string | null;
   removalPendingLabel?: string | null;
+  /** Living identity catalog — subtle dossier-style hover/active paint. */
+  catalogInteractive?: boolean;
 };
 
 const SURFACE_CLASS: Record<HwyGeoResponsibilityMemberFaceVariant, string> = {
@@ -62,6 +68,8 @@ export const HwyGeoResponsibilityMemberFace: React.FC<HwyGeoResponsibilityMember
   showName = true,
   joinMismatchLabel,
   removalPendingLabel,
+  catalogInteractive = false,
+  catalogPreviewState,
 }) => {
   const [avatarFailed, setAvatarFailed] = useState(false);
   useEffect(() => {
@@ -93,6 +101,11 @@ export const HwyGeoResponsibilityMemberFace: React.FC<HwyGeoResponsibilityMember
           'rounded-md border shadow-sm',
           compact ? 'gap-1.5 px-1.5 py-1' : 'gap-2 px-2 py-1.5',
           surfaceClass,
+        ),
+        catalogInteractive && cn(
+          HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS,
+          CATALOG_INTERACTION_MARKER_FACE,
+          catalogFaceAppliedStateClass(catalogPreviewState),
         ),
       )}
     >

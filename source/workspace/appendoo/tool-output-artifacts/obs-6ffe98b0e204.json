@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:6ffe98b0e204",
+    "toolCallId": "call_FQNnNcSDznF3UXhJkVTVh1Fs",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1841,
+    "digest": "2bbcd9f467867a4a3d7d02899b618cacf9118735b3848e7a6c246edf754a5755",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:12:11.685Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/api/contracts/ai/types.ts\",\n  \"startLine\": 60,\n  \"endLine\": 110,\n  \"totalLines\": 225,\n  \"truncated\": false,\n  \"content\": \"60|  | 'data'\\n61|  | 'context'\\n62|  | 'git'\\n63|  | 'openapi'\\n64|  | 'jobs'\\n65|  | 'edge'\\n66|  | 'memory'\\n67|  | 'cache'\\n68|  | 'workflow';\\n69|\\n70|export type AiOrchestrationPolicy = 'react' | 'utility-guided';\\n71|\\n72|export type AiAgentSettings = {\\n73|  defaultMode: 'ask' | 'agent' | 'plan';\\n74|  maxIterations: number;\\n75|  maxIterationsVibe: number;\\n76|  /** Read-only Ask tool loop iteration cap. */\\n77|  maxIterationsAsk?: number;\\n78|  maxToolCallsPerTurn: number;\\n79|  maxTokensPerRun?: number;\\n80|  orchestrationPolicy?: AiOrchestrationPolicy;\\n81|  tokenBudgetHardStop?: boolean;\\n82|  allowedNativeToolGroups: AiNativeToolGroup[];\\n83|  writeRequiresConfirm: boolean;\\n84|  contextWorkingTurns?: number;\\n85|  contextSummarizeAfterTurns?: number;\\n86|  /** When true, segment H uses a cheap LLM call with heuristic fallback (TOK-15). */\\n87|  contextSummarizeWithLlm?: boolean;\\n88|  /** Max assistant tool turns whose observations stay in working memory (older turns pruned). */\\n89|  contextToolObservationMaxTurns?: number;\\n90|  traceRetentionDays?: number;\\n91|  vibeMaxFilesPerProposal?: number;\\n92|  vibeMaxLinesPerProposal?: number;\\n93|};\\n94|\\n95|import type { FunctionAccessControl } from '../server-functions/accessControl';\\n96|\\n97|export type AiMcpServerTransport = 'stdio' | 'sse' | 'http';\\n98|\\n99|export type AiMcpServerConfig = {\\n100|  id: string;\\n101|  label: string;\\n102|  enabled: boolean;\\n103|  transport: AiMcpServerTransport;\\n104|  command?: string;\\n105|  args?: string[];\\n106|  url?: string;\\n107|  env?: Record<string, string>;\\n108|  allowedTools?: string[];\\n109|  note?: string;\\n110|  accessControl?: FunctionAccessControl;\"\n}"
+}

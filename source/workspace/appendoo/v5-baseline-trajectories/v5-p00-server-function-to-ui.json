@@ -1,0 +1,156 @@
+{
+  "taskId": "cdb2d655ae0781b9",
+  "scenarioId": "v5-p00-server-function-to-ui",
+  "category": "server_function_to_ui",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:14.296Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Build a UI for the scheduler.sample-heartbeat function",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "gate",
+          "name": "get_project_standards",
+          "args": {
+            "shard": "vibe-coding-workflows"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c2",
+          "name": "get_server_function",
+          "args": {
+            "functionId": "scheduler.sample-heartbeat"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c3",
+          "name": "draft_component_layout",
+          "args": {
+            "name": "Sample Heartbeat",
+            "folder": "scheduler",
+            "description": "Generic run-button UI with raw JSON response — no input/output fields were statically detected for this function."
+          }
+        }
+      ]
+    },
+    {
+      "text": "Because no input/output fields were detected for this function, I built a generic UI with a run button and raw JSON response display."
+    }
+  ],
+  "toolOrder": [
+    "get_project_standards",
+    "get_server_function",
+    "draft_component_layout"
+  ],
+  "result": {
+    "text": "Because no input/output fields were detected for this function, I built a generic UI with a run button and raw JSON response display.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 4,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "get_project_standards",
+        "argsHash": "70ecb22a4d391191",
+        "durationMs": 3,
+        "tokensEstimate": 1334,
+        "ok": true,
+        "summary": "Loaded standards shard \"docs/standards/vibe-coding-workflows.md\" (truncated to 6000 chars)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "get_server_function",
+        "argsHash": "c8d4787576970f67",
+        "durationMs": 340,
+        "tokensEstimate": 2943,
+        "ok": false,
+        "error": "function_not_found",
+        "summary": "Edge function \"scheduler.sample-heartbeat\" was not found."
+      },
+      {
+        "iteration": 3,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "draft_component_layout",
+        "argsHash": "45688b059476f07d",
+        "durationMs": 5,
+        "tokensEstimate": 2971,
+        "ok": true,
+        "summary": "Drafted component layout \"Sample Heartbeat\" (sample-heartbeat)."
+      },
+      {
+        "iteration": 4,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 3038,
+        "ok": true
+      }
+    ],
+    "proposalId": "c5283100-3789-464e-bcc5-d5e8a00c1ec9",
+    "changeSets": [
+      {
+        "id": "cs-f15808e3-d5dd-43e2-bf15-c251dfd5c5c4",
+        "kind": "component_layout_patch",
+        "title": "Component layout: Sample Heartbeat",
+        "summary": "Generic run-button UI with raw JSON response — no input/output fields were statically detected for this function.",
+        "layoutId": "sample-heartbeat",
+        "patch": {
+          "name": "Sample Heartbeat",
+          "folder": "scheduler",
+          "document": {
+            "schemaVersion": "1.0.0",
+            "id": "sample-heartbeat",
+            "name": "Sample Heartbeat",
+            "rootNodeId": "root",
+            "nodes": {
+              "root": {
+                "id": "root",
+                "type": "root",
+                "parentId": null,
+                "order": 0,
+                "props": {},
+                "layout": {},
+                "binding": {},
+                "children": []
+              }
+            },
+            "metadata": {
+              "createdAt": "2024-01-01T00:00:00.000Z",
+              "updatedAt": "2024-01-01T00:00:00.000Z"
+            },
+            "diagnostics": []
+          },
+          "bindingDefinitions": {
+            "definitions": {
+              "defaultVisibility": {
+                "sourceType": "static",
+                "sourcePath": "true",
+                "fallbackValue": true
+              }
+            },
+            "storeSegments": {},
+            "dataSources": {},
+            "lovs": {}
+          }
+        }
+      }
+    ],
+    "validationOk": true,
+    "validationViolations": [],
+    "retrievalOperationCount": 1,
+    "draftToolCount": 1
+  }
+}

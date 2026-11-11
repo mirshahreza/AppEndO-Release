@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:b91bf8548529",
+    "toolCallId": "call_YBWP692R4AQJYa1c4VQWSe9v",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1955,
+    "digest": "0241f796cf1b3555d0f0bcdeba9d2d27326136c3941e6e75b8f0cf9267faeb5a",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-08-31T08:46:01.144Z"
+  },
+  "content": "{\n  \"path\": \"src/features/server-functions/lib/serverFunctionAiSnapshot.ts\",\n  \"startLine\": 1,\n  \"endLine\": 58,\n  \"totalLines\": 58,\n  \"truncated\": false,\n  \"content\": \"1|import type { EdgeLogEntry } from '../../../shared/api/contracts/server-functions/types';\\n2|\\n3|const MAX_LOGS = 40;\\n4|const MAX_OUTPUT_CHARS = 12_000;\\n5|\\n6|export type ServerFunctionAiSnapshotInput = {\\n7|  name: string;\\n8|  method: string | null;\\n9|  path: string;\\n10|  language: string;\\n11|  engineType: string;\\n12|  readOnly: boolean;\\n13|  testPayload: string;\\n14|  source: string;\\n15|  lastRun: {\\n16|    isRunning: boolean;\\n17|    output: Record<string, unknown> | null;\\n18|    logs: EdgeLogEntry[];\\n19|  };\\n20|};\\n21|\\n22|const clipOutput = (output: Record<string, unknown> | null): Record<string, unknown> | null => {\\n23|  if (!output) {\\n24|    return null;\\n25|  }\\n26|  try {\\n27|    const serialized = JSON.stringify(output);\\n28|    if (serialized.length <= MAX_OUTPUT_CHARS) {\\n29|      return output;\\n30|    }\\n31|    return { truncated: true, preview: serialized.slice(0, MAX_OUTPUT_CHARS) };\\n32|  } catch {\\n33|    return { error: 'Unserializable Test Console output' };\\n34|  }\\n35|};\\n36|\\n37|export const buildServerFunctionAiSnapshot = (input: ServerFunctionAiSnapshotInput): string => (\\n38|  JSON.stringify({\\n39|    name: input.name,\\n40|    method: input.method,\\n41|    path: input.path,\\n42|    language: input.language,\\n43|    engineType: input.engineType,\\n44|    readOnly: input.readOnly,\\n45|    testPayload: input.testPayload,\\n46|    source: input.source,\\n47|    lastRun: {\\n48|      isRunning: input.lastRun.isRunning,\\n49|      output: clipOutput(input.lastRun.output ?? null),\\n50|      logs: (Array.isArray(input.lastRun.logs) ? input.lastRun.logs : []).slice(-MAX_LOGS).map((log) => ({\\n51|        time: log.time,\\n52|        type: log.type,\\n53|        msg: log.msg,\\n54|      })),\\n55|    },\\n56|  }, null, 2)\\n57|);\\n58|\"\n}"
+}

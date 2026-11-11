@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ca81669c8c08",
+    "toolCallId": "call_RMBtJB2NR701nMdwJNIvepfR",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1280,
+    "digest": "499d5232c8b428526198d93077ae518dc0190b9a44516984e6c263ac2fabf716",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T20:54:43.855Z"
+  },
+  "content": "{\n  \"query\": \"id: 'kpi-metrics-grid'\",\n  \"mode\": \"exact\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 1,\n  \"matches\": [\n    {\n      \"path\": \"src/domain/component-designer/layout-presets/newLayoutPresets.tsx\",\n      \"line\": 494,\n      \"column\": 5,\n      \"text\": \"id: 'kpi-metrics-grid',\",\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

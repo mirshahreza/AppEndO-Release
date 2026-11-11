@@ -8,89 +8,25 @@ import { assertPublicOssReleaseScope } from './assertPublicOssReleaseScope';
 import { copyFileEnsured, sha256File } from './artifacts';
 import { appendoReleaseStagingDir, APPENDO_RELEASE_REPO_NAME } from './appendoReleaseRepo';
 import { renderPublicReleaseReadme } from './renderPublicReleaseReadme';
+import { copyReleaseCutSourceSnapshot } from './releaseCutSourceSnapshot';
 import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
 
-const SOURCE_SKIP_DIR_NAMES = new Set([
-  'node_modules',
-  '.git',
-  'dist',
-  'coverage',
-  'agent-transcripts',
-  '.cursor',
-  '.claude',
-  'terminals',
-  'releases',
-  'release',
-  '.appendo-release-staging',
-  '.appendo-hawiety-staging',
-]);
-
-const SOURCE_EXCLUDE_SEGMENTS = [
-  `${path.sep}src${path.sep}server${path.sep}domain${path.sep}hwy${path.sep}`,
-  `${path.sep}src${path.sep}domain${path.sep}hwy${path.sep}`,
-  `${path.sep}src${path.sep}features${path.sep}hwy-`,
-  `${path.sep}scripts${path.sep}hawiety-pack${path.sep}`,
-  `${path.sep}scripts${path.sep}hwy-`,
-  `${path.sep}runtime${path.sep}package-artifacts${path.sep}hawiety${path.sep}`,
-  `${path.sep}dist${path.sep}release-cut${path.sep}`,
-  `${path.sep}plans${path.sep}packages${path.sep}todo${path.sep}hawiety-package${path.sep}`,
-];
-
-function shouldExcludeSourcePath(absPath: string): boolean {
-  const norm = absPath.replace(/\//g, path.sep);
-  if (norm.includes(`${path.sep}hawiety-`) && norm.endsWith('.zip')) return true;
-  return SOURCE_EXCLUDE_SEGMENTS.some((seg) => norm.includes(seg));
-}
-
-function walkRepoFiles(onFile: (absFile: string, relFile: string) => void, onDir: (absDir: string) => void): void {
-  const walk = (absDir: string): void => {
-    if (shouldExcludeSourcePath(absDir)) return;
-    onDir(absDir);
-    for (const entry of fs.readdirSync(absDir, { withFileTypes: true })) {
-      const full = path.join(absDir, entry.name);
-      const rel = path.relative(REPO_ROOT, full);
-      if (!rel) continue;
-      if (SOURCE_SKIP_DIR_NAMES.has(entry.name)) continue;
-      if (shouldExcludeSourcePath(full)) continue;
-      if (entry.isDirectory()) {
-        walk(full);
-      } else if (entry.isFile()) {
-        onFile(full, rel);
-      }
-    }
-  };
-  walk(REPO_ROOT);
-}
-
 function copySourceSnapshot(destRoot: string): void {
-  const sourceRoot = path.join(destRoot, 'source');
-  fs.mkdirSync(sourceRoot, { recursive: true });
-
-  walkRepoFiles(
-    (absFile, relFile) => {
-      copyFileEnsured(absFile, path.join(sourceRoot, relFile));
-    },
-    (absDir) => {
-      const rel = path.relative(REPO_ROOT, absDir);
-      if (rel) {
-        fs.mkdirSync(path.join(sourceRoot, rel), { recursive: true });
-      }
-    },
-  );
-
-  fs.writeFileSync(
-    path.join(sourceRoot, 'PUBLIC_SOURCE_README.txt'),
-    [
+  copyReleaseCutSourceSnapshot({
+    repoRoot: REPO_ROOT,
+    destRoot,
+    mode: 'oss',
+    cloneProfileId: 'oss',
+    sourceReadmeLines: [
       'AppEndO public source snapshot.',
       'Hawiety vertical paths and pack tooling are excluded.',
       'Bundled packages for this release: cms, remote-hubs (see ../packages/).',
+      'Isolated dev: see CLONE_PROFILE.md and settings.recommended.json (database AppEndORelease).',
       'Install: npm ci && npm run build',
-      '',
-    ].join('\n'),
-    'utf8',
-  );
+    ],
+  });
 }
 
 function copyDistBuild(destRoot: string): void {

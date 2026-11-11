@@ -671,6 +671,42 @@
           "order": 1
         }
       ]
+    },
+    {
+      "heading": "Voting",
+      "icon": "Vote",
+      "order": 28,
+      "items": [
+        {
+          "pageKey": "voting-votings",
+          "routePattern": "voting/votings",
+          "label": "Voting",
+          "icon": "Vote",
+          "description": "Voting scopes, ballots, and operations.",
+          "iconColor": "text-violet-600",
+          "order": 1,
+          "auth": {
+            "roles": [
+              "ADMIN"
+            ]
+          }
+        },
+        {
+          "pageKey": "voting-settings",
+          "routePattern": "voting/settings/*",
+          "label": "Settings",
+          "icon": "Settings",
+          "description": "Voting Base Info vocabularies.",
+          "iconColor": "text-slate-600",
+          "order": 2,
+          "separatorBefore": true,
+          "auth": {
+            "roles": [
+              "ADMIN"
+            ]
+          }
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,42 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "63616e45-2f0c-4708-b7a5-e1a105a65b2c",
+      "taskId": "005e0ae9-0ece-4658-9f55-698d77697ed6",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:search_codebase",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-16T11:48:22.652Z"
+    },
+    {
+      "evidenceId": "7ba3ed4f-7fd1-40fd-a925-919178af5e23",
+      "taskId": "005e0ae9-0ece-4658-9f55-698d77697ed6",
+      "type": "RUNTIME",
+      "subjectRefs": [],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "orchestrator:no_mutation_attempted"
+      ],
+      "producedAt": "2026-07-16T11:48:22.691Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "79e7bd7e-ccc6-49a5-a7f1-208c734ce788",
+      "taskId": "005e0ae9-0ece-4658-9f55-698d77697ed6",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "7ba3ed4f-7fd1-40fd-a925-919178af5e23"
+      ],
+      "finalized": true
+    }
+  ]
+}

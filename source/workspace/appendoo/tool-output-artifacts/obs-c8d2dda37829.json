@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:c8d2dda37829",
+    "toolCallId": "call_B9xmZoCqfkdLAWLxP3mM65q9",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1932,
+    "digest": "4ded24b430f9d7fa68953c363d9d252dc240b50fa3fef4e12c41bee59b7b5e92",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:51:46.395Z"
+  },
+  "content": "{\n  \"query\": \"updateWebSearchSettings\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"src/server\",\n  \"scopePaths\": [\n    \"src/server\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/server/db/aiSettingsStore.ts\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/webActions.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/ai/aiSettings.service.ts\",\n      \"line\": 289,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/controllers/ai.controller.ts\",\n      \"line\": 649,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/platform/platformWebFonts.service.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"platform-portals\",\n      \"label\": \"Portals\"\n    },\n    {\n      \"path\": \"src/server/services/platform/platformCultureSettings.service.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"platform-portals\",\n      \"label\": \"Portals\"\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/webTools.ts\",\n      \"line\": 289,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/domain/attributes/settingsAttributesRepository.ts\",\n      \"line\": 217,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"settings\",\n    \"platform-portals\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

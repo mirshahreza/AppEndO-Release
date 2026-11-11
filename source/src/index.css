@@ -1380,7 +1380,7 @@ html[data-loading-identity='hawiety'][data-boot-splash-logo-locked='1']
 	position: absolute;
 	inset: 0;
 	pointer-events: none;
-	border-radius: 1.125rem;
+	border-radius: 0.5rem;
 }
 
 .app-route-loading__logo-stage::before,
@@ -1417,7 +1417,7 @@ html[data-loading-identity='hawiety'][data-boot-splash-logo-locked='1']
 .app-boot-logo-stage--appendo::after {
 	opacity: 0.35;
 	inset: 0.4rem;
-	border-radius: 0.875rem;
+	border-radius: 0.375rem;
 	background: linear-gradient(
 		145deg,
 		rgb(255 255 255 / 0.65) 0%,
@@ -1446,7 +1446,7 @@ html[data-loading-identity='hawiety'] .app-boot-logo-stage--square::before {
 html[data-loading-identity='hawiety'] .app-boot-logo-stage--square::after {
 	opacity: 0.28;
 	inset: 0.45rem;
-	border-radius: 0.875rem;
+	border-radius: 0.375rem;
 	background: linear-gradient(145deg, rgb(255 255 255 / 0.4) 0%, transparent 52%);
 }
 
@@ -1454,7 +1454,7 @@ html:not([data-loading-identity='hawiety']) .app-boot-logo-stage--square::before
 .app-route-loading:not(.app-route-loading--hawiety) .app-route-loading__logo-stage--square::before {
 	opacity: 0.55;
 	border: none;
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 	background: radial-gradient(
 		ellipse 88% 78% at 50% 45%,
 		color-mix(in srgb, var(--app-route-loading-accent, var(--app-accent-500, #00a28a)) 14%, transparent) 0%,
@@ -1473,7 +1473,7 @@ html[data-loading-identity='hawiety'] .app-boot-logo-stage--square .app-boot-log
 .app-route-loading__logo-stage--wide::before,
 .app-boot-logo-stage--wide::before {
 	opacity: 0.58;
-	border-radius: 0.875rem;
+	border-radius: 0.5rem;
 	inset: 0.25rem 0.4rem;
 	border: none;
 	background: radial-gradient(

@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:03cac7c66ca7",
+    "toolCallId": "c1",
+    "toolName": "get_server_function",
+    "contentType": "json",
+    "byteLength": 1562,
+    "digest": "390e7e8267c18d7e27c8bf5fcf5138d40ba5fcd474406a233a86bf027d79e5cb",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-16T22:10:54.064Z"
+  },
+  "content": "{\n  \"id\": \"math.sum-two-numbers\",\n  \"name\": \"sum-two-numbers\",\n  \"folder\": \"math\",\n  \"method\": \"POST\",\n  \"path\": \"/api/math/sum-two-numbers\",\n  \"engineType\": \"SANDBOX_JS\",\n  \"language\": \"ts\",\n  \"runtimeVersion\": \"v20.x\",\n  \"timeoutMs\": 1500,\n  \"updatedAt\": \"2026-07-11T15:51:27.612Z\",\n  \"testPayload\": \"{\\n  \\\"a\\\": \\\"\\\",\\n  \\\"b\\\": \\\"\\\"\\n}\",\n  \"contract\": {\n    \"requestExample\": {\n      \"a\": \"\",\n      \"b\": \"\"\n    },\n    \"validationFields\": [\n      \"a\",\n      \"b\"\n    ],\n    \"outputFields\": [],\n    \"queryFields\": [],\n    \"paramFields\": [],\n    \"summary\": \"POST /api/math/sum-two-numbers\",\n    \"hasNoDetectedFields\": false\n  },\n  \"source\": \"type EdgeReq = {\\r\\n  body: Record<string, unknown>;\\r\\n  query: Record<string, unknown>;\\r\\n  params: Record<string, string>;\\r\\n  method: string;\\r\\n  headers: Record<string, string | undefined>;\\r\\n};\\r\\n\\r\\ntype EdgeRes = {\\r\\n  json: (data: unknown) => unknown;\\r\\n  send: (data: unknown) => unknown;\\r\\n  status: (code: number) => EdgeRes;\\r\\n};\\r\\n\\r\\nconst edgeReq = req as EdgeReq;\\r\\nconst edgeRes = res as EdgeRes;\\r\\n\\r\\nasync function handler(): Promise<void> {\\r\\n  const body = edgeReq.body ?? {};\\r\\n  const a = Number(body.a);\\r\\n  const b = Number(body.b);\\r\\n\\r\\n  if (!Number.isFinite(a) || !Number.isFinite(b)) {\\r\\n    edgeRes.status(400).json({\\r\\n      ok: false,\\r\\n      error: 'Both \\\"a\\\" and \\\"b\\\" must be finite numbers.',\\r\\n    });\\r\\n    return;\\r\\n  }\\r\\n\\r\\n  edgeRes.status(200).json({\\r\\n    ok: true,\\r\\n    a,\\r\\n    b,\\r\\n    sum: a + b,\\r\\n  });\\r\\n}\",\n  \"sourceTruncated\": false\n}"
+}

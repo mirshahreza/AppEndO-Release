@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "3f45f0ed-7a70-4cfa-81a8-fe288ab09f00",
+      "taskId": "6b0a3fdf-c836-4264-8fbf-e550b597975f",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-16T11:55:59.952Z"
+    },
+    {
+      "evidenceId": "9e50155e-113e-4555-b3f3-9c950244f002",
+      "taskId": "6b0a3fdf-c836-4264-8fbf-e550b597975f",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleA.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-16T11:55:59.970Z"
+    },
+    {
+      "evidenceId": "04ea850f-cfcc-4aa1-a82b-02afc0df76b5",
+      "taskId": "6b0a3fdf-c836-4264-8fbf-e550b597975f",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-16T11:55:59.985Z"
+    },
+    {
+      "evidenceId": "8e511c0b-1083-4a1a-bad0-78c85f3b1fc4",
+      "taskId": "6b0a3fdf-c836-4264-8fbf-e550b597975f",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "65007227-336e-4a3a-b49c-a82e47f3b955"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-16T11:56:00.010Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "3021be7b-4848-40c3-8de8-29f150eec5dc",
+      "taskId": "6b0a3fdf-c836-4264-8fbf-e550b597975f",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "8e511c0b-1083-4a1a-bad0-78c85f3b1fc4"
+      ],
+      "finalized": true
+    }
+  ]
+}

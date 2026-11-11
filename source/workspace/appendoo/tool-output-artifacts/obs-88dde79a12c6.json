@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:88dde79a12c6",
+    "toolCallId": "call-standards",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 1685,
+    "digest": "48c9f248bdf380d7831b0637683b4870cf467c107823039e5d36b9a16d55042f",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T07:52:38.680Z"
+  },
+  "content": "{\n  \"version\": \"1.50.0\",\n  \"updatedAt\": \"2026-07-16\",\n  \"shard\": \"vibe-crud\",\n  \"path\": \"docs/standards/vibe-crud.md\",\n  \"content\": \"# WF-2 — Client CRUD UI (vibe shard)\\r\\n\\r\\n> **Shard key:** `get_project_standards({ shard: \\\"vibe-crud\\\" })`  \\r\\n> **Workflow:** [`vibe-coding-workflows.md`](./vibe-coding-workflows.md) § WF-2  \\r\\n> **Playbook:** [`vibe-operator-playbook.md`](./vibe-operator-playbook.md)\\r\\n\\r\\n---\\r\\n\\r\\n## When to use\\r\\n\\r\\nUser is on **Client Components** (`pageKey: client-components`) and wants a new grid + form CRUD bound to an API.\\r\\n\\r\\n## Execute — do not re-ask\\r\\n\\r\\nIf the user already described the CRUD (entity, columns, API), after retrieve call **`draft_component_layout`** — do not ask them to repeat.\\r\\n\\r\\n## Tool order\\r\\n\\r\\n1. `get_feature_graph({ pageKey: \\\"client-components\\\" })`\\r\\n2. `search_codebase` + `read_file` — similar layout/template\\r\\n3. **`draft_component_layout`** (templateId or document)\\r\\n4. Proposal → confirm → apply → **Designer handoff**\\r\\n\\r\\n## UI rules (mandatory)\\r\\n\\r\\n| Control | Use |\\r\\n|---------|-----|\\r\\n| Grids | `AppTableGrid` |\\r\\n| Booleans | `UiCheckbox` — never native checkbox |\\r\\n| Buttons | `AppButton` intents from `buttonSemantics.ts` |\\r\\n| Modals | `CreateEditModalShell` |\\r\\n| Labels | `ps-[4px]` + 2px gap to control |\\r\\n\\r\\n## Related shards\\r\\n\\r\\n- `crud-pages` — CRUD page patterns\\r\\n- `ui-grid` — columns, paging, actions\\r\\n- `ui-core` — forms, shell, typography\\r\\n- `auto-crud` — when API is auto-CRUD generated\\r\\n\",\n  \"truncated\": false,\n  \"maxChars\": 6000,\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic map.\"\n}"
+}

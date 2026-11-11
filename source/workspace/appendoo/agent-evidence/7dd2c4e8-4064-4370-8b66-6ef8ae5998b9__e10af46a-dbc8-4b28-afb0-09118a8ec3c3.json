@@ -1,0 +1,42 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "7ce975ae-a6d8-445e-a28f-4021a3d49b51",
+      "taskId": "7dd2c4e8-4064-4370-8b66-6ef8ae5998b9",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/bugFixSample.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T23:32:51.018Z"
+    },
+    {
+      "evidenceId": "62e558cf-fbbf-4365-8918-ce2cec03c2e9",
+      "taskId": "7dd2c4e8-4064-4370-8b66-6ef8ae5998b9",
+      "type": "RUNTIME",
+      "subjectRefs": [],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "orchestrator:no_mutation_attempted"
+      ],
+      "producedAt": "2026-07-17T23:32:51.038Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "a6fd536f-0509-47a9-adb1-749928d925e8",
+      "taskId": "7dd2c4e8-4064-4370-8b66-6ef8ae5998b9",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "62e558cf-fbbf-4365-8918-ce2cec03c2e9"
+      ],
+      "finalized": true
+    }
+  ]
+}

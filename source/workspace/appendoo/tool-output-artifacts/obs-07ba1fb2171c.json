@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:07ba1fb2171c",
+    "toolCallId": "call_4SPlOjhACagMFFPFSM5Zfer8",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2677,
+    "digest": "069e9ac86b0864af6588a819f640ec8d838258f5bbdd6b4d1ef1a241c8dbff34",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:05:18.631Z"
+  },
+  "content": "{\n  \"query\": \"draft_component_layout Component Designer template AppButton fetch API form\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": true,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": false,\n  \"matchCount\": 8,\n  \"matches\": [\n    {\n      \"path\": \"src/features/server-functions/components/AutoCrudRouteMethodsStep.tsx\",\n      \"line\": 793,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/mappers.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/server/routes/component-designer.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/initialFunctions.ts\",\n      \"line\": 1009,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/mappers.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/features/server-functions/components/ServerFunctionsPageView.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/features/server-functions/lib/autoCrudRouteMethods.ts\",\n      \"line\": 361,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/features/server-functions/components/ServerFunctionDeleteModal.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

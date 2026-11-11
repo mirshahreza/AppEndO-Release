@@ -1,0 +1,43 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "3612eab0-1ef8-4191-8699-0ac39c172ad6",
+      "taskId": "d6bb0779-2fa0-43f2-b4e0-7e6d02315828",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T21:09:40.732Z"
+    },
+    {
+      "evidenceId": "559e0776-41a3-48a3-8e7c-4355ea77662a",
+      "taskId": "d6bb0779-2fa0-43f2-b4e0-7e6d02315828",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/features/users/UsersPage.tsx"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T21:09:40.781Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "e8cd0e80-e56d-463f-ba30-1f2402e8cf58",
+      "taskId": "d6bb0779-2fa0-43f2-b4e0-7e6d02315828",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [],
+      "finalized": false
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:8ddb34fcc915",
+    "toolCallId": "call_4FjFRgFMxlO2jL135VlbSxzK",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1483,
+    "digest": "3875cb8ee54c8db132f870def941677f558cc390da238645c2086b24139a5e10",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:38:57.097Z"
+  },
+  "content": "{\n  \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n  \"startLine\": 515,\n  \"endLine\": 533,\n  \"totalLines\": 533,\n  \"truncated\": false,\n  \"content\": \"515|    finally {\\n516|      setIsSubmitting(false);\\n517|    }\\n518|  }, []);\\n519|  return (\\n520|    <div className=\\\"space-y-3\\\">\\n521|      <div className=\\\"flex flex-col gap-3\\\">\\n522|        <p className=\\\"text-sm text-default-700\\\">UI for sum-two-numbers</p>\\n523|        <form className=\\\"space-y-3 rounded-lg border border-default-200 bg-content1 p-4\\\" data-designer-node-id=\\\"html-form-1784327521579-i0rvy\\\">\\n524|          <Input className=\\\"rounded-md border border-slate-300 bg-white px-2.5 py-px text-xs text-slate-700\\\" label=\\\"First number\\\" type=\\\"number\\\" placeholder=\\\"0\\\" size=\\\"sm\\\" />\\n525|          <Input className=\\\"rounded-md border border-slate-300 bg-white px-2.5 py-px text-xs text-slate-700\\\" label=\\\"Second number\\\" type=\\\"number\\\" placeholder=\\\"0\\\" size=\\\"sm\\\" />\\n526|          <Button className=\\\"inline-flex rounded-lg bg-cyan-600 px-3 py-2 text-sm font-medium text-white no-underline hover:bg-cyan-700\\\" variant=\\\"primary\\\" size=\\\"md\\\" href=\\\"#\\\" target=\\\"_self\\\" isDisabled={isSubmitting} onClick={handleonClick_heroui_button_solid_1784327521580_rw1xq}>Calculate</Button>\\n527|        </form>\\n528|        <p className=\\\"text-sm text-default-700\\\">Press Calculate to call the server function and view the response.</p>\\n529|      </div>\\n530|    </div>\\n531|  );\\n532|};\\n533|\"\n}"
+}

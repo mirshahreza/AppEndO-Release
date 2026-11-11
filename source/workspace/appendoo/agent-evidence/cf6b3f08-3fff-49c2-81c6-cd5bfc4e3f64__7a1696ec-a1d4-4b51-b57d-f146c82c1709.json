@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "855ad461-ecd7-457e-b168-6ce4555f7f6f",
+      "taskId": "cf6b3f08-3fff-49c2-81c6-cd5bfc4e3f64",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-20T19:37:24.791Z"
+    },
+    {
+      "evidenceId": "b7c1462c-a217-4c21-8fe8-94545a346e0b",
+      "taskId": "cf6b3f08-3fff-49c2-81c6-cd5bfc4e3f64",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleA.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-20T19:37:24.805Z"
+    },
+    {
+      "evidenceId": "e2490bdd-397b-4767-a378-fe9aa1af7217",
+      "taskId": "cf6b3f08-3fff-49c2-81c6-cd5bfc4e3f64",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-20T19:37:24.818Z"
+    },
+    {
+      "evidenceId": "8c0cff46-b622-4948-8029-fc899815b6a8",
+      "taskId": "cf6b3f08-3fff-49c2-81c6-cd5bfc4e3f64",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "448a282f-346b-4288-ad6b-543edcbfe97b"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-20T19:37:24.842Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "cc4a1185-2187-4dc1-a75c-b3c44138196a",
+      "taskId": "cf6b3f08-3fff-49c2-81c6-cd5bfc4e3f64",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "8c0cff46-b622-4948-8029-fc899815b6a8"
+      ],
+      "finalized": true
+    }
+  ]
+}

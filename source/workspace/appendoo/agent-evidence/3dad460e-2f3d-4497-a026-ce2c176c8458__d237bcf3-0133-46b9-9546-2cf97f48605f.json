@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "942e2c8e-8f17-40c3-8284-eca57882eb3c",
+      "taskId": "3dad460e-2f3d-4497-a026-ce2c176c8458",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T21:59:19.340Z"
+    },
+    {
+      "evidenceId": "0c756c30-b576-47a7-8585-4ac21eca7901",
+      "taskId": "3dad460e-2f3d-4497-a026-ce2c176c8458",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleA.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T21:59:19.357Z"
+    },
+    {
+      "evidenceId": "f711dff2-70b5-4015-993b-ac8066e73421",
+      "taskId": "3dad460e-2f3d-4497-a026-ce2c176c8458",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T21:59:19.370Z"
+    },
+    {
+      "evidenceId": "80c8f048-fcc0-431b-93c0-640c34e57c38",
+      "taskId": "3dad460e-2f3d-4497-a026-ce2c176c8458",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "74d36e94-4ae5-4fb3-8570-4f658cb66eaf"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T21:59:19.389Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "a098f8a2-0a3f-4302-ad83-1fddc918e649",
+      "taskId": "3dad460e-2f3d-4497-a026-ce2c176c8458",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "80c8f048-fcc0-431b-93c0-640c34e57c38"
+      ],
+      "finalized": true
+    }
+  ]
+}

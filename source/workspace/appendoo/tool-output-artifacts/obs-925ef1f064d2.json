@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:925ef1f064d2",
+    "toolCallId": "call_hDyrE2k2gSqdAWKew8MTvaf0",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2507,
+    "digest": "36b3cb835788db1d604bbcddb991d098e89a531eb2883d1545792c79f50a1915",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:49:40.799Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/catalog.ts\",\n  \"startLine\": 450,\n  \"endLine\": 500,\n  \"totalLines\": 1403,\n  \"truncated\": false,\n  \"content\": \"450|    icon: 'Coins',\\n451|    defaultProps: { className: 'rounded-xl border border-default-200 bg-content1 p-5 shadow-sm' },\\n452|    allowedParentTypes: ['root', 'container', 'list'],\\n453|    canHaveChildren: true,\\n454|    sourceType: 'local',\\n455|    nodeType: 'container',\\n456|  },\\n457|  {\\n458|    id: 'tailwind.image-overlay',\\n459|    label: 'Image Overlay',\\n460|    category: 'tailwind-ui-blocks',\\n461|    icon: 'ImagePlus',\\n462|    defaultProps: { className: 'relative overflow-hidden rounded-xl border border-default-200 p-4 text-white shadow-sm' },\\n463|    allowedParentTypes: ['root', 'container', 'list'],\\n464|    canHaveChildren: true,\\n465|    sourceType: 'local',\\n466|    nodeType: 'container',\\n467|    // Visual block — not layout.overlay / modal overlay (id substring would mis-tag overlay-nav).\\n468|    capabilities: ['container'],\\n469|  },\\n470|  {\\n471|    id: 'heroui.button-solid',\\n472|    label: 'Button Solid',\\n473|    category: 'heroui-general',\\n474|    icon: 'MousePointerClick',\\n475|    defaultProps: { text: 'Action', href: '#', target: '_self', rel: '', className: 'inline-flex rounded-lg bg-cyan-600 px-3 py-2 text-sm font-medium text-white no-underline hover:bg-cyan-700' },\\n476|    allowedParentTypes: ['root', 'container', 'list', 'list-item'],\\n477|    canHaveChildren: false,\\n478|    sourceType: 'local',\\n479|    nodeType: 'link',\\n480|  },\\n481|  {\\n482|    id: 'heroui.button-outline',\\n483|    label: 'Button Outline',\\n484|    category: 'heroui-general',\\n485|    icon: 'SquareDashedMousePointer',\\n486|    defaultProps: { text: 'Secondary', href: '#', target: '_self', rel: '', className: 'inline-flex rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 no-underline hover:bg-slate-100' },\\n487|    allowedParentTypes: ['root', 'container', 'list', 'list-item'],\\n488|    canHaveChildren: false,\\n489|    sourceType: 'local',\\n490|    nodeType: 'link',\\n491|  },\\n492|  {\\n493|    id: 'heroui.link',\\n494|    label: 'Link',\\n495|    category: 'heroui-general',\\n496|    icon: 'Link',\\n497|    defaultProps: { text: 'Read more', href: '#', target: '_self', rel: '', className: 'text-cyan-700 no-underline hover:underline' },\\n498|    allowedParentTypes: ['root', 'container', 'list', 'list-item'],\\n499|    canHaveChildren: false,\\n500|    sourceType: 'local',\"\n}"
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:c6ba51c5aad6",
+    "toolCallId": "call_qJbgQ6v1THUF6o94ZAEcWPMG",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1279,
+    "digest": "5c16a717977819d62b874163edaa888ed62cc7e3aadfc96858ccdb76d6915b8f",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T11:38:53.900Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/designerComponentMetaSidecar.ts\",\n  \"startLine\": 1,\n  \"endLine\": 27,\n  \"totalLines\": 27,\n  \"truncated\": false,\n  \"content\": \"1|export const DESIGNER_COMPONENT_META_SUFFIX = '.meta.json';\\n2|\\n3|export const isDesignerComponentMetaFileName = (fileName: string): boolean =>\\n4|  fileName.endsWith(DESIGNER_COMPONENT_META_SUFFIX);\\n5|\\n6|export const isDesignerComponentTsxFileName = (fileName: string): boolean =>\\n7|  fileName.endsWith('.tsx');\\n8|\\n9|export const resolveDesignerComponentMetaPath = (tsxFilePath: string): string => {\\n10|  if (tsxFilePath.endsWith('.tsx')) {\\n11|    return `${tsxFilePath.slice(0, -4)}${DESIGNER_COMPONENT_META_SUFFIX}`;\\n12|  }\\n13|\\n14|  return `${tsxFilePath}${DESIGNER_COMPONENT_META_SUFFIX}`;\\n15|};\\n16|\\n17|export const resolveDesignerComponentTsxPath = (metaFilePath: string): string | null => {\\n18|  if (!metaFilePath.endsWith(DESIGNER_COMPONENT_META_SUFFIX)) {\\n19|    return null;\\n20|  }\\n21|\\n22|  return `${metaFilePath.slice(0, -DESIGNER_COMPONENT_META_SUFFIX.length)}.tsx`;\\n23|};\\n24|\\n25|export const draftIdFromDesignerMetaContent = (content: string, draftId: string): boolean =>\\n26|  content.includes(`\\\"id\\\":\\\"${draftId}\\\"`) || content.includes(`\\\"id\\\": \\\"${draftId}\\\"`);\\n27|\"\n}"
+}

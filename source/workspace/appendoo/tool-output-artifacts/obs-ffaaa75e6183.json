@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ffaaa75e6183",
+    "toolCallId": "call_DNEORbFMRTX2ckV3PbBlGC8e",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1773,
+    "digest": "5dcd1cecd97235c5a9301a6165f80deba99e7c25ee6b25c9b9cb985c290c8bd3",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:12:11.674Z"
+  },
+  "content": "{\n  \"path\": \"src/core/ai/AiManager.ts\",\n  \"startLine\": 260,\n  \"endLine\": 303,\n  \"totalLines\": 303,\n  \"truncated\": false,\n  \"content\": \"260|    );\\n261|    registerNativeTools(toolRegistry);\\n262|    if (input.prepareRegistry) {\\n263|      await input.prepareRegistry(toolRegistry);\\n264|    }\\n265|\\n266|    const config: AgentRunConfig = {\\n267|      mode: input.mode,\\n268|      agentSettings,\\n269|      pageContext: input.pageContext,\\n270|      contextResources: input.contextResources,\\n271|      contextWorkingTurns: agentSettings.contextWorkingTurns,\\n272|      maxTokensPerRun: agentSettings.maxTokensPerRun,\\n273|      planDocumentPath: input.planDocumentPath,\\n274|      planDocumentContent: input.planDocumentContent,\\n275|      docAccessPrincipal: input.docAccessPrincipal,\\n276|      mcpAccessContext: input.mcpAccessContext,\\n277|      enabledCapabilityPackIds: input.enabledCapabilityPackIds,\\n278|      persistedHistorySummary: input.persistedHistorySummary,\\n279|      pageContextPreload: input.pageContextPreload,\\n280|      preloadedRetrieve: input.preloadedRetrieve,\\n281|      executionProfile: input.executionProfile,\\n282|      useEngineeringPipeline: input.useEngineeringPipeline,\\n283|      taskId: input.taskId,\\n284|      attemptId: input.attemptId,\\n285|    };\\n286|\\n287|    const orchestrator = new AgentOrchestrator({\\n288|      provider,\\n289|      modelId: entry.id,\\n290|      toolRegistry,\\n291|      policy: createOrchestrationPolicy(agentSettings.orchestrationPolicy ?? 'react'),\\n292|    });\\n293|\\n294|    const result = await orchestrator.run(input.messages, config, {\\n295|      onEvent: input.onEvent,\\n296|    });\\n297|\\n298|    return result;\\n299|  }\\n300|}\\n301|\\n302|export const aiManager = AiManager.getInstance();\\n303|\"\n}"
+}

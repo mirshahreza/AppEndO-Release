@@ -1,0 +1,155 @@
+{
+  "id": "ea_8a626381fdf48b88",
+  "edgeModelId": "em_0b9bf6045b23e222",
+  "key": "vote-poll-questions",
+  "label": "Voting Poll Questions",
+  "basePath": "/api/voting/poll-questions",
+  "operations": [
+    {
+      "id": "op_list_zqeppc",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/voting/poll-questions",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "statusCode",
+          "publishLevelCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_zqeppc",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/voting/poll-questions/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "statusCode",
+          "publishLevelCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_zqeppc",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/voting/poll-questions",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "statusCode",
+          "publishLevelCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "votingId",
+          "title",
+          "statusCode",
+          "publishLevelCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "required": [
+          "title",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_zqeppc",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/voting/poll-questions/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "statusCode",
+          "publishLevelCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "votingId",
+          "title",
+          "statusCode",
+          "publishLevelCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "required": [
+          "title",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_zqeppc",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/voting/poll-questions/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "title",
+          "statusCode",
+          "publishLevelCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-10T13:08:18.953Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "vote-poll-questions.vote-poll-questions-list"
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:f67fc4b07d5d",
+    "toolCallId": "call_zzl2XxCzyUXu9pbKzP9IVeYl",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2061,
+    "digest": "63d5f80b312c3e44b616397d1f09d1c5fc7fa197c773f7af30a28a8b845c49ef",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-30T20:24:58.664Z"
+  },
+  "content": "{\n  \"query\": \"templateId crud-collection-page app-shell\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"idea-workshop\",\n  \"scopePath\": \"pageKey:idea-workshop\",\n  \"scopePaths\": [\n    \"src/features/idea-workshop\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/idea-workshop\",\n    \"src/server/services/idea-workshop\",\n    \"src/shared\"\n  ],\n  \"includeText\": false,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/ui/shell-effects/renderers.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/package-manifest/verticalApp.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/package-manifest/verticalApp.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/CrudSet.tsx\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/platformCrud.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/platformCrud.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/git/types.ts\",\n      \"line\": 217,\n      \"column\": 1,\n      \"pageKey\": \"git\",\n      \"label\": \"Git\"\n    },\n    {\n      \"path\": \"src/shared/ui/shell/ShellAppEndOButton.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/promptRuntimeScaffold.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/shell/ShellAppEndooControl.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"idea-workshop\",\n    \"label\": \"Idea Workshop\",\n    \"routePattern\": \"idea-workshop\",\n    \"searchRoots\": [\n      \"src/features/idea-workshop\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/idea-workshop\",\n      \"src/server/services/idea-workshop\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

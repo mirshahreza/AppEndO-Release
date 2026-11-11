@@ -1,0 +1,88 @@
+
+> react-example@0.0.0 hwy:etl:sync-changes
+> tsx scripts/hwy-etl/run-sync-changes-etl.ts
+
+[2026-10-18T13:17:46.623Z] [WARN] [CredentialVault] APPENDO_CREDENTIAL_MASTER_KEY is unset; deriving a development key from the JWT secret. Set APPENDO_CREDENTIAL_MASTER_KEY for durable encryption at rest. Compromising this key decrypts every vault secret. 
+(node:3860) [DEP0123] DeprecationWarning: Setting the TLS ServerName to an IP address is not permitted by RFC 6066. This will be ignored in a future version.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[hwy:etl:sync-changes] plan {
+  statePath: 'C:\\Workspace\\Projects\\AppEndO\\packages-storage\\hwy-etl-sync-state.json',
+  scratchPath: 'C:\\Workspace\\Projects\\AppEndO\\packages-storage\\hwy-etl-sync-run.json',
+  localMaxMemberId: 1886694,
+  lookbackHours: 6,
+  updatedSince: '2026-10-18T07:17:49.785Z',
+  changeHistoryAfterId: 0,
+  legacyUpdatedCount: 235,
+  changeHistoryMemberCount: 41961,
+  targetMemberCount: 42041
+}
+
+[hwy:etl:sync-changes] >>> New members (id > local max)
+[2026-10-18T13:17:56.843Z] [WARN] [CredentialVault] APPENDO_CREDENTIAL_MASTER_KEY is unset; deriving a development key from the JWT secret. Set APPENDO_CREDENTIAL_MASTER_KEY for durable encryption at rest. Compromising this key decrypts every vault secret. 
+[hwy:etl:sync-new-members] local max member id 1886694 → importing legacy ids >= 1886695
+(node:18976) [DEP0123] DeprecationWarning: Setting the TLS ServerName to an IP address is not permitted by RFC 6066. This will be ignored in a future version.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[hwy:etl:fast-full] in-process | shards=4 | ids 1886695..1886695 | page=25000
+[hwy:etl:fast-full] shard 3/4 [1886697..1886695] inserted 0
+[hwy:etl:fast-full] shard 2/4 [1886696..1886695] inserted 0
+[hwy:etl:fast-full] shard 4/4 [1886698..1886695] inserted 0
+[shard 1/4 [1886695..1886695]] through Id 1886695 | inserted 1
+[hwy:etl:fast-full] shard 1/4 [1886695..1886695] inserted 1
+[hwy:etl:fast-full] members inserted (sum shards): 1
+[hwy:etl:fast-full] nakhebin member_id links: 1
+[hwy:etl:platform-users:bulk] pending: 1 | turbo=true
+[hwy:etl:platform-users:bulk] turbo done | linked 1 | users +1
+[hwy:etl:fast-full] platform bulk: { linked: 1, createdUsers: 1, createdProfiles: 376557 }
+  edge model refreshed: vw_hwy_members (em_5f3a30c99bb3420e)
+
+[hwy:etl:sync-changes] >>> Changed members (upsert)
+[2026-10-18T13:19:08.241Z] [WARN] [CredentialVault] APPENDO_CREDENTIAL_MASTER_KEY is unset; deriving a development key from the JWT secret. Set APPENDO_CREDENTIAL_MASTER_KEY for durable encryption at rest. Compromising this key decrypts every vault secret. 
+[hwy:etl:sync-changed-members] upserting 42041 members (scratch: C:\Workspace\Projects\AppEndO\packages-storage\hwy-etl-sync-run.json)
+(node:29116) [DEP0123] DeprecationWarning: Setting the TLS ServerName to an IP address is not permitted by RFC 6066. This will be ignored in a future version.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[hwy:etl:sync-changed-members] upserted 42041 | nakhebin links 2
+
+[hwy:etl:sync-changes] >>> Change history (append)
+[2026-10-18T13:20:44.628Z] [WARN] [CredentialVault] APPENDO_CREDENTIAL_MASTER_KEY is unset; deriving a development key from the JWT secret. Set APPENDO_CREDENTIAL_MASTER_KEY for durable encryption at rest. Compromising this key decrypts every vault secret. 
+[hwy:etl:change-history] legacy (read-only): 91.107.155.153 MembersV2
+(node:25932) [DEP0123] DeprecationWarning: Setting the TLS ServerName to an IP address is not permitted by RFC 6066. This will be ignored in a future version.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[hwy:etl:change-history] imported members: 376557
+[hwy:etl:change-history] bulk SQL writer | legacy batch 12000 | tracked legacy fields: 9 | id range: — .. — | preloaded idempotency keys: 59329 | chain tips: 41963
+[hwy:etl:change-history] through Id 111999 | emitted ~0 | skipped idempotent 13054 | scanned 12000
+[hwy:etl:change-history] through Id 123999 | emitted ~0 | skipped idempotent 26818 | scanned 24000
+[hwy:etl:change-history] through Id 135999 | emitted ~0 | skipped idempotent 40891 | scanned 36000
+[hwy:etl:change-history] through Id 147999 | emitted ~0 | skipped idempotent 55427 | scanned 48000
+[hwy:etl:change-history] through Id 151164 | emitted ~3 | skipped idempotent 59329 | scanned 51165
+[hwy:etl:change-history] done {
+  scanned: 51165,
+  emitted: 3,
+  skippedIdempotent: 59329,
+  skippedMember: 26,
+  skippedField: 0
+}
+
+[hwy:etl:sync-changes] >>> Member satellites (targeted)
+[2026-10-18T13:20:59.665Z] [WARN] [CredentialVault] APPENDO_CREDENTIAL_MASTER_KEY is unset; deriving a development key from the JWT secret. Set APPENDO_CREDENTIAL_MASTER_KEY for durable encryption at rest. Compromising this key decrypts every vault secret. 
+(node:39324) [DEP0123] DeprecationWarning: Setting the TLS ServerName to an IP address is not permitted by RFC 6066. This will be ignored in a future version.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[hwy:etl:sample-satellites] targeted sync | members=42042 | skipFiles=true | skipNotes=false | skipSecurity=true
+[hwy:etl:sample-satellites] targeted batch 10000/42042
+[hwy:etl:sample-satellites] targeted batch 20000/42042
+[hwy:etl:sample-satellites] targeted batch 30000/42042
+[hwy:etl:sample-satellites] targeted batch 40000/42042
+[hwy:etl:sample-satellites] targeted batch 42042/42042
+done: {
+  memberInstitutes: 1461,
+  memberFiles: 0,
+  memberNotes: 54100,
+  securityProfiles: 0,
+  trackingCodes: 16858,
+  usernameRepo: 42042
+}
+[hwy:etl:sync-changes] domain modules skipped (fast path). Set HWY_ETL_SYNC_INCLUDE_DOMAIN=1 to force.
+[hwy:etl:sync-changes] done — state updated {
+  lastLegacyMemberUpdatedOn: '2026-10-18T16:22:14.000Z',
+  lastChangeHistoryId: 151162,
+  domainModules: false
+}

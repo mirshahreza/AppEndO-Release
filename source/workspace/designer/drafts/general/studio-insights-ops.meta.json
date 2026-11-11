@@ -1,0 +1,842 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "studio-insights-ops",
+    "name": "studio-insights-ops",
+    "rootNodeId": "root",
+    "pageAccess": {
+      "accessMode": "specific",
+      "allowRoles": [
+        "ADMIN"
+      ],
+      "allowUsers": [],
+      "denyRoles": [],
+      "denyUsers": []
+    },
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "dashboardCanvasConfig": "{\"personalizable\":true,\"domain\":[{\"id\":\"ops_jobs\",\"label\":\"Jobs\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_7adfdb41e3b051b0\"},\"exposedFields\":[\"id\",\"job_type\",\"status\",\"progress\",\"attempt_count\",\"max_attempts\",\"queued_at\",\"started_at\",\"finished_at\",\"created_at\"]},{\"id\":\"ops_logs\",\"label\":\"Logs\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_a17944326b172489\"},\"exposedFields\":[\"id\",\"level\",\"context\",\"actor\",\"call_success\",\"duration_ms\",\"message_size\",\"has_meta\",\"created_at\"]},{\"id\":\"ops_data_sources\",\"label\":\"Data sources\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_77a1864205985a4f\"},\"exposedFields\":[\"id\",\"name\",\"type\",\"status\",\"created_at\"]}],\"filters\":[{\"id\":\"ops-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_jobs\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"ops-ov-kpi-failed\",\"ops-ov-kpi-running\",\"ops-ov-chart-job-status\",\"ops-ov-chart-jobs-day\",\"ops-jb-kpi-pending\",\"ops-jb-kpi-running\",\"ops-jb-kpi-completed\",\"ops-jb-kpi-failed\",\"ops-jb-chart-type\",\"ops-jb-chart-status\",\"ops-jb-chart-day-type\",\"ops-jb-table-type-status\"],\"defaultValue\":\"last:7d\"},{\"id\":\"ops-log-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_logs\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"ops-ov-kpi-errors\",\"ops-ov-chart-log-level\",\"ops-lg-kpi-error\",\"ops-lg-kpi-warn\",\"ops-lg-kpi-duration\",\"ops-lg-kpi-msgsize\",\"ops-lg-chart-level\",\"ops-lg-chart-context\",\"ops-lg-chart-day\",\"ops-lg-table-ctx-level\"],\"defaultValue\":\"last:7d\"},{\"id\":\"ops-job-status\",\"label\":\"Job status\",\"domainEntryId\":\"ops_jobs\",\"field\":\"status\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"ops-ov-chart-job-status\",\"ops-jb-chart-type\",\"ops-jb-chart-status\",\"ops-jb-chart-day-type\",\"ops-jb-table-type-status\"]},{\"id\":\"ops-log-level\",\"label\":\"Log level\",\"domainEntryId\":\"ops_logs\",\"field\":\"level\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"ops-lg-chart-level\",\"ops-lg-chart-context\",\"ops-lg-chart-day\",\"ops-lg-table-ctx-level\"]},{\"id\":\"ops-job-type\",\"label\":\"Job type\",\"domainEntryId\":\"ops_jobs\",\"field\":\"job_type\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"ops-jb-kpi-pending\",\"ops-jb-kpi-running\",\"ops-jb-kpi-completed\",\"ops-jb-kpi-failed\",\"ops-jb-chart-type\",\"ops-jb-chart-status\",\"ops-jb-chart-day-type\",\"ops-jb-table-type-status\"]}],\"tabs\":[{\"id\":\"overview\",\"label\":\"Overview\"},{\"id\":\"jobs\",\"label\":\"Jobs\"},{\"id\":\"logs\",\"label\":\"Logs\"}],\"dashboardLinks\":[{\"label\":\"Jobs\",\"target\":{\"url\":\"/studio/jobs\"}},{\"label\":\"Logs\",\"target\":{\"url\":\"/studio/logs\"}},{\"label\":\"Data Sources\",\"target\":{\"url\":\"/studio/data-sources\"}},{\"label\":\"Scheduled tasks\",\"target\":{\"url\":\"/studio/scheduled-tasks\"}},{\"label\":\"Cache\",\"target\":{\"url\":\"/studio/cache\"}},{\"label\":\"Work queue\",\"target\":{\"pageId\":\"studio-insights-work\"}}]}",
+          "dashboardPersonalizable": true
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "canvas"
+        ]
+      },
+      "canvas": {
+        "id": "canvas",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "_designerPaletteItemId": "viz.dashboard-canvas",
+          "dashboardCanvasConfig": "{\"personalizable\":true,\"domain\":[{\"id\":\"ops_jobs\",\"label\":\"Jobs\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_7adfdb41e3b051b0\"},\"exposedFields\":[\"id\",\"job_type\",\"status\",\"progress\",\"attempt_count\",\"max_attempts\",\"queued_at\",\"started_at\",\"finished_at\",\"created_at\"]},{\"id\":\"ops_logs\",\"label\":\"Logs\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_a17944326b172489\"},\"exposedFields\":[\"id\",\"level\",\"context\",\"actor\",\"call_success\",\"duration_ms\",\"message_size\",\"has_meta\",\"created_at\"]},{\"id\":\"ops_data_sources\",\"label\":\"Data sources\",\"dataSourceRef\":{\"id\":\"ds_default_local\",\"dataSourceId\":\"ds_default_local\",\"edgeModelId\":\"em_77a1864205985a4f\"},\"exposedFields\":[\"id\",\"name\",\"type\",\"status\",\"created_at\"]}],\"filters\":[{\"id\":\"ops-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_jobs\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"ops-ov-kpi-failed\",\"ops-ov-kpi-running\",\"ops-ov-chart-job-status\",\"ops-ov-chart-jobs-day\",\"ops-jb-kpi-pending\",\"ops-jb-kpi-running\",\"ops-jb-kpi-completed\",\"ops-jb-kpi-failed\",\"ops-jb-chart-type\",\"ops-jb-chart-status\",\"ops-jb-chart-day-type\",\"ops-jb-table-type-status\"],\"defaultValue\":\"last:7d\"},{\"id\":\"ops-log-range\",\"label\":\"Date range\",\"domainEntryId\":\"ops_logs\",\"field\":\"created_at\",\"controlType\":\"dateRange\",\"appliesToWidgetIds\":[\"ops-ov-kpi-errors\",\"ops-ov-chart-log-level\",\"ops-lg-kpi-error\",\"ops-lg-kpi-warn\",\"ops-lg-kpi-duration\",\"ops-lg-kpi-msgsize\",\"ops-lg-chart-level\",\"ops-lg-chart-context\",\"ops-lg-chart-day\",\"ops-lg-table-ctx-level\"],\"defaultValue\":\"last:7d\"},{\"id\":\"ops-job-status\",\"label\":\"Job status\",\"domainEntryId\":\"ops_jobs\",\"field\":\"status\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"ops-ov-chart-job-status\",\"ops-jb-chart-type\",\"ops-jb-chart-status\",\"ops-jb-chart-day-type\",\"ops-jb-table-type-status\"]},{\"id\":\"ops-log-level\",\"label\":\"Log level\",\"domainEntryId\":\"ops_logs\",\"field\":\"level\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"ops-lg-chart-level\",\"ops-lg-chart-context\",\"ops-lg-chart-day\",\"ops-lg-table-ctx-level\"]},{\"id\":\"ops-job-type\",\"label\":\"Job type\",\"domainEntryId\":\"ops_jobs\",\"field\":\"job_type\",\"controlType\":\"multiSelect\",\"appliesToWidgetIds\":[\"ops-jb-kpi-pending\",\"ops-jb-kpi-running\",\"ops-jb-kpi-completed\",\"ops-jb-kpi-failed\",\"ops-jb-chart-type\",\"ops-jb-chart-status\",\"ops-jb-chart-day-type\",\"ops-jb-table-type-status\"]}],\"tabs\":[{\"id\":\"overview\",\"label\":\"Overview\"},{\"id\":\"jobs\",\"label\":\"Jobs\"},{\"id\":\"logs\",\"label\":\"Logs\"}],\"dashboardLinks\":[{\"label\":\"Jobs\",\"target\":{\"url\":\"/studio/jobs\"}},{\"label\":\"Logs\",\"target\":{\"url\":\"/studio/logs\"}},{\"label\":\"Data Sources\",\"target\":{\"url\":\"/studio/data-sources\"}},{\"label\":\"Scheduled tasks\",\"target\":{\"url\":\"/studio/scheduled-tasks\"}},{\"label\":\"Cache\",\"target\":{\"url\":\"/studio/cache\"}},{\"label\":\"Work queue\",\"target\":{\"pageId\":\"studio-insights-work\"}}]}",
+          "dashboardPersonalizable": true
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "ops-ov-kpi-failed",
+          "ops-ov-kpi-running",
+          "ops-ov-kpi-errors",
+          "ops-ov-kpi-ds-down",
+          "ops-ov-chart-job-status",
+          "ops-ov-chart-log-level",
+          "ops-ov-chart-jobs-day",
+          "ops-ov-chart-ds-status",
+          "ops-jb-kpi-pending",
+          "ops-jb-kpi-running",
+          "ops-jb-kpi-completed",
+          "ops-jb-kpi-failed",
+          "ops-jb-chart-type",
+          "ops-jb-chart-status",
+          "ops-jb-chart-day-type",
+          "ops-jb-table-type-status",
+          "ops-lg-kpi-error",
+          "ops-lg-kpi-warn",
+          "ops-lg-kpi-duration",
+          "ops-lg-kpi-msgsize",
+          "ops-lg-chart-level",
+          "ops-lg-chart-context",
+          "ops-lg-chart-day",
+          "ops-lg-table-ctx-level"
+        ]
+      },
+      "ops-ov-kpi-failed": {
+        "id": "ops-ov-kpi-failed",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 0,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Failed jobs",
+          "chartFieldMapping": {
+            "title": "Failed jobs",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "failed"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No jobs in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-ov-kpi-running": {
+        "id": "ops-ov-kpi-running",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 1,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Running jobs",
+          "chartFieldMapping": {
+            "title": "Running jobs",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "running"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-ov-kpi-errors": {
+        "id": "ops-ov-kpi-errors",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 2,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Error logs",
+          "chartFieldMapping": {
+            "title": "Error logs",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "level": {
+                "eq": "ERROR"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No log volume in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-ov-kpi-ds-down": {
+        "id": "ops-ov-kpi-ds-down",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 3,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_data_sources",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Sources not connected",
+          "chartFieldMapping": {
+            "title": "Sources not connected",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "ne": "connected"
+              }
+            }
+          },
+          "vizConfig": {
+            "emptyText": "No data sources registered."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-ov-chart-job-status": {
+        "id": "ops-ov-chart-job-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 4,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Jobs by status",
+          "chartFieldMapping": {
+            "title": "Jobs by status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "status",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No jobs in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-ov-chart-log-level": {
+        "id": "ops-ov-chart-log-level",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 5,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Log volume by level",
+          "chartFieldMapping": {
+            "title": "Log volume by level",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "level",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No log volume in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-ov-chart-jobs-day": {
+        "id": "ops-ov-chart-jobs-day",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 6,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Jobs per day",
+          "chartFieldMapping": {
+            "title": "Jobs per day",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "created_at",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {
+            "emptyText": "No jobs in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-ov-chart-ds-status": {
+        "id": "ops-ov-chart-ds-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 7,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_data_sources",
+          "dashboardTabId": "overview",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 11,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Sources by status",
+          "chartFieldMapping": {
+            "title": "Sources by status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "status",
+            "chartKind": "pie"
+          },
+          "vizConfig": {
+            "emptyText": "No data sources registered."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-kpi-pending": {
+        "id": "ops-jb-kpi-pending",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 8,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Pending",
+          "chartFieldMapping": {
+            "title": "Pending",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "pending"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-kpi-running": {
+        "id": "ops-jb-kpi-running",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 9,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Running",
+          "chartFieldMapping": {
+            "title": "Running",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "running"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-kpi-completed": {
+        "id": "ops-jb-kpi-completed",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 10,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Completed",
+          "chartFieldMapping": {
+            "title": "Completed",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "completed"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-kpi-failed": {
+        "id": "ops-jb-kpi-failed",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 11,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Failed",
+          "chartFieldMapping": {
+            "title": "Failed",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "status": {
+                "eq": "failed"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-chart-type": {
+        "id": "ops-jb-chart-type",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 12,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Jobs by type",
+          "chartFieldMapping": {
+            "title": "Jobs by type",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "job_type",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No jobs in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-chart-status": {
+        "id": "ops-jb-chart-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 13,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Jobs by status",
+          "chartFieldMapping": {
+            "title": "Jobs by status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "status",
+            "chartKind": "pie"
+          },
+          "vizConfig": {
+            "emptyText": "No jobs in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-chart-day-type": {
+        "id": "ops-jb-chart-day-type",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 14,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 12,
+            "h": 8
+          },
+          "title": "Jobs per day by type",
+          "chartFieldMapping": {
+            "title": "Jobs per day by type",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "created_at",
+            "dimensionB": "job_type",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {
+            "emptyText": "No jobs in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-jb-table-type-status": {
+        "id": "ops-jb-table-type-status",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 15,
+        "props": {
+          "_designerPaletteItemId": "viz.sheet",
+          "dashboardDomainEntryId": "ops_jobs",
+          "dashboardTabId": "jobs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 19,
+            "w": 12,
+            "h": 8
+          },
+          "title": "Jobs by type and status",
+          "chartFieldMapping": {
+            "title": "Jobs by type and status",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "job_type",
+            "dimensionB": "status"
+          },
+          "vizConfig": {
+            "emptyText": "No jobs in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-kpi-error": {
+        "id": "ops-lg-kpi-error",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 16,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Errors",
+          "chartFieldMapping": {
+            "title": "Errors",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "level": {
+                "eq": "ERROR"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-kpi-warn": {
+        "id": "ops-lg-kpi-warn",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 17,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Warnings",
+          "chartFieldMapping": {
+            "title": "Warnings",
+            "metric": "id",
+            "aggregation": "count",
+            "filters": {
+              "level": {
+                "eq": "WARN"
+              }
+            }
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-kpi-duration": {
+        "id": "ops-lg-kpi-duration",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 18,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Avg duration (ms)",
+          "chartFieldMapping": {
+            "title": "Avg duration (ms)",
+            "metric": "duration_ms",
+            "aggregation": "avg"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-kpi-msgsize": {
+        "id": "ops-lg-kpi-msgsize",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 19,
+        "props": {
+          "_designerPaletteItemId": "content.stat-trend",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3
+          },
+          "title": "Avg message size",
+          "chartFieldMapping": {
+            "title": "Avg message size",
+            "metric": "message_size",
+            "aggregation": "avg"
+          },
+          "vizConfig": {}
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-chart-level": {
+        "id": "ops-lg-chart-level",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 20,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-pie",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Logs by level",
+          "chartFieldMapping": {
+            "title": "Logs by level",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "level",
+            "chartKind": "pie"
+          },
+          "vizConfig": {
+            "emptyText": "No log volume in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-chart-context": {
+        "id": "ops-lg-chart-context",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 21,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-bar",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 8
+          },
+          "title": "Logs by context",
+          "chartFieldMapping": {
+            "title": "Logs by context",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "context",
+            "chartKind": "bar"
+          },
+          "vizConfig": {
+            "emptyText": "No log volume in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-chart-day": {
+        "id": "ops-lg-chart-day",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 22,
+        "props": {
+          "_designerPaletteItemId": "viz.chart-line",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 11,
+            "w": 12,
+            "h": 8
+          },
+          "title": "Log volume per day",
+          "chartFieldMapping": {
+            "title": "Log volume per day",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "created_at",
+            "dimensionGrain": "day",
+            "chartKind": "line"
+          },
+          "vizConfig": {
+            "emptyText": "No log volume in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "ops-lg-table-ctx-level": {
+        "id": "ops-lg-table-ctx-level",
+        "type": "container",
+        "parentId": "canvas",
+        "order": 23,
+        "props": {
+          "_designerPaletteItemId": "viz.sheet",
+          "dashboardDomainEntryId": "ops_logs",
+          "dashboardTabId": "logs",
+          "dashboardGrid": {
+            "x": 0,
+            "y": 19,
+            "w": 12,
+            "h": 8
+          },
+          "title": "Context by level",
+          "chartFieldMapping": {
+            "title": "Context by level",
+            "metric": "id",
+            "aggregation": "count",
+            "dimension": "context",
+            "dimensionB": "level"
+          },
+          "vizConfig": {
+            "emptyText": "No log volume in this date range."
+          }
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-14T03:26:55.415Z",
+      "updatedAt": "2026-09-14T03:26:55.419Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {},
+    "storeSegments": {},
+    "dataSources": {},
+    "lovs": {}
+  }
+}

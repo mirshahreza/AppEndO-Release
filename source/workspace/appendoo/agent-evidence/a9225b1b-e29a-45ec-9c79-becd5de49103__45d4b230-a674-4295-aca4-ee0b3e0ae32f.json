@@ -1,0 +1,215 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "450c2791-f551-44bf-aec8-f9ac57bdb789",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_page_context",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:45.292Z"
+    },
+    {
+      "evidenceId": "e4f271b0-12ef-4323-b7b1-53aa2867546d",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:45.306Z"
+    },
+    {
+      "evidenceId": "d068be2c-1643-4c76-a00d-ca6f8e111954",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_feature_graph",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:45.318Z"
+    },
+    {
+      "evidenceId": "eaf681e8-df48-4198-86cb-2a269f105fef",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:list_server_functions",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:50.949Z"
+    },
+    {
+      "evidenceId": "7173e574-588e-4257-bf43-78aa76c693e8",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "runtime/designer/drafts/math"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:glob_files",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:50.962Z"
+    },
+    {
+      "evidenceId": "689bceed-3ce7-41c5-81ff-4619f1145536",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_feature_graph",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:50.975Z"
+    },
+    {
+      "evidenceId": "1b9b64f0-0e40-4189-ba1a-33cf9a11f21f",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:search_codebase",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:51.130Z"
+    },
+    {
+      "evidenceId": "f78cd04a-d3d4-4323-84fc-74357762540b",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "math.sum-two-numbers"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_server_function",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:54.049Z"
+    },
+    {
+      "evidenceId": "362ef565-44a0-481f-a250-1a7b301f6d39",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "runtime/designer/drafts/math/UI-for-sum-two-numbers.json"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:54.075Z"
+    },
+    {
+      "evidenceId": "b93c8986-c544-48e7-8c6f-0744f522768e",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:54.099Z"
+    },
+    {
+      "evidenceId": "c44e8a10-703c-4a26-a4f4-e25a8460d515",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "TEST",
+      "subjectRefs": [
+        "math.sum-two-numbers"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "tool:test_server_function",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:59.311Z"
+    },
+    {
+      "evidenceId": "1aa45949-ef8f-4e82-95ee-659ae9efb157",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "TEST",
+      "subjectRefs": [
+        "math.sum-two-numbers"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "tool:test_server_function",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:59.329Z"
+    },
+    {
+      "evidenceId": "b3e80e2e-e258-4a98-9269-0372da1e6a3b",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:59.337Z"
+    },
+    {
+      "evidenceId": "6afdc1e9-a4cc-45db-9ac9-62ccb33a86f5",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/domain/component-designer/bindingCodegen.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:00:59.351Z"
+    },
+    {
+      "evidenceId": "5533b38e-ff77-4636-b8a3-7c333a2918b3",
+      "taskId": "a9225b1b-e29a-45ec-9c79-becd5de49103",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T14:01:05.167Z"
+    }
+  ],
+  "claims": []
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:e2204e462495",
+    "toolCallId": "call_OPcqAbt9PyDi5VjbQ3hu52E4",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1953,
+    "digest": "cb02882ee6305ed363ebfccbbc0f1a260b3b07014098af32b3db7be99ec1fa09",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-30T20:24:56.097Z"
+  },
+  "content": "{\n  \"query\": \"CRM scaffold package-ui AppTableGrid CreateEditModalShell\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"idea-workshop\",\n  \"scopePath\": \"pageKey:idea-workshop\",\n  \"scopePaths\": [\n    \"src/features/idea-workshop\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/idea-workshop\",\n    \"src/server/services/idea-workshop\",\n    \"src/shared\"\n  ],\n  \"includeText\": false,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 1009,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/CreateEditModalShell.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/surfaceClasses.ts\",\n      \"line\": 721,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appTableGridShell.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 217,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appTableGridCardView.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/surfaceClasses.ts\",\n      \"line\": 1009,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGridColumnHeader.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appTableGridShell.ts\",\n      \"line\": 73,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"idea-workshop\",\n    \"label\": \"Idea Workshop\",\n    \"routePattern\": \"idea-workshop\",\n    \"searchRoots\": [\n      \"src/features/idea-workshop\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/idea-workshop\",\n      \"src/server/services/idea-workshop\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

@@ -1,0 +1,201 @@
+{
+  "id": "ea_b11f2e57e56440bb",
+  "edgeModelId": "em_efa8e9859bf37d3c",
+  "key": "vote-candidates",
+  "label": "Voting Candidates",
+  "basePath": "/api/voting/candidates",
+  "operations": [
+    {
+      "id": "op_list_z06aev",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/voting/candidates",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "displayName",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "geoScopeId",
+          "statusCode",
+          "listScopeLegacy",
+          "operatorNote",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_z06aev",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/voting/candidates/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "displayName",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "geoScopeId",
+          "statusCode",
+          "listScopeLegacy",
+          "operatorNote",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_z06aev",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/voting/candidates",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "displayName",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "geoScopeId",
+          "statusCode",
+          "listScopeLegacy",
+          "operatorNote",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ],
+        "write": [
+          "votingId",
+          "ballotId",
+          "displayName",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "geoScopeId",
+          "statusCode",
+          "listScopeLegacy",
+          "operatorNote",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ],
+        "required": [
+          "votingId",
+          "displayName",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ]
+      }
+    },
+    {
+      "id": "op_update_z06aev",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/voting/candidates/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "displayName",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "geoScopeId",
+          "statusCode",
+          "listScopeLegacy",
+          "operatorNote",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ],
+        "write": [
+          "votingId",
+          "ballotId",
+          "displayName",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "geoScopeId",
+          "statusCode",
+          "listScopeLegacy",
+          "operatorNote",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ],
+        "required": [
+          "votingId",
+          "displayName",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_z06aev",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/voting/candidates/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "displayName",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "geoScopeId",
+          "statusCode",
+          "listScopeLegacy",
+          "operatorNote",
+          "createdAt",
+          "updatedAt",
+          "sortOrder"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-10T13:08:07.411Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "vote-candidates.vote-candidates-list"
+}

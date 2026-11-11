@@ -1,0 +1,92 @@
+{
+  "$schemaVersion": "1.0",
+  "id": "remote-hubs",
+  "name": "Remote Hubs",
+  "version": "1.0.5",
+  "description": "Sftp, SSH, and RDP as one optional Studio package. Home widgets (core registry) list up to five saved connections per hub.",
+  "createdBy": "admin",
+  "requiredAppVersion": ">=1.0.0",
+  "dependencies": [],
+  "libraries": [
+    {
+      "name": "ssh2",
+      "versionRange": "^1.17.0"
+    },
+    {
+      "name": "basic-ftp",
+      "versionRange": "^6.2.0"
+    },
+    {
+      "name": "ws",
+      "versionRange": "^8.21.3"
+    },
+    {
+      "name": "@xterm/xterm",
+      "versionRange": "^6.0.0"
+    },
+    {
+      "name": "@xterm/addon-fit",
+      "versionRange": "^0.11.0"
+    },
+    {
+      "name": "guacamole-lite",
+      "versionRange": "^1.2.0"
+    },
+    {
+      "name": "guacamole-common-js",
+      "versionRange": "^1.5.0"
+    }
+  ],
+  "capabilities": {
+    "apis": [],
+    "ui_components": [],
+    "ui_routes": [
+      {
+        "pageKey": "file-hub",
+        "entry": "ui/sftp.tsx",
+        "suggestedRoutePattern": "sftp/*",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "ssh-hub",
+        "entry": "ui/ssh.tsx",
+        "suggestedRoutePattern": "ssh/*",
+        "suggestedMountId": "studio"
+      },
+      {
+        "pageKey": "rdp-hub",
+        "entry": "ui/rdp.tsx",
+        "suggestedRoutePattern": "rdp/*",
+        "suggestedMountId": "studio"
+      }
+    ],
+    "db_objects": [],
+    "mcp_servers": [],
+    "edge_models": [],
+    "edge_apis": [],
+    "edge_model_studio_meta": [],
+    "install_hooks": [],
+    "navigation_patches": [
+      {
+        "navigationId": "studio",
+        "entry": "platform/navigation-patches/studio.json"
+      }
+    ],
+    "culture_keys": [
+      {
+        "entry": "culture/keys.json"
+      }
+    ]
+  },
+  "overridePolicy": {
+    "apis": "deny",
+    "ui_components": "deny",
+    "db_objects": "deny",
+    "mcp_servers": "deny"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "artifactHash": "acb514aed2b0e0c794fcf47d6b6c72ce14a5ed270f41d699f6f3fa52eb48f1e8"
+  },
+  "createdAt": "2026-09-17T16:37:39.020Z"
+}

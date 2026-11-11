@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:1380b4d577d4",
+    "toolCallId": "call_UL8jwvRTzddOTuQWi5SjDIMk",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1929,
+    "digest": "d7e6419fc722802ad49dad9586f3288b0690dbf51669b57c44a76bf98f11a7bc",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-08-31T20:55:26.670Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/ui/AppTableGrid.tsx\",\n  \"startLine\": 1009,\n  \"endLine\": 1070,\n  \"totalLines\": 1120,\n  \"truncated\": false,\n  \"content\": \"1009|      );\\n1010|    }\\n1011|\\n1012|    if (useSplitTableScroll) {\\n1013|      return (\\n1014|        <AppTableGridSplitTableLayout\\n1015|          scrollRef={scrollRef}\\n1016|          bodyScrollClassName={bodyScrollClassName}\\n1017|          tableClassName={tableClass}\\n1018|          tableAriaLabel={ariaLabel}\\n1019|          theadClassName={theadClass}\\n1020|          headerRow={header}\\n1021|          tbodyClassName={cn(APP_TABLE_GRID_TBODY_CLASS, tbodyClassName)}\\n1022|          onScroll={onScroll}\\n1023|          bodyDataScrollOwner={scrollOwner}\\n1024|        >\\n1025|          {children}\\n1026|        </AppTableGridSplitTableLayout>\\n1027|      );\\n1028|    }\\n1029|\\n1030|    return (\\n1031|      <table\\n1032|        className={tableClass}\\n1033|        aria-label={ariaLabel}\\n1034|      >\\n1035|        <thead className={theadClass}>\\n1036|          {header}\\n1037|        </thead>\\n1038|        <tbody className={cn(APP_TABLE_GRID_TBODY_CLASS, tbodyClassName)}>\\n1039|          {children}\\n1040|        </tbody>\\n1041|      </table>\\n1042|    );\\n1043|  };\\n1044|\\n1045|  const usesSplitScrollHost = useSplitTableScroll && !isLoading && !errorContent && !isEmpty;\\n1046|\\n1047|  const scrollBody = usesSplitScrollHost ? (\\n1048|    renderScrollBody()\\n1049|  ) : (\\n1050|    <div\\n1051|      ref={scrollRef}\\n1052|      className={bodyScrollClassName}\\n1053|      data-table-grid-scroll-owner={scrollOwner}\\n1054|      onScroll={onScroll}\\n1055|    >\\n1056|      {renderScrollBody()}\\n1057|    </div>\\n1058|  );\\n1059|\\n1060|  return wrapAppTableGridShell({\\n1061|    scrollOwner,\\n1062|    fillHeight,\\n1063|    chrome,\\n1064|    margin,\\n1065|    borderWidth,\\n1066|    cellPaddingX,\\n1067|    className,\\n1068|    footer,\\n1069|    scrollBody,\\n1070|  });\"\n}"
+}

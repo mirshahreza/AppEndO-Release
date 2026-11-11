@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:7cac2eb1efa1",
+    "toolCallId": "c1",
+    "toolName": "list_server_functions",
+    "contentType": "json",
+    "byteLength": 1073,
+    "digest": "c7a93ff32257e9390c30db55f7f03fa16c3cadfa94abbdbc9f82eb258eeaaa30",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:27:48.358Z"
+  },
+  "content": "{\n  \"items\": [\n    {\n      \"id\": \"math.add-two-numbers\",\n      \"name\": \"add-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/add-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-17T23:01:18.351Z\"\n    },\n    {\n      \"id\": \"math.multiply-two-numbers\",\n      \"name\": \"multiply-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/multiply-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-17T22:42:42.453Z\"\n    },\n    {\n      \"id\": \"math.subtract-two-numbers\",\n      \"name\": \"subtract-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/subtract-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-17T23:03:08.756Z\"\n    }\n  ],\n  \"totalCount\": 3\n}"
+}

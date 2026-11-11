@@ -1,7 +1,7 @@
 # Codebase Index (AI Navigation)
 
 > **Generated** — do not edit tables by hand. Regenerate: `npm run codegen:ai-index`
-> **Source:** `src/config/platform-registry/navigation/studio.json` · 2026-11-08T15:11:24.053Z
+> **Source:** `src/config/platform-registry/navigation/studio.json` · 2026-11-11T05:42:15.842Z
 
 This map answers **where things live**. Constraints: `AGENTS.md` + one `docs/standards/` shard (`docs/standards/INDEX.md`). Human-only bulk docs: `docs/archive/` (AI-index excluded).
 

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ac0a271fa07f",
+    "toolCallId": "call_N2PiOwFG9Jp3uq4Vuwqze56H",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2795,
+    "digest": "68683f2d5f36bcf49ca18d52048f6ac3092f95dd5a5cd13609d84b6da8e02cd0",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:50:41.363Z"
+  },
+  "content": "{\n  \"query\": \"FirstRunWizardTemplateId form dashboard blank\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/features/dashboard/hooks/useDashboardPage.tsx\",\n      \"line\": 145,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/features/dashboard/hooks/useDashboardPage.tsx\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/features/dashboard/components/DashboardMyInbox.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/features/dashboard/components/DashboardAgentStats.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/features/dashboard/hooks/useDashboardPage.tsx\",\n      \"line\": 217,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/features/dashboard/hooks/useDashboardPage.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/server/routes/dashboard.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/features/dashboard/components/DashboardCultures.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/features/dashboard/components/DashboardPortals.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/features/dashboard/constants.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

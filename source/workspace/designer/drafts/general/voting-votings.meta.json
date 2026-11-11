@@ -1,0 +1,812 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-voting-votings",
+    "name": "voting-votings",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1794315065630-kbb4b",
+          "node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5",
+          "node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf"
+        ]
+      },
+      "heroui-app-table-grid-1794315065630-kbb4b": {
+        "id": "heroui-app-table-grid-1794315065630-kbb4b",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"title\",\"label\":\"Title\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cellKind\":\"link\",\"cellFields\":{\"labelField\":\"title\",\"hrefTemplate\":\"/studio/voting/votings/edit/{id}\"},\"cardRole\":\"title\"},{\"key\":\"statusCode\",\"label\":\"Status\",\"sort\":true,\"cellKind\":\"lookup\",\"cellFields\":{\"labelField\":\"statusCode\",\"lookupEntries\":[{\"value\":\"102.001.001\",\"label\":\"Draft\"},{\"value\":\"102.001.002\",\"label\":\"Open\"},{\"value\":\"102.001.003\",\"label\":\"Closed\"},{\"value\":\"102.001.004\",\"label\":\"Archived\"}]},\"cardRole\":\"meta\",\"width\":\"10rem\"},{\"key\":\"startsAt\",\"label\":\"Starts\",\"sort\":true,\"cellKind\":\"date\",\"cardRole\":\"meta\"},{\"key\":\"endsAt\",\"label\":\"Ends\",\"sort\":true,\"cellKind\":\"date\",\"cardRole\":\"meta\"},{\"key\":\"updatedAt\",\"label\":\"Updated\",\"sort\":true,\"cellKind\":\"date\",\"cardRole\":\"meta\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"delete\",\"icon\":\"Trash2\",\"intent\":\"delete\",\"tooltip\":\"Delete\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"layoutPinned\":\"right\",\"width\":\"30px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "title",
+          "sortOptions": "[{\"value\":\"title\",\"label\":\"Title\"},{\"value\":\"statusCode\",\"label\":\"Status\"},{\"value\":\"startsAt\",\"label\":\"Starts\"},{\"value\":\"endsAt\",\"label\":\"Ends\"},{\"value\":\"updatedAt\",\"label\":\"Updated\"}]",
+          "loadingMessage": "Loading voting scopes…",
+          "emptyContent": "No voting scopes found.",
+          "errorContent": "Could not load voting scopes.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search voting scopes…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"New voting scope\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[{\"columnId\":\"title\",\"apiParam\":\"filter[title][like]\",\"kind\":\"text\"}]}}"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteVotingsList",
+            "sourcePath": "voteVotingsList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere",
+              "filter[title][like]": "gridQuery.filters.title"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5": {
+        "id": "node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5",
+        "type": "container",
+        "parentId": "root",
+        "order": 1,
+        "props": {
+          "title": "Create voting scope",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-d6e9d21b-1fad-461c-b831-b5582fe000ac",
+          "node-6c91850d-26c2-4137-a75b-5f9cec404ef4"
+        ]
+      },
+      "node-169049a9-52ef-4602-aa12-6d4a1a28fce1": {
+        "id": "node-169049a9-52ef-4602-aa12-6d4a1a28fce1",
+        "type": "container",
+        "parentId": "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f",
+        "order": 0,
+        "props": {
+          "name": "title",
+          "label": "Title",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Title",
+          "hint": "Required. Enter title.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-4a83c630-8591-46fc-ae80-c7843dada8ab": {
+        "id": "node-4a83c630-8591-46fc-ae80-c7843dada8ab",
+        "type": "container",
+        "parentId": "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f",
+        "order": 1,
+        "props": {
+          "name": "statusCode",
+          "label": "Status",
+          "hint": "Enter status.",
+          "items": [
+            {
+              "key": "102.001.001",
+              "label": "Draft"
+            },
+            {
+              "key": "102.001.002",
+              "label": "Open"
+            },
+            {
+              "key": "102.001.003",
+              "label": "Closed"
+            },
+            {
+              "key": "102.001.004",
+              "label": "Archived"
+            }
+          ],
+          "_designerPaletteItemId": "heroui.input-select"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "statusCode",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-32710f79-0d2a-4207-99f4-b5022228ce77": {
+        "id": "node-32710f79-0d2a-4207-99f4-b5022228ce77",
+        "type": "container",
+        "parentId": "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f",
+        "order": 2,
+        "props": {
+          "name": "startsAt",
+          "label": "Starts",
+          "placeholder": "Select starts…",
+          "hint": "Enter starts.",
+          "granularity": "minute",
+          "className": "w-full",
+          "_designerPaletteItemId": "heroui.date-picker",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "startsAt",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-2f29bd23-de92-43f4-ab71-e6953f743c87": {
+        "id": "node-2f29bd23-de92-43f4-ab71-e6953f743c87",
+        "type": "container",
+        "parentId": "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f",
+        "order": 3,
+        "props": {
+          "name": "endsAt",
+          "label": "Ends",
+          "placeholder": "Select ends…",
+          "hint": "Enter ends.",
+          "granularity": "minute",
+          "className": "w-full",
+          "_designerPaletteItemId": "heroui.date-picker",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "endsAt",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-12f3eb98-a653-4a32-8679-65a598ac1672": {
+        "id": "node-12f3eb98-a653-4a32-8679-65a598ac1672",
+        "type": "container",
+        "parentId": "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f",
+        "order": 4,
+        "props": {
+          "name": "operatorNote",
+          "label": "Operator note",
+          "hint": "Enter operator note.",
+          "_designerPaletteItemId": "heroui.input-textarea"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "operatorNote",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f": {
+        "id": "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f",
+        "type": "container",
+        "parentId": "node-d6e9d21b-1fad-461c-b831-b5582fe000ac",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-169049a9-52ef-4602-aa12-6d4a1a28fce1",
+          "node-4a83c630-8591-46fc-ae80-c7843dada8ab",
+          "node-32710f79-0d2a-4207-99f4-b5022228ce77",
+          "node-2f29bd23-de92-43f4-ab71-e6953f743c87",
+          "node-12f3eb98-a653-4a32-8679-65a598ac1672"
+        ]
+      },
+      "node-e6bf08b6-d877-46e7-af8e-c44f90aea35f": {
+        "id": "node-e6bf08b6-d877-46e7-af8e-c44f90aea35f",
+        "type": "link",
+        "parentId": "node-6c91850d-26c2-4137-a75b-5f9cec404ef4",
+        "order": 1,
+        "props": {
+          "text": "Create voting scope",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-d6e9d21b-1fad-461c-b831-b5582fe000ac",
+          "icon": "Plus"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaov1gq_wc777",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaov1gr_za4q2",
+                "type": "navigate",
+                "navigateTarget": "/studio/voting/votings/edit/{response.data.id}",
+                "navigateReplace": false
+              }
+            ],
+            "responseStorePath": "response"
+          }
+        },
+        "children": []
+      },
+      "node-d6e9d21b-1fad-461c-b831-b5582fe000ac": {
+        "id": "node-d6e9d21b-1fad-461c-b831-b5582fe000ac",
+        "type": "container",
+        "parentId": "node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-d6e9d21b-1fad-461c-b831-b5582fe000ac"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteVotingsList",
+            "sourcePath": "voteVotingsList"
+          }
+        },
+        "children": [
+          "node-7b8efcee-aa8e-4856-ae9b-8e0a7b47a49f"
+        ]
+      },
+      "node-d80b5295-4686-46d4-b825-5e4baaf30a26": {
+        "id": "node-d80b5295-4686-46d4-b825-5e4baaf30a26",
+        "type": "link",
+        "parentId": "node-6c91850d-26c2-4137-a75b-5f9cec404ef4",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaov1gr_9yjku",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-6c91850d-26c2-4137-a75b-5f9cec404ef4": {
+        "id": "node-6c91850d-26c2-4137-a75b-5f9cec404ef4",
+        "type": "container",
+        "parentId": "node-800448e1-cf0c-40ec-ad05-4dba08d1d5d5",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-d80b5295-4686-46d4-b825-5e4baaf30a26",
+          "node-e6bf08b6-d877-46e7-af8e-c44f90aea35f"
+        ]
+      },
+      "node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf": {
+        "id": "node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf",
+        "type": "container",
+        "parentId": "root",
+        "order": 2,
+        "props": {
+          "title": "Delete voting scope?",
+          "size": "sm",
+          "isOpen": false,
+          "tone": "danger",
+          "_designerPaletteItemId": "heroui.alert-dialog",
+          "_isBuiltInTemplateRoot": true
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf === true"
+        },
+        "binding": {},
+        "children": [
+          "node-cb2660e6-c146-48f0-827c-17e30a197105",
+          "node-f3a5efc8-685c-4755-ac8d-8bbb97335a54"
+        ]
+      },
+      "node-cb2660e6-c146-48f0-827c-17e30a197105": {
+        "id": "node-cb2660e6-c146-48f0-827c-17e30a197105",
+        "type": "text",
+        "parentId": "node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf",
+        "order": 0,
+        "props": {
+          "text": "Delete this voting scope? This cannot be undone.",
+          "className": "block p-[15px] text-sm text-slate-700",
+          "_designerPaletteItemId": "html.text",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "block",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "node-adaf7c0c-db36-4948-99c9-9e18085ae694": {
+        "id": "node-adaf7c0c-db36-4948-99c9-9e18085ae694",
+        "type": "link",
+        "parentId": "node-f3a5efc8-685c-4755-ac8d-8bbb97335a54",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaov1gs_dlw59",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-2f951a68-b823-487a-b7a8-f8b6615b48c7": {
+        "id": "node-2f951a68-b823-487a-b7a8-f8b6615b48c7",
+        "type": "link",
+        "parentId": "node-f3a5efc8-685c-4755-ac8d-8bbb97335a54",
+        "order": 1,
+        "props": {
+          "text": "Delete",
+          "icon": "Trash2",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-rose-600 hover:bg-rose-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaov1gs_g9bok",
+                "type": "callMutation",
+                "mutationOperation": "delete",
+                "dataSourceRef": "voteVotingsList",
+                "mutationRecordIdStorePath": "selection.id"
+              },
+              {
+                "id": "da_mwaov1gs_906j4",
+                "type": "refreshDataSource",
+                "dataSourceRef": "voteVotingsList"
+              },
+              {
+                "id": "da_mwaov1gs_8abvo",
+                "type": "showToast",
+                "toastTitle": "Deleted",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaov1gs_oguhq",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-f3a5efc8-685c-4755-ac8d-8bbb97335a54": {
+        "id": "node-f3a5efc8-685c-4755-ac8d-8bbb97335a54",
+        "type": "container",
+        "parentId": "node-8f282180-ce1d-4e24-9a11-1b8e98ebbabf",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-adaf7c0c-db36-4948-99c9-9e18085ae694",
+          "node-2f951a68-b823-487a-b7a8-f8b6615b48c7"
+        ]
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-11-09T17:50:05.702Z",
+      "updatedAt": "2026-11-10T12:51:06.590Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "selection": {
+        "id": "selection",
+        "initialValue": {
+          "id": null
+        },
+        "persist": "none"
+      }
+    },
+    "dataSources": {
+      "voteVotingsList": {
+        "id": "voteVotingsList",
+        "name": "Vote votings",
+        "endpoint": "/api/voting/votings",
+        "fields": [
+          "id",
+          "title",
+          "statusCode",
+          "startsAt",
+          "endsAt",
+          "geoRootId",
+          "operatorNote",
+          "updatedAt"
+        ],
+        "primaryKey": "id",
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/voting/votings"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/voting/votings"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/voting/votings/:id"
+          },
+          "delete": {
+            "method": "DELETE",
+            "endpoint": "/api/voting/votings/:id"
+          }
+        },
+        "responseMapping": {
+          "dataPath": "data",
+          "arrayPath": "data",
+          "totalPath": "count"
+        }
+      }
+    },
+    "lovs": {}
+  }
+}

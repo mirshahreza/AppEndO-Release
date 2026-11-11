@@ -8,67 +8,23 @@ import { assertInternalDeployScope } from './assertInternalDeployScope';
 import { appendoHawietyStagingDir, APPENDO_HAWIETY_REPO_NAME } from './appendoHawietyRepo';
 import { copyFileEnsured, sha256File } from './artifacts';
 import { renderInternalDeployReadme } from './renderInternalDeployReadme';
+import { copyReleaseCutSourceSnapshot } from './releaseCutSourceSnapshot';
 import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
 
-const SOURCE_SKIP_DIR_NAMES = new Set([
-  'node_modules',
-  '.git',
-  'dist',
-  'coverage',
-  'agent-transcripts',
-  '.cursor',
-  '.claude',
-  'terminals',
-  'releases',
-  'release',
-  '.appendo-release-staging',
-  '.appendo-hawiety-staging',
-  '.appendo-deploy-staging',
-]);
-
-function walkRepoFiles(onFile: (absFile: string, relFile: string) => void, onDir: (absDir: string) => void): void {
-  const walk = (absDir: string): void => {
-    onDir(absDir);
-    for (const entry of fs.readdirSync(absDir, { withFileTypes: true })) {
-      const full = path.join(absDir, entry.name);
-      const rel = path.relative(REPO_ROOT, full);
-      if (!rel) continue;
-      if (SOURCE_SKIP_DIR_NAMES.has(entry.name)) continue;
-      if (entry.isDirectory()) {
-        walk(full);
-      } else if (entry.isFile()) {
-        onFile(full, rel);
-      }
-    }
-  };
-  walk(REPO_ROOT);
-}
-
 function copySourceSnapshot(destRoot: string): void {
-  const sourceRoot = path.join(destRoot, 'source');
-  fs.mkdirSync(sourceRoot, { recursive: true });
-  walkRepoFiles(
-    (absFile, relFile) => {
-      copyFileEnsured(absFile, path.join(sourceRoot, relFile));
-    },
-    (absDir) => {
-      const rel = path.relative(REPO_ROOT, absDir);
-      if (rel) {
-        fs.mkdirSync(path.join(sourceRoot, rel), { recursive: true });
-      }
-    },
-  );
-  fs.writeFileSync(
-    path.join(sourceRoot, 'DEPLOY_SOURCE_README.txt'),
-    [
+  copyReleaseCutSourceSnapshot({
+    repoRoot: REPO_ROOT,
+    destRoot,
+    mode: 'full',
+    cloneProfileId: 'hawiety',
+    sourceReadmeLines: [
       'AppEndO private deploy source snapshot (includes Hawiety).',
       'Hawiety ZIP was promoted from runtime/package-artifacts — not re-packed during export.',
-      '',
-    ].join('\n'),
-    'utf8',
-  );
+      'Isolated dev: see CLONE_PROFILE.md and settings.recommended.json (database AppEndOHawiety).',
+    ],
+  });
 }
 
 function copyDistBuild(destRoot: string): void {

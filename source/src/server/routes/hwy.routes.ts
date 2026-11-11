@@ -23,6 +23,30 @@ import {
 
 } from '../domain/hwy/selfRegistration.service';
 
+import { loginHwyPublicMember } from '../domain/hwy/hwyPublicMemberLogin.service';
+import {
+  patchHwyPublicMemberMyProfile,
+  readHwyPublicMemberMyProfile,
+} from '../domain/hwy/hwyPublicMemberMyProfile.service';
+import { applyHwyMemberRegistrationGate } from '../domain/hwy/hwyMemberRegistrationGate.service';
+import { readHwyPublicMemberInquiry } from '../domain/hwy/hwyMemberInquiry.service';
+import { readHwyMemberQrExport } from '../domain/hwy/hwyMemberQrExport.service';
+import {
+  readHwyMemberPoints,
+  readHwyPublicMemberSelfPoints,
+} from '../domain/hwy/hwyMemberPointsRead.service';
+import { resolveHwyPublicPortalNavSections } from '../domain/hwy/hwyPublicPortalNav.service';
+import { AuthService } from '../services/auth.service';
+import { applyAuthSideEffects } from '../utils/authCookies';
+import {
+  buildCookieOptions,
+  REFRESH_COOKIE_NAME,
+} from '../constants/auth';
+import { isHttpError } from '../errors/HttpError';
+import { sendHttpError } from '../utils/controllerHttp';
+import { toAuthAuditContext } from '../utils/requestContext';
+import { resolveHwyPublicCultureFromPathname } from '../../domain/hwy/selfRegistration/hwySelfRegistrationRoutes';
+
 import {
   listHwySelfRegistrationDistricts,
   listHwySelfRegistrationProvinces,
@@ -195,6 +219,7 @@ import {
   applyHwyCandidatePipelineSecurityRecord,
   listHwyCandidatePipeline,
 } from '../domain/hwy/hwyCandidatePipeline.service';
+import { listHwyCandidatePipelineTarshihGeoOptions } from '../domain/hwy/hwyCandidatePipelineTarshihGeoOptions.service';
 import { resolveHwyMemberDirectoryQueryLang } from '../domain/hwy/hwyMemberDirectoryQueryLang';
 import {
   getHwyCandidatePipelineInterviewLast,
@@ -479,10 +504,12 @@ const registerHwyOrgMembershipTransferRoutes = (router: Router): void => {
       const memberId = String(req.params.memberId ?? '').trim();
       const instituteCode = String(req.params.instituteCode ?? '').trim();
       try {
+        const actorUserId = req.auth?.userId != null ? Number(req.auth.userId) : null;
         await rollbackHwyOrgMembershipTransferForMember({
           memberId,
           instituteCode,
           roleNames: normalizeAuthRoles(req),
+          actorUserId: Number.isFinite(actorUserId) ? actorUserId : null,
         });
         res.json({ success: true });
       } catch (error) {
@@ -761,11 +788,159 @@ export const mountHwyRoutes = (app: Express): void => {
 
 
 
-  router.post('/public/member/login', hwyPublicMutationRateLimit, async (_req: Request, res: Response) => {
-    res.status(501).json({
-      success: false,
-      message: 'Hawiety member login is not wired in this environment yet.',
+  const authService = new AuthService();
+  const REMEMBER_ME_REFRESH_TTL_SECONDS = 30 * 24 * 60 * 60;
+
+  router.post('/public/member/login', hwyPublicMutationRateLimit, async (req: Request, res: Response) => {
+    const membershipNumber = readBodyString(req.body, 'membershipNumber');
+    const password = readBodyString(req.body, 'password');
+    const rememberMe = Boolean((req.body as { rememberMe?: unknown })?.rememberMe);
+    const referer = String(req.get('referer') || '');
+    let cultureId: string | undefined;
+    try {
+      const refererUrl = referer ? new URL(referer) : null;
+      cultureId = refererUrl ? resolveHwyPublicCultureFromPathname(refererUrl.pathname) : undefined;
+    } catch {
+      cultureId = undefined;
+    }
+
+    try {
+      const { authResult, redirectTo, rememberMe: remember } = await loginHwyPublicMember(
+        {
+          membershipNumber,
+          password,
+          rememberMe,
+          cultureId,
+          ip: req.ip || 'unknown-ip',
+          audit: toAuthAuditContext(req),
+        },
+        authService,
+      );
+
+      if ('cookies' in authResult) {
+        applyAuthSideEffects(res, authResult);
+        if (remember && authResult.cookies) {
+          res.cookie(
+            REFRESH_COOKIE_NAME,
+            authResult.cookies.refreshToken,
+            buildCookieOptions(REMEMBER_ME_REFRESH_TTL_SECONDS),
+          );
+        }
+      }
+
+      const payload = authResult.body;
+      if ('requiresOtp' in payload && payload.requiresOtp) {
+        res.json({ success: true, data: { ...payload, redirectTo } });
+        return;
+      }
+
+      res.json({ success: true, data: { redirectTo } });
+    } catch (error) {
+      if (isHttpError(error)) {
+        sendHttpError(res, error, 'Sign-in failed.');
+        return;
+      }
+      const message = error instanceof Error ? error.message : 'Sign-in failed.';
+      res.status(401).json({ success: false, message });
+    }
+  });
+
+  router.get('/public/member/my-profile', requireAuth, async (req: Request, res: Response) => {
+    const userId = req.auth?.userId;
+    if (!userId) {
+      res.status(401).json({ success: false, message: 'Unauthorized.' });
+      return;
+    }
+    try {
+      const data = await readHwyPublicMemberMyProfile(userId);
+      res.json({ success: true, data });
+    } catch (error) {
+      if (isHttpError(error)) {
+        sendHttpError(res, error, 'Could not load profile.');
+        return;
+      }
+      const message = error instanceof Error ? error.message : 'Could not load profile.';
+      res.status(500).json({ success: false, message });
+    }
+  });
+
+  router.patch('/public/member/my-profile', requireAuth, async (req: Request, res: Response) => {
+    const userId = req.auth?.userId;
+    if (!userId) {
+      res.status(401).json({ success: false, message: 'Unauthorized.' });
+      return;
+    }
+    try {
+      const data = await patchHwyPublicMemberMyProfile({
+        userId,
+        patch: parseHwyMemberDirectoryPatchFromRequestBody(req.body),
+      });
+      res.json({ success: true, data });
+    } catch (error) {
+      if (isHttpError(error)) {
+        sendHttpError(res, error, 'Could not update profile.');
+        return;
+      }
+      const message = error instanceof Error ? error.message : 'Could not update profile.';
+      res.status(400).json({ success: false, message });
+    }
+  });
+
+  router.get('/public/member/points', requireAuth, async (req: Request, res: Response) => {
+    const userId = req.auth?.userId;
+    if (!userId) {
+      res.status(401).json({ success: false, message: 'Unauthorized.' });
+      return;
+    }
+    try {
+      const data = await readHwyPublicMemberSelfPoints(userId);
+      res.json({ success: true, data });
+    } catch (error) {
+      if (isHttpError(error)) {
+        sendHttpError(res, error, 'Could not load points.');
+        return;
+      }
+      const message = error instanceof Error ? error.message : 'Could not load points.';
+      res.status(500).json({ success: false, message });
+    }
+  });
+
+  router.get('/public/member/inquiry', hwyPublicMutationRateLimit, async (req: Request, res: Response) => {
+    try {
+      const data = await readHwyPublicMemberInquiry({
+        username: typeof req.query.username === 'string' ? req.query.username : null,
+        memberId: typeof req.query.memberId === 'string' ? req.query.memberId : null,
+        trackingCode: typeof req.query.trackingCode === 'string' ? req.query.trackingCode : null,
+      });
+      if (!data) {
+        res.status(404).json({ success: false, message: 'No active member matched the inquiry.' });
+        return;
+      }
+      res.json({ success: true, data });
+    } catch (error) {
+      if (isHttpError(error)) {
+        sendHttpError(res, error, 'Inquiry failed.');
+        return;
+      }
+      const message = error instanceof Error ? error.message : 'Inquiry failed.';
+      res.status(400).json({ success: false, message });
+    }
+  });
+
+  router.get('/public/portal-nav-sections', async (req: Request, res: Response) => {
+    const referer = String(req.get('referer') || '');
+  let cultureId: string | undefined;
+    try {
+      const refererUrl = referer ? new URL(referer) : null;
+      cultureId = refererUrl ? resolveHwyPublicCultureFromPathname(refererUrl.pathname) : undefined;
+    } catch {
+      cultureId = undefined;
+    }
+    const data = resolveHwyPublicPortalNavSections({
+      cultureId: typeof req.query.cultureId === 'string' ? req.query.cultureId : cultureId,
+      refererPath: referer || null,
     });
+    res.json({ success: true, data });
   });
 
   router.post('/public/self-registration/track', hwyPublicMutationRateLimit, async (req: Request, res: Response) => {
@@ -1071,6 +1246,85 @@ export const mountHwyRoutes = (app: Express): void => {
         const message = error instanceof Error ? error.message : 'Could not load profile section counts.';
         const status = message.includes('not found') ? 404 : 400;
         res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/member-directory/:memberId/points',
+    requireAuth,
+    requireRole('ADMIN'),
+    async (req: Request, res: Response) => {
+      const memberId = String(req.params.memberId ?? '').trim();
+      if (!memberId) {
+        res.status(400).json({ success: false, message: 'Member id is required.' });
+        return;
+      }
+      try {
+        const data = await readHwyMemberPoints(memberId);
+        res.json({ success: true, data });
+      } catch (error) {
+        if (isHttpError(error)) {
+          sendHttpError(res, error, 'Could not load member points.');
+          return;
+        }
+        const message = error instanceof Error ? error.message : 'Could not load member points.';
+        res.status(400).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
+    '/member-directory/:memberId/qr-export',
+    requireAuth,
+    requireRole('ADMIN'),
+    async (req: Request, res: Response) => {
+      const memberId = String(req.params.memberId ?? '').trim();
+      if (!memberId) {
+        res.status(400).json({ success: false, message: 'Member id is required.' });
+        return;
+      }
+      try {
+        const data = await readHwyMemberQrExport(memberId);
+        res.json({ success: true, data });
+      } catch (error) {
+        if (isHttpError(error)) {
+          sendHttpError(res, error, 'Could not export QR data.');
+          return;
+        }
+        const message = error instanceof Error ? error.message : 'Could not export QR data.';
+        res.status(400).json({ success: false, message });
+      }
+    },
+  );
+
+  router.post(
+    '/member-directory/:memberId/registration-gate',
+    requireAuth,
+    requireRole('ADMIN'),
+    async (req: Request, res: Response) => {
+      const memberId = String(req.params.memberId ?? '').trim();
+      if (!memberId) {
+        res.status(400).json({ success: false, message: 'Member id is required.' });
+        return;
+      }
+      const legacyDeviceOsTypeId = Number((req.body as { legacyDeviceOsTypeId?: unknown })?.legacyDeviceOsTypeId);
+      const registrationChannelShortName = readBodyString(req.body, 'registrationChannelShortName') || null;
+      try {
+        const data = await applyHwyMemberRegistrationGate({
+          memberIdRaw: memberId,
+          legacyDeviceOsTypeId: Number.isFinite(legacyDeviceOsTypeId) ? legacyDeviceOsTypeId : null,
+          registrationChannelShortName,
+          actorUserId: req.auth?.userId ?? null,
+        });
+        res.json({ success: true, data });
+      } catch (error) {
+        if (isHttpError(error)) {
+          sendHttpError(res, error, 'Registration gate update failed.');
+          return;
+        }
+        const message = error instanceof Error ? error.message : 'Registration gate update failed.';
+        res.status(400).json({ success: false, message });
       }
     },
   );
@@ -2930,6 +3184,34 @@ export const mountHwyRoutes = (app: Express): void => {
   };
 
   router.get(
+    '/geo-responsibility/candidate-pipeline/tarshih-geo-options',
+    requireAuth,
+    requireHwyCandidatePipelineAccess,
+    async (req: Request, res: Response) => {
+      const level = readQueryString(req.query, 'level');
+      if (!level) {
+        res.status(400).json({ success: false, message: 'level is required.' });
+        return;
+      }
+      try {
+        const data = await listHwyCandidatePipelineTarshihGeoOptions(
+          {
+            level,
+            parentId: readQueryString(req.query, 'parentId'),
+          },
+          normalizeAuthRoles(req),
+          req.user?.username ?? req.user?.email ?? null,
+        );
+        res.json({ success: true, data });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Could not list geo options.';
+        const status = message.includes('Invalid') || message.includes('numeric') ? 400 : 500;
+        res.status(status).json({ success: false, message });
+      }
+    },
+  );
+
+  router.get(
     '/geo-responsibility/candidate-pipeline/:stage',
     requireAuth,
     requireHwyCandidatePipelineAccess,
@@ -2940,6 +3222,7 @@ export const mountHwyRoutes = (app: Express): void => {
         return;
       }
       try {
+        const identitySession = await resolveHwyMemberDirectoryIdentitySession(req);
         const data = await listHwyCandidatePipeline(
           {
             stage,
@@ -2958,12 +3241,19 @@ export const mountHwyRoutes = (app: Express): void => {
             phone: readQueryString(req.query, 'phone'),
             genderId: readQueryString(req.query, 'genderId'),
             actorUserName: readQueryString(req.query, 'actorUserName'),
+            memberName: readQueryString(req.query, 'memberName'),
+            extraSearchCsv: readQueryString(req.query, 'extraSearchCsv'),
+            extraSearchAndOr: (() => {
+              const raw = readQueryString(req.query, 'extraSearchAndOr');
+              return raw === 'OR' || raw === 'AND' ? raw : undefined;
+            })(),
             page: Number(readQueryString(req.query, 'page') || '1'),
             pageSize: Number(readQueryString(req.query, 'pageSize') || '25'),
             queryLang: resolveHwyMemberDirectoryQueryLang(
               req.query as Record<string, unknown>,
               req,
             ),
+            session: identitySession,
           },
           normalizeAuthRoles(req),
           req.user?.username ?? req.user?.email ?? null,

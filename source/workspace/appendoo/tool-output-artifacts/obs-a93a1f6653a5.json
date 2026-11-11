@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:a93a1f6653a5",
+    "toolCallId": "call_xIJf6mwApF0JQFVVsngABqp2",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1864,
+    "digest": "ad8650133c61baa9d08320e2f3150549b7443a8eaa9e959cb9e054c232b2abd9",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:20:14.896Z"
+  },
+  "content": "{\n  \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n  \"startLine\": 430,\n  \"endLine\": 480,\n  \"totalLines\": 533,\n  \"truncated\": false,\n  \"content\": \"430|        return { id, textValue };\\n431|      })\\n432|      .filter((entry): entry is EntityPickerOption => entry !== null);\\n433|  }\\n434|\\n435|  if (payload && typeof payload === \\\"object\\\") {\\n436|    const record = payload as Record<string, unknown>;\\n437|    const items = record.items ?? record.results ?? record.data;\\n438|    return normalizeEntityPickerItems(items);\\n439|  }\\n440|\\n441|  return [];\\n442|}\\n443|\\n444|function useEntityPickerOptions(entityRef: string, searchParam: string) {\\n445|  const [items, setItems] = React.useState<EntityPickerOption[]>([]);\\n446|  const [isLoading, setIsLoading] = React.useState(false);\\n447|\\n448|  const loadOptions = React.useCallback(async (query: string) => {\\n449|    if (!entityRef) {\\n450|      setItems([]);\\n451|      return;\\n452|    }\\n453|\\n454|    setIsLoading(true);\\n455|    try {\\n456|      const url = entityRef.startsWith(\\\"http\\\")\\n457|        ? new URL(entityRef)\\n458|        : new URL(entityRef, window.location.origin);\\n459|      url.searchParams.set(searchParam, query);\\n460|      const response = await fetch(url.toString());\\n461|      if (!response.ok) {\\n462|        throw new Error(await parseApiErrorMessage(response));\\n463|      }\\n464|      const payload = await response.json();\\n465|      setItems(normalizeEntityPickerItems(payload));\\n466|    } catch {\\n467|      setItems([]);\\n468|    } finally {\\n469|      setIsLoading(false);\\n470|    }\\n471|  }, [entityRef, searchParam]);\\n472|\\n473|  React.useEffect(() => {\\n474|    void loadOptions(\\\"\\\");\\n475|  }, [loadOptions]);\\n476|\\n477|  return { items, isLoading, loadOptions };\\n478|}\\n479|\\n480|export const GeneratedComponent: React.FC = () => {\"\n}"
+}

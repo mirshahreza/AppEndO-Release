@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:53c1e881ab0f",
+    "toolCallId": "call_NKWCbpeXdI4b5JpJqbioPJ01",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2905,
+    "digest": "1a1d8ab05cab7c53bd186fa2b85adaecf1de738877c4c38ddfbe5ecb3c9cfa09",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:37:17.384Z"
+  },
+  "content": "{\n  \"path\": \"src/features/component-designer/components/InspectorEventBindingPanel.tsx\",\n  \"startLine\": 250,\n  \"endLine\": 330,\n  \"totalLines\": 668,\n  \"truncated\": false,\n  \"content\": \"250|  const commitManual = (\\n251|    nextEndpoint: string,\\n252|    nextActionType: typeof ACTION_OPTIONS[number],\\n253|    nextPayloadEntries: PayloadEntry[],\\n254|    nextUrlParams: Record<string, string>,\\n255|    nextHeaders: Record<string, string>,\\n256|    nextStoreWritePath: string,\\n257|  ) => {\\n258|    const trimmedEndpoint = nextEndpoint.trim();\\n259|    const trimmedStoreWritePath = nextStoreWritePath.trim();\\n260|\\n261|    if (trimmedEndpoint.length === 0 && trimmedStoreWritePath.length === 0) {\\n262|      clearBinding();\\n263|      return;\\n264|    }\\n265|\\n266|    if (trimmedEndpoint.length === 0) {\\n267|      dispatch({\\n268|        type: 'set-node-binding',\\n269|        nodeId: node.id,\\n270|        bindingKey,\\n271|        definition: {\\n272|          sourceType: 'store',\\n273|          bindingRole: 'event',\\n274|          targetEvent,\\n275|          storeWritePath: trimmedStoreWritePath,\\n276|        },\\n277|      });\\n278|      return;\\n279|    }\\n280|\\n281|    dispatch({\\n282|      type: 'set-node-binding',\\n283|      nodeId: node.id,\\n284|      bindingKey,\\n285|      definition: createEventBindingDefinition(\\n286|        targetEvent,\\n287|        trimmedEndpoint,\\n288|        nextActionType,\\n289|        payloadEntriesToRecord(nextPayloadEntries),\\n290|        {\\n291|          urlParams: nextUrlParams,\\n292|          headers: nextHeaders,\\n293|          storeWritePath: trimmedStoreWritePath.length > 0 ? trimmedStoreWritePath : undefined,\\n294|        },\\n295|      ),\\n296|    });\\n297|  };\\n298|\\n299|  const updatePayloadEntries = (nextEntries: PayloadEntry[]) => {\\n300|    setPayloadEntries(nextEntries);\\n301|    if (actionMode === 'manual' && (endpoint.trim().length > 0 || storeWritePath.trim().length > 0)) {\\n302|      commitManual(endpoint, actionType, nextEntries, urlParams, headers, storeWritePath);\\n303|    }\\n304|  };\\n305|\\n306|  const handleActionModeChange = (nextMode: ActionMode) => {\\n307|    setActionMode(nextMode);\\n308|\\n309|    if (nextMode === 'none') {\\n310|      clearBinding();\\n311|      return;\\n312|    }\\n313|\\n314|    if (nextMode === 'regionSubmit') {\\n315|      commitRegionSubmit();\\n316|      return;\\n317|    }\\n318|\\n319|    if (nextMode === 'refreshDataSource') {\\n320|      commitRefreshDataSource(refreshDataSourceRef || dataSourceOptions[0]?.id || '');\\n321|      return;\\n322|    }\\n323|\\n324|    if (nextMode === 'dynamicActions') {\\n325|      const nonRefreshActions = trueActions.filter((action) => action.type !== 'refreshDataSource');\\n326|      commitDynamicActions(nonRefreshActions);\\n327|      return;\\n328|    }\\n329|\\n330|    commitManual(endpoint, actionType, payloadEntries, urlParams, headers, storeWritePath);\"\n}"
+}

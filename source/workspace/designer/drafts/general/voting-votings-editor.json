@@ -1,0 +1,5291 @@
+{
+  "schema": "component-designer-draft",
+  "id": "draft-voting-votings-editor",
+  "name": "voting-votings-editor",
+  "folder": "general",
+  "catalogKind": "custom",
+  "tags": [],
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-voting-votings-editor",
+    "name": "voting-votings-editor",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1794316123907-wdoig",
+          "node-f53f9efe-8db5-42ea-9b94-898695065bab",
+          "node-2505cd81-4f24-4e95-9a86-45d29d772103",
+          "node-13e6bd03-8adb-4d58-adc9-3605690caaef",
+          "node-993a713a-4a3a-44bd-97c1-c79f025463aa",
+          "node-d496d557-9e25-41ca-a0c7-c5861acb91a3",
+          "node-67b3fbbb-ca30-44c2-8f34-b804d832d599",
+          "node-b9b759f9-116a-4e6e-a30e-fd341231057d",
+          "node-f5a37c74-b666-4402-8aee-55a655d248d2",
+          "node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2"
+        ]
+      },
+      "layout-flex-column-1794316123907-wdoig": {
+        "id": "layout-flex-column-1794316123907-wdoig",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden bg-white",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-row-1794316123908-5nxwc",
+          "layout-grid-2-1794316123915-3u8zs"
+        ]
+      },
+      "layout-flex-row-1794316123908-5nxwc": {
+        "id": "layout-flex-row-1794316123908-5nxwc",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123907-wdoig",
+        "order": 0,
+        "props": {
+          "className": "flex shrink-0 items-center gap-3 border-b border-slate-200 bg-white px-3 py-2.5 sm:px-5",
+          "_designerPaletteItemId": "layout.flex-row",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteVotingDetail",
+            "sourcePath": "voteVotingDetail",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "routeParams.id"
+            }
+          }
+        },
+        "children": [
+          "heroui-button-outline-1794316123909-65x6d",
+          "layout-flex-row-1794316123910-jnz1i",
+          "heroui-button-solid-1794316123914-j149x"
+        ]
+      },
+      "heroui-button-outline-1794316123909-65x6d": {
+        "id": "heroui-button-outline-1794316123909-65x6d",
+        "type": "link",
+        "parentId": "layout-flex-row-1794316123908-5nxwc",
+        "order": 0,
+        "props": {
+          "text": "Secondary",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "className": "inline-flex rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 no-underline hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-medium",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "workspaceBack": true,
+          "aria-label": "Back to voting scopes",
+          "title": "Back to list"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq12_kn8mb",
+                "type": "navigate",
+                "navigateTarget": "/studio/voting/votings",
+                "navigateReplace": false
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "layout-flex-row-1794316123910-jnz1i": {
+        "id": "layout-flex-row-1794316123910-jnz1i",
+        "type": "container",
+        "parentId": "layout-flex-row-1794316123908-5nxwc",
+        "order": 1,
+        "props": {
+          "className": "flex min-w-0 flex-1 items-center gap-2 overflow-hidden",
+          "_designerPaletteItemId": "layout.flex-row",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123911-t5fx6",
+          "html-text-1794316123912-r56ih",
+          "html-text-1794316123913-4gjro"
+        ]
+      },
+      "html-text-1794316123911-t5fx6": {
+        "id": "html-text-1794316123911-t5fx6",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123910-jnz1i",
+        "order": 0,
+        "props": {
+          "text": "—",
+          "className": "m-0 min-w-0 truncate text-sm font-semibold leading-none text-slate-800",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "m-0",
+          "twWidth": "min-w-0",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:text": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "text",
+            "column": "title",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "html-text-1794316123912-r56ih": {
+        "id": "html-text-1794316123912-r56ih",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123910-jnz1i",
+        "order": 1,
+        "props": {
+          "text": "·",
+          "className": "shrink-0 text-slate-300",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "html-text-1794316123913-4gjro": {
+        "id": "html-text-1794316123913-4gjro",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123910-jnz1i",
+        "order": 2,
+        "props": {
+          "text": "—",
+          "className": "m-0 shrink-0 font-mono text-xs font-medium leading-none text-slate-500",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "m-0",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-medium",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:text": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "text",
+            "column": "id",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "heroui-button-solid-1794316123914-j149x": {
+        "id": "heroui-button-solid-1794316123914-j149x",
+        "type": "link",
+        "parentId": "layout-flex-row-1794316123908-5nxwc",
+        "order": 2,
+        "props": {
+          "text": "Save scope",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "className": "bg-violet-600 text-white hover:bg-violet-700",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "icon": "Save",
+          "type": "submit",
+          "form": "voting-scope-editor-form"
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "layout-grid-2-1794316123915-3u8zs": {
+        "id": "layout-grid-2-1794316123915-3u8zs",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123907-wdoig",
+        "order": 1,
+        "props": {
+          "className": "min-h-0 flex-1 gap-0 overflow-hidden bg-white w-full grid",
+          "_designerPaletteItemId": "layout.grid-2",
+          "twDisplay": "grid",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-0",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "layoutGridColumnWidths": "[{\"value\":\"1\",\"unit\":\"fr\"},{\"value\":\"320\",\"unit\":\"px\"}]",
+          "layoutGridDirection": "row"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-column-1794316123915-8tmb0",
+          "layout-column-1794316123915-ry9pv"
+        ]
+      },
+      "layout-column-1794316123915-8tmb0": {
+        "id": "layout-column-1794316123915-8tmb0",
+        "type": "container",
+        "parentId": "layout-grid-2-1794316123915-3u8zs",
+        "order": 0,
+        "props": {
+          "className": "min-h-0 min-w-0 overflow-hidden",
+          "_designerLayoutSlot": true,
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1794316123941-mskqk"
+        ]
+      },
+      "layout-column-1794316123915-ry9pv": {
+        "id": "layout-column-1794316123915-ry9pv",
+        "type": "container",
+        "parentId": "layout-grid-2-1794316123915-3u8zs",
+        "order": 1,
+        "props": {
+          "className": "min-h-0 min-w-0 overflow-hidden",
+          "_designerLayoutSlot": true,
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1794316123919-wnau6"
+        ]
+      },
+      "layout-flex-column-1794316123919-wnau6": {
+        "id": "layout-flex-column-1794316123919-wnau6",
+        "type": "container",
+        "parentId": "layout-column-1794316123915-ry9pv",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 flex-col gap-3 overflow-y-auto border-s border-slate-200 bg-slate-50 px-3 pb-4 pt-[10px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-y-auto",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-form-1794316123919-wss0b"
+        ]
+      },
+      "html-form-1794316123919-wss0b": {
+        "id": "html-form-1794316123919-wss0b",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123919-wnau6",
+        "order": 0,
+        "props": {
+          "className": "space-y-3 rounded-lg border border-default-200 bg-content1 p-4",
+          "_designerPaletteItemId": "html.form",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "voting-scope-editor-form"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteVotingDetail",
+            "sourcePath": "voteVotingDetail",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "routeParams.id"
+            }
+          },
+          "event:onSubmit": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onSubmit",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaphq1c_rr37y",
+                "type": "showToast",
+                "toastTitle": "Voting scope saved.",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              }
+            ]
+          }
+        },
+        "children": [
+          "layout-flex-column-1794316123921-se5ko"
+        ]
+      },
+      "layout-flex-column-1794316123921-se5ko": {
+        "id": "layout-flex-column-1794316123921-se5ko",
+        "type": "container",
+        "parentId": "html-form-1794316123919-wss0b",
+        "order": 0,
+        "props": {
+          "className": "flex flex-col space-y-2",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-row-1794316123921-1d0b8",
+          "layout-flex-column-1794316123923-0qa53"
+        ]
+      },
+      "layout-flex-row-1794316123921-1d0b8": {
+        "id": "layout-flex-row-1794316123921-1d0b8",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123921-se5ko",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-4 items-center gap-0.5 ps-[4px]",
+          "_designerPaletteItemId": "layout.flex-row",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "min-h-4",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "",
+          "twGap": "gap-0.5",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123922-k2chc"
+        ]
+      },
+      "html-text-1794316123922-k2chc": {
+        "id": "html-text-1794316123922-k2chc",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123921-1d0b8",
+        "order": 0,
+        "props": {
+          "text": "Scope settings",
+          "className": "border-s-2 ps-1.5 text-[11px] font-bold uppercase tracking-wider leading-none text-violet-700 border-violet-400",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "ps-1.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-bold",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "layout-flex-column-1794316123923-0qa53": {
+        "id": "layout-flex-column-1794316123923-0qa53",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123921-se5ko",
+        "order": 1,
+        "props": {
+          "className": "flex flex-col gap-2",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-row-1794316123923-nvj1c",
+          "layout-flex-column-1794316123926-b4d2j",
+          "heroui-input-text-1794316123931-8grsz",
+          "heroui-select-1794316123933-rnd5x",
+          "heroui-date-picker-1794316123935-1gajf",
+          "heroui-date-picker-1794316123937-o107h",
+          "heroui-textarea-1794316123939-jbw41"
+        ]
+      },
+      "layout-flex-row-1794316123923-nvj1c": {
+        "id": "layout-flex-row-1794316123923-nvj1c",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123923-0qa53",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 items-center justify-between gap-3 overflow-hidden ps-[4px]",
+          "_designerPaletteItemId": "layout.flex-row",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-between",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123924-ayxcg",
+          "html-text-1794316123925-kj6hd"
+        ]
+      },
+      "html-text-1794316123924-ayxcg": {
+        "id": "html-text-1794316123924-ayxcg",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123923-nvj1c",
+        "order": 0,
+        "props": {
+          "text": "Record id",
+          "className": "text-[11px] font-normal normal-case tracking-normal text-slate-500",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-normal",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "html-text-1794316123925-kj6hd": {
+        "id": "html-text-1794316123925-kj6hd",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123923-nvj1c",
+        "order": 1,
+        "props": {
+          "text": "—",
+          "className": "min-w-0 overflow-hidden break-words text-[11px] font-bold rounded-md border border-violet-200 bg-violet-50/70 px-2 py-1.5 text-violet-900 text-end font-mono",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "px-2",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-bold",
+          "twTextAlign": "text-end",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:text": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "text",
+            "column": "id",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "layout-flex-column-1794316123926-b4d2j": {
+        "id": "layout-flex-column-1794316123926-b4d2j",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123923-0qa53",
+        "order": 1,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-[2px] overflow-hidden ps-[4px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123926-cs32t",
+          "html-text-1794316123929-2oo2w"
+        ]
+      },
+      "html-text-1794316123926-cs32t": {
+        "id": "html-text-1794316123926-cs32t",
+        "type": "text",
+        "parentId": "layout-flex-column-1794316123926-b4d2j",
+        "order": 0,
+        "props": {
+          "text": "Current status (code)",
+          "className": "text-[11px] font-normal normal-case tracking-normal text-slate-500",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-normal",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "html-text-1794316123929-2oo2w": {
+        "id": "html-text-1794316123929-2oo2w",
+        "type": "text",
+        "parentId": "layout-flex-column-1794316123926-b4d2j",
+        "order": 1,
+        "props": {
+          "text": "—",
+          "className": "min-w-0 overflow-hidden break-words text-[11px] font-bold rounded-md border border-sky-200 bg-sky-50/70 px-2 py-1.5 text-sky-900",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "px-2",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-bold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:text": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "text",
+            "column": "statusCode",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "heroui-input-text-1794316123931-8grsz": {
+        "id": "heroui-input-text-1794316123931-8grsz",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123923-0qa53",
+        "order": 2,
+        "props": {
+          "size": "sm",
+          "className": "rounded-md border border-slate-300 bg-white px-2.5 py-px text-xs text-slate-700",
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-2.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "",
+          "label": "Title"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "heroui-select-1794316123933-rnd5x": {
+        "id": "heroui-select-1794316123933-rnd5x",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123923-0qa53",
+        "order": 3,
+        "props": {
+          "placeholder": "Select…",
+          "size": "sm",
+          "items": "[{\"id\":\"102.001.001\",\"textValue\":\"Draft\"},{\"id\":\"102.001.002\",\"textValue\":\"Open\"},{\"id\":\"102.001.003\",\"textValue\":\"Closed\"},{\"id\":\"102.001.004\",\"textValue\":\"Archived\"}]",
+          "className": "w-full",
+          "_designerPaletteItemId": "heroui.select",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "label": "Status"
+        },
+        "layout": {},
+        "binding": {
+          "prop:selectedKeys": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "selectedKeys",
+            "column": "statusCode",
+            "valueMode": "defaultValue",
+            "payloadTransform": "nullableString"
+          }
+        },
+        "children": []
+      },
+      "heroui-date-picker-1794316123935-1gajf": {
+        "id": "heroui-date-picker-1794316123935-1gajf",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123923-0qa53",
+        "order": 4,
+        "props": {
+          "label": "Starts",
+          "placeholder": "Select date",
+          "value": "",
+          "calendarSystem": "gregorian",
+          "locale": "",
+          "granularity": "minute",
+          "hourCycle": "auto",
+          "hideTimeZone": false,
+          "shouldForceLeadingZeros": true,
+          "minValue": "",
+          "maxValue": "",
+          "placeholderValue": "",
+          "firstDayOfWeek": "",
+          "timeZone": "",
+          "visibleMonths": "1",
+          "pageBehavior": "visible",
+          "isReadOnly": false,
+          "autoFocus": false,
+          "className": "w-full min-w-0",
+          "_designerPaletteItemId": "heroui.date-picker",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "startsAt",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "heroui-date-picker-1794316123937-o107h": {
+        "id": "heroui-date-picker-1794316123937-o107h",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123923-0qa53",
+        "order": 5,
+        "props": {
+          "label": "Ends",
+          "placeholder": "Select date",
+          "value": "",
+          "calendarSystem": "gregorian",
+          "locale": "",
+          "granularity": "minute",
+          "hourCycle": "auto",
+          "hideTimeZone": false,
+          "shouldForceLeadingZeros": true,
+          "minValue": "",
+          "maxValue": "",
+          "placeholderValue": "",
+          "firstDayOfWeek": "",
+          "timeZone": "",
+          "visibleMonths": "1",
+          "pageBehavior": "visible",
+          "isReadOnly": false,
+          "autoFocus": false,
+          "className": "w-full min-w-0",
+          "_designerPaletteItemId": "heroui.date-picker",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "endsAt",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "heroui-textarea-1794316123939-jbw41": {
+        "id": "heroui-textarea-1794316123939-jbw41",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123923-0qa53",
+        "order": 6,
+        "props": {
+          "size": "sm",
+          "className": "min-h-24 rounded-md border border-slate-300 bg-white px-2.5 py-2 text-xs text-slate-700",
+          "_designerPaletteItemId": "heroui.textarea",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-2.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "min-h-24",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "",
+          "label": "Operator note",
+          "rows": 4
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "operatorNote",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "layout-flex-column-1794316123941-mskqk": {
+        "id": "layout-flex-column-1794316123941-mskqk",
+        "type": "container",
+        "parentId": "layout-column-1794316123915-8tmb0",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 min-w-0 flex-1 flex-col gap-5 overflow-y-auto p-4 sm:p-5",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-y-auto",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-5",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1794316123943-6zrb0",
+          "layout-flex-column-1794316123975-nv12g",
+          "layout-flex-column-1794316124036-61e9k"
+        ]
+      },
+      "layout-flex-column-1794316123943-6zrb0": {
+        "id": "layout-flex-column-1794316123943-6zrb0",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123941-mskqk",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 min-w-0 flex-1 flex-col gap-2 overflow-hidden",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1794316123944-d6vgw"
+        ]
+      },
+      "layout-flex-column-1794316123944-d6vgw": {
+        "id": "layout-flex-column-1794316123944-d6vgw",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123943-6zrb0",
+        "order": 0,
+        "props": {
+          "className": "flex flex-col space-y-2 pt-3",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "pt-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-row-1794316123945-wwvm2",
+          "layout-flex-column-1794316123949-ycxp5"
+        ]
+      },
+      "layout-flex-row-1794316123945-wwvm2": {
+        "id": "layout-flex-row-1794316123945-wwvm2",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123944-d6vgw",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-4 items-center gap-0.5 ps-[4px]",
+          "_designerPaletteItemId": "layout.flex-row",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "min-h-4",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "",
+          "twGap": "gap-0.5",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123946-grl88"
+        ]
+      },
+      "html-text-1794316123946-grl88": {
+        "id": "html-text-1794316123946-grl88",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123945-wwvm2",
+        "order": 0,
+        "props": {
+          "text": "Questions for participants",
+          "className": "border-s-2 ps-1.5 text-[11px] font-bold uppercase tracking-wider leading-none text-indigo-700 border-indigo-400",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "ps-1.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-bold",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "layout-flex-column-1794316123949-ycxp5": {
+        "id": "layout-flex-column-1794316123949-ycxp5",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123944-d6vgw",
+        "order": 1,
+        "props": {
+          "className": "flex min-h-0 min-w-0 flex-1 flex-col gap-2",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123950-zbzut",
+          "heroui-app-table-grid-1794316123953-xbb11"
+        ]
+      },
+      "html-text-1794316123950-zbzut": {
+        "id": "html-text-1794316123950-zbzut",
+        "type": "text",
+        "parentId": "layout-flex-column-1794316123949-ycxp5",
+        "order": 0,
+        "props": {
+          "text": "Click a question row to load its choices below. Pick rule: single = one answer; multiple = voter may pick several.",
+          "className": "text-xs leading-relaxed text-indigo-900/80 ps-[4px] pb-1",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "pb-1",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "heroui-app-table-grid-1794316123953-xbb11": {
+        "id": "heroui-app-table-grid-1794316123953-xbb11",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123949-ycxp5",
+        "order": 1,
+        "props": {
+          "className": "flex min-h-[200px] min-w-0 flex-[3] flex-col",
+          "columns": "[{\"key\":\"title\",\"label\":\"Question\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"title\"},{\"key\":\"selectionMode\",\"label\":\"Pick rule\",\"sort\":true,\"cellKind\":\"lookup\",\"cellFields\":{\"labelField\":\"selectionMode\",\"lookupEntries\":[{\"value\":\"single\",\"label\":\"One answer\"},{\"value\":\"multiple\",\"label\":\"Several answers\"}]},\"cardRole\":\"meta\",\"width\":\"9.5rem\"},{\"key\":\"maxSelections\",\"label\":\"Max picks\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"sortOrder\",\"label\":\"Order\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-2505cd81-4f24-4e95-9a86-45d29d772103\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.ballotId\"}},{\"actionId\":\"delete\",\"icon\":\"Trash2\",\"intent\":\"delete\",\"tooltip\":\"Delete\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-13e6bd03-8adb-4d58-adc9-3605690caaef\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.ballotId\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"layoutPinned\":\"right\",\"width\":\"57px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 25,
+          "page": 1,
+          "total": 0,
+          "presentation": "table",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "sortOrder",
+          "sortOptions": "[{\"value\":\"title\",\"label\":\"Question\"},{\"value\":\"selectionMode\",\"label\":\"Pick rule\"},{\"value\":\"maxSelections\",\"label\":\"Max picks\"},{\"value\":\"sortOrder\",\"label\":\"Order\"}]",
+          "loadingMessage": "Loading questions…",
+          "emptyContent": "No questions yet. Use Add question to define what voters will answer.",
+          "errorContent": "Could not load questions.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-[200px]",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search questions…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"Add question\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-f53f9efe-8db5-42ea-9b94-898695065bab\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.ballotId\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[{\"columnId\":\"title\",\"apiParam\":\"filter[title][like]\",\"kind\":\"text\"}]}}",
+          "selectionMode": "single",
+          "selectionStorePath": "voteEditor.activeBallotKeys"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteBallotsList",
+            "sourcePath": "voteBallotsList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere",
+              "filter[title][like]": "gridQuery.filters.title",
+              "filter[votingId][eq]": "routeParams.id"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-f53f9efe-8db5-42ea-9b94-898695065bab": {
+        "id": "node-f53f9efe-8db5-42ea-9b94-898695065bab",
+        "type": "container",
+        "parentId": "root",
+        "order": 1,
+        "props": {
+          "title": "Create question",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-f53f9efe-8db5-42ea-9b94-898695065bab === true"
+        },
+        "binding": {},
+        "children": [
+          "node-53d4ccde-414a-45cc-8029-0a8d9aa2c36e",
+          "node-180c3f9a-d2c0-4366-9c83-29a9fd5c6b2c"
+        ]
+      },
+      "node-903e35fa-ee0b-4976-8fed-9e0624b6a9e8": {
+        "id": "node-903e35fa-ee0b-4976-8fed-9e0624b6a9e8",
+        "type": "container",
+        "parentId": "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4",
+        "order": 0,
+        "props": {
+          "name": "votingId",
+          "label": "Voting scope",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Voting scope",
+          "hint": "Required. Enter voting scope.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "votingId",
+            "valueMode": "defaultValue"
+          },
+          "store:routeParams.id": {
+            "sourceType": "store",
+            "bindingRole": "property",
+            "targetProp": "value"
+          }
+        },
+        "children": []
+      },
+      "node-4f65a6b2-c0b3-4e6e-b66c-92dcfa68174e": {
+        "id": "node-4f65a6b2-c0b3-4e6e-b66c-92dcfa68174e",
+        "type": "container",
+        "parentId": "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4",
+        "order": 1,
+        "props": {
+          "name": "title",
+          "label": "Question / ballot title",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "e.g. Choose the committee chair",
+          "hint": "Required. Enter question / ballot title.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-395d03bc-dd57-4f45-8b57-2dd20dd86fcd": {
+        "id": "node-395d03bc-dd57-4f45-8b57-2dd20dd86fcd",
+        "type": "container",
+        "parentId": "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4",
+        "order": 2,
+        "props": {
+          "name": "selectionMode",
+          "label": "How many choices can each voter pick?",
+          "isRequired": true,
+          "hint": "Required. Enter how many choices can each voter pick?.",
+          "items": "[{\"key\":\"single\",\"label\":\"Single choice (pick one)\"},{\"key\":\"multiple\",\"label\":\"Multiple choice (pick several)\"}]",
+          "defaultValue": "single",
+          "_designerPaletteItemId": "heroui.radio-group"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "selectionMode",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-466be8cc-37a6-41c5-9a42-55f14a63e475": {
+        "id": "node-466be8cc-37a6-41c5-9a42-55f14a63e475",
+        "type": "container",
+        "parentId": "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4",
+        "order": 3,
+        "props": {
+          "name": "maxSelections",
+          "label": "Max selections (multiple only)",
+          "size": "sm",
+          "placeholder": "Leave empty for no limit",
+          "hint": "Enter max selections (multiple only).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "maxSelections",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-4f321202-a622-482f-b78a-12bda70103a1": {
+        "id": "node-4f321202-a622-482f-b78a-12bda70103a1",
+        "type": "container",
+        "parentId": "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4",
+        "order": 4,
+        "props": {
+          "name": "sortOrder",
+          "label": "Display order",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "0",
+          "hint": "Required. Enter display order.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "sortOrder",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4": {
+        "id": "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4",
+        "type": "container",
+        "parentId": "node-53d4ccde-414a-45cc-8029-0a8d9aa2c36e",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-903e35fa-ee0b-4976-8fed-9e0624b6a9e8",
+          "node-4f65a6b2-c0b3-4e6e-b66c-92dcfa68174e",
+          "node-395d03bc-dd57-4f45-8b57-2dd20dd86fcd",
+          "node-466be8cc-37a6-41c5-9a42-55f14a63e475",
+          "node-4f321202-a622-482f-b78a-12bda70103a1"
+        ]
+      },
+      "node-e63159e0-a8da-4805-969d-800e259d1dd3": {
+        "id": "node-e63159e0-a8da-4805-969d-800e259d1dd3",
+        "type": "link",
+        "parentId": "node-180c3f9a-d2c0-4366-9c83-29a9fd5c6b2c",
+        "order": 1,
+        "props": {
+          "text": "Create question",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-53d4ccde-414a-45cc-8029-0a8d9aa2c36e",
+          "icon": "Plus"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaphq2q_tm1d8",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-f53f9efe-8db5-42ea-9b94-898695065bab"
+              },
+              {
+                "id": "da_mwaphq2q_mw1wp",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq2q_qai1n",
+                "type": "refreshDataSource",
+                "dataSourceRef": "voteBallotsList"
+              },
+              {
+                "id": "da_mwaphq2q_qop8e",
+                "type": "resetForm",
+                "targetNodeId": "node-53d4ccde-414a-45cc-8029-0a8d9aa2c36e"
+              }
+            ],
+            "invalidateQueries": [
+              "region:voteBallotsList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-53d4ccde-414a-45cc-8029-0a8d9aa2c36e": {
+        "id": "node-53d4ccde-414a-45cc-8029-0a8d9aa2c36e",
+        "type": "container",
+        "parentId": "node-f53f9efe-8db5-42ea-9b94-898695065bab",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-53d4ccde-414a-45cc-8029-0a8d9aa2c36e"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteBallotsList",
+            "sourcePath": "voteBallotsList"
+          }
+        },
+        "children": [
+          "node-f03f6904-30c0-42fe-8aa8-3e7aec6cc8e4"
+        ]
+      },
+      "node-45eb8a5b-bfb5-4318-a834-b3c680d2c751": {
+        "id": "node-45eb8a5b-bfb5-4318-a834-b3c680d2c751",
+        "type": "link",
+        "parentId": "node-180c3f9a-d2c0-4366-9c83-29a9fd5c6b2c",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq2q_5vfai",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-f53f9efe-8db5-42ea-9b94-898695065bab"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-180c3f9a-d2c0-4366-9c83-29a9fd5c6b2c": {
+        "id": "node-180c3f9a-d2c0-4366-9c83-29a9fd5c6b2c",
+        "type": "container",
+        "parentId": "node-f53f9efe-8db5-42ea-9b94-898695065bab",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-45eb8a5b-bfb5-4318-a834-b3c680d2c751",
+          "node-e63159e0-a8da-4805-969d-800e259d1dd3"
+        ]
+      },
+      "node-2505cd81-4f24-4e95-9a86-45d29d772103": {
+        "id": "node-2505cd81-4f24-4e95-9a86-45d29d772103",
+        "type": "container",
+        "parentId": "root",
+        "order": 2,
+        "props": {
+          "title": "Edit question",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-2505cd81-4f24-4e95-9a86-45d29d772103 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-b8715c07-6472-4c65-974c-89648e07443d",
+          "node-5ca69944-fbf6-40e6-bd01-93e41acb7de9"
+        ]
+      },
+      "node-e1a56579-ee40-4eee-a9cf-06172982a476": {
+        "id": "node-e1a56579-ee40-4eee-a9cf-06172982a476",
+        "type": "container",
+        "parentId": "node-21a49ed2-588f-4c22-b64f-f38454e6d623",
+        "order": 0,
+        "props": {
+          "name": "votingId",
+          "label": "Voting scope",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Voting scope",
+          "hint": "Required. Enter voting scope.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "votingId",
+            "valueMode": "defaultValue"
+          },
+          "store:routeParams.id": {
+            "sourceType": "store",
+            "bindingRole": "property",
+            "targetProp": "value"
+          }
+        },
+        "children": []
+      },
+      "node-7781f91c-0826-43e2-8013-d089c59b0da9": {
+        "id": "node-7781f91c-0826-43e2-8013-d089c59b0da9",
+        "type": "container",
+        "parentId": "node-21a49ed2-588f-4c22-b64f-f38454e6d623",
+        "order": 1,
+        "props": {
+          "name": "title",
+          "label": "Question / ballot title",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "e.g. Choose the committee chair",
+          "hint": "Required. Enter question / ballot title.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-901e35ea-6591-467b-bd6d-44721d672aea": {
+        "id": "node-901e35ea-6591-467b-bd6d-44721d672aea",
+        "type": "container",
+        "parentId": "node-21a49ed2-588f-4c22-b64f-f38454e6d623",
+        "order": 2,
+        "props": {
+          "name": "selectionMode",
+          "label": "How many choices can each voter pick?",
+          "isRequired": true,
+          "hint": "Required. Enter how many choices can each voter pick?.",
+          "items": "[{\"key\":\"single\",\"label\":\"Single choice (pick one)\"},{\"key\":\"multiple\",\"label\":\"Multiple choice (pick several)\"}]",
+          "defaultValue": "single",
+          "_designerPaletteItemId": "heroui.radio-group"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "selectionMode",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-350ec2c6-0860-4cc9-91f9-f99342db075b": {
+        "id": "node-350ec2c6-0860-4cc9-91f9-f99342db075b",
+        "type": "container",
+        "parentId": "node-21a49ed2-588f-4c22-b64f-f38454e6d623",
+        "order": 3,
+        "props": {
+          "name": "maxSelections",
+          "label": "Max selections (multiple only)",
+          "size": "sm",
+          "placeholder": "Leave empty for no limit",
+          "hint": "Enter max selections (multiple only).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "maxSelections",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-35c39e5a-6ef0-4b16-b3c8-773bb51da218": {
+        "id": "node-35c39e5a-6ef0-4b16-b3c8-773bb51da218",
+        "type": "container",
+        "parentId": "node-21a49ed2-588f-4c22-b64f-f38454e6d623",
+        "order": 4,
+        "props": {
+          "name": "sortOrder",
+          "label": "Display order",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "0",
+          "hint": "Required. Enter display order.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "sortOrder",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-21a49ed2-588f-4c22-b64f-f38454e6d623": {
+        "id": "node-21a49ed2-588f-4c22-b64f-f38454e6d623",
+        "type": "container",
+        "parentId": "node-b8715c07-6472-4c65-974c-89648e07443d",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-e1a56579-ee40-4eee-a9cf-06172982a476",
+          "node-7781f91c-0826-43e2-8013-d089c59b0da9",
+          "node-901e35ea-6591-467b-bd6d-44721d672aea",
+          "node-350ec2c6-0860-4cc9-91f9-f99342db075b",
+          "node-35c39e5a-6ef0-4b16-b3c8-773bb51da218"
+        ]
+      },
+      "node-3fe28dc2-55b3-4bb3-8b6f-fce7294bade9": {
+        "id": "node-3fe28dc2-55b3-4bb3-8b6f-fce7294bade9",
+        "type": "link",
+        "parentId": "node-5ca69944-fbf6-40e6-bd01-93e41acb7de9",
+        "order": 1,
+        "props": {
+          "text": "Save",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-b8715c07-6472-4c65-974c-89648e07443d",
+          "icon": "Save"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaphq2r_o7tcc",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-2505cd81-4f24-4e95-9a86-45d29d772103"
+              },
+              {
+                "id": "da_mwaphq2r_er10i",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq2r_rwc14",
+                "type": "refreshDataSource",
+                "dataSourceRef": "voteBallotsList"
+              }
+            ],
+            "invalidateQueries": [
+              "region:voteBallotsList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-b8715c07-6472-4c65-974c-89648e07443d": {
+        "id": "node-b8715c07-6472-4c65-974c-89648e07443d",
+        "type": "container",
+        "parentId": "node-2505cd81-4f24-4e95-9a86-45d29d772103",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-b8715c07-6472-4c65-974c-89648e07443d"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteBallotsList",
+            "sourcePath": "voteBallotsList",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "selection.id"
+            }
+          }
+        },
+        "children": [
+          "node-21a49ed2-588f-4c22-b64f-f38454e6d623"
+        ]
+      },
+      "node-43124754-a680-4bfe-89fe-65fba16a52bc": {
+        "id": "node-43124754-a680-4bfe-89fe-65fba16a52bc",
+        "type": "link",
+        "parentId": "node-5ca69944-fbf6-40e6-bd01-93e41acb7de9",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq2r_7ybu7",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-2505cd81-4f24-4e95-9a86-45d29d772103"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-5ca69944-fbf6-40e6-bd01-93e41acb7de9": {
+        "id": "node-5ca69944-fbf6-40e6-bd01-93e41acb7de9",
+        "type": "container",
+        "parentId": "node-2505cd81-4f24-4e95-9a86-45d29d772103",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-43124754-a680-4bfe-89fe-65fba16a52bc",
+          "node-3fe28dc2-55b3-4bb3-8b6f-fce7294bade9"
+        ]
+      },
+      "node-13e6bd03-8adb-4d58-adc9-3605690caaef": {
+        "id": "node-13e6bd03-8adb-4d58-adc9-3605690caaef",
+        "type": "container",
+        "parentId": "root",
+        "order": 3,
+        "props": {
+          "title": "Delete question?",
+          "size": "sm",
+          "isOpen": false,
+          "tone": "danger",
+          "_designerPaletteItemId": "heroui.alert-dialog",
+          "_isBuiltInTemplateRoot": true
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-13e6bd03-8adb-4d58-adc9-3605690caaef === true"
+        },
+        "binding": {},
+        "children": [
+          "node-99bb4029-db23-40e2-9f37-fb5d65ad7c90",
+          "node-3accacee-5832-4417-8981-2ced682f9219"
+        ]
+      },
+      "node-99bb4029-db23-40e2-9f37-fb5d65ad7c90": {
+        "id": "node-99bb4029-db23-40e2-9f37-fb5d65ad7c90",
+        "type": "text",
+        "parentId": "node-13e6bd03-8adb-4d58-adc9-3605690caaef",
+        "order": 0,
+        "props": {
+          "text": "Delete this question? This cannot be undone.",
+          "className": "block p-[15px] text-sm text-slate-700",
+          "_designerPaletteItemId": "html.text",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "block",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "node-35895677-50ca-48e7-845f-f31858c94b26": {
+        "id": "node-35895677-50ca-48e7-845f-f31858c94b26",
+        "type": "link",
+        "parentId": "node-3accacee-5832-4417-8981-2ced682f9219",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq2r_oxjil",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-13e6bd03-8adb-4d58-adc9-3605690caaef"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-03c21b6a-6d57-4a41-af42-e5dbe682410a": {
+        "id": "node-03c21b6a-6d57-4a41-af42-e5dbe682410a",
+        "type": "link",
+        "parentId": "node-3accacee-5832-4417-8981-2ced682f9219",
+        "order": 1,
+        "props": {
+          "text": "Delete",
+          "icon": "Trash2",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-rose-600 hover:bg-rose-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq2r_hxytt",
+                "type": "callMutation",
+                "mutationOperation": "delete",
+                "dataSourceRef": "voteBallotsList",
+                "mutationRecordIdStorePath": "selection.id"
+              },
+              {
+                "id": "da_mwaphq2r_avytg",
+                "type": "refreshDataSource",
+                "dataSourceRef": "voteBallotsList"
+              },
+              {
+                "id": "da_mwaphq2r_vlco2",
+                "type": "showToast",
+                "toastTitle": "Deleted",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq2r_p6kg6",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-13e6bd03-8adb-4d58-adc9-3605690caaef"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-3accacee-5832-4417-8981-2ced682f9219": {
+        "id": "node-3accacee-5832-4417-8981-2ced682f9219",
+        "type": "container",
+        "parentId": "node-13e6bd03-8adb-4d58-adc9-3605690caaef",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-35895677-50ca-48e7-845f-f31858c94b26",
+          "node-03c21b6a-6d57-4a41-af42-e5dbe682410a"
+        ]
+      },
+      "layout-flex-column-1794316123975-nv12g": {
+        "id": "layout-flex-column-1794316123975-nv12g",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123941-mskqk",
+        "order": 1,
+        "props": {
+          "className": "flex min-h-0 min-w-0 flex-1 flex-col gap-2 overflow-hidden",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1794316123978-6a2la"
+        ]
+      },
+      "layout-flex-column-1794316123978-6a2la": {
+        "id": "layout-flex-column-1794316123978-6a2la",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123975-nv12g",
+        "order": 0,
+        "props": {
+          "className": "flex flex-col space-y-2 pt-3",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "pt-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-row-1794316123980-iy5sc",
+          "layout-flex-column-1794316123990-xsjjp"
+        ]
+      },
+      "layout-flex-row-1794316123980-iy5sc": {
+        "id": "layout-flex-row-1794316123980-iy5sc",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123978-6a2la",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-4 items-center gap-0.5 ps-[4px]",
+          "_designerPaletteItemId": "layout.flex-row",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "min-h-4",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "",
+          "twGap": "gap-0.5",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123982-8936z"
+        ]
+      },
+      "html-text-1794316123982-8936z": {
+        "id": "html-text-1794316123982-8936z",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316123980-iy5sc",
+        "order": 0,
+        "props": {
+          "text": "Participant choices",
+          "className": "border-s-2 ps-1.5 text-[11px] font-bold uppercase tracking-wider leading-none text-emerald-800 border-emerald-600",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "ps-1.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-bold",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "layout-flex-column-1794316123990-xsjjp": {
+        "id": "layout-flex-column-1794316123990-xsjjp",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123978-6a2la",
+        "order": 1,
+        "props": {
+          "className": "flex flex-col gap-2",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316123992-lpqp5",
+          "html-text-1794316123998-584ou",
+          "layout-flex-column-1794316124003-u8cur"
+        ]
+      },
+      "html-text-1794316123992-lpqp5": {
+        "id": "html-text-1794316123992-lpqp5",
+        "type": "text",
+        "parentId": "layout-flex-column-1794316123990-xsjjp",
+        "order": 0,
+        "props": {
+          "text": "Choices for the selected question appear below.",
+          "className": "text-xs leading-relaxed text-emerald-900/80 ps-[4px]",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {
+          "visibleCondition": "store.voteEditor.activeBallotKeys.0"
+        },
+        "binding": {},
+        "children": []
+      },
+      "html-text-1794316123998-584ou": {
+        "id": "html-text-1794316123998-584ou",
+        "type": "text",
+        "parentId": "layout-flex-column-1794316123990-xsjjp",
+        "order": 1,
+        "props": {
+          "text": "No question selected — pick a row in Questions for participants.",
+          "className": "rounded-md border border-dashed border-emerald-200 bg-emerald-50/60 px-3 py-4 text-center text-xs font-medium text-emerald-800",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-medium",
+          "twTextAlign": "text-center",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {
+          "visibleCondition": "!store.voteEditor.activeBallotKeys.0"
+        },
+        "binding": {},
+        "children": []
+      },
+      "layout-flex-column-1794316124003-u8cur": {
+        "id": "layout-flex-column-1794316124003-u8cur",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123990-xsjjp",
+        "order": 2,
+        "props": {
+          "className": "flex min-h-0 min-w-0 flex-1 flex-col gap-2",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1794316124005-jmpdp"
+        ]
+      },
+      "heroui-app-table-grid-1794316124005-jmpdp": {
+        "id": "heroui-app-table-grid-1794316124005-jmpdp",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316124003-u8cur",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-[200px] min-w-0 flex-[2] flex-col",
+          "columns": "[{\"key\":\"displayName\",\"label\":\"Choice\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"title\"},{\"key\":\"sortOrder\",\"label\":\"Order\",\"sort\":true,\"cardRole\":\"meta\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-d496d557-9e25-41ca-a0c7-c5861acb91a3\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.choiceId\"}},{\"actionId\":\"delete\",\"icon\":\"Trash2\",\"intent\":\"delete\",\"tooltip\":\"Delete\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-67b3fbbb-ca30-44c2-8f34-b804d832d599\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.choiceId\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"layoutPinned\":\"right\",\"width\":\"57px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "cards",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "sortOrder",
+          "sortOptions": "[{\"value\":\"displayName\",\"label\":\"Choice\"},{\"value\":\"sortOrder\",\"label\":\"Order\"}]",
+          "loadingMessage": "Loading choices…",
+          "emptyContent": "No choices for this question yet. Use Add choice to create voter options.",
+          "errorContent": "Could not load choices.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-[200px]",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search choices…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"Add choice\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-993a713a-4a3a-44bd-97c1-c79f025463aa\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.choiceId\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[{\"columnId\":\"displayName\",\"apiParam\":\"filter[displayName][like]\",\"kind\":\"text\"}]}}"
+        },
+        "layout": {
+          "visibleCondition": "store.voteEditor.activeBallotKeys.0"
+        },
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteCandidatesList",
+            "sourcePath": "voteCandidatesList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere",
+              "filter[displayName][like]": "gridQuery.filters.displayName",
+              "filter[votingId][eq]": "routeParams.id",
+              "filter[ballotId][eq]": "voteEditor.activeBallotKeys.0"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-993a713a-4a3a-44bd-97c1-c79f025463aa": {
+        "id": "node-993a713a-4a3a-44bd-97c1-c79f025463aa",
+        "type": "container",
+        "parentId": "root",
+        "order": 4,
+        "props": {
+          "title": "Create choice",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.voteEditor.activeBallotKeys.0"
+        },
+        "binding": {},
+        "children": [
+          "node-d9d81289-915a-49b7-8536-c4a7e8839857",
+          "node-0339f845-c51c-4200-81a0-51ec87dc965e"
+        ]
+      },
+      "node-880128c4-d9a5-48b8-8a22-a5224f6567c2": {
+        "id": "node-880128c4-d9a5-48b8-8a22-a5224f6567c2",
+        "type": "container",
+        "parentId": "node-c72ea770-8049-4898-851f-93e87b0af80d",
+        "order": 0,
+        "props": {
+          "name": "votingId",
+          "label": "Voting scope",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Voting scope",
+          "hint": "Required. Enter voting scope.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "votingId",
+            "valueMode": "defaultValue"
+          },
+          "store:routeParams.id": {
+            "sourceType": "store",
+            "bindingRole": "property",
+            "targetProp": "value"
+          }
+        },
+        "children": []
+      },
+      "node-38722b55-6593-400d-8530-e3f504a4822c": {
+        "id": "node-38722b55-6593-400d-8530-e3f504a4822c",
+        "type": "container",
+        "parentId": "node-c72ea770-8049-4898-851f-93e87b0af80d",
+        "order": 1,
+        "props": {
+          "name": "ballotId",
+          "label": "Question",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Question",
+          "hint": "Required. Enter question.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "ballotId",
+            "valueMode": "defaultValue"
+          },
+          "store:voteEditor.activeBallotKeys.0": {
+            "sourceType": "store",
+            "bindingRole": "property",
+            "targetProp": "value"
+          }
+        },
+        "children": []
+      },
+      "node-b79002b8-5172-474a-b1fb-4ee5c4593277": {
+        "id": "node-b79002b8-5172-474a-b1fb-4ee5c4593277",
+        "type": "container",
+        "parentId": "node-c72ea770-8049-4898-851f-93e87b0af80d",
+        "order": 2,
+        "props": {
+          "name": "displayName",
+          "label": "Choice label (what voters see)",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "e.g. Option A — Dr. Sara Ahmadi",
+          "hint": "Required. Enter choice label (what voters see).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "displayName",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-6578a8db-65d5-40e8-95b7-c6b03210da5e": {
+        "id": "node-6578a8db-65d5-40e8-95b7-c6b03210da5e",
+        "type": "container",
+        "parentId": "node-c72ea770-8049-4898-851f-93e87b0af80d",
+        "order": 3,
+        "props": {
+          "name": "sortOrder",
+          "label": "Display order",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "0",
+          "hint": "Required. Enter display order.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "sortOrder",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-c72ea770-8049-4898-851f-93e87b0af80d": {
+        "id": "node-c72ea770-8049-4898-851f-93e87b0af80d",
+        "type": "container",
+        "parentId": "node-d9d81289-915a-49b7-8536-c4a7e8839857",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-880128c4-d9a5-48b8-8a22-a5224f6567c2",
+          "node-38722b55-6593-400d-8530-e3f504a4822c",
+          "node-b79002b8-5172-474a-b1fb-4ee5c4593277",
+          "node-6578a8db-65d5-40e8-95b7-c6b03210da5e"
+        ]
+      },
+      "node-a6ed3016-c97e-4d59-827a-04062ebd3e1e": {
+        "id": "node-a6ed3016-c97e-4d59-827a-04062ebd3e1e",
+        "type": "link",
+        "parentId": "node-0339f845-c51c-4200-81a0-51ec87dc965e",
+        "order": 1,
+        "props": {
+          "text": "Create choice",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-d9d81289-915a-49b7-8536-c4a7e8839857",
+          "icon": "Plus"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaphq4b_jojff",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-993a713a-4a3a-44bd-97c1-c79f025463aa"
+              },
+              {
+                "id": "da_mwaphq4b_kopng",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq4b_9hruw",
+                "type": "refreshDataSource",
+                "dataSourceRef": "voteCandidatesList"
+              },
+              {
+                "id": "da_mwaphq4b_hpd1l",
+                "type": "resetForm",
+                "targetNodeId": "node-d9d81289-915a-49b7-8536-c4a7e8839857"
+              }
+            ],
+            "invalidateQueries": [
+              "region:voteCandidatesList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-d9d81289-915a-49b7-8536-c4a7e8839857": {
+        "id": "node-d9d81289-915a-49b7-8536-c4a7e8839857",
+        "type": "container",
+        "parentId": "node-993a713a-4a3a-44bd-97c1-c79f025463aa",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-d9d81289-915a-49b7-8536-c4a7e8839857"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteCandidatesList",
+            "sourcePath": "voteCandidatesList"
+          }
+        },
+        "children": [
+          "node-c72ea770-8049-4898-851f-93e87b0af80d"
+        ]
+      },
+      "node-ad6d75d4-bbc8-402e-8ea6-f85c90500b3f": {
+        "id": "node-ad6d75d4-bbc8-402e-8ea6-f85c90500b3f",
+        "type": "link",
+        "parentId": "node-0339f845-c51c-4200-81a0-51ec87dc965e",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq4b_geoii",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-993a713a-4a3a-44bd-97c1-c79f025463aa"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-0339f845-c51c-4200-81a0-51ec87dc965e": {
+        "id": "node-0339f845-c51c-4200-81a0-51ec87dc965e",
+        "type": "container",
+        "parentId": "node-993a713a-4a3a-44bd-97c1-c79f025463aa",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-ad6d75d4-bbc8-402e-8ea6-f85c90500b3f",
+          "node-a6ed3016-c97e-4d59-827a-04062ebd3e1e"
+        ]
+      },
+      "node-d496d557-9e25-41ca-a0c7-c5861acb91a3": {
+        "id": "node-d496d557-9e25-41ca-a0c7-c5861acb91a3",
+        "type": "container",
+        "parentId": "root",
+        "order": 5,
+        "props": {
+          "title": "Edit choice",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-d496d557-9e25-41ca-a0c7-c5861acb91a3 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-e1eaed1e-9bc8-43b8-8201-ff0dc11132ec",
+          "node-1465e0e1-f582-49b6-8435-21c39df6426f"
+        ]
+      },
+      "node-f9341a42-a3f3-4164-a534-3808ca048434": {
+        "id": "node-f9341a42-a3f3-4164-a534-3808ca048434",
+        "type": "container",
+        "parentId": "node-eb37cf24-9dab-44ca-9675-5a8e055d8f9a",
+        "order": 0,
+        "props": {
+          "name": "votingId",
+          "label": "Voting scope",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Voting scope",
+          "hint": "Required. Enter voting scope.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "votingId",
+            "valueMode": "defaultValue"
+          },
+          "store:routeParams.id": {
+            "sourceType": "store",
+            "bindingRole": "property",
+            "targetProp": "value"
+          }
+        },
+        "children": []
+      },
+      "node-361ebb66-295d-413a-9ff9-a1f521510c4b": {
+        "id": "node-361ebb66-295d-413a-9ff9-a1f521510c4b",
+        "type": "container",
+        "parentId": "node-eb37cf24-9dab-44ca-9675-5a8e055d8f9a",
+        "order": 1,
+        "props": {
+          "name": "ballotId",
+          "label": "Question",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Question",
+          "hint": "Required. Enter question.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "ballotId",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-ee32f5b5-300b-4490-b884-0b357dba1dd7": {
+        "id": "node-ee32f5b5-300b-4490-b884-0b357dba1dd7",
+        "type": "container",
+        "parentId": "node-eb37cf24-9dab-44ca-9675-5a8e055d8f9a",
+        "order": 2,
+        "props": {
+          "name": "displayName",
+          "label": "Choice label (what voters see)",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "e.g. Option A — Dr. Sara Ahmadi",
+          "hint": "Required. Enter choice label (what voters see).",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "displayName",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-705c8465-4e99-4cc5-b8e3-f5c4e8301af1": {
+        "id": "node-705c8465-4e99-4cc5-b8e3-f5c4e8301af1",
+        "type": "container",
+        "parentId": "node-eb37cf24-9dab-44ca-9675-5a8e055d8f9a",
+        "order": 3,
+        "props": {
+          "name": "sortOrder",
+          "label": "Display order",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "0",
+          "hint": "Required. Enter display order.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "sortOrder",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-eb37cf24-9dab-44ca-9675-5a8e055d8f9a": {
+        "id": "node-eb37cf24-9dab-44ca-9675-5a8e055d8f9a",
+        "type": "container",
+        "parentId": "node-e1eaed1e-9bc8-43b8-8201-ff0dc11132ec",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-f9341a42-a3f3-4164-a534-3808ca048434",
+          "node-361ebb66-295d-413a-9ff9-a1f521510c4b",
+          "node-ee32f5b5-300b-4490-b884-0b357dba1dd7",
+          "node-705c8465-4e99-4cc5-b8e3-f5c4e8301af1"
+        ]
+      },
+      "node-9b6688b9-3b25-4238-adc1-19303ec55de4": {
+        "id": "node-9b6688b9-3b25-4238-adc1-19303ec55de4",
+        "type": "link",
+        "parentId": "node-1465e0e1-f582-49b6-8435-21c39df6426f",
+        "order": 1,
+        "props": {
+          "text": "Save",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-e1eaed1e-9bc8-43b8-8201-ff0dc11132ec",
+          "icon": "Save"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaphq4b_moc3v",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-d496d557-9e25-41ca-a0c7-c5861acb91a3"
+              },
+              {
+                "id": "da_mwaphq4b_w7k4d",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq4b_asi45",
+                "type": "refreshDataSource",
+                "dataSourceRef": "voteCandidatesList"
+              }
+            ],
+            "invalidateQueries": [
+              "region:voteCandidatesList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-e1eaed1e-9bc8-43b8-8201-ff0dc11132ec": {
+        "id": "node-e1eaed1e-9bc8-43b8-8201-ff0dc11132ec",
+        "type": "container",
+        "parentId": "node-d496d557-9e25-41ca-a0c7-c5861acb91a3",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-e1eaed1e-9bc8-43b8-8201-ff0dc11132ec"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "voteCandidatesList",
+            "sourcePath": "voteCandidatesList",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "selection.id"
+            }
+          }
+        },
+        "children": [
+          "node-eb37cf24-9dab-44ca-9675-5a8e055d8f9a"
+        ]
+      },
+      "node-536cf237-419e-485a-9ba6-9604387d2905": {
+        "id": "node-536cf237-419e-485a-9ba6-9604387d2905",
+        "type": "link",
+        "parentId": "node-1465e0e1-f582-49b6-8435-21c39df6426f",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq4b_dlej3",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-d496d557-9e25-41ca-a0c7-c5861acb91a3"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-1465e0e1-f582-49b6-8435-21c39df6426f": {
+        "id": "node-1465e0e1-f582-49b6-8435-21c39df6426f",
+        "type": "container",
+        "parentId": "node-d496d557-9e25-41ca-a0c7-c5861acb91a3",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-536cf237-419e-485a-9ba6-9604387d2905",
+          "node-9b6688b9-3b25-4238-adc1-19303ec55de4"
+        ]
+      },
+      "node-67b3fbbb-ca30-44c2-8f34-b804d832d599": {
+        "id": "node-67b3fbbb-ca30-44c2-8f34-b804d832d599",
+        "type": "container",
+        "parentId": "root",
+        "order": 6,
+        "props": {
+          "title": "Delete choice?",
+          "size": "sm",
+          "isOpen": false,
+          "tone": "danger",
+          "_designerPaletteItemId": "heroui.alert-dialog",
+          "_isBuiltInTemplateRoot": true
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-67b3fbbb-ca30-44c2-8f34-b804d832d599 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-35528077-cf4b-4ffe-994d-480bd92223a8",
+          "node-e5f8b525-baaa-4147-a287-f6831c9e7473"
+        ]
+      },
+      "node-35528077-cf4b-4ffe-994d-480bd92223a8": {
+        "id": "node-35528077-cf4b-4ffe-994d-480bd92223a8",
+        "type": "text",
+        "parentId": "node-67b3fbbb-ca30-44c2-8f34-b804d832d599",
+        "order": 0,
+        "props": {
+          "text": "Delete this choice? This cannot be undone.",
+          "className": "block p-[15px] text-sm text-slate-700",
+          "_designerPaletteItemId": "html.text",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "block",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "node-1f0c98d3-43f1-4fc7-8d23-03ec954ed71c": {
+        "id": "node-1f0c98d3-43f1-4fc7-8d23-03ec954ed71c",
+        "type": "link",
+        "parentId": "node-e5f8b525-baaa-4147-a287-f6831c9e7473",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq4c_rzcto",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-67b3fbbb-ca30-44c2-8f34-b804d832d599"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-5902248c-e659-49c6-9374-6afe22122b6b": {
+        "id": "node-5902248c-e659-49c6-9374-6afe22122b6b",
+        "type": "link",
+        "parentId": "node-e5f8b525-baaa-4147-a287-f6831c9e7473",
+        "order": 1,
+        "props": {
+          "text": "Delete",
+          "icon": "Trash2",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-rose-600 hover:bg-rose-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq4c_9ug4a",
+                "type": "callMutation",
+                "mutationOperation": "delete",
+                "dataSourceRef": "voteCandidatesList",
+                "mutationRecordIdStorePath": "selection.id"
+              },
+              {
+                "id": "da_mwaphq4c_zxndg",
+                "type": "refreshDataSource",
+                "dataSourceRef": "voteCandidatesList"
+              },
+              {
+                "id": "da_mwaphq4c_itdhl",
+                "type": "showToast",
+                "toastTitle": "Deleted",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq4c_bciqr",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-67b3fbbb-ca30-44c2-8f34-b804d832d599"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-e5f8b525-baaa-4147-a287-f6831c9e7473": {
+        "id": "node-e5f8b525-baaa-4147-a287-f6831c9e7473",
+        "type": "container",
+        "parentId": "node-67b3fbbb-ca30-44c2-8f34-b804d832d599",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-1f0c98d3-43f1-4fc7-8d23-03ec954ed71c",
+          "node-5902248c-e659-49c6-9374-6afe22122b6b"
+        ]
+      },
+      "layout-flex-column-1794316124036-61e9k": {
+        "id": "layout-flex-column-1794316124036-61e9k",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316123941-mskqk",
+        "order": 2,
+        "props": {
+          "className": "flex min-h-0 min-w-0 shrink-0 flex-col gap-2 overflow-hidden",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "overflow-hidden",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-0",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-column-1794316124039-ifksr"
+        ]
+      },
+      "layout-flex-column-1794316124039-ifksr": {
+        "id": "layout-flex-column-1794316124039-ifksr",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316124036-61e9k",
+        "order": 0,
+        "props": {
+          "className": "flex flex-col space-y-2 pt-3",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "pt-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "layout-flex-row-1794316124045-razcc",
+          "layout-flex-column-1794316124052-psuxn"
+        ]
+      },
+      "layout-flex-row-1794316124045-razcc": {
+        "id": "layout-flex-row-1794316124045-razcc",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316124039-ifksr",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-4 items-center gap-0.5 ps-[4px]",
+          "_designerPaletteItemId": "layout.flex-row",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "min-h-4",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "",
+          "twGap": "gap-0.5",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316124048-1ml6p"
+        ]
+      },
+      "html-text-1794316124048-1ml6p": {
+        "id": "html-text-1794316124048-1ml6p",
+        "type": "text",
+        "parentId": "layout-flex-row-1794316124045-razcc",
+        "order": 0,
+        "props": {
+          "text": "Polling stations (Cars)",
+          "className": "border-s-2 ps-1.5 text-[11px] font-bold uppercase tracking-wider leading-none text-amber-700 border-amber-400",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "ps-1.5",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "font-bold",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "layout-flex-column-1794316124052-psuxn": {
+        "id": "layout-flex-column-1794316124052-psuxn",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316124039-ifksr",
+        "order": 1,
+        "props": {
+          "className": "flex flex-col gap-2",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "html-text-1794316124055-d54lc",
+          "heroui-app-table-grid-1794316124060-wa771"
+        ]
+      },
+      "html-text-1794316124055-d54lc": {
+        "id": "html-text-1794316124055-d54lc",
+        "type": "text",
+        "parentId": "layout-flex-column-1794316124052-psuxn",
+        "order": 0,
+        "props": {
+          "text": "Physical or logical polling locations for this voting scope (legacy Elections_Cars parity).",
+          "className": "text-xs leading-relaxed text-amber-900/80 ps-[4px] pb-1",
+          "_designerPaletteItemId": "html.text",
+          "twDisplay": "",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "pb-1",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "heroui-app-table-grid-1794316124060-wa771": {
+        "id": "heroui-app-table-grid-1794316124060-wa771",
+        "type": "container",
+        "parentId": "layout-flex-column-1794316124052-psuxn",
+        "order": 1,
+        "props": {
+          "className": "flex min-h-[160px] min-w-0 flex-col",
+          "columns": "[{\"key\":\"title\",\"label\":\"Station\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"title\"},{\"key\":\"isActive\",\"label\":\"Active\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"meta\",\"width\":\"6rem\"},{\"key\":\"operatorNote\",\"label\":\"Note\",\"cardRole\":\"meta\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-f5a37c74-b666-4402-8aee-55a655d248d2\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},{\"actionId\":\"delete\",\"icon\":\"Trash2\",\"intent\":\"delete\",\"tooltip\":\"Delete\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"layoutPinned\":\"right\",\"width\":\"57px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 15,
+          "page": 1,
+          "total": 0,
+          "presentation": "table",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "title",
+          "sortOptions": "[{\"value\":\"title\",\"label\":\"Station\"},{\"value\":\"isActive\",\"label\":\"Active\"}]",
+          "loadingMessage": "Loading stations…",
+          "emptyContent": "No polling stations yet. Use Add station when you are ready for on-site voting.",
+          "errorContent": "Could not load stations.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "min-w-0",
+          "twHeight": "min-h-[160px]",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search stations…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"Add station\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-b9b759f9-116a-4e6e-a30e-fd341231057d\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[{\"columnId\":\"title\",\"apiParam\":\"filter[title][like]\",\"kind\":\"text\"}]}}"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "votePollingStationsList",
+            "sourcePath": "votePollingStationsList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere",
+              "filter[title][like]": "gridQuery.filters.title",
+              "filter[votingId][eq]": "routeParams.id"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-b9b759f9-116a-4e6e-a30e-fd341231057d": {
+        "id": "node-b9b759f9-116a-4e6e-a30e-fd341231057d",
+        "type": "container",
+        "parentId": "root",
+        "order": 7,
+        "props": {
+          "title": "Create station",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-b9b759f9-116a-4e6e-a30e-fd341231057d === true"
+        },
+        "binding": {},
+        "children": [
+          "node-44ae1fe2-5d21-4dc4-a4db-2071b90868ab",
+          "node-51e5fb99-21d6-48d0-943b-336665e0e59a"
+        ]
+      },
+      "node-21bd7fd7-f593-4ffb-8d50-3fc3863d208b": {
+        "id": "node-21bd7fd7-f593-4ffb-8d50-3fc3863d208b",
+        "type": "container",
+        "parentId": "node-18601d6a-9bf6-426f-a780-cfbd215cb5e3",
+        "order": 0,
+        "props": {
+          "name": "votingId",
+          "label": "Voting scope",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Voting scope",
+          "hint": "Required. Enter voting scope.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "votingId",
+            "valueMode": "defaultValue"
+          },
+          "store:routeParams.id": {
+            "sourceType": "store",
+            "bindingRole": "property",
+            "targetProp": "value"
+          }
+        },
+        "children": []
+      },
+      "node-2250f71f-d1a3-492c-a98b-d91a9fad621d": {
+        "id": "node-2250f71f-d1a3-492c-a98b-d91a9fad621d",
+        "type": "container",
+        "parentId": "node-18601d6a-9bf6-426f-a780-cfbd215cb5e3",
+        "order": 1,
+        "props": {
+          "name": "title",
+          "label": "Station title",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "e.g. Central hall — district 3",
+          "hint": "Required. Enter station title.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-342a157f-e49a-496b-b31e-ba1af601dfe5": {
+        "id": "node-342a157f-e49a-496b-b31e-ba1af601dfe5",
+        "type": "container",
+        "parentId": "node-18601d6a-9bf6-426f-a780-cfbd215cb5e3",
+        "order": 2,
+        "props": {
+          "name": "isActive",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "isActive",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-6c2ac0df-6419-4129-8580-9320d3163b28": {
+        "id": "node-6c2ac0df-6419-4129-8580-9320d3163b28",
+        "type": "container",
+        "parentId": "node-18601d6a-9bf6-426f-a780-cfbd215cb5e3",
+        "order": 3,
+        "props": {
+          "name": "operatorNote",
+          "label": "Operator note",
+          "size": "sm",
+          "placeholder": "Operator note",
+          "hint": "Enter operator note.",
+          "rows": 3,
+          "_designerPaletteItemId": "heroui.textarea"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "operatorNote",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-18601d6a-9bf6-426f-a780-cfbd215cb5e3": {
+        "id": "node-18601d6a-9bf6-426f-a780-cfbd215cb5e3",
+        "type": "container",
+        "parentId": "node-44ae1fe2-5d21-4dc4-a4db-2071b90868ab",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-21bd7fd7-f593-4ffb-8d50-3fc3863d208b",
+          "node-2250f71f-d1a3-492c-a98b-d91a9fad621d",
+          "node-342a157f-e49a-496b-b31e-ba1af601dfe5",
+          "node-6c2ac0df-6419-4129-8580-9320d3163b28"
+        ]
+      },
+      "node-4212700e-21fb-4b41-bf68-a14aee631bec": {
+        "id": "node-4212700e-21fb-4b41-bf68-a14aee631bec",
+        "type": "link",
+        "parentId": "node-51e5fb99-21d6-48d0-943b-336665e0e59a",
+        "order": 1,
+        "props": {
+          "text": "Create station",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-44ae1fe2-5d21-4dc4-a4db-2071b90868ab",
+          "icon": "Plus"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaphq60_20qwx",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-b9b759f9-116a-4e6e-a30e-fd341231057d"
+              },
+              {
+                "id": "da_mwaphq60_somqz",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq60_6iea4",
+                "type": "refreshDataSource",
+                "dataSourceRef": "votePollingStationsList"
+              },
+              {
+                "id": "da_mwaphq60_ru9nv",
+                "type": "resetForm",
+                "targetNodeId": "node-44ae1fe2-5d21-4dc4-a4db-2071b90868ab"
+              }
+            ],
+            "invalidateQueries": [
+              "region:votePollingStationsList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-44ae1fe2-5d21-4dc4-a4db-2071b90868ab": {
+        "id": "node-44ae1fe2-5d21-4dc4-a4db-2071b90868ab",
+        "type": "container",
+        "parentId": "node-b9b759f9-116a-4e6e-a30e-fd341231057d",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-44ae1fe2-5d21-4dc4-a4db-2071b90868ab"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "votePollingStationsList",
+            "sourcePath": "votePollingStationsList"
+          }
+        },
+        "children": [
+          "node-18601d6a-9bf6-426f-a780-cfbd215cb5e3"
+        ]
+      },
+      "node-c8e4869e-2d96-4a79-9c21-6faa84c583c7": {
+        "id": "node-c8e4869e-2d96-4a79-9c21-6faa84c583c7",
+        "type": "link",
+        "parentId": "node-51e5fb99-21d6-48d0-943b-336665e0e59a",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq60_2wasm",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-b9b759f9-116a-4e6e-a30e-fd341231057d"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-51e5fb99-21d6-48d0-943b-336665e0e59a": {
+        "id": "node-51e5fb99-21d6-48d0-943b-336665e0e59a",
+        "type": "container",
+        "parentId": "node-b9b759f9-116a-4e6e-a30e-fd341231057d",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-c8e4869e-2d96-4a79-9c21-6faa84c583c7",
+          "node-4212700e-21fb-4b41-bf68-a14aee631bec"
+        ]
+      },
+      "node-f5a37c74-b666-4402-8aee-55a655d248d2": {
+        "id": "node-f5a37c74-b666-4402-8aee-55a655d248d2",
+        "type": "container",
+        "parentId": "root",
+        "order": 8,
+        "props": {
+          "title": "Edit station",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-f5a37c74-b666-4402-8aee-55a655d248d2 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-b1271bc9-70e7-40b2-9701-74d62bd4067d",
+          "node-171f6a21-71a7-4c03-9597-ba5ad0262e4f"
+        ]
+      },
+      "node-8eefcfde-5c5b-4e5d-b52a-6bd4338ca112": {
+        "id": "node-8eefcfde-5c5b-4e5d-b52a-6bd4338ca112",
+        "type": "container",
+        "parentId": "node-1cb89ebc-6d4f-4e6e-87e0-b9c40cf516ca",
+        "order": 0,
+        "props": {
+          "name": "votingId",
+          "label": "Voting scope",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Voting scope",
+          "hint": "Required. Enter voting scope.",
+          "className": "hidden",
+          "readOnly": true,
+          "_designerPaletteItemId": "heroui.input-text",
+          "twDisplay": "hidden",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "votingId",
+            "valueMode": "defaultValue"
+          },
+          "store:routeParams.id": {
+            "sourceType": "store",
+            "bindingRole": "property",
+            "targetProp": "value"
+          }
+        },
+        "children": []
+      },
+      "node-64262d18-0b37-4306-b864-7d085441ed88": {
+        "id": "node-64262d18-0b37-4306-b864-7d085441ed88",
+        "type": "container",
+        "parentId": "node-1cb89ebc-6d4f-4e6e-87e0-b9c40cf516ca",
+        "order": 1,
+        "props": {
+          "name": "title",
+          "label": "Station title",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "e.g. Central hall — district 3",
+          "hint": "Required. Enter station title.",
+          "_designerPaletteItemId": "heroui.input-text"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "title",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-e4b847d0-cb4b-4214-80cc-da08a65629f6": {
+        "id": "node-e4b847d0-cb4b-4214-80cc-da08a65629f6",
+        "type": "container",
+        "parentId": "node-1cb89ebc-6d4f-4e6e-87e0-b9c40cf516ca",
+        "order": 2,
+        "props": {
+          "name": "isActive",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "_designerPaletteItemId": "heroui.switch"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "isActive",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-95b678dc-d248-4cc6-8053-7033249398a9": {
+        "id": "node-95b678dc-d248-4cc6-8053-7033249398a9",
+        "type": "container",
+        "parentId": "node-1cb89ebc-6d4f-4e6e-87e0-b9c40cf516ca",
+        "order": 3,
+        "props": {
+          "name": "operatorNote",
+          "label": "Operator note",
+          "size": "sm",
+          "placeholder": "Operator note",
+          "hint": "Enter operator note.",
+          "rows": 3,
+          "_designerPaletteItemId": "heroui.textarea"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "operatorNote",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-1cb89ebc-6d4f-4e6e-87e0-b9c40cf516ca": {
+        "id": "node-1cb89ebc-6d4f-4e6e-87e0-b9c40cf516ca",
+        "type": "container",
+        "parentId": "node-b1271bc9-70e7-40b2-9701-74d62bd4067d",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-2 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-8eefcfde-5c5b-4e5d-b52a-6bd4338ca112",
+          "node-64262d18-0b37-4306-b864-7d085441ed88",
+          "node-e4b847d0-cb4b-4214-80cc-da08a65629f6",
+          "node-95b678dc-d248-4cc6-8053-7033249398a9"
+        ]
+      },
+      "node-36aaa2ff-a4a1-4cec-a872-96fdaa316f97": {
+        "id": "node-36aaa2ff-a4a1-4cec-a872-96fdaa316f97",
+        "type": "link",
+        "parentId": "node-171f6a21-71a7-4c03-9597-ba5ad0262e4f",
+        "order": 1,
+        "props": {
+          "text": "Save",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-b1271bc9-70e7-40b2-9701-74d62bd4067d",
+          "icon": "Save"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mwaphq60_liil0",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-f5a37c74-b666-4402-8aee-55a655d248d2"
+              },
+              {
+                "id": "da_mwaphq60_7lwel",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq60_vd87e",
+                "type": "refreshDataSource",
+                "dataSourceRef": "votePollingStationsList"
+              }
+            ],
+            "invalidateQueries": [
+              "region:votePollingStationsList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-b1271bc9-70e7-40b2-9701-74d62bd4067d": {
+        "id": "node-b1271bc9-70e7-40b2-9701-74d62bd4067d",
+        "type": "container",
+        "parentId": "node-f5a37c74-b666-4402-8aee-55a655d248d2",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-b1271bc9-70e7-40b2-9701-74d62bd4067d"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "votePollingStationsList",
+            "sourcePath": "votePollingStationsList",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "selection.id"
+            }
+          }
+        },
+        "children": [
+          "node-1cb89ebc-6d4f-4e6e-87e0-b9c40cf516ca"
+        ]
+      },
+      "node-f1e1d736-1ee3-4cb0-afe2-27fbd5962cac": {
+        "id": "node-f1e1d736-1ee3-4cb0-afe2-27fbd5962cac",
+        "type": "link",
+        "parentId": "node-171f6a21-71a7-4c03-9597-ba5ad0262e4f",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq60_tbjlm",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-f5a37c74-b666-4402-8aee-55a655d248d2"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-171f6a21-71a7-4c03-9597-ba5ad0262e4f": {
+        "id": "node-171f6a21-71a7-4c03-9597-ba5ad0262e4f",
+        "type": "container",
+        "parentId": "node-f5a37c74-b666-4402-8aee-55a655d248d2",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-f1e1d736-1ee3-4cb0-afe2-27fbd5962cac",
+          "node-36aaa2ff-a4a1-4cec-a872-96fdaa316f97"
+        ]
+      },
+      "node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2": {
+        "id": "node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2",
+        "type": "container",
+        "parentId": "root",
+        "order": 9,
+        "props": {
+          "title": "Delete station?",
+          "size": "sm",
+          "isOpen": false,
+          "tone": "danger",
+          "_designerPaletteItemId": "heroui.alert-dialog",
+          "_isBuiltInTemplateRoot": true
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-a8a3f5b9-08a6-467a-acc9-e529d1d640d4",
+          "node-05bbc719-e516-484b-8a4c-0248389f13c6"
+        ]
+      },
+      "node-a8a3f5b9-08a6-467a-acc9-e529d1d640d4": {
+        "id": "node-a8a3f5b9-08a6-467a-acc9-e529d1d640d4",
+        "type": "text",
+        "parentId": "node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2",
+        "order": 0,
+        "props": {
+          "text": "Delete this station? This cannot be undone.",
+          "className": "block p-[15px] text-sm text-slate-700",
+          "_designerPaletteItemId": "html.text",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "block",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "node-372239f4-6a69-4f5c-b448-e8687f1d0b7e": {
+        "id": "node-372239f4-6a69-4f5c-b448-e8687f1d0b7e",
+        "type": "link",
+        "parentId": "node-05bbc719-e516-484b-8a4c-0248389f13c6",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq61_wfmxa",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-46ef38af-0273-4cb1-95a4-49f6e8c684e1": {
+        "id": "node-46ef38af-0273-4cb1-95a4-49f6e8c684e1",
+        "type": "link",
+        "parentId": "node-05bbc719-e516-484b-8a4c-0248389f13c6",
+        "order": 1,
+        "props": {
+          "text": "Delete",
+          "icon": "Trash2",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-rose-600 hover:bg-rose-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mwaphq61_8301d",
+                "type": "callMutation",
+                "mutationOperation": "delete",
+                "dataSourceRef": "votePollingStationsList",
+                "mutationRecordIdStorePath": "selection.id"
+              },
+              {
+                "id": "da_mwaphq61_7ubo9",
+                "type": "refreshDataSource",
+                "dataSourceRef": "votePollingStationsList"
+              },
+              {
+                "id": "da_mwaphq61_gitu6",
+                "type": "showToast",
+                "toastTitle": "Deleted",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mwaphq61_ypgq4",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-05bbc719-e516-484b-8a4c-0248389f13c6": {
+        "id": "node-05bbc719-e516-484b-8a4c-0248389f13c6",
+        "type": "container",
+        "parentId": "node-218c9cd5-dee9-4d02-b0be-bdc06654b6c2",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-372239f4-6a69-4f5c-b448-e8687f1d0b7e",
+          "node-46ef38af-0273-4cb1-95a4-49f6e8c684e1"
+        ]
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-11-10T04:54:13.470Z",
+      "updatedAt": "2026-11-10T13:08:44.405Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "voteEditor": {
+        "id": "voteEditor",
+        "persist": "none",
+        "initialValue": {
+          "activeBallotKeys": []
+        }
+      },
+      "selection": {
+        "id": "selection",
+        "persist": "none",
+        "initialValue": {
+          "id": null,
+          "ballotId": null,
+          "choiceId": null
+        }
+      }
+    },
+    "dataSources": {
+      "voteVotingDetail": {
+        "id": "voteVotingDetail",
+        "name": "Voting scope (detail)",
+        "endpoint": "/api/voting/votings/:id",
+        "primaryKey": "id",
+        "fields": [
+          "id",
+          "title",
+          "statusCode",
+          "startsAt",
+          "endsAt",
+          "operatorNote",
+          "updatedAt"
+        ],
+        "kind": "collection",
+        "operations": {
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/voting/votings/:id"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/voting/votings/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      },
+      "voteBallotsList": {
+        "id": "voteBallotsList",
+        "name": "Ballots",
+        "endpoint": "/api/voting/ballots",
+        "primaryKey": "id",
+        "fields": [
+          "id",
+          "votingId",
+          "title",
+          "selectionMode",
+          "maxSelections",
+          "sortOrder",
+          "ballotTypeCode",
+          "statusCode",
+          "updatedAt"
+        ],
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/voting/ballots"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/voting/ballots"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/voting/ballots/:id"
+          },
+          "delete": {
+            "method": "DELETE",
+            "endpoint": "/api/voting/ballots/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      },
+      "voteCandidatesList": {
+        "id": "voteCandidatesList",
+        "name": "Participant choices",
+        "endpoint": "/api/voting/candidates",
+        "primaryKey": "id",
+        "fields": [
+          "id",
+          "votingId",
+          "ballotId",
+          "displayName",
+          "sortOrder",
+          "statusCode",
+          "updatedAt"
+        ],
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/voting/candidates"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/voting/candidates"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/voting/candidates/:id"
+          },
+          "delete": {
+            "method": "DELETE",
+            "endpoint": "/api/voting/candidates/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      },
+      "votePollingStationsList": {
+        "id": "votePollingStationsList",
+        "name": "Polling stations",
+        "endpoint": "/api/voting/polling-stations",
+        "primaryKey": "id",
+        "fields": [
+          "id",
+          "votingId",
+          "title",
+          "isActive",
+          "operatorNote",
+          "geoNodeId",
+          "updatedAt"
+        ],
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/voting/polling-stations"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/voting/polling-stations"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/voting/polling-stations/:id"
+          },
+          "delete": {
+            "method": "DELETE",
+            "endpoint": "/api/voting/polling-stations/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      }
+    },
+    "lovs": {}
+  },
+  "metadata": {
+    "createdAt": "2026-11-10T04:54:14.155Z",
+    "updatedAt": "2026-11-10T13:08:44.405Z",
+    "createdBy": "voting-phase3c",
+    "updatedBy": "voting-phase3c"
+  }
+}

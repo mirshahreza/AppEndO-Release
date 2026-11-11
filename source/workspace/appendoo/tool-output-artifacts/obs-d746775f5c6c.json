@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:d746775f5c6c",
+    "toolCallId": "call_mv7PhSaTDTwEMlWCoGJFhZju",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1457,
+    "digest": "c83f2c76c683cb67f0a4d11e7b75b6820251d8cd3d0cbd2d7ddc8675f2700a39",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-30T20:25:17.123Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/ui/surfaceClasses.ts\",\n  \"startLine\": 930,\n  \"endLine\": 950,\n  \"totalLines\": 1153,\n  \"truncated\": false,\n  \"content\": \"930|/** @deprecated Use APP_TABLE_GRID_FIRST_COLUMN_PS_CLASS */\\n931|export const APP_TABLE_GRID_FIRST_COLUMN_PL_CLASS = APP_TABLE_GRID_FIRST_COLUMN_PS_CLASS;\\n932|\\n933|/**\\n934| * Table-level cell inline padding: every column uses --app-table-grid-cell-px (default 5px).\\n935| * Prefer APP_TABLE_GRID_TABLE_CLASS on every grid table so cells need only APP_TABLE_GRID_CELL_PE_CLASS.\\n936| */\\n937|export const APP_TABLE_GRID_TABLE_FIRST_COLUMN_INSET_CLASS =\\n938|  '[&_tr>th]:ps-[var(--app-table-grid-cell-px,5px)] [&_tr>td]:ps-[var(--app-table-grid-cell-px,5px)] [&_tr>th]:pe-[var(--app-table-grid-cell-px,5px)] [&_tr>td]:pe-[var(--app-table-grid-cell-px,5px)]';\\n939|\\n940|/** Base table styles for AppTableGrid and composed grid tables. */\\n941|export const APP_TABLE_GRID_TABLE_CLASS =\\n942|  `w-full table-fixed text-start border-collapse ${APP_TABLE_GRID_TABLE_FIRST_COLUMN_INSET_CLASS}`;\\n943|\\n944|/** Clip cell values at the column edge and show an ellipsis when the remainder is hidden. */\\n945|export const APP_TABLE_GRID_CELL_CLIP_CLASS = 'min-w-0 max-w-full truncate';\\n946|\\n947|/** Wrap long cell values inside the column instead of a single-line ellipsis. */\\n948|export const APP_TABLE_GRID_CELL_WRAP_CLASS = 'min-w-0 max-w-full overflow-hidden whitespace-pre-wrap break-words';\\n949|\\n950|/**\"\n}"
+}

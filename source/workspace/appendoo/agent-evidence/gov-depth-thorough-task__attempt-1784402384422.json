@@ -1,0 +1,56 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "6978dce1-0178-4cd8-a167-36c680fe0573",
+      "taskId": "gov-depth-thorough-task",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T19:19:44.816Z"
+    },
+    {
+      "evidenceId": "173b9057-b60a-4089-af27-09664fb13fd9",
+      "taskId": "gov-depth-thorough-task",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/bugFixSample.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T19:19:45.407Z"
+    },
+    {
+      "evidenceId": "1ce80905-4449-4a0d-ad59-d11499e024f9",
+      "taskId": "gov-depth-thorough-task",
+      "type": "RUNTIME",
+      "subjectRefs": [],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "orchestrator:no_mutation_attempted"
+      ],
+      "producedAt": "2026-07-18T19:19:47.074Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "5d7c949a-bdc7-42fe-af15-da98d18f4de4",
+      "taskId": "gov-depth-thorough-task",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "1ce80905-4449-4a0d-ad59-d11499e024f9"
+      ],
+      "finalized": true
+    }
+  ]
+}

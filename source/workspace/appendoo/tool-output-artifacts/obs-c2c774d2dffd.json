@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:c2c774d2dffd",
+    "toolCallId": "call_S2HSQCa91VltMZmr15bPaP1S",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2887,
+    "digest": "24a7bd72f2043583e833e22ca3d446a6f751518b97cf81a91cb049d542838d3d",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T22:40:29.003Z"
+  },
+  "content": "{\n  \"path\": \"src/server/domain/base-info/treeRepository.ts\",\n  \"startLine\": 120,\n  \"endLine\": 210,\n  \"totalLines\": 607,\n  \"truncated\": false,\n  \"content\": \"120|  viewOrder: true,\\n121|  uiColor: true,\\n122|  uiHtml: true,\\n123|} as const;\\n124|\\n125|const treeSelect = {\\n126|  ...optionsSelect,\\n127|  shortName: true,\\n128|  note: true,\\n129|  noteEn: true,\\n130|  noteFa: true,\\n131|  noteAr: true,\\n132|  metadata: true,\\n133|} as const;\\n134|\\n135|const listOrderBy = orderByViewOrderThenId();\\n136|\\n137|const treeListOrderBy = [\\n138|  { parentId: 'asc' as const },\\n139|  ...orderByViewOrderThenId(),\\n140|];\\n141|\\n142|export async function listBaseInfoOptionsRows(\\n143|  titleColumn: string,\\n144|  activeClause: string,\\n145|  rootClause: string,\\n146|  params: unknown[],\\n147|) {\\n148|  const { titleColumn: resolvedTitleColumn, includeInactive, root } = parseListFilters(\\n149|    titleColumn,\\n150|    activeClause,\\n151|    rootClause,\\n152|    params,\\n153|  );\\n154|  const rows = await prisma().baseInfo.findMany({\\n155|    where: {\\n156|      ...buildRootWhere(root),\\n157|      ...(includeInactive ? {} : { isActive: true }),\\n158|    },\\n159|    select: optionsSelect,\\n160|    orderBy: listOrderBy,\\n161|  });\\n162|  return rows.map((row) => mapOptionsRow(row, resolvedTitleColumn));\\n163|}\\n164|\\n165|export async function listBaseInfoTreeRows(\\n166|  titleColumn: string,\\n167|  activeClause: string,\\n168|  rootClause: string,\\n169|  params: unknown[],\\n170|) {\\n171|  const { titleColumn: resolvedTitleColumn, includeInactive, root } = parseListFilters(\\n172|    titleColumn,\\n173|    activeClause,\\n174|    rootClause,\\n175|    params,\\n176|  );\\n177|  const rows = await prisma().baseInfo.findMany({\\n178|    where: {\\n179|      ...buildRootWhere(root),\\n180|      ...(includeInactive ? {} : { isActive: true }),\\n181|    },\\n182|    select: treeSelect,\\n183|    orderBy: treeListOrderBy,\\n184|  });\\n185|  return rows.map((row) => mapTreeRow(row, resolvedTitleColumn));\\n186|}\\n187|\\n188|const parseChildrenFilters = (\\n189|  titleColumn: string,\\n190|  whereClause: string,\\n191|  activeClause: string,\\n192|  params: unknown[],\\n193|) => {\\n194|  const trimmedWhere = whereClause.trim();\\n195|  let parentFilter: { parentId: string | null } | { id: string } | { parentId: null } = { parentId: null };\\n196|\\n197|  if (trimmedWhere.includes('parent_id =')) {\\n198|    parentFilter = { parentId: String(params[0] ?? '') };\\n199|  } else if (trimmedWhere.includes('n.id =') || trimmedWhere.endsWith('id = ?')) {\\n200|    parentFilter = { id: String(params[0] ?? '') };\\n201|  }\\n202|\\n203|  return {\\n204|    titleColumn: (titleColumn || 'title_en') as TitleColumn,\\n205|    includeInactive: activeClause.trim() === '',\\n206|    parentFilter,\\n207|  };\\n208|};\\n209|\\n210|const loadChildPresence = async (nodeIds: string[], includeInactive: boolean) => {\"\n}"
+}

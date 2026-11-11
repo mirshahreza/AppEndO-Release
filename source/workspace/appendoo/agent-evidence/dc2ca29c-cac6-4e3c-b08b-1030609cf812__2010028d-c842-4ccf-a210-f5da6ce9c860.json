@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "e9f02fef-de7f-4a25-8d1c-5119fc57fa07",
+      "taskId": "dc2ca29c-cac6-4e3c-b08b-1030609cf812",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-15T14:56:23.939Z"
+    },
+    {
+      "evidenceId": "42e4be32-af92-4dd0-9815-3cf3f0c9b5e1",
+      "taskId": "dc2ca29c-cac6-4e3c-b08b-1030609cf812",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleA.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-15T14:56:23.940Z"
+    },
+    {
+      "evidenceId": "24f45d14-ec7f-47db-97fb-d5887ed296da",
+      "taskId": "dc2ca29c-cac6-4e3c-b08b-1030609cf812",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-15T14:56:23.941Z"
+    },
+    {
+      "evidenceId": "041455b1-49d3-4f9b-91f9-111a84bef639",
+      "taskId": "dc2ca29c-cac6-4e3c-b08b-1030609cf812",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "27799357-8c9d-4049-ad23-e489b6716209"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-15T14:56:23.943Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "8ed11d9f-0365-438f-85a5-3ba2cfe3f48a",
+      "taskId": "dc2ca29c-cac6-4e3c-b08b-1030609cf812",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "041455b1-49d3-4f9b-91f9-111a84bef639"
+      ],
+      "finalized": true
+    }
+  ]
+}

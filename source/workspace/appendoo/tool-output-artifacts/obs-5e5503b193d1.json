@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:5e5503b193d1",
+    "toolCallId": "call_9Hd576hNc0AFwR4t2xojbtbT",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1719,
+    "digest": "445e350c4c4eef5f145b24371bac5674184bc6c0c228fca9465666a407ab6f1b",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:48:40.226Z"
+  },
+  "content": "{\n  \"query\": \"draft_component_layout template calculator form\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\"\n  ],\n  \"includeText\": false,\n  \"matchCount\": 4,\n  \"matches\": [\n    {\n      \"path\": \"src/features/dashboard/constants.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    },\n    {\n      \"path\": \"src/server/routes/platform.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/platformWebFonts.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/features/dashboard/hooks/useDashboardPage.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"dashboard\",\n      \"label\": \"Dashboard\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

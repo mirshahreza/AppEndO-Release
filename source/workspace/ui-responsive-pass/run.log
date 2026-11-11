@@ -1,0 +1,253 @@
+[2026-09-26T21:07:39.623Z] FAIL responsive:studio:phone P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:07:42.199Z] FAIL responsive:studio:tablet P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:07:44.825Z] FAIL responsive:studio:desktop P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:07:47.536Z] PASS responsive:studio-users:phone
+[2026-09-26T21:07:50.401Z] PASS responsive:studio-users:tablet
+[2026-09-26T21:07:53.234Z] PASS responsive:studio-users:desktop
+[2026-09-26T21:07:55.920Z] PASS responsive:studio-server-functions:phone
+[2026-09-26T21:07:58.726Z] PASS responsive:studio-server-functions:tablet
+[2026-09-26T21:08:01.862Z] PASS responsive:studio-server-functions:desktop
+[2026-09-26T21:08:04.554Z] PASS responsive:studio-package-manager:phone
+[2026-09-26T21:08:07.215Z] PASS responsive:studio-package-manager:tablet
+[2026-09-26T21:08:09.913Z] PASS responsive:studio-package-manager:desktop
+[2026-09-26T21:08:12.573Z] PASS responsive:studio-roles:phone
+[2026-09-26T21:08:15.215Z] PASS responsive:studio-roles:tablet
+[2026-09-26T21:08:17.903Z] PASS responsive:studio-roles:desktop
+[2026-09-26T21:08:20.562Z] PASS responsive:studio-base-info:phone
+[2026-09-26T21:08:23.204Z] PASS responsive:studio-base-info:tablet
+[2026-09-26T21:08:25.851Z] FAIL responsive:studio-base-info:desktop P0: React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ BaseTreeGrid 1. useContext                 useContext
+2. useContext                 useContext
+3. useMemo                    useMemo
+4. useMemo                    useMemo
+5. useContext                 useContext
+6. useState                   useState
+7. useEffect                  useEffect
+8. useMemo                    useMemo
+9. useContext                 useContext
+10. useState                  useState
+11. useEffect                 useEffect
+12. useEffect                 useEffect
+13. useCallback               useCallback
+14. useEffect                 useEffect
+15. useMemo                   useMemo
+16. useRef                    useRef
+17. useCallback               useCallback
+18. useCallback               useCallback
+19. useMemo                   useMemo
+20. useMemo                   useMemo
+21. useMemo                   useMemo
+22. useCallback               useCallback
+23. useState                  useState
+24. useState                  useState
+25. useState                  useState
+26. useState                  useState
+27. useRef                    useRef
+28. useCallback               useCallback
+29. useCallback               useCallback
+30. useCallback               useCallback
+31. useCallback               useCallback
+32. useCallback               useCallback
+33. useCallback               useCallback
+34. useCallback               useCallback
+35. useCallback               useCallback
+36. useCallback               useCallback
+37. useMemo                   useMemo
+38. useMemo                   useMemo
+39. useRef                    useRef
+40. useRef                    useRef
+41. useCallback               useCallback
+42. useCallback               useCallback
+43. useMemo                   useMemo
+44. useMemo                   useMemo
+45. useReducer                useReducer
+46. useRef                    useRef
+47. useState                  useState
+48. useLayoutEffect           useLayoutEffect
+49. useLayoutEffect           useLayoutEffect
+50. useLayoutEffect           useLayoutEffect
+51. useLayoutEffect           useLayoutEffect
+52. useReducer                useReducer
+53. useRef                    useRef
+54. useState                  useState
+55. useLayoutEffect           useLayoutEffect
+56. useLayoutEffect           useLayoutEffect
+57. useLayoutEffect           useLayoutEffect
+58. useLayoutEffect           useLayoutEffect
+59. undefined                 useCallback
+
+[2026-09-26T21:08:28.499Z] FAIL responsive:studio-logs:phone P0: %o
+
+%s
+
+%s
+ Error: Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
+    at finishRenderingHooks (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:5697:17)
+    at renderWithHooks (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:5675:9)
+    at updateFunctionComponent (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:7475:21)
+    at beginWork (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:8525:20)
+    at runWithFiberInDEV (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:997:72)
+    at performUnitOfWork (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:12561:98)
+    at workLoopSync (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:12424:43)
+    at renderRootSync (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:12408:13)
+    at performWorkOnRoot (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:11827:37)
+    at performSyncWorkOnRoot (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:13517:9) The above error occurred in the <BaseTreeGrid> component. React will try to recreate this component tree from scratch using the error boundary you provided, AppErrorBoundaryInner.
+[2026-09-26T21:08:31.686Z] PASS responsive:studio-logs:tablet
+[2026-09-26T21:08:35.284Z] PASS responsive:studio-logs:desktop
+[2026-09-26T21:08:37.979Z] PASS responsive:studio-record-events:phone
+[2026-09-26T21:08:40.692Z] PASS responsive:studio-record-events:tablet
+[2026-09-26T21:08:43.477Z] PASS responsive:studio-record-events:desktop
+[2026-09-26T21:08:46.185Z] PASS responsive:studio-in-app-notifications:phone
+[2026-09-26T21:08:48.846Z] PASS responsive:studio-in-app-notifications:tablet
+[2026-09-26T21:08:51.514Z] PASS responsive:studio-in-app-notifications:desktop
+[2026-09-26T21:08:54.176Z] PASS responsive:studio-chat-history:phone
+[2026-09-26T21:08:56.822Z] PASS responsive:studio-chat-history:tablet
+[2026-09-26T21:08:59.494Z] PASS responsive:studio-chat-history:desktop
+[2026-09-26T21:09:02.149Z] PASS responsive:studio-libraries:phone
+[2026-09-26T21:09:04.930Z] PASS responsive:studio-libraries:tablet
+[2026-09-26T21:09:07.759Z] PASS responsive:studio-libraries:desktop
+[2026-09-26T21:09:10.433Z] PASS responsive:studio-jobs:phone
+[2026-09-26T21:09:13.080Z] PASS responsive:studio-jobs:tablet
+[2026-09-26T21:09:15.752Z] PASS responsive:studio-jobs:desktop
+[2026-09-26T21:09:18.414Z] PASS responsive:studio-cache:phone
+[2026-09-26T21:09:21.090Z] PASS responsive:studio-cache:tablet
+[2026-09-26T21:09:23.778Z] PASS responsive:studio-cache:desktop
+[2026-09-26T21:09:26.452Z] PASS responsive:studio-scheduled-tasks:phone
+[2026-09-26T21:09:29.115Z] PASS responsive:studio-scheduled-tasks:tablet
+[2026-09-26T21:09:31.819Z] PASS responsive:studio-scheduled-tasks:desktop
+[2026-09-26T21:09:34.509Z] PASS responsive:studio-data-sources:phone
+[2026-09-26T21:09:37.171Z] PASS responsive:studio-data-sources:tablet
+[2026-09-26T21:09:39.872Z] PASS responsive:studio-data-sources:desktop
+[2026-09-26T21:09:42.537Z] PASS responsive:studio-my-apis:phone
+[2026-09-26T21:09:45.475Z] PASS responsive:studio-my-apis:tablet
+[2026-09-26T21:09:48.940Z] PASS responsive:studio-my-apis:desktop
+[2026-09-26T21:09:51.623Z] PASS responsive:studio-my-feedback:phone
+[2026-09-26T21:09:54.285Z] PASS responsive:studio-my-feedback:tablet
+[2026-09-26T21:09:56.969Z] PASS responsive:studio-my-feedback:desktop
+[2026-09-26T21:09:59.627Z] PASS responsive:studio-my-messages:phone
+[2026-09-26T21:10:02.269Z] PASS responsive:studio-my-messages:tablet
+[2026-09-26T21:10:04.943Z] PASS responsive:studio-my-messages:desktop
+[2026-09-26T21:10:07.621Z] PASS responsive:studio-feedback-inbox:phone
+[2026-09-26T21:10:10.264Z] PASS responsive:studio-feedback-inbox:tablet
+[2026-09-26T21:10:12.949Z] PASS responsive:studio-feedback-inbox:desktop
+[2026-09-26T21:10:15.605Z] PASS responsive:studio-platform-portals:phone
+[2026-09-26T21:10:18.256Z] PASS responsive:studio-platform-portals:tablet
+[2026-09-26T21:10:20.928Z] PASS responsive:studio-platform-portals:desktop
+[2026-09-26T21:10:23.584Z] PASS responsive:studio-platform-navigations:phone
+[2026-09-26T21:10:26.225Z] PASS responsive:studio-platform-navigations:tablet
+[2026-09-26T21:10:28.918Z] PASS responsive:studio-platform-navigations:desktop
+[2026-09-26T21:10:31.573Z] PASS responsive:studio-file-manager:phone
+[2026-09-26T21:10:34.235Z] PASS responsive:studio-file-manager:tablet
+[2026-09-26T21:10:36.941Z] PASS responsive:studio-file-manager:desktop
+[2026-09-26T21:10:39.631Z] PASS responsive:studio-git:phone
+[2026-09-26T21:10:42.270Z] PASS responsive:studio-git:tablet
+[2026-09-26T21:10:44.944Z] PASS responsive:studio-git:desktop
+[2026-09-26T21:10:47.623Z] PASS responsive:studio-workbooks:phone
+[2026-09-26T21:10:50.275Z] PASS responsive:studio-workbooks:tablet
+[2026-09-26T21:10:52.977Z] PASS responsive:studio-workbooks:desktop
+[2026-09-26T21:10:55.627Z] PASS responsive:studio-my-workbooks:phone
+[2026-09-26T21:10:58.270Z] PASS responsive:studio-my-workbooks:tablet
+[2026-09-26T21:11:00.958Z] PASS responsive:studio-my-workbooks:desktop
+[2026-09-26T21:11:03.618Z] PASS responsive:studio-workflows:phone
+[2026-09-26T21:11:06.280Z] PASS responsive:studio-workflows:tablet
+[2026-09-26T21:11:08.988Z] PASS responsive:studio-workflows:desktop
+[2026-09-26T21:11:11.656Z] PASS responsive:studio-work-items:phone
+[2026-09-26T21:11:14.296Z] PASS responsive:studio-work-items:tablet
+[2026-09-26T21:11:16.987Z] PASS responsive:studio-work-items:desktop
+[2026-09-26T21:11:19.647Z] PASS responsive:studio-idea-foundry:phone
+[2026-09-26T21:11:22.312Z] PASS responsive:studio-idea-foundry:tablet
+[2026-09-26T21:11:25.013Z] PASS responsive:studio-idea-foundry:desktop
+[2026-09-26T21:11:27.705Z] PASS responsive:studio-component-designer:phone
+[2026-09-26T21:11:30.363Z] PASS responsive:studio-component-designer:tablet
+[2026-09-26T21:11:33.053Z] PASS responsive:studio-component-designer:desktop
+[2026-09-26T21:11:35.757Z] PASS responsive:studio-client-components:phone
+[2026-09-26T21:11:38.730Z] PASS responsive:studio-client-components:tablet
+[2026-09-26T21:11:41.547Z] PASS responsive:studio-client-components:desktop
+[2026-09-26T21:11:44.320Z] PASS responsive:studio-settings:phone
+[2026-09-26T21:11:47.000Z] PASS responsive:studio-settings:tablet
+[2026-09-26T21:11:49.725Z] PASS responsive:studio-settings:desktop
+[2026-09-26T21:11:52.427Z] PASS responsive:studio-organization-chart:phone
+[2026-09-26T21:11:55.088Z] PASS responsive:studio-organization-chart:tablet
+[2026-09-26T21:11:57.790Z] PASS responsive:studio-organization-chart:desktop
+[2026-09-26T21:12:00.467Z] PASS responsive:studio-geographic-divisions:phone
+[2026-09-26T21:12:03.181Z] PASS responsive:studio-geographic-divisions:tablet
+[2026-09-26T21:12:05.883Z] PASS responsive:studio-geographic-divisions:desktop
+[2026-09-26T21:12:08.589Z] PASS responsive:studio-data-studio:phone
+[2026-09-26T21:12:11.273Z] PASS responsive:studio-data-studio:tablet
+[2026-09-26T21:12:43.905Z] FAIL responsive:studio-data-studio:desktop locator.innerText: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('body')
+
+[2026-09-26T21:12:47.803Z] FAIL responsive:studio:phone P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:12:50.436Z] FAIL responsive:studio:tablet P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:12:53.100Z] FAIL responsive:studio:desktop P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:12:55.721Z] PASS responsive:studio-base-info:desktop
+[2026-09-26T21:12:58.362Z] FAIL responsive:studio-logs:phone P0: %o
+
+%s
+
+%s
+ Error: Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
+    at finishRenderingHooks (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:5697:17)
+    at renderWithHooks (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:5675:9)
+    at updateFunctionComponent (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:7475:21)
+    at beginWork (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:8525:20)
+    at runWithFiberInDEV (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:997:72)
+    at performUnitOfWork (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:12561:98)
+    at workLoopSync (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:12424:43)
+    at renderRootSync (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:12408:13)
+    at performWorkOnRoot (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:11827:37)
+    at performSyncWorkOnRoot (http://127.0.0.1:3200/node_modules/.vite/deps/react-dom_client.js?v=09101a9d:13517:9) The above error occurred in the <BaseTreeGrid> component. React will try to recreate this component tree from scratch using the error boundary you provided, AppErrorBoundaryInner.
+[2026-09-26T21:13:01.610Z] PASS responsive:studio-data-studio:desktop
+[2026-09-26T21:13:04.289Z] PASS responsive:studio-sql-console:phone
+[2026-09-26T21:13:06.931Z] PASS responsive:studio-sql-console:tablet
+[2026-09-26T21:13:09.664Z] PASS responsive:studio-sql-console:desktop
+[2026-09-26T21:13:12.377Z] PASS responsive:studio-api-talk:phone
+[2026-09-26T21:13:15.071Z] PASS responsive:studio-api-talk:tablet
+[2026-09-26T21:13:17.823Z] PASS responsive:studio-api-talk:desktop
+[2026-09-26T21:13:20.553Z] PASS responsive:studio-appearance:phone
+[2026-09-26T21:13:23.195Z] PASS responsive:studio-appearance:tablet
+[2026-09-26T21:13:25.880Z] PASS responsive:studio-appearance:desktop
+[2026-09-26T21:13:28.867Z] PASS responsive:studio-base-components:phone
+[2026-09-26T21:13:32.000Z] PASS responsive:studio-base-components:tablet
+[2026-09-26T21:13:35.312Z] PASS responsive:studio-base-components:desktop
+[2026-09-26T21:13:38.301Z] PASS responsive:studio-dev-reference:phone
+[2026-09-26T21:13:40.963Z] PASS responsive:studio-dev-reference:tablet
+[2026-09-26T21:13:43.668Z] PASS responsive:studio-dev-reference:desktop
+[2026-09-26T21:13:46.355Z] PASS responsive:studio-platform-transfer:phone
+[2026-09-26T21:13:49.047Z] PASS responsive:studio-platform-transfer:tablet
+[2026-09-26T21:13:51.782Z] PASS responsive:studio-platform-transfer:desktop
+[2026-09-26T21:13:54.466Z] PASS responsive:studio-cms-contents:phone
+[2026-09-26T21:13:57.162Z] PASS responsive:studio-cms-contents:tablet
+[2026-09-26T21:13:59.978Z] PASS responsive:studio-cms-contents:desktop
+[2026-09-26T21:14:02.837Z] FAIL responsive:studio-cms-contents-edit-new:phone P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:14:05.635Z] FAIL responsive:studio-cms-contents-edit-new:tablet P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:14:08.320Z] FAIL responsive:studio-cms-contents-edit-new:desktop P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:14:11.044Z] FAIL responsive:studio-cms-settings:phone P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:14:13.658Z] FAIL responsive:studio-cms-settings:tablet P0: %s contains an input of type %s with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://react.dev/link/controlled-components ForwardRef(bound $7230ffa83bc0c2cf$var$DOMElement) text
+[2026-09-26T21:14:16.277Z] FAIL responsive:studio-cms-settings:desktop P0: %s contains an input of type %s with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://react.dev/link/controlled-components ForwardRef(bound $7230ffa83bc0c2cf$var$DOMElement) text
+[2026-09-26T21:14:18.953Z] PASS responsive:studio-cms-settings-content-types:phone
+[2026-09-26T21:14:21.595Z] PASS responsive:studio-cms-settings-content-types:tablet
+[2026-09-26T21:14:24.296Z] PASS responsive:studio-cms-settings-content-types:desktop
+[2026-09-26T21:14:26.958Z] PASS responsive:studio-cms:phone
+[2026-09-26T21:14:29.608Z] PASS responsive:studio-cms:tablet
+[2026-09-26T21:14:32.271Z] PASS responsive:studio-cms:desktop
+[2026-09-26T21:14:34.855Z] FAIL responsive:studio-ssh:phone P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:14:37.441Z] FAIL responsive:studio-ssh:tablet P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:14:40.047Z] FAIL responsive:studio-ssh:desktop P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:14:42.681Z] PASS responsive:studio-sftp:phone
+[2026-09-26T21:14:45.307Z] PASS responsive:studio-sftp:tablet
+[2026-09-26T21:14:47.965Z] PASS responsive:studio-sftp:desktop
+[2026-09-26T21:14:50.608Z] PASS responsive:studio-rdp:phone
+[2026-09-26T21:14:53.245Z] PASS responsive:studio-rdp:tablet
+[2026-09-26T21:14:55.943Z] PASS responsive:studio-rdp:desktop
+[2026-09-26T21:14:56.189Z] Done studio responsive queue. fails=19
+[2026-09-26T21:16:07.161Z] FAIL responsive:studio:phone P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:16:09.815Z] FAIL responsive:studio:tablet P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:16:12.445Z] FAIL responsive:studio:desktop P0: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[2026-09-26T21:16:15.116Z] PASS responsive:studio-logs:phone
+[2026-09-26T21:16:15.340Z] Done studio responsive queue. fails=22

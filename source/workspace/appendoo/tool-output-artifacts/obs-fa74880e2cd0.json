@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:fa74880e2cd0",
+    "toolCallId": "call_ThD8gORgpDqaiU8NebsZ25cU",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2675,
+    "digest": "707f07e4d09326a4cdcea64053727cfcc24deded8d3d7985b67183d454a3ab29",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:53:39.565Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/api/contracts/server-functions/templates.ts\",\n  \"startLine\": 1,\n  \"endLine\": 73,\n  \"totalLines\": 73,\n  \"truncated\": false,\n  \"content\": \"1|import { DEFAULT_SERVER_FUNCTION_LANGUAGE, type ServerFunctionLanguage } from './constants';\\n2|import type { ServerFunctionLanguage as ServerFunctionLanguageType } from './types';\\n3|\\n4|export const getActiveSourceLanguage = (value?: ServerFunctionLanguageType | null): ServerFunctionLanguage => {\\n5|  return value === 'js' ? 'js' : DEFAULT_SERVER_FUNCTION_LANGUAGE;\\n6|};\\n7|\\n8|export const normalizeFunctionForEditor = <T extends object>(item: T): T & { language: ServerFunctionLanguage } => {\\n9|  return {\\n10|    ...item,\\n11|    language: DEFAULT_SERVER_FUNCTION_LANGUAGE,\\n12|  };\\n13|};\\n14|\\n15|/** Canonical EdgeReq / EdgeRes / EdgeDb types for generated sandbox route scripts. */\\n16|export const SERVER_FUNCTION_SANDBOX_TYPE_DEFINITIONS = `\\n17|type EdgeReq = {\\n18|  body: Record<string, unknown>;\\n19|  query: Record<string, unknown>;\\n20|  params: Record<string, string>;\\n21|  method: string;\\n22|  headers: Record<string, string | undefined>;\\n23|};\\n24|\\n25|type EdgeRes = {\\n26|  json: (data: unknown) => unknown;\\n27|  send: (data: unknown) => unknown;\\n28|  status: (code: number) => EdgeRes;\\n29|};\\n30|\\n31|type EdgeDb = {\\n32|  query: (\\n33|    operation: string | Record<string, unknown>,\\n34|    params?: unknown[],\\n35|    context?: { dataSourceId?: string; dataSourceName?: string; database?: string },\\n36|  ) => Promise<unknown>;\\n37|};\\n38|`.trim();\\n39|\\n40|export const buildServerFunctionTemplate = (method: string, path: string, logLabel?: string) => {\\n41|  const resolvedLogLabel = logLabel || path;\\n42|  return `// AppEnd OS - ${method} ${path}\\n43|// Global Objects Available: req, res, db, console\\n44|\\n45|${SERVER_FUNCTION_SANDBOX_TYPE_DEFINITIONS}\\n46|\\n47|type EdgeDbContext = { dataSourceId?: string; dataSourceName?: string; database?: string };\\n48|\\n49|const withDataSource = (ctx: EdgeDbContext) => ({\\n50|  query: (operation: string | Record<string, unknown>, params?: unknown[]) => edgeDb.query(operation, params, ctx),\\n51|});\\n52|\\n53|const edgeReq = req as EdgeReq;\\n54|const edgeRes = res as EdgeRes;\\n55|const edgeDb = db as EdgeDb;\\n56|\\n57|async function handler(): Promise<void> {\\n58|  console.log('Edge route invoked: ${resolvedLogLabel}');\\n59|\\n60|  edgeRes.json({\\n61|    status: 'success',\\n62|    message: 'AppEnd Edge Route executed successfully!',\\n63|    path: '${path}',\\n64|    method: edgeReq.method,\\n65|    timestamp: new Date().toISOString(),\\n66|  });\\n67|}\\n68|\\n69|(async () => {\\n70|  await handler();\\n71|})();`;\\n72|};\\n73|\"\n}"
+}

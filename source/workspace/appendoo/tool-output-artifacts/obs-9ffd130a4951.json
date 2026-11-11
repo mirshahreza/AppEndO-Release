@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:9ffd130a4951",
+    "toolCallId": "call_ty5hnYWZAe3IUS98lsHymzvO",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2272,
+    "digest": "0ab0e1bf74e5ec672d4b2089ad7fdce57ebbc051016aed1b8a966145c528e59c",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:38:14.255Z"
+  },
+  "content": "{\n  \"query\": \"organic_results serpapi Missing SerpAPI key\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"server-functions\",\n  \"scopePath\": \"pageKey:server-functions\",\n  \"scopePaths\": [\n    \"src/features/server-functions\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/server-functions\",\n    \"src/server/services/functions.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 433,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 577,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/lib/dataApiManagedFunctions.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/edgeApiOperations.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/my-apis.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/profile.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/queries/api-endpoint-schema.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/constants.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/queries/api-talk.ts\",\n      \"line\": 1,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"server-functions\",\n    \"label\": \"Server Functions\",\n    \"routePattern\": \"server-functions\",\n    \"searchRoots\": [\n      \"src/features/server-functions\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/server-functions\",\n      \"src/server/services/functions.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

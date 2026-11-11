@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:67591328b89b",
+    "toolCallId": "call_WZxNPVPSBfKf6xTXAs1OpNsj",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2647,
+    "digest": "d219b7f0bd72766efe66a865d28bb48bd07e2d4edfeeb763d99de9b7cabfe39b",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T16:19:12.299Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/lib/gridCellRenderers.tsx\",\n  \"startLine\": 1,\n  \"endLine\": 65,\n  \"totalLines\": 65,\n  \"truncated\": false,\n  \"content\": \"1|import React from 'react';\\n2|import { Check, X } from 'lucide-react';\\n3|import type { AppTableGridColumnDef } from './appTableGridQuery';\\n4|import { APP_TABLE_GRID_AUDIT_COLUMN_WIDTH } from '../ui/surfaceClasses';\\n5|import { MountGridDateText } from '../../app/platform/MountGridDateText';\\n6|\\n7|export type AuditRow = {\\n8|  createdAt?: string;\\n9|  createdByUsername?: string | null;\\n10|  createdBy?: number | null;\\n11|  updatedAt?: string;\\n12|  updatedByUsername?: string | null;\\n13|  updatedBy?: number | null;\\n14|};\\n15|\\n16|export const renderBooleanIcon = (value: boolean | null | undefined) => {\\n17|  if (value == null) return <span className=\\\"text-slate-300\\\">-</span>;\\n18|  return value\\n19|    ? <Check className=\\\"h-3.5 w-3.5 text-emerald-700\\\" aria-label=\\\"Yes\\\" />\\n20|    : <X className=\\\"h-3.5 w-3.5 text-rose-700\\\" aria-label=\\\"No\\\" />;\\n21|};\\n22|\\n23|export const renderActorLabel = (username?: string | null, actorId?: number | null) => {\\n24|  const label = username || (actorId ? `#${actorId}` : null);\\n25|  if (!label) return <span className=\\\"text-slate-300\\\">-</span>;\\n26|  return <span className=\\\"text-slate-600\\\">{label}</span>;\\n27|};\\n28|\\n29|export function createAuditColumns<T extends AuditRow>(): AppTableGridColumnDef<T>[] {\\n30|  return [\\n31|    {\\n32|      id: 'created',\\n33|      label: 'Created',\\n34|      width: APP_TABLE_GRID_AUDIT_COLUMN_WIDTH,\\n35|      cellClassName: 'text-[11px] text-slate-600',\\n36|      renderCell: (row) => (\\n37|        <div className=\\\"flex flex-col items-start leading-tight\\\">\\n38|          <MountGridDateText value={row.createdAt} />\\n39|          <span className=\\\"text-[10px] text-slate-400\\\">\\n40|            {row.createdByUsername || (row.createdBy ? `#${row.createdBy}` : '-')}\\n41|          </span>\\n42|        </div>\\n43|      ),\\n44|      sort: false,\\n45|      filter: false,\\n46|    },\\n47|    {\\n48|      id: 'updated',\\n49|      label: 'Updated',\\n50|      width: APP_TABLE_GRID_AUDIT_COLUMN_WIDTH,\\n51|      cellClassName: 'text-[11px] text-slate-600',\\n52|      renderCell: (row) => (\\n53|        <div className=\\\"flex flex-col items-start leading-tight\\\">\\n54|          <MountGridDateText value={row.updatedAt} />\\n55|          <span className=\\\"text-[10px] text-slate-400\\\">\\n56|            {row.updatedByUsername || (row.updatedBy ? `#${row.updatedBy}` : '-')}\\n57|          </span>\\n58|        </div>\\n59|      ),\\n60|      sort: false,\\n61|      filter: false,\\n62|    },\\n63|  ];\\n64|}\\n65|\"\n}"
+}

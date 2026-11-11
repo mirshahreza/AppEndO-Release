@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:8deead205ec8",
+    "toolCallId": "call_elDIB6JVtXlGVH1f8nwWl0Cx",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1194,
+    "digest": "45a1ddf63f9fc1a2e699cd0f7d89854f1877d5c3c9436080b48140e7e1f2d379",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:36:58.471Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/bindingApiCodegen.ts\",\n  \"startLine\": 492,\n  \"endLine\": 519,\n  \"totalLines\": 519,\n  \"truncated\": false,\n  \"content\": \"492|    deps.push(storeVar);\\n493|  }\\n494|\\n495|  return [\\n496|    `  const ${BINDING_CONTEXT_VAR} = React.useMemo<Record<string, unknown>>(() => ({ ${spreads.join(', ')} }), [${deps.join(', ')}]);`,\\n497|  ];\\n498|};\\n499|\\n500|export const renderNestedPayloadMappingLines = (\\n501|  payloadMapping: Record<string, string>,\\n502|  valueExpression: string,\\n503|  indent = '      ',\\n504|): string[] => {\\n505|  const lines: string[] = [];\\n506|  lines.push(`${indent}const payload: Record<string, unknown> = {};`);\\n507|\\n508|  for (const [apiPath, sourceField] of Object.entries(payloadMapping)) {\\n509|    const resolvedValue = valueExpression.replace('SOURCE_FIELD', JSON.stringify(sourceField));\\n510|    if (isNestedPayloadPath(apiPath)) {\\n511|      lines.push(`${indent}setNestedPayloadValue(payload, ${JSON.stringify(apiPath)}, ${resolvedValue});`);\\n512|    } else {\\n513|      lines.push(`${indent}payload[${JSON.stringify(apiPath)}] = ${resolvedValue};`);\\n514|    }\\n515|  }\\n516|\\n517|  return lines;\\n518|};\\n519|\"\n}"
+}

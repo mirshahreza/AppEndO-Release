@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:6f68fd48b68d",
+    "toolCallId": "call_JDhszwylHba3ZJaQdCXCIJNO",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2029,
+    "digest": "40e4fb51c0718278c391781936ead6e0bfe5d8c7e6a3671c1c6ff2aac09935d8",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:57:32.618Z"
+  },
+  "content": "{\n  \"query\": \"runWorkflowExecute WORKFLOW_ACTION_EXECUTE status output safeMessage\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"src/server\",\n  \"scopePaths\": [\n    \"src/server\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/server/domain/workflow/actions/packageActionSandboxExecutor.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/services/ai/mcp/builtin/workflowActionsTools.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/inlineCodeExecutor.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/domain/workflow/designer/simulation/simulationEngine.ts\",\n      \"line\": 577,\n      \"column\": 1,\n      \"pageKey\": \"workflows\",\n      \"label\": \"Workflows\"\n    },\n    {\n      \"path\": \"src/server/services/package-runtime/packageWorkflowActionRuntime.service.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"package-manager\",\n      \"label\": \"Package Manager\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/designer/simulation/simulationEngine.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"workflows\",\n      \"label\": \"Workflows\"\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/documentActions.ts\",\n      \"line\": 217,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/communicationActions.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/fileActions.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/identityActions.ts\",\n      \"line\": 217,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"settings\",\n    \"workflows\",\n    \"package-manager\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:18001ddfd6e1",
+    "toolCallId": "call_gRE3C8Gj6xPWdwOsdSOgDw2E",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2530,
+    "digest": "36d933dfb02c309440a79780c17ba82ab8bf7e5da76f22a1b0e389f626aa07c8",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-16T00:38:24.479Z"
+  },
+  "content": "{\n  \"query\": \"sum-two-numbers\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/lib/appendoo/goldenEvalAgentLoop.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/goldenEvalAgentLoopE2e.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/serverFunctionContractFixtures.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/v5BaselineTrajectoryCorpus.ts\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/goldenEvalAgentLoop.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/appendoo/goldenEval.types.ts\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/goldenEvalAgentLoopE2e.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/appendoo/goldenEval.types.ts\",\n      \"line\": 337,\n      \"column\": 40,\n      \"text\": \"prompt: 'برای Server Function math.sum-two-numbers یک UI بساز',\"\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/goldenEvalAgentLoop.ts\",\n      \"line\": 9,\n      \"column\": 56,\n      \"text\": \"export const GE_AGENT_WF4_001_PROMPT = 'برای تابع math.sum-two-numbers یک فرم ساده با دو ورودی بساز';\"\n    },\n    {\n      \"path\": \"src/shared/lib/appendoo/goldenEvalAgentLoop.ts\",\n      \"line\": 44,\n      \"column\": 47,\n      \"text\": \"path: '/us/studio/server-functions/math/sum-two-numbers',\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

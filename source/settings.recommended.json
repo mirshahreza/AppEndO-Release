@@ -1,0 +1,40 @@
+{
+  "database": {
+    "provider": "sqlserver",
+    "url": "sqlserver://localhost;database=AppEndORelease;user=sa;encrypt=true;trustServerCertificate=true",
+    "engine": "prisma"
+  },
+  "runtime": {
+    "nodeEnv": "development",
+    "port": 3000,
+    "appUrl": "http://localhost:3000",
+    "accessTokenSecret": "clone_oss_access_token_change_me",
+    "refreshTokenSecret": "clone_oss_refresh_token_change_me",
+    "databaseProvider": "sqlserver",
+    "disableHmr": false,
+    "hmrPort": 0,
+    "logLevel": "debug",
+    "nodeName": "clone-oss",
+    "capabilities": ["service", "platform", "worker"]
+  },
+  "install": {
+    "pending": true
+  },
+  "dataSources": [
+    {
+      "id": "ds_clone_oss",
+      "name": "clone-oss-control-plane",
+      "type": "SQL Server",
+      "host": "localhost",
+      "port": 1433,
+      "database": "AppEndORelease",
+      "username": "sa",
+      "encrypt": true,
+      "trustServerCertificate": true,
+      "pooling": false,
+      "status": "disconnected",
+      "isDefault": true
+    }
+  ],
+  "plugins": []
+}

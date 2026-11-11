@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:8fd97e35bee3",
+    "toolCallId": "call_cuIe1rwrptpfOAntkthX6hBU",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1536,
+    "digest": "6a79d7d374e3758072379d4f73d7e57f757aa02479f3cc9079fbbf438b330260",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:35:35.393Z"
+  },
+  "content": "{\n  \"path\": \"runtime/server-functions/custom/math.sum-two-numbers.ts\",\n  \"startLine\": 1,\n  \"endLine\": 56,\n  \"totalLines\": 56,\n  \"truncated\": false,\n  \"content\": \"1|type EdgeReq = {\\n2|  body: Record<string, unknown>;\\n3|  query: Record<string, unknown>;\\n4|  params: Record<string, string>;\\n5|  method: string;\\n6|  headers: Record<string, string | undefined>;\\n7|};\\n8|\\n9|type EdgeRes = {\\n10|  json: (data: unknown) => unknown;\\n11|  send: (data: unknown) => unknown;\\n12|  status: (code: number) => EdgeRes;\\n13|};\\n14|\\n15|const edgeReq = req as EdgeReq;\\n16|const edgeRes = res as EdgeRes;\\n17|\\n18|function toFiniteNumber(value: unknown): number | null {\\n19|  if (typeof value === \\\"number\\\" && Number.isFinite(value)) {\\n20|    return value;\\n21|  }\\n22|\\n23|  if (typeof value === \\\"string\\\" && value.trim() !== \\\"\\\") {\\n24|    const parsed = Number(value);\\n25|    if (Number.isFinite(parsed)) {\\n26|      return parsed;\\n27|    }\\n28|  }\\n29|\\n30|  return null;\\n31|}\\n32|\\n33|async function handler(): Promise<void> {\\n34|  const a = toFiniteNumber(edgeReq.body.a);\\n35|  const b = toFiniteNumber(edgeReq.body.b);\\n36|\\n37|  if (a === null || b === null) {\\n38|    edgeRes.status(400).json({\\n39|      success: false,\\n40|      error: \\\"Both \\\\\\\"a\\\\\\\" and \\\\\\\"b\\\\\\\" are required finite numbers.\\\",\\n41|    });\\n42|    return;\\n43|  }\\n44|\\n45|  const sum = a + b;\\n46|\\n47|  edgeRes.json({\\n48|    success: true,\\n49|    data: {\\n50|      a,\\n51|      b,\\n52|      result: sum,\\n53|      sum,\\n54|    },\\n55|  });\\n56|}\"\n}"
+}

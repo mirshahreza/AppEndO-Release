@@ -1,0 +1,189 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-nakhebin",
+    "name": "hwy-nakhebin",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1791518522545-sak40"
+        ]
+      },
+      "heroui-app-table-grid-1791518522545-sak40": {
+        "id": "heroui-app-table-grid-1791518522545-sak40",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"memberId\",\"label\":\"Member link\",\"labelTranslationKey\":\"hwy.nakhebin.column.memberLink\",\"sort\":true,\"cardRole\":\"hidden\",\"width\":\"64px\",\"layoutResizable\":false,\"layoutHideable\":false,\"cellKind\":\"avatar\",\"cellFields\":{\"imageUrlField\":\"memberLinkAvatarUrl\",\"fallbackTextField\":\"memberLinkDisplayName\",\"captionSecondaryField\":\"memberId\",\"genderCodeField\":\"memberLinkGenderCode\",\"avatarSizePx\":43,\"visibleWhenField\":\"memberId\"},\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center\",\"cellClickBehavior\":{\"kind\":\"navigate\",\"navigateTarget\":\"/hawiety/members-all/view/{selection.id}\",\"primaryKeyField\":\"memberId\",\"selectionStorePath\":\"selection.id\"}},{\"key\":\"familyCode\",\"label\":\"Voter record\",\"labelTranslationKey\":\"hwy.members.column.nakhebin\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"width\":\"78px\",\"layoutResizable\":false,\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"id\",\"secondaryField\":\"familyCode\",\"accountLayout\":\"stacked-text-center\"},\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center min-w-0 text-xs tabular-nums leading-snug\",\"cellClickBehavior\":{\"kind\":\"hwy-family-household\"}},{\"key\":\"firstName\",\"label\":\"Voter\",\"labelTranslationKey\":\"hwy.nakhebin.column.voter\",\"cardRole\":\"title\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"voterNameLine1\",\"secondaryField\":\"voterNameLine2\",\"accountLayout\":\"stacked-text-lg\"},\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"width\":\"154px\",\"layoutResizable\":false,\"cellClassName\":\"max-w-[154px] whitespace-normal leading-snug\"},{\"key\":\"phone1\",\"label\":\"Phone\",\"labelTranslationKey\":\"hwy.members.column.phone\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"phone1\",\"secondaryField\":\"phone2\",\"accountLayout\":\"stacked-text-center\"},\"width\":\"86px\",\"layoutResizable\":false,\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center text-xs tabular-nums\",\"sort\":true,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"registeredCaseCodeTitle\",\"label\":\"Registered\",\"labelTranslationKey\":\"hwy.family.column.cardStatus\",\"width\":\"64px\",\"layoutResizable\":false,\"sort\":false,\"filter\":false,\"cellKind\":\"hwy-registered-icon\",\"cellFields\":{\"primaryField\":\"registeredCaseCodeTitle\",\"secondaryField\":\"registeredCaseCode\"},\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center\"},{\"key\":\"electoralDivisionPath\",\"label\":\"Region\",\"labelTranslationKey\":\"hwy.nakhebin.column.region\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"electoralDivisionLine1\",\"secondaryField\":\"electoralDivisionLine2\",\"accountLayout\":\"stacked-text\"},\"cellClassName\":\"min-w-0 whitespace-normal text-xs leading-snug\"},{\"key\":\"votedOn2021\",\"label\":\"Voted 2021\",\"labelTranslationKey\":\"hwy.nakhebin.column.voted2021\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"meta\",\"width\":\"78px\",\"layoutResizable\":false,\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap text-xs\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell\"},{\"key\":\"votedOn2023\",\"label\":\"Voted 2023\",\"labelTranslationKey\":\"hwy.nakhebin.column.voted2023\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"meta\",\"width\":\"78px\",\"layoutResizable\":false,\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap text-xs\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell\"},{\"key\":\"votedOn2025\",\"label\":\"Voted 2025\",\"labelTranslationKey\":\"hwy.nakhebin.column.voted2025\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"meta\",\"width\":\"78px\",\"layoutResizable\":false,\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap text-xs\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": true,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "id",
+          "sortOptions": "[{\"value\":\"memberId\",\"label\":\"Member link\",\"labelTranslationKey\":\"hwy.nakhebin.column.memberLink\"},{\"value\":\"familyCode\",\"label\":\"Voter record\",\"labelTranslationKey\":\"hwy.members.column.nakhebin\"},{\"value\":\"firstName\",\"label\":\"Voter\",\"labelTranslationKey\":\"hwy.nakhebin.column.voter\"},{\"value\":\"phone1\",\"label\":\"Phone\",\"labelTranslationKey\":\"hwy.members.column.phone\"},{\"value\":\"electoralDivisionPath\",\"label\":\"Region\",\"labelTranslationKey\":\"hwy.nakhebin.column.region\"},{\"value\":\"votedOn2021\",\"label\":\"Voted 2021\",\"labelTranslationKey\":\"hwy.nakhebin.column.voted2021\"},{\"value\":\"votedOn2023\",\"label\":\"Voted 2023\",\"labelTranslationKey\":\"hwy.nakhebin.column.voted2023\"},{\"value\":\"votedOn2025\",\"label\":\"Voted 2025\",\"labelTranslationKey\":\"hwy.nakhebin.column.voted2025\"}]",
+          "loadingMessage": "Loading voter roll…",
+          "emptyContent": "No voters found.",
+          "errorContent": "Could not load voter roll.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search nakhebin…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}",
+          "gridId": "hwy-hwy-nakhebin-v39",
+          "loadingMessageTranslationKey": "hwy.nakhebin.loading",
+          "emptyContentTranslationKey": "hwy.nakhebin.empty",
+          "errorContentTranslationKey": "hwy.nakhebin.error",
+          "searchPlaceholderTranslationKey": "hwy.nakhebin.search.placeholder",
+          "refreshLabelTranslationKey": "hwy.nakhebin.toolbar.refresh",
+          "density": "compact",
+          "compactTabletLayout": "cards",
+          "compactPhoneLayout": "cards"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwynakhebinList",
+            "sourcePath": "hwynakhebinList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere",
+              "lang": "static:ar"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-16T13:40:49.761Z",
+      "updatedAt": "2026-10-09T04:02:02.885Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {},
+    "dataSources": {
+      "hwynakhebinList": {
+        "id": "hwynakhebinList",
+        "name": "Nakhebin",
+        "endpoint": "/api/hwy/nakhebin",
+        "fields": [
+          "id",
+          "memberId",
+          "familyCode",
+          "firstName",
+          "phone1",
+          "registeredCaseCode",
+          "registeredCaseCodeTitle",
+          "electoralDivisionPath",
+          "votedOn2021",
+          "votedOn2023",
+          "votedOn2025",
+          "fatherName",
+          "grandfatherName",
+          "familyName",
+          "voterNameLine1",
+          "voterNameLine2",
+          "genderCode",
+          "regionId",
+          "genderCodeTitle",
+          "memberLinkAvatarUrl",
+          "memberLinkUsername",
+          "memberLinkGenderCode",
+          "memberLinkDisplayName",
+          "phone2"
+        ],
+        "primaryKey": "id",
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/nakhebin"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/nakhebin/:id"
+          }
+        },
+        "responseMapping": {
+          "dataPath": "data",
+          "arrayPath": "data",
+          "totalPath": "count"
+        }
+      }
+    },
+    "lovs": {}
+  }
+}

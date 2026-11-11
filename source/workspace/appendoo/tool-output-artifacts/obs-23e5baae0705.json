@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:23e5baae0705",
+    "toolCallId": "call_Jdp5cPbFHsLVMDm1m5vWF5y2",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1881,
+    "digest": "b76e1fb559c5ee5b84ce16e1c77250d6e3a389aaf2a27902bb1b01d82ad74802",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:12:09.349Z"
+  },
+  "content": "{\n  \"query\": \"aiManager.getSettings().webSearch web search settings provider apiKey\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": true,\n  \"pageKey\": null,\n  \"scopePath\": null,\n  \"scopePaths\": null,\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 433,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 577,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/validators.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/core/ai/AiManager.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/domain/workflow/actions/corePack/webActions.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/aiSettingsStore.ts\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/types.ts\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/features/settings/components/mcpServers/McpWebSearchModal.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"settings\",\n      \"label\": \"Settings\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/types.ts\",\n      \"line\": 145,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/core/ai/AiManager.ts\",\n      \"line\": 289,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"chat-history\",\n    \"settings\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

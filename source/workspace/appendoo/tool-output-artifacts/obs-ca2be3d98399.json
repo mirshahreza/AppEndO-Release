@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ca2be3d98399",
+    "toolCallId": "call_AGQlhvuMcWNHHco3C8zVxwWv",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1551,
+    "digest": "0766fa1ddfecb28fb21cb22d1825b0ff850c21c15e26342047502c9eb63da1a4",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:49:20.488Z"
+  },
+  "content": "{\n  \"path\": \"src/server/routes/functions.routes.ts\",\n  \"startLine\": 1,\n  \"endLine\": 26,\n  \"totalLines\": 26,\n  \"truncated\": false,\n  \"content\": \"1|import { Router, type Express } from 'express';\\n2|import { FunctionsController } from '../controllers/functions.controller';\\n3|import { createBuiltInRouteGuard } from '../middleware/builtInFunctionAccess.middleware';\\n4|import type { FunctionsServiceDeps } from '../services/functions.service';\\n5|import { FunctionsService } from '../services/functions.service';\\n6|\\n7|export const mountFunctionsRoutes = (app: Express, deps: FunctionsServiceDeps): void => {\\n8|  const service = new FunctionsService(deps);\\n9|  const controller = new FunctionsController(service, deps);\\n10|  const routeGuard = createBuiltInRouteGuard('ADMIN');\\n11|  const router = Router();\\n12|\\n13|  router.get('/entity-access/:entityKind/:entityKey', controller.getEntityFunctionAccess);\\n14|  router.put('/entity-access/:entityKind/:entityKey', controller.replaceEntityFunctionAccess);\\n15|  router.get('/system', controller.listSystem);\\n16|  router.get('/', controller.list);\\n17|  // Express 4 skips path segments containing a dot unless the param pattern allows it.\\n18|  router.put('/builtin/:id([^/]+)', controller.updateBuiltIn);\\n19|  router.put('/package/:id([^/]+)', controller.updatePackage);\\n20|  router.post('/', controller.create);\\n21|  router.put('/:id([^/]+)', controller.update);\\n22|  router.delete('/:id([^/]+)', controller.remove);\\n23|\\n24|  app.use('/api/functions', routeGuard, router);\\n25|};\\n26|\"\n}"
+}

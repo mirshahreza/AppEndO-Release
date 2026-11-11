@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:76481ce173cf",
+    "toolCallId": "call_MSKzTwX4kWHaPXkcFB8FnBDK",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1458,
+    "digest": "95c5906ab8627421039f413427c09b634782d5ac000332950382f78e0aa70b6e",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:52:13.199Z"
+  },
+  "content": "{\n  \"query\": \"webSearch provider disabled missing_api_key serper brave tavily types\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": true,\n  \"pageKey\": null,\n  \"scopePath\": \"src/server/db\",\n  \"scopePaths\": [\n    \"src/server/db\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/server/db/aiSettingsStore.ts\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/aiSettingsStore.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/identityProvidersStore.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/dataSourcesStore.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/identityProvidersStore.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/aiSettingsStore.ts\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/dataSourcesStore.ts\",\n      \"line\": 505,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/ensureSampleMockSchema.ts\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/controlPlaneSchemaPush.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/server/db/controlPlaneSchemaPush.ts\",\n      \"line\": 1,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

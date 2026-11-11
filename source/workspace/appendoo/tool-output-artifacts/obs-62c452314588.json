@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:62c452314588",
+    "toolCallId": "call_cuR1o5xvZS2rnWGMJ7QxrKvf",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1555,
+    "digest": "a55ff508bbd7801719c36ef986254eb6c9e64a40352cf5d77e0f932b4749c9ab",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T16:17:55.601Z"
+  },
+  "content": "{\n  \"query\": \"proposalValidator.ts file_patch userIntentPaths changeSet\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"src/core/ai/validation\",\n  \"scopePaths\": [\n    \"src/core/ai/validation\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/core/ai/validation/proposalValidator.ts\",\n      \"line\": 217,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/proposalValidator.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/changeSetBuilder.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/proposalValidator.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/proposalContextStore.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/standardsProposalValidator.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/changeSetBuilder.ts\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/proposalValidator.ts\",\n      \"line\": 145,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/changeSetBuilder.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/validation/standardsProposalValidator.ts\",\n      \"line\": 1,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

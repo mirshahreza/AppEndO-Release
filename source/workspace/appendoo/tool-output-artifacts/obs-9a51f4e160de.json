@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:9a51f4e160de",
+    "toolCallId": "call_jyWLXJjn48vj2ESvcbt2xgHm",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1153,
+    "digest": "b1e4970e660bd9c529ac71bafb992d6c06b26becf5b54748eabe536feedc7f96",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:25:34.896Z"
+  },
+  "content": "{\n  \"query\": \"API route not found\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 1,\n  \"matches\": [\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 433,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

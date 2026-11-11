@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:d4b69ba685f5",
+    "toolCallId": "call_hT4oBulK0HzsOT8LdEFl4clk",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1678,
+    "digest": "4515a824a8ab359ffcf7e24eeb1b9c81fa6e30abe639bbd3e157896616f59355",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:20:35.591Z"
+  },
+  "content": "{\n  \"query\": \"fetch\",\n  \"mode\": \"exact\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n  \"scopePaths\": [\n    \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 6,\n  \"matches\": [\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 164,\n      \"column\": 27,\n      \"text\": \"// Example: const designerFetch = createAuthenticatedFetch({ getAccessToken, refreshTokens, onSessionExpired });\"\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 165,\n      \"column\": 15,\n      \"text\": \"const designerFetch: typeof fetch = fetch;\"\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 167,\n      \"column\": 17,\n      \"text\": \"function useDataFetch<T>(url: string, options: { headers?: Record<string, string> } = {}) {\"\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 191,\n      \"column\": 40,\n      \"text\": \"const response = await designerFetch(url, {\"\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 460,\n      \"column\": 30,\n      \"text\": \"const response = await fetch(url.toString());\"\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n      \"line\": 502,\n      \"column\": 38,\n      \"text\": \"const response = await designerFetch(url, {\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

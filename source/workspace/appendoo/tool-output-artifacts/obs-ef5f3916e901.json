@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ef5f3916e901",
+    "toolCallId": "call_nyb423UPNPkZIbXRxTbc7Qpb",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2552,
+    "digest": "c2a3e4086d47ee4ab68ef02d777e60df320cd2f13b814c47f7fa14ae7a43aaa9",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T11:37:05.073Z"
+  },
+  "content": "{\n  \"path\": \"src/features/component-designer/layout-presets/componentAloneLayoutTemplate.ts\",\n  \"startLine\": 1,\n  \"endLine\": 71,\n  \"totalLines\": 71,\n  \"truncated\": false,\n  \"content\": \"1|import { createInitialDesignerState } from '../../../domain/component-designer/state';\\n2|import type { DesignerNode, TemplateNodeSeed } from '../../../domain/component-designer/types';\\n3|import { SHELL_ROUTE_OUTLET_SLOT_ID } from '../../../shared/lib/shellRouteOutlet';\\n4|\\n5|/** Minimal portal layout: route outlet only (no chrome or navigation). */\\n6|export const COMPONENT_ALONE_LAYOUT_TEMPLATE: TemplateNodeSeed[] = [\\n7|  {\\n8|    type: 'container',\\n9|    props: { className: 'flex h-full min-h-0 w-full flex-col overflow-hidden bg-white' },\\n10|    children: [\\n11|      {\\n12|        type: 'system-slot',\\n13|        props: { slotId: SHELL_ROUTE_OUTLET_SLOT_ID, className: 'min-h-0 flex-1' },\\n14|      },\\n15|    ],\\n16|  },\\n17|];\\n18|\\n19|export function createStateFromComponentAloneLayoutTemplate(): {\\n20|  state: ReturnType<typeof createInitialDesignerState>;\\n21|  preferredSelectedNodeId: string | null;\\n22|} {\\n23|  const baseState = createInitialDesignerState();\\n24|  const rootNodeId = baseState.document.rootNodeId;\\n25|  const now = new Date().toISOString();\\n26|  const nodes: Record<string, DesignerNode> = {\\n27|    ...baseState.document.nodes,\\n28|  };\\n29|\\n30|  let seed = 0;\\n31|  const buildNode = (item: TemplateNodeSeed, parentId: string, order: number): string => {\\n32|    seed += 1;\\n33|    const nodeId = `component-alone-${item.type}-${Date.now()}-${seed}`;\\n34|    const children = (item.children ?? []).map((child, childIndex) => buildNode(child, nodeId, childIndex));\\n35|\\n36|    nodes[nodeId] = {\\n37|      id: nodeId,\\n38|      type: item.type,\\n39|      parentId,\\n40|      order,\\n41|      props: { ...(item.props ?? {}) },\\n42|      layout: {},\\n43|      binding: {},\\n44|      children,\\n45|    };\\n46|\\n47|    return nodeId;\\n48|  };\\n49|\\n50|  const rootChildren = COMPONENT_ALONE_LAYOUT_TEMPLATE.map((item, index) => buildNode(item, rootNodeId, index));\\n51|  nodes[rootNodeId] = {\\n52|    ...nodes[rootNodeId],\\n53|    children: rootChildren,\\n54|  };\\n55|\\n56|  return {\\n57|    state: {\\n58|      ...baseState,\\n59|      document: {\\n60|        ...baseState.document,\\n61|        nodes,\\n62|        metadata: {\\n63|          ...baseState.document.metadata,\\n64|          updatedAt: now,\\n65|        },\\n66|      },\\n67|    },\\n68|    preferredSelectedNodeId: rootChildren[0] ?? null,\\n69|  };\\n70|}\\n71|\"\n}"
+}

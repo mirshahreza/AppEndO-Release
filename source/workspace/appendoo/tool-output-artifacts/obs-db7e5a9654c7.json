@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:db7e5a9654c7",
+    "toolCallId": "call_ef46SEotxFXBkImsGs72apJL",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1485,
+    "digest": "f0c7a2ab7c7c9e9481ecf68a983ce06c5220e19c848db955f8b202ad61bd8366",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:17:40.392Z"
+  },
+  "content": "{\n  \"query\": \"math-sum-two-numbers-calculator\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 4,\n  \"matches\": [\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.json\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.meta.json\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/index.json\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"runtime/designer/publish/index.json\",\n      \"line\": 1,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

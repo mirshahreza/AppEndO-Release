@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:c1ac67e2c17e",
+    "toolCallId": "call_KW1YwPL4NWnvvvlpxPBppMoj",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1598,
+    "digest": "ee6d2f5aa38dfe49f445b08f6448d74afe64e904dc92efefafa6312565dc021a",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-18T11:37:57.710Z"
+  },
+  "content": "{\n  \"path\": \"runtime/server-functions/custom/math.multiply-two-numbers.ts\",\n  \"startLine\": 1,\n  \"endLine\": 54,\n  \"totalLines\": 54,\n  \"truncated\": false,\n  \"content\": \"1|// AppEnd OS - POST /api/math/multiply-two-numbers\\n2|// Global Objects Available: req, res, db, console\\n3|\\n4|type EdgeReq = {\\n5|  body: Record<string, unknown>;\\n6|  query: Record<string, unknown>;\\n7|  params: Record<string, string>;\\n8|  method: string;\\n9|  headers: Record<string, string | undefined>;\\n10|};\\n11|\\n12|type EdgeRes = {\\n13|  json: (data: unknown) => unknown;\\n14|  send: (data: unknown) => unknown;\\n15|  status: (code: number) => EdgeRes;\\n16|};\\n17|\\n18|const edgeReq = req as EdgeReq;\\n19|const edgeRes = res as EdgeRes;\\n20|\\n21|const parseFiniteNumber = (value: unknown): number | null => {\\n22|  if (typeof value === 'number') {\\n23|    return Number.isFinite(value) ? value : null;\\n24|  }\\n25|\\n26|  if (typeof value === 'string' && value.trim() !== '') {\\n27|    const parsed = Number(value);\\n28|    return Number.isFinite(parsed) ? parsed : null;\\n29|  }\\n30|\\n31|  return null;\\n32|};\\n33|\\n34|async function handler(): Promise<void> {\\n35|  const a = parseFiniteNumber(edgeReq.body.a);\\n36|  const b = parseFiniteNumber(edgeReq.body.b);\\n37|\\n38|  if (a === null || b === null) {\\n39|    edgeRes.status(400).json({\\n40|      success: false,\\n41|      error: 'Both \\\"a\\\" and \\\"b\\\" are required finite numbers.',\\n42|    });\\n43|    return;\\n44|  }\\n45|\\n46|  edgeRes.json({\\n47|    success: true,\\n48|    data: {\\n49|      a,\\n50|      b,\\n51|      result: a * b,\\n52|    },\\n53|  });\\n54|}\"\n}"
+}

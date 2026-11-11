@@ -26,6 +26,7 @@ const routeBindingsDir = path.join(repoRoot, 'workspace/platform-registry/route-
 /** Core Studio pages re-exported into the package runtime (host modules stay build-time deps). */
 export const HAWIETY_CORE_UI_PAGE_EXPORTS: Array<{ pageKey: string; title: string; modulePath: string }> = [
   { pageKey: 'hwy-etl-console', title: 'ETL Console', modulePath: '@/features/hwy-etl-console/HwyEtlConsolePage' },
+  { pageKey: 'hwy-message-audit', title: 'Message audit', modulePath: '@/features/hwy-message-audit/HwyMessageAuditPage' },
   {
     pageKey: 'hwy-business-rules-reference',
     title: 'Business rules reference',
@@ -314,6 +315,7 @@ export function buildHawietyVerticalAppPackageSpec(options?: {
   );
   const defaultRoutePatterns: Record<string, string> = {
     'hwy-etl-console': 'etl-console',
+    'hwy-message-audit': 'message-audit',
     'hwy-business-rules-reference': 'business-rules/*',
     'hwy-identity-components': 'identity-components/*',
     'hwy-org-membership-transfer': 'members-org-membership-transfer',

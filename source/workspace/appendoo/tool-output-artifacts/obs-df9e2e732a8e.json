@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:df9e2e732a8e",
+    "toolCallId": "call_EYw22n8GxvfPq3NckEDTkUoQ",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2704,
+    "digest": "51206534d355951b7ce09b1a423f2a6f3544c7c5885ff9cfc12f4457025f357c",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:48:51.009Z"
+  },
+  "content": "{\n  \"path\": \"src/features/component-designer/layout-presets/enterprisePresetTemplates.ts\",\n  \"startLine\": 30,\n  \"endLine\": 90,\n  \"totalLines\": 527,\n  \"truncated\": false,\n  \"content\": \"30|          {\\n31|            type: 'heading',\\n32|            paletteItemId: 'html.heading',\\n33|            props: { text: 'Sign in to your account', className: 'text-2xl font-semibold tracking-tight text-foreground' },\\n34|          },\\n35|          {\\n36|            type: 'text',\\n37|            paletteItemId: 'html.text',\\n38|            props: { text: 'Enter your credentials to access the workspace.', className: 'text-sm text-default-500' },\\n39|          },\\n40|        ],\\n41|      },\\n42|      {\\n43|        type: 'container',\\n44|        paletteItemId: 'html.form',\\n45|        props: { className: 'flex flex-col gap-3', method: 'post', action: '' },\\n46|        binding: bindingReadySubmit,\\n47|        children: [\\n48|          {\\n49|            type: 'container',\\n50|            paletteItemId: 'heroui.input-text',\\n51|            props: { placeholder: 'Email address', name: 'email', ariaLabel: 'Email address', inputType: 'email' },\\n52|          },\\n53|          {\\n54|            type: 'container',\\n55|            paletteItemId: 'heroui.input-text',\\n56|            props: { placeholder: 'Password', name: 'password', ariaLabel: 'Password', inputType: 'password' },\\n57|          },\\n58|          {\\n59|            type: 'container',\\n60|            paletteItemId: 'layout.flex-row',\\n61|            props: { className: 'flex flex-row items-center justify-between gap-3' },\\n62|            children: [\\n63|              {\\n64|                type: 'container',\\n65|                paletteItemId: 'heroui.switch',\\n66|                props: { ariaLabel: 'Remember me', className: 'inline-flex items-center gap-2' },\\n67|              },\\n68|              {\\n69|                type: 'link',\\n70|                paletteItemId: 'html.link',\\n71|                props: { text: 'Forgot password?', href: '#', target: '_self', rel: '', className: 'text-sm text-primary underline underline-offset-2 hover:opacity-80' },\\n72|              },\\n73|            ],\\n74|          },\\n75|          {\\n76|            type: 'link',\\n77|            paletteItemId: 'heroui.button-solid',\\n78|            props: { text: 'Sign in', href: '#', target: '_self', rel: '', className: `${btn} w-full justify-center` },\\n79|          },\\n80|        ],\\n81|      },\\n82|      {\\n83|        type: 'text',\\n84|        paletteItemId: 'html.text',\\n85|        props: { text: 'Need an account? Create one', className: 'text-center text-sm text-default-500' },\\n86|      },\\n87|    ],\\n88|  }]);\\n89|\\n90|add('auth-signup', [{\"\n}"
+}

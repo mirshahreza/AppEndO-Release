@@ -1,0 +1,182 @@
+{
+  "id": "ea_c6618c627d0c0ac2",
+  "edgeModelId": "em_16aba77c7faa9d8d",
+  "key": "vote-ballots",
+  "label": "Voting Ballots",
+  "basePath": "/api/voting/ballots",
+  "operations": [
+    {
+      "id": "op_list_knsgva",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/voting/ballots",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotTypeCode",
+          "title",
+          "statusCode",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode",
+          "maxSelections"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_knsgva",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/voting/ballots/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotTypeCode",
+          "title",
+          "statusCode",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode",
+          "maxSelections"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_knsgva",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/voting/ballots",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotTypeCode",
+          "title",
+          "statusCode",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode",
+          "maxSelections"
+        ],
+        "write": [
+          "votingId",
+          "ballotTypeCode",
+          "title",
+          "statusCode",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode",
+          "maxSelections"
+        ],
+        "required": [
+          "votingId",
+          "title",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode"
+        ]
+      }
+    },
+    {
+      "id": "op_update_knsgva",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/voting/ballots/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotTypeCode",
+          "title",
+          "statusCode",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode",
+          "maxSelections"
+        ],
+        "write": [
+          "votingId",
+          "ballotTypeCode",
+          "title",
+          "statusCode",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode",
+          "maxSelections"
+        ],
+        "required": [
+          "votingId",
+          "title",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_knsgva",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/voting/ballots/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotTypeCode",
+          "title",
+          "statusCode",
+          "sortOrder",
+          "createdAt",
+          "updatedAt",
+          "selectionMode",
+          "maxSelections"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-10T13:08:05.190Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "vote-ballots.vote-ballots-list"
+}

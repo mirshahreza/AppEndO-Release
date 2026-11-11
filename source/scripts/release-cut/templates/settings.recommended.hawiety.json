@@ -1,0 +1,40 @@
+{
+  "database": {
+    "provider": "sqlserver",
+    "url": "sqlserver://localhost;database=AppEndOHawiety;user=sa;encrypt=true;trustServerCertificate=true",
+    "engine": "prisma"
+  },
+  "runtime": {
+    "nodeEnv": "development",
+    "port": 3001,
+    "appUrl": "http://localhost:3001",
+    "accessTokenSecret": "clone_hawiety_access_token_change_me",
+    "refreshTokenSecret": "clone_hawiety_refresh_token_change_me",
+    "databaseProvider": "sqlserver",
+    "disableHmr": false,
+    "hmrPort": 0,
+    "logLevel": "debug",
+    "nodeName": "clone-hawiety",
+    "capabilities": ["service", "platform", "worker"]
+  },
+  "install": {
+    "pending": true
+  },
+  "dataSources": [
+    {
+      "id": "ds_clone_hawiety",
+      "name": "clone-hawiety-control-plane",
+      "type": "SQL Server",
+      "host": "localhost",
+      "port": 1433,
+      "database": "AppEndOHawiety",
+      "username": "sa",
+      "encrypt": true,
+      "trustServerCertificate": true,
+      "pooling": false,
+      "status": "disconnected",
+      "isDefault": true
+    }
+  ],
+  "plugins": []
+}

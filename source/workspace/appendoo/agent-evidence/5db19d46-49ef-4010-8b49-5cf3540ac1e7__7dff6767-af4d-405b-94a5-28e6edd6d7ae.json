@@ -1,0 +1,33 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "e674899f-6e2a-4b45-9aab-5df4b228d91d",
+      "taskId": "5db19d46-49ef-4010-8b49-5cf3540ac1e7",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/validation"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:search_codebase",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:17:55.595Z"
+    },
+    {
+      "evidenceId": "badf7cb1-c79b-47b4-8590-4c84edc5a551",
+      "taskId": "5db19d46-49ef-4010-8b49-5cf3540ac1e7",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/core/ai/validation/proposalValidator.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:17:57.087Z"
+    }
+  ],
+  "claims": []
+}

@@ -8,14 +8,21 @@ import {
   hwyElectoralBreadcrumbLinkSegments,
   splitHwyElectoralBreadcrumbParts,
 } from '../../lib/hwyElectoralBreadcrumbStandard';
+import { catalogTextLinkSkyAppliedStateClass } from '../catalog/catalogInteractionApplied';
+import type { CatalogInteractionPreviewProps } from '../catalog/catalogInteractionState';
+import { CATALOG_INTERACTION_MARKER_TEXT_LINK } from '../catalog/catalogInteractionState';
 import { useOpenHwyGeoResponsibilityInlineListDialog } from './hwyGeoResponsibilityInlineListDialogApi';
 
 const TITLE_PATH_JOIN = ' | ';
 
-const segmentLinkClassName =
-  'font-inherit cursor-pointer border-0 bg-transparent p-0 text-sky-600 no-underline hover:underline underline-offset-2 hover:text-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-sky-500';
+const segmentLinkClassName = cn(
+  'font-inherit cursor-pointer border-0 bg-transparent p-0 text-sky-600 no-underline underline-offset-2',
+  'hover:underline hover:text-sky-700 active:text-sky-800 active:underline',
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-sky-500',
+  CATALOG_INTERACTION_MARKER_TEXT_LINK,
+);
 
-type SegmentLinkLineProps = {
+type SegmentLinkLineProps = CatalogInteractionPreviewProps & {
   segments: string[];
   segmentOffset: number;
   segmentCount: number;
@@ -36,6 +43,7 @@ const HwyElectoralPathSegmentLinkLine: React.FC<SegmentLinkLineProps & {
   allSegments,
   onOpenLevel,
   className,
+  catalogPreviewState,
 }) => {
   if (segments.length === 0) {
     return null;
@@ -70,7 +78,7 @@ const HwyElectoralPathSegmentLinkLine: React.FC<SegmentLinkLineProps & {
             {separator}
             <button
               type="button"
-              className={segmentLinkClassName}
+              className={cn(segmentLinkClassName, catalogTextLinkSkyAppliedStateClass(catalogPreviewState))}
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -86,7 +94,7 @@ const HwyElectoralPathSegmentLinkLine: React.FC<SegmentLinkLineProps & {
   );
 };
 
-export type HwyElectoralDivisionPathLinksProps = {
+export type HwyElectoralDivisionPathLinksProps = CatalogInteractionPreviewProps & {
   value: unknown;
   /** Single bold line (dossier), electoral grid cell, or similar-members area column. */
   layout?: 'inline' | 'twoLine' | 'memberArea';
@@ -99,6 +107,7 @@ export const HwyElectoralDivisionPathLinks: React.FC<HwyElectoralDivisionPathLin
   layout = 'twoLine',
   className,
   inlineClassName,
+  catalogPreviewState,
 }) => {
   const openInlineList = useOpenHwyGeoResponsibilityInlineListDialog();
 
@@ -136,6 +145,7 @@ export const HwyElectoralDivisionPathLinks: React.FC<HwyElectoralDivisionPathLin
           segmentOffset={0}
           segmentCount={allSegments.length}
           onOpenLevel={onOpenLevel}
+          catalogPreviewState={catalogPreviewState}
         />
       </span>
     );
@@ -174,6 +184,7 @@ export const HwyElectoralDivisionPathLinks: React.FC<HwyElectoralDivisionPathLin
         segmentOffset={segmentOffset}
         segmentCount={allSegments.length}
         onOpenLevel={onOpenLevel}
+        catalogPreviewState={catalogPreviewState}
         className={cn(
           'block min-w-0 w-full text-start text-xs',
           classNameLine,

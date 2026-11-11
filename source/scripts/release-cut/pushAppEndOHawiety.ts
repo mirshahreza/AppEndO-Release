@@ -16,10 +16,22 @@ import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
 
+const GIT_SPAWN_OPTS = {
+  encoding: 'utf8' as const,
+  shell: false as const,
+  maxBuffer: 64 * 1024 * 1024,
+  env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+};
+
 function git(cwd: string, args: string[]): void {
-  const child = spawnSync('git', args, { cwd, encoding: 'utf8', shell: false });
+  const child = spawnSync('git', args, { cwd, ...GIT_SPAWN_OPTS });
+  if (child.error) {
+    throw new Error(`git ${args.join(' ')} failed: ${child.error.message}`);
+  }
   if (child.status !== 0) {
-    throw new Error(`git ${args.join(' ')} failed: ${child.stderr || child.stdout}`);
+    const err = child.stderr || child.stdout || '';
+    const tail = err.length > 4000 ? `${err.slice(-4000)}` : err;
+    throw new Error(`git ${args.join(' ')} failed: ${tail}`);
   }
 }
 
@@ -69,6 +81,7 @@ export function pushAppEndOHawietyTree(options?: { repoRoot?: string; pushRemote
       }
       throw new Error(`git push -u origin ${branch} failed: ${err}`);
     }
+    spawnSync('git', ['push', 'origin', `:refs/tags/${tagName}`], { cwd: clonePath, ...GIT_SPAWN_OPTS });
     git(clonePath, ['push', 'origin', tagName]);
   }
 

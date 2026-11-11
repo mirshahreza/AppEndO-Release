@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:37417e437625",
+    "toolCallId": "call_ra6W0xm13zUyQvoHRh5TJ5KV",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2356,
+    "digest": "0946694ffcc90ffeebbfce0a78e51d38a17c49a0890679c4e5b32b78b411035d",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:24:13.845Z"
+  },
+  "content": "{\n  \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n  \"startLine\": 400,\n  \"endLine\": 455,\n  \"totalLines\": 533,\n  \"truncated\": false,\n  \"content\": \"400|\\n401|const transformApiRowsToSheetData = (\\n402|  rows: Array<Record<string, unknown>>,\\n403|  mapping: { kind: \\\"sheet\\\"; columns: Array<{ header: string; field: string }> },\\n404|): { columns: string[]; rows: string[][] } => ({\\n405|  columns: mapping.columns.map((column) => column.header),\\n406|  rows: rows.map((row) => mapping.columns.map((column) => readVizStringField(row, column.field))),\\n407|});\\n408|\\n409|type EntityPickerOption = { id: string; textValue: string };\\n410|\\n411|function normalizeEntityPickerItems(payload: unknown): EntityPickerOption[] {\\n412|  if (Array.isArray(payload)) {\\n413|    return payload\\n414|      .map((entry) => {\\n415|        if (!entry || typeof entry !== \\\"object\\\") {\\n416|          return null;\\n417|        }\\n418|        const record = entry as Record<string, unknown>;\\n419|        const id = typeof record.id === \\\"string\\\" ? record.id : typeof record.value === \\\"string\\\" ? record.value : \\\"\\\";\\n420|        const textValue = typeof record.textValue === \\\"string\\\"\\n421|          ? record.textValue\\n422|          : typeof record.label === \\\"string\\\"\\n423|            ? record.label\\n424|            : typeof record.name === \\\"string\\\"\\n425|              ? record.name\\n426|              : id;\\n427|        if (!id || !textValue) {\\n428|          return null;\\n429|        }\\n430|        return { id, textValue };\\n431|      })\\n432|      .filter((entry): entry is EntityPickerOption => entry !== null);\\n433|  }\\n434|\\n435|  if (payload && typeof payload === \\\"object\\\") {\\n436|    const record = payload as Record<string, unknown>;\\n437|    const items = record.items ?? record.results ?? record.data;\\n438|    return normalizeEntityPickerItems(items);\\n439|  }\\n440|\\n441|  return [];\\n442|}\\n443|\\n444|function useEntityPickerOptions(entityRef: string, searchParam: string) {\\n445|  const [items, setItems] = React.useState<EntityPickerOption[]>([]);\\n446|  const [isLoading, setIsLoading] = React.useState(false);\\n447|\\n448|  const loadOptions = React.useCallback(async (query: string) => {\\n449|    if (!entityRef) {\\n450|      setItems([]);\\n451|      return;\\n452|    }\\n453|\\n454|    setIsLoading(true);\\n455|    try {\"\n}"
+}

@@ -1,0 +1,56 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "98af1c00-251e-4c8f-b792-114c433e1e9e",
+      "taskId": "63be54bd-fc20-4065-8275-4d83c44302ef",
+      "type": "TEST",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "CONTRADICTING",
+      "sourceRefs": [
+        "tool:run_tests",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-16T22:10:41.813Z"
+    },
+    {
+      "evidenceId": "000f6791-2248-4a5b-b1df-95e577b22aab",
+      "taskId": "63be54bd-fc20-4065-8275-4d83c44302ef",
+      "type": "TEST",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "CONTRADICTING",
+      "sourceRefs": [
+        "tool:run_tests",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-16T22:10:41.852Z"
+    },
+    {
+      "evidenceId": "aa1e8f2a-a82f-4680-acc4-73ecb1e45523",
+      "taskId": "63be54bd-fc20-4065-8275-4d83c44302ef",
+      "type": "RUNTIME",
+      "subjectRefs": [],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "orchestrator:no_mutation_attempted"
+      ],
+      "producedAt": "2026-07-16T22:10:41.901Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "d150ec97-cec4-4c5f-89aa-1007b9b3a58a",
+      "taskId": "63be54bd-fc20-4065-8275-4d83c44302ef",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "aa1e8f2a-a82f-4680-acc4-73ecb1e45523"
+      ],
+      "finalized": true
+    }
+  ]
+}

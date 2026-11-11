@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ccf65c9e4697",
+    "toolCallId": "call_CEPP8huxZPhCENfbXYCtDpQD",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2787,
+    "digest": "f91c8ac37958754bca951b10d3c6a8196589a76707fb6b5741194d48ff9b0d9e",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:45:58.602Z"
+  },
+  "content": "{\n  \"query\": \"test_server_function\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"server-functions\",\n  \"scopePath\": \"pageKey:server-functions\",\n  \"scopePaths\": [\n    \"src/features/server-functions\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/server-functions\",\n    \"src/server/services/functions.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/features/server-functions/hooks/useServerFunctionsPage.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/server-functions/buildFunctionDerivedMetadata.ts\",\n      \"line\": 217,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/features/server-functions/components/ServerFunctionsLayout.tsx\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/features/server-functions/hooks/useServerFunctionSettings.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/payloads.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/server-functions/buildFunctionDerivedMetadata.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/features/server-functions/hooks/useServerFunctionEditor.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/features/server-functions/lib/serverFunctionAiSnapshot.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/types.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/features/server-functions/hooks/useServerFunctionRunner.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"server-functions\",\n    \"label\": \"Server Functions\",\n    \"routePattern\": \"server-functions\",\n    \"searchRoots\": [\n      \"src/features/server-functions\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/server-functions\",\n      \"src/server/services/functions.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

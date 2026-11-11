@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "f8080ef7-5dd8-4ee0-a31d-d835a76cd455",
+      "taskId": "590234e7-ba98-4509-92fe-a2c2edef637d",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T19:47:22.787Z"
+    },
+    {
+      "evidenceId": "25345270-f498-4966-b4eb-fddbeed1392e",
+      "taskId": "590234e7-ba98-4509-92fe-a2c2edef637d",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "runtime/server-functions/custom/math.sum-two-numbers.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T19:47:22.812Z"
+    },
+    {
+      "evidenceId": "d9a18e7b-bcbf-4b67-a74e-15adbd2e16d3",
+      "taskId": "590234e7-ba98-4509-92fe-a2c2edef637d",
+      "type": "TEST",
+      "subjectRefs": [
+        "math.sum-two-numbers"
+      ],
+      "result": "CONTRADICTING",
+      "sourceRefs": [
+        "tool:test_server_function",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T19:47:22.856Z"
+    },
+    {
+      "evidenceId": "ac31a7c8-cc84-4f03-badc-376c5a50899e",
+      "taskId": "590234e7-ba98-4509-92fe-a2c2edef637d",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "ff8d80c1-18b8-4239-ae7b-7266368a9661"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T19:47:22.879Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "f4e1d124-a901-4131-bc17-9a33786fe127",
+      "taskId": "590234e7-ba98-4509-92fe-a2c2edef637d",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "ac31a7c8-cc84-4f03-badc-376c5a50899e"
+      ],
+      "finalized": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:8d6bd26989eb",
+    "toolCallId": "call_rspKOp6fqVq2n1xlbQQyg6RJ",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1267,
+    "digest": "eb7103c27b74d2a9cfd30aea1b15b4acaf289667d844d04f83e43abe0acbf665",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T22:07:31.465Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/ui/AppButton.tsx\",\n  \"startLine\": 1,\n  \"endLine\": 29,\n  \"totalLines\": 29,\n  \"truncated\": false,\n  \"content\": \"1|import * as React from 'react';\\n2|import { cn } from '../../lib/utils';\\n3|import { getButtonIntentClassName, type ButtonIntent, type ButtonSize } from './buttonSemantics';\\n4|import { NativeButton, type NativeButtonProps } from './NativeButton';\\n5|import {\\n6|  ICON_ACTION_BUTTON_SM_CLASS,\\n7|  ICON_ACTION_CANCEL_CLASS,\\n8|} from './surfaceClasses';\\n9|\\n10|export type AppButtonProps = NativeButtonProps & {\\n11|  intent?: ButtonIntent;\\n12|  size?: ButtonSize;\\n13|  /** Icon-only close/dismiss control for modal headers. */\\n14|  closeIcon?: boolean;\\n15|};\\n16|\\n17|export const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(function AppButton(\\n18|  { intent, size = 'sm', closeIcon = false, className, type = 'button', ...props },\\n19|  ref,\\n20|) {\\n21|  const resolvedClassName = closeIcon\\n22|    ? cn(ICON_ACTION_BUTTON_SM_CLASS, ICON_ACTION_CANCEL_CLASS, 'rounded p-1', className)\\n23|    : intent\\n24|      ? getButtonIntentClassName(intent, className, size)\\n25|      : className;\\n26|\\n27|  return <NativeButton ref={ref} type={type} className={resolvedClassName} {...props} />;\\n28|});\\n29|\"\n}"
+}

@@ -1,0 +1,166 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-queue-local",
+    "name": "hwy-queue-local",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1789615844142-hdnhu"
+        ]
+      },
+      "heroui-app-table-grid-1789615844142-hdnhu": {
+        "id": "heroui-app-table-grid-1789615844142-hdnhu",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"username\",\"label\":\"\",\"width\":\"108px\",\"cardRole\":\"media\",\"cellKind\":\"avatar\",\"cellFields\":{\"imageUrlField\":\"avatarUrl\",\"fallbackTextField\":\"displayFullName\",\"captionField\":\"username\",\"captionFallbackField\":\"trackingCode\",\"genderCodeField\":\"genderCode\"},\"sort\":false,\"filter\":false,\"layoutHideable\":false,\"layoutResizable\":false},{\"key\":\"displayFullName\",\"label\":\"Member\",\"cardRole\":\"title\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"displayFullName\",\"secondaryField\":\"birthYear\",\"accountLayout\":\"stacked-text-lg\"},\"sort\":true,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"phone1\",\"label\":\"Phone\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"phone1\",\"secondaryField\":\"phone2\",\"accountLayout\":\"stacked-text-center\"},\"headerClassName\":\"text-center [&>div]:justify-center\",\"cellClassName\":\"text-center\",\"sort\":true,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"membershipStatusCodeTitle\",\"label\":\"Status\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"headerClassName\":\"text-center [&>div]:justify-center\",\"cellClassName\":\"text-center\"},{\"key\":\"nakhebinId\",\"label\":\"Nakhebin\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"hidden\"},{\"key\":\"electoralDivisionPath\",\"label\":\"Electoral division\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"cellClassName\":\"max-w-[16rem] whitespace-normal text-xs leading-snug\"},{\"key\":\"residenceSummary\",\"label\":\"Residence\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"cellClassName\":\"max-w-[18rem] whitespace-normal text-xs leading-snug\"},{\"key\":\"membershipOn\",\"label\":\"Membership on\",\"sort\":true,\"cellKind\":\"date\",\"cardRole\":\"meta\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": true,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "membershipOn",
+          "sortOptions": "[{\"value\":\"displayFullName\",\"label\":\"Member\"},{\"value\":\"phone1\",\"label\":\"Phone\"},{\"value\":\"membershipStatusCodeTitle\",\"label\":\"Status\"},{\"value\":\"nakhebinId\",\"label\":\"Nakhebin\"},{\"value\":\"electoralDivisionPath\",\"label\":\"Electoral division\"},{\"value\":\"residenceSummary\",\"label\":\"Residence\"},{\"value\":\"membershipOn\",\"label\":\"Membership on\"}]",
+          "loadingMessage": "Loading pending local verification…",
+          "emptyContent": "No pending local verification found.",
+          "errorContent": "Could not load pending local verification.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search pending local verification…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}",
+          "gridId": "hwy-hwy-queue-local-member-dir-v16"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwymemberdirectoryList",
+            "sourcePath": "hwymemberdirectoryList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "where": "gridToolbar.listWhere",
+              "filter[membershipStatusCode][eq]": "static:220.001.002"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-16T13:40:49.752Z",
+      "updatedAt": "2026-09-17T03:30:45.699Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {},
+    "dataSources": {
+      "hwymemberdirectoryList": {
+        "id": "hwymemberdirectoryList",
+        "name": "Pending Local Verification",
+        "endpoint": "/api/hwy/member-directory",
+        "fields": [
+          "id",
+          "trackingCode",
+          "username",
+          "displayFullName",
+          "phone1",
+          "membershipStatusCodeTitle",
+          "nakhebinId",
+          "electoralDivisionPath",
+          "residenceSummary",
+          "membershipOn"
+        ],
+        "primaryKey": "id",
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory/:id"
+          }
+        },
+        "responseMapping": {
+          "dataPath": "data",
+          "arrayPath": "data",
+          "totalPath": "count"
+        }
+      }
+    },
+    "lovs": {}
+  }
+}

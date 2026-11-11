@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:7f0d48939a1e",
+    "toolCallId": "call_wqOgaYPXMxcuKBjkYrnCdAEN",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 1635,
+    "digest": "b03f5784156548f22000d566bed4ed3eaf5740affcfd051230b2ad141dcc4f1a",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:47:40.384Z"
+  },
+  "content": "{\n  \"version\": \"1.51.0\",\n  \"updatedAt\": \"2026-07-18\",\n  \"standards\": [\n    {\n      \"id\": \"ai.mcp.builtin-packs\",\n      \"title\": \"AI Agent Built-in MCP Packs\",\n      \"value\": \"built-in MCP capability packs are in-process bundles under src/server/services/ai/mcp/builtin/ registered via registerBuiltinCapabilityPacks; canonical catalog is AI_CAPABILITY_PACK_CATALOG in capabilityPacks.ts (UI dropdown + runtime); migrate native tools into packs without dual registration; MCP tools are Agent mode only\",\n      \"appliesTo\": [\n        \"agent.service\",\n        \"capabilityPacks.ts\",\n        \"mcp/builtin\",\n        \"AgentCapabilityDropdown\",\n        \"ToolRegistry\"\n      ]\n    },\n    {\n      \"id\": \"ai.vibe.confirm-and-rollback\",\n      \"title\": \"Vibe Coding Write Confirm and Rollback\",\n      \"value\": \"all vibe coding writes go through draft_* → proposal → apply API (writeRequiresConfirm); AppEndooPanel auto-applies valid proposals in Agent mode without asking the user to type confirm or click Create; apply creates rollback snapshots; users may rollback last apply from AppEndooPanel; agent must never tell users to save or apply manually in the UI\",\n      \"appliesTo\": [\n        \"changeSet.service\",\n        \"AppEndooPanel\",\n        \"agent proposals\",\n        \"vibe-coding\"\n      ]\n    }\n  ],\n  \"matchCount\": 2,\n  \"truncated\": false,\n  \"maxRules\": 10,\n  \"knowledgeKinds\": [\n    \"STANDARD\",\n    \"BUILDER_GUIDANCE\"\n  ],\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic shards.\",\n  \"runtimeApi\": \"/api/project-standards\",\n  \"shardHint\": \"Pass shard (e.g. ui-grid) to load the full markdown topic file.\"\n}"
+}

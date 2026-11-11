@@ -1,0 +1,56 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "12e5d64e-d6eb-4397-9a96-7da220017b0f",
+      "taskId": "crash-fixture-task-2",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:09:03.760Z"
+    },
+    {
+      "evidenceId": "b1a51caa-9af6-4cc9-8594-1d02e8ab1dae",
+      "taskId": "crash-fixture-task-2",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/permissionSample.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:09:04.086Z"
+    },
+    {
+      "evidenceId": "0ae3f362-086f-47f0-963f-54baf53c6cba",
+      "taskId": "crash-fixture-task-2",
+      "type": "RUNTIME",
+      "subjectRefs": [],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "orchestrator:no_mutation_attempted"
+      ],
+      "producedAt": "2026-08-31T16:09:04.326Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "38c10042-eb4e-4512-b30a-b1529bea1fab",
+      "taskId": "crash-fixture-task-2",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "0ae3f362-086f-47f0-963f-54baf53c6cba"
+      ],
+      "finalized": true
+    }
+  ]
+}

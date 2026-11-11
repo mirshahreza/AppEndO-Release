@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:539473fe05b7",
+    "toolCallId": "call_4Jam9HubqgDsRcqdrQfzNfgh",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1220,
+    "digest": "67bf8399f224f019d0779f81956d617c9ceddf2a32ca1f1d862a977ff95c5921",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-19T05:13:42.912Z"
+  },
+  "content": "{\n  \"path\": \"src/server/routes/base-info.routes.ts\",\n  \"startLine\": 1,\n  \"endLine\": 23,\n  \"totalLines\": 23,\n  \"truncated\": false,\n  \"content\": \"1|import { Router, type Express } from 'express';\\n2|import { BaseInfoController } from '../controllers/base-info.controller';\\n3|import { requireAuth, requireRole } from '../middleware/auth.middleware';\\n4|import { BaseInfoService } from '../services/base-info.service';\\n5|\\n6|export const mountBaseInfoRoutes = (app: Express): void => {\\n7|  const service = new BaseInfoService();\\n8|  const controller = new BaseInfoController(service);\\n9|  const adminOnly = requireRole('ADMIN');\\n10|  const router = Router();\\n11|\\n12|  router.get('/options', requireAuth, controller.listOptions);\\n13|  router.get('/tree', requireAuth, controller.listTree);\\n14|  router.get('/children', requireAuth, controller.listChildren);\\n15|  router.post('/', adminOnly, controller.create);\\n16|  router.put('/:id', adminOnly, controller.update);\\n17|  router.post('/:id/move', adminOnly, controller.move);\\n18|  router.delete('/:id', adminOnly, controller.remove);\\n19|  router.patch('/:id/active', adminOnly, controller.setActive);\\n20|\\n21|  app.use('/api/base-info', router);\\n22|};\\n23|\"\n}"
+}

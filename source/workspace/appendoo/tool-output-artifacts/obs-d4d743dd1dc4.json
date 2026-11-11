@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:d4d743dd1dc4",
+    "toolCallId": "call_KYQsptGQzU0TuIGCQowDtpoO",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1085,
+    "digest": "307ebfa71fbbcc12f050cb014f7f884ecd723072fb0d837399ac78f9cf7c5a63",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-16T00:36:17.484Z"
+  },
+  "content": "{\n  \"path\": \"runtime/server-functions/custom/math.sum-two-numbers.ts\",\n  \"startLine\": 1,\n  \"endLine\": 37,\n  \"totalLines\": 37,\n  \"truncated\": false,\n  \"content\": \"1|type EdgeReq = {\\n2|  body: Record<string, unknown>;\\n3|  query: Record<string, unknown>;\\n4|  params: Record<string, string>;\\n5|  method: string;\\n6|  headers: Record<string, string | undefined>;\\n7|};\\n8|\\n9|type EdgeRes = {\\n10|  json: (data: unknown) => unknown;\\n11|  send: (data: unknown) => unknown;\\n12|  status: (code: number) => EdgeRes;\\n13|};\\n14|\\n15|const edgeReq = req as EdgeReq;\\n16|const edgeRes = res as EdgeRes;\\n17|\\n18|async function handler(): Promise<void> {\\n19|  const body = edgeReq.body ?? {};\\n20|  const a = Number(body.a);\\n21|  const b = Number(body.b);\\n22|\\n23|  if (!Number.isFinite(a) || !Number.isFinite(b)) {\\n24|    edgeRes.status(400).json({\\n25|      ok: false,\\n26|      error: 'Both \\\"a\\\" and \\\"b\\\" must be finite numbers.',\\n27|    });\\n28|    return;\\n29|  }\\n30|\\n31|  edgeRes.status(200).json({\\n32|    ok: true,\\n33|    a,\\n34|    b,\\n35|    sum: a + b,\\n36|  });\\n37|}\"\n}"
+}

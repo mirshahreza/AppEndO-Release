@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:4ab1163e5bd8",
+    "toolCallId": "c1",
+    "toolName": "get_server_function",
+    "contentType": "json",
+    "byteLength": 1884,
+    "digest": "923e202fc644107dfcec9ec4ad541ec34defb5c79aa77ff9a4d0992f4bb864d8",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-18T20:52:22.107Z"
+  },
+  "content": "{\n  \"id\": \"math.sum-two-numbers\",\n  \"name\": \"sum-two-numbers\",\n  \"folder\": \"math\",\n  \"method\": \"POST\",\n  \"path\": \"/api/math/sum-two-numbers\",\n  \"engineType\": \"SANDBOX_JS\",\n  \"language\": \"ts\",\n  \"runtimeVersion\": \"v20.x\",\n  \"timeoutMs\": 1500,\n  \"updatedAt\": \"2026-07-17T23:28:49.450Z\",\n  \"testPayload\": \"{\\n  \\\"a\\\": \\\"\\\",\\n  \\\"b\\\": \\\"\\\"\\n}\",\n  \"contract\": {\n    \"requestExample\": {\n      \"a\": \"\",\n      \"b\": \"\"\n    },\n    \"validationFields\": [\n      \"a\",\n      \"b\"\n    ],\n    \"outputFields\": [],\n    \"queryFields\": [],\n    \"paramFields\": [],\n    \"summary\": \"POST /api/math/sum-two-numbers\",\n    \"hasNoDetectedFields\": false\n  },\n  \"source\": \"type EdgeReq = {\\n  body: Record<string, unknown>;\\n  query: Record<string, unknown>;\\n  params: Record<string, string>;\\n  method: string;\\n  headers: Record<string, string | undefined>;\\n};\\n\\ntype EdgeRes = {\\n  json: (data: unknown) => unknown;\\n  send: (data: unknown) => unknown;\\n  status: (code: number) => EdgeRes;\\n};\\n\\nconst edgeReq = req as EdgeReq;\\nconst edgeRes = res as EdgeRes;\\n\\nfunction toFiniteNumber(value: unknown): number | null {\\n  if (typeof value === \\\"number\\\" && Number.isFinite(value)) {\\n    return value;\\n  }\\n\\n  if (typeof value === \\\"string\\\" && value.trim() !== \\\"\\\") {\\n    const parsed = Number(value);\\n    if (Number.isFinite(parsed)) {\\n      return parsed;\\n    }\\n  }\\n\\n  return null;\\n}\\n\\nasync function handler(): Promise<void> {\\n  const a = toFiniteNumber(edgeReq.body.a);\\n  const b = toFiniteNumber(edgeReq.body.b);\\n\\n  if (a === null || b === null) {\\n    edgeRes.status(400).json({\\n      success: false,\\n      error: \\\"Both \\\\\\\"a\\\\\\\" and \\\\\\\"b\\\\\\\" are required finite numbers.\\\",\\n    });\\n    return;\\n  }\\n\\n  const sum = a + b;\\n\\n  edgeRes.json({\\n    success: true,\\n    data: {\\n      a,\\n      b,\\n      result: sum,\\n      sum,\\n    },\\n  });\\n}\",\n  \"sourceTruncated\": false\n}"
+}

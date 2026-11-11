@@ -1,8 +1,8 @@
 {
   "version": "1",
-  "generatedAt": "2026-11-08T15:11:24.170Z",
+  "generatedAt": "2026-11-11T05:42:15.909Z",
   "policy": "all-locked",
-  "pageCount": 103,
+  "pageCount": 112,
   "pages": [
     {
       "pageKey": "api-talk",
@@ -353,7 +353,7 @@
     {
       "pageKey": "hwy-member-dossier-view",
       "label": "Member dossier (view)",
-      "routePattern": "hawiety/members-all/view/*",
+      "routePattern": null,
       "searchRoots": [
         "src/features/hwy-member-dossier"
       ],
@@ -784,6 +784,15 @@
       "source": "route-binding"
     },
     {
+      "pageKey": "hwy-message-audit",
+      "label": "Message audit",
+      "routePattern": "hawiety/message-audit",
+      "searchRoots": [
+        "src/features/hwy-message-audit"
+      ],
+      "source": "package-ui"
+    },
+    {
       "pageKey": "hwy-nakhebin",
       "label": "hwy-nakhebin",
       "routePattern": "hawiety/nakhebin",
@@ -1102,6 +1111,62 @@
         "src/server/services/users"
       ],
       "source": "feature-graph"
+    },
+    {
+      "pageKey": "voting-settings",
+      "label": "voting-settings",
+      "routePattern": "voting/settings/*",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "voting-vocab-ballot-types",
+      "label": "voting-vocab-ballot-types",
+      "routePattern": "voting/settings/ballot-types",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "voting-vocab-cast-channels",
+      "label": "voting-vocab-cast-channels",
+      "routePattern": "voting/settings/cast-channels",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "voting-vocab-observer-roles",
+      "label": "voting-vocab-observer-roles",
+      "routePattern": "voting/settings/observer-roles",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "voting-vocab-registration-statuses",
+      "label": "voting-vocab-registration-statuses",
+      "routePattern": "voting/settings/registration-statuses",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "voting-vocab-voting-statuses",
+      "label": "voting-vocab-voting-statuses",
+      "routePattern": "voting/settings/voting-statuses",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "voting-votings",
+      "label": "voting-votings",
+      "routePattern": "voting/votings",
+      "searchRoots": [],
+      "source": "route-binding"
+    },
+    {
+      "pageKey": "voting-votings-editor",
+      "label": "voting-votings-editor",
+      "routePattern": "voting/votings/edit/*",
+      "searchRoots": [],
+      "source": "route-binding"
     },
     {
       "pageKey": "workbooks",

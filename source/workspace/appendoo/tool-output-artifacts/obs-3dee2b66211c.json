@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:3dee2b66211c",
+    "toolCallId": "call_pqDLpOWGa2s8sFm7Lpx3CNkp",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2902,
+    "digest": "41719352ccbeab448d7c8ef5b47800157b5cf8c08121ef3a6a05ba84a5bf07cf",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T22:40:09.823Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/api/contracts/data-sources/prismaSchema.ts\",\n  \"startLine\": 1,\n  \"endLine\": 81,\n  \"totalLines\": 81,\n  \"truncated\": false,\n  \"content\": \"1|export type PrismaSchemaDomain =\\n2|  | 'identity'\\n3|  | 'rbac'\\n4|  | 'settings'\\n5|  | 'reference'\\n6|  | 'platform'\\n7|  | 'ai';\\n8|\\n9|export type PrismaFieldKind = 'scalar' | 'relation' | 'enum';\\n10|\\n11|export type PrismaSchemaField = {\\n12|  name: string;\\n13|  type: string;\\n14|  kind: PrismaFieldKind;\\n15|  isOptional: boolean;\\n16|  isList: boolean;\\n17|  isId: boolean;\\n18|  isUnique: boolean;\\n19|  mappedName?: string;\\n20|  relationTarget?: string;\\n21|  relationField?: string;\\n22|};\\n23|\\n24|export type PrismaSchemaModel = {\\n25|  name: string;\\n26|  tableName: string;\\n27|  domain: PrismaSchemaDomain;\\n28|  fields: PrismaSchemaField[];\\n29|  relationNames: string[];\\n30|};\\n31|\\n32|export type PrismaSchemaRelation = {\\n33|  fromModel: string;\\n34|  toModel: string;\\n35|  fromField: string;\\n36|  cardinality: '1:1' | '1:n' | 'n:1' | 'n:m';\\n37|};\\n38|\\n39|export type PrismaSchemaCatalog = {\\n40|  version: number;\\n41|  sourcePath: string;\\n42|  provider: string;\\n43|  generatedAt: string;\\n44|  models: PrismaSchemaModel[];\\n45|  relations: PrismaSchemaRelation[];\\n46|  domains: Array<{ id: PrismaSchemaDomain; label: string; description: string }>;\\n47|};\\n48|\\n49|export const PRISMA_SCHEMA_DOMAINS: PrismaSchemaCatalog['domains'] = [\\n50|  { id: 'identity', label: 'Identity & Auth', description: 'Users, profiles, OTP, refresh tokens, audit logs.' },\\n51|  { id: 'rbac', label: 'Roles & Access', description: 'Roles, user-role links, MCP grants.' },\\n52|  { id: 'settings', label: 'Settings & Attributes', description: 'Platform blobs, custom attributes, profile field config.' },\\n53|  { id: 'reference', label: 'Reference Data', description: 'BaseInfo tree and lookup values.' },\\n54|  { id: 'platform', label: 'Platform Ops', description: 'Jobs, app logs, contact messages.' },\\n55|  { id: 'ai', label: 'AI & Agent', description: 'Chat sessions, agent traces, apply snapshots.' },\\n56|];\\n57|\\n58|export const PRISMA_MODEL_DOMAIN: Record<string, PrismaSchemaDomain> = {\\n59|  BaseUser: 'identity',\\n60|  BaseUserProfile: 'identity',\\n61|  BaseUserIdentity: 'identity',\\n62|  BaseOtpChallenge: 'identity',\\n63|  BaseAuthRefreshToken: 'identity',\\n64|  BaseAuthAuditLog: 'identity',\\n65|  BaseRole: 'rbac',\\n66|  BaseUserRole: 'rbac',\\n67|  BaseRoleMcpGrant: 'rbac',\\n68|  BaseSettingsSection: 'settings',\\n69|  BaseSettingsAttribute: 'settings',\\n70|  BaseSettingsProfileField: 'settings',\\n71|  BaseUserAttribute: 'settings',\\n72|  BaseRoleAttribute: 'settings',\\n73|  BaseInfo: 'reference',\\n74|  BaseJob: 'platform',\\n75|  BaseAppLog: 'platform',\\n76|  BaseContactMessage: 'platform',\\n77|  BaseAiChatSession: 'ai',\\n78|  BaseAiAgentTrace: 'ai',\\n79|  BaseAiAgentApplySnapshot: 'ai',\\n80|};\\n81|\"\n}"
+}

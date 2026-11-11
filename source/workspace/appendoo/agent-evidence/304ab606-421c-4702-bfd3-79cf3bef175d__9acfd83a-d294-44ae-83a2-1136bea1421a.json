@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "0f85d18a-3198-4ea3-8bc0-8776c6a8931b",
+      "taskId": "304ab606-421c-4702-bfd3-79cf3bef175d",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T05:31:41.100Z"
+    },
+    {
+      "evidenceId": "d79c016c-3a4c-46cb-9dc3-b50d7d70ce7e",
+      "taskId": "304ab606-421c-4702-bfd3-79cf3bef175d",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/features/math/SumTwoNumbersForm.tsx"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T05:31:41.140Z"
+    },
+    {
+      "evidenceId": "820f2518-111c-4667-ba9b-c7a36ade98d9",
+      "taskId": "304ab606-421c-4702-bfd3-79cf3bef175d",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "math.sum-two-numbers"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_server_function",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T05:31:41.168Z"
+    },
+    {
+      "evidenceId": "211c6b29-76d1-4352-ab2f-bfcb33ee8ee5",
+      "taskId": "304ab606-421c-4702-bfd3-79cf3bef175d",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "34c5e4be-e2c7-46d6-9660-308ffccc0351"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-18T05:31:41.230Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "02ac480f-780c-4995-b121-ca3a3f98fce6",
+      "taskId": "304ab606-421c-4702-bfd3-79cf3bef175d",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "211c6b29-76d1-4352-ab2f-bfcb33ee8ee5"
+      ],
+      "finalized": true
+    }
+  ]
+}

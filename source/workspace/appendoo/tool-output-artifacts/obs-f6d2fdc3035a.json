@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:f6d2fdc3035a",
+    "toolCallId": "call_PcjFnBTd43hWkS23VpbGVKAM",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2312,
+    "digest": "c898ee1968ba2950139110623a15d0ea081666ddda5bcdbb7c9550bc94a57182",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:47:20.796Z"
+  },
+  "content": "{\n  \"query\": \"multiply two numbers server function\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"dashboard\",\n  \"scopePath\": \"pageKey:dashboard\",\n  \"scopePaths\": [\n    \"src/features/dashboard\",\n    \"src/server/routes\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/server/routes/server-functions.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/docs.routes.ts\",\n      \"line\": 289,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/functions.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/docs.routes.ts\",\n      \"line\": 361,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/workflow-proof.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/workflow-runtime.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/workflow-work-items.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/workflows.routes.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/docs.routes.ts\",\n      \"line\": 217,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    },\n    {\n      \"path\": \"src/server/routes/docs.routes.ts\",\n      \"line\": 433,\n      \"column\": 1,\n      \"pageKey\": \"base-info\",\n      \"label\": \"Base Info\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"dashboard\",\n    \"label\": \"Dashboard\",\n    \"routePattern\": \"\",\n    \"searchRoots\": [\n      \"src/features/dashboard\",\n      \"src/server/routes\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

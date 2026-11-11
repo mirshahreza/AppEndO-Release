@@ -1,0 +1,26 @@
+{
+  "schema": "package-deployment-applied",
+  "schemaVersion": "1.0.0",
+  "packageId": "cms",
+  "version": "1.3.9",
+  "appliedAt": "2026-11-06T20:29:02.623Z",
+  "kind": "extension-ui-routes",
+  "routes": [
+    {
+      "pageKey": "cms-site-home",
+      "title": "Cms Site Home",
+      "routePattern": "packages/cms/cms-site-home",
+      "mountId": "studio",
+      "loaderRef": "cms:cms-site-home",
+      "entry": "ui/cms-site-home.tsx"
+    },
+    {
+      "pageKey": "cms-site-article",
+      "title": "Cms Site Article",
+      "routePattern": "packages/cms/cms-site-article",
+      "mountId": "studio",
+      "loaderRef": "cms:cms-site-article",
+      "entry": "ui/cms-site-article.tsx"
+    }
+  ]
+}

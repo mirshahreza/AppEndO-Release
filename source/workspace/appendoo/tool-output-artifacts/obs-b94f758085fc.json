@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:b94f758085fc",
+    "toolCallId": "call_gYv7tYZHhuomD5Rwt00n1mex",
+    "toolName": "get_project_standards",
+    "contentType": "json",
+    "byteLength": 1210,
+    "digest": "66d1e4d2a7daf92ce58e50080e1771dd15a4eb0fa4084f71f82d2dc2cfe85e3b",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-16T00:37:36.074Z"
+  },
+  "content": "{\n  \"version\": \"1.49.0\",\n  \"updatedAt\": \"2026-07-09\",\n  \"standards\": [\n    {\n      \"id\": \"component-designer.public-component-name\",\n      \"title\": \"Component Designer — Public Component Name\",\n      \"value\": \"outside the Component Designer workspace, identify saved components by folder + name path (<folder>/<component-name>); never expose draft/version ids (e.g. draft-…) in preview URLs or cross-feature APIs; preview uses ?component=<folder>/<name>; experience manifest pageKey remains the component name slug when the platform contract forbids slashes; draft index and draft ids are designer-internal persistence only; reference docs/standards/component-designer.md\",\n      \"appliesTo\": [\n        \"component designer preview\",\n        \"experience manifest\",\n        \"portal navigation\",\n        \"designer route propagation\",\n        \"component-designer API consumers\"\n      ]\n    }\n  ],\n  \"matchCount\": 1,\n  \"truncated\": false,\n  \"maxRules\": 10,\n  \"knowledgeKinds\": [\n    \"STANDARD\"\n  ],\n  \"agentsMdPointer\": \"See AGENTS.md hub and docs/standards/INDEX.md for topic shards.\",\n  \"runtimeApi\": \"/api/project-standards\",\n  \"shardHint\": \"Pass shard (e.g. ui-grid) to load the full markdown topic file.\"\n}"
+}

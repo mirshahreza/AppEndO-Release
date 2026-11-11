@@ -1,0 +1,194 @@
+{
+  "schema": "component-designer-export",
+  "version": "1.0.0",
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-members",
+    "name": "hwy-members",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1789651319766-ydp5e"
+        ]
+      },
+      "heroui-app-table-grid-1789651319766-ydp5e": {
+        "id": "heroui-app-table-grid-1789651319766-ydp5e",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"username\",\"label\":\"\",\"width\":\"64px\",\"cardRole\":\"media\",\"cellKind\":\"avatar\",\"cellFields\":{\"imageUrlField\":\"avatarUrl\",\"fallbackTextField\":\"displayFullName\",\"captionField\":\"username\",\"captionFallbackField\":\"trackingCode\",\"genderCodeField\":\"genderCode\",\"avatarSizePx\":43},\"sort\":false,\"filter\":false,\"layoutHideable\":false,\"layoutResizable\":false},{\"key\":\"displayFullName\",\"label\":\"Member\",\"labelTranslationKey\":\"hwy.members.column.member\",\"cardRole\":\"title\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"displayFullName\",\"secondaryField\":\"birthYear\",\"accountLayout\":\"stacked-text-lg\"},\"sort\":true,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"phone1\",\"label\":\"Phone\",\"labelTranslationKey\":\"hwy.members.column.phone\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"phone1\",\"secondaryField\":\"phone2\",\"accountLayout\":\"stacked-text-center\"},\"headerClassName\":\"text-center [&>div]:justify-center\",\"cellClassName\":\"text-center\",\"sort\":true,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"membershipStatusCodeTitle\",\"label\":\"Status\",\"labelTranslationKey\":\"hwy.members.column.status\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"headerClassName\":\"text-center [&>div]:justify-center\",\"cellClassName\":\"text-center\"},{\"key\":\"nakhebinId\",\"label\":\"Nakhebin\",\"labelTranslationKey\":\"hwy.members.column.nakhebin\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"hidden\"},{\"key\":\"electoralDivisionPath\",\"label\":\"Electoral division\",\"labelTranslationKey\":\"hwy.members.column.electoralDivision\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"electoralDivisionLine1\",\"secondaryField\":\"electoralDivisionLine2\",\"accountLayout\":\"stacked-text\"},\"cellClassName\":\"max-w-[16rem] whitespace-normal text-xs leading-snug\"},{\"key\":\"residenceSummary\",\"label\":\"Residence\",\"labelTranslationKey\":\"hwy.members.column.residence\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"cellClassName\":\"max-w-[18rem] whitespace-normal text-xs leading-snug\"},{\"key\":\"membershipOn\",\"label\":\"Membership on\",\"labelTranslationKey\":\"hwy.members.column.membershipOn\",\"sort\":true,\"cellKind\":\"date\",\"cardRole\":\"meta\",\"width\":\"9.5rem\",\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "table",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": true,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "membershipOn",
+          "sortOptions": "[{\"value\":\"displayFullName\",\"label\":\"Member\",\"labelTranslationKey\":\"hwy.members.column.member\"},{\"value\":\"phone1\",\"label\":\"Phone\",\"labelTranslationKey\":\"hwy.members.column.phone\"},{\"value\":\"membershipStatusCodeTitle\",\"label\":\"Status\",\"labelTranslationKey\":\"hwy.members.column.status\"},{\"value\":\"nakhebinId\",\"label\":\"Nakhebin\",\"labelTranslationKey\":\"hwy.members.column.nakhebin\"},{\"value\":\"electoralDivisionPath\",\"label\":\"Electoral division\",\"labelTranslationKey\":\"hwy.members.column.electoralDivision\"},{\"value\":\"residenceSummary\",\"label\":\"Residence\",\"labelTranslationKey\":\"hwy.members.column.residence\"},{\"value\":\"membershipOn\",\"label\":\"Membership on\",\"labelTranslationKey\":\"hwy.members.column.membershipOn\"}]",
+          "loadingMessage": "Loading members…",
+          "emptyContent": "No members found.",
+          "errorContent": "Could not load members.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search members…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"fieldFilters\":[{\"id\":\"membershipStatusCode\",\"field\":\"membershipStatusCode\",\"label\":\"Status\",\"labelTranslationKey\":\"hwy.members.filter.status\",\"controlType\":\"select\",\"optionsSource\":\"lov\",\"lovRef\":\"hwyMembershipStatus\",\"multiple\":true,\"apiParam\":\"filter[membershipStatusCode][in]\",\"storePath\":\"gridToolbar.filters.membershipStatusCode\"}],\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}",
+          "gridId": "hwy-hwy-members-member-dir-v25",
+          "loadingMessageTranslationKey": "hwy.members.loading",
+          "emptyContentTranslationKey": "hwy.members.empty",
+          "errorContentTranslationKey": "hwy.members.error",
+          "searchPlaceholderTranslationKey": "hwy.members.search.placeholder",
+          "refreshLabelTranslationKey": "hwy.members.toolbar.refresh",
+          "density": "compact",
+          "compactTabletLayout": "table-scroll",
+          "compactPhoneLayout": "table-scroll"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwymemberdirectoryList",
+            "sourcePath": "hwymemberdirectoryList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "filter[membershipStatusCode][in]": "gridToolbar.filters.membershipStatusCode",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "where": "gridToolbar.listWhere",
+              "lang": "static:ar"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-16T13:40:49.738Z",
+      "updatedAt": "2026-09-17T13:21:59.978Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "gridToolbar": {
+        "id": "gridToolbar",
+        "initialValue": {
+          "search": "",
+          "filters": {
+            "membershipStatusCode": ""
+          }
+        },
+        "persist": "local"
+      }
+    },
+    "dataSources": {
+      "hwymemberdirectoryList": {
+        "id": "hwymemberdirectoryList",
+        "name": "Members",
+        "endpoint": "/api/hwy/member-directory",
+        "fields": [
+          "id",
+          "trackingCode",
+          "username",
+          "displayFullName",
+          "phone1",
+          "membershipStatusCodeTitle",
+          "nakhebinId",
+          "electoralDivisionPath",
+          "residenceSummary",
+          "membershipOn"
+        ],
+        "primaryKey": "id",
+        "kind": "collection",
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory/:id"
+          }
+        },
+        "responseMapping": {
+          "dataPath": "data",
+          "arrayPath": "data",
+          "totalPath": "count"
+        }
+      }
+    },
+    "lovs": {
+      "hwyMembershipStatus": {
+        "id": "hwyMembershipStatus",
+        "name": "Membership Status",
+        "endpoint": "/api/base-info/options?root=220.001&lang=ar",
+        "displayValue": "label",
+        "returnValue": "id"
+      }
+    }
+  }
+}

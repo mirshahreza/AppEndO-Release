@@ -206,4 +206,18 @@ export const APPENDOO_EN: Record<string, string> = {
   'appendoo.agent.applyFailed': 'Apply failed.',
   'appendoo.agent.applySuccess': 'Changes applied successfully.',
   'appendoo.agent.readFileFailed': 'Failed to read file.',
+
+  'platform.recordSubjectTimeline.title': 'Record timeline',
+  'platform.recordSubjectTimeline.triggerLabel': 'Record timeline',
+  'platform.recordSubjectTimeline.showFieldTimeline': 'Show field timeline',
+  'platform.recordSubjectTimeline.hideFieldTimeline': 'Hide field timeline',
+  'platform.recordSubjectTimeline.loading': 'Loading timeline…',
+  'platform.recordSubjectTimeline.empty': 'No timeline events yet.',
+  'platform.recordSubjectTimeline.loadFailed': 'Failed to load timeline.',
+  'platform.recordSubjectTimeline.loadFailedDetail': 'Unable to load timeline.',
+  'platform.recordSubjectTimeline.sortToggleToOldestFirst': 'Show oldest first',
+  'platform.recordSubjectTimeline.sortToggleToNewestFirst': 'Show newest first',
+  'platform.recordSubjectTimeline.systemActor': 'System',
+  'platform.recordSubjectTimeline.restorePreviousValue': 'Restore previous value',
+  'platform.recordSubjectTimeline.eventDetailTitle': 'Timeline event',
 };

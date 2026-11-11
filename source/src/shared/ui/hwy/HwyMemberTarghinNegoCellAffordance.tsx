@@ -4,11 +4,18 @@ import { MessageSquare, MessageSquarePlus } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { HWY_MEMBER_TARGHIN_NOTE_BODY_CLASS } from '../../../domain/hwy/hwyMemberTarghinAdminLayout';
 import { AppButton } from '../AppButton';
+import { catalogTextLinkPrimaryAppliedStateClass } from '../catalog/catalogInteractionApplied';
+import type { CatalogInteractionPreviewProps } from '../catalog/catalogInteractionState';
+import { CATALOG_INTERACTION_MARKER_TEXT_LINK_PRIMARY } from '../catalog/catalogInteractionState';
 
-const NEGO_LINK_CLASS =
-  'ms-[5px] inline-flex h-auto min-h-0 w-auto max-w-full items-center gap-1 border-0 bg-transparent px-0 py-0.5 text-start text-xs font-medium text-primary-700 shadow-none transition-colors hover:bg-transparent hover:text-primary-800 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 disabled:opacity-50';
+const NEGO_LINK_CLASS = cn(
+  'ms-[5px] inline-flex h-auto min-h-0 w-auto max-w-full items-center gap-1 border-0 bg-transparent px-0 py-0.5 text-start text-xs font-medium text-primary-700 shadow-none transition-colors',
+  'hover:bg-transparent hover:text-primary-800 hover:underline active:text-primary-900 active:underline',
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 disabled:opacity-50',
+  CATALOG_INTERACTION_MARKER_TEXT_LINK_PRIMARY,
+);
 
-export type HwyMemberTarghinNegoCellAffordanceProps = {
+export type HwyMemberTarghinNegoCellAffordanceProps = CatalogInteractionPreviewProps & {
   negoNoteCount: number;
   lastNegoNote?: string | null;
   lastNegoNoteIsByViewer?: boolean;
@@ -29,6 +36,7 @@ export const HwyMemberTarghinNegoCellAffordance: React.FC<HwyMemberTarghinNegoCe
   openThreadAriaLabel,
   onOpenThread,
   className,
+  catalogPreviewState,
 }) => {
   const preview = lastNegoNote?.trim();
   const effectiveCount = negoNoteCount > 0 ? negoNoteCount : (preview ? 1 : 0);
@@ -39,7 +47,7 @@ export const HwyMemberTarghinNegoCellAffordance: React.FC<HwyMemberTarghinNegoCe
   return (
     <div className={cn('mt-[11px] space-y-1', className)}>
       <AppButton
-        className={NEGO_LINK_CLASS}
+        className={cn(NEGO_LINK_CLASS, catalogTextLinkPrimaryAppliedStateClass(catalogPreviewState))}
         onClick={onOpenThread}
         aria-label={openThreadAriaLabel}
       >

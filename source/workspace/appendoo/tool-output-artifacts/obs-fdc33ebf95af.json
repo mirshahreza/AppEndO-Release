@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:fdc33ebf95af",
+    "toolCallId": "call_NKPJ1tFVffI4wZI1sKoOh4kn",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1960,
+    "digest": "223330d061a3464f591a391b2a86c7f05f11bfdaccca22923a38acc84d861203",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-17T23:02:41.971Z"
+  },
+  "content": "{\n  \"query\": \"buildServerFunctionTemplate success true data edgeReq.body finite numbers\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": true,\n  \"pageKey\": \"server-functions\",\n  \"scopePath\": \"pageKey:server-functions\",\n  \"scopePaths\": [\n    \"src/features/server-functions\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/server-functions\",\n    \"src/server/services/functions.service.ts\"\n  ],\n  \"includeText\": false,\n  \"matchCount\": 5,\n  \"matches\": [\n    {\n      \"path\": \"src/features/server-functions/lib/buildAutoCrudRouteFiles.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/features/server-functions/constants.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/initialFunctions.ts\",\n      \"line\": 433,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/initialFunctions.ts\",\n      \"line\": 289,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/initialFunctions.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"server-functions\",\n    \"label\": \"Server Functions\",\n    \"routePattern\": \"server-functions\",\n    \"searchRoots\": [\n      \"src/features/server-functions\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/server-functions\",\n      \"src/server/services/functions.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

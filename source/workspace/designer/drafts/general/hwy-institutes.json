@@ -1,0 +1,1503 @@
+{
+  "schema": "component-designer-draft",
+  "id": "draft-hwy-institutes",
+  "name": "hwy-institutes",
+  "folder": "general",
+  "catalogKind": "custom",
+  "tags": [],
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-institutes",
+    "name": "hwy-institutes",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1793645604280-hpw4a",
+          "node-dcf70428-9758-4dee-ac10-0b7294b77b03",
+          "node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db"
+        ]
+      },
+      "heroui-app-table-grid-1793645604280-hpw4a": {
+        "id": "heroui-app-table-grid-1793645604280-hpw4a",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"logoUrl\",\"label\":\"Logo\",\"labelTranslationKey\":\"hwy.institutes.column.logo\",\"cellKind\":\"avatar\",\"cellFields\":{\"imageUrlField\":\"logoUrl\",\"fallbackTextField\":\"code\",\"avatarSizePx\":36},\"layoutResizable\":false,\"width\":\"64px\",\"headerClassName\":\"text-center [&>div]:justify-center\",\"cellClassName\":\"text-center\",\"cellClickBehavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},{\"key\":\"code\",\"label\":\"Latin name\",\"labelTranslationKey\":\"hwy.institutes.column.code\",\"sort\":true,\"cardRole\":\"meta\",\"layoutResizable\":false,\"width\":\"140px\"},{\"key\":\"titleAr\",\"label\":\"Title\",\"labelTranslationKey\":\"hwy.institutes.column.title\",\"sort\":true,\"cardRole\":\"title\",\"layoutResizable\":true},{\"key\":\"isActive\",\"label\":\"On\",\"labelTranslationKey\":\"hwy.institutes.column.isActive\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"meta\",\"layoutResizable\":false,\"width\":\"56px\",\"headerClassName\":\"text-center [&>div]:justify-center [&>div>span]:flex-none whitespace-nowrap text-[10px] leading-tight px-0.5 max-w-[4rem]\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell px-0.5\"},{\"key\":\"allowsSelfRegistration\",\"label\":\"Self\",\"labelTranslationKey\":\"hwy.institutes.column.allowsSelfRegistration\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\",\"layoutResizable\":false,\"width\":\"56px\",\"headerClassName\":\"text-center [&>div]:justify-center [&>div>span]:flex-none whitespace-nowrap text-[10px] leading-tight px-0.5 max-w-[4rem]\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell px-0.5\"},{\"key\":\"allowsInvite\",\"label\":\"Invite\",\"labelTranslationKey\":\"hwy.institutes.column.allowsInvite\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\",\"layoutResizable\":false,\"width\":\"56px\",\"headerClassName\":\"text-center [&>div]:justify-center [&>div>span]:flex-none whitespace-nowrap text-[10px] leading-tight px-0.5 max-w-[4rem]\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell px-0.5\"},{\"key\":\"hideMemberPhones\",\"label\":\"Hide tel\",\"labelTranslationKey\":\"hwy.institutes.column.hideMemberPhones\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\",\"layoutResizable\":false,\"width\":\"56px\",\"headerClassName\":\"text-center [&>div]:justify-center [&>div>span]:flex-none whitespace-nowrap text-[10px] leading-tight px-0.5 max-w-[4rem]\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell px-0.5\"},{\"key\":\"hasDedicatedList\",\"label\":\"List\",\"labelTranslationKey\":\"hwy.institutes.column.hasDedicatedList\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\",\"layoutResizable\":false,\"width\":\"56px\",\"headerClassName\":\"text-center [&>div]:justify-center [&>div>span]:flex-none whitespace-nowrap text-[10px] leading-tight px-0.5 max-w-[4rem]\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell px-0.5\"},{\"key\":\"allowsListScopedEdit\",\"label\":\"L-edit\",\"labelTranslationKey\":\"hwy.institutes.column.allowsListScopedEdit\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\",\"layoutResizable\":false,\"width\":\"56px\",\"headerClassName\":\"text-center [&>div]:justify-center [&>div>span]:flex-none whitespace-nowrap text-[10px] leading-tight px-0.5 max-w-[4rem]\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell px-0.5\"},{\"key\":\"showInstituteCharacterInDossier\",\"label\":\"Dossier\",\"labelTranslationKey\":\"hwy.institutes.column.showInstituteCharacterInDossier\",\"sort\":true,\"cellKind\":\"boolean-icon\",\"cardRole\":\"hidden\",\"layoutResizable\":false,\"width\":\"56px\",\"headerClassName\":\"text-center [&>div]:justify-center [&>div>span]:flex-none whitespace-nowrap text-[10px] leading-tight px-0.5 max-w-[4rem]\",\"cellClassName\":\"text-center nakhebin-voted-grid-cell px-0.5\"},{\"key\":\"actions\",\"label\":\"\",\"kind\":\"action-group\",\"actions\":[{\"actionId\":\"edit\",\"icon\":\"Pencil\",\"intent\":\"edit\",\"tooltip\":\"Edit\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}}],\"maxVisibleActions\":3,\"cardRole\":\"actions\",\"layoutHideable\":false,\"layoutResizable\":false,\"layoutReorderable\":false,\"width\":\"30px\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 1000,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": false,
+          "showListModeControls": false,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "code",
+          "sortOptions": "[{\"value\":\"code\",\"label\":\"Latin name\",\"labelTranslationKey\":\"hwy.institutes.column.code\"},{\"value\":\"titleAr\",\"label\":\"Title\",\"labelTranslationKey\":\"hwy.institutes.column.title\"},{\"value\":\"isActive\",\"label\":\"On\",\"labelTranslationKey\":\"hwy.institutes.column.isActive\"},{\"value\":\"allowsSelfRegistration\",\"label\":\"Self\",\"labelTranslationKey\":\"hwy.institutes.column.allowsSelfRegistration\"},{\"value\":\"allowsInvite\",\"label\":\"Invite\",\"labelTranslationKey\":\"hwy.institutes.column.allowsInvite\"},{\"value\":\"hideMemberPhones\",\"label\":\"Hide tel\",\"labelTranslationKey\":\"hwy.institutes.column.hideMemberPhones\"},{\"value\":\"hasDedicatedList\",\"label\":\"List\",\"labelTranslationKey\":\"hwy.institutes.column.hasDedicatedList\"},{\"value\":\"allowsListScopedEdit\",\"label\":\"L-edit\",\"labelTranslationKey\":\"hwy.institutes.column.allowsListScopedEdit\"},{\"value\":\"showInstituteCharacterInDossier\",\"label\":\"Dossier\",\"labelTranslationKey\":\"hwy.institutes.column.showInstituteCharacterInDossier\"}]",
+          "loadingMessage": "Loading institutes…",
+          "emptyContent": "No institutes found.",
+          "errorContent": "Could not load institutes.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": false,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search institutes…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"create\":{\"enabled\":true,\"label\":\"Create\",\"icon\":\"Plus\",\"behavior\":{\"kind\":\"open-modal\",\"modalNodeId\":\"node-dcf70428-9758-4dee-ac10-0b7294b77b03\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"}},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]},\"listWhereFilter\":false,\"queryPresetChips\":false}",
+          "gridId": "hwy-hwy-institutes-logo-edit-link-v2",
+          "loadingMessageTranslationKey": "hwy.institutes.loading",
+          "emptyContentTranslationKey": "hwy.institutes.empty",
+          "errorContentTranslationKey": "hwy.institutes.error",
+          "searchPlaceholderTranslationKey": "hwy.institutes.search.placeholder",
+          "refreshLabelTranslationKey": "hwy.institutes.toolbar.refresh"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwyinstitutesList",
+            "sourcePath": "hwyinstitutesList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      },
+      "node-dcf70428-9758-4dee-ac10-0b7294b77b03": {
+        "id": "node-dcf70428-9758-4dee-ac10-0b7294b77b03",
+        "type": "container",
+        "parentId": "root",
+        "order": 1,
+        "props": {
+          "title": "Create Institute",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside",
+          "titleTranslationKey": "hwy.institutes.modal.create"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-dcf70428-9758-4dee-ac10-0b7294b77b03 === true"
+        },
+        "binding": {},
+        "children": [
+          "node-6fde13e5-cf40-4358-b837-4ff1177f7bbf",
+          "node-7f5699b1-b29c-42dc-9a1d-9cd07af9cbb6"
+        ]
+      },
+      "node-5fe071bd-0db5-4509-94dc-151bdd69eef5": {
+        "id": "node-5fe071bd-0db5-4509-94dc-151bdd69eef5",
+        "type": "container",
+        "parentId": "node-5012b4d7-d4e2-4b4d-b437-3d683f074fbe",
+        "order": 0,
+        "props": {
+          "name": "logoContentBase64",
+          "label": "Logo",
+          "ariaLabel": "Logo",
+          "hint": "Enter logo.",
+          "labelTranslationKey": "hwy.institutes.column.logo",
+          "_designerPaletteItemId": "hwy.institute-logo-upload",
+          "className": "flex w-full flex-col items-center"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "logoContentBase64",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-ffa61b38-568f-488a-b626-a87be704fa95": {
+        "id": "node-ffa61b38-568f-488a-b626-a87be704fa95",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-title-row",
+        "order": 1,
+        "props": {
+          "name": "titleAr",
+          "label": "",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Title (Arabic)",
+          "hint": "Required. Enter title (Arabic).",
+          "placeholderTranslationKey": "hwy.institutes.field.titleAr.placeholder",
+          "_designerPaletteItemId": "heroui.input-text",
+          "className": "min-w-0 flex-1 w-full"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "titleAr",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-b333ed58-378d-46e7-98f2-0a403a609f01": {
+        "id": "node-b333ed58-378d-46e7-98f2-0a403a609f01",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-switches-box",
+        "order": 0,
+        "props": {
+          "name": "isActive",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "labelTranslationKey": "hwy.institutes.field.isActive",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "isActive",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-f2e3c037-3ea5-4dca-8a9b-50f3d549adfb": {
+        "id": "node-f2e3c037-3ea5-4dca-8a9b-50f3d549adfb",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-switches-box",
+        "order": 1,
+        "props": {
+          "name": "allowsSelfRegistration",
+          "label": "Self registration",
+          "ariaLabel": "Self registration",
+          "hint": "Turn self registration on or off.",
+          "labelTranslationKey": "hwy.institutes.field.allowsSelfRegistration",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allowsSelfRegistration",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-c0be51bd-bfea-4f6c-8dc8-cd4485267571": {
+        "id": "node-c0be51bd-bfea-4f6c-8dc8-cd4485267571",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-switches-box",
+        "order": 2,
+        "props": {
+          "name": "allowsInvite",
+          "label": "Allows invite",
+          "ariaLabel": "Allows invite",
+          "hint": "Turn allows invite on or off.",
+          "labelTranslationKey": "hwy.institutes.field.allowsInvite",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allowsInvite",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-c3ea6d19-0783-443c-9da0-7664dff95aaf": {
+        "id": "node-c3ea6d19-0783-443c-9da0-7664dff95aaf",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-expiry-row",
+        "order": 1,
+        "props": {
+          "name": "inviteExpiresAfterDays",
+          "label": "",
+          "size": "sm",
+          "placeholder": "Invite expires (days)",
+          "hint": "Enter invite expires (days).",
+          "placeholderTranslationKey": "hwy.institutes.field.inviteExpiresAfterDays.placeholder",
+          "_designerPaletteItemId": "heroui.number-input",
+          "className": "min-w-0 flex-1 w-full"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "inviteExpiresAfterDays",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-c0f92000-d94d-4896-b062-0d7c48b72a3b": {
+        "id": "node-c0f92000-d94d-4896-b062-0d7c48b72a3b",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-switches-box",
+        "order": 3,
+        "props": {
+          "name": "hideMemberPhones",
+          "label": "Hide member phones",
+          "ariaLabel": "Hide member phones",
+          "hint": "Turn hide member phones on or off.",
+          "labelTranslationKey": "hwy.institutes.field.hideMemberPhones",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "hideMemberPhones",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-a81b2e64-9fde-458f-a15c-c8748a725373": {
+        "id": "node-a81b2e64-9fde-458f-a15c-c8748a725373",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-switches-box",
+        "order": 4,
+        "props": {
+          "name": "hasDedicatedList",
+          "label": "Dedicated list",
+          "ariaLabel": "Dedicated list",
+          "hint": "Turn dedicated list on or off.",
+          "labelTranslationKey": "hwy.institutes.field.hasDedicatedList",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "hasDedicatedList",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-ff1f79b6-73cb-49b7-b3e1-3a3f187c8750": {
+        "id": "node-ff1f79b6-73cb-49b7-b3e1-3a3f187c8750",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-switches-box",
+        "order": 5,
+        "props": {
+          "name": "allowsListScopedEdit",
+          "label": "List scoped edit",
+          "ariaLabel": "List scoped edit",
+          "hint": "Turn list scoped edit on or off.",
+          "labelTranslationKey": "hwy.institutes.field.allowsListScopedEdit",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allowsListScopedEdit",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-83075f62-80d8-4cd1-8958-6871edd5a0aa": {
+        "id": "node-83075f62-80d8-4cd1-8958-6871edd5a0aa",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-switches-box",
+        "order": 6,
+        "props": {
+          "name": "showInstituteCharacterInDossier",
+          "label": "Show institute block in dossier",
+          "ariaLabel": "Show institute block in dossier",
+          "hint": "Turn show institute block in dossier on or off.",
+          "labelTranslationKey": "hwy.institutes.field.showInstituteCharacterInDossier",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "showInstituteCharacterInDossier",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-9ef01de2-746c-46e7-9687-8a08fe1d09c8": {
+        "id": "node-9ef01de2-746c-46e7-9687-8a08fe1d09c8",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-fields-box",
+        "order": 2,
+        "props": {
+          "name": "note",
+          "label": "Note",
+          "size": "sm",
+          "placeholder": "Note",
+          "hint": "Enter note.",
+          "labelTranslationKey": "hwy.institutes.field.note",
+          "placeholderTranslationKey": "hwy.institutes.field.note.placeholder",
+          "_designerPaletteItemId": "heroui.textarea",
+          "className": "w-full"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "note",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-5012b4d7-d4e2-4b4d-b437-3d683f074fbe": {
+        "id": "node-5012b4d7-d4e2-4b4d-b437-3d683f074fbe",
+        "type": "container",
+        "parentId": "node-6fde13e5-cf40-4358-b837-4ff1177f7bbf",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-4 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-4",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-5fe071bd-0db5-4509-94dc-151bdd69eef5",
+          "hwy-inst-layout-3f074fbe-fields-box",
+          "hwy-inst-layout-3f074fbe-switches-box"
+        ]
+      },
+      "node-cd4deb6a-0594-494a-9d82-7adc1493b8dc": {
+        "id": "node-cd4deb6a-0594-494a-9d82-7adc1493b8dc",
+        "type": "link",
+        "parentId": "node-7f5699b1-b29c-42dc-9a1d-9cd07af9cbb6",
+        "order": 1,
+        "props": {
+          "text": "Create Institute",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-6fde13e5-cf40-4358-b837-4ff1177f7bbf",
+          "icon": "Plus",
+          "textTranslationKey": "hwy.institutes.modal.create"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mvzma5ry_apq0d",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-dcf70428-9758-4dee-ac10-0b7294b77b03"
+              },
+              {
+                "id": "da_mvzma5ry_mccv3",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mvzma5ry_22upp",
+                "type": "refreshDataSource",
+                "dataSourceRef": "hwyinstitutesList"
+              },
+              {
+                "id": "da_mvzma5ry_xsica",
+                "type": "resetForm",
+                "targetNodeId": "node-6fde13e5-cf40-4358-b837-4ff1177f7bbf"
+              }
+            ],
+            "invalidateQueries": [
+              "region:hwyinstitutesList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-6fde13e5-cf40-4358-b837-4ff1177f7bbf": {
+        "id": "node-6fde13e5-cf40-4358-b837-4ff1177f7bbf",
+        "type": "container",
+        "parentId": "node-dcf70428-9758-4dee-ac10-0b7294b77b03",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-6fde13e5-cf40-4358-b837-4ff1177f7bbf"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwyinstitutesList",
+            "sourcePath": "hwyinstitutesList"
+          }
+        },
+        "children": [
+          "node-5012b4d7-d4e2-4b4d-b437-3d683f074fbe"
+        ]
+      },
+      "node-92fdcfa0-8bb5-4537-ad01-352f3ca2a06c": {
+        "id": "node-92fdcfa0-8bb5-4537-ad01-352f3ca2a06c",
+        "type": "link",
+        "parentId": "node-7f5699b1-b29c-42dc-9a1d-9cd07af9cbb6",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50",
+          "textTranslationKey": "actions.cancel"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mvzma5rz_2xkyn",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-dcf70428-9758-4dee-ac10-0b7294b77b03"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-7f5699b1-b29c-42dc-9a1d-9cd07af9cbb6": {
+        "id": "node-7f5699b1-b29c-42dc-9a1d-9cd07af9cbb6",
+        "type": "container",
+        "parentId": "node-dcf70428-9758-4dee-ac10-0b7294b77b03",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-92fdcfa0-8bb5-4537-ad01-352f3ca2a06c",
+          "node-cd4deb6a-0594-494a-9d82-7adc1493b8dc"
+        ]
+      },
+      "node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db": {
+        "id": "node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db",
+        "type": "container",
+        "parentId": "root",
+        "order": 2,
+        "props": {
+          "title": "Edit Institute",
+          "size": "lg",
+          "isOpen": false,
+          "_designerPaletteItemId": "heroui.modal",
+          "_isBuiltInTemplateRoot": true,
+          "backdrop": "blur",
+          "scrollBehavior": "inside",
+          "titleTranslationKey": "hwy.institutes.modal.edit"
+        },
+        "layout": {
+          "visibleCondition": "store.ui.visibility.node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db === true"
+        },
+        "binding": {},
+        "children": [
+          "node-ac594618-a48b-482f-8955-89b913d7e39a",
+          "node-b08ccc3e-b8df-4903-82d6-b7c80953d8e8"
+        ]
+      },
+      "node-b6306efa-ba8e-45d6-9a8d-dfb15f623a02": {
+        "id": "node-b6306efa-ba8e-45d6-9a8d-dfb15f623a02",
+        "type": "container",
+        "parentId": "node-71ff7004-5254-4f16-b8fc-5b7309b73755",
+        "order": 0,
+        "props": {
+          "name": "logoContentBase64",
+          "label": "Logo",
+          "ariaLabel": "Logo",
+          "hint": "Enter logo.",
+          "labelTranslationKey": "hwy.institutes.column.logo",
+          "_designerPaletteItemId": "hwy.institute-logo-upload",
+          "className": "flex w-full flex-col items-center"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "logoContentBase64",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-13efe8cb-095d-4ba4-90f6-e47cfafaaac5": {
+        "id": "node-13efe8cb-095d-4ba4-90f6-e47cfafaaac5",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-title-row",
+        "order": 1,
+        "props": {
+          "name": "titleAr",
+          "label": "",
+          "size": "sm",
+          "isRequired": true,
+          "placeholder": "Title (Arabic)",
+          "hint": "Required. Enter title (Arabic).",
+          "placeholderTranslationKey": "hwy.institutes.field.titleAr.placeholder",
+          "_designerPaletteItemId": "heroui.input-text",
+          "className": "min-w-0 flex-1 w-full"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "titleAr",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-862a57d1-6e94-48a0-8ab7-6c02afab0722": {
+        "id": "node-862a57d1-6e94-48a0-8ab7-6c02afab0722",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-switches-box",
+        "order": 0,
+        "props": {
+          "name": "isActive",
+          "label": "Active",
+          "ariaLabel": "Active",
+          "hint": "Turn active on or off.",
+          "labelTranslationKey": "hwy.institutes.field.isActive",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "isActive",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-8674e3ba-01f7-41db-830f-094ddebe4ed0": {
+        "id": "node-8674e3ba-01f7-41db-830f-094ddebe4ed0",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-switches-box",
+        "order": 1,
+        "props": {
+          "name": "allowsSelfRegistration",
+          "label": "Self registration",
+          "ariaLabel": "Self registration",
+          "hint": "Turn self registration on or off.",
+          "labelTranslationKey": "hwy.institutes.field.allowsSelfRegistration",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allowsSelfRegistration",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-1db465b9-beaf-403f-8b36-e0de6cf80027": {
+        "id": "node-1db465b9-beaf-403f-8b36-e0de6cf80027",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-switches-box",
+        "order": 2,
+        "props": {
+          "name": "allowsInvite",
+          "label": "Allows invite",
+          "ariaLabel": "Allows invite",
+          "hint": "Turn allows invite on or off.",
+          "labelTranslationKey": "hwy.institutes.field.allowsInvite",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allowsInvite",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-b75d0ff1-b7e4-4cfb-a4f7-5ee3bd6116ec": {
+        "id": "node-b75d0ff1-b7e4-4cfb-a4f7-5ee3bd6116ec",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-expiry-row",
+        "order": 1,
+        "props": {
+          "name": "inviteExpiresAfterDays",
+          "label": "",
+          "size": "sm",
+          "placeholder": "Invite expires (days)",
+          "hint": "Enter invite expires (days).",
+          "placeholderTranslationKey": "hwy.institutes.field.inviteExpiresAfterDays.placeholder",
+          "_designerPaletteItemId": "heroui.number-input",
+          "className": "min-w-0 flex-1 w-full"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "inviteExpiresAfterDays",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-33f6b773-d561-4966-b0ca-dd7786cea31a": {
+        "id": "node-33f6b773-d561-4966-b0ca-dd7786cea31a",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-switches-box",
+        "order": 3,
+        "props": {
+          "name": "hideMemberPhones",
+          "label": "Hide member phones",
+          "ariaLabel": "Hide member phones",
+          "hint": "Turn hide member phones on or off.",
+          "labelTranslationKey": "hwy.institutes.field.hideMemberPhones",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "hideMemberPhones",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-715e102e-3468-4058-9dd3-5c6e1440aeb9": {
+        "id": "node-715e102e-3468-4058-9dd3-5c6e1440aeb9",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-switches-box",
+        "order": 4,
+        "props": {
+          "name": "hasDedicatedList",
+          "label": "Dedicated list",
+          "ariaLabel": "Dedicated list",
+          "hint": "Turn dedicated list on or off.",
+          "labelTranslationKey": "hwy.institutes.field.hasDedicatedList",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "hasDedicatedList",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-0f000a75-7804-4fec-ab72-491c98035bd9": {
+        "id": "node-0f000a75-7804-4fec-ab72-491c98035bd9",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-switches-box",
+        "order": 5,
+        "props": {
+          "name": "allowsListScopedEdit",
+          "label": "List scoped edit",
+          "ariaLabel": "List scoped edit",
+          "hint": "Turn list scoped edit on or off.",
+          "labelTranslationKey": "hwy.institutes.field.allowsListScopedEdit",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "allowsListScopedEdit",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-f9ecffd0-20f3-429f-bf06-67768a26dc88": {
+        "id": "node-f9ecffd0-20f3-429f-bf06-67768a26dc88",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-switches-box",
+        "order": 6,
+        "props": {
+          "name": "showInstituteCharacterInDossier",
+          "label": "Show institute block in dossier",
+          "ariaLabel": "Show institute block in dossier",
+          "hint": "Turn show institute block in dossier on or off.",
+          "labelTranslationKey": "hwy.institutes.field.showInstituteCharacterInDossier",
+          "_designerPaletteItemId": "heroui.switch",
+          "className": "w-full justify-between"
+        },
+        "layout": {},
+        "binding": {
+          "prop:isSelected": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "isSelected",
+            "column": "showInstituteCharacterInDossier",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-1663604d-cbd8-4297-ba26-878b91c946c3": {
+        "id": "node-1663604d-cbd8-4297-ba26-878b91c946c3",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-fields-box",
+        "order": 2,
+        "props": {
+          "name": "note",
+          "label": "Note",
+          "size": "sm",
+          "placeholder": "Note",
+          "hint": "Enter note.",
+          "labelTranslationKey": "hwy.institutes.field.note",
+          "placeholderTranslationKey": "hwy.institutes.field.note.placeholder",
+          "_designerPaletteItemId": "heroui.textarea",
+          "className": "w-full"
+        },
+        "layout": {},
+        "binding": {
+          "prop:value": {
+            "sourceType": "regionColumn",
+            "bindingRole": "property",
+            "targetProp": "value",
+            "column": "note",
+            "valueMode": "defaultValue"
+          }
+        },
+        "children": []
+      },
+      "node-71ff7004-5254-4f16-b8fc-5b7309b73755": {
+        "id": "node-71ff7004-5254-4f16-b8fc-5b7309b73755",
+        "type": "container",
+        "parentId": "node-ac594618-a48b-482f-8955-89b913d7e39a",
+        "order": 0,
+        "props": {
+          "className": "flex min-w-0 flex-col gap-4 bg-white p-[15px]",
+          "_designerPaletteItemId": "layout.flex-column",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-4",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-b6306efa-ba8e-45d6-9a8d-dfb15f623a02",
+          "hwy-inst-layout-09b73755-fields-box",
+          "hwy-inst-layout-09b73755-switches-box"
+        ]
+      },
+      "node-5b8c25d8-73c7-4fe0-89fb-fe2080e3005d": {
+        "id": "node-5b8c25d8-73c7-4fe0-89fb-fe2080e3005d",
+        "type": "link",
+        "parentId": "node-b08ccc3e-b8df-4903-82d6-b7c80953d8e8",
+        "order": 1,
+        "props": {
+          "text": "Save",
+          "href": "#",
+          "target": "_self",
+          "rel": "",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 bg-primary-600 hover:bg-primary-700 text-white",
+          "_designerPaletteItemId": "heroui.button-solid",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "",
+          "twJustify": "justify-center",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "text-sm",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "hover:opacity-90",
+          "form": "node-ac594618-a48b-482f-8955-89b913d7e39a",
+          "icon": "Save",
+          "textTranslationKey": "actions.save"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "apiRef",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "regionSubmit": true,
+            "trueActions": [
+              {
+                "id": "da_mvzma5rz_62b3p",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db"
+              },
+              {
+                "id": "da_mvzma5rz_uicp0",
+                "type": "showToast",
+                "toastTitle": "Saved successfully",
+                "toastVariant": "success",
+                "toastDuration": 4000
+              },
+              {
+                "id": "da_mvzma5rz_zlq6p",
+                "type": "refreshDataSource",
+                "dataSourceRef": "hwyinstitutesList"
+              }
+            ],
+            "invalidateQueries": [
+              "region:hwyinstitutesList"
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-ac594618-a48b-482f-8955-89b913d7e39a": {
+        "id": "node-ac594618-a48b-482f-8955-89b913d7e39a",
+        "type": "container",
+        "parentId": "node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db",
+        "order": 0,
+        "props": {
+          "className": "flex min-h-0 flex-col gap-0 bg-white",
+          "method": "post",
+          "action": "",
+          "_designerPaletteItemId": "html.form",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "p-4",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "gap-3",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "rounded-lg",
+          "twShadow": "",
+          "twOpacity": "",
+          "id": "node-ac594618-a48b-482f-8955-89b913d7e39a"
+        },
+        "layout": {},
+        "binding": {
+          "regionDataSource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwyinstitutesList",
+            "sourcePath": "hwyinstitutesList",
+            "loadOperation": "detail",
+            "urlParams": {
+              "id": "selection.id"
+            }
+          }
+        },
+        "children": [
+          "node-71ff7004-5254-4f16-b8fc-5b7309b73755"
+        ]
+      },
+      "node-c23a5712-e7d7-4554-a12b-3bb357f4bbf7": {
+        "id": "node-c23a5712-e7d7-4554-a12b-3bb357f4bbf7",
+        "type": "link",
+        "parentId": "node-b08ccc3e-b8df-4903-82d6-b7c80953d8e8",
+        "order": 0,
+        "props": {
+          "text": "Cancel",
+          "icon": "X",
+          "type": "button",
+          "className": "inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [@media(pointer:coarse)]:min-h-11 border border-slate-200 text-slate-600 hover:bg-slate-100",
+          "_designerPaletteItemId": "heroui.button-outline",
+          "twDisplay": "inline-flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "px-3",
+          "twMargin": "",
+          "twWidth": "",
+          "twHeight": "h-8",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-center",
+          "twGap": "gap-1.5",
+          "twGridCols": "",
+          "twTextSize": "text-xs",
+          "twFontWeight": "font-semibold",
+          "twTextAlign": "",
+          "twRounded": "rounded-md",
+          "twShadow": "",
+          "twOpacity": "disabled:opacity-50",
+          "textTranslationKey": "actions.cancel"
+        },
+        "layout": {},
+        "binding": {
+          "event:onClick": {
+            "sourceType": "static",
+            "bindingRole": "event",
+            "targetEvent": "onClick",
+            "trueActions": [
+              {
+                "id": "da_mvzma5rz_hnksr",
+                "type": "showHide",
+                "showHideEffect": "hide",
+                "targetNodeId": "node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db"
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      "node-b08ccc3e-b8df-4903-82d6-b7c80953d8e8": {
+        "id": "node-b08ccc3e-b8df-4903-82d6-b7c80953d8e8",
+        "type": "container",
+        "parentId": "node-36e60d73-bdf2-46a0-bbe8-2a5dd5a3b3db",
+        "order": 1,
+        "props": {
+          "className": "flex w-full shrink-0 items-center justify-end gap-2",
+          "_designerPaletteItemId": "layout.flex-row",
+          "_isBuiltInTemplateRoot": true,
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "",
+          "twFlexDirection": "",
+          "twItems": "items-center",
+          "twJustify": "justify-end",
+          "twGap": "gap-2",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": ""
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-c23a5712-e7d7-4554-a12b-3bb357f4bbf7",
+          "node-5b8c25d8-73c7-4fe0-89fb-fe2080e3005d"
+        ]
+      },
+      "hwy-inst-layout-3f074fbe-title-label": {
+        "id": "hwy-inst-layout-3f074fbe-title-label",
+        "type": "text",
+        "parentId": "hwy-inst-layout-3f074fbe-title-row",
+        "order": 0,
+        "props": {
+          "text": "Title (Arabic)",
+          "textContentMode": "translation",
+          "translationKey": "hwy.institutes.field.titleAr",
+          "className": "shrink-0 min-w-[9.5rem] max-w-[11rem] text-end text-xs font-medium leading-snug text-slate-600"
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "hwy-inst-layout-3f074fbe-title-row": {
+        "id": "hwy-inst-layout-3f074fbe-title-row",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-fields-box",
+        "order": 0,
+        "props": {
+          "className": "flex w-full min-w-0 flex-row items-center gap-3",
+          "_designerPaletteItemId": "layout.flex-row"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "hwy-inst-layout-3f074fbe-title-label",
+          "node-ffa61b38-568f-488a-b626-a87be704fa95"
+        ]
+      },
+      "hwy-inst-layout-3f074fbe-expiry-label": {
+        "id": "hwy-inst-layout-3f074fbe-expiry-label",
+        "type": "text",
+        "parentId": "hwy-inst-layout-3f074fbe-expiry-row",
+        "order": 0,
+        "props": {
+          "text": "Invite expires (days)",
+          "textContentMode": "translation",
+          "translationKey": "hwy.institutes.field.inviteExpiresAfterDays",
+          "className": "shrink-0 min-w-[9.5rem] max-w-[11rem] text-end text-xs font-medium leading-snug text-slate-600"
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "hwy-inst-layout-3f074fbe-expiry-row": {
+        "id": "hwy-inst-layout-3f074fbe-expiry-row",
+        "type": "container",
+        "parentId": "hwy-inst-layout-3f074fbe-fields-box",
+        "order": 1,
+        "props": {
+          "className": "flex w-full min-w-0 flex-row items-center gap-3",
+          "_designerPaletteItemId": "layout.flex-row"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "hwy-inst-layout-3f074fbe-expiry-label",
+          "node-c3ea6d19-0783-443c-9da0-7664dff95aaf"
+        ]
+      },
+      "hwy-inst-layout-3f074fbe-fields-box": {
+        "id": "hwy-inst-layout-3f074fbe-fields-box",
+        "type": "container",
+        "parentId": "node-5012b4d7-d4e2-4b4d-b437-3d683f074fbe",
+        "order": 1,
+        "props": {
+          "className": "flex w-full min-w-0 flex-col gap-3 rounded-xl border border-default-200 bg-content1 p-4 shadow-sm",
+          "_designerPaletteItemId": "heroui.card"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "hwy-inst-layout-3f074fbe-title-row",
+          "hwy-inst-layout-3f074fbe-expiry-row",
+          "node-9ef01de2-746c-46e7-9687-8a08fe1d09c8"
+        ]
+      },
+      "hwy-inst-layout-3f074fbe-switches-box": {
+        "id": "hwy-inst-layout-3f074fbe-switches-box",
+        "type": "container",
+        "parentId": "node-5012b4d7-d4e2-4b4d-b437-3d683f074fbe",
+        "order": 2,
+        "props": {
+          "className": "flex w-full min-w-0 flex-col gap-3 rounded-xl border border-default-200 bg-content1 p-4 shadow-sm !gap-2",
+          "_designerPaletteItemId": "heroui.card"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-b333ed58-378d-46e7-98f2-0a403a609f01",
+          "node-f2e3c037-3ea5-4dca-8a9b-50f3d549adfb",
+          "node-c0be51bd-bfea-4f6c-8dc8-cd4485267571",
+          "node-c0f92000-d94d-4896-b062-0d7c48b72a3b",
+          "node-a81b2e64-9fde-458f-a15c-c8748a725373",
+          "node-ff1f79b6-73cb-49b7-b3e1-3a3f187c8750",
+          "node-83075f62-80d8-4cd1-8958-6871edd5a0aa"
+        ]
+      },
+      "hwy-inst-layout-09b73755-title-label": {
+        "id": "hwy-inst-layout-09b73755-title-label",
+        "type": "text",
+        "parentId": "hwy-inst-layout-09b73755-title-row",
+        "order": 0,
+        "props": {
+          "text": "Title (Arabic)",
+          "textContentMode": "translation",
+          "translationKey": "hwy.institutes.field.titleAr",
+          "className": "shrink-0 min-w-[9.5rem] max-w-[11rem] text-end text-xs font-medium leading-snug text-slate-600"
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "hwy-inst-layout-09b73755-title-row": {
+        "id": "hwy-inst-layout-09b73755-title-row",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-fields-box",
+        "order": 0,
+        "props": {
+          "className": "flex w-full min-w-0 flex-row items-center gap-3",
+          "_designerPaletteItemId": "layout.flex-row"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "hwy-inst-layout-09b73755-title-label",
+          "node-13efe8cb-095d-4ba4-90f6-e47cfafaaac5"
+        ]
+      },
+      "hwy-inst-layout-09b73755-expiry-label": {
+        "id": "hwy-inst-layout-09b73755-expiry-label",
+        "type": "text",
+        "parentId": "hwy-inst-layout-09b73755-expiry-row",
+        "order": 0,
+        "props": {
+          "text": "Invite expires (days)",
+          "textContentMode": "translation",
+          "translationKey": "hwy.institutes.field.inviteExpiresAfterDays",
+          "className": "shrink-0 min-w-[9.5rem] max-w-[11rem] text-end text-xs font-medium leading-snug text-slate-600"
+        },
+        "layout": {},
+        "binding": {},
+        "children": []
+      },
+      "hwy-inst-layout-09b73755-expiry-row": {
+        "id": "hwy-inst-layout-09b73755-expiry-row",
+        "type": "container",
+        "parentId": "hwy-inst-layout-09b73755-fields-box",
+        "order": 1,
+        "props": {
+          "className": "flex w-full min-w-0 flex-row items-center gap-3",
+          "_designerPaletteItemId": "layout.flex-row"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "hwy-inst-layout-09b73755-expiry-label",
+          "node-b75d0ff1-b7e4-4cfb-a4f7-5ee3bd6116ec"
+        ]
+      },
+      "hwy-inst-layout-09b73755-fields-box": {
+        "id": "hwy-inst-layout-09b73755-fields-box",
+        "type": "container",
+        "parentId": "node-71ff7004-5254-4f16-b8fc-5b7309b73755",
+        "order": 1,
+        "props": {
+          "className": "flex w-full min-w-0 flex-col gap-3 rounded-xl border border-default-200 bg-content1 p-4 shadow-sm",
+          "_designerPaletteItemId": "heroui.card"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "hwy-inst-layout-09b73755-title-row",
+          "hwy-inst-layout-09b73755-expiry-row",
+          "node-1663604d-cbd8-4297-ba26-878b91c946c3"
+        ]
+      },
+      "hwy-inst-layout-09b73755-switches-box": {
+        "id": "hwy-inst-layout-09b73755-switches-box",
+        "type": "container",
+        "parentId": "node-71ff7004-5254-4f16-b8fc-5b7309b73755",
+        "order": 2,
+        "props": {
+          "className": "flex w-full min-w-0 flex-col gap-3 rounded-xl border border-default-200 bg-content1 p-4 shadow-sm !gap-2",
+          "_designerPaletteItemId": "heroui.card"
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "node-862a57d1-6e94-48a0-8ab7-6c02afab0722",
+          "node-8674e3ba-01f7-41db-830f-094ddebe4ed0",
+          "node-1db465b9-beaf-403f-8b36-e0de6cf80027",
+          "node-33f6b773-d561-4966-b0ca-dd7786cea31a",
+          "node-715e102e-3468-4058-9dd3-5c6e1440aeb9",
+          "node-0f000a75-7804-4fec-ab72-491c98035bd9",
+          "node-f9ecffd0-20f3-429f-bf06-67768a26dc88"
+        ]
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-09-16T13:40:49.754Z",
+      "updatedAt": "2026-11-02T18:53:24.639Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "selection": {
+        "id": "selection",
+        "initialValue": {
+          "id": null
+        },
+        "persist": "none"
+      }
+    },
+    "dataSources": {
+      "hwyinstitutesList": {
+        "id": "hwyinstitutesList",
+        "name": "Institutes",
+        "endpoint": "/api/hwy/institutes",
+        "primaryKey": "id",
+        "kind": "collection",
+        "fields": [
+          "id",
+          "logoUrl",
+          "code",
+          "titleAr",
+          "isActive",
+          "allowsSelfRegistration",
+          "allowsInvite",
+          "hideMemberPhones",
+          "hasDedicatedList",
+          "allowsListScopedEdit",
+          "showInstituteCharacterInDossier",
+          "logoContentBase64",
+          "inviteExpiresAfterDays",
+          "note"
+        ],
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/institutes"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/institutes/:id"
+          },
+          "create": {
+            "method": "POST",
+            "endpoint": "/api/hwy/institutes"
+          },
+          "update": {
+            "method": "PUT",
+            "endpoint": "/api/hwy/institutes/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      }
+    },
+    "lovs": {}
+  },
+  "metadata": {
+    "createdAt": "2026-09-16T13:40:51.286Z",
+    "updatedAt": "2026-11-02T18:53:24.639Z",
+    "createdBy": "hwy-phase3",
+    "updatedBy": "hwy-republish-institutes"
+  }
+}

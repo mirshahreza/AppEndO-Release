@@ -16,13 +16,15 @@ import {
 } from './index';
 import { UserHistoryDialog } from './UserHistoryDialog';
 import { EntityFunctionAccessModal } from '../../../shared/ui/EntityFunctionAccessModal';
-import { ListFilterDialog, ListFilterSummaryBand, ListPageShell } from '../../../shared/ui';
+import { ListFilterDialog, ListFilterSummaryBand, ListPageShell, useRecordSubjectTimelineCopy } from '../../../shared/ui';
 
 export type UsersPageViewProps = {
   page: UsersPageState;
 };
 
-export const UsersPageView: React.FC<UsersPageViewProps> = ({ page }) => (
+export const UsersPageView: React.FC<UsersPageViewProps> = ({ page }) => {
+  const timelineCopy = useRecordSubjectTimelineCopy();
+  return (
   <ListPageShell onGridScroll={page.onGridScroll}>
     <UserFilterToolbar
       searchInput={page.searchInput}
@@ -171,7 +173,7 @@ export const UsersPageView: React.FC<UsersPageViewProps> = ({ page }) => (
 
     <UserHistoryDialog
       userId={page.historyUser?.id ?? null}
-      title={page.historyUser ? `History · ${page.historyUser.username}` : 'History'}
+      title={page.historyUser ? `${timelineCopy.title} · ${page.historyUser.username}` : timelineCopy.title}
       open={Boolean(page.historyUser)}
       onClose={page.closeHistory}
     />
@@ -179,4 +181,5 @@ export const UsersPageView: React.FC<UsersPageViewProps> = ({ page }) => (
     <UsersToast toast={page.toast} />
     <ListFilterDialog {...page.filterDialogProps} />
   </ListPageShell>
-);
+  );
+};

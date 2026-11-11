@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:21f62c51725c",
+    "toolCallId": "call_YjXC6mp4nPWTJ4P1RxyqTwrN",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2530,
+    "digest": "d67c24af47ae0c2e320890a0983e0230662ccb74a4aa87639c7a3a0502f6110a",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T16:19:05.248Z"
+  },
+  "content": "{\n  \"query\": \"APP_TABLE_GRID_AUDIT_COLUMN_WIDTH Check X boolean columns\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/ui/surfaceClasses.ts\",\n      \"line\": 1009,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/lib/gridCellRenderers.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGridColumnHeader.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/domain/component-designer/designerDataGridColumns.ts\",\n      \"line\": 145,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/domain/component-designer/designerDataGridColumns.ts\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/domain/component-designer/DesignerRuntimeAppTableGrid.tsx\",\n      \"line\": 505,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/shared/lib/appTableGridPinnedColumns.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGridVirtualColumnBody.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/ui/AppTableGridColumnLayoutControl.tsx\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/domain/component-designer/designerDataGridDefaults.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

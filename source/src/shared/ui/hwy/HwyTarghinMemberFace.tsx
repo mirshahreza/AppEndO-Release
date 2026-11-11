@@ -11,12 +11,16 @@ import {
   hwyMemberFaceCaptionTextClass,
   resolveHwyMemberFaceCaptionFromMemberFields,
 } from '../../../domain/hwy/hwyMemberFaceCaptionDisplay';
+import { catalogFaceAppliedStateClass } from '../catalog/catalogInteractionApplied';
+import type { CatalogInteractionPreviewProps } from '../catalog/catalogInteractionState';
+import { CATALOG_INTERACTION_MARKER_FACE } from '../catalog/catalogInteractionState';
 import { PhoneNumberDisplay } from '../PhoneNumberDisplay';
+import { HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS } from './hwyMemberFaceInteraction';
 import { HWY_PHONE_TEXT_XS_CLASS } from './hwyPhoneTypography';
 
 export type HwyTarghinMemberFaceElectoralPathLayout = 'inline' | 'belowFullWidth';
 
-export type HwyTarghinMemberFaceProps = {
+export type HwyTarghinMemberFaceProps = CatalogInteractionPreviewProps & {
   face: HwyMemberTarghinAdminMemberFace;
   /** Show electoral path under the name (requester column in legacy). */
   showElectoralPath?: boolean;
@@ -35,6 +39,8 @@ export type HwyTarghinMemberFaceProps = {
   /** Override display-name typography (default: `text-sm font-semibold`). */
   displayNameClassName?: string;
   rootClassName?: string;
+  /** Living identity catalog — subtle dossier-style hover/active paint. */
+  catalogInteractive?: boolean;
 };
 
 /**
@@ -54,7 +60,17 @@ export const HwyTarghinMemberFace: React.FC<HwyTarghinMemberFaceProps> = ({
   roleTitlesPlacement = 'textColumn',
   displayNameClassName,
   rootClassName,
+  catalogInteractive = false,
+  catalogPreviewState,
 }) => {
+  const catalogInteractiveRootClass =
+    catalogInteractive
+      ? cn(
+          HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS,
+          CATALOG_INTERACTION_MARKER_FACE,
+          catalogFaceAppliedStateClass(catalogPreviewState),
+        )
+      : undefined;
   const { direction } = useCulture();
   const [avatarFailed, setAvatarFailed] = useState(false);
   const displayName = formatHwyGeoResponsibilityMemberDisplayName(face.displayFullName);
@@ -196,6 +212,7 @@ export const HwyTarghinMemberFace: React.FC<HwyTarghinMemberFaceProps> = ({
         className={cn(
           'grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] gap-x-0 gap-y-1 py-0.5',
           rootClassName,
+          catalogInteractiveRootClass,
         )}
       >
         <div className="col-start-1 row-start-1">{avatarColumn}</div>
@@ -208,7 +225,11 @@ export const HwyTarghinMemberFace: React.FC<HwyTarghinMemberFaceProps> = ({
   return (
     <div
       dir={direction}
-      className={cn('flex min-w-0 w-full flex-row items-start gap-0 py-0.5', rootClassName)}
+      className={cn(
+        'flex min-w-0 w-full flex-row items-start gap-0 py-0.5',
+        rootClassName,
+        catalogInteractiveRootClass,
+      )}
     >
       {avatarColumn}
       <div className="min-w-0 flex-1">{textColumn}</div>

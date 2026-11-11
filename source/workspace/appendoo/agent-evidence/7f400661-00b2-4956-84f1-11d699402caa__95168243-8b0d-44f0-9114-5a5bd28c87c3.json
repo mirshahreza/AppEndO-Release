@@ -1,0 +1,73 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "897d4a65-7d5b-459f-9e0b-3f5c84adcb65",
+      "taskId": "7f400661-00b2-4956-84f1-11d699402caa",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T23:42:33.329Z"
+    },
+    {
+      "evidenceId": "54078dde-7302-4780-b3cb-a4598db2c54c",
+      "taskId": "7f400661-00b2-4956-84f1-11d699402caa",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleA.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T23:42:33.345Z"
+    },
+    {
+      "evidenceId": "633f1d0e-befe-4378-824f-762ffad87c76",
+      "taskId": "7f400661-00b2-4956-84f1-11d699402caa",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/shared/lib/appendoo/v5Baseline/multiFileFeatureSampleB.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T23:42:33.359Z"
+    },
+    {
+      "evidenceId": "e9f04142-ed83-4222-80ae-dcee8e57e444",
+      "taskId": "7f400661-00b2-4956-84f1-11d699402caa",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "5617529c-2dfc-41c8-86af-aa587176a26c"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-07-17T23:42:33.379Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "fc7f9939-8c7a-4772-a9c1-d1df32ae1187",
+      "taskId": "7f400661-00b2-4956-84f1-11d699402caa",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "e9f04142-ed83-4222-80ae-dcee8e57e444"
+      ],
+      "finalized": true
+    }
+  ]
+}

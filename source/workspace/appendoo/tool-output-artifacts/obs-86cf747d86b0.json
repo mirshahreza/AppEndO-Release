@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:86cf747d86b0",
+    "toolCallId": "c1",
+    "toolName": "list_server_functions",
+    "contentType": "json",
+    "byteLength": 2704,
+    "digest": "fef310db3b5b613b5f59cefc1da130d0b29771975abc2b88f014ceb5bae5921b",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-16T22:13:24.823Z"
+  },
+  "content": "{\n  \"items\": [\n    {\n      \"id\": \"math.sum-two-numbers\",\n      \"name\": \"sum-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/sum-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-11T15:51:27.612Z\"\n    },\n    {\n      \"id\": \"scheduler.sample-heartbeat\",\n      \"name\": \"sample-heartbeat\",\n      \"folder\": \"scheduler\",\n      \"method\": \"POST\",\n      \"path\": \"/api/scheduler/sample-heartbeat\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 3000,\n      \"updatedAt\": \"2026-07-15T16:59:24.025Z\"\n    },\n    {\n      \"id\": \"t114.contact-messages\",\n      \"name\": \"contact-messages\",\n      \"folder\": \"t114\",\n      \"method\": \"POST\",\n      \"path\": \"/api/t1-14/contact-messages\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 3000,\n      \"updatedAt\": \"2026-07-14T09:10:27.607Z\"\n    },\n    {\n      \"id\": \"t114.sales-orders\",\n      \"name\": \"sales-orders\",\n      \"folder\": \"t114\",\n      \"method\": \"GET\",\n      \"path\": \"/api/t1-14/sales-orders\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 3000,\n      \"updatedAt\": \"2026-07-14T09:11:34.889Z\"\n    },\n    {\n      \"id\": \"t114.user-profile\",\n      \"name\": \"user-profile\",\n      \"folder\": \"t114\",\n      \"method\": \"GET\",\n      \"path\": \"/api/t1-14/user-profile\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 3000,\n      \"updatedAt\": \"2026-07-14T09:11:34.847Z\"\n    },\n    {\n      \"id\": \"t137.kanban-tasks\",\n      \"name\": \"kanban-tasks\",\n      \"folder\": \"t137\",\n      \"method\": \"GET\",\n      \"path\": \"/api/t1-37/kanban-tasks\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 3000,\n      \"updatedAt\": \"2026-07-14T14:38:02.850Z\"\n    },\n    {\n      \"id\": \"t137.promo-offers\",\n      \"name\": \"promo-offers\",\n      \"folder\": \"t137\",\n      \"method\": \"GET\",\n      \"path\": \"/api/t1-37/promo-offers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 3000,\n      \"updatedAt\": \"2026-07-14T14:38:02.935Z\"\n    },\n    {\n      \"id\": \"t137.support-tickets\",\n      \"name\": \"support-tickets\",\n      \"folder\": \"t137\",\n      \"method\": \"GET\",\n      \"path\": \"/api/t1-37/support-tickets\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 3000,\n      \"updatedAt\": \"2026-07-14T14:38:02.888Z\"\n    }\n  ],\n  \"totalCount\": 8\n}"
+}

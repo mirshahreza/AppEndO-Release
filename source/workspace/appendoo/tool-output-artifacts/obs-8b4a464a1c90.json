@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:8b4a464a1c90",
+    "toolCallId": "call_lKmR1hGW7iPk3MIiZJ80DFcP",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1949,
+    "digest": "d4a7c2db62d7f3f63b8f4655b2a59d4f8db2fb3b1a81a8b2836ee3d61ca7d305",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:02:43.857Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/api/contracts/server-functions/initialFunctions.ts\",\n  \"startLine\": 289,\n  \"endLine\": 335,\n  \"totalLines\": 1132,\n  \"truncated\": false,\n  \"content\": \"289|  const users = await db.query('SELECT id, password_hash FROM base_users WHERE id = ? LIMIT 1', [actorUserId]);\\n290|  const user = users?.[0] || null;\\n291|  if (!user) {\\n292|    return res.status(404).json({ success: false, error: 'User not found.' });\\n293|  }\\n294|\\n295|  return res.json({ success: true, message: 'Password changed successfully. Please login again.' });\\n296|}\\n297|\\n298|handler();`,\\n299|    testPayload: `{\\n300|  \\\"currentPassword\\\": \\\"old-password\\\",\\n301|  \\\"newPassword\\\": \\\"new-password-123\\\"\\n302|}`,\\n303|    memoryLimit: 128,\\n304|    timeoutMs: 1500,\\n305|    runtimeVersion: 'v20.x',\\n306|    useGlobalConfig: true,\\n307|    enableLogs: true,\\n308|    isBuiltIn: true,\\n309|    accessControl: BUILTIN_AUTHENTICATED_ACCESS_CONTROL\\n310|  },\\n311|  {\\n312|    id: 'fn-auth-delete-account',\\n313|    name: 'delete-my-account',\\n314|    folder: 'auth',\\n315|    method: 'DELETE',\\n316|    path: '/api/auth/account',\\n317|    code: `// DELETE /api/auth/account\\n318|// Self-service account deletion. Target user is always derived from req.auth.userId.\\n319|async function handler() {\\n320|  const actorUserId = Number(req.auth?.userId || 0);\\n321|  if (!actorUserId) {\\n322|    return res.status(401).json({ success: false, error: 'Unauthorized.' });\\n323|  }\\n324|\\n325|  const payload = req.body || {};\\n326|  if (!payload.password) {\\n327|    return res.status(400).json({ success: false, error: 'password is required.' });\\n328|  }\\n329|\\n330|  const users = await db.query('SELECT id, is_builtin FROM base_users WHERE id = ? LIMIT 1', [actorUserId]);\\n331|  const user = users?.[0] || null;\\n332|  if (!user) {\\n333|    return res.status(404).json({ success: false, error: 'User not found.' });\\n334|  }\\n335|  if (user.is_builtin) {\"\n}"
+}

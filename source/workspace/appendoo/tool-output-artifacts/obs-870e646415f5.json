@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:870e646415f5",
+    "toolCallId": "call_scQTnpUlxhcYf9PNJ1mlR6Ue",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1658,
+    "digest": "ddcf15c7e5333f721d7d4c0daee90a8be0a0462fc8b464b7c6dd23a4057879db",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T20:55:06.613Z"
+  },
+  "content": "{\n  \"query\": \"draft_component_layout draft_application_scaffold tool descriptions\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": null,\n  \"scopePaths\": null,\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/core/ai/tools/native/draftApplicationScaffold.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/tools/native/draftComponentLayout.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/tools/native/draftApplicationScaffold.ts\",\n      \"line\": 217,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/tools/native/draftApplicationScaffold.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"docs/standards/vibe-operator-playbook.md\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/features/component-designer/lib/clientComponentAiAgentApply.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/core/ai/tools/native/draftComponentLayout.ts\",\n      \"line\": 73,\n      \"column\": 1\n    },\n    {\n      \"path\": \"docs/standards/vibe-crud.md\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"docs/refactor-spec/client-components-gap-analysis-fa.md\",\n      \"line\": 289,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/core/ai/tools/native/designerLayoutDraftHelpers.ts\",\n      \"line\": 73,\n      \"column\": 1\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"client-components\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

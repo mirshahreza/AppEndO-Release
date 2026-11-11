@@ -1,0 +1,472 @@
+{
+  "$schemaVersion": "1.1",
+  "kind": "vertical-app",
+  "id": "hawiety",
+  "name": "Hawiety",
+  "version": "0.3.5",
+  "description": "Hawiety (هویتی) membership portal — schema via install; member data via ETL only.",
+  "createdBy": "admin",
+  "requiredAppVersion": ">=1.0.0",
+  "dependencies": [],
+  "capabilities": {
+    "shell": {
+      "key": "hawiety-shell",
+      "name": "Hawiety Shell",
+      "entry": "ui/shell/AppShell.js",
+      "surface": "portal"
+    },
+    "pages": [
+      {
+        "pageKey": "hwy-etl-console",
+        "title": "ETL Console",
+        "entry": "ui/pages/hwy_etl_console.bundle.js"
+      },
+      {
+        "pageKey": "hwy-business-rules-reference",
+        "title": "Business rules reference",
+        "entry": "ui/pages/hwy_business_rules_reference.bundle.js"
+      },
+      {
+        "pageKey": "hwy-org-membership-transfer",
+        "title": "Org membership transfer",
+        "entry": "ui/pages/hwy_org_membership_transfer.bundle.js"
+      },
+      {
+        "pageKey": "hwy-geo-responsibility",
+        "title": "Geo responsibility",
+        "entry": "ui/pages/hwy_geo_responsibility.bundle.js"
+      },
+      {
+        "pageKey": "hwy-card-flow",
+        "title": "Badge management",
+        "entry": "ui/pages/hwy_card_flow.bundle.js"
+      },
+      {
+        "pageKey": "hwy-meetings-management",
+        "title": "Meetings management",
+        "entry": "ui/pages/hwy_meetings_management.bundle.js"
+      },
+      {
+        "pageKey": "hwy-employees-list",
+        "title": "Employees list",
+        "entry": "ui/pages/hwy_employees_list.bundle.js"
+      },
+      {
+        "pageKey": "hwy-courses-activities",
+        "title": "Courses & activities",
+        "entry": "ui/pages/hwy_courses_activities.bundle.js"
+      },
+      {
+        "pageKey": "hwy-targhin-requests",
+        "title": "Targhin admin",
+        "entry": "ui/pages/hwy_targhin_requests.bundle.js"
+      },
+      {
+        "pageKey": "hwy-phone-requests",
+        "title": "Phone requests",
+        "entry": "ui/pages/hwy_phone_requests.bundle.js"
+      },
+      {
+        "pageKey": "hwy-members-targhin",
+        "title": "Targhin members",
+        "entry": "ui/pages/hwy_members_targhin.bundle.js"
+      },
+      {
+        "pageKey": "hwy-member-dossier",
+        "title": "Member dossier",
+        "entry": "ui/pages/hwy_member_dossier.bundle.js"
+      },
+      {
+        "pageKey": "hwy-member-dossier-view",
+        "title": "Member dossier (view)",
+        "entry": "ui/pages/hwy_member_dossier_view.bundle.js"
+      },
+      {
+        "pageKey": "hwy-member-dossier-edit",
+        "title": "Member dossier (edit)",
+        "entry": "ui/pages/hwy_member_dossier_edit.bundle.js"
+      }
+    ],
+    "apis": [
+      {
+        "id": "hawiety.health",
+        "method": "GET",
+        "path": "/packages/hawiety/health",
+        "entry": "api/health.js",
+        "auth": "public"
+      }
+    ],
+    "db_objects": [
+      {
+        "objectType": "table",
+        "objectName": "hwy_schema",
+        "installScript": "db/install/hwy_schema.sqlserver.sql",
+        "uninstallScript": "db/uninstall/hwy_schema.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_phone_requests",
+        "installScript": "db/install/hwy_member_phone_requests.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_geo_responsibility",
+        "installScript": "db/install/hwy_geo_responsibility.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_courses_activities",
+        "installScript": "db/install/hwy_courses_activities.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_registration_state_columns",
+        "installScript": "db/install/hwy_registration_state_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_nakhebin_phone_columns",
+        "installScript": "db/install/hwy_nakhebin_phone_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_after_create_columns",
+        "installScript": "db/install/hwy_member_after_create_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_kasb_links",
+        "installScript": "db/install/hwy_member_kasb_links.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_institutes_logo_url",
+        "installScript": "db/install/hwy_institutes_logo_url.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_institutes_logo_content",
+        "installScript": "db/install/hwy_institutes_logo_content.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_functions_geo_member",
+        "installScript": "db/install/hwy_db_functions_geo_member.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_writes",
+        "installScript": "db/install/hwy_db_procedures_writes.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_writes_drafts",
+        "installScript": "db/install/hwy_db_procedures_writes_drafts.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_writes_member",
+        "installScript": "db/install/hwy_db_procedures_writes_member.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_writes_membership",
+        "installScript": "db/install/hwy_db_procedures_writes_membership.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads",
+        "installScript": "db/install/hwy_db_procedures_reads.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_misc",
+        "installScript": "db/install/hwy_db_procedures_reads_misc.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_geo",
+        "installScript": "db/install/hwy_db_procedures_reads_geo.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_geo_nomination",
+        "installScript": "db/install/hwy_db_procedures_reads_geo_nomination.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_targhin",
+        "installScript": "db/install/hwy_db_procedures_reads_targhin.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_activities_tajammoat_columns",
+        "installScript": "db/install/hwy_activities_tajammoat_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_courses",
+        "installScript": "db/install/hwy_db_procedures_reads_courses.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_dossier",
+        "installScript": "db/install/hwy_db_procedures_reads_dossier.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_employees",
+        "installScript": "db/install/hwy_db_procedures_reads_employees.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_stat_columns",
+        "installScript": "db/install/hwy_member_stat_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_pipeline_snake_columns",
+        "installScript": "db/install/hwy_member_pipeline_snake_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_stats_recalc_support",
+        "installScript": "db/install/hwy_member_stats_recalc_support.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_passed_necessary_dorat",
+        "installScript": "db/install/hwy_member_passed_necessary_dorat.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_legacy_edge_parity_table_rename",
+        "installScript": "db/install/hwy_legacy_edge_parity_table_rename.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_legacy_edge_parity_column_rename",
+        "installScript": "db/install/hwy_legacy_edge_parity_column_rename.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_stats_recalc",
+        "installScript": "db/install/hwy_member_stats_recalc.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_legacy_edge_pipeline_compat",
+        "installScript": "db/install/hwy_legacy_edge_pipeline_compat.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_legacy_edge_area_limit_agg_functions",
+        "installScript": "db/install/hwy_legacy_edge_area_limit_agg_functions.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_ref_mirror_members_gender_limits",
+        "installScript": "db/install/hwy_ref_mirror_members_gender_limits.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_ref_mirror_pipeline_reference",
+        "installScript": "db/install/hwy_ref_mirror_pipeline_reference.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_legacy_pipeline_views",
+        "installScript": "db/install/hwy_legacy_pipeline_views.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_legacy_edge_function_retire",
+        "installScript": "db/install/hwy_legacy_edge_function_retire.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_card_flow_columns",
+        "installScript": "db/install/hwy_member_card_flow_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_candidate_pipeline_indexes",
+        "installScript": "db/install/hwy_candidate_pipeline_indexes.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_candidate_pipeline",
+        "installScript": "db/install/hwy_candidate_pipeline.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_card_flow",
+        "installScript": "db/install/hwy_card_flow.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_members_legacy_pascal_retire",
+        "installScript": "db/install/hwy_members_legacy_pascal_retire.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_meetings",
+        "installScript": "db/install/hwy_meetings.sqlserver.sql"
+      },
+      {
+        "objectType": "view",
+        "objectName": "vw_hwy_members",
+        "installScript": "db/install/vw_hwy_members.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_geo_responsibility_montadhemin_sql",
+        "installScript": "db/install/hwy_geo_responsibility_montadhemin_sql.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_geo_sql_functions",
+        "installScript": "db/install/hwy_geo_sql_functions.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_geo_rename_region_maktab",
+        "installScript": "db/install/hwy_geo_rename_region_maktab.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "base_info_title_path",
+        "installScript": "db/install/base_info_title_path.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_writes_courses_admin",
+        "installScript": "db/install/hwy_db_procedures_writes_courses_admin.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_geo_responsibility_center_stats",
+        "installScript": "db/install/hwy_geo_responsibility_center_stats.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_geo_responsibility_member_area_limits",
+        "installScript": "db/install/hwy_geo_responsibility_member_area_limits.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_geo_responsibility_patch_history",
+        "installScript": "db/install/hwy_geo_responsibility_patch_history.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_institutes_scoped_edit_config",
+        "installScript": "db/install/hwy_institutes_scoped_edit_config.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_imagefix_editor_columns",
+        "installScript": "db/install/hwy_member_imagefix_editor_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_member_referrer_deleted_columns",
+        "installScript": "db/install/hwy_member_referrer_deleted_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_members_mehani_professional_columns",
+        "installScript": "db/install/hwy_members_mehani_professional_columns.sqlserver.sql"
+      },
+      {
+        "objectType": "function",
+        "objectName": "hwy_retire_tracking_codes_table",
+        "installScript": "db/install/hwy_retire_tracking_codes_table.sqlserver.sql"
+      }
+    ],
+    "mcp_servers": []
+  },
+  "deployment": {
+    "applyPolicy": "propose",
+    "mount": {
+      "id": "hawiety",
+      "pathPrefix": "/hawiety",
+      "name": "Hawiety",
+      "defaultRoute": "members-all",
+      "authProfile": {
+        "requireAuth": true
+      },
+      "experienceConfig": {
+        "locale": "iq",
+        "calendar": "gregorian",
+        "direction": "rtl",
+        "timezone": "Asia/Baghdad"
+      }
+    },
+    "shellRule": {
+      "pathPrefix": "/hawiety",
+      "shellKey": "hawiety-shell",
+      "priority": 10
+    },
+    "routes": [
+      {
+        "routePattern": "business-rules/*",
+        "pageKey": "hwy-business-rules-reference"
+      },
+      {
+        "routePattern": "card-flow/*",
+        "pageKey": "hwy-card-flow"
+      },
+      {
+        "routePattern": "courses-activities/*",
+        "pageKey": "hwy-courses-activities"
+      },
+      {
+        "routePattern": "employees-list",
+        "pageKey": "hwy-employees-list"
+      },
+      {
+        "routePattern": "etl-console",
+        "pageKey": "hwy-etl-console"
+      },
+      {
+        "routePattern": "geo-responsibility/*",
+        "pageKey": "hwy-geo-responsibility"
+      },
+      {
+        "routePattern": "meetings-management",
+        "pageKey": "hwy-meetings-management"
+      },
+      {
+        "routePattern": "members-all/edit/*",
+        "pageKey": "hwy-member-dossier-edit"
+      },
+      {
+        "routePattern": "members-all/view/*",
+        "pageKey": "hwy-member-dossier-view"
+      },
+      {
+        "routePattern": "members-org-membership-transfer",
+        "pageKey": "hwy-org-membership-transfer"
+      },
+      {
+        "routePattern": "members-targhin",
+        "pageKey": "hwy-members-targhin"
+      },
+      {
+        "routePattern": "targhin-requests",
+        "pageKey": "hwy-targhin-requests"
+      }
+    ]
+  },
+  "overridePolicy": {
+    "apis": "deny",
+    "db_objects": "deny",
+    "mcp_servers": "deny"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "artifactHash": "3500f33808d0b84a7ff9168d711c2ce03c09fad12aefc58a4c9dd745381743b5"
+  },
+  "createdAt": "2026-11-06T05:42:18.989Z"
+}

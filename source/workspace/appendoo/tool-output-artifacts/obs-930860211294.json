@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:930860211294",
+    "toolCallId": "call_54UcZg2nNZcRU42fMd5s0IxA",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1493,
+    "digest": "8d9aa1861faeb8034cf032a22be008a61ca49f272795b49b9c6e21752aa9b514",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:16:41.163Z"
+  },
+  "content": "{\n  \"path\": \"runtime/server-functions/custom/math.add-two-numbers.ts\",\n  \"startLine\": 1,\n  \"endLine\": 53,\n  \"totalLines\": 53,\n  \"truncated\": false,\n  \"content\": \"1|type EdgeReq = {\\n2|  body: Record<string, unknown>;\\n3|  query: Record<string, unknown>;\\n4|  params: Record<string, string>;\\n5|  method: string;\\n6|  headers: Record<string, string | undefined>;\\n7|};\\n8|\\n9|type EdgeRes = {\\n10|  json: (data: unknown) => unknown;\\n11|  send: (data: unknown) => unknown;\\n12|  status: (code: number) => EdgeRes;\\n13|};\\n14|\\n15|const edgeReq = req as EdgeReq;\\n16|const edgeRes = res as EdgeRes;\\n17|\\n18|function toFiniteNumber(value: unknown): number | null {\\n19|  if (typeof value === \\\"number\\\" && Number.isFinite(value)) {\\n20|    return value;\\n21|  }\\n22|\\n23|  if (typeof value === \\\"string\\\" && value.trim() !== \\\"\\\") {\\n24|    const parsed = Number(value);\\n25|    if (Number.isFinite(parsed)) {\\n26|      return parsed;\\n27|    }\\n28|  }\\n29|\\n30|  return null;\\n31|}\\n32|\\n33|async function handler(): Promise<void> {\\n34|  const a = toFiniteNumber(edgeReq.body.a);\\n35|  const b = toFiniteNumber(edgeReq.body.b);\\n36|\\n37|  if (a === null || b === null) {\\n38|    edgeRes.status(400).json({\\n39|      success: false,\\n40|      error: \\\"Both \\\\\\\"a\\\\\\\" and \\\\\\\"b\\\\\\\" are required finite numbers.\\\",\\n41|    });\\n42|    return;\\n43|  }\\n44|\\n45|  edgeRes.json({\\n46|    success: true,\\n47|    data: {\\n48|      a,\\n49|      b,\\n50|      result: a + b,\\n51|    },\\n52|  });\\n53|}\"\n}"
+}

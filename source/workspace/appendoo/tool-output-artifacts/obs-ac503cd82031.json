@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:ac503cd82031",
+    "toolCallId": "call_B5KDyWqMRpGpJ7VXL9DJkQq8",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1850,
+    "digest": "a0b1fbf1d6a83fd27d80479c2632f34693b790a26097ff28ed0d3c4f2d9888d9",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:50:07.436Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/catalog.ts\",\n  \"startLine\": 455,\n  \"endLine\": 490,\n  \"totalLines\": 1403,\n  \"truncated\": false,\n  \"content\": \"455|    nodeType: 'container',\\n456|  },\\n457|  {\\n458|    id: 'tailwind.image-overlay',\\n459|    label: 'Image Overlay',\\n460|    category: 'tailwind-ui-blocks',\\n461|    icon: 'ImagePlus',\\n462|    defaultProps: { className: 'relative overflow-hidden rounded-xl border border-default-200 p-4 text-white shadow-sm' },\\n463|    allowedParentTypes: ['root', 'container', 'list'],\\n464|    canHaveChildren: true,\\n465|    sourceType: 'local',\\n466|    nodeType: 'container',\\n467|    // Visual block — not layout.overlay / modal overlay (id substring would mis-tag overlay-nav).\\n468|    capabilities: ['container'],\\n469|  },\\n470|  {\\n471|    id: 'heroui.button-solid',\\n472|    label: 'Button Solid',\\n473|    category: 'heroui-general',\\n474|    icon: 'MousePointerClick',\\n475|    defaultProps: { text: 'Action', href: '#', target: '_self', rel: '', className: 'inline-flex rounded-lg bg-cyan-600 px-3 py-2 text-sm font-medium text-white no-underline hover:bg-cyan-700' },\\n476|    allowedParentTypes: ['root', 'container', 'list', 'list-item'],\\n477|    canHaveChildren: false,\\n478|    sourceType: 'local',\\n479|    nodeType: 'link',\\n480|  },\\n481|  {\\n482|    id: 'heroui.button-outline',\\n483|    label: 'Button Outline',\\n484|    category: 'heroui-general',\\n485|    icon: 'SquareDashedMousePointer',\\n486|    defaultProps: { text: 'Secondary', href: '#', target: '_self', rel: '', className: 'inline-flex rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 no-underline hover:bg-slate-100' },\\n487|    allowedParentTypes: ['root', 'container', 'list', 'list-item'],\\n488|    canHaveChildren: false,\\n489|    sourceType: 'local',\\n490|    nodeType: 'link',\"\n}"
+}

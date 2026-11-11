@@ -44,6 +44,7 @@ export type SectionId =
   | 'date-time'
   | 'file-media-input'
   | 'loading-error-empty'
+  | 'record-subject-timeline'
   | 'chart'
   | 'kanban'
   | 'spreadsheet'

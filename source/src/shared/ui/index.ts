@@ -252,6 +252,27 @@ export {
 export { CatalogSpecimenCard } from './catalog/CatalogSpecimenCard';
 export { CatalogSpecimenCodeBadge } from './catalog/CatalogSpecimenCodeBadge';
 export { CatalogSpecimenGrid } from './catalog/CatalogSpecimenGrid';
+export { CatalogSpecimenInteractionLanes } from './catalog/CatalogSpecimenInteractionLanes';
+export type {
+  CatalogInteractionPreviewProps,
+  CatalogInteractionProfile,
+  CatalogInteractionState,
+} from './catalog/catalogInteractionState';
+export {
+  CATALOG_INTERACTION_MARKER_APP_BUTTON,
+  CATALOG_INTERACTION_MARKER_FACE,
+  CATALOG_INTERACTION_MARKER_FILTER_CLEAR,
+  CATALOG_INTERACTION_MARKER_TEXT_LINK,
+  CATALOG_INTERACTION_MARKER_TEXT_LINK_PRIMARY,
+} from './catalog/catalogInteractionState';
+export {
+  catalogAppButtonSoftCyanAppliedStateClass,
+  catalogAppButtonSoftIndigoAppliedStateClass,
+  catalogFaceAppliedStateClass,
+  catalogFilterClearAppliedStateClass,
+  catalogTextLinkPrimaryAppliedStateClass,
+  catalogTextLinkSkyAppliedStateClass,
+} from './catalog/catalogInteractionApplied';
 export {
   FORM_ACCESSORY_TAB_INDEX,
   FormAccessorySlot,
@@ -1617,11 +1638,15 @@ export {
   type AppObjectPaletteExtendedHue,
 } from './paletteHues';
 export {
+  RECORD_SUBJECT_TIMELINE_ICON,
   RecordEventHistoryIcon,
+  RecordEventHistoryFieldChromeToggle,
   recordEventHistoryFieldChromeToggle,
+  type RecordEventHistoryHeaderChrome,
   type RecordEventHistoryIconProps,
 } from './RecordEventHistoryIcon';
 export { RecordEventHistoryDialog, type RecordEventHistoryDialogProps } from './RecordEventHistoryDialog';
+export * from './recordSubjectTimeline';
 export {
   ChangeReasonFields,
   attachChangeReason,

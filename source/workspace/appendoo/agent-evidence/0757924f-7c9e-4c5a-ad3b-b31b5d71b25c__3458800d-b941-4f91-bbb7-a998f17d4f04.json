@@ -1,0 +1,157 @@
+{
+  "evidence": [
+    {
+      "evidenceId": "60a470d4-adba-4153-8b57-19586f056c31",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:20.036Z"
+    },
+    {
+      "evidenceId": "3279c882-ee60-4b3c-9e4e-8019f579f77f",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:20.062Z"
+    },
+    {
+      "evidenceId": "6001bc2e-f62a-42fc-9875-1bf854c97983",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_project_standards",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:20.089Z"
+    },
+    {
+      "evidenceId": "023519e6-fd46-44f1-b419-385d39dd5d6b",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:get_feature_graph",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:20.120Z"
+    },
+    {
+      "evidenceId": "da84604a-ae51-4111-8d65-a4c78619bb36",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "default"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:search_codebase",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:23.839Z"
+    },
+    {
+      "evidenceId": "4ac2d182-df9d-4c4a-b0ae-5e4e7bf63b5c",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/domain/component-designer/layout-presets/builtInTemplateResolver.ts"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:25.746Z"
+    },
+    {
+      "evidenceId": "245bedd0-b376-40bc-bbc8-dbd5d0fa250a",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/domain/component-designer/layout-presets/newLayoutPresets.tsx"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:25.770Z"
+    },
+    {
+      "evidenceId": "2374f93c-7bff-4950-a4be-4d4466b538de",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/domain/component-designer/layout-presets/newLayoutPresets.tsx"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:search_codebase",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:27.366Z"
+    },
+    {
+      "evidenceId": "c69b6a04-6c16-46bf-98c6-ce93920b6f9d",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "SOURCE",
+      "subjectRefs": [
+        "src/domain/component-designer/layout-presets/newLayoutPresets.tsx"
+      ],
+      "result": "NEUTRAL",
+      "sourceRefs": [
+        "tool:read_file",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:28.747Z"
+    },
+    {
+      "evidenceId": "e49e3e72-2092-4ddc-995b-186de93a070f",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "type": "RUNTIME",
+      "subjectRefs": [
+        "99ba3678-55b5-468a-a13f-e86f561c5c36"
+      ],
+      "result": "SUPPORTING",
+      "sourceRefs": [
+        "orchestrator:validateProposal",
+        "provider:mock"
+      ],
+      "producedAt": "2026-08-31T16:19:36.734Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "d3b757f8-a4e2-496c-8489-33cc14d485fb",
+      "taskId": "0757924f-7c9e-4c5a-ad3b-b31b5d71b25c",
+      "statement": "The final proposal must pass proposal validation (validateProposal ok:true).",
+      "source": "ACCEPTANCE_CRITERION",
+      "required": true,
+      "evidenceIds": [
+        "e49e3e72-2092-4ddc-995b-186de93a070f"
+      ],
+      "finalized": true
+    }
+  ]
+}

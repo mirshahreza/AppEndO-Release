@@ -16,6 +16,8 @@ import {
   HwySelfRegistrationPage,
   HwyTrackRegistrationPage,
   HwyPublicLoginPage,
+  HwyPublicMyProfilePage,
+  HwyPublicInquiryPage,
   HwyRegistrationDevPortalPage,
 } from '../routes/lazyPages';
 import {
@@ -23,6 +25,8 @@ import {
   HWY_DEFAULT_PUBLIC_CULTURE,
   HWY_PUBLIC_PORTAL_SEGMENT,
   HWY_LOGIN_PUBLIC_PATH,
+  HWY_MY_PROFILE_PUBLIC_PATH,
+  HWY_MEMBER_INQUIRY_PUBLIC_PATH,
   HWY_SELF_REGISTRATION_PUBLIC_PATHS,
   HWY_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH,
   HWY_TRACK_REGISTRATION_PUBLIC_PATH,
@@ -126,6 +130,16 @@ export const PlatformAppRoutes: React.FC = () => (
               key={`${cultureId}${HWY_LOGIN_PUBLIC_PATH}`}
               path={`${cultureId}/${HWY_PUBLIC_PORTAL_SEGMENT}${HWY_LOGIN_PUBLIC_PATH}`}
               element={withPublicCulture(<HawietyPackagePublicGate><HwyPublicLoginPage /></HawietyPackagePublicGate>)}
+            />
+            <Route
+              key={`${cultureId}${HWY_MY_PROFILE_PUBLIC_PATH}`}
+              path={`${cultureId}/${HWY_PUBLIC_PORTAL_SEGMENT}${HWY_MY_PROFILE_PUBLIC_PATH}`}
+              element={withPublicCulture(<HawietyPackagePublicGate><HwyPublicMyProfilePage /></HawietyPackagePublicGate>)}
+            />
+            <Route
+              key={`${cultureId}${HWY_MEMBER_INQUIRY_PUBLIC_PATH}`}
+              path={`${cultureId}/${HWY_PUBLIC_PORTAL_SEGMENT}${HWY_MEMBER_INQUIRY_PUBLIC_PATH}`}
+              element={withPublicCulture(<HawietyPackagePublicGate><HwyPublicInquiryPage /></HawietyPackagePublicGate>)}
             />
             <Route
               key={`${cultureId}${HWY_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH}`}

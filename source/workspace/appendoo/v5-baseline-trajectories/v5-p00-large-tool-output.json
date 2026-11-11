@@ -1,0 +1,59 @@
+{
+  "taskId": "c58e9b445944a3f8",
+  "scenarioId": "v5-p00-large-tool-output",
+  "category": "large_tool_output",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:59.339Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Find all TODOs in the project.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "search_codebase",
+          "args": {
+            "query": "TODO",
+            "mode": "exact",
+            "maxResults": 100,
+            "includeText": true
+          }
+        }
+      ]
+    },
+    {
+      "text": "TODO matches are listed in the tool observation."
+    }
+  ],
+  "toolOrder": [
+    "search_codebase"
+  ],
+  "result": {
+    "text": "TODO matches are listed in the tool observation.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 2,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "search_codebase",
+        "argsHash": "1813e937ee59f435",
+        "durationMs": 1231,
+        "tokensEstimate": 1322,
+        "ok": true,
+        "summary": "Found 100 match(es) for \"TODO\". Verify with read_file (startLine/endLine) before citing code."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 7564,
+        "ok": true
+      }
+    ],
+    "retrievalOperationCount": 1,
+    "draftToolCount": 0
+  }
+}

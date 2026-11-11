@@ -1,0 +1,114 @@
+{
+  "id": "em_b840775bdeab8a7f",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_observers",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VoteObservers",
+    "tableName": "vote_observers"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "voting_id",
+      "field": "votingId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_3bc12e270160de98",
+        "column": "id"
+      }
+    },
+    {
+      "name": "station_id",
+      "field": "stationId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_ac3be3baf6bf1b75",
+        "column": "id"
+      }
+    },
+    {
+      "name": "hwy_member_id",
+      "field": "hwyMemberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "role_code",
+      "field": "roleCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_061c85dfa99a404c",
+      "targetModelId": "em_3bc12e270160de98",
+      "foreignKey": "voting_id",
+      "as": "voting",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_6873949e36314606",
+      "targetModelId": "em_ac3be3baf6bf1b75",
+      "foreignKey": "station_id",
+      "as": "station",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_94d22d3ee2074f8c",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "role_code",
+      "as": "role",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "3e624231f543b58b",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_observers"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:11:16.761Z",
+  "updated_at": "2026-11-10T13:06:43.785Z"
+}

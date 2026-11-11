@@ -1,0 +1,169 @@
+{
+  "id": "ea_0e19b72a2e09ef11",
+  "edgeModelId": "em_a3f3ec89a1f7d05b",
+  "key": "vote-voter-registrations",
+  "label": "Voting Voter Registrations",
+  "basePath": "/api/voting/voter-registrations",
+  "operations": [
+    {
+      "id": "op_list_feyvti",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/voting/voter-registrations",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "invitedByMemberId",
+          "statusCode",
+          "trackingCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_feyvti",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/voting/voter-registrations/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "invitedByMemberId",
+          "statusCode",
+          "trackingCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_feyvti",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/voting/voter-registrations",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "invitedByMemberId",
+          "statusCode",
+          "trackingCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "votingId",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "invitedByMemberId",
+          "statusCode",
+          "trackingCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "required": [
+          "votingId",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_feyvti",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/voting/voter-registrations/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "invitedByMemberId",
+          "statusCode",
+          "trackingCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "write": [
+          "votingId",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "invitedByMemberId",
+          "statusCode",
+          "trackingCode",
+          "createdAt",
+          "updatedAt"
+        ],
+        "required": [
+          "votingId",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_feyvti",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/voting/voter-registrations/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "hwyMemberId",
+          "hwyNakhebId",
+          "invitedByMemberId",
+          "statusCode",
+          "trackingCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-10T13:08:09.527Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "vote-voter-registrations.vote-voter-registrations-list"
+}

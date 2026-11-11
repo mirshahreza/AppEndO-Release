@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:82e0ed015c7a",
+    "toolCallId": "call_fNHoyYvZ6gJ5miy0Ms5Rssgs",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 3041,
+    "digest": "461bd3b097bef170c86bee6c28788ae553c1f35f34cd6bacc23c562de30a75c4",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-18T22:08:09.967Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/api/queries/server-functions.ts\",\n  \"startLine\": 350,\n  \"endLine\": 430,\n  \"totalLines\": 495,\n  \"truncated\": false,\n  \"content\": \"350|    data = {\\n351|      ...(result.data as Record<string, unknown>),\\n352|      _httpStatus: result.response.status,\\n353|    };\\n354|  } else {\\n355|    const result = await apiPost<ApiMutationResponse>('/api/core/server-functions/execute', {\\n356|      code: activeFn.code,\\n357|      language: getActiveSourceLanguage(activeFn.language),\\n358|      runtimeVersion: vmMode,\\n359|      memoryLimit: runRam,\\n360|      timeoutMs: runTimeout,\\n361|      engineType: activeFn.engineType,\\n362|      metadataJson: activeFn.metadataJson,\\n363|      functionId: activeFn.id,\\n364|      edgeCache: {\\n365|        enabled: Boolean(activeFn.cacheEnabled),\\n366|        requestMethod: resolvedRequestMethod,\\n367|        ttlMs: activeFn.cacheTtlMs,\\n368|        byParam: Boolean(activeFn.cacheByParam),\\n369|        byUser: Boolean(activeFn.cacheByUser),\\n370|        keyNamespace: `${resolvedRequestMethod}:${activeFn.path}`,\\n371|        requestParams: payload.params,\\n372|        requestQuery: payload.query,\\n373|      },\\n374|      dbContext: runDbContext,\\n375|      ...payload,\\n376|    });\\n377|    response = result.response;\\n378|    data = {\\n379|      ...(result.data as Record<string, unknown>),\\n380|      _httpStatus: result.response.status,\\n381|    };\\n382|  }\\n383|\\n384|  return {\\n385|    data: finalizeExecuteResponse(data, response),\\n386|    response,\\n387|  };\\n388|}\\n389|\\n390|export async function invokeAuthenticatedApiRoute(input: {\\n391|  path: string;\\n392|  method: string;\\n393|  payload: Record<string, unknown>;\\n394|  isDirectSql?: boolean;\\n395|}): Promise<{ data: Record<string, unknown>; response: Response }> {\\n396|  const result = await invokeManagedRoute({\\n397|    path: input.path,\\n398|    method: input.method,\\n399|    payload: input.payload,\\n400|    includeRuntimeDataSourceHeaders: false,\\n401|    isDirectSql: Boolean(input.isDirectSql),\\n402|  });\\n403|\\n404|  return {\\n405|    data: finalizeExecuteResponse(result.data, result.response),\\n406|    response: result.response,\\n407|  };\\n408|}\\n409|\\n410|export function useServerFunctionsCatalogQuery(enabled = true) {\\n411|  return useQuery({\\n412|    queryKey: serverFunctionsQueryKeys.catalog(),\\n413|    queryFn: ({ signal }) => fetchServerFunctionsCatalog(signal),\\n414|    enabled,\\n415|    retry: (failureCount, error) => (\\n416|      isAbortError(error)\\n417|        ? failureCount < 2\\n418|        : failureCount < 1\\n419|    ),\\n420|  });\\n421|}\\n422|\\n423|export function useCreateServerFunctionMutation() {\\n424|  const queryClient = useQueryClient();\\n425|  return useMutation({\\n426|    mutationFn: (payload: CreateServerFunctionPayload) => apiPost<ApiMutationResponse & { id?: string | number }>('/api/functions', payload),\\n427|    onSuccess: ({ data }) => {\\n428|      if (data.success) {\\n429|        invalidateServerFunctionDependentQueries(queryClient);\\n430|      }\"\n}"
+}

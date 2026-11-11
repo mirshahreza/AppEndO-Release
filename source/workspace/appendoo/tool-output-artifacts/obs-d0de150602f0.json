@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:d0de150602f0",
+    "toolCallId": "call_7bdY1Sv9QzBG01YJYpP3GKKl",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 3099,
+    "digest": "3a62ff45d571d5225a3d4ddbdcb2892fcd8f2021d495013bbe6e1b7058e81512",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-07-17T23:39:26.397Z"
+  },
+  "content": "{\n  \"path\": \"runtime/designer/drafts/math/UI-for-sum-two-numbers.tsx\",\n  \"startLine\": 118,\n  \"endLine\": 190,\n  \"totalLines\": 533,\n  \"truncated\": false,\n  \"content\": \"118|const collectRegionFormDataFromContainer = (\\n119|  container: ParentNode,\\n120|  formFieldNames: readonly string[],\\n121|): FormData => {\\n122|  const formData = new FormData();\\n123|  for (const formFieldName of formFieldNames) {\\n124|    const escapedName = formFieldName.replace(/\\\\\\\\/g, \\\"\\\\\\\\\\\\\\\\\\\").replace(/\\\"/g, '\\\\\\\\\\\"');\\n125|    const field = container.querySelector(`[name=\\\"${escapedName}\\\"]`);\\n126|    if (!field) {\\n127|      continue;\\n128|    }\\n129|    if (field instanceof HTMLInputElement) {\\n130|      if (field.type === \\\"checkbox\\\" || field.type === \\\"radio\\\") {\\n131|        formData.set(formFieldName, field.checked ? \\\"true\\\" : \\\"false\\\");\\n132|      } else {\\n133|        formData.set(formFieldName, field.value);\\n134|      }\\n135|      continue;\\n136|    }\\n137|    if (field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {\\n138|      formData.set(formFieldName, field.value);\\n139|      continue;\\n140|    }\\n141|    formData.set(formFieldName, field.getAttribute(\\\"value\\\") ?? \\\"\\\");\\n142|  }\\n143|  return formData;\\n144|};\\n145|\\n146|const applyPayloadFieldTransform = (value: FormDataEntryValue | null, transform?: string): unknown => {\\n147|  const raw = value === null ? \\\"\\\" : String(value);\\n148|  switch (transform) {\\n149|    case \\\"number\\\": {\\n150|      const parsed = Number(raw);\\n151|      return Number.isFinite(parsed) ? parsed : raw;\\n152|    }\\n153|    case \\\"boolean\\\":\\n154|      return raw === \\\"true\\\" || raw === \\\"1\\\" || raw === \\\"on\\\";\\n155|    case \\\"commaSeparatedArray\\\":\\n156|      return raw.split(\\\",\\\").map((entry) => entry.trim()).filter(Boolean);\\n157|    default:\\n158|      return raw;\\n159|  }\\n160|};\\n161|\\n162|// --- AUTH / TOKEN LIFECYCLE INJECTION POINT ---\\n163|// Register your application-wide 401 interceptor and token refresh handler here before production.\\n164|// Example: const designerFetch = createAuthenticatedFetch({ getAccessToken, refreshTokens, onSessionExpired });\\n165|const designerFetch: typeof fetch = fetch;\\n166|\\n167|function useDataFetch<T>(url: string, options: { headers?: Record<string, string> } = {}) {\\n168|  const [data, setData] = React.useState<T | null>(null);\\n169|  const [isLoading, setIsLoading] = React.useState(Boolean(url));\\n170|  const [error, setError] = React.useState<string | null>(null);\\n171|  const [refreshNonce, setRefreshNonce] = React.useState(0);\\n172|  const headersKey = JSON.stringify(options.headers ?? {});\\n173|\\n174|  const refresh = React.useCallback(async () => {\\n175|    setRefreshNonce((previous) => previous + 1);\\n176|  }, []);\\n177|\\n178|  React.useEffect(() => {\\n179|    if (!url) {\\n180|      setData(null);\\n181|      setIsLoading(false);\\n182|      setError(null);\\n183|      return undefined;\\n184|    }\\n185|\\n186|    let cancelled = false;\\n187|    const load = async () => {\\n188|      setIsLoading(true);\\n189|      setError(null);\\n190|      try {\"\n}"
+}

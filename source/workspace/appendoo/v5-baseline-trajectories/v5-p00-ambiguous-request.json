@@ -1,0 +1,82 @@
+{
+  "taskId": "d0bfffc18585b568",
+  "scenarioId": "v5-p00-ambiguous-request",
+  "category": "ambiguous_request",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:57.050Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Build a form for heartbeat",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "search_codebase",
+          "args": {
+            "query": "heartbeat",
+            "mode": "hybrid"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c2",
+          "name": "ask_clarifying_question",
+          "args": {
+            "question": "Which heartbeat function do you mean?",
+            "options": "[\"scheduler.sample-heartbeat\"]",
+            "reason": "Several heartbeat-related functions/files were found and the exact function name was not in the prompt."
+          }
+        }
+      ]
+    },
+    {
+      "text": "Waiting for the user to clarify."
+    }
+  ],
+  "toolOrder": [
+    "search_codebase",
+    "ask_clarifying_question"
+  ],
+  "result": {
+    "text": "Waiting for the user to clarify.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 3,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "search_codebase",
+        "argsHash": "27cb91c5e7eea7b2",
+        "durationMs": 4908,
+        "tokensEstimate": 1322,
+        "ok": true,
+        "summary": "Found 30 match(es) for \"heartbeat\". Verify with read_file (startLine/endLine) before citing code."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "ask_clarifying_question",
+        "argsHash": "17a43632b20d1507",
+        "durationMs": 6,
+        "tokensEstimate": 1944,
+        "ok": true,
+        "summary": "Which heartbeat function do you mean?"
+      },
+      {
+        "iteration": 3,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 2019,
+        "ok": true
+      }
+    ],
+    "retrievalOperationCount": 1,
+    "draftToolCount": 0
+  }
+}

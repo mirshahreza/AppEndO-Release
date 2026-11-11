@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:d0e214891aa6",
+    "toolCallId": "call_ZSQsXGMRDp84YwgkrGg9pzyb",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2317,
+    "digest": "58828f9e95327bb8841a95a824ba7e2c06266fc4497a1521937b5be4776e663f",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-08-31T08:46:01.134Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/api/contracts/server-functions/payloads.ts\",\n  \"startLine\": 1,\n  \"endLine\": 66,\n  \"totalLines\": 66,\n  \"truncated\": false,\n  \"content\": \"1|import type { ServerFunctionEngineType, ServerFunctionItem, ServerFunctionMetadataJson } from './types';\\n2|import type { FunctionAccessControl } from './accessControl';\\n3|import { parseFunctionAccessControl } from './accessControl';\\n4|import type { ServerFunctionHooksConfig } from './hooks';\\n5|\\n6|export type CreateServerFunctionPayload = {\\n7|  name: string;\\n8|  folder: string;\\n9|  method: ServerFunctionItem['method'];\\n10|  path: string;\\n11|  code: string;\\n12|  language?: string;\\n13|  testPayload: string;\\n14|  runtimeVersion: string;\\n15|  memoryLimit: number;\\n16|  timeoutMs: number;\\n17|  useGlobalConfig?: boolean;\\n18|  enableLogs?: boolean;\\n19|  cacheEnabled?: boolean;\\n20|  cacheTtlMs?: number;\\n21|  cacheByParam?: boolean;\\n22|  cacheByUser?: boolean;\\n23|  engineType?: ServerFunctionEngineType;\\n24|  metadataJson?: ServerFunctionMetadataJson | null;\\n25|  accessControl?: FunctionAccessControl;\\n26|  hooks?: ServerFunctionHooksConfig;\\n27|};\\n28|\\n29|export type UpdateServerFunctionPayload = CreateServerFunctionPayload;\\n30|\\n31|export type UpdatePackageServerFunctionPayload = {\\n32|  code: string;\\n33|};\\n34|\\n35|export type UpdateBuiltinFunctionMetadataPayload = {\\n36|  accessControl?: import('./accessControl').FunctionAccessControl;\\n37|  hooks?: ServerFunctionHooksConfig;\\n38|  enableLogs?: boolean;\\n39|  testPayload?: string;\\n40|  metadataJson?: import('./types').ServerFunctionMetadataJson | null;\\n41|  language?: string;\\n42|  runtimeVersion?: string;\\n43|  memoryLimit?: number;\\n44|  timeoutMs?: number;\\n45|  useGlobalConfig?: boolean;\\n46|  cacheEnabled?: boolean;\\n47|  cacheTtlMs?: number;\\n48|  cacheByParam?: boolean;\\n49|  cacheByUser?: boolean;\\n50|};\\n51|\\n52|export type ExecuteServerFunctionInput = {\\n53|  activeFn: ServerFunctionItem;\\n54|  parsedPayload: Record<string, unknown>;\\n55|  vmMode: 'v18.x' | 'v20.x';\\n56|  runRam: number;\\n57|  runTimeout: number;\\n58|  requestMethod?: ServerFunctionItem['method'];\\n59|};\\n60|\\n61|export type ServerFunctionsCatalog = {\\n62|  functions: ServerFunctionItem[];\\n63|  systemError: string | null;\\n64|  customError: string | null;\\n65|};\\n66|\"\n}"
+}

@@ -1,0 +1,166 @@
+{
+  "taskId": "f5e23ec1ee160765",
+  "scenarioId": "v5-p00-repeated-test-failure",
+  "category": "repeated_test_failure",
+  "repositoryFingerprint": "58ec62690",
+  "capturedAt": "2026-11-02T04:34:57.481Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Write and run a test for bugFixSample.ts; if it fails, fix it until it passes.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "run_tests",
+          "args": {}
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "gate",
+          "name": "get_project_standards",
+          "args": {
+            "shard": "vibe-coding-workflows"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c1b",
+          "name": "read_file",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/bugFixSample.ts"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c2",
+          "name": "draft_file_patch",
+          "args": {
+            "path": "src/shared/lib/appendoo/v5Baseline/bugFixSample.ts",
+            "content": "/**\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`bug_fix` scenario).\n * Clamps both bounds so scripted agent trajectories have a real, deterministic fix to propose.\n */\nexport function clampPercentage(value: number): number {\n  if (value > 100) return 100;\n  if (value < 0) return 0;\n  return value;\n}\n"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c3",
+          "name": "run_tests",
+          "args": {}
+        }
+      ]
+    },
+    {
+      "text": "After one failure and one fix, all tests passed."
+    }
+  ],
+  "toolOrder": [
+    "run_tests",
+    "get_project_standards",
+    "read_file",
+    "draft_file_patch",
+    "run_tests"
+  ],
+  "result": {
+    "text": "After one failure and one fix, all tests passed.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 6,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "run_tests",
+        "argsHash": "44136fa355b3678a",
+        "durationMs": 3,
+        "tokensEstimate": 1334,
+        "ok": false,
+        "error": "assertion_failed",
+        "summary": "Test run 1 failed: expected clampPercentage(-5) to be 0, got -5."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "get_project_standards",
+        "argsHash": "70ecb22a4d391191",
+        "durationMs": 5,
+        "tokensEstimate": 1362,
+        "ok": true,
+        "summary": "Loaded standards shard \"docs/standards/vibe-coding-workflows.md\" (truncated to 6000 chars)."
+      },
+      {
+        "iteration": 3,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "read_file",
+        "argsHash": "1bf1ec4193b004ae",
+        "durationMs": 6,
+        "tokensEstimate": 2971,
+        "ok": true,
+        "summary": "Read 11 line(s) from src/shared/lib/appendoo/v5Baseline/bugFixSample.ts (11 total)."
+      },
+      {
+        "iteration": 4,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "draft_file_patch",
+        "argsHash": "ae416e4eaad9ac66",
+        "durationMs": 7,
+        "tokensEstimate": 3167,
+        "ok": true,
+        "summary": "Drafted file patch for src/shared/lib/appendoo/v5Baseline/bugFixSample.ts (10 lines, full content)."
+      },
+      {
+        "iteration": 5,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "run_tests",
+        "argsHash": "44136fa355b3678a",
+        "durationMs": 8,
+        "tokensEstimate": 3252,
+        "ok": true,
+        "summary": "All tests passed."
+      },
+      {
+        "iteration": 6,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 3263,
+        "ok": true
+      }
+    ],
+    "proposalId": "ca68bf3e-90a7-4a5d-b481-6da6707a7ae1",
+    "changeSets": [
+      {
+        "id": "cs-d96eaa9b-4266-4aeb-b5cb-dd12fa2fe82e",
+        "kind": "file_patch",
+        "title": "File patch: src/shared/lib/appendoo/v5Baseline/bugFixSample.ts",
+        "path": "src/shared/lib/appendoo/v5Baseline/bugFixSample.ts",
+        "beforeHash": "8a2422108ea3cb66",
+        "beforeContent": "/**\r\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`bug_fix` scenario).\r\n * Deliberately contains a one-line bug (missing lower-bound clamp) so a scripted agent\r\n * trajectory can propose a real `draft_file_patch` against a real, allowlisted file without\r\n * depending on unrelated application files that could churn independently of this corpus.\r\n */\r\nexport function clampPercentage(value: number): number {\r\n  if (value > 100) return 100;\r\n  return value;\r\n}\r\n",
+        "diffZones": [
+          {
+            "startLine": 3,
+            "endLine": 11
+          }
+        ],
+        "content": "/**\n * Stable, owned fixture target for V5 Phase P00 baseline trajectories (`bug_fix` scenario).\n * Clamps both bounds so scripted agent trajectories have a real, deterministic fix to propose.\n */\nexport function clampPercentage(value: number): number {\n  if (value > 100) return 100;\n  if (value < 0) return 0;\n  return value;\n}\n"
+      }
+    ],
+    "validationOk": true,
+    "validationViolations": [],
+    "retrievalOperationCount": 2,
+    "draftToolCount": 1
+  }
+}

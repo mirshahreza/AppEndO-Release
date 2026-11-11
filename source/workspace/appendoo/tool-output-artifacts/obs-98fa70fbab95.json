@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:98fa70fbab95",
+    "toolCallId": "call_P2SfRMDu3a2Eoc9XEocyW4RO",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1432,
+    "digest": "72ba297432eefc46c24a1d4df6eb5ad1e6575d6e66b9b27785c77c12ca79e8aa",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T07:38:14.082Z"
+  },
+  "content": "{\n  \"query\": \"buildServerFunctionTemplate\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"src/shared/api/contracts/server-functions\",\n  \"scopePaths\": [\n    \"src/shared/api/contracts/server-functions\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 5,\n  \"matches\": [\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/templates.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/mappers.ts\",\n      \"line\": 289,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/hooks.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/payloads.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/server-functions/reservedFunctions.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"server-functions\",\n      \"label\": \"Server Functions\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"server-functions\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

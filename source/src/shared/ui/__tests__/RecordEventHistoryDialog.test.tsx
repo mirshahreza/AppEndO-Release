@@ -122,20 +122,20 @@ describe('RecordEventHistoryDialog', () => {
     render(
       <RecordEventHistoryDialog
         open
-        title="History"
+        title="Record timeline"
         subjectKind="base_sample_mock_records"
         subjectId="1"
         onClose={() => undefined}
       />,
     );
 
-    expect(screen.getByRole('dialog', { name: 'History' })).toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: 'Record timeline' })).toBeInTheDocument();
     expect(screen.getByLabelText('Event kind')).toBeInTheDocument();
     expect(screen.getByLabelText('Filter by field')).toBeInTheDocument();
     expect(screen.getByLabelText('From date')).toBeInTheDocument();
     expect(screen.getByLabelText('To date')).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByText('No history yet.')).toBeInTheDocument();
+      expect(screen.getByText('platform.recordSubjectTimeline.empty')).toBeInTheDocument();
     });
   });
 
@@ -145,7 +145,7 @@ describe('RecordEventHistoryDialog', () => {
     render(
       <RecordEventHistoryDialog
         open
-        title="History · firstName"
+        title="Record timeline · firstName"
         subjectKind="base_users"
         subjectId="7"
         field="firstName"

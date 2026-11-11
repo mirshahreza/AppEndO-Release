@@ -1,0 +1,119 @@
+{
+  "id": "em_0b9bf6045b23e222",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_poll_questions",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VotePollQuestions",
+    "tableName": "vote_poll_questions"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "voting_id",
+      "field": "votingId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_3bc12e270160de98",
+        "column": "id"
+      }
+    },
+    {
+      "name": "title",
+      "field": "title",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status_code",
+      "field": "statusCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "publish_level_code",
+      "field": "publishLevelCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_10e8643c69724d95",
+      "targetModelId": "em_3bc12e270160de98",
+      "foreignKey": "voting_id",
+      "as": "voting",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_2b13454237084199",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "status_code",
+      "as": "status",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_5c1b4a32c4634700",
+      "targetModelId": "em_3881614faca08a21",
+      "foreignKey": "question_id",
+      "as": "answers",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "8baf183d7610ac8d",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_poll_questions"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:11:17.830Z",
+  "updated_at": "2026-11-10T13:06:43.795Z"
+}

@@ -1,0 +1,236 @@
+{
+  "schema": "component-designer-draft",
+  "id": "draft-hwy-members-image-fix",
+  "name": "hwy-members-image-fix",
+  "folder": "general",
+  "catalogKind": "custom",
+  "tags": [],
+  "document": {
+    "schemaVersion": "1.0.0",
+    "id": "draft-hwy-members-image-fix",
+    "name": "hwy-members-image-fix",
+    "rootNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "parentId": null,
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-col bg-white font-sans",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "publishedFormAssist": false
+        },
+        "layout": {},
+        "binding": {},
+        "children": [
+          "heroui-app-table-grid-1793680953826-tyghm"
+        ]
+      },
+      "heroui-app-table-grid-1793680953826-tyghm": {
+        "id": "heroui-app-table-grid-1793680953826-tyghm",
+        "type": "container",
+        "parentId": "root",
+        "order": 0,
+        "props": {
+          "className": "flex h-full min-h-0 w-full flex-1 flex-col",
+          "columns": "[{\"key\":\"displayFullName\",\"label\":\"Member\",\"labelTranslationKey\":\"hwy.members.column.member\",\"cardRole\":\"title\",\"cellKind\":\"hwy-member-face\",\"cellFields\":{\"imageUrlField\":\"avatarUrl\",\"fallbackTextField\":\"displayFullName\",\"captionField\":\"username\",\"captionFallbackField\":\"trackingCode\",\"genderCodeField\":\"genderCode\",\"avatarSizePx\":43,\"primaryField\":\"displayFullName\",\"secondaryField\":\"birthYear\"},\"width\":\"255px\",\"layoutResizable\":false,\"layoutHideable\":false,\"headerClassName\":\"text-start [&>div]:justify-start whitespace-nowrap\",\"cellClassName\":\"min-w-0 max-w-[255px] whitespace-normal leading-snug px-0.5\",\"cellClickBehavior\":{\"kind\":\"navigate\",\"navigateTarget\":\"/hawiety/members-all/view/{selection.id}\",\"primaryKeyField\":\"id\",\"selectionStorePath\":\"selection.id\"},\"sort\":true,\"filter\":true,\"filterType\":\"text\"},{\"key\":\"imageFixMemberActions\",\"label\":\"\",\"cellKind\":\"hwy-imagefix-member-actions\",\"layoutResizable\":false,\"width\":\"93px\",\"headerClassName\":\"text-start [&>div]:justify-start whitespace-nowrap\",\"cellClassName\":\"min-w-0 whitespace-normal px-1 py-0.5\",\"cardRole\":\"actions\"},{\"key\":\"registrationImageFixThumbs\",\"label\":\"Documents\",\"labelTranslationKey\":\"hwy.imageFix.column.documents\",\"cardRole\":\"meta\",\"cellKind\":\"hwy-imagefix-thumbs\",\"width\":\"340px\",\"layoutResizable\":false,\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"px-1 py-1\",\"sort\":false,\"filter\":false},{\"key\":\"nakhebinJoinTasjilStateCodeTitle\",\"label\":\"Registered\",\"labelTranslationKey\":\"hwy.family.column.cardStatus\",\"width\":\"48px\",\"layoutResizable\":false,\"sort\":false,\"filter\":false,\"cellKind\":\"hwy-registered-icon\",\"cellFields\":{\"primaryField\":\"nakhebinJoinTasjilStateCodeTitle\",\"secondaryField\":\"nakhebinJoinTasjilStateCode\"},\"headerClassName\":\"text-center [&>div]:justify-center whitespace-nowrap\",\"cellClassName\":\"text-center\"},{\"key\":\"electoralDivisionPath\",\"label\":\"Electoral division\",\"labelTranslationKey\":\"hwy.members.column.electoralDivision\",\"sort\":true,\"filter\":true,\"filterType\":\"text\",\"cardRole\":\"meta\",\"cellKind\":\"account\",\"cellFields\":{\"primaryField\":\"electoralDivisionLine1\",\"secondaryField\":\"electoralDivisionLine2\",\"accountLayout\":\"stacked-text\",\"electoralFallbackField\":\"addrProvinceTitle\"},\"cellClassName\":\"min-w-0 whitespace-normal text-xs leading-snug hwy-electoral-division-grid-cell align-middle\"}]",
+          "gridQueryMode": "server",
+          "pageSize": 50,
+          "page": 1,
+          "total": 0,
+          "presentation": "auto",
+          "cardBelow": "tablet",
+          "enableColumnLayout": false,
+          "showSortControls": true,
+          "showListModeControls": true,
+          "listMode": "paging",
+          "rowKeyField": "id",
+          "defaultSortBy": "membershipStatusUpdatedOn",
+          "sortOptions": "[{\"value\":\"membershipStatusUpdatedOn\",\"label\":\"Status updated on\",\"labelTranslationKey\":\"hwy.members.column.membershipStatusUpdatedOn\"},{\"value\":\"updatedAt\",\"label\":\"Modified on\",\"labelTranslationKey\":\"hwy.members.column.updatedAt\"},{\"value\":\"createdAt\",\"label\":\"Created on\",\"labelTranslationKey\":\"hwy.members.column.createdAt\"},{\"value\":\"membershipOn\",\"label\":\"Membership on\",\"labelTranslationKey\":\"hwy.members.column.membershipOn\"},{\"value\":\"displayFullName\",\"label\":\"Member\",\"labelTranslationKey\":\"hwy.members.column.member\"},{\"value\":\"electoralDivisionPath\",\"label\":\"Electoral division\",\"labelTranslationKey\":\"hwy.members.column.electoralDivision\"}]",
+          "loadingMessage": "Loading members…",
+          "emptyContent": "No members found.",
+          "errorContent": "Could not load members.",
+          "_designerPaletteItemId": "heroui.app-table-grid",
+          "twDisplay": "flex",
+          "twPosition": "",
+          "twOverflow": "",
+          "twPadding": "",
+          "twMargin": "",
+          "twWidth": "w-full",
+          "twHeight": "h-full",
+          "twFlexDirection": "flex-col",
+          "twItems": "",
+          "twJustify": "",
+          "twGap": "",
+          "twGridCols": "",
+          "twTextSize": "",
+          "twFontWeight": "",
+          "twTextAlign": "",
+          "twRounded": "",
+          "twShadow": "",
+          "twOpacity": "",
+          "showPagingFooter": true,
+          "toolbarConfig": "{\"enabled\":true,\"search\":{\"enabled\":true,\"placeholder\":\"Search registration image review…\",\"storePath\":\"gridToolbar.search\",\"apiParam\":\"search\",\"debounceMs\":300},\"refresh\":{\"enabled\":true},\"serverQuery\":{\"enabled\":true,\"sortByParam\":\"sortBy\",\"sortDirParam\":\"sortDir\",\"sortByStorePath\":\"gridQuery.sortBy\",\"sortDirStorePath\":\"gridQuery.sortDir\",\"pageParam\":\"page\",\"pageSizeParam\":\"pageSize\",\"pageStorePath\":\"gridQuery.page\",\"pageSizeStorePath\":\"gridQuery.pageSize\",\"columnFilters\":[]}}",
+          "gridId": "hwy-hwy-members-image-fix-member-dir-v39",
+          "loadingMessageTranslationKey": "hwy.members.loading",
+          "emptyContentTranslationKey": "hwy.members.empty",
+          "errorContentTranslationKey": "hwy.members.error",
+          "searchPlaceholderTranslationKey": "hwy.members.search.placeholder",
+          "refreshLabelTranslationKey": "hwy.members.toolbar.refresh",
+          "density": "compact",
+          "compactTabletLayout": "cards",
+          "compactPhoneLayout": "cards"
+        },
+        "layout": {},
+        "binding": {
+          "gridListResource": {
+            "sourceType": "static",
+            "dataSourceRef": "hwymemberdirectoryList",
+            "sourcePath": "hwymemberdirectoryList",
+            "loadOperation": "list",
+            "queryParams": {
+              "search": "gridToolbar.search",
+              "sortBy": "gridQuery.sortBy",
+              "sortDir": "gridQuery.sortDir",
+              "page": "gridQuery.page",
+              "pageSize": "gridQuery.pageSize",
+              "includeCount": "static:page1Only",
+              "where": "gridToolbar.listWhere",
+              "lang": "static:ar",
+              "listScope": "static:HWY_Members_List_Imagefix"
+            },
+            "storeWritePath": "gridQuery.sort",
+            "dataPath": "gridQuery.page"
+          }
+        },
+        "children": []
+      }
+    },
+    "metadata": {
+      "createdAt": "2026-10-26T09:58:36.686Z",
+      "updatedAt": "2026-11-03T04:42:33.922Z"
+    },
+    "diagnostics": []
+  },
+  "bindingDefinitions": {
+    "definitions": {
+      "defaultVisibility": {
+        "sourceType": "static",
+        "sourcePath": "true",
+        "fallbackValue": true
+      }
+    },
+    "storeSegments": {
+      "gridQuery": {
+        "id": "gridQuery",
+        "persist": "local",
+        "initialValue": {
+          "page": 1,
+          "pageSize": 50,
+          "sortBy": "membershipStatusUpdatedOn",
+          "sortDir": "desc",
+          "search": "",
+          "filters": {}
+        }
+      },
+      "gridToolbar": {
+        "id": "gridToolbar",
+        "persist": "local",
+        "initialValue": {
+          "search": "",
+          "imageFix": {
+            "queue": "todo",
+            "roled": "",
+            "nakhebCardType": "",
+            "doc": {
+              "picture": "",
+              "nationalCardFront": "",
+              "nationalCardBehind": "",
+              "nakhebCardFront": "",
+              "maskanCard": "",
+              "oath": ""
+            }
+          }
+        }
+      }
+    },
+    "dataSources": {
+      "hwymemberdirectoryList": {
+        "id": "hwymemberdirectoryList",
+        "name": "Registration image review",
+        "endpoint": "/api/hwy/member-directory",
+        "primaryKey": "id",
+        "kind": "collection",
+        "fields": [
+          "id",
+          "trackingCode",
+          "createdAt",
+          "updatedAt",
+          "displayFullName",
+          "avatarUrl",
+          "username",
+          "genderCode",
+          "birthYear",
+          "imageFixMemberActions",
+          "registrationImageFixThumbs",
+          "nakhebinJoinTasjilStateCode",
+          "nakhebinJoinTasjilStateCodeTitle",
+          "electoralDivisionPath",
+          "electoralDivisionLine1",
+          "electoralDivisionLine2",
+          "stacked-text",
+          "addrProvinceTitle",
+          "membershipOn",
+          "membershipStatusCode",
+          "membershipStatusCodeTitle",
+          "registrationChannelCodeTitle",
+          "nakhebinRegionId",
+          "nakhebinLinkRegionId",
+          "nakhebinFamilyCode",
+          "family_code",
+          "familyCode"
+        ],
+        "operations": {
+          "list": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory"
+          },
+          "detail": {
+            "method": "GET",
+            "endpoint": "/api/hwy/member-directory/:id"
+          }
+        },
+        "responseMapping": {
+          "arrayPath": "data",
+          "totalPath": "count",
+          "dataPath": "data"
+        }
+      }
+    },
+    "lovs": {}
+  },
+  "metadata": {
+    "createdAt": "2026-10-26T09:58:36.822Z",
+    "updatedAt": "2026-11-03T04:42:33.922Z",
+    "createdBy": "hwy-member-lists",
+    "updatedBy": "hwy-member-lists"
+  }
+}

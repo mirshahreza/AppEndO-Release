@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:3f38418155c1",
+    "toolCallId": "c1",
+    "toolName": "list_server_functions",
+    "contentType": "json",
+    "byteLength": 1779,
+    "digest": "78344c12bc8ea94e96a18da2dccb8b96eb619c790b45a199637dbaaf16646c7b",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-20T20:20:26.983Z"
+  },
+  "content": "{\n  \"items\": [\n    {\n      \"id\": \"math.add-two-numbers\",\n      \"name\": \"add-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/add-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-17T23:01:18.351Z\"\n    },\n    {\n      \"id\": \"math.multiply-two-numbers\",\n      \"name\": \"multiply-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/multiply-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-17T22:42:42.453Z\"\n    },\n    {\n      \"id\": \"math.subtract-two-numbers\",\n      \"name\": \"subtract-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/subtract-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-17T23:03:08.756Z\"\n    },\n    {\n      \"id\": \"math.sum-two-numbers\",\n      \"name\": \"sum-two-numbers\",\n      \"folder\": \"math\",\n      \"method\": \"POST\",\n      \"path\": \"/api/math/sum-two-numbers\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"ts\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 1500,\n      \"updatedAt\": \"2026-07-17T23:28:49.450Z\"\n    },\n    {\n      \"id\": \"workflow-engine.scheduled-start\",\n      \"name\": \"scheduled-start\",\n      \"folder\": \"workflow-engine\",\n      \"method\": \"POST\",\n      \"path\": \"/system/workflow-engine/scheduled-start\",\n      \"engineType\": \"SANDBOX_JS\",\n      \"language\": \"js\",\n      \"runtimeVersion\": \"v20.x\",\n      \"timeoutMs\": 5000,\n      \"updatedAt\": \"2026-07-19T22:23:53.809Z\"\n    }\n  ],\n  \"totalCount\": 5\n}"
+}

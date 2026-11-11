@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:e532ee002682",
+    "toolCallId": "call_IskSflEK95eww2RkDWuVtff5",
+    "toolName": "get_feature_graph",
+    "contentType": "json",
+    "byteLength": 1545,
+    "digest": "7904611663d05a67954a735858c6b669ab7f1b7039f95d5a9962bd6e42035ff4",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-16T00:38:22.146Z"
+  },
+  "content": "{\n  \"version\": \"1\",\n  \"generatedAt\": \"2026-07-06T10:35:21.753Z\",\n  \"node\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"menuGroup\": \"Development\",\n    \"routePattern\": \"client-components\",\n    \"inStudioMenu\": true,\n    \"ui\": {\n      \"pageModule\": \"src/config/platform-registry/page-modules/client-components.json\",\n      \"loaderRef\": \"core:ComponentDesigner\",\n      \"page\": \"src/features/component-designer/ComponentDesignerPage.tsx\",\n      \"feature\": \"src/features/component-designer/\",\n      \"domain\": \"src/domain/component-designer/\",\n      \"workspace\": \"ComponentDesignerWorkspace\"\n    },\n    \"api\": {\n      \"routes\": [\n        \"src/server/routes/component-designer.routes.ts\"\n      ],\n      \"apiPrefixes\": [\n        \"/api/component-designer\"\n      ],\n      \"contracts\": \"src/shared/api/contracts/component-designer/\",\n      \"services\": [\n        \"src/server/services/component-designer.service.ts\"\n      ]\n    },\n    \"tests\": \"src/features/component-designer/__tests__/\",\n    \"notes\": null\n  },\n  \"searchContext\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\"\n}"
+}

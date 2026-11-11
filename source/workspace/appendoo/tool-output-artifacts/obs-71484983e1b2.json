@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:71484983e1b2",
+    "toolCallId": "call_8g0jIuNBGHZr3iCCsmZRlKCu",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2776,
+    "digest": "7ad7e3031374fa437e1b821980e443971fa85a64550083121948f0d2ff204dc5",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T22:08:09.946Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/ui/index.ts\",\n  \"startLine\": 250,\n  \"endLine\": 330,\n  \"totalLines\": 506,\n  \"truncated\": false,\n  \"content\": \"250|  sanitizeGridQuery,\\n251|  setColumnFilter,\\n252|  toggleColumnSort,\\n253|  type AppTableGridColumnDef,\\n254|  type GridColumnCardRole,\\n255|  type GridColumnHideBelow,\\n256|  type GridColumnQueryMode,\\n257|  type GridFilterType,\\n258|  type GridFilterValue,\\n259|  type GridQueryChangeMeta,\\n260|  type GridQueryState,\\n261|  type GridSortDirection,\\n262|} from '../lib/appTableGridQuery';\\n263|export {\\n264|  useGridQueryState,\\n265|  type UseGridQueryStateOptions,\\n266|} from '../lib/useGridQueryState';\\n267|export {\\n268|  applyColumnLayout,\\n269|  areColumnLayoutsEqual,\\n270|  createDefaultColumnLayout,\\n271|  getColumnLayoutLabel,\\n272|  GRID_COLUMN_MIN_WIDTH,\\n273|  reorderColumn,\\n274|  resetColumnLayout,\\n275|  resolveColumnLayoutOptions,\\n276|  resolveColumnWidth,\\n277|  resolveColumnWidthPx,\\n278|  sanitizeColumnLayout,\\n279|  setColumnWidth,\\n280|  toggleColumnVisibility,\\n281|  type GridColumnLayoutChangeMeta,\\n282|  type GridColumnLayoutOptions,\\n283|  type GridColumnLayoutState,\\n284|} from '../lib/appTableGridColumnLayout';\\n285|export {\\n286|  resolveCardLayout,\\n287|  type ResolvedCardLayout,\\n288|} from '../lib/appTableGridCardLayout';\\n289|export {\\n290|  resolveGridEffectivePresentation,\\n291|  tierUsesCardLayout,\\n292|  type GridCardBelowTier,\\n293|  type GridEffectivePresentation,\\n294|  type GridPresentationMode,\\n295|} from '../lib/appTableGridPresentation';\\n296|export {\\n297|  useGridColumnLayout,\\n298|  type UseGridColumnLayoutOptions,\\n299|} from '../lib/useGridColumnLayout';\\n300|export { UiCheckbox, UiInputCore, UiPasswordInput, UiSelect, UiTextareaCore, UiAutocomplete, UiRadioGroup, type HeroUiFieldSize } from './HeroFieldControls';\\n301|export {\\n302|  UiCheckboxChoice,\\n303|  UiCheckboxChoiceGroup,\\n304|  UiCheckboxChoiceList,\\n305|  UiRadioChoiceGroup,\\n306|  UiRadioChoiceList,\\n307|  type UiCheckboxChoiceGroupProps,\\n308|  type UiCheckboxChoiceListOption,\\n309|  type UiCheckboxChoiceListProps,\\n310|  type UiCheckboxChoiceProps,\\n311|  type UiRadioChoiceGroupProps,\\n312|  type UiRadioChoiceListProps,\\n313|} from './FormChoiceFields';\\n314|export {\\n315|  HERO_UI_RADIO_LABEL_NUDGE_CLASS,\\n316|  UI_CHOICE_STACK_GAP_CLASS,\\n317|  resolveUiChoiceLabelRowClass,\\n318|  resolveUiChoiceOptionLabelClass,\\n319|  resolveUiRadioLabelClass,\\n320|  resolveUiRadioOptionRootClass,\\n321|  resolveUiRadioRowClass,\\n322|  type UiRadioGroupProps,\\n323|  type UiRadioOption,\\n324|} from './HeroFieldControls';\\n325|export {\\n326|  HERO_UI_FIELD_PREFERRED_SIZES,\\n327|  HERO_UI_FIELD_SIZES,\\n328|  isHeroUiFieldSize,\\n329|  resolveHeroUiFieldSizeTokens,\\n330|} from './heroFieldSize';\"\n}"
+}

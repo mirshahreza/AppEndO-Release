@@ -1,0 +1,84 @@
+{
+  "taskId": "d5dff642d11dae56",
+  "scenarioId": "v5-p00-server-function-edit",
+  "category": "server_function_edit",
+  "repositoryFingerprint": "43979980",
+  "capturedAt": "2026-07-20T20:20:27.286Z",
+  "providerMode": "mock",
+  "debtRef": "plans/core/next/p-72-ai-backlog.md",
+  "prompt": "Review the math.sum-two-numbers function code and make sure non-numeric inputs are rejected.",
+  "scriptedSteps": [
+    {
+      "toolCalls": [
+        {
+          "id": "c1",
+          "name": "get_server_function",
+          "args": {
+            "functionId": "math.sum-two-numbers"
+          }
+        }
+      ]
+    },
+    {
+      "toolCalls": [
+        {
+          "id": "c2",
+          "name": "test_server_function",
+          "args": {
+            "functionId": "math.sum-two-numbers",
+            "payload": {
+              "a": "x",
+              "b": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "text": "The code already rejects non-numeric inputs with a 400 error; the test confirmed the behavior is correct."
+    }
+  ],
+  "toolOrder": [
+    "get_server_function",
+    "test_server_function"
+  ],
+  "result": {
+    "text": "The code already rejects non-numeric inputs with a 400 error; the test confirmed the behavior is correct.",
+    "modelId": "mock-baseline-provider",
+    "iterationCount": 3,
+    "traces": [
+      {
+        "iteration": 1,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "get_server_function",
+        "argsHash": "ad835eaea4674441",
+        "durationMs": 4,
+        "tokensEstimate": 1445,
+        "ok": true,
+        "summary": "Loaded server function \"sum-two-numbers\" (POST /api/math/sum-two-numbers)."
+      },
+      {
+        "iteration": 2,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "tool_call",
+        "toolName": "test_server_function",
+        "argsHash": "2b9eed2fd4df7368",
+        "durationMs": 114,
+        "tokensEstimate": 1892,
+        "ok": false,
+        "error": "execution_failed",
+        "summary": "Edge function test failed: Both \"a\" and \"b\" are required finite numbers."
+      },
+      {
+        "iteration": 3,
+        "modelId": "mock-baseline-provider",
+        "policyAction": "respond",
+        "tokensEstimate": 1923,
+        "ok": true
+      }
+    ],
+    "retrievalOperationCount": 1,
+    "draftToolCount": 0
+  }
+}

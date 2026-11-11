@@ -12,14 +12,21 @@ import {
   hwyMemberTarghinAdminRequesterRequestGridTemplateColumns,
 } from '../../../domain/hwy/hwyMemberTarghinAdminLayout';
 import { cn } from '../../../lib/utils';
+import { catalogTextLinkSkyAppliedStateClass } from '../catalog/catalogInteractionApplied';
+import type { CatalogInteractionPreviewProps } from '../catalog/catalogInteractionState';
+import { CATALOG_INTERACTION_MARKER_TEXT_LINK } from '../catalog/catalogInteractionState';
 import { HwyMemberTarghinRequestDetailDialog } from './HwyMemberTarghinRequestDetailDialog';
 import { HwyTarghinDossierFaceLink } from './HwyTarghinDossierFaceLink';
 import { HwyTarghinMemberFace } from './HwyTarghinMemberFace';
 
 const INNER_GRID_CLASS = 'grid w-full min-w-0 gap-3';
 
-const TARGHIN_REQUEST_VIEW_FULL_LINK_CLASS =
-  'inline-flex max-w-full items-center gap-1 self-start border-0 bg-transparent p-0 text-start text-[11px] font-medium leading-none text-sky-700 underline-offset-2 hover:text-sky-800 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-sky-500';
+const TARGHIN_REQUEST_VIEW_FULL_LINK_CLASS = cn(
+  'inline-flex max-w-full items-center gap-1 self-start border-0 bg-transparent p-0 text-start text-[11px] font-medium leading-none text-sky-700 underline-offset-2',
+  'hover:text-sky-800 hover:underline active:text-sky-900 active:underline',
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-sky-500',
+  CATALOG_INTERACTION_MARKER_TEXT_LINK,
+);
 
 export { HWY_TARGHIN_DOSSIER_FACE_LINK_CLASS } from './HwyTarghinDossierFaceLink';
 
@@ -154,7 +161,7 @@ export const HwyMemberTarghinAdminRequestPreview: React.FC<HwyMemberTarghinAdmin
   );
 };
 
-export type HwyMemberTarghinRequesterRequestCellProps = {
+export type HwyMemberTarghinRequesterRequestCellProps = CatalogInteractionPreviewProps & {
   requester: HwyMemberTarghinAdminMemberFace | null;
   createdAt: string;
   requestReasonCodeTitle?: string | null;
@@ -178,6 +185,7 @@ export const HwyMemberTarghinRequesterRequestCell: React.FC<HwyMemberTarghinRequ
   requesterDossierMemberId,
   onOpenDossier,
   className,
+  catalogPreviewState,
 }) => {
   const { direction } = useCulture();
   const requesterDossierId = resolveTarghinRowFaceDossierMemberId(requesterDossierMemberId, requester);
@@ -186,6 +194,7 @@ export const HwyMemberTarghinRequesterRequestCell: React.FC<HwyMemberTarghinRequ
       dossierMemberId={requesterDossierId}
       onOpenDossier={onOpenDossier}
       dir={direction}
+      catalogPreviewState={catalogPreviewState}
     >
       <HwyTarghinMemberFace face={requester} showElectoralPath />
     </HwyTarghinDossierFaceLink>

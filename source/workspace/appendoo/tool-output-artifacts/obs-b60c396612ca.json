@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:b60c396612ca",
+    "toolCallId": "call_7Dj3KOndrlwqvPVsbv8kUQJK",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 2079,
+    "digest": "ad36101d7daddaf9a12b7e5111a9c83840db3c23aaee1abdc621ebc24a8a9bc1",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-08-31T08:06:50.346Z"
+  },
+  "content": "{\n  \"path\": \"src/shared/server-functions/testPayloadRequest.ts\",\n  \"startLine\": 1,\n  \"endLine\": 54,\n  \"totalLines\": 54,\n  \"truncated\": false,\n  \"content\": \"1|export type SandboxTestRequest = {\\n2|  method: string;\\n3|  body: unknown;\\n4|  query: Record<string, unknown>;\\n5|  params: Record<string, string>;\\n6|  headers: Record<string, unknown>;\\n7|};\\n8|\\n9|/** Reserved Test Console envelope keys — other top-level keys are treated as POST/PUT body fields. */\\n10|export const TEST_PAYLOAD_ENVELOPE_KEYS = new Set(['body', 'query', 'params', 'headers']);\\n11|\\n12|export const extractBodyFieldsFromTestPayload = (\\n13|  payload: Record<string, unknown>,\\n14|): Record<string, unknown> => {\\n15|  if (payload.body && typeof payload.body === 'object' && !Array.isArray(payload.body)) {\\n16|    return payload.body as Record<string, unknown>;\\n17|  }\\n18|\\n19|  return Object.fromEntries(\\n20|    Object.entries(payload).filter(([key]) => !TEST_PAYLOAD_ENVELOPE_KEYS.has(key)),\\n21|  );\\n22|};\\n23|\\n24|/** Test Console payload: body fields at root; optional `query` / `params` wrappers when needed. */\\n25|export const buildRequestFromTestPayload = (\\n26|  method: string,\\n27|  payload: Record<string, unknown>,\\n28|): SandboxTestRequest => {\\n29|  const hasEnvelope = 'body' in payload || 'query' in payload || 'params' in payload;\\n30|  if (hasEnvelope) {\\n31|    return {\\n32|      method,\\n33|      body: payload.body ?? {},\\n34|      query: payload.query && typeof payload.query === 'object' && !Array.isArray(payload.query)\\n35|        ? payload.query as Record<string, unknown>\\n36|        : {},\\n37|      params: payload.params && typeof payload.params === 'object' && !Array.isArray(payload.params)\\n38|        ? Object.fromEntries(\\n39|          Object.entries(payload.params as Record<string, unknown>).map(([key, value]) => [key, String(value)]),\\n40|        )\\n41|        : {},\\n42|      headers: {},\\n43|    };\\n44|  }\\n45|\\n46|  return {\\n47|    method,\\n48|    body: payload,\\n49|    query: {},\\n50|    params: {},\\n51|    headers: {},\\n52|  };\\n53|};\\n54|\"\n}"
+}

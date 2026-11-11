@@ -1,0 +1,34 @@
+{
+  "schema": "package-deployment-applied",
+  "schemaVersion": "1.0.0",
+  "packageId": "remote-hubs",
+  "version": "1.0.6",
+  "appliedAt": "2026-11-06T20:28:28.363Z",
+  "kind": "extension-ui-routes",
+  "routes": [
+    {
+      "pageKey": "file-hub",
+      "title": "Sftp",
+      "routePattern": "sftp/*",
+      "mountId": "studio",
+      "loaderRef": "remote-hubs:file-hub",
+      "entry": "ui/sftp.tsx"
+    },
+    {
+      "pageKey": "ssh-hub",
+      "title": "SSH",
+      "routePattern": "ssh/*",
+      "mountId": "studio",
+      "loaderRef": "remote-hubs:ssh-hub",
+      "entry": "ui/ssh.tsx"
+    },
+    {
+      "pageKey": "rdp-hub",
+      "title": "RDP",
+      "routePattern": "rdp/*",
+      "mountId": "studio",
+      "loaderRef": "remote-hubs:rdp-hub",
+      "entry": "ui/rdp.tsx"
+    }
+  ]
+}

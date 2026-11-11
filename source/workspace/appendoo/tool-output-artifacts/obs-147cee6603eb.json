@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "artifactId": "obs:147cee6603eb",
+    "toolCallId": "call_CQYS6eeRb2a0SxLdHM64h6Kr",
+    "toolName": "read_file",
+    "contentType": "json",
+    "byteLength": 1958,
+    "digest": "c34f82820675fe36e86b0f86a589ae3b468f1501bb14554abfe9d6e76d8f9b49",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search",
+      "list_errors"
+    ],
+    "createdAt": "2026-08-31T16:18:47.874Z"
+  },
+  "content": "{\n  \"path\": \"src/domain/component-designer/layout-presets/types.ts\",\n  \"startLine\": 1,\n  \"endLine\": 63,\n  \"totalLines\": 63,\n  \"truncated\": false,\n  \"content\": \"1|export type NewLayoutPresetId =\\n2|  | 'blank'\\n3|  | 'hero-cta'\\n4|  | 'feature-grid'\\n5|  | 'split-media'\\n6|  | 'dashboard-kpi'\\n7|  | 'dashboard-viz-kit'\\n8|  | 'pricing-cards'\\n9|  | 'faq-accordion'\\n10|  | 'contact-form'\\n11|  | 'timeline'\\n12|  | 'blog-list'\\n13|  | 'testimonial-wall'\\n14|  | 'stats-strip'\\n15|  | 'team-grid'\\n16|  | 'sidebar-layout'\\n17|  | 'app-shell'\\n18|  | 'site-shell'\\n19|  | 'gallery-grid'\\n20|  | 'changelog'\\n21|  | 'cta-banner'\\n22|  | 'bento-hero'\\n23|  | 'comparison-table'\\n24|  | 'roadmap-board'\\n25|  | 'newsletter-signup'\\n26|  | 'support-center'\\n27|  | 'event-agenda'\\n28|  | 'empty-state'\\n29|  | 'product-showcase'\\n30|  | 'analytics-detail'\\n31|  | 'command-center'\\n32|  | 'feature-tabs'\\n33|  | 'case-study'\\n34|  | 'onboarding-steps'\\n35|  | 'kanban-board'\\n36|  | 'release-notes-grid'\\n37|  | 'social-proof-strip'\\n38|  | 'integrations-grid'\\n39|  | 'settings-form'\\n40|  | 'profile-overview'\\n41|  | 'mobile-app-promo'\\n42|  | 'docs-detail'\\n43|  | 'metrics-sidebar'\\n44|  | 'auth-login'\\n45|  | 'auth-signup'\\n46|  | 'kpi-metrics-grid'\\n47|  | 'pricing-tier-featured'\\n48|  | 'master-detail-header'\\n49|  | 'user-account-settings'\\n50|  | 'billing-subscription'\\n51|  | 'crud-collection-page'\\n52|  | 'not-found-error-pages'\\n53|  | 'advanced-search-results';\\n54|\\n55|/** Built-in portal skins. Catalog folder is `general`, not copy-template `templates`. */\\n56|export const BUILT_IN_SHELL_PRESET_IDS = ['app-shell', 'site-shell'] as const satisfies readonly NewLayoutPresetId[];\\n57|\\n58|export type BuiltInShellPresetId = (typeof BUILT_IN_SHELL_PRESET_IDS)[number];\\n59|\\n60|export function isBuiltInShellPresetId(value: string): boolean {\\n61|  return (BUILT_IN_SHELL_PRESET_IDS as readonly string[]).includes(value.trim());\\n62|}\\n63|\"\n}"
+}

@@ -1,0 +1,31 @@
+{
+  "sessionId": "hwy-finance-wave",
+  "planDoc": "plans/packages/todo/hawiety-package/hwy-finance-masoolin-socialscreens-build-plan.md",
+  "updatedAt": "2026-11-08T15:20:00.000Z",
+  "phases": {
+    "0": {
+      "status": "done",
+      "notes": "Route bindings 143–146, nav group Financial management (order 4.5), masoolin/social nav items, culture keys, four feature folders."
+    },
+    "1": {
+      "status": "done",
+      "notes": "GET/POST /api/hwy/payment-documents*, legacy read list + main workflow actions, HwyPaymentDocumentsPage list UI, hwyPaymentDocumentsLegacyAccess unit test."
+    },
+    "2": {
+      "status": "done",
+      "notes": "GET/POST /api/hwy/payment-documents-members*, legacy Read_List on HWY_VW_PaymentDocuments_Members, switch payability + UpdatePayAmount SP + Read_Images, HwyPaymentDocumentsMembersPage grid, hwyPaymentDocumentsMembersLegacyAccess unit test."
+    },
+    "3": {
+      "status": "done",
+      "notes": "GET /api/hwy/masoolin-performance*, legacy HWY_SP_Masoolin_Performance read + export JSON, HwyMasoolinPerformancePage filters/grid/export, hwyMasoolinPerformanceLegacyAccess unit test, en/iq culture keys."
+    },
+    "4": {
+      "status": "done",
+      "notes": "GET/POST /api/hwy/members-social-screens*, legacy Read_HistoryMonthesForAdminPanel + Read_NextPerson + screen list, FinalAccept/FinalReject stubs, HwyMembersSocialScreensPage review UI, hwyMembersSocialScreensLegacyAccess unit test, en/iq culture keys."
+    },
+    "5": {
+      "status": "done",
+      "notes": "Parity OK (hwy:etl:finance-payment:replace + hwy:parity:finance-wave row_mismatches=0); chiefMasool UI/API (legacy Payable); vitest; ETL Console finance-parity-count preset step."
+    }
+  }
+}

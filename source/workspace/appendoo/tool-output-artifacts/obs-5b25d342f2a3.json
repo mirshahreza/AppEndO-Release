@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:5b25d342f2a3",
+    "toolCallId": "call_LjdGcDQ0sgfvbh7E1em43Hai",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 1357,
+    "digest": "222a1e2db6278ba04bc04faa5d93615e3cdd3f474b1f02e44216855f9faf65e3",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-07-18T06:50:04.662Z"
+  },
+  "content": "{\n  \"query\": \"heroui.button\",\n  \"mode\": \"exact\",\n  \"subLoopRefined\": false,\n  \"pageKey\": null,\n  \"scopePath\": \"src/domain/component-designer/catalog.ts\",\n  \"scopePaths\": [\n    \"src/domain/component-designer/catalog.ts\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 4,\n  \"matches\": [\n    {\n      \"path\": \"src/domain/component-designer/catalog.ts\",\n      \"line\": 471,\n      \"column\": 10,\n      \"text\": \"id: 'heroui.button-solid',\",\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/domain/component-designer/catalog.ts\",\n      \"line\": 482,\n      \"column\": 10,\n      \"text\": \"id: 'heroui.button-outline',\",\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/domain/component-designer/catalog.ts\",\n      \"line\": 1169,\n      \"column\": 4,\n      \"text\": \"'heroui.button-solid',\",\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/domain/component-designer/catalog.ts\",\n      \"line\": 1170,\n      \"column\": 4,\n      \"text\": \"'heroui.button-outline',\",\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    }\n  ],\n  \"featureGraph\": null,\n  \"graphPageKeys\": [\n    \"client-components\"\n  ],\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

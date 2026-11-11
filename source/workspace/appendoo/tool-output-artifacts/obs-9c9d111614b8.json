@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "artifactId": "obs:9c9d111614b8",
+    "toolCallId": "call_kcGf8i6lQsCYNeM31BoY1dRf",
+    "toolName": "search_codebase",
+    "contentType": "json",
+    "byteLength": 2740,
+    "digest": "29f3747eb31fdce0a4b1e2b6a795f036337e15c151a9f90a51d00e8794f95f17",
+    "queryCapabilities": [
+      "read_range",
+      "tail",
+      "search"
+    ],
+    "createdAt": "2026-09-01T08:57:34.874Z"
+  },
+  "content": "{\n  \"query\": \"status checkedAt simple display layout api binding response text\",\n  \"mode\": \"hybrid\",\n  \"subLoopRefined\": true,\n  \"pageKey\": \"client-components\",\n  \"scopePath\": \"pageKey:client-components\",\n  \"scopePaths\": [\n    \"src/features/component-designer\",\n    \"src/domain/component-designer\",\n    \"src/server/routes\",\n    \"src/shared/api/contracts/component-designer\",\n    \"src/server/services/component-designer.service.ts\",\n    \"src/shared\"\n  ],\n  \"includeText\": true,\n  \"matchCount\": 10,\n  \"matches\": [\n    {\n      \"path\": \"src/domain/component-designer/bindingApiCodegen.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/euaFieldAssist.ts\",\n      \"line\": 145,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/install/types.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/domain/component-designer/bindingMutationRuntime.ts\",\n      \"line\": 217,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/shared/api/queries/euaFieldAssist.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/client.ts\",\n      \"line\": 1,\n      \"column\": 1\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/agentMessageAttachments.ts\",\n      \"line\": 217,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/domain/component-designer/bindingLovRegistry.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    },\n    {\n      \"path\": \"src/shared/api/contracts/ai/workspaceEmbeddingsIndexStatus.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"pageKey\": \"chat-history\",\n      \"label\": \"Chat History\"\n    },\n    {\n      \"path\": \"src/features/component-designer/components/BindingApiEndpointPicker.tsx\",\n      \"line\": 73,\n      \"column\": 1,\n      \"pageKey\": \"client-components\",\n      \"label\": \"Client Components\"\n    }\n  ],\n  \"featureGraph\": {\n    \"pageKey\": \"client-components\",\n    \"label\": \"Client Components\",\n    \"routePattern\": \"client-components\",\n    \"searchRoots\": [\n      \"src/features/component-designer\",\n      \"src/domain/component-designer\",\n      \"src/server/routes\",\n      \"src/shared/api/contracts/component-designer\",\n      \"src/server/services/component-designer.service.ts\"\n    ],\n    \"codebaseIndexPointer\": \"docs/ai/CODEBASE_INDEX.md\",\n    \"version\": \"1\"\n  },\n  \"graphPageKeys\": null,\n  \"verifyHint\": \"Call read_file with startLine/endLine from search hits before citing code.\"\n}"
+}

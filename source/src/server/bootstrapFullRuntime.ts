@@ -83,6 +83,7 @@ import { mountWorkflowProofRoutes } from './routes/workflow-proof.routes';
 import { mountWorkflowHooksRoutes } from './routes/workflow-hooks.routes';
 import { mountUserNotificationsRoutes } from './routes/user-notifications.routes';
 import { mountUserMessageDispatchesRoutes } from './routes/user-message-dispatches.routes';
+import { mountAdminUserMessageDispatchesRoutes } from './routes/admin-user-message-dispatches.routes';
 import { mountPersonalInboxRoutes } from './routes/personal-inbox.routes';
 import { mountDirectMessagesRoutes } from './routes/direct-messages.routes';
 import { mountWorkItemDelegationRulesRoutes } from './routes/work-item-delegation-rules.routes';
@@ -529,6 +530,7 @@ export async function mountFullServerRoutes(
   mountWorkflowHooksRoutes(routeHost);
   mountUserNotificationsRoutes(routeHost);
   mountUserMessageDispatchesRoutes(routeHost);
+  mountAdminUserMessageDispatchesRoutes(routeHost);
   mountPersonalInboxRoutes(routeHost, settingsPath);
   mountDirectMessagesRoutes(routeHost, settingsPath);
   mountWorkItemDelegationRulesRoutes(routeHost);

@@ -18,6 +18,7 @@ import {
   CreateEditModalShell,
   RecordEventHistoryDialog,
   recordEventHistoryFieldChromeToggle,
+  useRecordSubjectTimelineCopy,
   emptyChangeReason,
   type ChangeReasonValue,
 } from '../../../shared/ui';
@@ -57,6 +58,7 @@ export type UserFormModalProps = {
 
 export const UserFormModal: React.FC<UserFormModalProps> = (props) => {
   const t = useCultureT();
+  const timelineCopy = useRecordSubjectTimelineCopy();
   const [reasonOpen, setReasonOpen] = useState(false);
   const [reason, setReason] = useState<ChangeReasonValue>(emptyChangeReason());
   const policy = useNamedApiChangeReasonPolicy('PUT', '/api/users/:id/profile', USERS_PROFILE_CHANGE_REASON);
@@ -145,7 +147,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = (props) => {
 
       <RecordEventHistoryDialog
         open={history.dialogOpen}
-        title={history.dialogField ? `History · ${history.dialogField}` : 'History'}
+        title={history.dialogField ? `${timelineCopy.title} · ${history.dialogField}` : timelineCopy.title}
         subjectKind="base_users"
         subjectId={props.editingUser.id}
         field={history.dialogField}

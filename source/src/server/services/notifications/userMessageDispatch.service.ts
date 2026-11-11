@@ -201,6 +201,50 @@ export async function countUserMessageDispatches(
   return model.count({ where: buildDispatchWhere(userId, options) });
 }
 
+export type AdminUserMessageDispatchListOptions = {
+  channel?: string;
+  deliveryStatus?: string;
+  eventType?: string;
+  userId?: number;
+  skip?: number;
+  take?: number;
+};
+
+export async function listAllUserMessageDispatchesForAdmin(
+  options?: AdminUserMessageDispatchListOptions,
+): Promise<{ total: number; rows: UserMessageDispatchRecord[] }> {
+  const model = getUserMessageDispatchModel();
+  const where: Record<string, unknown> = {};
+  if (options?.channel) where.channel = options.channel;
+  if (options?.deliveryStatus) where.deliveryStatus = options.deliveryStatus;
+  if (options?.eventType) where.eventType = options.eventType;
+  if (options?.userId != null && Number.isFinite(options.userId)) where.userId = options.userId;
+
+  const take = Math.min(options?.take ?? 25, 200);
+  const skip = options?.skip ?? 0;
+  const total = await model.count({ where });
+  const rows = await model.findAll({
+    where,
+    order: [['createdAt', 'DESC']],
+    offset: skip,
+    limit: take,
+  });
+  return {
+    total,
+    rows: rows.map((row) => {
+      const plain = row.get({ plain: true });
+      return mapRow({
+        ...plain,
+        id: BigInt(plain.id),
+        userId: BigInt(plain.userId),
+        inAppNotificationId: plain.inAppNotificationId !== null && plain.inAppNotificationId !== undefined
+          ? BigInt(plain.inAppNotificationId)
+          : null,
+      });
+    }),
+  };
+}
+
 export async function listUserMessageDispatches(
   userId: number,
   options?: {

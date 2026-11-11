@@ -222,6 +222,16 @@ export const VxPublicLoginPage = lazyNamed(
   'VxPublicLogin',
 );
 
+export const VxPublicMyProfilePage = lazyNamed(
+  () => import('../../pages/VxPublicMyProfile'),
+  'VxPublicMyProfile',
+);
+
+export const VxPublicInquiryPage = lazyNamed(
+  () => import('../../pages/VxPublicInquiry'),
+  'VxPublicInquiry',
+);
+
 export const VxRegistrationDevPortalPage = lazyNamed(
   () => import('../../pages/VxRegistrationDevPortal'),
   'VxRegistrationDevPortal',

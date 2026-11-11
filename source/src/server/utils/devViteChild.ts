@@ -139,9 +139,9 @@ export const startDevViteChild = async (options: {
   // nothing else here notices, and every proxied request just piles up behind its
   // own timeout looking like a permanent hang. Ping it directly and force-restart
   // it if it stops answering, instead of requiring a manual `npm run restart`.
-  const HEALTH_INTERVAL_MS = 5_000;
-  const HEALTH_TIMEOUT_MS = 8_000;
-  const FAILURE_THRESHOLD = 3;
+  const HEALTH_INTERVAL_MS = 10_000;
+  const HEALTH_TIMEOUT_MS = 30_000;
+  const FAILURE_THRESHOLD = 4;
   let consecutiveFailures = 0;
   let restarting = false;
   const pingChild = (): Promise<boolean> => new Promise((resolve) => {

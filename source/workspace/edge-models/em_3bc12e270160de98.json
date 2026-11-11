@@ -1,0 +1,215 @@
+{
+  "id": "em_3bc12e270160de98",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_votings",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VoteVotings",
+    "tableName": "vote_votings"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "title",
+      "field": "title",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status_code",
+      "field": "statusCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "starts_at",
+      "field": "startsAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "ends_at",
+      "field": "endsAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "geo_root_id",
+      "field": "geoRootId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "operator_note",
+      "field": "operatorNote",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_by",
+      "field": "updatedBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_3d75174e23a54644",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "status_code",
+      "as": "status",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_0b3022b3ed274c97",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_b136dcdeffb9423c",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "updated_by",
+      "as": "updatedByUser",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_92e095b825fb4050",
+      "targetModelId": "em_16aba77c7faa9d8d",
+      "foreignKey": "voting_id",
+      "as": "ballots",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_757723d66a774bf8",
+      "targetModelId": "em_efa8e9859bf37d3c",
+      "foreignKey": "voting_id",
+      "as": "candidates",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_e767658e49b04030",
+      "targetModelId": "em_a3f3ec89a1f7d05b",
+      "foreignKey": "voting_id",
+      "as": "registrations",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_e1191ce21ab44c8d",
+      "targetModelId": "em_ac3be3baf6bf1b75",
+      "foreignKey": "voting_id",
+      "as": "stations",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_ca8785e77d3d43af",
+      "targetModelId": "em_b840775bdeab8a7f",
+      "foreignKey": "voting_id",
+      "as": "observers",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_b18ad18e10164b26",
+      "targetModelId": "em_c08c062973da7869",
+      "foreignKey": "voting_id",
+      "as": "castEvents",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_4ba5a30b77784d03",
+      "targetModelId": "em_0b9bf6045b23e222",
+      "foreignKey": "voting_id",
+      "as": "pollQuestions",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "c7166e296ff8efd1",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_votings"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:47:10.600Z",
+  "updated_at": "2026-11-10T13:06:43.755Z"
+}

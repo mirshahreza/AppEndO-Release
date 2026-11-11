@@ -1,19 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState, type UIEvent } from 'react';
 import { recordEventKindSchema, type RecordEventPublicRow } from '../api/contracts/record-events';
-import { APP_GRID_IDS } from '../api/contracts/grids/gridIds';
 import { fetchRecordEvents } from '../api/queries/recordEvents';
 import { isAbortError } from '../api/client';
 import { recordEventDateBound } from '../lib/formatRecordEventValue';
 import { resolveRecordEventFieldQuery } from '../lib/recordEventHistoryFields';
 import { APP_LIST_PREFERENCE_KEYS } from '../lib/listPreferenceKeys';
 import { DEFAULT_GRID_PAGE_SIZE } from '../lib/gridPagingConstants';
-import { EMPTY_GRID_QUERY } from '../lib/appTableGridQuery';
-import { useGridColumnLayout } from '../lib/useGridColumnLayout';
 import { usePersistedListPaging } from '../lib/usePersistedListPreferences';
-import { AppTableGrid } from './AppTableGrid';
 import { CreateEditModalShell } from './CreateEditModalShell';
-import { GridPagingFooter } from './GridPagingFooter';
 import { QueryErrorPanel } from './QueryErrorPanel';
+import { LoadingSpinner } from './LoadingSpinner';
+import { SectionEmptyState } from './SectionEmptyState';
 import {
   PAGE_TOOLBAR_ACTIONS_CLUSTER_CLASS,
   PAGE_TOOLBAR_FILTERS_CLUSTER_CLASS,
@@ -24,20 +21,18 @@ import { ToolbarSearchInput } from './ToolbarSearchInput';
 import { UiInput } from './ai-field-assist/AiAssistInput';
 import { UiSelect } from './HeroFieldControls';
 import {
-  createRecordSubjectHistoryGridColumns,
-  recordSubjectHistoryRowActions,
-} from './recordEventHistoryGridColumns';
+  RecordSubjectTimelineEventDetailDialog,
+  RecordSubjectTimelineRecordEventCard,
+  RecordSubjectTimelineSortToggle,
+  RecordSubjectTimelineSpine,
+  RECORD_SUBJECT_TIMELINE_SPINE_DOT_CLASS,
+  resolveRecordSubjectTimelineEventTone,
+  type RecordSubjectTimelineDirection,
+  useRecordSubjectTimelineCopy,
+} from './recordSubjectTimeline';
 
 const HISTORY_KIND_ALL = 'ALL';
 const HISTORY_EVENT_KINDS = recordEventKindSchema.options;
-
-const SORT_OPTIONS = [
-  { value: 'occurredAt', label: 'Time' },
-  { value: 'eventKind', label: 'Kind' },
-  { value: 'field', label: 'Field' },
-] as const;
-
-type HistorySortField = (typeof SORT_OPTIONS)[number]['value'];
 
 export type RecordEventHistoryDialogProps = {
   open: boolean;
@@ -51,24 +46,9 @@ export type RecordEventHistoryDialogProps = {
   onRestore?: (item: RecordEventPublicRow) => void | Promise<void>;
 };
 
-const compareHistoryRows = (
-  left: RecordEventPublicRow,
-  right: RecordEventPublicRow,
-  sortBy: HistorySortField,
-  direction: 'asc' | 'desc',
-): number => {
-  const dir = direction === 'asc' ? 1 : -1;
-  if (sortBy === 'occurredAt') {
-    return (new Date(left.occurredAt).getTime() - new Date(right.occurredAt).getTime()) * dir;
-  }
-  const leftValue = String(left[sortBy] ?? '');
-  const rightValue = String(right[sortBy] ?? '');
-  return leftValue.localeCompare(rightValue) * dir;
-};
-
 export const RecordEventHistoryDialog: React.FC<RecordEventHistoryDialogProps> = ({
   open,
-  title = 'History',
+  title,
   subjectKind,
   subjectId,
   field,
@@ -77,6 +57,8 @@ export const RecordEventHistoryDialog: React.FC<RecordEventHistoryDialogProps> =
   onClose,
   onRestore,
 }) => {
+  const copy = useRecordSubjectTimelineCopy();
+  const dialogTitle = title ?? copy.title;
   const subjectKey = subjectId == null || subjectId === '' ? '' : String(subjectId);
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
@@ -86,13 +68,13 @@ export const RecordEventHistoryDialog: React.FC<RecordEventHistoryDialogProps> =
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<HistorySortField>('occurredAt');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const { pageSize, setPageSize, listMode, setListMode } = usePersistedListPaging({
+  const [timelineDirection, setTimelineDirection] = useState<RecordSubjectTimelineDirection>('newestFirst');
+  const [selected, setSelected] = useState<RecordEventPublicRow | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
+  const { pageSize } = usePersistedListPaging({
     listKey: APP_LIST_PREFERENCE_KEYS.recordEventHistory,
     defaultPageSize: DEFAULT_GRID_PAGE_SIZE,
   });
-  const [page, setPage] = useState(1);
   const [visibleCount, setVisibleCount] = useState(pageSize);
 
   useEffect(() => {
@@ -101,12 +83,13 @@ export const RecordEventHistoryDialog: React.FC<RecordEventHistoryDialogProps> =
     setToDate('');
     setFieldFilter(field?.trim() ?? '');
     setEventKind(HISTORY_KIND_ALL);
+    setDetailOpen(false);
+    setSelected(null);
   }, [open, field, subjectKind, subjectKey]);
 
   useEffect(() => {
-    setPage(1);
     setVisibleCount(pageSize);
-  }, [eventKind, fieldFilter, fromDate, toDate, listMode, pageSize, subjectKind, subjectKey]);
+  }, [eventKind, fieldFilter, fromDate, toDate, pageSize, subjectKind, subjectKey]);
 
   const load = useCallback(async (signal?: AbortSignal) => {
     if (!open || !subjectKind || !subjectKey) {
@@ -131,14 +114,14 @@ export const RecordEventHistoryDialog: React.FC<RecordEventHistoryDialogProps> =
         from: recordEventDateBound(fromDate, 'start'),
         to: recordEventDateBound(toDate, 'end'),
         includeAuth: subjectKind === 'base_users' ? '1' : undefined,
-        limit: listMode === 'infinite' ? visibleCount : pageSize,
-        offset: listMode === 'infinite' ? 0 : (page - 1) * pageSize,
+        limit: visibleCount,
+        offset: 0,
       }, signal);
       if (signal?.aborted) return;
       if (!response.ok) {
         setItems([]);
         setTotalCount(0);
-        setLoadError(`Unable to load history (HTTP ${response.status}).`);
+        setLoadError(`${copy.loadFailedDetail} (HTTP ${response.status}).`);
         return;
       }
       setItems(Array.isArray(data.items) ? data.items : []);
@@ -149,23 +132,21 @@ export const RecordEventHistoryDialog: React.FC<RecordEventHistoryDialogProps> =
       }
       setItems([]);
       setTotalCount(0);
-      setLoadError('Unable to load history.');
+      setLoadError(copy.loadFailedDetail);
     } finally {
       if (!signal?.aborted) {
         setIsLoading(false);
       }
     }
   }, [
+    copy.loadFailedDetail,
     eventKind,
     fieldFilter,
     fieldMap,
-    fromDate,
-    listMode,
     open,
-    page,
-    pageSize,
     subjectKind,
     subjectKey,
+    fromDate,
     toDate,
     visibleCount,
   ]);
@@ -179,172 +160,155 @@ export const RecordEventHistoryDialog: React.FC<RecordEventHistoryDialogProps> =
   const restoreRow = useCallback(async (item: RecordEventPublicRow) => {
     await onRestore?.(item);
     await load();
+    setDetailOpen(false);
   }, [load, onRestore]);
 
-  const gridHandlers = useMemo(() => ({
-    onRestore: onRestore ? (item: RecordEventPublicRow) => void restoreRow(item) : undefined,
-  }), [onRestore, restoreRow]);
-
-  const gridColumns = useMemo(
-    () => createRecordSubjectHistoryGridColumns(gridHandlers),
-    [gridHandlers],
-  );
-  const { layout: columnLayout, setLayout: handleColumnLayoutChange } = useGridColumnLayout({
-    columns: gridColumns,
-    gridId: APP_GRID_IDS.recordEventHistory,
-  });
-
-  const sortedItems = useMemo(
-    () => [...items].sort((left, right) => compareHistoryRows(left, right, sortBy, sortDirection)),
-    [items, sortBy, sortDirection],
-  );
-  const totalPages = Math.max(1, Math.ceil(Math.max(totalCount, 1) / pageSize));
-  const safePage = Math.min(page, totalPages);
-  const pageNumbers = useMemo(() => {
-    const start = Math.max(1, safePage - 2);
-    const end = Math.min(totalPages, safePage + 2);
-    const pages: number[] = [];
-    for (let pageNumber = start; pageNumber <= end; pageNumber += 1) {
-      pages.push(pageNumber);
-    }
-    return pages;
-  }, [safePage, totalPages]);
-  const visibleInfiniteCount = Math.min(visibleCount, totalCount);
-  const hasMore = listMode === 'infinite' && visibleInfiniteCount < totalCount;
-  const handleScrollEnd = useCallback((event: UIEvent<HTMLDivElement>) => {
-    if (listMode !== 'infinite' || !hasMore) return;
+  const hasMore = visibleCount < totalCount;
+  const handleScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
+    if (!hasMore || isLoading) return;
     const element = event.currentTarget;
     const remaining = element.scrollHeight - element.scrollTop - element.clientHeight;
-    if (remaining <= 48) {
+    if (remaining <= 96) {
       setVisibleCount((current) => current + pageSize);
     }
-  }, [hasMore, listMode, pageSize]);
+  }, [hasMore, isLoading, pageSize]);
+
+  const renderEventCard = useCallback(
+    (item: RecordEventPublicRow, onSelect: () => void) => (
+      <RecordSubjectTimelineRecordEventCard item={item} onSelect={onSelect} />
+    ),
+    [],
+  );
+
+  const resolveSpineDotClassName = useCallback((item: RecordEventPublicRow) => {
+    const tone = resolveRecordSubjectTimelineEventTone(item);
+    return RECORD_SUBJECT_TIMELINE_SPINE_DOT_CLASS[tone];
+  }, []);
+
+  const onEventSelect = useCallback((item: RecordEventPublicRow) => {
+    setSelected(item);
+    setDetailOpen(true);
+  }, []);
+
+  const sortedItems = useMemo(() => items, [items]);
 
   if (!open) {
     return null;
   }
 
   return (
-    <CreateEditModalShell
-      size="maximized"
-      title={title}
-      contained={contained}
-      gradient={false}
-      shellClassName="flex min-h-0 flex-col overflow-hidden"
-      bodyOuterClassName="flex min-h-0 flex-1 flex-col overflow-hidden -mb-[15px]"
-      bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden !min-h-0 !p-0"
-      onClose={onClose}
-    >
-      <div className="flex h-full min-h-0 w-full flex-col bg-white">
-        <div className={`${PAGE_TOOLBAR_SINGLE_ROW_CLASS} justify-between`}>
-          <div className={PAGE_TOOLBAR_FILTERS_CLUSTER_CLASS}>
-            <div className="w-full min-w-0 sm:w-44 sm:shrink-0">
-              <UiSelect
-                size="sm"
-                className="w-full"
-                ariaLabel="Event kind"
-                value={eventKind}
-                onChange={(event) => setEventKind(String(event.target.value))}
-              >
-                <option value={HISTORY_KIND_ALL}>All kinds</option>
-                {HISTORY_EVENT_KINDS.map((kind) => (
-                  <option key={kind} value={kind}>{kind}</option>
-                ))}
-              </UiSelect>
-            </div>
-            <ToolbarSearchInput
-              value={fieldFilter}
-              onChange={setFieldFilter}
-              placeholder="Field"
-              ariaLabel="Filter by field"
-            />
-            <div className="w-[9.75rem] shrink-0">
-              <UiInput
-                size="sm"
-                type="date"
-                aiAssist={false}
-                ariaLabel="From date"
-                value={fromDate}
-                onChange={(event) => setFromDate(event.target.value)}
+    <>
+      <CreateEditModalShell
+        size="maximized"
+        title={dialogTitle}
+        contained={contained}
+        gradient={false}
+        shellClassName="flex min-h-0 flex-col overflow-hidden"
+        bodyOuterClassName="flex min-h-0 flex-1 flex-col overflow-hidden -mb-[15px]"
+        bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden !min-h-0 !p-0"
+        onClose={onClose}
+      >
+        <div className="flex h-full min-h-0 w-full flex-col bg-white">
+          <div className={`${PAGE_TOOLBAR_SINGLE_ROW_CLASS} justify-between`}>
+            <div className={PAGE_TOOLBAR_FILTERS_CLUSTER_CLASS}>
+              <div className="w-full min-w-0 sm:w-44 sm:shrink-0">
+                <UiSelect
+                  size="sm"
+                  className="w-full"
+                  ariaLabel="Event kind"
+                  value={eventKind}
+                  onChange={(event) => setEventKind(String(event.target.value))}
+                >
+                  <option value={HISTORY_KIND_ALL}>All kinds</option>
+                  {HISTORY_EVENT_KINDS.map((kind) => (
+                    <option key={kind} value={kind}>{kind}</option>
+                  ))}
+                </UiSelect>
+              </div>
+              <ToolbarSearchInput
+                value={fieldFilter}
+                onChange={setFieldFilter}
+                placeholder="Field"
+                ariaLabel="Filter by field"
               />
-            </div>
-            <div className="w-[9.75rem] shrink-0">
-              <UiInput
-                size="sm"
-                type="date"
-                aiAssist={false}
-                ariaLabel="To date"
-                value={toDate}
-                onChange={(event) => setToDate(event.target.value)}
-              />
-            </div>
-          </div>
-          <div className={PAGE_TOOLBAR_ACTIONS_CLUSTER_CLASS}>
-            <ToolbarRefreshButton
-              onClick={() => void load()}
-              isRefreshing={isLoading}
-              separatorBefore={false}
-            />
-          </div>
-        </div>
-        <div className="flex min-h-0 w-full flex-1 flex-col">
-          <AppTableGrid
-            chrome="hero"
-            presentation="auto"
-            size="sm"
-            tableClassName="text-slate-700"
-            theadClassName="text-xs font-bold text-slate-500 uppercase tracking-wider"
-            columns={gridColumns}
-            enableColumnLayout
-            persistListKey={APP_LIST_PREFERENCE_KEYS.recordEventHistory}
-            columnLayout={columnLayout}
-            onColumnLayoutChange={handleColumnLayoutChange}
-            rows={sortedItems}
-            getRowKey={(item) => item.id}
-            gridQueryMode="server"
-            query={EMPTY_GRID_QUERY}
-            onScroll={handleScrollEnd}
-            footer={(
-              <GridPagingFooter
-                chrome="hero"
-                totalCount={totalCount}
-                safePage={safePage}
-                pageSize={pageSize}
-                onPageSizeChange={setPageSize}
-                sortBy={sortBy}
-                sortOptions={[...SORT_OPTIONS]}
-                onSortByChange={(value) => setSortBy(value as HistorySortField)}
-                sortDirection={sortDirection}
-                onToggleSortDirection={() => setSortDirection((current) => (current === 'asc' ? 'desc' : 'asc'))}
-                showSortControls
-                totalPages={totalPages}
-                pageNumbers={pageNumbers}
-                onPageChange={setPage}
-                listMode={listMode}
-                onListModeChange={setListMode}
-                visibleInfiniteCount={visibleInfiniteCount}
-              />
-            )}
-            isLoading={isLoading}
-            loadingMessage="Loading history..."
-            errorContent={
-              loadError ? (
-                <QueryErrorPanel
-                  message="Failed to load history."
-                  detail={loadError}
-                  onRetry={() => void load()}
-                  isRetrying={isLoading}
-                  className="h-32"
+              <div className="w-[9.75rem] shrink-0">
+                <UiInput
+                  size="sm"
+                  type="date"
+                  aiAssist={false}
+                  ariaLabel="From date"
+                  value={fromDate}
+                  onChange={(event) => setFromDate(event.target.value)}
                 />
-              ) : undefined
-            }
-            isEmpty={!isLoading && !loadError && items.length === 0}
-            emptyMessage="No history yet."
-            emptyContent={<div className="flex h-32 items-center justify-center text-sm text-slate-500">No history yet.</div>}
-            getCardRowActions={(row) => recordSubjectHistoryRowActions(row as RecordEventPublicRow, gridHandlers)}
-          />
+              </div>
+              <div className="w-[9.75rem] shrink-0">
+                <UiInput
+                  size="sm"
+                  type="date"
+                  aiAssist={false}
+                  ariaLabel="To date"
+                  value={toDate}
+                  onChange={(event) => setToDate(event.target.value)}
+                />
+              </div>
+            </div>
+            <div className={PAGE_TOOLBAR_ACTIONS_CLUSTER_CLASS}>
+              <RecordSubjectTimelineSortToggle
+                direction={timelineDirection}
+                onToggle={() => setTimelineDirection((current) => (
+                  current === 'newestFirst' ? 'oldestFirst' : 'newestFirst'
+                ))}
+              />
+              <ToolbarRefreshButton
+                onClick={() => void load()}
+                isRefreshing={isLoading}
+                separatorBefore={false}
+              />
+            </div>
+          </div>
+          <div
+            className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+            onScroll={handleScroll}
+          >
+            {isLoading && items.length === 0 ? (
+              <div className="flex h-40 items-center justify-center gap-2 text-sm text-slate-500">
+                <LoadingSpinner className="h-4 w-4" />
+                {copy.loading}
+              </div>
+            ) : null}
+            {loadError ? (
+              <QueryErrorPanel
+                message={copy.loadFailed}
+                detail={loadError}
+                onRetry={() => void load()}
+                isRetrying={isLoading}
+                className="m-4"
+              />
+            ) : null}
+            {!isLoading && !loadError && sortedItems.length === 0 ? (
+              <SectionEmptyState className="m-4">{copy.empty}</SectionEmptyState>
+            ) : null}
+            {sortedItems.length > 0 ? (
+              <RecordSubjectTimelineSpine
+                events={sortedItems}
+                direction={timelineDirection}
+                resolveSpineDotClassName={resolveSpineDotClassName}
+                renderEventCard={renderEventCard}
+                onEventSelect={onEventSelect}
+              />
+            ) : null}
+            {isLoading && items.length > 0 ? (
+              <p className="pb-6 text-center text-xs text-slate-500">{copy.loading}</p>
+            ) : null}
+          </div>
         </div>
-      </div>
-    </CreateEditModalShell>
+      </CreateEditModalShell>
+      <RecordSubjectTimelineEventDetailDialog
+        open={detailOpen}
+        item={selected}
+        onClose={() => setDetailOpen(false)}
+        onRestore={onRestore ? restoreRow : undefined}
+      />
+    </>
   );
 };

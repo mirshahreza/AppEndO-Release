@@ -1,0 +1,186 @@
+{
+  "id": "em_c08c062973da7869",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_cast_events",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VoteCastEvents",
+    "tableName": "vote_cast_events"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "voting_id",
+      "field": "votingId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_3bc12e270160de98",
+        "column": "id"
+      }
+    },
+    {
+      "name": "ballot_id",
+      "field": "ballotId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_16aba77c7faa9d8d",
+        "column": "id"
+      }
+    },
+    {
+      "name": "candidate_id",
+      "field": "candidateId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_efa8e9859bf37d3c",
+        "column": "id"
+      }
+    },
+    {
+      "name": "voter_registration_id",
+      "field": "voterRegistrationId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_a3f3ec89a1f7d05b",
+        "column": "id"
+      }
+    },
+    {
+      "name": "cast_channel_code",
+      "field": "castChannelCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "idempotency_key",
+      "field": "idempotencyKey",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "payload_json",
+      "field": "payloadJson",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_by",
+      "field": "createdBy",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_f289f276eac5b468",
+        "column": "id"
+      }
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_3d8e45a95c5242c0",
+      "targetModelId": "em_3bc12e270160de98",
+      "foreignKey": "voting_id",
+      "as": "voting",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_552ae5aba043401c",
+      "targetModelId": "em_16aba77c7faa9d8d",
+      "foreignKey": "ballot_id",
+      "as": "ballot",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_ece576e72e3a4a8c",
+      "targetModelId": "em_efa8e9859bf37d3c",
+      "foreignKey": "candidate_id",
+      "as": "candidate",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_7321b86fca2e41c4",
+      "targetModelId": "em_a3f3ec89a1f7d05b",
+      "foreignKey": "voter_registration_id",
+      "as": "voterRegistration",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_81996524c5b94ba8",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "cast_channel_code",
+      "as": "castChannel",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_cf2e41cdf7934fa8",
+      "targetModelId": "em_f289f276eac5b468",
+      "foreignKey": "created_by",
+      "as": "createdByUser",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "1b11681c676fbc7e",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_cast_events"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:11:17.278Z",
+  "updated_at": "2026-11-10T13:06:43.790Z"
+}

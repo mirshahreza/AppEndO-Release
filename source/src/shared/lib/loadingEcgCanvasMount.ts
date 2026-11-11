@@ -11,7 +11,8 @@ const DISPLAY_BASELINE = 150;
 const Y_HALF_SPAN = 1.62;
 /** Legacy bar cap (4.25rem @ 16px); taller bar adds headroom, not bigger deflection. */
 const ECG_BAR_REF_HEIGHT_CSS_PX = 68;
-const TRACE_AMP_FRACTION = 0.46;
+/** Scales trace deflection only (bar/canvas CSS size unchanged). Legacy 0.46; tuned down for overflow:hidden. */
+const TRACE_AMP_FRACTION = 0.38;
 
 function readTraceStroke(root: Element): string {
   const style = getComputedStyle(root);

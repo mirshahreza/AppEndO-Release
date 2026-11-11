@@ -69,6 +69,7 @@ import {
   GripVertical,
   ScanLine,
   PenLine,
+  History,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { PRIMITIVE_SECTION_IDS } from './catalog/sections/primitiveSections.options';
@@ -135,6 +136,7 @@ export const BASE_COMPONENTS_SECTION_ICONS: Record<SectionId, React.ReactNode> =
   'date-time': <CalendarClock className="h-4 w-4" />,
   'file-media-input': <FileUp className="h-4 w-4" />,
   'loading-error-empty': <Loader className="h-4 w-4" />,
+  'record-subject-timeline': <History className="h-4 w-4" />,
   chart: <BarChart3 className="h-4 w-4" />,
   kanban: <KanbanSquare className="h-4 w-4" />,
   spreadsheet: <FileSpreadsheet className="h-4 w-4" />,

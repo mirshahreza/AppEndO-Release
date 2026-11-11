@@ -17,6 +17,7 @@ import {
   FieldHintTooltip,
   RecordEventHistoryDialog,
   recordEventHistoryFieldChromeToggle,
+  useRecordSubjectTimelineCopy,
   emptyChangeReason,
   type ChangeReasonValue,
 } from '../../../shared/ui';
@@ -50,6 +51,7 @@ export const UserRolesModal: React.FC<UserRolesModalProps> = ({
   onSubmit,
 }) => {
   const t = useCultureT();
+  const timelineCopy = useRecordSubjectTimelineCopy();
   const policy = useNamedApiChangeReasonPolicy('PUT', '/api/users/:id/roles', USERS_ROLES_CHANGE_REASON);
   const [baselineRoles, setBaselineRoles] = useState<string[]>([]);
   const [reasonOpen, setReasonOpen] = useState(false);
@@ -143,7 +145,7 @@ export const UserRolesModal: React.FC<UserRolesModalProps> = ({
 
       <RecordEventHistoryDialog
         open={history.dialogOpen}
-        title={history.dialogField ? `History · ${history.dialogField}` : 'History'}
+        title={history.dialogField ? `${timelineCopy.title} · ${history.dialogField}` : timelineCopy.title}
         subjectKind="base_users"
         subjectId={editingUser.id}
         field={history.dialogField}

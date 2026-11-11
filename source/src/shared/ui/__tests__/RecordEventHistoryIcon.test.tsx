@@ -5,6 +5,12 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { recordEventHistoryFieldChromeToggle } from '../RecordEventHistoryIcon';
 
+vi.mock('../../../core/culture/CultureContext', () => ({
+  useCultureT: () => (key: string, fallback?: string) => fallback ?? key,
+  useOptionalCulture: () => null,
+  useOptionalCultureT: () => undefined,
+}));
+
 describe('recordEventHistoryFieldChromeToggle', () => {
   it('opens history for the sole tracked field instead of toggling field chrome', () => {
     const openHistory = vi.fn();
@@ -18,7 +24,7 @@ describe('recordEventHistoryFieldChromeToggle', () => {
       soleTrackedField: 'roles',
     })}</>);
 
-    fireEvent.click(screen.getByRole('button', { name: 'History' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Record timeline' }));
 
     expect(openHistory).toHaveBeenCalledWith('roles');
     expect(toggleFieldIcons).not.toHaveBeenCalled();
@@ -36,7 +42,7 @@ describe('recordEventHistoryFieldChromeToggle', () => {
       soleTrackedField: null,
     })}</>);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Show field history' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Show field timeline' }));
 
     expect(toggleFieldIcons).toHaveBeenCalled();
     expect(openHistory).not.toHaveBeenCalled();

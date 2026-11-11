@@ -1,0 +1,102 @@
+{
+  "id": "em_3881614faca08a21",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_poll_answers",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VotePollAnswers",
+    "tableName": "vote_poll_answers"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "question_id",
+      "field": "questionId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_0b9bf6045b23e222",
+        "column": "id"
+      }
+    },
+    {
+      "name": "answer_code",
+      "field": "answerCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "grade_value",
+      "field": "gradeValue",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "voter_member_id",
+      "field": "voterMemberId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_1e81203115284be7",
+      "targetModelId": "em_0b9bf6045b23e222",
+      "foreignKey": "question_id",
+      "as": "question",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_99dd228b56554a51",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "answer_code",
+      "as": "answerCodeLov",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "656c8c1982bfd69d",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_poll_answers"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:11:18.099Z",
+  "updated_at": "2026-11-10T13:06:43.802Z"
+}

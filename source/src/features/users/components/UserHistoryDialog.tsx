@@ -12,7 +12,7 @@ export type UserHistoryDialogProps = {
 
 export const UserHistoryDialog: React.FC<UserHistoryDialogProps> = ({
   userId,
-  title = 'History',
+  title,
   open,
   onClose,
 }) => (

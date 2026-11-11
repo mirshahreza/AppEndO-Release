@@ -47,6 +47,7 @@ import { PopoverTooltipBaseComponentsWorkspace } from '../popover-tooltip/Popove
 import { DateTimeBaseComponentsWorkspace } from '../date-time/DateTimeBaseComponentsWorkspace';
 import { FileMediaInputBaseComponentsWorkspace } from '../file-media-input/FileMediaInputBaseComponentsWorkspace';
 import { LoadingErrorEmptyBaseComponentsWorkspace } from '../loading-error-empty/LoadingErrorEmptyBaseComponentsWorkspace';
+import { RecordSubjectTimelineBaseComponentsWorkspace } from '../record-subject-timeline/RecordSubjectTimelineBaseComponentsWorkspace';
 import { ChartBaseComponentsWorkspace } from '../chart/ChartBaseComponentsWorkspace';
 import { KanbanBaseComponentsWorkspace } from '../kanban/KanbanBaseComponentsWorkspace';
 import { SpreadsheetBaseComponentsWorkspace } from '../spreadsheet/SpreadsheetBaseComponentsWorkspace';
@@ -121,6 +122,7 @@ export const BASE_COMPONENT_SECTION_WORKSPACES: Record<SectionId, React.FC> = {
   'date-time': DateTimeBaseComponentsWorkspace,
   'file-media-input': FileMediaInputBaseComponentsWorkspace,
   'loading-error-empty': LoadingErrorEmptyBaseComponentsWorkspace,
+  'record-subject-timeline': RecordSubjectTimelineBaseComponentsWorkspace,
   chart: ChartBaseComponentsWorkspace,
   kanban: KanbanBaseComponentsWorkspace,
   spreadsheet: SpreadsheetBaseComponentsWorkspace,

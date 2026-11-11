@@ -1,0 +1,166 @@
+{
+  "id": "em_16aba77c7faa9d8d",
+  "dataSourceId": "ds_default_local",
+  "schema": null,
+  "objectName": "vote_ballots",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "VoteBallots",
+    "tableName": "vote_ballots"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "voting_id",
+      "field": "votingId",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_3bc12e270160de98",
+        "column": "id"
+      }
+    },
+    {
+      "name": "ballot_type_code",
+      "field": "ballotTypeCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "title",
+      "field": "title",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "status_code",
+      "field": "statusCode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "fkTarget": {
+        "modelId": "em_b93d328e7b5a5d67",
+        "column": "id"
+      }
+    },
+    {
+      "name": "sort_order",
+      "field": "sortOrder",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "createdAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "updated_at",
+      "field": "updatedAt",
+      "dataType": "datetime2",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "selection_mode",
+      "field": "selectionMode",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": false,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "max_selections",
+      "field": "maxSelections",
+      "dataType": "int",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [
+    {
+      "kind": "belongsTo",
+      "id": "ea_65fdbb9015c448dd",
+      "targetModelId": "em_3bc12e270160de98",
+      "foreignKey": "voting_id",
+      "as": "voting",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_9758930a376c4629",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "ballot_type_code",
+      "as": "ballotType",
+      "source": "manual"
+    },
+    {
+      "kind": "belongsTo",
+      "id": "ea_23caa11273da4192",
+      "targetModelId": "em_b93d328e7b5a5d67",
+      "foreignKey": "status_code",
+      "as": "status",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_64cc98ace7734680",
+      "targetModelId": "em_efa8e9859bf37d3c",
+      "foreignKey": "ballot_id",
+      "as": "candidates",
+      "source": "manual"
+    },
+    {
+      "kind": "hasMany",
+      "id": "ea_a6f4bca485294e08",
+      "targetModelId": "em_c08c062973da7869",
+      "foreignKey": "ballot_id",
+      "as": "castEvents",
+      "source": "manual"
+    }
+  ],
+  "schemaFingerprint": "d6aa90a4700ddf5a",
+  "readOnly": false,
+  "labels": {
+    "title": "vote_ballots"
+  },
+  "status": "ready",
+  "created_at": "2026-11-09T17:11:14.921Z",
+  "updated_at": "2026-11-10T13:06:43.764Z"
+}

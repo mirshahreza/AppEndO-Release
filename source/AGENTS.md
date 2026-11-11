@@ -29,6 +29,7 @@ When instructions conflict, this order wins:
 8. **Color / type tokens** live in [`ui-design-system.md`](docs/standards/ui-design-system.md). Semantic hues on **text, icons, badges, small objects**; large surfaces stay slate/neutral. Operator cue **“Color it”** → small-area meaning-first accents — recipe in [`ui-core.md`](docs/standards/ui-core.md).
 9. **Dev auth.** Simple username/password unless the task is auth E2E. Shard: [`dev-auth.md`](docs/standards/dev-auth.md).
 10. **Admin shell geometry locked.** Do not change admin-shell sidebar/header/logo **sizes, spacing, or React vs designer-published parity** unless the operator explicitly asked for a shell fix **and confirmed** the edit in that session. Shard: [`ui-core.md`](docs/standards/ui-core.md) §Admin shell geometry lock · ID `ui.admin-shell.geometry-lock`.
+11. **Record audit → record events.** When tracking or history is **record-scoped** and fits the record-events model (`subject_kind` + event / payload, Timeline, change reason), use **`base_record_events`** — **no new** per-entity history, change-log, or audit tables. HTTP logs, auth audit, and other non-record ledgers stay on their own tables. Shard: [`record-event-log.md`](docs/standards/record-event-log.md) · ID `record-event-log.prefer-over-sidecar-tables`.
 
 Domain rules (deep links, record policy, workflow-engine testing, package UI) are **not** always-on. Load their shard when the task hits that surface.
 

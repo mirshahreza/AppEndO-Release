@@ -22,6 +22,16 @@ const HI_SECTION_SLUG: Record<string, string> = {
   'targhin-decision-badge': 'tdb',
   'list-filter-identity-row': 'lfi',
   'list-legacy-filter-bar-toggle': 'lft',
+  'list-filter-personal-details-row': 'lfpd',
+  'list-filter-education-work-row': 'lfew',
+  'list-filter-electoral-row': 'lfel',
+  'list-filter-membership-checkboxes': 'lfmc',
+  'list-filter-institutes-row': 'lfin',
+  'list-filter-select-menu': 'lfsm',
+  'list-filter-multi-select': 'lfms',
+  'list-filter-field-by-field-stack': 'lffs',
+  'list-toolbar-quick-search': 'ltqs',
+  'phone-number-display': 'pndp',
 };
 
 const HI_VARIANT_SLUG: Record<string, string> = {
@@ -46,6 +56,13 @@ const HI_VARIANT_SLUG: Record<string, string> = {
   approved: 'ok',
   row: 'row',
   toggle: 'tgl',
+  membershipLov: 'mlov',
+  joinTasjil: 'jtas',
+  gender: 'gen',
+  institutes: 'inst',
+  allPeople: 'allp',
+  compact: 'cmp',
+  field: 'fld',
 };
 
 const BC_SECTION_SLUG: Record<string, string> = {

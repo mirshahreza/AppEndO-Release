@@ -7,7 +7,7 @@
 import React, { useCallback, useEffect, useMemo, useState, type UIEvent } from 'react';
 import { useCrudSetOverlayDeepLink } from './crudSet/useCrudSetOverlayDeepLink';
 import type { CrudSetDialogOverlayState } from './crudSet/crudSetWorkspaceOverlay';
-import { Check, Eye, FileSpreadsheet, History, KeyRound, Loader2, Lock, LockOpen, Pencil, Plus, Shield, Trash2, X } from 'lucide-react';
+import { Check, Eye, FileSpreadsheet, KeyRound, Loader2, Lock, LockOpen, Pencil, Plus, Shield, Trash2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import {
   applyCrudSetFilterBar,
@@ -156,7 +156,8 @@ import { resolveGridPagingFooterChrome } from '../lib/appTableGridShell';
 import { RECORD_CHANGE_REASON_REVERTED, type RecordEventPublicRow } from '../api/contracts/record-events';
 import { restoreRecordEventValue, useRecordSubjectHistory } from '../lib/useRecordSubjectHistory';
 import { RecordEventHistoryDialog } from './RecordEventHistoryDialog';
-import { recordEventHistoryFieldChromeToggle } from './RecordEventHistoryIcon';
+import { RECORD_SUBJECT_TIMELINE_ICON, recordEventHistoryFieldChromeToggle } from './RecordEventHistoryIcon';
+import { useRecordSubjectTimelineCopy } from './recordSubjectTimeline';
 import { AppButton } from './AppButton';
 import { AppSelectionToggle, APP_SELECTION_TOGGLE_WRAP_CLASS } from './AppSelectionToggle';
 import { UiChip } from './UiChip';
@@ -582,6 +583,7 @@ export const CrudSet: React.FC<CrudSetProps> = ({
   contained = false,
   className,
 }) => {
+  const recordTimelineCopy = useRecordSubjectTimelineCopy();
   const omitted = crudSetOmittedUi(spec);
   const paginationOn = crudSetPaginationEnabled(spec);
   const exportOn = crudSetExportEnabled(spec);
@@ -1169,9 +1171,9 @@ export const CrudSet: React.FC<CrudSetProps> = ({
     if (historySpec?.subjectKind) {
       actions.unshift({
         id: 'history',
-        label: 'History',
+        label: recordTimelineCopy.title,
         intent: 'view',
-        icon: <History className="h-3.5 w-3.5" />,
+        icon: <RECORD_SUBJECT_TIMELINE_ICON className="h-3.5 w-3.5" aria-hidden />,
         onClick: () => {
           setHistoryPeekKey(resolveRowKey(row));
           history.openHistory();
@@ -1185,6 +1187,7 @@ export const CrudSet: React.FC<CrudSetProps> = ({
     handleToggleClick,
     history,
     historySpec,
+    recordTimelineCopy.title,
     isRowActionDisabled,
     openFormPatch,
     resolveRowKey,
@@ -2193,7 +2196,7 @@ export const CrudSet: React.FC<CrudSetProps> = ({
       ) : null}
       <RecordEventHistoryDialog
         open={history.dialogOpen}
-        title={history.dialogField ? `History · ${history.dialogField}` : 'History'}
+        title={history.dialogField ? `${recordTimelineCopy.title} · ${history.dialogField}` : recordTimelineCopy.title}
         subjectKind={history.subjectKind}
         subjectId={history.subjectId}
         field={history.dialogField}

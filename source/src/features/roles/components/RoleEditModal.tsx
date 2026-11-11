@@ -8,6 +8,7 @@ import {
   RecordEventHistoryDialog,
   recordEventHistoryFieldChromeToggle,
   RecordForm,
+  useRecordSubjectTimelineCopy,
 } from '../../../shared/ui';
 import {
   restoreRecordEventValue,
@@ -43,6 +44,7 @@ export const RoleEditModal: React.FC<RoleEditModalProps> = ({
   onClose,
   onSubmit,
 }) => {
+  const timelineCopy = useRecordSubjectTimelineCopy();
   const history = useRecordSubjectHistory({
     subjectKind: 'base_roles',
     subjectId: role?.id,
@@ -114,7 +116,7 @@ export const RoleEditModal: React.FC<RoleEditModalProps> = ({
       </CreateEditModalShell>
       <RecordEventHistoryDialog
         open={history.dialogOpen}
-        title={history.dialogField ? `History · ${history.dialogField}` : 'History'}
+        title={history.dialogField ? `${timelineCopy.title} · ${history.dialogField}` : timelineCopy.title}
         subjectKind="base_roles"
         subjectId={role.id}
         field={history.dialogField}

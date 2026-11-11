@@ -189,7 +189,7 @@ export const TARGET_BASE_COMPONENT_SECTION_IDS = [
   'breadcrumbs', 'tabs', 'accordion-disclosure', 'sidebar-menu',
   'surface-box', 'scroll-area', 'dock-pane', 'canvas-toolbar', 'toolbox-panel', 'component-layout', 'client-component',
   'where-builder', 'relations',
-  'toast', 'skeleton', 'progress', 'loading-error-empty',
+  'toast', 'skeleton', 'progress', 'loading-error-empty', 'record-subject-timeline',
   'avatar', 'chip', 'phone-number', 'icon-sets', 'appendoo-companion', 'orbit-border', 'orbit-bg',
   'shell-foundation', 'shell-navigation', 'shell-effects',
   'landing-widgets', 'motion-behaviors', 'creative-scenes', 'visual-engines',
@@ -930,6 +930,10 @@ export const NON_TABS_SECTION_DEFINITIONS = [
     ['asyncPattern.primaryAction', 'content', 'composition-prop', 'checkbox', true, bool, 'primaryAction'],
     ['asyncPattern.state', 'state', 'scenario', 'state-matrix', 'default', ['default', 'long-message', 'offline', 'retrying']],
   ], 'preferred', 'recipe'),
+  section('record-subject-timeline', 'Record timeline', 'Data Display', 'Alternating spine timeline for append-only record events on a subject.', 'Cross-record audit grids or non-event ledgers.', [['central spine', 'year dividers', 'event cards'], ['History icon trigger', 'newest/oldest toggle']], ['Grid-only per-record history', 'Different icons or titles per surface'], DATA_EVIDENCE, [
+    ['recordSubjectTimeline.direction', 'layout', 'public-prop', 'segmented', 'newestFirst', ['newestFirst', 'oldestFirst'], 'direction'],
+    ['recordSubjectTimeline.viewport', 'responsive', 'scenario', 'responsive-matrix', 'desktop', viewport],
+  ]),
   section('shell-foundation', 'Shell Foundation', 'Shell', 'Audits registered Shell frame, region, surface, and responsive primitives.', 'Page-local component composition.', [['frame', 'content host', 'registered regions'], ['surface editor', 'logo editor', 'responsive matrix']], ['Unregistered component IDs', 'Recipe-only leaves fabricated as props'], SHELL_EVIDENCE, [
     ['shellFoundation.component', 'preset', 'catalog-only', 'combobox', 'ShellFrame', ['ShellFrame', 'ShellRegion', 'ShellHeader', 'ShellSidebar', 'ShellContentHost', 'ShellAside', 'ShellHero', 'ShellFooter', 'ShellSurface', 'ShellLogoRegion', 'ShellHeaderContext', 'ShellHeaderActions', 'ShellResponsiveDrawer', 'ShellResponsivePopover', 'ShellAccentControl', 'ShellMotionControl', 'ShellBackToTop']],
     ['shellFoundation.layoutWidth', 'layout', 'public-prop', 'segmented', 'fluid', ['fluid', 'bounded'], 'layoutWidth'],
@@ -1175,6 +1179,13 @@ const KNOWN_PUBLIC_EXPORTS_BY_SECTION: Readonly<Record<string, readonly string[]
   toast: ['UiToastProvider'],
   chart: ['UiBarChart', 'UiLineChart', 'UiPieChart', 'UiSparkline', 'UiChartGauge', 'UiAdvancedChart'],
   'loading-error-empty': ['LoadingSpinner', 'QueryErrorPanel', 'SectionEmptyState'],
+  'record-subject-timeline': [
+    'RecordSubjectTimelineSpine',
+    'RecordSubjectTimelineRecordEventCard',
+    'RecordSubjectTimelineSortToggle',
+    'RecordEventHistoryIcon',
+    'RecordEventHistoryDialog',
+  ],
   dialog: ['AccessControlModal'],
   'shell-foundation': ['ShellFrame', 'ShellRegion', 'ShellSurface', 'ShellResponsiveDrawer'],
   'shell-navigation': ['ShellNavRoot', 'ShellSidebarNavigation', 'ShellTopNavigation'],

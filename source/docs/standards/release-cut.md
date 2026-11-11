@@ -14,3 +14,26 @@ Dry run: `npm run release:cut:dry-run -- --allow-dirty` (or `npx tsx scripts/rel
 **Private repo `AppEndO-Vertical`:** `npm run release:export-appendo-vertical` copies **full source** + `dist/` + promotes existing `vertical-*.zip` (no pack on export). Push: `npm run release:push-appendo-vertical` or `npm run release:cut -- --push-appendo-vertical` to sibling `../AppEndO-Vertical` (private GitHub). Tag: `vertical/vX.Y.Z`. Server upload (FTP/rsync) is RCUT-9. Locale: Vertical README/templates **English**; product UI **Arabic (iq)** — **no Persian** in Vertical seeds or repo-facing docs (`package-vertical-locale-policy`).
 
 P5 tests default to `test:release-cut` and `test:release-cut-packaging` (package pipelines run in P4). Optional: `--with-test-critical`, `--with-repo-lint`.
+
+## Clone profiles (isolated database per git line)
+
+Each export ships a **clone profile** so AppEndO-Release and AppEndO-Vertical (and future `AppEndO-<Package>` repos) never reuse the private monorepo `AppEnd` database by default.
+
+| Profile | Repo line | Recommended DB | Dev port |
+| --- | --- | --- | --- |
+| `oss` | AppEndO-Release | `AppEndORelease` | 3000 |
+| `vertical` | AppEndO-Vertical | `AppEndOVertical` | 3001 |
+
+**Export behavior:** snapshots exclude operator `settings.json`, `.env`, `settings.json.*.tmp`, `workspace/models/` (local ONNX), appendoo agent runtime state dirs, and `*.onnx` blobs; each `source/` tree includes `settings.recommended.json`, `CLONE_PROFILE.md`, and `CLONE_PROFILE.json`. Push refuses dirty snapshots (`assertReleaseCutSourceSnapshotSanitized`). Clone push resets to `origin/main` before replacing the tree (drops failed local-only commits).
+
+**Registry (extend for new packages):** `scripts/release-cut/releaseCutCloneProfiles.ts` · private deploy lines `releaseCutPackageDeployLines.ts`.
+
+**Bootstrap on a clone:**
+
+```bash
+cd source
+npm run clone:bootstrap -- --profile oss
+# or: --profile vertical [--database CustomName] [--force]
+```
+
+Same command works on the private monorepo when testing an isolated DB name before export.

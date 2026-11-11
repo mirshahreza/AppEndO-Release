@@ -16,6 +16,8 @@ import {
   VxSelfRegistrationPage,
   VxTrackRegistrationPage,
   VxPublicLoginPage,
+  VxPublicMyProfilePage,
+  VxPublicInquiryPage,
   VxRegistrationDevPortalPage,
 } from '../routes/lazyPages';
 import {
@@ -23,6 +25,8 @@ import {
   VX_DEFAULT_PUBLIC_CULTURE,
   VX_PUBLIC_PORTAL_SEGMENT,
   VX_LOGIN_PUBLIC_PATH,
+  VX_MY_PROFILE_PUBLIC_PATH,
+  VX_MEMBER_INQUIRY_PUBLIC_PATH,
   VX_SELF_REGISTRATION_PUBLIC_PATHS,
   VX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH,
   VX_TRACK_REGISTRATION_PUBLIC_PATH,
@@ -126,6 +130,16 @@ export const PlatformAppRoutes: React.FC = () => (
               key={`${cultureId}${VX_LOGIN_PUBLIC_PATH}`}
               path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_LOGIN_PUBLIC_PATH}`}
               element={withPublicCulture(<VerticalPackagePublicGate><VxPublicLoginPage /></VerticalPackagePublicGate>)}
+            />
+            <Route
+              key={`${cultureId}${VX_MY_PROFILE_PUBLIC_PATH}`}
+              path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_MY_PROFILE_PUBLIC_PATH}`}
+              element={withPublicCulture(<VerticalPackagePublicGate><VxPublicMyProfilePage /></VerticalPackagePublicGate>)}
+            />
+            <Route
+              key={`${cultureId}${VX_MEMBER_INQUIRY_PUBLIC_PATH}`}
+              path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_MEMBER_INQUIRY_PUBLIC_PATH}`}
+              element={withPublicCulture(<VerticalPackagePublicGate><VxPublicInquiryPage /></VerticalPackagePublicGate>)}
             />
             <Route
               key={`${cultureId}${VX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH}`}

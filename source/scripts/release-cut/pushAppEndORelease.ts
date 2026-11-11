@@ -11,14 +11,27 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { appendoReleaseStagingDir, APPENDO_RELEASE_REPO_NAME, resolveAppEndOReleaseClonePath } from './appendoReleaseRepo';
+import { assertReleaseCutSourceSnapshotSanitized } from './releaseCutSnapshotSanitize';
 import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
 
+const GIT_SPAWN_OPTS = {
+  encoding: 'utf8' as const,
+  shell: false as const,
+  maxBuffer: 64 * 1024 * 1024,
+  env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+};
+
 function git(cwd: string, args: string[]): void {
-  const child = spawnSync('git', args, { cwd, encoding: 'utf8', shell: false });
+  const child = spawnSync('git', args, { cwd, ...GIT_SPAWN_OPTS });
+  if (child.error) {
+    throw new Error(`git ${args.join(' ')} failed: ${child.error.message}`);
+  }
   if (child.status !== 0) {
-    throw new Error(`git ${args.join(' ')} failed: ${child.stderr || child.stdout}`);
+    const err = child.stderr || child.stdout || '';
+    const tail = err.length > 4000 ? `${err.slice(-4000)}` : err;
+    throw new Error(`git ${args.join(' ')} failed: ${tail}`);
   }
 }
 
@@ -27,10 +40,24 @@ export function syncStagingToClone(stagingDir: string, clonePath: string): void 
     throw new Error(`Missing git clone at ${clonePath}. git clone <remote-url> "${clonePath}"`);
   }
 
+  spawnSync('git', ['fetch', 'origin'], { cwd: clonePath, ...GIT_SPAWN_OPTS });
+  const branch =
+    spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: clonePath, ...GIT_SPAWN_OPTS }).stdout?.trim() ||
+    'main';
+  const resetRemote = spawnSync('git', ['reset', '--hard', `origin/${branch}`], {
+    cwd: clonePath,
+    ...GIT_SPAWN_OPTS,
+  });
+  if (resetRemote.status !== 0) {
+    git(clonePath, ['reset', '--hard']);
+    spawnSync('git', ['clean', '-fdx'], { cwd: clonePath, ...GIT_SPAWN_OPTS });
+  }
+
   const sourceDir = path.join(stagingDir, 'source');
   if (!fs.existsSync(sourceDir)) {
     throw new Error(`Missing ${sourceDir} — run npm run release:export-appendo-release first`);
   }
+  assertReleaseCutSourceSnapshotSanitized(sourceDir);
 
   for (const name of fs.readdirSync(clonePath)) {
     if (name === '.git') continue;
@@ -92,6 +119,7 @@ export function pushAppEndOReleaseTree(options?: { repoRoot?: string; pushRemote
       }
       throw new Error(`git push -u origin ${branch} failed: ${err}`);
     }
+    spawnSync('git', ['push', 'origin', `:refs/tags/${tagName}`], { cwd: clonePath, ...GIT_SPAWN_OPTS });
     git(clonePath, ['push', 'origin', tagName]);
   }
 

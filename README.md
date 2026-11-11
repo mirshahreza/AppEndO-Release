@@ -84,7 +84,18 @@ cd dist
 node server.cjs
 ```
 
-For a typical layout, copy `source/settings.example.json` → `settings.json`, run the install wizard at `/install`, or use `npm run setup` from **`source/`** when using PostgreSQL CLI bootstrap.
+For an **isolated dev clone** (separate from the private monorepo database), use the release-cut profile in **`source/CLONE_PROFILE.md`**:
+
+```bash
+cd source
+npm run clone:bootstrap -- --profile oss
+npm install
+npm run dev
+```
+
+Recommended control-plane database: **`AppEndORelease`** (not `AppEnd`). Starter file: `source/settings.recommended.json`.
+
+For a generic layout, you may instead copy `source/settings.example.json` → `settings.json`, run the install wizard at `/install`, or use `npm run setup` when using PostgreSQL CLI bootstrap.
 
 From **`source/`** (rebuild or dev):
 
@@ -96,6 +107,8 @@ npm run dev
 ```
 
 Open [http://localhost:3000/install](http://localhost:3000/install) for first-time setup.
+
+**Never commit** `settings.json`, `.env`, or operator `settings.json.*.tmp` files to this repository.
 
 ### Production from source
 

@@ -76,6 +76,7 @@ export const BASE_COMPONENTS_SECTION_THEME: Record<SectionId, BaseComponentsSect
   'date-time': theme('cyan', 'indigo'),
   'file-media-input': theme('emerald', 'slate'),
   'loading-error-empty': theme('emerald', 'rose'),
+  'record-subject-timeline': theme('cyan', 'indigo'),
   chart: theme('indigo', 'slate'),
   kanban: theme('indigo', 'cyan'),
   spreadsheet: theme('emerald', 'cyan'),

@@ -1,0 +1,178 @@
+{
+  "id": "ea_684ef37eefbf2d00",
+  "edgeModelId": "em_c08c062973da7869",
+  "key": "vote-cast-events",
+  "label": "Voting Cast Events",
+  "basePath": "/api/voting/cast-events",
+  "operations": [
+    {
+      "id": "op_list_7n1cxb",
+      "method": "GET",
+      "kind": "list",
+      "pathPattern": "/api/voting/cast-events",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "candidateId",
+          "voterRegistrationId",
+          "castChannelCode",
+          "idempotencyKey",
+          "payloadJson",
+          "createdBy",
+          "createdAt"
+        ]
+      },
+      "query": {
+        "allowFilter": true,
+        "allowSort": true,
+        "maxPageSize": 100,
+        "defaultPageSize": 20
+      }
+    },
+    {
+      "id": "op_get_7n1cxb",
+      "method": "GET",
+      "kind": "getOne",
+      "pathPattern": "/api/voting/cast-events/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "candidateId",
+          "voterRegistrationId",
+          "castChannelCode",
+          "idempotencyKey",
+          "payloadJson",
+          "createdBy",
+          "createdAt"
+        ]
+      },
+      "query": {
+        "allowFilter": false,
+        "allowSort": false,
+        "maxPageSize": 1,
+        "defaultPageSize": 1
+      }
+    },
+    {
+      "id": "op_create_7n1cxb",
+      "method": "POST",
+      "kind": "create",
+      "pathPattern": "/api/voting/cast-events",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "candidateId",
+          "voterRegistrationId",
+          "castChannelCode",
+          "idempotencyKey",
+          "payloadJson",
+          "createdBy",
+          "createdAt"
+        ],
+        "write": [
+          "votingId",
+          "ballotId",
+          "candidateId",
+          "voterRegistrationId",
+          "castChannelCode",
+          "idempotencyKey",
+          "payloadJson",
+          "createdBy",
+          "createdAt"
+        ],
+        "required": [
+          "votingId",
+          "ballotId",
+          "idempotencyKey",
+          "createdAt"
+        ]
+      }
+    },
+    {
+      "id": "op_update_7n1cxb",
+      "method": "PUT",
+      "kind": "update",
+      "pathPattern": "/api/voting/cast-events/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "candidateId",
+          "voterRegistrationId",
+          "castChannelCode",
+          "idempotencyKey",
+          "payloadJson",
+          "createdBy",
+          "createdAt"
+        ],
+        "write": [
+          "votingId",
+          "ballotId",
+          "candidateId",
+          "voterRegistrationId",
+          "castChannelCode",
+          "idempotencyKey",
+          "payloadJson",
+          "createdBy",
+          "createdAt"
+        ],
+        "required": [
+          "votingId",
+          "ballotId",
+          "idempotencyKey",
+          "createdAt"
+        ]
+      }
+    },
+    {
+      "id": "op_delete_7n1cxb",
+      "method": "DELETE",
+      "kind": "delete",
+      "pathPattern": "/api/voting/cast-events/:pk",
+      "enabled": true,
+      "fields": {
+        "read": [
+          "id",
+          "votingId",
+          "ballotId",
+          "candidateId",
+          "voterRegistrationId",
+          "castChannelCode",
+          "idempotencyKey",
+          "payloadJson",
+          "createdBy",
+          "createdAt"
+        ]
+      }
+    }
+  ],
+  "accessControl": {
+    "accessMode": "authenticated",
+    "allowRoles": [],
+    "allowUsers": [],
+    "denyRoles": [],
+    "denyUsers": []
+  },
+  "openapi": {
+    "tags": [
+      "Data API"
+    ]
+  },
+  "publishedAt": "2026-11-10T13:08:16.526Z",
+  "version": 2,
+  "runtime": {
+    "useGlobalConfig": true
+  },
+  "managedFunctionId": "vote-cast-events.vote-cast-events-list"
+}

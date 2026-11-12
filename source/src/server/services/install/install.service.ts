@@ -523,6 +523,7 @@ export class InstallService {
     let schemaDropped = false;
 
     if (overrideExistingObjects && hasSchema) {
+      await closePrismaControlPlane().catch(() => undefined);
       await resetControlPlaneSchema(dbSettings);
       schemaDropped = true;
       hasSchema = false;
@@ -536,6 +537,7 @@ export class InstallService {
         await ensureControlPlaneInitialized(this.deps.settingsPath, {
           seedSampleData,
           pushSchema: dbSettings.provider === 'sqlite' || !schemaDropped,
+          sqlServerGreenfieldPush: dbSettings.provider === 'sqlserver' && !hasSchema,
         });
       }
       await ensureCredentialVaultTable();

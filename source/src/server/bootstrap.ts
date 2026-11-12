@@ -33,7 +33,7 @@ import { startDevViteChild, type DevViteChild } from './utils/devViteChild';
 import { getRequestPathname, isApiRequestPath, shouldBypassSpaDevMiddleware } from './utils/requestPaths';
 import { parseDashboardEmbedRequest } from '../shared/lib/dashboardCanvas';
 import { sendSpaIndexHtml } from './middleware/dashboardEmbedHeaders';
-import { readRuntimeSettings, resolveListenPort } from './config/settingsFile';
+import { readRuntimeSettings, resolveActiveSettingsPath, resolveListenPort } from './config/settingsFile';
 export async function startServer() {
   const bootStartedAt = Date.now();
   const bootMark = (label: string) => {
@@ -41,7 +41,7 @@ export async function startServer() {
   };
   console.log('[AppEndO] Starting server…');
 
-  const settingsPath = path.join(process.cwd(), 'settings.json');
+  const settingsPath = resolveActiveSettingsPath();
   const { isInstallComplete } = await import('./db/installSettingsStore');
   if (!isInstallComplete(settingsPath)) {
     const { startInstallPendingServer } = await import('./bootstrapInstallPending');

@@ -14,14 +14,14 @@ Use this **AppEndO-Hawiety** snapshot with a **dedicated control-plane database*
 2. From **`source/`**:
 
 ```bash
-npm run clone:bootstrap -- --profile hawiety
-npm install
-npm run schema:install-extensions
-npm run schema:install-extensions:hwy
-npm run dev
+# From AppEndO monorepo (recommended — avoids npm install inside clone):
+npx tsx ../AppEndO/scripts/release-cut/bootstrap-clone-profile.ts --profile hawiety --inherit-credentials --force
+npx tsx ../AppEndO/scripts/release-cut/provision-clone-database.ts --profile hawiety
 ```
 
-3. Open `http://localhost:{{RECOMMENDED_DEV_PORT}}/install` if install is still pending.
+Or from monorepo root: `npm run clone:bootstrap -- --profile hawiety --inherit-credentials --force` → `npm run clone:install-wizard -- --profile hawiety` → `npm run clone:provision -- --profile hawiety`.
+
+3. On a **fresh** database, finish install once (headless: `clone:install-wizard`, or browser: `http://localhost:{{RECOMMENDED_DEV_PORT}}/install`) **before** `clone:provision`. Hawiety provision skips legacy edge parity on greenfield; run `npm run hwy:etl:legacy-edge-parity` after importing legacy member tables.
 4. Install **`hawiety-*.zip`** from `../packages/` via Package Manager (ZIP is promoted at export — no re-pack here).
 5. Member data: use **ETL Console** — package install does not seed production members.
 

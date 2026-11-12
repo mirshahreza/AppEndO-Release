@@ -1,4 +1,9 @@
+import { resolveActiveSettingsPath } from '../config/settingsFile';
 import type { ControlPlaneDatabaseSettings } from './controlPlaneDatabase';
+import { readControlPlaneDatabaseSettings } from './controlPlaneDatabase';
+import { parseSqlServerConnectionUrl } from './sqlServerControlPlaneUrl';
+import { isHawietyRuntimeEnabled } from '../services/hawiety/hawietyRuntime';
+import { readInstallSettings } from './installSettingsStore';
 import { ensureDbEnrichmentRunProgressLogColumn } from './controlPlaneEnrichmentSchemaPatches';
 import {
   CONTROL_PLANE_BOOT_MARKER_KEYS,
@@ -16,6 +21,23 @@ import { ensureHwyMemberDossierSatellitesSchema } from '../domain/hwy/ensureHwyM
 import { ensureHwyMemberImageFixEditorSchema } from '../domain/hwy/ensureHwyMemberImageFixEditorSchema';
 import { ensureHwyMembersSelfRegistrationSchema } from '../domain/hwy/ensureHwyMembersSelfRegistrationSchema';
 import { ensureHwyNakhebinPhoneSchema } from '../domain/hwy/ensureHwyNakhebinPhoneSchema';
+
+const shouldRunHawietyRuntimePatches = (): boolean => {
+  if (!isHawietyRuntimeEnabled()) {
+    return false;
+  }
+  const settingsPath = resolveActiveSettingsPath();
+  const install = readInstallSettings(settingsPath);
+  if (install.pending === true || install.databaseInitialized !== true) {
+    return false;
+  }
+  const active = readControlPlaneDatabaseSettings(settingsPath);
+  if (active.provider !== 'sqlserver') {
+    return true;
+  }
+  const database = parseSqlServerConnectionUrl(active.url).database.trim().toLowerCase();
+  return database.includes('hawiety');
+};
 
 /**
  * Idempotent runtime DDL (sample mock, MSSQL unicode/index, profile/enrichment patches).
@@ -44,12 +66,14 @@ export const ensureControlPlaneRuntimePatches = async (
   await ensureUserProfileLegalEntityColumns(provider);
   await ensureDbEnrichmentRunProgressLogColumn(provider);
   await ensureNationalCodeCheckDropped(provider);
-  await ensureHwyNakhebinPhoneSchema(provider);
-  await ensureHwyMembersSelfRegistrationSchema();
-  await ensureHwyMemberImageFixEditorSchema();
-  await ensureHwyMemberDossierSatellitesSchema();
-  await ensureHwyCoursesActivitiesSchema();
-  await ensureHwyGeoResponsibilitySchema();
+  if (shouldRunHawietyRuntimePatches()) {
+    await ensureHwyNakhebinPhoneSchema(provider);
+    await ensureHwyMembersSelfRegistrationSchema();
+    await ensureHwyMemberImageFixEditorSchema();
+    await ensureHwyMemberDossierSatellitesSchema();
+    await ensureHwyCoursesActivitiesSchema();
+    await ensureHwyGeoResponsibilitySchema();
+  }
 
   await markControlPlaneBootApplied(
     provider,

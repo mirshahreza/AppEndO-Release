@@ -24,6 +24,7 @@ export const SOURCE_SNAPSHOT_SKIP_DIR_NAMES = new Set([
   '.appendo-hawiety-staging',
   '.appendo-deploy-staging',
   '.release-cut-runs',
+  '.appendo-clone-work',
 ]);
 
 /** Hawiety paths must not appear in public OSS source snapshots */

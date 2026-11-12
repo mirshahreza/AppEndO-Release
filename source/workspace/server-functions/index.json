@@ -1,8 +1,107 @@
 {
   "schema": "append-server-functions-index",
   "schemaVersion": "2.0.0",
-  "updatedAt": "2026-11-10T13:08:21.357Z",
+  "updatedAt": "2026-11-12T04:04:45.042Z",
   "functions": [
+    {
+      "id": "base-scope-memberships.ops-scope-memberships-pivot",
+      "name": "ops-scope-memberships-pivot",
+      "folder": "base-scope-memberships",
+      "method": "POST",
+      "path": "/api/ops/ops_scope_memberships/pivot",
+      "sourceFile": "base-scope-memberships.ops-scope-memberships-pivot.ts",
+      "metadataFile": "base-scope-memberships.ops-scope-memberships-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:30:05.352Z",
+      "updatedAt": "2026-11-11T12:30:05.352Z"
+    },
+    {
+      "id": "base-user-identities.ops-identities-pivot",
+      "name": "ops-identities-pivot",
+      "folder": "base-user-identities",
+      "method": "POST",
+      "path": "/api/ops/ops_identities/pivot",
+      "sourceFile": "base-user-identities.ops-identities-pivot.ts",
+      "metadataFile": "base-user-identities.ops-identities-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:30:03.231Z",
+      "updatedAt": "2026-11-11T12:30:03.231Z"
+    },
+    {
+      "id": "base-app-feedback.ops-feedback-pivot",
+      "name": "ops-feedback-pivot",
+      "folder": "base-app-feedback",
+      "method": "POST",
+      "path": "/api/ops/ops_feedback/pivot",
+      "sourceFile": "base-app-feedback.ops-feedback-pivot.ts",
+      "metadataFile": "base-app-feedback.ops-feedback-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:30:01.096Z",
+      "updatedAt": "2026-11-11T12:30:01.096Z"
+    },
+    {
+      "id": "base-workflow-dead-letters.ops-dead-letters-pivot",
+      "name": "ops-dead-letters-pivot",
+      "folder": "base-workflow-dead-letters",
+      "method": "POST",
+      "path": "/api/ops/ops_dead_letters/pivot",
+      "sourceFile": "base-workflow-dead-letters.ops-dead-letters-pivot.ts",
+      "metadataFile": "base-workflow-dead-letters.ops-dead-letters-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:29:59.005Z",
+      "updatedAt": "2026-11-11T12:29:59.005Z"
+    },
+    {
+      "id": "base-workflow-definitions.ops-workflow-defs-pivot",
+      "name": "ops-workflow-defs-pivot",
+      "folder": "base-workflow-definitions",
+      "method": "POST",
+      "path": "/api/ops/ops_workflow_defs/pivot",
+      "sourceFile": "base-workflow-definitions.ops-workflow-defs-pivot.ts",
+      "metadataFile": "base-workflow-definitions.ops-workflow-defs-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:29:56.915Z",
+      "updatedAt": "2026-11-11T12:29:56.915Z"
+    },
+    {
+      "id": "base-workflow-instances.ops-workflow-instances-pivot",
+      "name": "ops-workflow-instances-pivot",
+      "folder": "base-workflow-instances",
+      "method": "POST",
+      "path": "/api/ops/ops_workflow_instances/pivot",
+      "sourceFile": "base-workflow-instances.ops-workflow-instances-pivot.ts",
+      "metadataFile": "base-workflow-instances.ops-workflow-instances-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:29:54.710Z",
+      "updatedAt": "2026-11-11T12:29:54.710Z"
+    },
+    {
+      "id": "base-data-sources.ops-data-sources-pivot",
+      "name": "ops-data-sources-pivot",
+      "folder": "base-data-sources",
+      "method": "POST",
+      "path": "/api/ops/ops_data_sources/pivot",
+      "sourceFile": "base-data-sources.ops-data-sources-pivot.ts",
+      "metadataFile": "base-data-sources.ops-data-sources-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:29:52.493Z",
+      "updatedAt": "2026-11-11T12:29:52.493Z"
+    },
+    {
+      "id": "base-logs-app.ops-logs-pivot",
+      "name": "ops-logs-pivot",
+      "folder": "base-logs-app",
+      "method": "POST",
+      "path": "/api/ops/ops_logs/pivot",
+      "sourceFile": "base-logs-app.ops-logs-pivot.ts",
+      "metadataFile": "base-logs-app.ops-logs-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:29:50.267Z",
+      "updatedAt": "2026-11-11T12:29:50.267Z"
+    },
+    {
+      "id": "base-jobs.ops-jobs-pivot",
+      "name": "ops-jobs-pivot",
+      "folder": "base-jobs",
+      "method": "POST",
+      "path": "/api/ops/ops_jobs/pivot",
+      "sourceFile": "base-jobs.ops-jobs-pivot.ts",
+      "metadataFile": "base-jobs.ops-jobs-pivot.metadata.json",
+      "createdAt": "2026-11-11T12:29:47.826Z",
+      "updatedAt": "2026-11-11T12:29:47.826Z"
+    },
     {
       "id": "vote-poll-answers.vote-poll-answers-delete",
       "name": "vote-poll-answers-delete",
@@ -873,105 +972,6 @@
       "updatedAt": "2026-10-02T23:23:20.944Z"
     },
     {
-      "id": "base-scope-memberships.ops-scope-memberships-pivot",
-      "name": "ops-scope-memberships-pivot",
-      "folder": "base-scope-memberships",
-      "method": "POST",
-      "path": "/api/ops/ops_scope_memberships/pivot",
-      "sourceFile": "base-scope-memberships.ops-scope-memberships-pivot.ts",
-      "metadataFile": "base-scope-memberships.ops-scope-memberships-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:20.603Z",
-      "updatedAt": "2026-10-02T23:23:20.603Z"
-    },
-    {
-      "id": "base-user-identities.ops-identities-pivot",
-      "name": "ops-identities-pivot",
-      "folder": "base-user-identities",
-      "method": "POST",
-      "path": "/api/ops/ops_identities/pivot",
-      "sourceFile": "base-user-identities.ops-identities-pivot.ts",
-      "metadataFile": "base-user-identities.ops-identities-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:20.246Z",
-      "updatedAt": "2026-10-02T23:23:20.246Z"
-    },
-    {
-      "id": "base-app-feedback.ops-feedback-pivot",
-      "name": "ops-feedback-pivot",
-      "folder": "base-app-feedback",
-      "method": "POST",
-      "path": "/api/ops/ops_feedback/pivot",
-      "sourceFile": "base-app-feedback.ops-feedback-pivot.ts",
-      "metadataFile": "base-app-feedback.ops-feedback-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:19.903Z",
-      "updatedAt": "2026-10-02T23:23:19.903Z"
-    },
-    {
-      "id": "base-workflow-dead-letters.ops-dead-letters-pivot",
-      "name": "ops-dead-letters-pivot",
-      "folder": "base-workflow-dead-letters",
-      "method": "POST",
-      "path": "/api/ops/ops_dead_letters/pivot",
-      "sourceFile": "base-workflow-dead-letters.ops-dead-letters-pivot.ts",
-      "metadataFile": "base-workflow-dead-letters.ops-dead-letters-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:19.514Z",
-      "updatedAt": "2026-10-02T23:23:19.514Z"
-    },
-    {
-      "id": "base-workflow-definitions.ops-workflow-defs-pivot",
-      "name": "ops-workflow-defs-pivot",
-      "folder": "base-workflow-definitions",
-      "method": "POST",
-      "path": "/api/ops/ops_workflow_defs/pivot",
-      "sourceFile": "base-workflow-definitions.ops-workflow-defs-pivot.ts",
-      "metadataFile": "base-workflow-definitions.ops-workflow-defs-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:19.158Z",
-      "updatedAt": "2026-10-02T23:23:19.158Z"
-    },
-    {
-      "id": "base-workflow-instances.ops-workflow-instances-pivot",
-      "name": "ops-workflow-instances-pivot",
-      "folder": "base-workflow-instances",
-      "method": "POST",
-      "path": "/api/ops/ops_workflow_instances/pivot",
-      "sourceFile": "base-workflow-instances.ops-workflow-instances-pivot.ts",
-      "metadataFile": "base-workflow-instances.ops-workflow-instances-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:18.829Z",
-      "updatedAt": "2026-10-02T23:23:18.829Z"
-    },
-    {
-      "id": "base-data-sources.ops-data-sources-pivot",
-      "name": "ops-data-sources-pivot",
-      "folder": "base-data-sources",
-      "method": "POST",
-      "path": "/api/ops/ops_data_sources/pivot",
-      "sourceFile": "base-data-sources.ops-data-sources-pivot.ts",
-      "metadataFile": "base-data-sources.ops-data-sources-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:18.492Z",
-      "updatedAt": "2026-10-02T23:23:18.492Z"
-    },
-    {
-      "id": "base-logs-app.ops-logs-pivot",
-      "name": "ops-logs-pivot",
-      "folder": "base-logs-app",
-      "method": "POST",
-      "path": "/api/ops/ops_logs/pivot",
-      "sourceFile": "base-logs-app.ops-logs-pivot.ts",
-      "metadataFile": "base-logs-app.ops-logs-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:18.172Z",
-      "updatedAt": "2026-10-02T23:23:18.172Z"
-    },
-    {
-      "id": "base-jobs.ops-jobs-pivot",
-      "name": "ops-jobs-pivot",
-      "folder": "base-jobs",
-      "method": "POST",
-      "path": "/api/ops/ops_jobs/pivot",
-      "sourceFile": "base-jobs.ops-jobs-pivot.ts",
-      "metadataFile": "base-jobs.ops-jobs-pivot.metadata.json",
-      "createdAt": "2026-10-02T23:23:17.803Z",
-      "updatedAt": "2026-10-02T23:23:17.803Z"
-    },
-    {
       "id": "vw-hwy-members.hwy-member-directory-getone",
       "name": "hwy-member-directory-getone",
       "folder": "vw-hwy-members",
@@ -991,7 +991,7 @@
       "sourceFile": "vw-hwy-members.hwy-member-directory-list.ts",
       "metadataFile": "vw-hwy-members.hwy-member-directory-list.metadata.json",
       "createdAt": "2026-09-28T14:32:34.601Z",
-      "updatedAt": "2026-11-08T20:07:49.584Z"
+      "updatedAt": "2026-11-12T04:04:44.733Z"
     },
     {
       "id": "hwy-username-repo.hwy-username-repo-delete",
@@ -1464,7 +1464,7 @@
       "sourceFile": "hwy-institutes.hwy-institutes-create.ts",
       "metadataFile": "hwy-institutes.hwy-institutes-create.metadata.json",
       "createdAt": "2026-09-28T14:32:20.683Z",
-      "updatedAt": "2026-11-08T20:07:49.694Z"
+      "updatedAt": "2026-11-12T04:04:44.861Z"
     },
     {
       "id": "hwy-institutes.hwy-institutes-getone",
@@ -1497,7 +1497,7 @@
       "sourceFile": "workflow-engine.scheduled-start.js",
       "metadataFile": "workflow-engine.scheduled-start.metadata.json",
       "createdAt": "2026-07-27T13:08:55.526Z",
-      "updatedAt": "2026-11-08T20:07:49.820Z"
+      "updatedAt": "2026-11-12T04:04:45.002Z"
     }
   ]
 }

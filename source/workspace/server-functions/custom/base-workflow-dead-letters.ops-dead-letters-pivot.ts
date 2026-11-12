@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_dead_letters_pivot
  * Operation  : ops_dead_letters-pivot (POST /api/ops/ops_dead_letters/pivot)
- * Model      : BaseWorkflowDeadLetters (em_e6eb8be71ec07c48)
+ * Model      : BaseWorkflowDeadLetters (em_ops_dead_letters)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_e6eb8be71ec07c48";
+const EDGE_MODEL_ID = "em_ops_dead_letters";
 const EDGE_API_DEFINITION_ID = "ea_ops_dead_letters_pivot";
 const EDGE_API_OPERATION_ID = "ops_dead_letters-pivot";
 const MODEL_ALIAS = "BaseWorkflowDeadLetters";

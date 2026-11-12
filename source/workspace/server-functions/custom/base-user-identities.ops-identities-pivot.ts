@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_identities_pivot
  * Operation  : ops_identities-pivot (POST /api/ops/ops_identities/pivot)
- * Model      : BaseUserIdentities (em_24f4928b2dd23610)
+ * Model      : BaseUserIdentities (em_ops_identities)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_24f4928b2dd23610";
+const EDGE_MODEL_ID = "em_ops_identities";
 const EDGE_API_DEFINITION_ID = "ea_ops_identities_pivot";
 const EDGE_API_OPERATION_ID = "ops_identities-pivot";
 const MODEL_ALIAS = "BaseUserIdentities";

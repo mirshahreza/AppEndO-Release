@@ -37,6 +37,7 @@ import { attemptRepairForLog } from './repair';
 import type { SemverBump } from './semver';
 import { pushAppEndOReleaseTree } from './pushAppEndORelease';
 import { pushAppEndOHawietyTree } from './pushAppEndOHawiety';
+import { cloneProfilesForSchemaSync } from './cloneProfilesForSchemaSync';
 
 type CliOptions = {
   dryRun: boolean;
@@ -52,6 +53,7 @@ type CliOptions = {
   allowPlatformBuildFail: boolean;
   pushAppEndORelease: boolean;
   pushAppEndOHawiety: boolean;
+  syncCloneSchemas: boolean;
   resumeRunId?: string;
   mainBranchOnly: boolean;
 };
@@ -71,6 +73,7 @@ function parseArgs(argv: string[]): CliOptions {
   let allowPlatformBuildFail = false;
   let pushAppEndORelease = false;
   let pushAppEndOHawiety = false;
+  let syncCloneSchemas: boolean | undefined;
   let resumeRunId: string | undefined;
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -90,10 +93,14 @@ function parseArgs(argv: string[]): CliOptions {
     else if (arg === '--publish-packages') {
       publishPackageIds = (argv[++i] ?? '').split(',').map((s) => s.trim()).filter(Boolean);
     } else if (arg === '--resume') resumeRunId = argv[++i];
+    else if (arg === '--sync-clone-schemas') syncCloneSchemas = true;
+    else if (arg === '--skip-clone-schemas') syncCloneSchemas = false;
     else if (arg === '--no-main-guard') {
       /* testing */
     }
   }
+
+  const resolvedSyncCloneSchemas = syncCloneSchemas ?? !fast;
 
   return {
     dryRun,
@@ -109,6 +116,7 @@ function parseArgs(argv: string[]): CliOptions {
     allowPlatformBuildFail,
     pushAppEndORelease,
     pushAppEndOHawiety,
+    syncCloneSchemas: resolvedSyncCloneSchemas,
     resumeRunId,
     mainBranchOnly: !argv.includes('--no-main-guard'),
   };
@@ -159,9 +167,23 @@ function runWithOptionalRepair(
   }
 }
 
+function readCloneDevSqlPassword(repoRoot: string): string | undefined {
+  const fromEnv = process.env.APPENDO_CLONE_SQL_PASSWORD?.trim();
+  if (fromEnv) {
+    return fromEnv;
+  }
+  const secretPath = path.join(repoRoot, '.appendo-clone-work', 'clone-sql-login.password');
+  if (fs.existsSync(secretPath)) {
+    return fs.readFileSync(secretPath, 'utf8').trim();
+  }
+  return undefined;
+}
+
 function packPackageIds(repoRoot: string, runRoot: string, packageIds: string[], dryRun: boolean): void {
   const artifactsDir = path.join(runRoot, 'artifacts', 'packages');
   fs.mkdirSync(artifactsDir, { recursive: true });
+
+  const cloneSqlPassword = readCloneDevSqlPassword(repoRoot);
 
   for (const packageId of packageIds) {
     const entry = registryEntryFor(packageId);
@@ -174,6 +196,14 @@ function packPackageIds(repoRoot: string, runRoot: string, packageIds: string[],
     if (entry.releasePipeline && packageId === 'hawiety') {
       runWithOptionalRepair(entry.releasePipeline, repoRoot, path.join(runRoot, 'logs', `pack-${packageId}.log`), false);
     } else if (packageId === 'cms') {
+      if (cloneSqlPassword) {
+        process.env.APPENDO_CMS_PACK_SQL_LOGIN = 'appendo_clone_dev';
+        process.env.APPENDO_CLONE_SQL_PASSWORD = cloneSqlPassword;
+        delete process.env.APPENDO_WINDOWS_SQL_TRUSTED;
+      } else if (process.platform === 'win32') {
+        process.env.APPENDO_WINDOWS_SQL_TRUSTED =
+          process.env.APPENDO_WINDOWS_SQL_TRUSTED ?? '1';
+      }
       runWithOptionalRepair('cms:pack', repoRoot, path.join(runRoot, 'logs', `pack-${packageId}.log`), false);
     } else {
       runWithOptionalRepair(entry.packCommand, repoRoot, path.join(runRoot, 'logs', `pack-${packageId}.log`), false);
@@ -192,6 +222,51 @@ function packPackageIds(repoRoot: string, runRoot: string, packageIds: string[],
       throw new Error(`Pack succeeded but no zip found for ${packageId} (globs: ${entry.zipArtifactGlobs.join(', ')})`);
     }
   }
+}
+
+function runCloneSchemaSyncPillar(
+  options: CliOptions,
+  repoRoot: string,
+  runRoot: string,
+  dryRun: boolean,
+): void {
+  if (!options.syncCloneSchemas) {
+    appendReportLine(runRoot, '- P9 clone schema sync skipped (fast or --skip-clone-schemas)');
+    return;
+  }
+
+  const profiles = cloneProfilesForSchemaSync({
+    skipOss: options.skipOss,
+    publishPackageIds: options.publishPackageIds,
+  });
+
+  if (profiles.length === 0) {
+    appendReportLine(runRoot, '- P9 clone schema sync skipped (no profiles)');
+    return;
+  }
+
+  if (dryRun) {
+    appendReportLine(runRoot, `- P9 clone schema sync dry-run profiles=${profiles.join(', ')}`);
+    return;
+  }
+
+  for (const profileId of profiles) {
+    const logPath = path.join(runRoot, 'logs', `provision-${profileId}.log`);
+    const result = runNpmScript('clone:provision', {
+      cwd: repoRoot,
+      logPath,
+      extraArgs: ['--profile', profileId],
+      env: {
+        APPENDO_CLONE_WINDOWS_SQL_TRUSTED: process.env.APPENDO_CLONE_WINDOWS_SQL_TRUSTED ?? '1',
+      },
+    });
+    if (!result.ok) {
+      throw new Error(
+        `npm run clone:provision -- --profile ${profileId} failed (see ${logPath})`,
+      );
+    }
+  }
+  appendReportLine(runRoot, `- P9 clone schema sync OK profiles=${profiles.join(', ')}`);
 }
 
 function runTestPillar(options: CliOptions, repoRoot: string, runRoot: string, publishIds: string[]): void {
@@ -319,6 +394,7 @@ async function main(): Promise<void> {
     options.bump = checkpoint.bump;
     options.skipOss = checkpoint.skipOss;
     options.fast = checkpoint.fastMode;
+    options.syncCloneSchemas = checkpoint.syncCloneSchemas ?? options.syncCloneSchemas;
     runId = checkpoint.runId;
     if (checkpoint.tagName && phaseDone(checkpoint, 'P3')) {
       ensureAnnotatedTag(repoRoot, checkpoint.tagName, `Release ${checkpoint.versions?.platform ?? ''}`);
@@ -333,6 +409,7 @@ async function main(): Promise<void> {
       publishPackageIds: options.publishPackageIds,
       skipOss: options.skipOss,
       fastMode: options.fast,
+      syncCloneSchemas: options.syncCloneSchemas,
       completedPhases: [],
     };
     fs.mkdirSync(runRoot, { recursive: true });
@@ -341,7 +418,7 @@ async function main(): Promise<void> {
 
   appendReportLine(runRoot, `- Run \`${runId}\` dryRun=${options.dryRun} bump=${options.bump}`);
 
-  const phases: ReleaseCutPhaseId[] = ['P0', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'];
+  const phases: ReleaseCutPhaseId[] = ['P0', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P9', 'P8'];
   let tagName: string | undefined;
 
   try {
@@ -464,6 +541,12 @@ async function main(): Promise<void> {
           );
         }
         appendReportLine(runRoot, `- P7 public-oss ${options.skipOss ? 'skipped' : 'ok'}`);
+        markPhase(checkpoint, phase);
+        writeCheckpoint(runRoot, checkpoint);
+      }
+
+      if (phase === 'P9') {
+        runCloneSchemaSyncPillar(options, repoRoot, runRoot, options.dryRun);
         markPhase(checkpoint, phase);
         writeCheckpoint(runRoot, checkpoint);
       }

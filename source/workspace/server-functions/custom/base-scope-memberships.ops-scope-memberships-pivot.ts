@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_scope_memberships_pivot
  * Operation  : ops_scope_memberships-pivot (POST /api/ops/ops_scope_memberships/pivot)
- * Model      : BaseScopeMemberships (em_11771aa29defb94c)
+ * Model      : BaseScopeMemberships (em_ops_scope_memberships)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_11771aa29defb94c";
+const EDGE_MODEL_ID = "em_ops_scope_memberships";
 const EDGE_API_DEFINITION_ID = "ea_ops_scope_memberships_pivot";
 const EDGE_API_OPERATION_ID = "ops_scope_memberships-pivot";
 const MODEL_ALIAS = "BaseScopeMemberships";

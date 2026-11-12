@@ -15,6 +15,8 @@ Dry run: `npm run release:cut:dry-run -- --allow-dirty` (or `npx tsx scripts/rel
 
 P5 tests default to `test:release-cut` and `test:release-cut-packaging` (package pipelines run in P4). Optional: `--with-test-critical`, `--with-repo-lint`.
 
+**P9 — clone database structure (no ETL):** runs after P7, before P8 export/push. Default **on** for full cut (no `--fast`); off with `--fast` or `--skip-clone-schemas`. For each relevant clone profile (`oss` when OSS is in scope; `hawiety` when `hawiety` is in `--publish-packages`), runs `npm run clone:provision -- --profile …` (control-plane extensions + package SQL install flags only — not legacy ETL). Extend `scripts/release-cut/cloneProfilesForSchemaSync.ts` when a new package line gets its own DB.
+
 ## Clone profiles (isolated database per git line)
 
 Each export ships a **clone profile** so AppEndO-Release and AppEndO-Hawiety (and future `AppEndO-<Package>` repos) never reuse the private monorepo `AppEnd` database by default.
@@ -31,9 +33,16 @@ Each export ships a **clone profile** so AppEndO-Release and AppEndO-Hawiety (an
 **Bootstrap on a clone:**
 
 ```bash
-cd source
-npm run clone:bootstrap -- --profile oss
-# or: --profile hawiety [--database CustomName] [--force]
+npx tsx scripts/release-cut/bootstrap-clone-profile.ts --profile hawiety --inherit-credentials --force
+npx tsx scripts/release-cut/provision-clone-database.ts --profile hawiety
 ```
 
-Same command works on the private monorepo when testing an isolated DB name before export.
+`--inherit-credentials` copies JWT/runtime secrets needed to decrypt `passwordCipher` plus SQL host material from monorepo `settings.json` (separate database name per profile).
+
+**Windows dev (integrated SQL auth):** when `sqlcmd -E` works but Node cannot use `sa` with an empty password, run `npm run clone:install-wizard` — it creates SQL login `appendo_clone_dev` via `sqlcmd -E` (password in `.appendo-clone-work/clone-sql-login.password`, or set `APPENDO_CLONE_SQL_PASSWORD`). Full copy of `AppEnd` via backup needs ~300GB free disk on this machine; prefer wizard + `clone:provision` for schema-only clones.
+
+**Headless flow (monorepo, recommended):** `clone:bootstrap -- --profile … --inherit-credentials --force` → `clone:install-wizard -- --profile …` (runs if install still pending) → `clone:provision -- --profile …`. `clone:provision` swaps clone `settings.json` into the monorepo, runs `schema:install-extensions`, and for `hawiety` runs `hawiety:install` with `--skip-legacy-parity` (greenfield DB has no ETL parity tables yet) plus `schema:install-extensions:hwy`, then restores monorepo `settings.json`.
+
+`npm run clone:bootstrap` · `npm run clone:install-wizard` · `clone:provision` · `clone:db-from-template` (backup/restore; skip when disk is tight). On Windows use `npx tsx scripts/release-cut/... --profile oss|hawiety` when npm swallows `--profile`. Manual Hawiety install on an empty DB: `npm run hawiety:install -- --skip-legacy-parity`.
+
+**Dev beside monorepo:** from monorepo root, set `APPENDO_SETTINGS_PATH` to the clone `source/settings.json`, set `APPENDO_CLONE_SQL_PASSWORD` (or rely on `passwordCipher`), then `npm run dev` — server honors the clone port in that file (3000 OSS / 3001 Hawiety).

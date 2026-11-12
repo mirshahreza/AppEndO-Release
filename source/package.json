@@ -1,7 +1,7 @@
 {
   "name": "react-example",
   "private": true,
-  "version": "0.0.5",
+  "version": "0.0.9",
   "type": "module",
   "main": "electron-main.js",
   "scripts": {
@@ -248,6 +248,9 @@
     "release:cut:dry-run": "tsx scripts/release-cut/run-release-cut.ts --dry-run --no-main-guard",
     "release:cut:resume": "tsx scripts/release-cut/run-release-cut.ts --resume",
     "clone:bootstrap": "tsx scripts/release-cut/bootstrap-clone-profile.ts",
+    "clone:provision": "tsx scripts/release-cut/provision-clone-database.ts",
+    "clone:install-wizard": "tsx scripts/release-cut/run-clone-install-wizard.ts",
+    "clone:db-from-template": "tsx scripts/release-cut/clone-databases-from-template.ts",
     "release:export-appendo-release": "tsx scripts/release-cut/assemblePublicReleaseTree.ts",
     "release:push-appendo-release": "tsx scripts/release-cut/pushAppEndORelease.ts",
     "release:export-appendo-hawiety": "tsx scripts/release-cut/assembleInternalDeployTree.ts",

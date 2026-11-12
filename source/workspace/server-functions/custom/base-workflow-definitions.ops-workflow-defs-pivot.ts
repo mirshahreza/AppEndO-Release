@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_workflow_defs_pivot
  * Operation  : ops_workflow_defs-pivot (POST /api/ops/ops_workflow_defs/pivot)
- * Model      : BaseWorkflowDefinitions (em_5282477fc36a2a52)
+ * Model      : BaseWorkflowDefinitions (em_ops_workflow_defs)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_5282477fc36a2a52";
+const EDGE_MODEL_ID = "em_ops_workflow_defs";
 const EDGE_API_DEFINITION_ID = "ea_ops_workflow_defs_pivot";
 const EDGE_API_OPERATION_ID = "ops_workflow_defs-pivot";
 const MODEL_ALIAS = "BaseWorkflowDefinitions";

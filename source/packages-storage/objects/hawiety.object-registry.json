@@ -2,7 +2,7 @@
   "schema": "package-object-registry",
   "schemaVersion": "1.0.0",
   "packageId": "hawiety",
-  "activeVersion": "0.3.8",
+  "activeVersion": "0.3.14",
   "records": {
     "apis": [
       {
@@ -13,7 +13,7 @@
         "httpPath": "/api/packages/hawiety/health",
         "entry": "api/health.js",
         "auth": "public",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       }
     ],
     "uiComponents": [],
@@ -24,7 +24,14 @@
         "entry": "ui/pages/hwy_etl_console.bundle.js",
         "suggestedRoutePattern": "etl-console",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
+      },
+      {
+        "conflictKey": "ui_route::hwy-message-audit",
+        "pageKey": "hwy-message-audit",
+        "entry": "ui/pages/hwy_message_audit.bundle.js",
+        "suggestedMountId": "hawiety",
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-business-rules-reference",
@@ -32,7 +39,7 @@
         "entry": "ui/pages/hwy_business_rules_reference.bundle.js",
         "suggestedRoutePattern": "business-rules/*",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-identity-components",
@@ -40,7 +47,7 @@
         "entry": "ui/pages/hwy_identity_components.bundle.js",
         "suggestedRoutePattern": "identity-components/*",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-org-membership-transfer",
@@ -48,7 +55,7 @@
         "entry": "ui/pages/hwy_org_membership_transfer.bundle.js",
         "suggestedRoutePattern": "members-org-membership-transfer",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-geo-responsibility",
@@ -56,7 +63,7 @@
         "entry": "ui/pages/hwy_geo_responsibility.bundle.js",
         "suggestedRoutePattern": "geo-responsibility/*",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-card-flow",
@@ -64,7 +71,7 @@
         "entry": "ui/pages/hwy_card_flow.bundle.js",
         "suggestedRoutePattern": "card-flow/*",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-meetings-management",
@@ -72,7 +79,7 @@
         "entry": "ui/pages/hwy_meetings_management.bundle.js",
         "suggestedRoutePattern": "meetings-management",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-employees-list",
@@ -80,7 +87,7 @@
         "entry": "ui/pages/hwy_employees_list.bundle.js",
         "suggestedRoutePattern": "employees-list",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-payment-documents",
@@ -88,7 +95,7 @@
         "entry": "ui/pages/hwy_payment_documents.bundle.js",
         "suggestedRoutePattern": "finance/payment-documents",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-payment-documents-members",
@@ -96,7 +103,7 @@
         "entry": "ui/pages/hwy_payment_documents_members.bundle.js",
         "suggestedRoutePattern": "finance/payment-documents-members",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-masoolin-performance",
@@ -104,7 +111,7 @@
         "entry": "ui/pages/hwy_masoolin_performance.bundle.js",
         "suggestedRoutePattern": "masoolin-performance",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-members-social-screens",
@@ -112,7 +119,7 @@
         "entry": "ui/pages/hwy_members_social_screens.bundle.js",
         "suggestedRoutePattern": "members-social-screens",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-courses-activities",
@@ -120,7 +127,7 @@
         "entry": "ui/pages/hwy_courses_activities.bundle.js",
         "suggestedRoutePattern": "courses-activities/*",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-targhin-requests",
@@ -128,14 +135,14 @@
         "entry": "ui/pages/hwy_targhin_requests.bundle.js",
         "suggestedRoutePattern": "targhin-requests",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-phone-requests",
         "pageKey": "hwy-phone-requests",
         "entry": "ui/pages/hwy_phone_requests.bundle.js",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-members-targhin",
@@ -143,14 +150,14 @@
         "entry": "ui/pages/hwy_members_targhin.bundle.js",
         "suggestedRoutePattern": "members-targhin",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-member-dossier",
         "pageKey": "hwy-member-dossier",
         "entry": "ui/pages/hwy_member_dossier.bundle.js",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-member-dossier-view",
@@ -158,7 +165,7 @@
         "entry": "ui/pages/hwy_member_dossier_view.bundle.js",
         "suggestedRoutePattern": "members-all/view/*",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       },
       {
         "conflictKey": "ui_route::hwy-member-dossier-edit",
@@ -166,7 +173,7 @@
         "entry": "ui/pages/hwy_member_dossier_edit.bundle.js",
         "suggestedRoutePattern": "members-all/edit/*",
         "suggestedMountId": "hawiety",
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.447Z"
       }
     ],
     "dbObjects": [
@@ -178,7 +185,7 @@
         "installScript": "db/install/hwy_schema.sqlserver.sql",
         "uninstallScript": "db/uninstall/hwy_schema.sqlserver.sql",
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_phone_requests::default",
@@ -188,7 +195,7 @@
         "installScript": "db/install/hwy_member_phone_requests.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_geo_responsibility::default",
@@ -198,7 +205,7 @@
         "installScript": "db/install/hwy_geo_responsibility.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_courses_activities::default",
@@ -208,7 +215,7 @@
         "installScript": "db/install/hwy_courses_activities.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_registration_state_columns::default",
@@ -218,7 +225,7 @@
         "installScript": "db/install/hwy_registration_state_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_nakhebin_phone_columns::default",
@@ -228,7 +235,7 @@
         "installScript": "db/install/hwy_nakhebin_phone_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_after_create_columns::default",
@@ -238,7 +245,7 @@
         "installScript": "db/install/hwy_member_after_create_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_kasb_links::default",
@@ -248,7 +255,7 @@
         "installScript": "db/install/hwy_member_kasb_links.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_institutes_logo_url::default",
@@ -258,7 +265,7 @@
         "installScript": "db/install/hwy_institutes_logo_url.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_institutes_logo_content::default",
@@ -268,7 +275,7 @@
         "installScript": "db/install/hwy_institutes_logo_content.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_functions_geo_member::default",
@@ -278,7 +285,17 @@
         "installScript": "db/install/hwy_db_functions_geo_member.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_member_registration_files_unified::default",
+        "objectType": "function",
+        "objectName": "hwy_member_registration_files_unified",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_member_registration_files_unified.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_writes::default",
@@ -288,7 +305,7 @@
         "installScript": "db/install/hwy_db_procedures_writes.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_writes_drafts::default",
@@ -298,7 +315,7 @@
         "installScript": "db/install/hwy_db_procedures_writes_drafts.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_writes_member::default",
@@ -308,7 +325,7 @@
         "installScript": "db/install/hwy_db_procedures_writes_member.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_writes_membership::default",
@@ -318,7 +335,7 @@
         "installScript": "db/install/hwy_db_procedures_writes_membership.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads::default",
@@ -328,7 +345,7 @@
         "installScript": "db/install/hwy_db_procedures_reads.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads_misc::default",
@@ -338,7 +355,7 @@
         "installScript": "db/install/hwy_db_procedures_reads_misc.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads_geo::default",
@@ -348,7 +365,7 @@
         "installScript": "db/install/hwy_db_procedures_reads_geo.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads_geo_nomination::default",
@@ -358,7 +375,7 @@
         "installScript": "db/install/hwy_db_procedures_reads_geo_nomination.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads_targhin::default",
@@ -368,7 +385,7 @@
         "installScript": "db/install/hwy_db_procedures_reads_targhin.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_activities_tajammoat_columns::default",
@@ -378,7 +395,7 @@
         "installScript": "db/install/hwy_activities_tajammoat_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads_courses::default",
@@ -388,7 +405,7 @@
         "installScript": "db/install/hwy_db_procedures_reads_courses.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads_dossier::default",
@@ -398,7 +415,7 @@
         "installScript": "db/install/hwy_db_procedures_reads_dossier.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_db_procedures_reads_employees::default",
@@ -408,7 +425,7 @@
         "installScript": "db/install/hwy_db_procedures_reads_employees.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_stat_columns::default",
@@ -418,7 +435,7 @@
         "installScript": "db/install/hwy_member_stat_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_pipeline_snake_columns::default",
@@ -428,7 +445,17 @@
         "installScript": "db/install/hwy_member_pipeline_snake_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_pipeline_member_pascal_compat::default",
+        "objectType": "function",
+        "objectName": "hwy_pipeline_member_pascal_compat",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_pipeline_member_pascal_compat.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_stats_recalc_support::default",
@@ -438,7 +465,7 @@
         "installScript": "db/install/hwy_member_stats_recalc_support.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_passed_necessary_dorat::default",
@@ -448,7 +475,7 @@
         "installScript": "db/install/hwy_member_passed_necessary_dorat.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_legacy_edge_parity_table_rename::default",
@@ -458,7 +485,7 @@
         "installScript": "db/install/hwy_legacy_edge_parity_table_rename.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_legacy_edge_parity_column_rename::default",
@@ -468,7 +495,7 @@
         "installScript": "db/install/hwy_legacy_edge_parity_column_rename.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_stats_recalc::default",
@@ -478,7 +505,7 @@
         "installScript": "db/install/hwy_member_stats_recalc.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_legacy_edge_pipeline_compat::default",
@@ -488,7 +515,7 @@
         "installScript": "db/install/hwy_legacy_edge_pipeline_compat.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_legacy_edge_area_limit_agg_functions::default",
@@ -498,177 +525,7 @@
         "installScript": "db/install/hwy_legacy_edge_area_limit_agg_functions.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_ref_mirror_members_gender_limits::default",
-        "objectType": "function",
-        "objectName": "hwy_ref_mirror_members_gender_limits",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_ref_mirror_members_gender_limits.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_ref_mirror_pipeline_reference::default",
-        "objectType": "function",
-        "objectName": "hwy_ref_mirror_pipeline_reference",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_ref_mirror_pipeline_reference.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_legacy_pipeline_views::default",
-        "objectType": "function",
-        "objectName": "hwy_legacy_pipeline_views",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_legacy_pipeline_views.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_legacy_edge_function_retire::default",
-        "objectType": "function",
-        "objectName": "hwy_legacy_edge_function_retire",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_legacy_edge_function_retire.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_member_card_flow_columns::default",
-        "objectType": "function",
-        "objectName": "hwy_member_card_flow_columns",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_member_card_flow_columns.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_candidate_pipeline_indexes::default",
-        "objectType": "function",
-        "objectName": "hwy_candidate_pipeline_indexes",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_candidate_pipeline_indexes.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_candidate_pipeline::default",
-        "objectType": "function",
-        "objectName": "hwy_candidate_pipeline",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_candidate_pipeline.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_card_flow::default",
-        "objectType": "function",
-        "objectName": "hwy_card_flow",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_card_flow.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_members_legacy_pascal_retire::default",
-        "objectType": "function",
-        "objectName": "hwy_members_legacy_pascal_retire",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_members_legacy_pascal_retire.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_meetings::default",
-        "objectType": "function",
-        "objectName": "hwy_meetings",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_meetings.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "view::vw_hwy_members::default",
-        "objectType": "view",
-        "objectName": "vw_hwy_members",
-        "targetDataSource": "default",
-        "installScript": "db/install/vw_hwy_members.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_geo_responsibility_montadhemin_sql::default",
-        "objectType": "function",
-        "objectName": "hwy_geo_responsibility_montadhemin_sql",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_geo_responsibility_montadhemin_sql.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_geo_sql_functions::default",
-        "objectType": "function",
-        "objectName": "hwy_geo_sql_functions",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_geo_sql_functions.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_geo_rename_region_maktab::default",
-        "objectType": "function",
-        "objectName": "hwy_geo_rename_region_maktab",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_geo_rename_region_maktab.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::base_info_title_path::default",
-        "objectType": "function",
-        "objectName": "base_info_title_path",
-        "targetDataSource": "default",
-        "installScript": "db/install/base_info_title_path.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_db_procedures_writes_courses_admin::default",
-        "objectType": "function",
-        "objectName": "hwy_db_procedures_writes_courses_admin",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_db_procedures_writes_courses_admin.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
-      },
-      {
-        "conflictKey": "function::hwy_geo_responsibility_center_stats::default",
-        "objectType": "function",
-        "objectName": "hwy_geo_responsibility_center_stats",
-        "targetDataSource": "default",
-        "installScript": "db/install/hwy_geo_responsibility_center_stats.sqlserver.sql",
-        "uninstallScript": null,
-        "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_geo_responsibility_member_area_limits::default",
@@ -678,7 +535,377 @@
         "installScript": "db/install/hwy_geo_responsibility_member_area_limits.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_ref_mirror_members_gender_limits::default",
+        "objectType": "function",
+        "objectName": "hwy_ref_mirror_members_gender_limits",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_ref_mirror_members_gender_limits.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_ref_mirror_pipeline_reference::default",
+        "objectType": "function",
+        "objectName": "hwy_ref_mirror_pipeline_reference",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_ref_mirror_pipeline_reference.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "view::vw_hwy_members_legacy_row::default",
+        "objectType": "view",
+        "objectName": "vw_hwy_members_legacy_row",
+        "targetDataSource": "default",
+        "installScript": "db/install/vw_hwy_members_legacy_row.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_members_drop_oath_row_columns::default",
+        "objectType": "function",
+        "objectName": "hwy_members_drop_oath_row_columns",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_members_drop_oath_row_columns.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "view::vw_hwy_members_no_admin::default",
+        "objectType": "view",
+        "objectName": "vw_hwy_members_no_admin",
+        "targetDataSource": "default",
+        "installScript": "db/install/vw_hwy_members_no_admin.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_legacy_pipeline_views::default",
+        "objectType": "function",
+        "objectName": "hwy_legacy_pipeline_views",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_legacy_pipeline_views.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_legacy_edge_function_retire::default",
+        "objectType": "function",
+        "objectName": "hwy_legacy_edge_function_retire",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_legacy_edge_function_retire.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_member_card_flow_columns::default",
+        "objectType": "function",
+        "objectName": "hwy_member_card_flow_columns",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_member_card_flow_columns.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_candidate_pipeline_indexes::default",
+        "objectType": "function",
+        "objectName": "hwy_candidate_pipeline_indexes",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_candidate_pipeline_indexes.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_candidate_pipeline::default",
+        "objectType": "function",
+        "objectName": "hwy_candidate_pipeline",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_candidate_pipeline.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_card_flow::default",
+        "objectType": "function",
+        "objectName": "hwy_card_flow",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_card_flow.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_members_legacy_pascal_retire::default",
+        "objectType": "function",
+        "objectName": "hwy_members_legacy_pascal_retire",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_members_legacy_pascal_retire.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_members_drop_pascal_computed_aliases::default",
+        "objectType": "function",
+        "objectName": "hwy_members_drop_pascal_computed_aliases",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_members_drop_pascal_computed_aliases.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_meetings::default",
+        "objectType": "function",
+        "objectName": "hwy_meetings",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_meetings.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_member_masooliat_star_columns::default",
+        "objectType": "function",
+        "objectName": "hwy_member_masooliat_star_columns",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_member_masooliat_star_columns.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_members_chief_masool_rename::default",
+        "objectType": "function",
+        "objectName": "hwy_members_chief_masool_rename",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_members_chief_masool_rename.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_finance_greenfield_compat::default",
+        "objectType": "function",
+        "objectName": "hwy_finance_greenfield_compat",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_finance_greenfield_compat.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_finance_ref_compat::default",
+        "objectType": "function",
+        "objectName": "hwy_finance_ref_compat",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_finance_ref_compat.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_finance_edge_table_rename::default",
+        "objectType": "function",
+        "objectName": "hwy_finance_edge_table_rename",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_finance_edge_table_rename.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_finance_edge_column_rename::default",
+        "objectType": "function",
+        "objectName": "hwy_finance_edge_column_rename",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_finance_edge_column_rename.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_finance_edge_functions::default",
+        "objectType": "function",
+        "objectName": "hwy_finance_edge_functions",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_finance_edge_functions.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_finance_payment::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_finance_payment",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_finance_payment.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_reads_finance::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_reads_finance",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_reads_finance.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_writes_finance::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_writes_finance",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_writes_finance.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_views_finance_payment::default",
+        "objectType": "function",
+        "objectName": "hwy_db_views_finance_payment",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_views_finance_payment.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_finance_masoolin_process::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_finance_masoolin_process",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_finance_masoolin_process.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_views_finance_masoolin::default",
+        "objectType": "function",
+        "objectName": "hwy_db_views_finance_masoolin",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_views_finance_masoolin.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_finance_masoolin::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_finance_masoolin",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_finance_masoolin.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_finance_deferred::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_finance_deferred",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_finance_deferred.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_finance_legacy_retire::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_finance_legacy_retire",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_finance_legacy_retire.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "view::vw_hwy_members::default",
+        "objectType": "view",
+        "objectName": "vw_hwy_members",
+        "targetDataSource": "default",
+        "installScript": "db/install/vw_hwy_members.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_geo_responsibility_montadhemin_sql::default",
+        "objectType": "function",
+        "objectName": "hwy_geo_responsibility_montadhemin_sql",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_geo_responsibility_montadhemin_sql.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_geo_sql_functions::default",
+        "objectType": "function",
+        "objectName": "hwy_geo_sql_functions",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_geo_sql_functions.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_geo_rename_region_maktab::default",
+        "objectType": "function",
+        "objectName": "hwy_geo_rename_region_maktab",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_geo_rename_region_maktab.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::base_info_title_path::default",
+        "objectType": "function",
+        "objectName": "base_info_title_path",
+        "targetDataSource": "default",
+        "installScript": "db/install/base_info_title_path.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_db_procedures_writes_courses_admin::default",
+        "objectType": "function",
+        "objectName": "hwy_db_procedures_writes_courses_admin",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_db_procedures_writes_courses_admin.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
+      },
+      {
+        "conflictKey": "function::hwy_geo_responsibility_center_stats::default",
+        "objectType": "function",
+        "objectName": "hwy_geo_responsibility_center_stats",
+        "targetDataSource": "default",
+        "installScript": "db/install/hwy_geo_responsibility_center_stats.sqlserver.sql",
+        "uninstallScript": null,
+        "seedScript": null,
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_geo_responsibility_patch_history::default",
@@ -688,7 +915,7 @@
         "installScript": "db/install/hwy_geo_responsibility_patch_history.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_institutes_scoped_edit_config::default",
@@ -698,7 +925,7 @@
         "installScript": "db/install/hwy_institutes_scoped_edit_config.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_imagefix_editor_columns::default",
@@ -708,7 +935,7 @@
         "installScript": "db/install/hwy_member_imagefix_editor_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_member_referrer_deleted_columns::default",
@@ -718,7 +945,7 @@
         "installScript": "db/install/hwy_member_referrer_deleted_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_members_mehani_professional_columns::default",
@@ -728,7 +955,7 @@
         "installScript": "db/install/hwy_members_mehani_professional_columns.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       },
       {
         "conflictKey": "function::hwy_retire_tracking_codes_table::default",
@@ -738,7 +965,7 @@
         "installScript": "db/install/hwy_retire_tracking_codes_table.sqlserver.sql",
         "uninstallScript": null,
         "seedScript": null,
-        "registeredAt": "2026-11-08T15:17:38.866Z"
+        "registeredAt": "2026-11-12T04:55:07.446Z"
       }
     ],
     "mcpServers": [],
@@ -747,5 +974,5 @@
     "workflows": [],
     "workflowActions": []
   },
-  "updatedAt": "2026-11-08T15:17:38.866Z"
+  "updatedAt": "2026-11-12T04:55:07.447Z"
 }

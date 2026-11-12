@@ -1,0 +1,86 @@
+{
+  "id": "em_ops_dead_letters",
+  "dataSourceId": "ds_clone_hawiety",
+  "schema": null,
+  "objectName": "base_workflow_dead_letters",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseWorkflowDeadLetters",
+    "tableName": "base_workflow_dead_letters"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "status",
+      "field": "status",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "error_class",
+      "field": "error_class",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "error_code",
+      "field": "error_code",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "node_key",
+      "field": "node_key",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "created_at",
+      "field": "created_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "resolved_at",
+      "field": "resolved_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "ef4d6e56e6666270",
+  "readOnly": true,
+  "labels": {
+    "title": "Dead letters"
+  },
+  "status": "ready",
+  "created_at": "2026-11-12T03:53:46.547Z",
+  "updated_at": "2026-11-12T03:53:46.547Z"
+}

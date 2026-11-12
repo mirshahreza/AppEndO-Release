@@ -12,6 +12,15 @@ import { normalizeNodeCapabilities } from '../../shared/nodeCapabilities';
 
 export const SETTINGS_PATH = path.join(process.cwd(), 'settings.json');
 
+/** Install wizard / clone scripts may point the control plane at an isolated settings file. */
+export const resolveActiveSettingsPath = (): string => {
+  const fromEnv = process.env.APPENDO_SETTINGS_PATH?.trim();
+  if (fromEnv && fs.existsSync(fromEnv)) {
+    return fromEnv;
+  }
+  return SETTINGS_PATH;
+};
+
 const SETTINGS_OBJECT_CACHE_TTL_MS = 30_000;
 
 let cachedSettingsObject: {

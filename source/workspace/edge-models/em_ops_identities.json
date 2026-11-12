@@ -1,0 +1,59 @@
+{
+  "id": "em_ops_identities",
+  "dataSourceId": "ds_clone_hawiety",
+  "schema": null,
+  "objectName": "base_user_identities",
+  "objectType": "TABLE",
+  "sequelize": {
+    "modelName": "BaseUserIdentities",
+    "tableName": "base_user_identities"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "field": "id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": false,
+      "isPrimaryKey": true,
+      "isForeignKey": false
+    },
+    {
+      "name": "user_id",
+      "field": "user_id",
+      "dataType": "bigint",
+      "sequelizeType": "INTEGER",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "provider_kind",
+      "field": "provider_kind",
+      "dataType": "nvarchar",
+      "sequelizeType": "STRING",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    },
+    {
+      "name": "linked_at",
+      "field": "linked_at",
+      "dataType": "timestamp",
+      "sequelizeType": "DATE",
+      "allowNull": true,
+      "isPrimaryKey": false,
+      "isForeignKey": false
+    }
+  ],
+  "primaryKey": "id",
+  "associations": [],
+  "schemaFingerprint": "8e4df76b2de5fbf8",
+  "readOnly": true,
+  "labels": {
+    "title": "Identities"
+  },
+  "status": "ready",
+  "created_at": "2026-11-12T03:53:47.007Z",
+  "updated_at": "2026-11-12T03:53:47.007Z"
+}

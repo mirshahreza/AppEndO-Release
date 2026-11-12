@@ -2072,6 +2072,16 @@ const bundle: Record<string, string> = {
   'shell.inbox.bulk.clearSelection': 'مسح التحديد',
   'shell.inbox.bulk.failed': 'تعذّر تحديث بعض العناصر.',
   'shell.inbox.bulk.completed': 'تم تحديث {count} عنصر.',
+  'shell.inbox.bulk.deleteNoneEligible':
+    'لا يمكن نقل أي من العناصر المحددة إلى «محذوف» — ربما هي في المحذوف مسبقاً.',
+  'shell.inbox.bulk.deleteCompletedAllItemsViewHint':
+    'نُقل {count} عنصر إلى «محذوف». يبقى ظاهراً هنا في «كل العناصر»؛ انتقل إلى صندوق الوارد أو محذوف لرؤية التغيير.',
+  'shell.inbox.bulk.permanentConfirmTitle': 'حذف نهائي؟',
+  'shell.inbox.bulk.permanentConfirmQuestion':
+    'لا يمكن التراجع. سُيُزال {count} عنصر من صندوق الوارد نهائياً.',
+  'shell.inbox.bulk.permanentNoneEligible':
+    'لا يمكن حذف أي عنصر محدد نهائياً. عناصر العمل لا تُحذف بهذه الطريقة؛ الأنواع الأخرى يجب أن تكون في «محذوف» مسبقاً.',
+  'shell.inbox.bulk.permanentCompleted': 'تم الحذف النهائي لـ {count} عنصر.',
   'shell.inbox.markUnread': "تعليم كغير مقروء",
   'shell.inbox.filter.all': "الكل",
   'shell.inbox.filter.workItems': "مهام العمل",

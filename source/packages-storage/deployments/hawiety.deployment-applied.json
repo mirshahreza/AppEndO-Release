@@ -2,8 +2,8 @@
   "schema": "package-deployment-applied",
   "schemaVersion": "1.0.0",
   "packageId": "hawiety",
-  "version": "0.3.8",
-  "appliedAt": "2026-11-08T15:17:42.300Z",
+  "version": "0.3.14",
+  "appliedAt": "2026-11-12T04:55:09.955Z",
   "kind": "vertical-app",
   "deployment": {
     "applyPolicy": "propose",
@@ -110,6 +110,11 @@
         "pageKey": "hwy-etl-console",
         "title": "ETL Console",
         "entry": "ui/pages/hwy_etl_console.bundle.js"
+      },
+      {
+        "pageKey": "hwy-message-audit",
+        "title": "Message audit",
+        "entry": "ui/pages/hwy_message_audit.bundle.js"
       },
       {
         "pageKey": "hwy-business-rules-reference",

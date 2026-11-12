@@ -9,6 +9,8 @@ let controlPlaneInitPromise: Promise<void> | null = null;
 type ControlPlaneInitOptions = ControlPlaneSeedOptions & {
   /** When false, skip additive schema sync (schema already present). */
   pushSchema?: boolean;
+  /** Install-time empty SQL Server: use prisma db push (migrate-diff execute is brittle on greenfield). */
+  sqlServerGreenfieldPush?: boolean;
 };
 
 export function resetControlPlaneInitState(): void {
@@ -39,6 +41,14 @@ const runControlPlaneInit = async (
   if (shouldPush && settings.provider === 'sqlite') {
     restoreSchema = pushControlPlaneSchema(settings);
     await initPrismaControlPlane(settingsPath);
+  } else if (shouldPush && settings.provider === 'sqlserver') {
+    if (isPrismaControlPlaneReady()) {
+      await closePrismaControlPlane();
+    }
+    restoreSchema = pushControlPlaneSchema(settings, {
+      destructive: options.sqlServerGreenfieldPush === true,
+    });
+    await ensurePrismaReadyForControlPlaneInit(settingsPath);
   } else {
     await ensurePrismaReadyForControlPlaneInit(settingsPath);
     if (shouldPush) {

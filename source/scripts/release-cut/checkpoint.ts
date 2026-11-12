@@ -3,7 +3,7 @@ import path from 'node:path';
 import type { ReleaseCutVersionsFile } from './versionManifest';
 import type { SemverBump } from './semver';
 
-export type ReleaseCutPhaseId = 'P0' | 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | 'P6' | 'P7' | 'P8';
+export type ReleaseCutPhaseId = 'P0' | 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | 'P6' | 'P7' | 'P8' | 'P9';
 
 export type ReleaseCutCheckpoint = {
   runId: string;
@@ -14,6 +14,8 @@ export type ReleaseCutCheckpoint = {
   publishPackageIds: string[];
   skipOss: boolean;
   fastMode: boolean;
+  /** When true, P9 runs clone:provision for deploy-line databases (structure only, no ETL). */
+  syncCloneSchemas?: boolean;
   completedPhases: ReleaseCutPhaseId[];
   versions?: ReleaseCutVersionsFile;
   tagName?: string;

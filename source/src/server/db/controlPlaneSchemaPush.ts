@@ -16,6 +16,7 @@ import {
 } from './controlPlaneSchemaDiff';
 import { resolveControlPlaneSchemaProtectedTables } from './controlPlaneSchemaProtectedTables';
 import { compileGeneratedPrismaClientForNode } from './generatedPrismaClientRuntime';
+import { toPrismaCliDatabaseUrl } from './prismaCliSqlServerUrl';
 
 const SCHEMA_PATH = path.join(process.cwd(), 'prisma', 'schema.prisma');
 const GENERATED_CLASS_PATH = path.join(process.cwd(), 'src', 'generated', 'prisma', 'internal', 'class.ts');
@@ -411,11 +412,12 @@ const runPrismaCliCapture = (
   options?: { input?: string },
 ): string => {
   const command = `npx prisma ${args.join(' ')}`;
+  const prismaUrl = toPrismaCliDatabaseUrl(url);
   try {
     return execSync(command, {
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: buildPrismaCliEnv({ DATABASE_URL: url, ...extraEnv }),
+      env: buildPrismaCliEnv({ DATABASE_URL: prismaUrl, ...extraEnv }),
       shell: true,
       input: options?.input,
     }) ?? '';
@@ -443,9 +445,14 @@ const generatePrismaClient = (url: string, schemaPath = SCHEMA_PATH): void => {
 const UNICODE_UPGRADE_SCRIPT = path.join(process.cwd(), 'scripts', 'sqlserver-unicode-upgrade.ts');
 
 const prepareSqlServerDatabaseForSchemaPush = (url: string): void => {
+  const settingsPath = process.env.APPENDO_SETTINGS_PATH?.trim();
   execSync(`npx tsx ${quoteCliArg(UNICODE_UPGRADE_SCRIPT)}`, {
     stdio: 'inherit',
-    env: buildPrismaCliEnv({ CONTROL_PLANE_DATABASE_URL: url }),
+    env: buildPrismaCliEnv(
+      settingsPath
+        ? { APPENDO_SETTINGS_PATH: settingsPath }
+        : { CONTROL_PLANE_DATABASE_URL: url },
+    ),
     shell: true,
   });
 };
@@ -456,13 +463,14 @@ const pushPrismaSchema = (
   schemaPath: string,
   options?: { forceReset?: boolean; dangerousActionConsent?: string },
 ): void => {
+  const prismaUrl = toPrismaCliDatabaseUrl(url);
   const args = [
     'db',
     'push',
     '--schema',
     quoteCliArg(schemaPath),
     '--url',
-    quoteCliArg(url),
+    quoteCliArg(prismaUrl),
     '--accept-data-loss',
   ];
   if (options?.forceReset) {

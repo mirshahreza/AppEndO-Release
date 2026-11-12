@@ -4,6 +4,8 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AppButton,
   AppTableGrid,
+  ConfirmDialogShell,
+  DestructiveConfirmBody,
   ListPageShell,
   ListPageToolbarFrame,
   ListPageToolbarScrollRoot,
@@ -352,6 +354,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
   const [bulkSelectMode, setBulkSelectMode] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
   const [bulkActionBusy, setBulkActionBusy] = useState(false);
+  const [bulkPermanentConfirmOpen, setBulkPermanentConfirmOpen] = useState(false);
   useEffect(() => {
     const handle = window.setTimeout(() => setDebouncedSearch(searchInput), 250);
     return () => window.clearTimeout(handle);
@@ -609,6 +612,13 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
     [filteredItems, selectedRowKeys],
   );
 
+  const bulkPermanentDeleteTargets = useMemo(
+    () => selectedInboxItems.filter(
+      (item) => itemHasInboxSoftDeletedFolderTag(item.folderRefs ?? []) && item.kind !== 'work_item',
+    ),
+    [selectedInboxItems],
+  );
+
   const toggleBulkSelectMode = useCallback(() => {
     setBulkSelectMode((prev) => {
       if (prev) {
@@ -652,6 +662,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
   const runBulkInboxAction = useCallback(async (
     targets: PersonalInboxItem[],
     action: (item: PersonalInboxItem) => Promise<boolean>,
+    successToast?: { labelKey: string; fallback: string },
   ) => {
     if (targets.length === 0 || bulkActionBusy) {
       return;
@@ -671,8 +682,10 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
         { type: 'error' },
       );
     } else if (okCount > 0) {
+      const completedKey = successToast?.labelKey ?? 'shell.inbox.bulk.completed';
+      const completedFallback = successToast?.fallback ?? 'Updated {count} items.';
       showAppFeedbackToast(
-        resolveCultureLabel(t, 'shell.inbox.bulk.completed', 'Updated {count} items.')
+        resolveCultureLabel(t, completedKey, completedFallback)
           .replace('{count}', String(okCount)),
         { type: 'success' },
       );
@@ -737,11 +750,96 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
     const targets = selectedInboxItems.filter(
       (item) => !itemHasInboxSoftDeletedFolderTag(item.folderRefs ?? []),
     );
-    void runBulkInboxAction(targets, async (item) => {
-      const nextRefs = [...new Set([...(item.folderRefs ?? []), PERSONAL_INBOX_SYSTEM_FOLDER_DELETED])];
-      return applyBulkItemFolderUpdate(item, nextRefs);
-    });
-  }, [applyBulkItemFolderUpdate, runBulkInboxAction, selectedInboxItems]);
+    if (selectedInboxItems.length > 0 && targets.length === 0) {
+      showAppFeedbackToast(
+        resolveCultureLabel(
+          t,
+          'shell.inbox.bulk.deleteNoneEligible',
+          'None of the selected items can be moved to Deleted — they may already be in Deleted.',
+        ),
+        { type: 'info' },
+      );
+      return;
+    }
+    const allItemsView = folderFilter.trim().toLowerCase() === 'all';
+    void runBulkInboxAction(
+      targets,
+      async (item) => {
+        const nextRefs = [...new Set([...(item.folderRefs ?? []), PERSONAL_INBOX_SYSTEM_FOLDER_DELETED])];
+        return applyBulkItemFolderUpdate(item, nextRefs);
+      },
+      allItemsView
+        ? {
+          labelKey: 'shell.inbox.bulk.deleteCompletedAllItemsViewHint',
+          fallback:
+            'Moved {count} item(s) to Deleted. They stay visible here in All items; switch to Inbox or Deleted to see the change.',
+        }
+        : undefined,
+    );
+  }, [applyBulkItemFolderUpdate, folderFilter, runBulkInboxAction, selectedInboxItems, t]);
+
+  const bulkPermanentDeleteConfirmTitle = resolveCultureLabel(
+    t,
+    'shell.inbox.bulk.permanentConfirmTitle',
+    'Delete permanently?',
+  );
+  const bulkPermanentDeleteConfirmQuestion = (count: number) => (
+    resolveCultureLabel(
+      t,
+      'shell.inbox.bulk.permanentConfirmQuestion',
+      'This cannot be undone. {count} item(s) will be removed from your inbox for good.',
+    ).replace('{count}', String(count))
+  );
+  const bulkPermanentDeleteNoneEligibleLabel = resolveCultureLabel(
+    t,
+    'shell.inbox.bulk.permanentNoneEligible',
+    'No selected items can be permanently deleted. Work items cannot be removed this way; other types must already be in Deleted.',
+  );
+  const cancelLabel = resolveCultureLabel(t, 'actions.cancel', 'Cancel');
+
+  const requestBulkPermanentDelete = useCallback(() => {
+    if (bulkPermanentDeleteTargets.length === 0) {
+      showAppFeedbackToast(bulkPermanentDeleteNoneEligibleLabel, { type: 'info' });
+      return;
+    }
+    setBulkPermanentConfirmOpen(true);
+  }, [bulkPermanentDeleteNoneEligibleLabel, bulkPermanentDeleteTargets.length]);
+
+  const submitBulkPermanentDelete = useCallback(() => {
+    const targets = bulkPermanentDeleteTargets;
+    if (targets.length === 0 || bulkActionBusy) {
+      setBulkPermanentConfirmOpen(false);
+      return;
+    }
+    setBulkPermanentConfirmOpen(false);
+    void runBulkInboxAction(
+      targets,
+      async (item) => {
+        try {
+          const { deleted, summary } = await personalInboxApi.permanentDeleteItem(item.id);
+          if (!deleted) {
+            return false;
+          }
+          handleItemRemovedFromList(item.id);
+          applyAttentionSummary(summary);
+          await notifyPersonalInboxChangedWithFallback(summary);
+          return true;
+        } catch {
+          return false;
+        }
+      },
+      {
+        labelKey: 'shell.inbox.bulk.permanentCompleted',
+        fallback: 'Permanently deleted {count} item(s).',
+      },
+    );
+  }, [
+    applyAttentionSummary,
+    bulkActionBusy,
+    bulkPermanentDeleteTargets,
+    handleItemRemovedFromList,
+    runBulkInboxAction,
+  ]);
 
   const openItem = useCallback((item: PersonalInboxItem) => {
     if (bulkSelectMode) {
@@ -1590,6 +1688,15 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
       </AppButton>
       <AppButton
         type="button"
+        size="sm"
+        intent="destructive"
+        disabled={bulkActionBusy || bulkPermanentDeleteTargets.length === 0}
+        onClick={requestBulkPermanentDelete}
+      >
+        {permanentDeleteLabel}
+      </AppButton>
+      <AppButton
+        type="button"
         size="icon-md"
         intent="utility"
         aria-label={bulkClearSelectionLabel}
@@ -1688,6 +1795,42 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
         onOpenChange={setCorrespondenceOpen}
         onCompleted={() => void load(true)}
       />
+      {bulkPermanentConfirmOpen ? (
+        <ConfirmDialogShell
+          size="md"
+          title={bulkPermanentDeleteConfirmTitle}
+          icon={<Trash2 className="h-4 w-4 text-rose-600" aria-hidden />}
+          onClose={() => setBulkPermanentConfirmOpen(false)}
+          footer={(
+            <>
+              <AppButton
+                intent="cancel"
+                size="sm"
+                onClick={() => setBulkPermanentConfirmOpen(false)}
+                disabled={bulkActionBusy}
+              >
+                <X className="h-3.5 w-3.5" aria-hidden />
+                {cancelLabel}
+              </AppButton>
+              <AppButton
+                intent="destructive"
+                size="sm"
+                onClick={() => void submitBulkPermanentDelete()}
+                disabled={bulkActionBusy}
+              >
+                <Trash2 className="h-3.5 w-3.5" aria-hidden />
+                {permanentDeleteLabel}
+              </AppButton>
+            </>
+          )}
+        >
+          <DestructiveConfirmBody
+            dir={culture.direction}
+            question={bulkPermanentDeleteConfirmQuestion(bulkPermanentDeleteTargets.length)}
+            warning={null}
+          />
+        </ConfirmDialogShell>
+      ) : null}
     </ListPageShell>
   );
 };

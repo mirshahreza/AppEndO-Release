@@ -1,1 +1,0 @@
-import{j as s}from"./react-vendor-CsZD9bLw.js";import{eF as t,dt as n}from"./lucide-react-Bhi41pQe.js";const r=t,c=n,i=({className:o="h-3.5 w-3.5"})=>s.jsx(t,{className:o,"aria-hidden":"true"}),d=({className:o="h-3.5 w-3.5"})=>s.jsx(n,{className:o,"aria-hidden":"true"});export{i as C,d as R,r as a,c as b};

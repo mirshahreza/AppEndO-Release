@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_data_sources_pivot
  * Operation  : ops_data_sources-pivot (POST /api/ops/ops_data_sources/pivot)
- * Model      : BaseDataSources (em_77a1864205985a4f)
+ * Model      : BaseDataSources (em_ops_data_sources)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_77a1864205985a4f";
+const EDGE_MODEL_ID = "em_ops_data_sources";
 const EDGE_API_DEFINITION_ID = "ea_ops_data_sources_pivot";
 const EDGE_API_OPERATION_ID = "ops_data_sources-pivot";
 const MODEL_ALIAS = "BaseDataSources";

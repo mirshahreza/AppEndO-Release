@@ -19,7 +19,7 @@
   "cacheByParam": false,
   "cacheByUser": false,
   "engineType": "DATA_API",
-  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_scope_memberships_pivot\",\"edgeApiOperationId\":\"ops_scope_memberships-pivot\",\"edgeModelId\":\"em_11771aa29defb94c\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_scope_memberships/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"user_id\",\"dimension_key\",\"created_at\"]}},\"model\":{\"objectName\":\"base_scope_memberships\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"user_id\",\"name\":\"user_id\"},{\"field\":\"dimension_key\",\"name\":\"dimension_key\"},{\"field\":\"created_at\",\"name\":\"created_at\"}]},\"openapi\":{\"summary\":\"Scope memberships pivot\",\"description\":\"Scope memberships pivot (POST /api/ops/ops_scope_memberships/pivot) on base_scope_memberships.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:d61d7910\",\"generatedAt\":\"2026-10-02T23:23:20.436Z\",\"requestExample\":{\"body\":{\"user_id\":\"\",\"dimension_key\":\"\",\"created_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_scope_memberships/pivot\",\"routeNote\":\"Data API pivot on base_scope_memberships.\",\"validationFields\":[\"user_id\",\"dimension_key\",\"created_at\"],\"outputFields\":[\"id\",\"user_id\",\"dimension_key\",\"created_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_scope_memberships_pivot\",\"edgeApiOperationId\":\"ops_scope_memberships-pivot\",\"edgeModelId\":\"em_ops_scope_memberships\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_scope_memberships/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"user_id\",\"dimension_key\",\"created_at\"]}},\"model\":{\"objectName\":\"base_scope_memberships\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"user_id\",\"name\":\"user_id\"},{\"field\":\"dimension_key\",\"name\":\"dimension_key\"},{\"field\":\"created_at\",\"name\":\"created_at\"}]},\"openapi\":{\"summary\":\"Scope memberships pivot\",\"description\":\"Scope memberships pivot (POST /api/ops/ops_scope_memberships/pivot) on base_scope_memberships.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:91c7b03c\",\"generatedAt\":\"2026-11-11T12:30:04.380Z\",\"requestExample\":{\"body\":{\"user_id\":\"\",\"dimension_key\":\"\",\"created_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_scope_memberships/pivot\",\"routeNote\":\"Data API pivot on base_scope_memberships.\",\"validationFields\":[\"user_id\",\"dimension_key\",\"created_at\"],\"outputFields\":[\"id\",\"user_id\",\"dimension_key\",\"created_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
   "accessControl": {
     "accessMode": "specific",
     "allowRoles": [
@@ -30,8 +30,8 @@
     "denyUsers": []
   },
   "hooks": {},
-  "createdAt": "2026-10-02T23:23:20.603Z",
-  "updatedAt": "2026-10-02T23:23:20.603Z",
+  "createdAt": "2026-11-11T12:30:05.352Z",
+  "updatedAt": "2026-11-11T12:30:05.352Z",
   "createdBy": null,
   "updatedBy": null
 }

@@ -39,8 +39,10 @@ import {
   shouldPackPublicSiteHomePortal,
 } from '../../src/features/packages/lib/packageHomePortalPacking';
 import { DEFAULT_PACKAGE_INSTALL_OVERRIDE_POLICY } from '../../src/shared/api/contracts/package-manifest/types';
-import { SETTINGS_PATH } from '../../src/server/config/settingsFile';
+import { resolveActiveSettingsPath } from '../../src/server/config/settingsFile';
+import { hydrateDataSourcePassword } from '../../src/server/config/dataSourceSecrets';
 import { getDataSourcesFromSettings } from '../../src/server/db/dataSourcesStore';
+import type { StoredDataSource } from '../../src/core/database/EdgeDbRouter';
 import { closePrismaControlPlane, initPrismaControlPlane } from '../../src/server/db/prismaControlPlane';
 import {
   isPluginRuntimeEnabled,
@@ -74,10 +76,40 @@ const isCmsDraft = (folder: string, name: string, id: string): boolean => {
 
 const isCmsObjectName = (objectName: string): boolean => objectName.trim().toLowerCase().startsWith('cms_');
 
+const CLONE_DEV_SQL_LOGIN = 'appendo_clone_dev';
+
+const packDataSourcesForCmsCapture = (settingsPath: string): StoredDataSource[] => {
+  const hydrated = getDataSourcesFromSettings(settingsPath).map((item) =>
+    hydrateDataSourcePassword(item),
+  );
+  const overrideLogin = process.env.APPENDO_CMS_PACK_SQL_LOGIN?.trim();
+  if (overrideLogin !== CLONE_DEV_SQL_LOGIN) {
+    return hydrated;
+  }
+  const password = process.env.APPENDO_CLONE_SQL_PASSWORD?.trim();
+  if (!password) {
+    throw new Error(
+      'APPENDO_CLONE_SQL_PASSWORD is required when APPENDO_CMS_PACK_SQL_LOGIN=appendo_clone_dev.',
+    );
+  }
+  return hydrated.map((item) =>
+    item.isDefault
+      ? {
+          ...item,
+          username: CLONE_DEV_SQL_LOGIN,
+          password,
+          passwordCipher: undefined,
+          passwordEnvKey: undefined,
+        }
+      : item,
+  );
+};
+
 async function main(): Promise<void> {
   const reinstallFlag = process.argv.includes('--reinstall');
   const upload = process.argv.includes('--upload') || reinstallFlag;
-  const sources = getDataSourcesFromSettings(SETTINGS_PATH);
+  const settingsPath = resolveActiveSettingsPath();
+  const sources = packDataSourcesForCmsCapture(settingsPath);
   const source = sources.find((item) => item.isDefault) ?? sources[0];
   if (!source) {
     throw new Error('No data source is configured in settings.json.');
@@ -86,12 +118,12 @@ async function main(): Promise<void> {
   console.log(`Data source: ${source.name} (${source.type} / ${source.id})`);
 
   const edgeDbQuery = createEdgeDbQueryExecutor({
-    getDataSources: () => getDataSourcesFromSettings(SETTINGS_PATH),
+    getDataSources: () => packDataSourcesForCmsCapture(settingsPath),
   });
 
   console.log('Capturing CMS schema, vocab, content, and files…');
   const captured = await captureCmsModule(
-    { edgeDbQuery, settingsPath: SETTINGS_PATH },
+    { edgeDbQuery, settingsPath },
     { dataSourceId: source.id, includeOptionalRecords: true },
   );
 
@@ -302,7 +334,7 @@ async function main(): Promise<void> {
   }
 
   if (reinstallFlag) {
-    await initPrismaControlPlane(SETTINGS_PATH);
+    await initPrismaControlPlane(settingsPath);
     await bootstrapPlatformSettingsCaches();
     const lifecycle = getDefaultPackageLifecycleCoordinator();
     const installOptions = {

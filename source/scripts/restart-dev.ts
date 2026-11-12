@@ -4,7 +4,13 @@ import os from 'node:os';
 import path from 'node:path';
 import { removePendingInstallSqliteLeftovers } from './lib/sqliteInstallResetFiles';
 
-const SETTINGS_PATH = path.join(process.cwd(), 'settings.json');
+const resolveActiveSettingsPath = (): string => {
+  const fromEnv = process.env.APPENDO_SETTINGS_PATH?.trim();
+  if (fromEnv && fs.existsSync(fromEnv)) {
+    return fromEnv;
+  }
+  return path.join(process.cwd(), 'settings.json');
+};
 const PORT_SCAN_ATTEMPTS = 25;
 const VITE_WS_PORTS = [24678];
 const SERVER_COMMAND_MARKERS = ['src/server/index.ts', 'dist/server.cjs'];
@@ -21,9 +27,10 @@ const readRuntimePorts = (): { basePort: number; hmrPort: number } => {
   let basePort = 3000;
   let configuredHmrPort = 0;
 
-  if (fs.existsSync(SETTINGS_PATH)) {
+  const settingsPath = resolveActiveSettingsPath();
+  if (fs.existsSync(settingsPath)) {
     try {
-      const settings = JSON.parse(fs.readFileSync(SETTINGS_PATH, 'utf8')) as {
+      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as {
         runtime?: { port?: unknown; hmrPort?: unknown };
       };
       const parsedPort = Number(settings.runtime?.port);
@@ -238,7 +245,7 @@ const main = async (): Promise<void> => {
   await sleep(400);
 
   const lockedSqlite = removePendingInstallSqliteLeftovers({
-    settingsPath: SETTINGS_PATH,
+    settingsPath: resolveActiveSettingsPath(),
     backupPath: path.join(process.cwd(), 'settings.json.install-backup'),
   });
   if (lockedSqlite.length > 0) {

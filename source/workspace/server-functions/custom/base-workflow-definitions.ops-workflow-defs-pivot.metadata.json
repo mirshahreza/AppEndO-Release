@@ -19,7 +19,7 @@
   "cacheByParam": false,
   "cacheByUser": false,
   "engineType": "DATA_API",
-  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_workflow_defs_pivot\",\"edgeApiOperationId\":\"ops_workflow_defs-pivot\",\"edgeModelId\":\"em_5282477fc36a2a52\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_workflow_defs/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"]}},\"model\":{\"objectName\":\"base_workflow_definitions\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"key\",\"name\":\"key\"},{\"field\":\"lifecycle_status\",\"name\":\"lifecycle_status\"},{\"field\":\"created_at\",\"name\":\"created_at\"},{\"field\":\"last_published_at\",\"name\":\"last_published_at\"}]},\"openapi\":{\"summary\":\"Workflow definitions pivot\",\"description\":\"Workflow definitions pivot (POST /api/ops/ops_workflow_defs/pivot) on base_workflow_definitions.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:b6fe97b8\",\"generatedAt\":\"2026-10-02T23:23:19.007Z\",\"requestExample\":{\"body\":{\"key\":\"\",\"lifecycle_status\":\"\",\"created_at\":\"\",\"last_published_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_workflow_defs/pivot\",\"routeNote\":\"Data API pivot on base_workflow_definitions.\",\"validationFields\":[\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"],\"outputFields\":[\"id\",\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_workflow_defs_pivot\",\"edgeApiOperationId\":\"ops_workflow_defs-pivot\",\"edgeModelId\":\"em_ops_workflow_defs\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_workflow_defs/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"]}},\"model\":{\"objectName\":\"base_workflow_definitions\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"key\",\"name\":\"key\"},{\"field\":\"lifecycle_status\",\"name\":\"lifecycle_status\"},{\"field\":\"created_at\",\"name\":\"created_at\"},{\"field\":\"last_published_at\",\"name\":\"last_published_at\"}]},\"openapi\":{\"summary\":\"Workflow definitions pivot\",\"description\":\"Workflow definitions pivot (POST /api/ops/ops_workflow_defs/pivot) on base_workflow_definitions.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:18311204\",\"generatedAt\":\"2026-11-11T12:29:55.895Z\",\"requestExample\":{\"body\":{\"key\":\"\",\"lifecycle_status\":\"\",\"created_at\":\"\",\"last_published_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_workflow_defs/pivot\",\"routeNote\":\"Data API pivot on base_workflow_definitions.\",\"validationFields\":[\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"],\"outputFields\":[\"id\",\"key\",\"lifecycle_status\",\"created_at\",\"last_published_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
   "accessControl": {
     "accessMode": "specific",
     "allowRoles": [
@@ -30,8 +30,8 @@
     "denyUsers": []
   },
   "hooks": {},
-  "createdAt": "2026-10-02T23:23:19.158Z",
-  "updatedAt": "2026-10-02T23:23:19.158Z",
+  "createdAt": "2026-11-11T12:29:56.915Z",
+  "updatedAt": "2026-11-11T12:29:56.915Z",
   "createdBy": null,
   "updatedBy": null
 }

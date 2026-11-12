@@ -1,4 +1,4 @@
-import { execFile } from 'child_process';
+import { execFile, execFileSync } from 'child_process';
 import os from 'os';
 import { promisify } from 'util';
 import type { config as MssqlConfig } from 'mssql';
@@ -35,40 +35,14 @@ export const isLikelyLocalSqlHost = (server: string): boolean => {
   return normalized === os.hostname().toLowerCase();
 };
 
-/** Read the local named-instance TCP port from the Windows SQL Server registry (avoids SQL Browser). */
-export const resolveLocalSqlInstancePortFromRegistry = async (instanceName: string): Promise<number | null> => {
-  if (process.platform !== 'win32') return null;
-
-  const instance = instanceName.trim();
-  if (!instance) return null;
-
-  const instanceNamesKey = 'HKLM\\SOFTWARE\\Microsoft\\Microsoft SQL Server\\Instance Names\\SQL';
-  let instanceId: string | null = null;
-
-  try {
-    const candidates = Array.from(new Set([instance, instance.toUpperCase(), instance.toLowerCase()]));
-    for (const candidate of candidates) {
-      try {
-        const { stdout } = await execFileAsync('reg', ['query', instanceNamesKey, '/v', candidate], { windowsHide: true });
-        const value = parseWindowsRegistryValue(stdout, candidate);
-        if (value) {
-          instanceId = value;
-          break;
-        }
-      } catch {
-        // Try next candidate casing.
-      }
-    }
-  } catch {
-    return null;
-  }
-
-  if (!instanceId) return null;
-
+const lookupInstanceTcpPort = (instanceId: string): number | null => {
   const tcpKey = `HKLM\\SOFTWARE\\Microsoft\\Microsoft SQL Server\\${instanceId}\\MSSQLServer\\SuperSocketNetLib\\Tcp\\IPAll`;
 
   try {
-    const { stdout: tcpPortStdout } = await execFileAsync('reg', ['query', tcpKey, '/v', 'TcpPort'], { windowsHide: true });
+    const tcpPortStdout = execFileSync('reg', ['query', tcpKey, '/v', 'TcpPort'], {
+      windowsHide: true,
+      encoding: 'utf8',
+    });
     const fixedPort = parsePositivePortOrNull(parseWindowsRegistryValue(tcpPortStdout, 'TcpPort'));
     if (fixedPort) return fixedPort;
   } catch {
@@ -76,7 +50,10 @@ export const resolveLocalSqlInstancePortFromRegistry = async (instanceName: stri
   }
 
   try {
-    const { stdout: dynamicStdout } = await execFileAsync('reg', ['query', tcpKey, '/v', 'TcpDynamicPorts'], { windowsHide: true });
+    const dynamicStdout = execFileSync('reg', ['query', tcpKey, '/v', 'TcpDynamicPorts'], {
+      windowsHide: true,
+      encoding: 'utf8',
+    });
     const dynamicPort = parsePositivePortOrNull(parseWindowsRegistryValue(dynamicStdout, 'TcpDynamicPorts'));
     if (dynamicPort) return dynamicPort;
   } catch {
@@ -84,6 +61,54 @@ export const resolveLocalSqlInstancePortFromRegistry = async (instanceName: stri
   }
 
   return null;
+};
+
+const resolveInstanceIdFromRegistry = (instance: string): string | null => {
+  const instanceNamesKey = 'HKLM\\SOFTWARE\\Microsoft\\Microsoft SQL Server\\Instance Names\\SQL';
+  const candidates = Array.from(new Set([instance, instance.toUpperCase(), instance.toLowerCase()]));
+  for (const candidate of candidates) {
+    try {
+      const stdout = execFileSync('reg', ['query', instanceNamesKey, '/v', candidate], {
+        windowsHide: true,
+        encoding: 'utf8',
+      });
+      const value = parseWindowsRegistryValue(stdout, candidate);
+      if (value) return value;
+    } catch {
+      // Try next candidate casing.
+    }
+  }
+  return null;
+};
+
+/** Sync registry lookup for Prisma CLI / other blocking callers (Windows only). */
+export const resolveLocalSqlInstancePortFromRegistrySync = (instanceName: string): number | null => {
+  if (process.platform !== 'win32') return null;
+  const instance = instanceName.trim();
+  if (!instance) return null;
+  try {
+    const instanceId = resolveInstanceIdFromRegistry(instance);
+    if (!instanceId) return null;
+    return lookupInstanceTcpPort(instanceId);
+  } catch {
+    return null;
+  }
+};
+
+/** Read the local named-instance TCP port from the Windows SQL Server registry (avoids SQL Browser). */
+export const resolveLocalSqlInstancePortFromRegistry = async (instanceName: string): Promise<number | null> => {
+  if (process.platform !== 'win32') return null;
+
+  const instance = instanceName.trim();
+  if (!instance) return null;
+
+  try {
+    const instanceId = resolveInstanceIdFromRegistry(instance);
+    if (!instanceId) return null;
+    return lookupInstanceTcpPort(instanceId);
+  } catch {
+    return null;
+  }
 };
 
 export const applyDirectTcpPortToSqlServerConfig = (config: MssqlConfig, port: number): MssqlConfig => {

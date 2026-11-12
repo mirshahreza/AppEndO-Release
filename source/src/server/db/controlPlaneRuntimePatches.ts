@@ -1,4 +1,9 @@
+import { resolveActiveSettingsPath } from '../config/settingsFile';
 import type { ControlPlaneDatabaseSettings } from './controlPlaneDatabase';
+import { readControlPlaneDatabaseSettings } from './controlPlaneDatabase';
+import { parseSqlServerConnectionUrl } from './sqlServerControlPlaneUrl';
+import { isVerticalRuntimeEnabled } from '../services/vertical/verticalRuntime';
+import { readInstallSettings } from './installSettingsStore';
 import { ensureDbEnrichmentRunProgressLogColumn } from './controlPlaneEnrichmentSchemaPatches';
 import {
   CONTROL_PLANE_BOOT_MARKER_KEYS,
@@ -16,6 +21,23 @@ import { ensureHwyMemberDossierSatellitesSchema } from '../domain/vx/ensureHwyMe
 import { ensureHwyMemberImageFixEditorSchema } from '../domain/vx/ensureHwyMemberImageFixEditorSchema';
 import { ensureHwyMembersSelfRegistrationSchema } from '../domain/vx/ensureHwyMembersSelfRegistrationSchema';
 import { ensureHwyNakhebinPhoneSchema } from '../domain/vx/ensureHwyNakhebinPhoneSchema';
+
+const shouldRunVerticalRuntimePatches = (): boolean => {
+  if (!isVerticalRuntimeEnabled()) {
+    return false;
+  }
+  const settingsPath = resolveActiveSettingsPath();
+  const install = readInstallSettings(settingsPath);
+  if (install.pending === true || install.databaseInitialized !== true) {
+    return false;
+  }
+  const active = readControlPlaneDatabaseSettings(settingsPath);
+  if (active.provider !== 'sqlserver') {
+    return true;
+  }
+  const database = parseSqlServerConnectionUrl(active.url).database.trim().toLowerCase();
+  return database.includes('vertical');
+};
 
 /**
  * Idempotent runtime DDL (sample mock, MSSQL unicode/index, profile/enrichment patches).
@@ -44,12 +66,14 @@ export const ensureControlPlaneRuntimePatches = async (
   await ensureUserProfileLegalEntityColumns(provider);
   await ensureDbEnrichmentRunProgressLogColumn(provider);
   await ensureNationalCodeCheckDropped(provider);
-  await ensureHwyNakhebinPhoneSchema(provider);
-  await ensureHwyMembersSelfRegistrationSchema();
-  await ensureHwyMemberImageFixEditorSchema();
-  await ensureHwyMemberDossierSatellitesSchema();
-  await ensureHwyCoursesActivitiesSchema();
-  await ensureHwyGeoResponsibilitySchema();
+  if (shouldRunVerticalRuntimePatches()) {
+    await ensureHwyNakhebinPhoneSchema(provider);
+    await ensureHwyMembersSelfRegistrationSchema();
+    await ensureHwyMemberImageFixEditorSchema();
+    await ensureHwyMemberDossierSatellitesSchema();
+    await ensureHwyCoursesActivitiesSchema();
+    await ensureHwyGeoResponsibilitySchema();
+  }
 
   await markControlPlaneBootApplied(
     provider,

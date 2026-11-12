@@ -48,9 +48,14 @@ export const resolveDataSourcePassword = (input: DataSourceSecretInput): string 
   const raw = String(input.password ?? '').trim();
   const envKey = resolveEnvKey(input);
   const fromEnv = readEnvPassword(envKey);
+  const cloneDevPassword = process.env.APPENDO_CLONE_SQL_PASSWORD?.trim();
 
   if ((!raw || PASSWORD_ENV_PLACEHOLDERS.has(raw)) && fromEnv) {
     return fromEnv;
+  }
+
+  if ((!raw || PASSWORD_ENV_PLACEHOLDERS.has(raw)) && cloneDevPassword) {
+    return cloneDevPassword;
   }
 
   if (raw && !PASSWORD_ENV_PLACEHOLDERS.has(raw)) {

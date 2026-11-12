@@ -9,6 +9,7 @@ import {
   isLikelyLocalSqlHost,
   resolveLocalSqlInstancePortFromRegistry,
 } from './sqlServerLocalInstancePort';
+import { useWindowsIntegratedSqlForServer } from '../../server/db/localWindowsSqlIntegrated';
 
 export type StoredDataSource = {
   id: string;
@@ -150,9 +151,15 @@ export const buildSqlServerConfig = (source: StoredDataSource, poolMax: number):
   const namedInstance = Boolean(instanceName);
   const port = namedInstance ? null : (explicitPort ?? hostPort ?? SQL_SERVER_DEFAULT_PORT);
 
+  const windowsIntegrated = useWindowsIntegratedSqlForServer(server || 'localhost', source.password ?? '');
+
   return {
-    user: source.username || undefined,
-    password: source.password || undefined,
+    ...(windowsIntegrated
+      ? {}
+      : {
+          user: source.username || undefined,
+          password: source.password || undefined,
+        }),
     server: server || 'localhost',
     ...(port ? { port } : {}),
     database: source.database || undefined,
@@ -163,6 +170,7 @@ export const buildSqlServerConfig = (source: StoredDataSource, poolMax: number):
       trustServerCertificate: toSqlServerBoolean(source.trustServerCertificate, true),
       connectTimeout: 60_000,
       requestTimeout: 60_000,
+      ...(windowsIntegrated ? { trustedConnection: true } : {}),
       ...(namedInstance ? { instanceName } : {}),
     },
     pool: {

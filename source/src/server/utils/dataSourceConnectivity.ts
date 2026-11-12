@@ -88,17 +88,41 @@ const testSqlServerConnectivity = async (source: any) => {
     return { status: 'error', message: 'Provide SQL Server port or host\\instance name.' };
   }
 
-  if (!username || !password) {
-    return { status: 'error', message: 'SQL Server username and password are required for real connectivity test.' };
+  if (!username) {
+    return { status: 'error', message: 'SQL Server username is required for connectivity test.' };
+  }
+
+  const useWindowsIntegrated =
+    process.env.APPENDO_CLONE_WINDOWS_SQL_TRUSTED === '1'
+    && process.platform === 'win32'
+    && isLikelyLocalSqlHost(server)
+    && !password;
+
+  if (!useWindowsIntegrated && !password) {
+    const allowEmptyLocalSa =
+      isLikelyLocalSqlHost(server)
+      && username.toLowerCase() === 'sa'
+      && process.env.APPENDO_CLONE_DISALLOW_EMPTY_SA_PASSWORD !== '1';
+    if (!allowEmptyLocalSa) {
+      return {
+        status: 'error',
+        message: 'SQL Server password is required for connectivity test (set APPENDO_CLONE_WINDOWS_SQL_TRUSTED=1 for integrated auth).',
+      };
+    }
   }
 
   const baseConfig: mssql.config = {
     server,
-    user: username,
-    password,
+    ...(useWindowsIntegrated
+      ? {}
+      : {
+          user: username,
+          password,
+        }),
     options: {
       encrypt,
       trustServerCertificate,
+      ...(useWindowsIntegrated ? { trustedConnection: true } : {}),
       ...(useInstanceLookup ? { instanceName } : {}),
     },
     connectionTimeout: 5000,

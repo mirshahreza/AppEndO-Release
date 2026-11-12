@@ -14,12 +14,13 @@ Use this **AppEndO-Release** snapshot with a **dedicated control-plane database*
 2. From **`source/`**:
 
 ```bash
-npm run clone:bootstrap -- --profile oss
-npm install
-npm run dev
+# From AppEndO monorepo (recommended):
+npx tsx ../AppEndO/scripts/release-cut/bootstrap-clone-profile.ts --profile oss --inherit-credentials --force
+npx tsx ../AppEndO/scripts/release-cut/run-clone-install-wizard.ts --profile oss
+npx tsx ../AppEndO/scripts/release-cut/provision-clone-database.ts --profile oss
 ```
 
-3. Open `http://localhost:{{RECOMMENDED_DEV_PORT}}/install` and finish the wizard.
+3. On a **fresh** database, finish install once (headless wizard above, or browser: `http://localhost:{{RECOMMENDED_DEV_PORT}}/install`) **before** provision.
 4. Install bundled ZIPs from `../packages/` (cms, remote-hubs) via Package Manager.
 
 ## Rules

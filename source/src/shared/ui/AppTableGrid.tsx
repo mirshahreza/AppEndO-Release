@@ -677,7 +677,11 @@ function AppTableGridColumnMode<TRow>({
         const key = String(getRowKey(row));
         const checked = selectedKeySet.has(key);
         return (
-          <span data-row-selection-key={key}>
+          <span
+            data-row-selection-key={key}
+            onMouseDown={(event) => event.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
+          >
             <UiCheckbox
               size="sm"
               className={selectionControlClassName}

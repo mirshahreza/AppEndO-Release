@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_logs_pivot
  * Operation  : ops_logs-pivot (POST /api/ops/ops_logs/pivot)
- * Model      : BaseLogsApp (em_a17944326b172489)
+ * Model      : BaseLogsApp (em_ops_logs)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_a17944326b172489";
+const EDGE_MODEL_ID = "em_ops_logs";
 const EDGE_API_DEFINITION_ID = "ea_ops_logs_pivot";
 const EDGE_API_OPERATION_ID = "ops_logs-pivot";
 const MODEL_ALIAS = "BaseLogsApp";

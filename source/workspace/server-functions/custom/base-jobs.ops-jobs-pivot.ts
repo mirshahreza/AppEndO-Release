@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_jobs_pivot
  * Operation  : ops_jobs-pivot (POST /api/ops/ops_jobs/pivot)
- * Model      : BaseJobs (em_7adfdb41e3b051b0)
+ * Model      : BaseJobs (em_ops_jobs)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_7adfdb41e3b051b0";
+const EDGE_MODEL_ID = "em_ops_jobs";
 const EDGE_API_DEFINITION_ID = "ea_ops_jobs_pivot";
 const EDGE_API_OPERATION_ID = "ops_jobs-pivot";
 const MODEL_ALIAS = "BaseJobs";

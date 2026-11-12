@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-Dvo3WQhX.js","assets/react-vendor-CsZD9bLw.js","assets/UsersIcon-DCeYIj7S.js"])))=>i.map(i=>d[i]);
-import{j0 as a}from"./index-X8VNd1Qb.js";import"./react-vendor-CsZD9bLw.js";import"./tanstack-query-BjZ08O4H.js";let t=null;async function l(){if(t)return t;const e=await a(()=>import("./index-Dvo3WQhX.js"),__vite__mapDeps([0,1,2])),r=Object.keys(e).filter(o=>o.endsWith("Icon")).sort((o,c)=>o.localeCompare(c)).map(o=>[o,e[o]]);return t={entries:r,map:Object.fromEntries(r)},t}export{l as default};

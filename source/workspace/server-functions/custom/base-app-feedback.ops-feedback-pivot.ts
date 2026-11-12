@@ -3,7 +3,7 @@
  *
  * Definition : ea_ops_feedback_pivot
  * Operation  : ops_feedback-pivot (POST /api/ops/ops_feedback/pivot)
- * Model      : BaseAppFeedback (em_f186ade9fbfe1ad0)
+ * Model      : BaseAppFeedback (em_ops_feedback)
  *
  * Runtime engine: DATA_API (Sequelize DataApiExecutor).
  * Custom handlers that bypass DataApiExecutor must call emitRecordEvent.
@@ -32,7 +32,7 @@ import { resolvePrimaryKeyWhere } from '@/server/services/data-api/sequelize/bui
 import { resolvePublishedEdgeModel, resolveFieldEnrichmentDeps } from '@/server/services/data-api/dataApiPublishedRuntime';
 import { executePivot } from '@/server/services/data-api/pivotExecute';
 
-const EDGE_MODEL_ID = "em_f186ade9fbfe1ad0";
+const EDGE_MODEL_ID = "em_ops_feedback";
 const EDGE_API_DEFINITION_ID = "ea_ops_feedback_pivot";
 const EDGE_API_OPERATION_ID = "ops_feedback-pivot";
 const MODEL_ALIAS = "BaseAppFeedback";

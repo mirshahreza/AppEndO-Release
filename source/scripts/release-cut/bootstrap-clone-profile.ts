@@ -11,10 +11,16 @@ import { RELEASE_CUT_CLONE_PROFILES, cloneProfileFor } from './releaseCutClonePr
 
 const TEMPLATES_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'templates');
 
-function parseArgs(argv: string[]): { profile: ReleaseCutCloneProfileId; database?: string; force: boolean } {
+function parseArgs(argv: string[]): {
+  profile: ReleaseCutCloneProfileId;
+  database?: string;
+  force: boolean;
+  inheritCredentials: boolean;
+} {
   let profile: ReleaseCutCloneProfileId | undefined;
   let database: string | undefined;
   let force = false;
+  let inheritCredentials = false;
 
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
@@ -26,6 +32,8 @@ function parseArgs(argv: string[]): { profile: ReleaseCutCloneProfileId; databas
       i += 1;
     } else if (arg === '--force') {
       force = true;
+    } else if (arg === '--inherit-credentials') {
+      inheritCredentials = true;
     }
   }
 
@@ -34,7 +42,63 @@ function parseArgs(argv: string[]): { profile: ReleaseCutCloneProfileId; databas
     throw new Error(`Usage: clone:bootstrap -- --profile <${ids}> [--database Name] [--force]`);
   }
 
-  return { profile, database, force };
+  return { profile, database, force, inheritCredentials };
+}
+
+function resolveMonorepoSettingsPath(sourceRoot: string): string | undefined {
+  const candidates = [
+    path.join(sourceRoot, '..', '..', 'AppEndO', 'settings.json'),
+    path.join(sourceRoot, '..', '..', '..', 'AppEndO', 'settings.json'),
+    path.join(sourceRoot, 'settings.json'),
+  ];
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  return undefined;
+}
+
+function inheritSqlCredentials(
+  target: Record<string, unknown>,
+  monorepoSettings: Record<string, unknown>,
+): void {
+  const sources = monorepoSettings.dataSources as Array<Record<string, unknown>> | undefined;
+  const donor = Array.isArray(sources) ? sources.find((s) => s.isDefault) ?? sources[0] : undefined;
+  if (!donor) return;
+
+  const targetSources = target.dataSources as Array<Record<string, unknown>> | undefined;
+  if (!Array.isArray(targetSources) || !targetSources[0]) return;
+
+  const row = targetSources[0];
+  if (typeof donor.username === 'string') row.username = donor.username;
+  if (typeof donor.host === 'string') row.host = donor.host;
+  if (typeof donor.port === 'number') row.port = donor.port;
+  if (donor.passwordCipher) row.passwordCipher = donor.passwordCipher;
+  if (donor.encrypt !== undefined) row.encrypt = donor.encrypt;
+  if (donor.trustServerCertificate !== undefined) row.trustServerCertificate = donor.trustServerCertificate;
+
+  const db = target.database as Record<string, unknown> | undefined;
+  const donorDb = monorepoSettings.database as Record<string, unknown> | undefined;
+  if (db && typeof db.url === 'string' && typeof donorDb?.url === 'string') {
+    const donorUrl = donorDb.url;
+    const passwordMatch = donorUrl.match(/password=([^;]*)/i);
+    if (passwordMatch && !/password=/i.test(db.url)) {
+      const insert = `password=${passwordMatch[1]}`;
+      db.url = db.url.includes(';encrypt=')
+        ? db.url.replace(/;encrypt=/i, `;${insert};encrypt=`)
+        : `${db.url};${insert}`;
+    }
+  }
+
+  const targetRuntime = target.runtime as Record<string, unknown> | undefined;
+  const donorRuntime = monorepoSettings.runtime as Record<string, unknown> | undefined;
+  if (targetRuntime && donorRuntime) {
+    if (typeof donorRuntime.accessTokenSecret === 'string') {
+      targetRuntime.accessTokenSecret = donorRuntime.accessTokenSecret;
+    }
+    if (typeof donorRuntime.refreshTokenSecret === 'string') {
+      targetRuntime.refreshTokenSecret = donorRuntime.refreshTokenSecret;
+    }
+  }
 }
 
 function resolveSourceRoot(cwd: string): string {
@@ -70,7 +134,7 @@ function applyDatabaseOverride(settings: Record<string, unknown>, databaseName: 
 }
 
 function main(): void {
-  const { profile: profileId, database, force } = parseArgs(process.argv.slice(2));
+  const { profile: profileId, database, force, inheritCredentials } = parseArgs(process.argv.slice(2));
   const profile = cloneProfileFor(profileId);
   const sourceRoot = resolveSourceRoot(process.cwd());
 
@@ -96,6 +160,15 @@ function main(): void {
   const parsed = JSON.parse(body) as Record<string, unknown>;
   const dbName = database ?? profile.recommendedControlPlaneDatabase;
   applyDatabaseOverride(parsed, dbName, profile.recommendedDevPort);
+
+  if (inheritCredentials) {
+    const monorepoPath = resolveMonorepoSettingsPath(sourceRoot);
+    if (!monorepoPath) {
+      throw new Error('--inherit-credentials: could not find AppEndO settings.json beside clone');
+    }
+    const monorepo = JSON.parse(fs.readFileSync(monorepoPath, 'utf8')) as Record<string, unknown>;
+    inheritSqlCredentials(parsed, monorepo);
+  }
 
   fs.writeFileSync(settingsPath, `${JSON.stringify(parsed, null, 2)}\n`, 'utf8');
   console.log(`Wrote ${settingsPath} (profile=${profileId}, database=${dbName})`);

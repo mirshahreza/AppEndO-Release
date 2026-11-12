@@ -19,7 +19,7 @@
   "cacheByParam": false,
   "cacheByUser": false,
   "engineType": "DATA_API",
-  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_identities_pivot\",\"edgeApiOperationId\":\"ops_identities-pivot\",\"edgeModelId\":\"em_24f4928b2dd23610\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_identities/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"]}},\"model\":{\"objectName\":\"base_user_identities\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"user_id\",\"name\":\"user_id\"},{\"field\":\"provider_kind\",\"name\":\"provider_kind\"},{\"field\":\"linked_at\",\"name\":\"linked_at\"}]},\"openapi\":{\"summary\":\"Identities pivot\",\"description\":\"Identities pivot (POST /api/ops/ops_identities/pivot) on base_user_identities.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:9b574067\",\"generatedAt\":\"2026-10-02T23:23:20.092Z\",\"requestExample\":{\"body\":{\"user_id\":\"\",\"provider_kind\":\"\",\"linked_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_identities/pivot\",\"routeNote\":\"Data API pivot on base_user_identities.\",\"validationFields\":[\"user_id\",\"provider_kind\",\"linked_at\"],\"outputFields\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
+  "metadataJson": "{\"origin\":\"data-api\",\"routeKind\":\"data-api\",\"edgeApiDefinitionId\":\"ea_ops_identities_pivot\",\"edgeApiOperationId\":\"ops_identities-pivot\",\"edgeModelId\":\"em_ops_identities\",\"operation\":{\"kind\":\"pivot\",\"method\":\"POST\",\"pathPattern\":\"/api/ops/ops_identities/pivot\",\"query\":{\"allowFilter\":true,\"allowSort\":false,\"maxPageSize\":1000,\"defaultPageSize\":100},\"fields\":{\"read\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"]}},\"model\":{\"objectName\":\"base_user_identities\",\"primaryKey\":\"id\",\"columns\":[{\"field\":\"id\",\"name\":\"id\"},{\"field\":\"user_id\",\"name\":\"user_id\"},{\"field\":\"provider_kind\",\"name\":\"provider_kind\"},{\"field\":\"linked_at\",\"name\":\"linked_at\"}]},\"openapi\":{\"summary\":\"Identities pivot\",\"description\":\"Identities pivot (POST /api/ops/ops_identities/pivot) on base_user_identities.\",\"tags\":[\"Ops Insights\"]},\"derived\":{\"codeFingerprint\":\"fnv1a:3b1f8ecb\",\"generatedAt\":\"2026-11-11T12:30:02.252Z\",\"requestExample\":{\"body\":{\"user_id\":\"\",\"provider_kind\":\"\",\"linked_at\":\"\"}},\"docHints\":{\"summary\":\"POST /api/ops/ops_identities/pivot\",\"routeNote\":\"Data API pivot on base_user_identities.\",\"validationFields\":[\"user_id\",\"provider_kind\",\"linked_at\"],\"outputFields\":[\"id\",\"user_id\",\"provider_kind\",\"linked_at\"],\"queryFields\":[],\"paramFields\":[\"id\"]}},\"testPayloadSource\":\"generated\"}",
   "accessControl": {
     "accessMode": "specific",
     "allowRoles": [
@@ -30,8 +30,8 @@
     "denyUsers": []
   },
   "hooks": {},
-  "createdAt": "2026-10-02T23:23:20.246Z",
-  "updatedAt": "2026-10-02T23:23:20.246Z",
+  "createdAt": "2026-11-11T12:30:03.231Z",
+  "updatedAt": "2026-11-11T12:30:03.231Z",
   "createdBy": null,
   "updatedBy": null
 }

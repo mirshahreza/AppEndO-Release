@@ -2,6 +2,7 @@ import type { config as MssqlConfig } from 'mssql';
 
 import { parseSqlServerHost } from '../../shared/lib/sqlServerAddress';
 import { parseSqlServerConnectionUrl } from './sqlServerControlPlaneUrl';
+import { useWindowsIntegratedSqlForServer } from './localWindowsSqlIntegrated';
 
 /** node-mssql config for PrismaMssql from a control-plane sqlserver:// URL. */
 export const buildMssqlConfigFromControlPlaneUrl = (url: string): MssqlConfig => {
@@ -11,12 +12,18 @@ export const buildMssqlConfigFromControlPlaneUrl = (url: string): MssqlConfig =>
   const effectivePort = explicitPort ?? hostPort;
   const hasExplicitPort = explicitPort !== null && !instanceName;
 
+  const windowsIntegrated = useWindowsIntegratedSqlForServer(server, parsed.password);
+
   return {
     server,
     ...(hasExplicitPort ? { port: effectivePort ?? undefined } : {}),
     database: parsed.database,
-    user: parsed.username,
-    password: parsed.password,
+    ...(windowsIntegrated
+      ? {}
+      : {
+          user: parsed.username,
+          password: parsed.password,
+        }),
     // SQL Server instances with DelayedAutoStart can exceed the node-mssql default 15s on cold connect.
     connectionTimeout: 60_000,
     requestTimeout: 60_000,
@@ -25,6 +32,7 @@ export const buildMssqlConfigFromControlPlaneUrl = (url: string): MssqlConfig =>
       trustServerCertificate: parsed.trustServerCertificate,
       connectTimeout: 60_000,
       requestTimeout: 60_000,
+      ...(windowsIntegrated ? { trustedConnection: true } : {}),
       ...(instanceName && !hasExplicitPort ? { instanceName } : {}),
     },
     pool: {

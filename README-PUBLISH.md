@@ -1,4 +1,4 @@
-# AppEndO public release v0.0.5
+# AppEndO public release v0.0.9
 
 See **README.md** for the full public distribution guide.
 

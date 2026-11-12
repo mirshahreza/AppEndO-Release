@@ -1,5 +1,5 @@
 import { Sequelize, type Dialect, type Options } from 'sequelize';
-import { SETTINGS_PATH } from '../config/settingsFile';
+import { SETTINGS_PATH, resolveActiveSettingsPath } from '../config/settingsFile';
 import {
   parseSqliteControlPlaneFilePath,
   readControlPlaneDatabaseSettings,
@@ -135,7 +135,7 @@ export const buildMssqlControlPlaneSequelizeOptions = (url: string): Options => 
 };
 
 const createSequelize = (): Sequelize => {
-  const settings = readControlPlaneDatabaseSettings(SETTINGS_PATH);
+  const settings = readControlPlaneDatabaseSettings(resolveActiveSettingsPath());
   const dialect = dialectForProvider(settings.provider);
   const profiler = appendoSequelizeProfilerOptions('control-plane');
   if (dialect === 'sqlite') {

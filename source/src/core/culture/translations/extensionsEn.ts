@@ -518,6 +518,16 @@ export const TRANSLATION_EXTENSIONS_EN: Record<string, string> = {
   'shell.inbox.bulk.clearSelection': 'Clear selection',
   'shell.inbox.bulk.failed': 'Some items could not be updated.',
   'shell.inbox.bulk.completed': 'Updated {count} items.',
+  'shell.inbox.bulk.deleteNoneEligible':
+    'None of the selected items can be moved to Deleted — they may already be in Deleted.',
+  'shell.inbox.bulk.deleteCompletedAllItemsViewHint':
+    'Moved {count} item(s) to Deleted. They stay visible here in All items; switch to Inbox or Deleted to see the change.',
+  'shell.inbox.bulk.permanentConfirmTitle': 'Delete permanently?',
+  'shell.inbox.bulk.permanentConfirmQuestion':
+    'This cannot be undone. {count} item(s) will be removed from your inbox for good.',
+  'shell.inbox.bulk.permanentNoneEligible':
+    'No selected items can be permanently deleted. Work items cannot be removed this way; other types must already be in Deleted.',
+  'shell.inbox.bulk.permanentCompleted': 'Permanently deleted {count} item(s).',
   'shell.inbox.markRead': 'Mark as read',
   'shell.inbox.markUnread': 'Mark as unread',
   'shell.inbox.correspondence.reply': 'Reply',

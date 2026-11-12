@@ -2185,6 +2185,16 @@ const bundle: Record<string, string> = {
   'shell.inbox.bulk.clearSelection': 'پاک کردن انتخاب',
   'shell.inbox.bulk.failed': 'برخی آیتم‌ها به‌روز نشدند.',
   'shell.inbox.bulk.completed': '{count} آیتم به‌روز شد.',
+  'shell.inbox.bulk.deleteNoneEligible':
+    'هیچ‌کدام از موارد انتخاب‌شده قابل انتقال به «حذف‌شده» نیستند — احتمالاً قبلاً حذف نرم شده‌اند.',
+  'shell.inbox.bulk.deleteCompletedAllItemsViewHint':
+    '{count} مورد به «حذف‌شده» منتقل شد. در نمای «همه» هنوز دیده می‌شوند؛ برای دیدن تغییر به صندوق ورود یا حذف‌شده بروید.',
+  'shell.inbox.bulk.permanentConfirmTitle': 'حذف دائمی؟',
+  'shell.inbox.bulk.permanentConfirmQuestion':
+    'این کار قابل بازگشت نیست. {count} مورد برای همیشه از صندوق ورود شما حذف می‌شود.',
+  'shell.inbox.bulk.permanentNoneEligible':
+    'هیچ‌کدام از انتخاب‌ها قابل حذف دائمی نیست. کارهای کاری این‌طور حذف نمی‌شوند؛ بقیه باید از قبل در «حذف‌شده» باشند.',
+  'shell.inbox.bulk.permanentCompleted': '{count} مورد برای همیشه حذف شد.',
   'shell.inbox.grid.column.attachments': "پیوست‌ها",
   'shell.inbox.grid.attachmentsCount': "{count} پیوست",
   'shell.inbox.grid.attachmentsCountOne': "۱ پیوست",

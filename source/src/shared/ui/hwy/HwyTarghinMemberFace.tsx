@@ -41,6 +41,8 @@ export type HwyTarghinMemberFaceProps = CatalogInteractionPreviewProps & {
   rootClassName?: string;
   /** Living identity catalog — subtle dossier-style hover/active paint. */
   catalogInteractive?: boolean;
+  /** Hide the name line when it repeats the membership code under the avatar. */
+  suppressDisplayNameWhenRedundant?: boolean;
 };
 
 /**
@@ -62,6 +64,7 @@ export const HwyTarghinMemberFace: React.FC<HwyTarghinMemberFaceProps> = ({
   rootClassName,
   catalogInteractive = false,
   catalogPreviewState,
+  suppressDisplayNameWhenRedundant = false,
 }) => {
   const catalogInteractiveRootClass =
     catalogInteractive
@@ -79,6 +82,10 @@ export const HwyTarghinMemberFace: React.FC<HwyTarghinMemberFaceProps> = ({
     username: face.username,
   });
   const membership = faceCaption.text;
+  const hideRedundantDisplayName = suppressDisplayNameWhenRedundant
+    && Boolean(membership)
+    && (displayName === membership || displayName === String(face.username ?? '').trim());
+  const showDisplayName = Boolean(displayName) && displayName !== '—' && !hideRedundantDisplayName;
   const genderSlot = resolveHwyGeoResponsibilityGenderSlot(face.genderCode);
   const placeholderAccent = genderSlot === 'female'
     ? 'bg-pink-50 text-pink-600'
@@ -160,18 +167,20 @@ export const HwyTarghinMemberFace: React.FC<HwyTarghinMemberFaceProps> = ({
 
   const textColumn = (
     <div className="mt-[2px] min-w-0 space-y-0.5 text-start">
-      <div className="flex min-w-0 w-full flex-row items-baseline">
-        <span className="w-[3px] shrink-0" aria-hidden />
-        <span
-          className={cn(
-            'min-w-0 flex-1 truncate text-start',
-            displayNameClassName ?? DEFAULT_DISPLAY_NAME_CLASS,
-          )}
-          title={displayName}
-        >
-          {displayName}
-        </span>
-      </div>
+      {showDisplayName ? (
+        <div className="flex min-w-0 w-full flex-row items-baseline">
+          <span className="w-[3px] shrink-0" aria-hidden />
+          <span
+            className={cn(
+              'min-w-0 flex-1 truncate text-start',
+              displayNameClassName ?? DEFAULT_DISPLAY_NAME_CLASS,
+            )}
+            title={displayName}
+          >
+            {displayName}
+          </span>
+        </div>
+      ) : null}
       {face.phone?.trim() ? (
         <PhoneNumberDisplay
           phone={face.phone}

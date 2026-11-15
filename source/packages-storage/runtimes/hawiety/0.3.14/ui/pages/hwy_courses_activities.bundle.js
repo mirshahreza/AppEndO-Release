@@ -33896,7 +33896,7 @@ var hawiety_iq_default = {
   "hwy.meetings.filter.meeting": "\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
   "hwy.meetings.search.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
   "hwy.meetings.search.aria": "\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062C\u0644\u0633\u0627\u062A \u0628\u0631\u0642\u0645 \u0627\u0646\u062A\u0645\u0627\u0621 \u0623\u062D\u062F \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646",
-  "hwy.meetings.manageMembers": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+  "hwy.meetings.manageMembers": "\u0623\u0639\u0636\u0627\u0621",
   "hwy.meetings.addInstance": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629",
   "hwy.meetings.exportPivot": "\u062A\u0635\u062F\u064A\u0631 \u062D\u0636\u0648\u0631 \u0645\u062D\u0648\u0631\u064A",
   "hwy.meetings.totalCount": "{count} \u0633\u062C\u0644",
@@ -33916,6 +33916,17 @@ var hawiety_iq_default = {
   "hwy.meetings.column.rosterNot": "\u063A\u064A\u0631 \u0645\u0646\u062A\u0638\u0645",
   "hwy.meetings.column.hazerin": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646",
   "hwy.meetings.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+  "hwy.meetings.column.delete": "\u062D\u0630\u0641",
+  "hwy.meetings.column.instanceId": "\u0645",
+  "hwy.meetings.column.memberName": "\u0627\u0644\u0627\u0633\u0645",
+  "hwy.meetings.column.rosterRecordedOn": "\u0627\u0644\u0625\u0646\u0634\u0627\u0621",
+  "hwy.meetings.column.rosterIsMember": "\u0639\u0636\u0648",
+  "hwy.meetings.viewHazerin": "\u0639\u0631\u0636 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0644\u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629",
+  "hwy.meetings.rosterFilter.all": "\u0627\u0644\u0643\u0644",
+  "hwy.meetings.rosterFilter.yet": "\u0639\u0636\u0648",
+  "hwy.meetings.rosterFilter.not": "\u0644\u064A\u0633 \u0639\u0636\u0648",
+  "hwy.meetings.rosterFilter.aria": "\u062A\u0635\u0641\u064A\u0629 \u062D\u0633\u0628 \u062D\u0627\u0644\u0629 \u0627\u0644\u0639\u0636\u0648\u064A\u0629 \u0641\u064A \u0627\u0644\u0643\u0634\u0641",
+  "hwy.meetings.rosterSearch.aria": "\u0628\u062D\u062B \u0641\u064A \u0627\u0644\u0643\u0634\u0641 \u0628\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621 \u0623\u0648 \u0627\u0644\u0627\u0633\u0645",
   "hwy.meetings.column.memberYet": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0643\u0634\u0641",
   "hwy.meetings.column.present": "\u0627\u0644\u062D\u0636\u0648\u0631",
   "hwy.meetings.viewAttendance": "\u0627\u0644\u062D\u0636\u0648\u0631",
@@ -33923,11 +33934,16 @@ var hawiety_iq_default = {
   "hwy.meetings.deleteBlocked": "\u0623\u0632\u0644 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0642\u0628\u0644 \u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629.",
   "hwy.meetings.addInstanceTitle": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629 \u0627\u062C\u062A\u0645\u0627\u0639",
   "hwy.meetings.instanceDate": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062C\u0644\u0633\u0629",
-  "hwy.meetings.membersTitle": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639 \u0627\u0644\u062A\u064A\u0627\u0631\u064A",
+  "hwy.meetings.membersTitle": "\u0623\u0639\u0636\u0627\u0621",
   "hwy.meetings.addMemberUsername": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
   "hwy.meetings.addMember": "\u0625\u0636\u0627\u0641\u0629 \u0639\u0636\u0648",
   "hwy.meetings.noMembers": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
   "hwy.meetings.attendanceTitle": "\u062D\u0636\u0648\u0631 \u0627\u0644\u062C\u0644\u0633\u0629",
+  "hwy.meetings.rosterYetTitle": "\u0627\u0644\u0645\u0646\u062A\u0638\u0645\u0648\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+  "hwy.meetings.rosterNotTitle": "\u063A\u064A\u0631 \u0627\u0644\u0645\u0646\u062A\u0638\u0645\u064A\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+  "hwy.meetings.hazerinTitle": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629",
+  "hwy.meetings.memberPreviewEmpty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u0642\u0627\u0626\u0645\u0629.",
+  "hwy.meetings.deleteInstanceConfirm": "\u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629\u061F \u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u062A\u0631\u0627\u062C\u0639.",
   "hwy.meetings.markAbsent": "\u062D\u0627\u0636\u0631 \u2014 \u0625\u0644\u063A\u0627\u0621",
   "hwy.meetings.markPresent": "\u062A\u0633\u062C\u064A\u0644 \u062D\u0636\u0648\u0631",
   "hwy.meetings.noAttendanceRows": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
@@ -36354,6 +36370,11 @@ var hawiety_us_default = {
   "hwy.meetings.addMember": "Add member",
   "hwy.meetings.noMembers": "No members on this meeting roster.",
   "hwy.meetings.attendanceTitle": "Instance attendance",
+  "hwy.meetings.rosterYetTitle": "Active roster members",
+  "hwy.meetings.rosterNotTitle": "Inactive roster members",
+  "hwy.meetings.hazerinTitle": "Present at this instance",
+  "hwy.meetings.memberPreviewEmpty": "No members in this list.",
+  "hwy.meetings.deleteInstanceConfirm": "Delete this meeting instance? This cannot be undone.",
   "hwy.meetings.markAbsent": "Present \u2014 clear",
   "hwy.meetings.markPresent": "Mark present",
   "hwy.meetings.noAttendanceRows": "No roster members for this meeting.",
@@ -42545,7 +42566,8 @@ var HwyTarghinMemberFace = ({
   displayNameClassName,
   rootClassName,
   catalogInteractive = false,
-  catalogPreviewState
+  catalogPreviewState,
+  suppressDisplayNameWhenRedundant = false
 }) => {
   const catalogInteractiveRootClass = catalogInteractive ? cn(
     HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS,
@@ -42560,6 +42582,8 @@ var HwyTarghinMemberFace = ({
     username: face.username
   });
   const membership = faceCaption.text;
+  const hideRedundantDisplayName = suppressDisplayNameWhenRedundant && Boolean(membership) && (displayName === membership || displayName === String(face.username ?? "").trim());
+  const showDisplayName = Boolean(displayName) && displayName !== "\u2014" && !hideRedundantDisplayName;
   const genderSlot = resolveHwyGeoResponsibilityGenderSlot(face.genderCode);
   const placeholderAccent = genderSlot === "female" ? "bg-pink-50 text-pink-600" : genderSlot === "male" ? "bg-sky-50 text-sky-600" : "bg-slate-100 text-slate-400";
   const showAvatar = Boolean(face.avatarUrl?.trim()) && !avatarFailed;
@@ -42623,7 +42647,7 @@ var HwyTarghinMemberFace = ({
     `${title}-${index}`
   )) }) : null;
   const textColumn = /* @__PURE__ */ jsxs("div", { className: "mt-[2px] min-w-0 space-y-0.5 text-start", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 w-full flex-row items-baseline", children: [
+    showDisplayName ? /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 w-full flex-row items-baseline", children: [
       /* @__PURE__ */ jsx("span", { className: "w-[3px] shrink-0", "aria-hidden": true }),
       /* @__PURE__ */ jsx(
         "span",
@@ -42636,7 +42660,7 @@ var HwyTarghinMemberFace = ({
           children: displayName
         }
       )
-    ] }),
+    ] }) : null,
     face.phone?.trim() ? /* @__PURE__ */ jsx(
       PhoneNumberDisplay2,
       {
@@ -42697,7 +42721,8 @@ var HwyMemberAdminFaceCell = ({
   displayNameClassName,
   rootClassName,
   interactive = false,
-  catalogPreviewState
+  catalogPreviewState,
+  suppressDisplayNameWhenRedundant = false
 }) => {
   if (!face?.id) {
     return null;
@@ -42708,6 +42733,7 @@ var HwyMemberAdminFaceCell = ({
       face,
       textColumnFooter,
       displayNameClassName,
+      suppressDisplayNameWhenRedundant,
       rootClassName: cn(
         rootClassName,
         interactive && cn(
@@ -43201,317 +43227,12 @@ function hwyActivityWorkflowActionRequiresNote(action) {
 function hwyCourseWorkflowActionRequiresNote(action) {
   return action === "send-to-draft" || action === "send-to-marfoozeh";
 }
-
-// appendo-package-ui-global:react-dom
-var __runtime9 = globalThis.__APPENDO_PACKAGE_RUNTIME__;
-if (!__runtime9?.ReactDOM) {
-  throw new Error("Package UI runtime is not initialized. Reload the app and try again.");
+function resolveHwyCoursesActivitiesWorkflowActionTone(action) {
+  if (action === "send-to-draft" || action === "send-to-marfoozeh") {
+    return "backward";
+  }
+  return "forward";
 }
-var __mod7 = __runtime9.ReactDOM;
-var react_dom_default = __mod7.default;
-var {
-  __DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,
-  createPortal,
-  flushSync,
-  preconnect,
-  prefetchDNS,
-  preinit,
-  preinitModule,
-  preload,
-  preloadModule,
-  requestFormReset,
-  unstable_batchedUpdates,
-  useFormState,
-  useFormStatus,
-  version: version3
-} = __mod7;
-
-// src/shared/ui/overlay-motion/overlayMotion.ts
-var OVERLAY_MOTION_PANEL_CLASS = "overlay-motion-panel";
-var OVERLAY_MOTION_ENTER_CLASS = "overlay-motion-enter";
-function overlayMotionDocumentDir() {
-  if (typeof document === "undefined") {
-    return "ltr";
-  }
-  return document.documentElement.getAttribute("dir") === "rtl" ? "rtl" : "ltr";
-}
-function overlayOriginFromPopoverPlacement(placement) {
-  const vertical = placement.startsWith("top") ? "bottom" : placement.startsWith("bottom") ? "top" : null;
-  const horizontal = placement.endsWith("end") ? "end" : placement.endsWith("start") ? "start" : null;
-  if (vertical && horizontal) {
-    return `${vertical}-${horizontal}`;
-  }
-  if (vertical) {
-    return vertical;
-  }
-  if (horizontal) {
-    return horizontal;
-  }
-  return "center";
-}
-function overlayMotionPanelProps(options) {
-  const enterOnMount = options.enterOnMount ?? options.kind !== "drawer";
-  return {
-    className: cn(
-      OVERLAY_MOTION_PANEL_CLASS,
-      enterOnMount && OVERLAY_MOTION_ENTER_CLASS,
-      options.className
-    ),
-    "data-overlay-kind": options.kind,
-    "data-overlay-origin": options.origin,
-    ...typeof options.open === "boolean" ? { "data-overlay-open": options.open ? "true" : "false" } : {},
-    ...options.dir ? { "data-overlay-dir": options.dir } : {}
-  };
-}
-
-// src/shared/ui/shell-foundation/ShellResponsivePopover.tsx
-var placementClasses = {
-  "bottom-start": "start-0 top-full mt-1",
-  "bottom-end": "end-0 top-full mt-1",
-  "top-start": "bottom-full start-0 mb-1",
-  "top-end": "bottom-full end-0 mb-1"
-};
-var PANEL_GAP_PX = 4;
-var VIEWPORT_MARGIN_PX = 8;
-var flipVerticalPlacement = (value) => value.startsWith("bottom") ? value.replace("bottom", "top") : value.replace("top", "bottom");
-var flipHorizontalPlacement = (value) => value.endsWith("start") ? value.replace("start", "end") : value.replace("end", "start");
-var DEFAULT_PORTAL_Z_INDEX = 1e3;
-var DEFAULT_PORTAL_MAX_HEIGHT = `min(24rem, calc(100dvh - ${VIEWPORT_MARGIN_PX * 2}px))`;
-var getAvailableSpace = (triggerRect) => ({
-  below: window.innerHeight - triggerRect.bottom - PANEL_GAP_PX - VIEWPORT_MARGIN_PX,
-  above: triggerRect.top - PANEL_GAP_PX - VIEWPORT_MARGIN_PX
-});
-var resolveVerticalPlacement = (preferred, triggerRect, panelHeight) => {
-  const { below, above } = getAvailableSpace(triggerRect);
-  const estimatedHeight = Math.max(panelHeight, 160);
-  if (preferred.startsWith("bottom")) {
-    if (below < estimatedHeight && above > below) {
-      return flipVerticalPlacement(preferred);
-    }
-    return preferred;
-  }
-  if (above < estimatedHeight && below > above) {
-    return flipVerticalPlacement(preferred);
-  }
-  return preferred;
-};
-var getHorizontalAlignSpace = (triggerRect) => ({
-  atStart: window.innerWidth - triggerRect.left - VIEWPORT_MARGIN_PX,
-  atEnd: triggerRect.right - VIEWPORT_MARGIN_PX
-});
-var resolveHorizontalPlacement = (placement, triggerRect, panelWidth) => {
-  const estimatedWidth = Math.max(panelWidth, 192);
-  const { atStart, atEnd } = getHorizontalAlignSpace(triggerRect);
-  if (placement.endsWith("start")) {
-    if (estimatedWidth > atStart && atEnd > atStart) {
-      return flipHorizontalPlacement(placement);
-    }
-    return placement;
-  }
-  if (estimatedWidth > atEnd && atStart > atEnd) {
-    return flipHorizontalPlacement(placement);
-  }
-  return placement;
-};
-var resolvePlacement = (preferred, triggerRect, panelWidth, panelHeight) => {
-  const vertical = resolveVerticalPlacement(preferred, triggerRect, panelHeight);
-  return resolveHorizontalPlacement(vertical, triggerRect, panelWidth);
-};
-var resolvePortalMaxHeight = (placement, triggerRect, portalMaxHeight) => {
-  const availableBelow = window.innerHeight - triggerRect.bottom - PANEL_GAP_PX - VIEWPORT_MARGIN_PX;
-  const availableAbove = triggerRect.top - PANEL_GAP_PX - VIEWPORT_MARGIN_PX;
-  const viewportPx = placement.startsWith("bottom") ? Math.max(availableBelow, 160) : Math.max(availableAbove, 160);
-  if (portalMaxHeight === false) {
-    return `${viewportPx}px`;
-  }
-  if (typeof portalMaxHeight === "string") {
-    return portalMaxHeight;
-  }
-  return `min(24rem, ${viewportPx}px)`;
-};
-var buildPortalPanelStyle = (triggerRect, placement, portalZIndex, portalMaxHeight, portalSkidPx) => {
-  const style = {
-    position: "fixed",
-    zIndex: portalZIndex,
-    maxWidth: `calc(100vw - ${VIEWPORT_MARGIN_PX * 2}px)`,
-    maxHeight: resolvePortalMaxHeight(placement, triggerRect, portalMaxHeight)
-  };
-  if (placement.startsWith("bottom")) {
-    style.top = triggerRect.bottom + PANEL_GAP_PX;
-  } else {
-    style.bottom = window.innerHeight - triggerRect.top + PANEL_GAP_PX;
-  }
-  if (placement.endsWith("start")) {
-    style.left = triggerRect.left + portalSkidPx;
-  } else {
-    style.right = window.innerWidth - triggerRect.right + portalSkidPx;
-  }
-  return style;
-};
-var ShellResponsivePopover = ({
-  open,
-  onOpenChange,
-  trigger,
-  children,
-  placement = "bottom-end",
-  fallbackPlacement = "bottom-start",
-  dismissOnOutside = true,
-  dismissOnEscape = true,
-  dismissOnBlur = false,
-  ariaLabel = "Popover",
-  className,
-  portal = false,
-  portalZIndex = DEFAULT_PORTAL_Z_INDEX,
-  portalMaxHeight,
-  fillTrigger = false,
-  portalSkidPx = 0
-}) => {
-  const rootRef = useRef(null);
-  const triggerRef = useRef(null);
-  const panelRef = useRef(null);
-  const popoverId = useId();
-  const [resolvedPlacement, setResolvedPlacement] = useState(placement);
-  const [portalPanelStyle, setPortalPanelStyle] = useState();
-  useEffect(() => {
-    if (!open) {
-      setResolvedPlacement(placement);
-      setPortalPanelStyle(void 0);
-    }
-  }, [open, placement]);
-  const resolveCollision = useCallback(() => {
-    if (!triggerRef.current) {
-      return;
-    }
-    const triggerRect = triggerRef.current.getBoundingClientRect();
-    const panelRect = panelRef.current?.getBoundingClientRect();
-    const panelHeight = panelRef.current?.scrollHeight ?? panelRect?.height ?? 200;
-    const panelWidth = panelRef.current?.scrollWidth ?? panelRect?.width ?? 200;
-    setResolvedPlacement(resolvePlacement(placement, triggerRect, panelWidth, panelHeight));
-  }, [placement]);
-  useLayoutEffect(() => {
-    if (!open || portal) return void 0;
-    resolveCollision();
-    window.addEventListener("resize", resolveCollision);
-    return () => window.removeEventListener("resize", resolveCollision);
-  }, [open, portal, placement, resolveCollision]);
-  useLayoutEffect(() => {
-    if (!open || !portal) {
-      return void 0;
-    }
-    const updatePortalPosition = () => {
-      if (!triggerRef.current) return;
-      const triggerRect = triggerRef.current.getBoundingClientRect();
-      const panelHeight = panelRef.current?.scrollHeight ?? panelRef.current?.getBoundingClientRect().height ?? 400;
-      const panelWidth = panelRef.current?.scrollWidth ?? panelRef.current?.getBoundingClientRect().width ?? 400;
-      const nextPlacement = resolvePlacement(placement, triggerRect, panelWidth, panelHeight);
-      setResolvedPlacement(nextPlacement);
-      setPortalPanelStyle(
-        buildPortalPanelStyle(
-          triggerRect,
-          nextPlacement,
-          portalZIndex,
-          portalMaxHeight,
-          portalSkidPx
-        )
-      );
-    };
-    updatePortalPosition();
-    window.requestAnimationFrame(updatePortalPosition);
-    window.addEventListener("resize", updatePortalPosition);
-    window.addEventListener("scroll", updatePortalPosition, true);
-    return () => {
-      window.removeEventListener("resize", updatePortalPosition);
-      window.removeEventListener("scroll", updatePortalPosition, true);
-    };
-  }, [open, portal, placement, portalMaxHeight, portalSkidPx, portalZIndex]);
-  useEffect(() => {
-    if (!open) return;
-    const containsTarget = (target) => rootRef.current?.contains(target) || panelRef.current?.contains(target);
-    const onPointerDown = (event) => {
-      if (dismissOnOutside && !containsTarget(event.target)) onOpenChange(false);
-    };
-    const onKeyDown = (event) => {
-      if (dismissOnEscape && event.key === "Escape") {
-        event.preventDefault();
-        onOpenChange(false);
-        triggerRef.current?.focus();
-      }
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    const onFocusIn = (event) => {
-      if (dismissOnBlur && !containsTarget(event.target)) onOpenChange(false);
-    };
-    document.addEventListener("focusin", onFocusIn);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("focusin", onFocusIn);
-    };
-  }, [dismissOnBlur, dismissOnEscape, dismissOnOutside, onOpenChange, open]);
-  const popoverMotion = overlayMotionPanelProps({
-    kind: "popover",
-    origin: overlayOriginFromPopoverPlacement(resolvedPlacement),
-    dir: overlayMotionDocumentDir()
-  });
-  const panelClassName = cn(
-    popoverMotion.className,
-    portal ? "fixed flex min-h-0 min-w-48 flex-col overflow-visible rounded-medium border border-divider bg-content1 p-2 text-foreground shadow-large" : cn(
-      "absolute z-50 max-h-[min(24rem,calc(100dvh-2rem))] min-w-48 max-w-[calc(100vw-2rem)] overflow-auto rounded-medium border border-divider bg-content1 p-2 text-foreground shadow-large",
-      placementClasses[resolvedPlacement]
-    ),
-    className
-  );
-  const panel = open ? /* @__PURE__ */ jsx(
-    "div",
-    {
-      ref: panelRef,
-      id: popoverId,
-      role: "dialog",
-      "aria-label": ariaLabel,
-      "data-fallback-placement": fallbackPlacement,
-      "data-placement": resolvedPlacement,
-      "data-overlay-kind": popoverMotion["data-overlay-kind"],
-      "data-overlay-origin": popoverMotion["data-overlay-origin"],
-      "data-overlay-dir": popoverMotion["data-overlay-dir"],
-      className: panelClassName,
-      style: portal ? portalPanelStyle : void 0,
-      children
-    }
-  ) : null;
-  const triggerProps = trigger.props;
-  const triggerClassName = triggerProps.className;
-  return /* @__PURE__ */ jsxs(
-    "div",
-    {
-      ref: rootRef,
-      className: cn("relative", fillTrigger ? "flex h-full w-full min-h-0" : "inline-flex"),
-      "data-shell-responsive-popover": "",
-      children: [
-        cloneElement(trigger, {
-          className: cn(
-            fillTrigger && "h-full min-h-0 w-full min-w-0 flex-1",
-            triggerClassName
-          ),
-          ref: (node) => {
-            triggerRef.current = node;
-            const originalRef = triggerProps.ref;
-            if (typeof originalRef === "function") originalRef(node);
-            else if (originalRef) originalRef.current = node;
-          },
-          "aria-expanded": open,
-          "aria-controls": open ? popoverId : void 0,
-          "aria-haspopup": "dialog",
-          onClick: (event) => {
-            triggerProps.onClick?.(event);
-            if (!event.defaultPrevented) onOpenChange(!open);
-          }
-        }),
-        panel && portal && typeof document !== "undefined" ? createPortal(panel, document.body) : panel
-      ]
-    }
-  );
-};
 
 // src/features/hwy-courses-activities/hwyCoursesActivitiesDialogIcons.tsx
 var HWY_CA_BUTTON_ICON_CLASS = "h-3.5 w-3.5 shrink-0";
@@ -43531,15 +43252,76 @@ function resolveHwyCoursesActivitiesWorkflowActionIcon(action) {
   return Check;
 }
 
-// src/features/hwy-courses-activities/HwyCoursesActivitiesGridWorkflowCell.tsx
-var WORKFLOW_MENU_TRIGGER_CLASS = cn(
-  "app-table-grid-workflow-menu-trigger",
-  "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full",
-  "border border-slate-200/80 bg-white text-slate-600 shadow-xs",
-  "transition-[background-color,border-color,color,box-shadow]",
-  "hover:border-slate-300 hover:bg-slate-50 hover:text-slate-800",
-  "focus-visible:outline focus-visible:ring-2 focus-visible:ring-cyan-600/35"
+// src/features/hwy-courses-activities/hwyCoursesActivitiesStatusColumnVisual.ts
+var HWY_COURSES_ACTIVITIES_STATUS_COLUMN_WIDTH = "13rem";
+var HWY_COURSES_ACTIVITIES_STATUS_HEADER_CLASS = "text-start whitespace-nowrap";
+var HWY_COURSES_ACTIVITIES_STATUS_CELL_CLASS = "overflow-visible text-start align-top";
+var HWY_COURSES_ACTIVITIES_STATUS_STACK_MAX_CLASS = "max-w-[13rem]";
+var HWY_COURSES_ACTIVITIES_STATUS_LABEL_CLASS = "text-[11px] font-semibold leading-tight";
+var HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_LABEL_CLASS = "text-[10px] font-semibold leading-tight";
+var HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_ICON_CLASS = "h-3 w-3 shrink-0";
+var hwyCoursesActivitiesStatusColumnStackClass = cn(
+  "flex w-full flex-col items-stretch gap-1 py-0.5",
+  HWY_COURSES_ACTIVITIES_STATUS_STACK_MAX_CLASS,
+  "text-start"
 );
+var hwyCoursesActivitiesStatusPillRootClass = "flex w-full items-start justify-start";
+var hwyCoursesActivitiesStatusPillClass = cn(
+  "inline-flex w-auto max-w-full min-w-0 items-center gap-1",
+  "rounded-full border border-slate-200/60 bg-white/90 px-1.5 py-0.5 shadow-xs"
+);
+var hwyCoursesActivitiesStatusPillIconFrameClass = cn(
+  "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border shadow-xs"
+);
+var hwyCoursesActivitiesStatusPillIconClass = "h-3 w-3 shrink-0";
+var HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_ACTIONS_INDENT_CLASS = "ps-[10px]";
+var hwyCoursesActivitiesStatusWorkflowStackClass = "flex w-full min-w-0 flex-col items-stretch gap-0.5 text-start";
+var hwyCoursesActivitiesStatusWorkflowActionsStackClass = cn(
+  hwyCoursesActivitiesStatusWorkflowStackClass,
+  HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_ACTIONS_INDENT_CLASS
+);
+var hwyCoursesActivitiesStatusWorkflowListClass = "m-0 flex w-full list-none flex-col gap-px py-0 pe-0";
+var hwyCoursesActivitiesStatusWorkflowDividerClass = "my-1 w-full border-t border-slate-200/50";
+var WORKFLOW_ACTION_BASE = cn(
+  "inline-flex w-auto max-w-full min-h-[1.625rem] cursor-pointer items-center gap-1 self-start",
+  "rounded-full border border-transparent px-1.5 py-0.5",
+  HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_LABEL_CLASS,
+  "text-start transition-colors duration-150",
+  "focus-visible:outline focus-visible:ring-2 focus-visible:ring-cyan-600/25",
+  "disabled:pointer-events-none disabled:opacity-45"
+);
+var WORKFLOW_ACTION_TONE = {
+  forward: cn(
+    "text-sky-800",
+    "hover:border-sky-200/90 hover:bg-sky-50/95 hover:text-sky-900",
+    "active:bg-sky-100/80"
+  ),
+  backward: cn(
+    "text-rose-800",
+    "hover:border-rose-200/90 hover:bg-rose-50/95 hover:text-rose-900",
+    "active:bg-rose-100/80"
+  )
+};
+var hwyCoursesActivitiesStatusWorkflowActionClass = (tone) => cn(WORKFLOW_ACTION_BASE, WORKFLOW_ACTION_TONE[tone]);
+var hwyCoursesActivitiesStatusWorkflowIconToneClass = (tone) => tone === "forward" ? "text-sky-600" : "text-rose-600";
+var hwyCoursesActivitiesStatusWorkflowNotePanelClass = cn(
+  "w-full min-w-0 space-y-1.5 rounded-md border border-slate-200/80 bg-white/95 p-1.5 text-start shadow-xs",
+  HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_LABEL_CLASS
+);
+
+// src/features/hwy-courses-activities/HwyCoursesActivitiesGridWorkflowCell.tsx
+var partitionWorkflowActionsByTone = (actions) => {
+  const forward = [];
+  const backward = [];
+  for (const action of actions) {
+    if (resolveHwyCoursesActivitiesWorkflowActionTone(action) === "backward") {
+      backward.push(action);
+    } else {
+      forward.push(action);
+    }
+  }
+  return { forward, backward };
+};
 var HwyCoursesActivitiesGridWorkflowCell = ({
   kind,
   recordId,
@@ -43555,7 +43337,6 @@ var HwyCoursesActivitiesGridWorkflowCell = ({
   const queryClient = useQueryClient();
   const isActivity = kind === "activity";
   const id4 = recordId.trim();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
   const [note, setNote] = useState("");
   const workflowActions = useMemo(() => {
@@ -43575,6 +43356,10 @@ var HwyCoursesActivitiesGridWorkflowCell = ({
     }
     return [];
   }, [activitiesQueue, coursesQueue, fileCount, isActivity, memberCount, statusCode]);
+  const workflowActionsByTone = useMemo(
+    () => partitionWorkflowActionsByTone(workflowActions),
+    [workflowActions]
+  );
   const workflowMutation = useMutation({
     mutationFn: async (input) => {
       if (isActivity) {
@@ -43592,7 +43377,6 @@ var HwyCoursesActivitiesGridWorkflowCell = ({
     },
     onSuccess: async () => {
       showAppFeedbackToast2(t("hwy.coursesActivities.workflow.success", "Status updated."), { type: "success" });
-      setMenuOpen(false);
       setPendingAction(null);
       setNote("");
       await queryClient.invalidateQueries({ queryKey: ["hwy-activities-admin"] });
@@ -43616,12 +43400,6 @@ var HwyCoursesActivitiesGridWorkflowCell = ({
   const resetPanel = () => {
     setPendingAction(null);
     setNote("");
-  };
-  const handleOpenChange = (open) => {
-    setMenuOpen(open);
-    if (!open) {
-      resetPanel();
-    }
   };
   const handlePickAction = (action) => {
     if (actionRequiresNote(action)) {
@@ -43649,64 +43427,69 @@ var HwyCoursesActivitiesGridWorkflowCell = ({
   const menuAriaLabel = t("hwy.coursesActivities.workflow.changeStatus", "Change status");
   const backLabel = t("hwy.coursesActivities.workflow.back", "Back");
   const pendingCopy = pendingAction ? resolveActionCopy(pendingAction) : null;
+  const renderInlineAction = (action) => {
+    const { label } = resolveActionCopy(action);
+    const tone = resolveHwyCoursesActivitiesWorkflowActionTone(action);
+    const WorkflowIcon = resolveHwyCoursesActivitiesWorkflowActionIcon(action);
+    return /* @__PURE__ */ jsx("li", { className: "w-full min-w-0", children: /* @__PURE__ */ jsxs(
+      NativeButton,
+      {
+        type: "button",
+        className: hwyCoursesActivitiesStatusWorkflowActionClass(tone),
+        disabled: workflowMutation.isPending,
+        onClick: () => handlePickAction(action),
+        children: [
+          /* @__PURE__ */ jsx(
+            WorkflowIcon,
+            {
+              className: cn(
+                HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_ICON_CLASS,
+                hwyCoursesActivitiesStatusWorkflowIconToneClass(tone)
+              ),
+              "aria-hidden": true
+            }
+          ),
+          /* @__PURE__ */ jsx("span", { className: cn("min-w-0 text-pretty", HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_LABEL_CLASS), children: label })
+        ]
+      }
+    ) }, action);
+  };
   return /* @__PURE__ */ jsx(
-    ShellResponsivePopover,
+    "div",
     {
-      open: menuOpen,
-      onOpenChange: handleOpenChange,
-      portal: true,
-      portalZIndex: 1200,
-      placement: "bottom-end",
-      fallbackPlacement: "top-end",
-      dismissOnOutside: true,
-      dismissOnEscape: true,
-      ariaLabel: menuAriaLabel,
-      className: cn(
-        "flex flex-col gap-0 p-1",
-        pendingAction ? "w-[min(18rem,calc(100vw-2rem))] gap-3 p-3" : "min-w-[11rem]"
-      ),
-      trigger: /* @__PURE__ */ jsx(
-        NativeButton,
-        {
-          type: "button",
-          className: cn(WORKFLOW_MENU_TRIGGER_CLASS, menuOpen && "app-table-grid-workflow-menu-trigger--open"),
-          title: menuAriaLabel,
-          "aria-label": menuAriaLabel,
-          "aria-haspopup": "menu",
-          "aria-expanded": menuOpen,
-          onClick: (event) => event.stopPropagation(),
-          children: /* @__PURE__ */ jsx(Ellipsis, { className: "h-4 w-4 shrink-0", "aria-hidden": true })
-        }
-      ),
-      children: pendingAction && pendingCopy ? /* @__PURE__ */ jsxs(Fragment2, { children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2 text-start", children: [
+      className: hwyCoursesActivitiesStatusWorkflowStackClass,
+      role: "group",
+      "aria-label": menuAriaLabel,
+      onClick: (event) => event.stopPropagation(),
+      children: pendingAction && pendingCopy ? /* @__PURE__ */ jsxs("div", { className: hwyCoursesActivitiesStatusWorkflowNotePanelClass, children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-1", children: [
           /* @__PURE__ */ jsx(
             NativeButton,
             {
               type: "button",
-              className: "mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100",
+              className: "mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100",
               "aria-label": backLabel,
               onClick: resetPanel,
-              children: /* @__PURE__ */ jsx(ChevronLeft, { className: "h-4 w-4", "aria-hidden": true })
+              children: /* @__PURE__ */ jsx(ChevronLeft, { className: HWY_COURSES_ACTIVITIES_STATUS_WORKFLOW_ICON_CLASS, "aria-hidden": true })
             }
           ),
-          /* @__PURE__ */ jsxs("div", { className: "min-w-0 space-y-1", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-slate-900", children: pendingCopy.label }),
-            /* @__PURE__ */ jsx("p", { className: "text-xs leading-5 text-slate-600", children: pendingCopy.description })
+          /* @__PURE__ */ jsxs("div", { className: "min-w-0 space-y-0.5", children: [
+            /* @__PURE__ */ jsx("p", { className: "font-semibold text-slate-900", children: pendingCopy.label }),
+            /* @__PURE__ */ jsx("p", { className: "text-[10px] leading-4 text-slate-600", children: pendingCopy.description })
           ] })
         ] }),
         /* @__PURE__ */ jsx(FormField, { label: noteLabel, children: /* @__PURE__ */ jsx(
           UiTextarea,
           {
             size: "sm",
-            rows: 3,
+            rows: 2,
             value: note,
             onChange: (event) => setNote(event.target.value),
             ariaLabel: noteLabel
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-end gap-2 border-t border-slate-200/70 pt-2", children: [
-          /* @__PURE__ */ jsxs(AppButton, { intent: "cancel", size: "sm", isDisabled: workflowMutation.isPending, onClick: () => handleOpenChange(false), children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-end gap-1.5", children: [
+          /* @__PURE__ */ jsxs(AppButton, { intent: "cancel", size: "sm", isDisabled: workflowMutation.isPending, onClick: resetPanel, children: [
             /* @__PURE__ */ jsx(X, { className: HWY_CA_BUTTON_ICON_CLASS, "aria-hidden": true }),
             cancelLabel
           ] }),
@@ -43724,31 +43507,16 @@ var HwyCoursesActivitiesGridWorkflowCell = ({
             }
           )
         ] })
-      ] }) : /* @__PURE__ */ jsx("div", { role: "menu", "aria-label": menuAriaLabel, className: "py-0.5", children: workflowActions.map((action) => {
-        const { label } = resolveActionCopy(action);
-        const WorkflowIcon = resolveHwyCoursesActivitiesWorkflowActionIcon(action);
-        return /* @__PURE__ */ jsx(
-          SplitButtonMenuItem,
-          {
-            icon: /* @__PURE__ */ jsx(WorkflowIcon, { className: "h-3.5 w-3.5 shrink-0", "aria-hidden": true }),
-            disabled: workflowMutation.isPending,
-            className: "text-rose-800 hover:bg-rose-50/80",
-            onClick: () => handlePickAction(action),
-            children: label
-          },
-          action
-        );
-      }) })
+      ] }) : /* @__PURE__ */ jsxs("div", { className: hwyCoursesActivitiesStatusWorkflowActionsStackClass, children: [
+        workflowActionsByTone.forward.length > 0 ? /* @__PURE__ */ jsx("ul", { className: hwyCoursesActivitiesStatusWorkflowListClass, children: workflowActionsByTone.forward.map((action) => renderInlineAction(action)) }) : null,
+        workflowActionsByTone.forward.length > 0 && workflowActionsByTone.backward.length > 0 ? /* @__PURE__ */ jsx("div", { className: hwyCoursesActivitiesStatusWorkflowDividerClass, "aria-hidden": true }) : null,
+        workflowActionsByTone.backward.length > 0 ? /* @__PURE__ */ jsx("ul", { className: hwyCoursesActivitiesStatusWorkflowListClass, children: workflowActionsByTone.backward.map((action) => renderInlineAction(action)) }) : null
+      ] })
     }
   );
 };
 
 // src/features/hwy-courses-activities/HwyCoursesActivitiesStatusCell.tsx
-var STATUS_COLUMN_HEADER_CLASS = "text-center [&>div]:justify-center whitespace-nowrap";
-var STATUS_COLUMN_CELL_CLASS = "overflow-visible text-center align-middle";
-var HWY_COURSES_ACTIVITIES_STATUS_COLUMN_WIDTH = "12rem";
-var STATUS_ICON_FRAME_CLASS = "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border shadow-xs";
-var STATUS_ROW_CLASS = "inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-full border border-slate-200/60 bg-white/90 px-1.5 py-0.5 shadow-xs";
 var normalizeStatusCode = (statusCode) => String(statusCode ?? "").trim();
 function resolveHwyCoursesActivitiesStatusVisual(statusCode) {
   switch (statusCode) {
@@ -43818,13 +43586,14 @@ var HwyCoursesActivitiesStatusCell = ({
   }
   const visual = resolveHwyCoursesActivitiesStatusVisual(code);
   const { Icon: Icon2 } = visual;
-  return /* @__PURE__ */ jsx("div", { className: "flex w-full items-center justify-center", children: /* @__PURE__ */ jsxs("span", { className: STATUS_ROW_CLASS, title: label, children: [
-    /* @__PURE__ */ jsx("span", { className: cn(STATUS_ICON_FRAME_CLASS, visual.frameClass), "aria-hidden": true, children: /* @__PURE__ */ jsx(Icon2, { className: cn("h-3.5 w-3.5 shrink-0", visual.iconClass), strokeWidth: 2.25 }) }),
+  return /* @__PURE__ */ jsx("div", { className: hwyCoursesActivitiesStatusPillRootClass, children: /* @__PURE__ */ jsxs("span", { className: hwyCoursesActivitiesStatusPillClass, title: label, children: [
+    /* @__PURE__ */ jsx("span", { className: cn(hwyCoursesActivitiesStatusPillIconFrameClass, visual.frameClass), "aria-hidden": true, children: /* @__PURE__ */ jsx(Icon2, { className: cn(hwyCoursesActivitiesStatusPillIconClass, visual.iconClass), strokeWidth: 2.25 }) }),
     /* @__PURE__ */ jsx(
       "span",
       {
         className: cn(
-          "min-w-0 truncate text-[11px] font-semibold leading-tight",
+          "min-w-0 truncate",
+          HWY_COURSES_ACTIVITIES_STATUS_LABEL_CLASS,
           visual.labelClass
         ),
         children: label
@@ -43833,20 +43602,30 @@ var HwyCoursesActivitiesStatusCell = ({
   ] }) });
 };
 var hwyCoursesActivitiesStatusColumnChrome = {
-  headerClassName: STATUS_COLUMN_HEADER_CLASS,
-  cellClassName: STATUS_COLUMN_CELL_CLASS
+  headerClassName: HWY_COURSES_ACTIVITIES_STATUS_HEADER_CLASS,
+  cellClassName: HWY_COURSES_ACTIVITIES_STATUS_CELL_CLASS
 };
-var HwyCoursesActivitiesStatusWithWorkflowCell = ({ statusCode, statusCodeTitle, cultureId, ...workflowProps }) => /* @__PURE__ */ jsxs("div", { className: "flex w-full items-center justify-center gap-1 py-0.5", children: [
-  /* @__PURE__ */ jsx(
-    HwyCoursesActivitiesStatusCell,
+var HwyCoursesActivitiesStatusWithWorkflowCell = ({ statusCode, statusCodeTitle, cultureId, ...workflowProps }) => {
+  const { direction } = useCulture();
+  return /* @__PURE__ */ jsxs(
+    "div",
     {
-      statusCode,
-      statusCodeTitle,
-      cultureId
+      dir: direction,
+      className: hwyCoursesActivitiesStatusColumnStackClass,
+      children: [
+        /* @__PURE__ */ jsx(
+          HwyCoursesActivitiesStatusCell,
+          {
+            statusCode,
+            statusCodeTitle,
+            cultureId
+          }
+        ),
+        /* @__PURE__ */ jsx(HwyCoursesActivitiesGridWorkflowCell, { statusCode, ...workflowProps })
+      ]
     }
-  ),
-  /* @__PURE__ */ jsx(HwyCoursesActivitiesGridWorkflowCell, { statusCode, ...workflowProps })
-] });
+  );
+};
 
 // src/domain/hwy/hwyCoursesActivitiesTypeSubtypeDisplay.ts
 var trimLabel = (value) => {
@@ -43877,24 +43656,30 @@ function hwyCoursesActivitiesTypeSubtypeStackHasContent(stack) {
   );
 }
 
-// src/features/hwy-courses-activities/HwyCoursesActivitiesCountBadge.tsx
+// src/shared/ui/hwy/HwyGridParticipantCountButton.tsx
 var PARTICIPANTS_COUNT_NUMBER_LOCALE = "en-US";
 var GRID_COUNT_COLUMN_HEADER_CLASS = "text-center [&>div]:justify-center whitespace-nowrap";
 var GRID_COUNT_COLUMN_CELL_CLASS = "text-center align-middle";
-var HWY_COURSES_ACTIVITIES_PARTICIPANTS_COLUMN_WIDTH = "145px";
+var HWY_GRID_PARTICIPANT_COUNT_COLUMN_WIDTH = "145px";
 var PARTICIPANTS_COUNT_BADGE_WIDTH_CLASS = "box-border w-[129px] min-w-[129px] max-w-[129px]";
 var PARTICIPANTS_COUNT_BADGE_CLASS = "inline-flex min-h-8 items-center justify-center gap-1.5 rounded-md border border-slate-200/80 bg-white px-2 py-1 text-base font-semibold tabular-nums leading-none text-slate-800";
 var PARTICIPANTS_COUNT_PLAIN_CLASS = "inline-flex min-h-8 items-center justify-center gap-1.5 rounded-md border border-transparent bg-transparent px-2 py-1 text-base font-semibold tabular-nums leading-none text-slate-800";
+var PARTICIPANTS_COUNT_BUTTON_GROUP_CLASS = "cursor-default group-hover:cursor-pointer";
 var PARTICIPANTS_COUNT_BADGE_HOVER_CLASS = "transition-colors duration-150 group-hover:border-slate-300/90 group-hover:bg-slate-50 group-focus-visible:border-slate-300/90 group-focus-visible:bg-slate-50";
 var PARTICIPANTS_COUNT_PLAIN_TO_BADGE_HOVER_CLASS = "transition-[background-color,border-color,box-shadow] duration-150 group-hover:border-slate-200/80 group-hover:bg-white group-hover:shadow-sm group-focus-visible:border-slate-200/80 group-focus-visible:bg-white group-focus-visible:shadow-sm";
-function formatHwyCoursesActivitiesParticipantCount(count) {
+function formatHwyGridParticipantCount(count) {
   const safe = Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
   return new Intl.NumberFormat(PARTICIPANTS_COUNT_NUMBER_LOCALE, {
     maximumFractionDigits: 0,
     numberingSystem: "latn"
   }).format(safe);
 }
-var HwyCoursesActivitiesParticipantsCountBadge = ({ count, className, chrome = "badge", withGroupHover = false }) => /* @__PURE__ */ jsxs(
+var HwyGridParticipantCountBadge = ({
+  count,
+  className,
+  chrome = "badge",
+  withGroupHover = false
+}) => /* @__PURE__ */ jsxs(
   "span",
   {
     className: cn(
@@ -43910,24 +43695,33 @@ var HwyCoursesActivitiesParticipantsCountBadge = ({ count, className, chrome = "
     ),
     children: [
       /* @__PURE__ */ jsx(Users, { className: "h-4 w-4 shrink-0 text-slate-500", "aria-hidden": true }),
-      /* @__PURE__ */ jsx("span", { dir: "ltr", className: "tabular-nums", children: formatHwyCoursesActivitiesParticipantCount(count) })
+      /* @__PURE__ */ jsx("span", { dir: "ltr", className: "tabular-nums", children: formatHwyGridParticipantCount(count) })
     ]
   }
 );
-var HwyCoursesActivitiesParticipantsCountButton = ({ count, onActivate, ariaLabel, chrome = "badge" }) => /* @__PURE__ */ jsx(
+var HwyGridParticipantCountButton = ({
+  count,
+  onActivate,
+  ariaLabel,
+  chrome = "plainUntilHover"
+}) => /* @__PURE__ */ jsx(
   "button",
   {
     type: "button",
     "aria-label": ariaLabel,
-    className: "group mx-auto inline-flex w-full max-w-full justify-center border-0 bg-transparent p-0 shadow-none outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40 focus-visible:ring-offset-1",
+    className: cn(
+      "group mx-auto inline-flex w-full max-w-full justify-center border-0 bg-transparent p-0 shadow-none outline-none",
+      "focus-visible:ring-2 focus-visible:ring-slate-400/40 focus-visible:ring-offset-1",
+      PARTICIPANTS_COUNT_BUTTON_GROUP_CLASS
+    ),
     onClick: (event) => {
       event.stopPropagation();
       onActivate();
     },
-    children: /* @__PURE__ */ jsx(HwyCoursesActivitiesParticipantsCountBadge, { count, chrome, withGroupHover: true })
+    children: /* @__PURE__ */ jsx(HwyGridParticipantCountBadge, { count, chrome, withGroupHover: true })
   }
 );
-var hwyCoursesActivitiesAttendanceColumnChrome = {
+var hwyGridParticipantCountColumnChrome = {
   headerClassName: GRID_COUNT_COLUMN_HEADER_CLASS,
   cellClassName: GRID_COUNT_COLUMN_CELL_CLASS
 };
@@ -44625,11 +44419,11 @@ var ADMIN_SHELL_HEADER_SUBTITLE_CLASS = `mt-0.5 hidden min-w-0 truncate leading-
 var DEFAULT_FIELD_FEEDBACK_PLACEMENT2 = "overlay";
 
 // appendo-package-ui-global:@heroui/react
-var __runtime10 = globalThis.__APPENDO_PACKAGE_RUNTIME__;
-if (!__runtime10?.HeroUIReact) {
+var __runtime9 = globalThis.__APPENDO_PACKAGE_RUNTIME__;
+if (!__runtime9?.HeroUIReact) {
   throw new Error("Package UI runtime is not initialized. Reload the app and try again.");
 }
-var __mod8 = __runtime10.HeroUIReact;
+var __mod7 = __runtime9.HeroUIReact;
 var {
   Accordion,
   AccordionBody,
@@ -45155,7 +44949,7 @@ var {
   useScrollShadow,
   useTheme,
   useYearPicker
-} = __mod8;
+} = __mod7;
 
 // src/shared/ui/shell/pageGuide/pageGuide.attrs.ts
 var PAGE_GUIDE_ATTR = "data-page-guide";
@@ -45535,6 +45329,30 @@ var FormField2 = ({
   );
 };
 
+// appendo-package-ui-global:react-dom
+var __runtime10 = globalThis.__APPENDO_PACKAGE_RUNTIME__;
+if (!__runtime10?.ReactDOM) {
+  throw new Error("Package UI runtime is not initialized. Reload the app and try again.");
+}
+var __mod8 = __runtime10.ReactDOM;
+var react_dom_default = __mod8.default;
+var {
+  __DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,
+  createPortal,
+  flushSync,
+  preconnect,
+  prefetchDNS,
+  preinit,
+  preinitModule,
+  preload,
+  preloadModule,
+  requestFormReset,
+  unstable_batchedUpdates,
+  useFormState,
+  useFormStatus,
+  version: version3
+} = __mod8;
+
 // src/shared/ui/paletteHues.ts
 var SOFT_TONE_CLASS2 = {
   slate: "border border-slate-200 text-slate-600 hover:bg-slate-100",
@@ -45594,6 +45412,44 @@ var pageGuideLocalProps = (title, hint, priority = 50) => pageGuideProps({
   scope: "local",
   topic: "page"
 });
+
+// src/shared/ui/overlay-motion/overlayMotion.ts
+var OVERLAY_MOTION_PANEL_CLASS = "overlay-motion-panel";
+var OVERLAY_MOTION_ENTER_CLASS = "overlay-motion-enter";
+function overlayMotionDocumentDir() {
+  if (typeof document === "undefined") {
+    return "ltr";
+  }
+  return document.documentElement.getAttribute("dir") === "rtl" ? "rtl" : "ltr";
+}
+function overlayOriginFromPopoverPlacement(placement) {
+  const vertical = placement.startsWith("top") ? "bottom" : placement.startsWith("bottom") ? "top" : null;
+  const horizontal = placement.endsWith("end") ? "end" : placement.endsWith("start") ? "start" : null;
+  if (vertical && horizontal) {
+    return `${vertical}-${horizontal}`;
+  }
+  if (vertical) {
+    return vertical;
+  }
+  if (horizontal) {
+    return horizontal;
+  }
+  return "center";
+}
+function overlayMotionPanelProps(options) {
+  const enterOnMount = options.enterOnMount ?? options.kind !== "drawer";
+  return {
+    className: cn(
+      OVERLAY_MOTION_PANEL_CLASS,
+      enterOnMount && OVERLAY_MOTION_ENTER_CLASS,
+      options.className
+    ),
+    "data-overlay-kind": options.kind,
+    "data-overlay-origin": options.origin,
+    ...typeof options.open === "boolean" ? { "data-overlay-open": options.open ? "true" : "false" } : {},
+    ...options.dir ? { "data-overlay-dir": options.dir } : {}
+  };
+}
 
 // src/shared/ui/AppSplitButton.tsx
 var SPLIT_BUTTON_MENU_PANEL_CLASS2 = "overlay-motion-panel overlay-motion-enter absolute end-0 top-[calc(100%+4px)] z-20 min-w-[7.5rem] rounded-md border border-slate-200 bg-white py-1 shadow-lg";
@@ -49727,6 +49583,9 @@ function resolveAppTableGridHeaderLabelClassName(headerClassName) {
   if (headerClassName?.includes("text-end") || headerClassName?.includes("text-right")) {
     return "min-w-0 flex-1 truncate text-end";
   }
+  if (headerClassName?.includes("text-start") || headerClassName?.includes("text-left")) {
+    return "min-w-0 w-full truncate text-start";
+  }
   return "min-w-0 flex-1 truncate";
 }
 function resolveAppTableGridCellClipAlign(cellClassName) {
@@ -50277,7 +50136,7 @@ var AppTableGridColumnHeader2 = ({
           {
             className: cn(
               "flex min-w-0 items-center gap-1",
-              effectiveHeaderClassName?.includes("text-center") && "w-full",
+              (effectiveHeaderClassName?.includes("text-center") || effectiveHeaderClassName?.includes("text-start") || effectiveHeaderClassName?.includes("text-left")) && "w-full",
               resolveAppTableGridHeaderFlexJustify(effectiveHeaderClassName)
             ),
             children: /* @__PURE__ */ jsx("span", { className: resolveAppTableGridHeaderLabelClassName(effectiveHeaderClassName), children: column.label })
@@ -58825,7 +58684,7 @@ var APP_LIST_PREFERENCE_KEYS2 = {
   hwyActivitiesAdmin: "hwy-activities-admin",
   hwyActivitiesAdminCentral: "hwy-activities-admin-central",
   hwyCoursesAdmin: "hwy-courses-admin",
-  hwyMeetingsManagement: "hwy-meetings-management-v2",
+  hwyMeetingsManagement: "hwy-meetings-management-v3",
   hwyCoursesParticipants: "hwy-courses-participants",
   hwyTarghinAdmin: "hwy-targhin-requests-admin-v6",
   hwyMembersTarghin: "hwy-members-targhin-v4",
@@ -60811,6 +60670,173 @@ var HwyCoursesActivitiesTypeSubtypeCell = ({
         /* @__PURE__ */ jsx(SessionTitleLine, { sessionCode, title: mutedSecondLineTitle }),
         stack.noteFirstLine ? /* @__PURE__ */ jsx("div", { className: "mt-0.5 line-clamp-2 text-xs leading-snug text-slate-600", children: stack.noteFirstLine }) : null
       ] }) : null
+    }
+  );
+};
+
+// src/domain/hwy/hwyAuditActorAvatarCaption.ts
+var stripHwyDevUserPrefix = (value) => {
+  const trimmed = String(value ?? "").trim();
+  if (!trimmed) {
+    return "";
+  }
+  return trimmed.replace(/^user-/i, "").trim();
+};
+var resolveHwyAuditActorAvatarUsernameLabel = (face) => {
+  const memberId = /^\d+$/.test(String(face.id).trim()) ? String(face.id).trim() : null;
+  const candidates = [
+    face.username,
+    stripHwyDevUserPrefix(face.username)
+  ].map((value) => String(value ?? "").trim()).filter(Boolean);
+  const seen = /* @__PURE__ */ new Set();
+  for (const raw of candidates) {
+    if (seen.has(raw)) {
+      continue;
+    }
+    seen.add(raw);
+    const allocated = resolveHwyAllocatedMembershipUsername(raw, memberId);
+    if (allocated) {
+      return allocated;
+    }
+    const stripped = stripHwyDevUserPrefix(raw);
+    if (stripped && isHwyAllocatedMembershipUsernameFormat(stripped)) {
+      return stripped;
+    }
+    if (stripped && !isHwyMembershipUsernamePlaceholder(stripped, memberId) && stripped !== memberId) {
+      return stripped;
+    }
+  }
+  return "";
+};
+
+// src/shared/ui/SideHintTooltip.tsx
+var SIDE_HINT_TOOLTIP_CONTENT_CLASS2 = cn(
+  "z-[9999] max-w-[18rem] border border-slate-700/70 bg-slate-900 px-3 py-2.5",
+  "text-start text-[11px] font-medium leading-relaxed text-slate-100",
+  "shadow-xl shadow-slate-900/25"
+);
+
+// src/features/hwy-courses-activities/HwyCentralAuditActorCell.tsx
+var TOOLTIP_BODY_CLASS = cn(
+  SIDE_HINT_TOOLTIP_CONTENT_CLASS2,
+  "max-w-[16rem] space-y-1 rounded-lg px-3 py-2.5 text-start"
+);
+var HWY_CENTRAL_AUDIT_ACTOR_CELL_MAX_WIDTH_CLASS = "max-w-[85px]";
+var HwyCentralAuditActorCell = ({
+  face,
+  occurredAt,
+  onActivate,
+  activateAriaLabel,
+  layoutMaxWidthClass = HWY_CENTRAL_AUDIT_ACTOR_CELL_MAX_WIDTH_CLASS
+}) => {
+  const [avatarFailed, setAvatarFailed] = useState(false);
+  const hasFace = hwyMemberListFaceHasLabel(face) && Boolean(face?.id);
+  const hasTimestamp = Boolean(occurredAt?.trim());
+  if (!hasFace && !hasTimestamp) {
+    return null;
+  }
+  if (!hasFace) {
+    return /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: cn(
+          "mx-auto flex w-full flex-col items-center justify-center py-0.5 text-center",
+          layoutMaxWidthClass
+        ),
+        children: /* @__PURE__ */ jsx(
+          MountGridDateText,
+          {
+            value: occurredAt?.trim() ?? "",
+            align: "center",
+            className: "text-[11px] font-semibold leading-none text-slate-700"
+          }
+        )
+      }
+    );
+  }
+  const resolvedFace = face;
+  const usernameLabel = resolveHwyAuditActorAvatarUsernameLabel(resolvedFace);
+  const fullNameRaw = resolvedFace.displayFullName?.trim() ?? "";
+  const fullNameFormatted = formatHwyMemberPersonDisplayName(fullNameRaw);
+  const tooltipTitle = fullNameFormatted || fullNameRaw;
+  const showTooltip = Boolean(tooltipTitle && tooltipTitle !== "\u2014");
+  const genderSlot = resolveHwyGeoResponsibilityGenderSlot(resolvedFace.genderCode);
+  const placeholderAccent = genderSlot === "female" ? "bg-pink-50 text-pink-600" : genderSlot === "male" ? "bg-sky-50 text-sky-600" : "bg-slate-100 text-slate-400";
+  const showAvatar = Boolean(resolvedFace.avatarUrl?.trim()) && !avatarFailed;
+  const avatarFrameClass = cn(
+    "box-border h-7 w-7 shrink-0 rounded-full border-2 border-white object-cover",
+    genderSlot === "male" && "border-sky-200/90",
+    genderSlot === "female" && "border-pink-200/90",
+    genderSlot === "unknown" && "border-slate-200/80"
+  );
+  const stackClassName = cn(
+    "mx-auto flex w-full min-w-0 flex-col items-center justify-center gap-0.5 py-0.5 text-center",
+    layoutMaxWidthClass,
+    onActivate && "cursor-pointer rounded-md",
+    onActivate && HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS
+  );
+  const avatarNode = showAvatar ? /* @__PURE__ */ jsx(
+    "img",
+    {
+      src: resolvedFace.avatarUrl,
+      alt: "",
+      className: avatarFrameClass,
+      onError: () => setAvatarFailed(true)
+    }
+  ) : /* @__PURE__ */ jsx(
+    "span",
+    {
+      className: cn("flex items-center justify-center", avatarFrameClass, placeholderAccent),
+      "aria-hidden": true,
+      children: /* @__PURE__ */ jsx(User, { className: "h-3.5 w-3.5" })
+    }
+  );
+  const stackBody = /* @__PURE__ */ jsxs(Fragment2, { children: [
+    occurredAt?.trim() ? /* @__PURE__ */ jsx(
+      MountGridDateText,
+      {
+        value: occurredAt,
+        align: "center",
+        className: "text-[11px] font-semibold leading-none text-slate-700"
+      }
+    ) : null,
+    avatarNode,
+    usernameLabel ? /* @__PURE__ */ jsx(
+      "span",
+      {
+        dir: "ltr",
+        className: "max-w-full truncate text-[11px] font-semibold tabular-nums text-slate-800",
+        children: usernameLabel
+      }
+    ) : null
+  ] });
+  const tooltipContent = showTooltip ? /* @__PURE__ */ jsx("div", { className: "text-sm font-semibold leading-snug text-white", children: tooltipTitle }) : null;
+  const trigger = onActivate ? /* @__PURE__ */ jsx(
+    "button",
+    {
+      type: "button",
+      className: cn("border-0 bg-transparent p-0", stackClassName),
+      "aria-label": activateAriaLabel ?? usernameLabel,
+      onClick: (event) => {
+        event.stopPropagation();
+        onActivate();
+      },
+      children: stackBody
+    }
+  ) : /* @__PURE__ */ jsx("span", { className: stackClassName, children: stackBody });
+  if (!showTooltip || !tooltipContent) {
+    return trigger;
+  }
+  return /* @__PURE__ */ jsx(
+    UiTooltip,
+    {
+      content: tooltipContent,
+      contentClassName: TOOLTIP_BODY_CLASS,
+      placement: "top",
+      delay: 200,
+      showArrow: true,
+      offset: 10,
+      children: trigger
     }
   );
 };
@@ -74814,6 +74840,255 @@ var drawTextOnContext = (ctx, point, text, options) => {
   ctx.fillText(trimmed, point.x, point.y);
 };
 var isPointInsideDisplayImage = (x, y, metrics2) => x >= metrics2.offsetX && x <= metrics2.offsetX + metrics2.displayWidth && y >= metrics2.offsetY && y <= metrics2.offsetY + metrics2.displayHeight;
+
+// src/shared/ui/shell-foundation/ShellResponsivePopover.tsx
+var placementClasses = {
+  "bottom-start": "start-0 top-full mt-1",
+  "bottom-end": "end-0 top-full mt-1",
+  "top-start": "bottom-full start-0 mb-1",
+  "top-end": "bottom-full end-0 mb-1"
+};
+var PANEL_GAP_PX = 4;
+var VIEWPORT_MARGIN_PX = 8;
+var flipVerticalPlacement = (value) => value.startsWith("bottom") ? value.replace("bottom", "top") : value.replace("top", "bottom");
+var flipHorizontalPlacement = (value) => value.endsWith("start") ? value.replace("start", "end") : value.replace("end", "start");
+var DEFAULT_PORTAL_Z_INDEX = 1e3;
+var DEFAULT_PORTAL_MAX_HEIGHT = `min(24rem, calc(100dvh - ${VIEWPORT_MARGIN_PX * 2}px))`;
+var getAvailableSpace = (triggerRect) => ({
+  below: window.innerHeight - triggerRect.bottom - PANEL_GAP_PX - VIEWPORT_MARGIN_PX,
+  above: triggerRect.top - PANEL_GAP_PX - VIEWPORT_MARGIN_PX
+});
+var resolveVerticalPlacement = (preferred, triggerRect, panelHeight) => {
+  const { below, above } = getAvailableSpace(triggerRect);
+  const estimatedHeight = Math.max(panelHeight, 160);
+  if (preferred.startsWith("bottom")) {
+    if (below < estimatedHeight && above > below) {
+      return flipVerticalPlacement(preferred);
+    }
+    return preferred;
+  }
+  if (above < estimatedHeight && below > above) {
+    return flipVerticalPlacement(preferred);
+  }
+  return preferred;
+};
+var getHorizontalAlignSpace = (triggerRect) => ({
+  atStart: window.innerWidth - triggerRect.left - VIEWPORT_MARGIN_PX,
+  atEnd: triggerRect.right - VIEWPORT_MARGIN_PX
+});
+var resolveHorizontalPlacement = (placement, triggerRect, panelWidth) => {
+  const estimatedWidth = Math.max(panelWidth, 192);
+  const { atStart, atEnd } = getHorizontalAlignSpace(triggerRect);
+  if (placement.endsWith("start")) {
+    if (estimatedWidth > atStart && atEnd > atStart) {
+      return flipHorizontalPlacement(placement);
+    }
+    return placement;
+  }
+  if (estimatedWidth > atEnd && atStart > atEnd) {
+    return flipHorizontalPlacement(placement);
+  }
+  return placement;
+};
+var resolvePlacement = (preferred, triggerRect, panelWidth, panelHeight) => {
+  const vertical = resolveVerticalPlacement(preferred, triggerRect, panelHeight);
+  return resolveHorizontalPlacement(vertical, triggerRect, panelWidth);
+};
+var resolvePortalMaxHeight = (placement, triggerRect, portalMaxHeight) => {
+  const availableBelow = window.innerHeight - triggerRect.bottom - PANEL_GAP_PX - VIEWPORT_MARGIN_PX;
+  const availableAbove = triggerRect.top - PANEL_GAP_PX - VIEWPORT_MARGIN_PX;
+  const viewportPx = placement.startsWith("bottom") ? Math.max(availableBelow, 160) : Math.max(availableAbove, 160);
+  if (portalMaxHeight === false) {
+    return `${viewportPx}px`;
+  }
+  if (typeof portalMaxHeight === "string") {
+    return portalMaxHeight;
+  }
+  return `min(24rem, ${viewportPx}px)`;
+};
+var buildPortalPanelStyle = (triggerRect, placement, portalZIndex, portalMaxHeight, portalSkidPx) => {
+  const style = {
+    position: "fixed",
+    zIndex: portalZIndex,
+    maxWidth: `calc(100vw - ${VIEWPORT_MARGIN_PX * 2}px)`,
+    maxHeight: resolvePortalMaxHeight(placement, triggerRect, portalMaxHeight)
+  };
+  if (placement.startsWith("bottom")) {
+    style.top = triggerRect.bottom + PANEL_GAP_PX;
+  } else {
+    style.bottom = window.innerHeight - triggerRect.top + PANEL_GAP_PX;
+  }
+  if (placement.endsWith("start")) {
+    style.left = triggerRect.left + portalSkidPx;
+  } else {
+    style.right = window.innerWidth - triggerRect.right + portalSkidPx;
+  }
+  return style;
+};
+var ShellResponsivePopover = ({
+  open,
+  onOpenChange,
+  trigger,
+  children,
+  placement = "bottom-end",
+  fallbackPlacement = "bottom-start",
+  dismissOnOutside = true,
+  dismissOnEscape = true,
+  dismissOnBlur = false,
+  ariaLabel = "Popover",
+  className,
+  portal = false,
+  portalZIndex = DEFAULT_PORTAL_Z_INDEX,
+  portalMaxHeight,
+  fillTrigger = false,
+  portalSkidPx = 0
+}) => {
+  const rootRef = useRef(null);
+  const triggerRef = useRef(null);
+  const panelRef = useRef(null);
+  const popoverId = useId();
+  const [resolvedPlacement, setResolvedPlacement] = useState(placement);
+  const [portalPanelStyle, setPortalPanelStyle] = useState();
+  useEffect(() => {
+    if (!open) {
+      setResolvedPlacement(placement);
+      setPortalPanelStyle(void 0);
+    }
+  }, [open, placement]);
+  const resolveCollision = useCallback(() => {
+    if (!triggerRef.current) {
+      return;
+    }
+    const triggerRect = triggerRef.current.getBoundingClientRect();
+    const panelRect = panelRef.current?.getBoundingClientRect();
+    const panelHeight = panelRef.current?.scrollHeight ?? panelRect?.height ?? 200;
+    const panelWidth = panelRef.current?.scrollWidth ?? panelRect?.width ?? 200;
+    setResolvedPlacement(resolvePlacement(placement, triggerRect, panelWidth, panelHeight));
+  }, [placement]);
+  useLayoutEffect(() => {
+    if (!open || portal) return void 0;
+    resolveCollision();
+    window.addEventListener("resize", resolveCollision);
+    return () => window.removeEventListener("resize", resolveCollision);
+  }, [open, portal, placement, resolveCollision]);
+  useLayoutEffect(() => {
+    if (!open || !portal) {
+      return void 0;
+    }
+    const updatePortalPosition = () => {
+      if (!triggerRef.current) return;
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const panelHeight = panelRef.current?.scrollHeight ?? panelRef.current?.getBoundingClientRect().height ?? 400;
+      const panelWidth = panelRef.current?.scrollWidth ?? panelRef.current?.getBoundingClientRect().width ?? 400;
+      const nextPlacement = resolvePlacement(placement, triggerRect, panelWidth, panelHeight);
+      setResolvedPlacement(nextPlacement);
+      setPortalPanelStyle(
+        buildPortalPanelStyle(
+          triggerRect,
+          nextPlacement,
+          portalZIndex,
+          portalMaxHeight,
+          portalSkidPx
+        )
+      );
+    };
+    updatePortalPosition();
+    window.requestAnimationFrame(updatePortalPosition);
+    window.addEventListener("resize", updatePortalPosition);
+    window.addEventListener("scroll", updatePortalPosition, true);
+    return () => {
+      window.removeEventListener("resize", updatePortalPosition);
+      window.removeEventListener("scroll", updatePortalPosition, true);
+    };
+  }, [open, portal, placement, portalMaxHeight, portalSkidPx, portalZIndex]);
+  useEffect(() => {
+    if (!open) return;
+    const containsTarget = (target) => rootRef.current?.contains(target) || panelRef.current?.contains(target);
+    const onPointerDown = (event) => {
+      if (dismissOnOutside && !containsTarget(event.target)) onOpenChange(false);
+    };
+    const onKeyDown = (event) => {
+      if (dismissOnEscape && event.key === "Escape") {
+        event.preventDefault();
+        onOpenChange(false);
+        triggerRef.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    const onFocusIn = (event) => {
+      if (dismissOnBlur && !containsTarget(event.target)) onOpenChange(false);
+    };
+    document.addEventListener("focusin", onFocusIn);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("focusin", onFocusIn);
+    };
+  }, [dismissOnBlur, dismissOnEscape, dismissOnOutside, onOpenChange, open]);
+  const popoverMotion = overlayMotionPanelProps({
+    kind: "popover",
+    origin: overlayOriginFromPopoverPlacement(resolvedPlacement),
+    dir: overlayMotionDocumentDir()
+  });
+  const panelClassName = cn(
+    popoverMotion.className,
+    portal ? "fixed flex min-h-0 min-w-48 flex-col overflow-visible rounded-medium border border-divider bg-content1 p-2 text-foreground shadow-large" : cn(
+      "absolute z-50 max-h-[min(24rem,calc(100dvh-2rem))] min-w-48 max-w-[calc(100vw-2rem)] overflow-auto rounded-medium border border-divider bg-content1 p-2 text-foreground shadow-large",
+      placementClasses[resolvedPlacement]
+    ),
+    className
+  );
+  const panel = open ? /* @__PURE__ */ jsx(
+    "div",
+    {
+      ref: panelRef,
+      id: popoverId,
+      role: "dialog",
+      "aria-label": ariaLabel,
+      "data-fallback-placement": fallbackPlacement,
+      "data-placement": resolvedPlacement,
+      "data-overlay-kind": popoverMotion["data-overlay-kind"],
+      "data-overlay-origin": popoverMotion["data-overlay-origin"],
+      "data-overlay-dir": popoverMotion["data-overlay-dir"],
+      className: panelClassName,
+      style: portal ? portalPanelStyle : void 0,
+      children
+    }
+  ) : null;
+  const triggerProps = trigger.props;
+  const triggerClassName = triggerProps.className;
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      ref: rootRef,
+      className: cn("relative", fillTrigger ? "flex h-full w-full min-h-0" : "inline-flex"),
+      "data-shell-responsive-popover": "",
+      children: [
+        cloneElement(trigger, {
+          className: cn(
+            fillTrigger && "h-full min-h-0 w-full min-w-0 flex-1",
+            triggerClassName
+          ),
+          ref: (node) => {
+            triggerRef.current = node;
+            const originalRef = triggerProps.ref;
+            if (typeof originalRef === "function") originalRef(node);
+            else if (originalRef) originalRef.current = node;
+          },
+          "aria-expanded": open,
+          "aria-controls": open ? popoverId : void 0,
+          "aria-haspopup": "dialog",
+          onClick: (event) => {
+            triggerProps.onClick?.(event);
+            if (!event.defaultPrevented) onOpenChange(!open);
+          }
+        }),
+        panel && portal && typeof document !== "undefined" ? createPortal(panel, document.body) : panel
+      ]
+    }
+  );
+};
 
 // src/shared/ui/image-editor/ImageEditorStrokePickers.tsx
 var IMAGE_EDITOR_POPOVER_Z_INDEX = 1400;
@@ -89387,161 +89662,6 @@ var HwyNbTargetAudienceCountButton = ({
   ] });
 };
 
-// src/domain/hwy/hwyAuditActorAvatarCaption.ts
-var stripHwyDevUserPrefix = (value) => {
-  const trimmed = String(value ?? "").trim();
-  if (!trimmed) {
-    return "";
-  }
-  return trimmed.replace(/^user-/i, "").trim();
-};
-var resolveHwyAuditActorAvatarUsernameLabel = (face) => {
-  const memberId = /^\d+$/.test(String(face.id).trim()) ? String(face.id).trim() : null;
-  const candidates = [
-    face.username,
-    stripHwyDevUserPrefix(face.username)
-  ].map((value) => String(value ?? "").trim()).filter(Boolean);
-  const seen = /* @__PURE__ */ new Set();
-  for (const raw of candidates) {
-    if (seen.has(raw)) {
-      continue;
-    }
-    seen.add(raw);
-    const allocated = resolveHwyAllocatedMembershipUsername(raw, memberId);
-    if (allocated) {
-      return allocated;
-    }
-    const stripped = stripHwyDevUserPrefix(raw);
-    if (stripped && isHwyAllocatedMembershipUsernameFormat(stripped)) {
-      return stripped;
-    }
-    if (stripped && !isHwyMembershipUsernamePlaceholder(stripped, memberId) && stripped !== memberId) {
-      return stripped;
-    }
-  }
-  return "";
-};
-
-// src/shared/ui/SideHintTooltip.tsx
-var SIDE_HINT_TOOLTIP_CONTENT_CLASS2 = cn(
-  "z-[9999] max-w-[18rem] border border-slate-700/70 bg-slate-900 px-3 py-2.5",
-  "text-start text-[11px] font-medium leading-relaxed text-slate-100",
-  "shadow-xl shadow-slate-900/25"
-);
-
-// src/features/hwy-courses-activities/HwyCentralAuditActorCell.tsx
-var TOOLTIP_BODY_CLASS = cn(
-  SIDE_HINT_TOOLTIP_CONTENT_CLASS2,
-  "max-w-[16rem] space-y-1 rounded-lg px-3 py-2.5 text-start"
-);
-var HwyCentralAuditActorCell = ({
-  face,
-  occurredAt,
-  onActivate,
-  activateAriaLabel
-}) => {
-  const [avatarFailed, setAvatarFailed] = useState(false);
-  const hasFace = hwyMemberListFaceHasLabel(face) && Boolean(face?.id);
-  const hasTimestamp = Boolean(occurredAt?.trim());
-  if (!hasFace && !hasTimestamp) {
-    return null;
-  }
-  if (!hasFace) {
-    return /* @__PURE__ */ jsx("div", { className: "mx-auto flex w-full max-w-[85px] flex-col items-center justify-center py-0.5 text-center", children: /* @__PURE__ */ jsx(
-      MountGridDateText,
-      {
-        value: occurredAt?.trim() ?? "",
-        align: "center",
-        className: "text-[11px] font-semibold leading-none text-slate-700"
-      }
-    ) });
-  }
-  const resolvedFace = face;
-  const usernameLabel = resolveHwyAuditActorAvatarUsernameLabel(resolvedFace);
-  const fullNameRaw = resolvedFace.displayFullName?.trim() ?? "";
-  const fullNameFormatted = formatHwyMemberPersonDisplayName(fullNameRaw);
-  const tooltipTitle = fullNameFormatted || fullNameRaw;
-  const showTooltip = Boolean(tooltipTitle && tooltipTitle !== "\u2014");
-  const genderSlot = resolveHwyGeoResponsibilityGenderSlot(resolvedFace.genderCode);
-  const placeholderAccent = genderSlot === "female" ? "bg-pink-50 text-pink-600" : genderSlot === "male" ? "bg-sky-50 text-sky-600" : "bg-slate-100 text-slate-400";
-  const showAvatar = Boolean(resolvedFace.avatarUrl?.trim()) && !avatarFailed;
-  const avatarFrameClass = cn(
-    "box-border h-7 w-7 shrink-0 rounded-full border-2 border-white object-cover",
-    genderSlot === "male" && "border-sky-200/90",
-    genderSlot === "female" && "border-pink-200/90",
-    genderSlot === "unknown" && "border-slate-200/80"
-  );
-  const stackClassName = cn(
-    "mx-auto flex w-full min-w-0 max-w-[85px] flex-col items-center justify-center gap-0.5 py-0.5 text-center",
-    onActivate && "cursor-pointer rounded-md",
-    onActivate && HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS
-  );
-  const avatarNode = showAvatar ? /* @__PURE__ */ jsx(
-    "img",
-    {
-      src: resolvedFace.avatarUrl,
-      alt: "",
-      className: avatarFrameClass,
-      onError: () => setAvatarFailed(true)
-    }
-  ) : /* @__PURE__ */ jsx(
-    "span",
-    {
-      className: cn("flex items-center justify-center", avatarFrameClass, placeholderAccent),
-      "aria-hidden": true,
-      children: /* @__PURE__ */ jsx(User, { className: "h-3.5 w-3.5" })
-    }
-  );
-  const stackBody = /* @__PURE__ */ jsxs(Fragment2, { children: [
-    occurredAt?.trim() ? /* @__PURE__ */ jsx(
-      MountGridDateText,
-      {
-        value: occurredAt,
-        align: "center",
-        className: "text-[11px] font-semibold leading-none text-slate-700"
-      }
-    ) : null,
-    avatarNode,
-    usernameLabel ? /* @__PURE__ */ jsx(
-      "span",
-      {
-        dir: "ltr",
-        className: "max-w-full truncate text-[11px] font-semibold tabular-nums text-slate-800",
-        children: usernameLabel
-      }
-    ) : null
-  ] });
-  const tooltipContent = showTooltip ? /* @__PURE__ */ jsx("div", { className: "text-sm font-semibold leading-snug text-white", children: tooltipTitle }) : null;
-  const trigger = onActivate ? /* @__PURE__ */ jsx(
-    "button",
-    {
-      type: "button",
-      className: cn("border-0 bg-transparent p-0", stackClassName),
-      "aria-label": activateAriaLabel ?? usernameLabel,
-      onClick: (event) => {
-        event.stopPropagation();
-        onActivate();
-      },
-      children: stackBody
-    }
-  ) : /* @__PURE__ */ jsx("span", { className: stackClassName, children: stackBody });
-  if (!showTooltip || !tooltipContent) {
-    return trigger;
-  }
-  return /* @__PURE__ */ jsx(
-    UiTooltip,
-    {
-      content: tooltipContent,
-      contentClassName: TOOLTIP_BODY_CLASS,
-      placement: "top",
-      delay: 200,
-      showArrow: true,
-      offset: 10,
-      children: trigger
-    }
-  );
-};
-
 // src/domain/hwy/hwyCoursesActivitiesShellHeader.ts
 var buildHwyCoursesActivitiesShellHeaderOverride = (input) => {
   const sectionLabel = input.sectionLabel.trim();
@@ -90128,10 +90248,10 @@ var HwyActivitiesCentralPage = () => {
     {
       id: "members",
       label: t("hwy.coursesActivities.column.participants", "Participants"),
-      width: HWY_COURSES_ACTIVITIES_PARTICIPANTS_COLUMN_WIDTH,
-      ...hwyCoursesActivitiesAttendanceColumnChrome,
+      width: HWY_GRID_PARTICIPANT_COUNT_COLUMN_WIDTH,
+      ...hwyGridParticipantCountColumnChrome,
       renderCell: (row) => /* @__PURE__ */ jsx(
-        HwyCoursesActivitiesParticipantsCountButton,
+        HwyGridParticipantCountButton,
         {
           count: row.memberCount,
           chrome: "plainUntilHover",
@@ -90203,6 +90323,7 @@ var HwyActivitiesCentralPage = () => {
       rowCount: rows.length,
       t
     }),
+    loadingMessage: t("hwy.coursesActivities.loading", "Loading\u2026"),
     errorContent: activitiesQuery.error instanceof Error ? activitiesQuery.error.message : activitiesQuery.error ? t("hwy.coursesActivities.loadError", "Could not load the list. Try refresh.") : void 0
   };
   const gridFooter = total > 0 && !activitiesQuery.isLoading && !activitiesQuery.error ? /* @__PURE__ */ jsx(
@@ -90337,6 +90458,18 @@ var HWY_COURSES_ACTIVITIES_DATE_COLUMN_WIDTH = "110px";
 var hwyCoursesActivitiesTrainerColumnChrome = {
   headerClassName: "text-center [&>div]:justify-center whitespace-nowrap",
   cellClassName: "text-start align-middle"
+};
+var HWY_COURSES_ACTIVITIES_CREATED_BY_COLUMN_WIDTH = "105px";
+var hwyCoursesActivitiesTypeColumnChrome = {
+  minWidth: "5rem",
+  wrap: true
+};
+var hwyCoursesActivitiesCreatedByColumnChrome = {
+  width: HWY_COURSES_ACTIVITIES_CREATED_BY_COLUMN_WIDTH,
+  minWidth: HWY_COURSES_ACTIVITIES_CREATED_BY_COLUMN_WIDTH,
+  maxWidth: HWY_COURSES_ACTIVITIES_CREATED_BY_COLUMN_WIDTH,
+  headerClassName: "text-center [&>div]:justify-center whitespace-nowrap px-1",
+  cellClassName: "text-center align-middle px-1"
 };
 var emptyQueueActivitiesFieldFilters = () => ({
   recordId: "",
@@ -90594,6 +90727,7 @@ var HwyCoursesActivitiesQueuesPage = ({
         {
           face,
           interactive: true,
+          suppressDisplayNameWhenRedundant: true,
           rootClassName: "w-auto max-w-full",
           displayNameClassName: "truncate text-xs font-semibold leading-snug text-slate-900"
         }
@@ -90617,13 +90751,32 @@ var HwyCoursesActivitiesQueuesPage = ({
     },
     [navigateShell, pathname]
   );
+  const renderCreatedByCompactCell = useCallback(
+    (face) => {
+      if (!hwyMemberListFaceHasLabel(face)) {
+        return EMPTY_CELL3;
+      }
+      const dossierTarget = face?.id ? resolveHwyMemberDossierViewNavigateTarget(face.id, pathname, null) : null;
+      return /* @__PURE__ */ jsx(
+        HwyCentralAuditActorCell,
+        {
+          face,
+          layoutMaxWidthClass: "max-w-[105px]",
+          onActivate: dossierTarget ? () => {
+            navigateShell(dossierTarget);
+          } : void 0,
+          activateAriaLabel: t("hwy.coursesActivities.action.openMemberDossier", "Open member dossier")
+        }
+      );
+    },
+    [navigateShell, pathname, t]
+  );
   const activityColumns = useMemo(() => [
     {
       id: "idTypeCourse",
       label: t("hwy.coursesActivities.column.typeCourse", "Type / session"),
       textDirection: "culture",
-      minWidth: "8rem",
-      wrap: true,
+      ...hwyCoursesActivitiesTypeColumnChrome,
       renderCell: (row) => /* @__PURE__ */ jsx(
         HwyCoursesActivitiesTypeSubtypeCell,
         {
@@ -90655,21 +90808,27 @@ var HwyCoursesActivitiesQueuesPage = ({
       ) : EMPTY_CELL3
     },
     {
+      id: "files",
+      label: t("hwy.coursesActivities.column.files", "Files"),
+      width: "4.5rem",
+      headerClassName: "text-center [&>div]:justify-center whitespace-nowrap",
+      cellClassName: "text-center align-middle tabular-nums text-xs font-semibold text-slate-800",
+      renderCell: (row) => row.fileCount > 0 ? String(row.fileCount) : EMPTY_CELL3
+    },
+    {
       id: "createdBy",
       label: t("hwy.coursesActivities.column.createdBy", "Created by"),
       textDirection: "culture",
-      width: "240px",
-      wrap: true,
-      ...hwyCoursesActivitiesTrainerColumnChrome,
-      renderCell: (row) => renderGridMemberFaceCell(row.createdBy ?? null)
+      ...hwyCoursesActivitiesCreatedByColumnChrome,
+      renderCell: (row) => renderCreatedByCompactCell(row.createdBy ?? null)
     },
     {
       id: "members",
       label: t("hwy.coursesActivities.column.participants", "Participants"),
-      width: HWY_COURSES_ACTIVITIES_PARTICIPANTS_COLUMN_WIDTH,
-      ...hwyCoursesActivitiesAttendanceColumnChrome,
+      width: HWY_GRID_PARTICIPANT_COUNT_COLUMN_WIDTH,
+      ...hwyGridParticipantCountColumnChrome,
       renderCell: (row) => /* @__PURE__ */ jsx(
-        HwyCoursesActivitiesParticipantsCountButton,
+        HwyGridParticipantCountButton,
         {
           count: row.memberCount,
           onActivate: () => openParticipantsDetail(row.id),
@@ -90680,6 +90839,7 @@ var HwyCoursesActivitiesQueuesPage = ({
     {
       id: "status",
       label: t("hwy.coursesActivities.column.status", "Status"),
+      textDirection: "culture",
       width: HWY_COURSES_ACTIVITIES_STATUS_COLUMN_WIDTH,
       minWidth: "100px",
       wrap: true,
@@ -90698,14 +90858,6 @@ var HwyCoursesActivitiesQueuesPage = ({
           coursesQueue: null
         }
       )
-    },
-    {
-      id: "files",
-      label: t("hwy.coursesActivities.column.files", "Files"),
-      width: "4.5rem",
-      headerClassName: "text-center [&>div]:justify-center whitespace-nowrap",
-      cellClassName: "text-center align-middle tabular-nums text-xs font-semibold text-slate-800",
-      renderCell: (row) => row.fileCount > 0 ? String(row.fileCount) : EMPTY_CELL3
     }
   ], [
     activitiesQueue,
@@ -90714,7 +90866,7 @@ var HwyCoursesActivitiesQueuesPage = ({
     openParticipantsLabel,
     openRecordDetail,
     openRecordLabel,
-    renderGridMemberFaceCell,
+    renderCreatedByCompactCell,
     t
   ]);
   const courseColumns = useMemo(() => [
@@ -90722,8 +90874,7 @@ var HwyCoursesActivitiesQueuesPage = ({
       id: "idTypeCourse",
       label: t("hwy.coursesActivities.column.typeCourse", "Type / session"),
       textDirection: "culture",
-      minWidth: "8rem",
-      wrap: true,
+      ...hwyCoursesActivitiesTypeColumnChrome,
       renderCell: (row) => /* @__PURE__ */ jsx(
         HwyCoursesActivitiesTypeSubtypeCell,
         {
@@ -90767,10 +90918,10 @@ var HwyCoursesActivitiesQueuesPage = ({
     {
       id: "members",
       label: t("hwy.coursesActivities.column.participants", "Participants"),
-      width: HWY_COURSES_ACTIVITIES_PARTICIPANTS_COLUMN_WIDTH,
-      ...hwyCoursesActivitiesAttendanceColumnChrome,
+      width: HWY_GRID_PARTICIPANT_COUNT_COLUMN_WIDTH,
+      ...hwyGridParticipantCountColumnChrome,
       renderCell: (row) => /* @__PURE__ */ jsx(
-        HwyCoursesActivitiesParticipantsCountButton,
+        HwyGridParticipantCountButton,
         {
           count: row.memberCount,
           onActivate: () => openParticipantsDetail(row.id),
@@ -90781,6 +90932,7 @@ var HwyCoursesActivitiesQueuesPage = ({
     {
       id: "status",
       label: t("hwy.coursesActivities.column.status", "Status"),
+      textDirection: "culture",
       width: HWY_COURSES_ACTIVITIES_STATUS_COLUMN_WIDTH,
       minWidth: "100px",
       wrap: true,
@@ -90833,6 +90985,7 @@ var HwyCoursesActivitiesQueuesPage = ({
       rowCount: isActivities ? activityRows.length : courseRows.length,
       t
     }),
+    loadingMessage: t("hwy.coursesActivities.loading", "Loading\u2026"),
     errorContent: listErrorMessage
   };
   const listTotalCountValue = !listQuery.isLoading && !listQuery.error ? total : void 0;

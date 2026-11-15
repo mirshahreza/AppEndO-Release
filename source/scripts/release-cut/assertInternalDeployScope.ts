@@ -19,10 +19,15 @@ export function assertInternalDeployScope(deployDir: string): void {
     throw new Error('Deploy gate: manifest must bundle hawiety');
   }
 
-  const names = fs.readdirSync(deployDir).filter((n) => n.endsWith('.zip'));
-  const hawietyZips = names.filter((n) => n.startsWith('hawiety-'));
+  const packagesDir = path.join(deployDir, 'packages');
+  if (!fs.existsSync(packagesDir)) {
+    throw new Error('Deploy gate: missing packages/ directory');
+  }
+  const hawietyZips = fs
+    .readdirSync(packagesDir)
+    .filter((n) => n.startsWith('hawiety-') && n.endsWith('.zip'));
   if (hawietyZips.length === 0) {
-    throw new Error('Deploy gate: missing hawiety-*.zip at deploy root');
+    throw new Error('Deploy gate: missing hawiety-*.zip under packages/');
   }
 
   if (manifest.hawietyPromoteMode !== 'reuse-zip') {

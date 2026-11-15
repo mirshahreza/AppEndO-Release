@@ -1,4 +1,5 @@
 import type { ReleaseCutCloneProfileId } from './releaseCutCloneProfiles';
+import type { ReleaseCutServerDeployTargetId } from './releaseCutServerDeployTargets';
 
 /**
  * Private full-source deploy git lines (one row per vertical / package family).
@@ -12,6 +13,8 @@ export type ReleaseCutPackageDeployLine = {
   repoPathEnvVar: string;
   exportNpmScript: string;
   pushNpmScript: string;
+  /** RCUT-9 server deploy target (separate deploy root + URL). */
+  serverDeployTargetId: ReleaseCutServerDeployTargetId;
 };
 
 export const RELEASE_CUT_PACKAGE_DEPLOY_LINES: ReleaseCutPackageDeployLine[] = [
@@ -23,6 +26,7 @@ export const RELEASE_CUT_PACKAGE_DEPLOY_LINES: ReleaseCutPackageDeployLine[] = [
     repoPathEnvVar: 'APPENDO_HAWIETY_REPO_PATH',
     exportNpmScript: 'release:export-appendo-hawiety',
     pushNpmScript: 'release:push-appendo-hawiety',
+    serverDeployTargetId: 'hawiety',
   },
 ];
 

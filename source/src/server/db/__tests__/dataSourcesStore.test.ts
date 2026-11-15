@@ -262,4 +262,36 @@ describe('dataSourcesStore control plane sync', () => {
     };
     expect(saved.dataSources?.[0]?.type).toBe('SQL Server');
   });
+
+  it('exposes default data source under legacy edge model ids', () => {
+    const dir = createSettingsDir({
+      database: {
+        provider: 'sqlserver',
+        url: 'sqlserver://localhost\\SQL2025;database=AppEnd;user=sa;encrypt=true;trustServerCertificate=true',
+        engine: 'prisma',
+      },
+      dataSources: [
+        {
+          id: 'ds_pg18_local',
+          name: 'default-db',
+          type: 'SQL Server',
+          host: 'localhost\\SQL2025',
+          port: 0,
+          database: 'AppEnd',
+          username: 'sa',
+          passwordCipher: encryptCredential('secret'),
+          isDefault: true,
+          status: 'connected',
+          created_at: '2026-01-01T00:00:00.000Z',
+          updated_at: '',
+        },
+      ],
+    });
+    const settingsPath = path.join(dir, 'settings.json');
+    const items = getDataSourcesFromSettings(settingsPath);
+    const ids = items.map((item) => item.id).sort();
+
+    expect(ids).toEqual(['ds_default_local', 'ds_pg18_local']);
+    expect(items.find((item) => item.id === 'ds_default_local')?.database).toBe('AppEnd');
+  });
 });

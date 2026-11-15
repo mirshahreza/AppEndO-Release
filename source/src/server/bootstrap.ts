@@ -32,6 +32,7 @@ import {
 import { startDevViteChild, type DevViteChild } from './utils/devViteChild';
 import { getRequestPathname, isApiRequestPath, shouldBypassSpaDevMiddleware } from './utils/requestPaths';
 import { parseDashboardEmbedRequest } from '../shared/lib/dashboardCanvas';
+import { isOperatorDevPortStrict } from '../shared/lib/operatorDevPortPolicy';
 import { sendSpaIndexHtml } from './middleware/dashboardEmbedHeaders';
 import { readRuntimeSettings, resolveActiveSettingsPath, resolveListenPort } from './config/settingsFile';
 export async function startServer() {
@@ -254,7 +255,8 @@ export async function startServer() {
   try {
     // Production: dual-stack. Development: IPv4 loopback only (see listenOnAvailablePort).
     const listenHost = env.isProduction ? '::' : '127.0.0.1';
-    const { port: activePort, server } = await listenOnAvailablePort(app, PORT, 25, listenHost);
+    const portAttempts = !env.isProduction && isOperatorDevPortStrict() ? 1 : 25;
+    const { port: activePort, server } = await listenOnAvailablePort(app, PORT, portAttempts, listenHost);
     // Always register hub upgrade handlers. Native libs load lazily on first session
     // so install/uninstall without a process restart still opens or rejects the socket.
     const sshHub = await import('./services/ssh-hub/sshHubSession');

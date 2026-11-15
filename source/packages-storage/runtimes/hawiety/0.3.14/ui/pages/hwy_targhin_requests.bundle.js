@@ -34906,7 +34906,7 @@ var hawiety_iq_default = {
   "hwy.meetings.filter.meeting": "\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
   "hwy.meetings.search.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
   "hwy.meetings.search.aria": "\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062C\u0644\u0633\u0627\u062A \u0628\u0631\u0642\u0645 \u0627\u0646\u062A\u0645\u0627\u0621 \u0623\u062D\u062F \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646",
-  "hwy.meetings.manageMembers": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+  "hwy.meetings.manageMembers": "\u0623\u0639\u0636\u0627\u0621",
   "hwy.meetings.addInstance": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629",
   "hwy.meetings.exportPivot": "\u062A\u0635\u062F\u064A\u0631 \u062D\u0636\u0648\u0631 \u0645\u062D\u0648\u0631\u064A",
   "hwy.meetings.totalCount": "{count} \u0633\u062C\u0644",
@@ -34926,6 +34926,17 @@ var hawiety_iq_default = {
   "hwy.meetings.column.rosterNot": "\u063A\u064A\u0631 \u0645\u0646\u062A\u0638\u0645",
   "hwy.meetings.column.hazerin": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646",
   "hwy.meetings.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+  "hwy.meetings.column.delete": "\u062D\u0630\u0641",
+  "hwy.meetings.column.instanceId": "\u0645",
+  "hwy.meetings.column.memberName": "\u0627\u0644\u0627\u0633\u0645",
+  "hwy.meetings.column.rosterRecordedOn": "\u0627\u0644\u0625\u0646\u0634\u0627\u0621",
+  "hwy.meetings.column.rosterIsMember": "\u0639\u0636\u0648",
+  "hwy.meetings.viewHazerin": "\u0639\u0631\u0636 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0644\u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629",
+  "hwy.meetings.rosterFilter.all": "\u0627\u0644\u0643\u0644",
+  "hwy.meetings.rosterFilter.yet": "\u0639\u0636\u0648",
+  "hwy.meetings.rosterFilter.not": "\u0644\u064A\u0633 \u0639\u0636\u0648",
+  "hwy.meetings.rosterFilter.aria": "\u062A\u0635\u0641\u064A\u0629 \u062D\u0633\u0628 \u062D\u0627\u0644\u0629 \u0627\u0644\u0639\u0636\u0648\u064A\u0629 \u0641\u064A \u0627\u0644\u0643\u0634\u0641",
+  "hwy.meetings.rosterSearch.aria": "\u0628\u062D\u062B \u0641\u064A \u0627\u0644\u0643\u0634\u0641 \u0628\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621 \u0623\u0648 \u0627\u0644\u0627\u0633\u0645",
   "hwy.meetings.column.memberYet": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0643\u0634\u0641",
   "hwy.meetings.column.present": "\u0627\u0644\u062D\u0636\u0648\u0631",
   "hwy.meetings.viewAttendance": "\u0627\u0644\u062D\u0636\u0648\u0631",
@@ -34933,11 +34944,16 @@ var hawiety_iq_default = {
   "hwy.meetings.deleteBlocked": "\u0623\u0632\u0644 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0642\u0628\u0644 \u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629.",
   "hwy.meetings.addInstanceTitle": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629 \u0627\u062C\u062A\u0645\u0627\u0639",
   "hwy.meetings.instanceDate": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062C\u0644\u0633\u0629",
-  "hwy.meetings.membersTitle": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639 \u0627\u0644\u062A\u064A\u0627\u0631\u064A",
+  "hwy.meetings.membersTitle": "\u0623\u0639\u0636\u0627\u0621",
   "hwy.meetings.addMemberUsername": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
   "hwy.meetings.addMember": "\u0625\u0636\u0627\u0641\u0629 \u0639\u0636\u0648",
   "hwy.meetings.noMembers": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
   "hwy.meetings.attendanceTitle": "\u062D\u0636\u0648\u0631 \u0627\u0644\u062C\u0644\u0633\u0629",
+  "hwy.meetings.rosterYetTitle": "\u0627\u0644\u0645\u0646\u062A\u0638\u0645\u0648\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+  "hwy.meetings.rosterNotTitle": "\u063A\u064A\u0631 \u0627\u0644\u0645\u0646\u062A\u0638\u0645\u064A\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+  "hwy.meetings.hazerinTitle": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629",
+  "hwy.meetings.memberPreviewEmpty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u0642\u0627\u0626\u0645\u0629.",
+  "hwy.meetings.deleteInstanceConfirm": "\u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629\u061F \u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u062A\u0631\u0627\u062C\u0639.",
   "hwy.meetings.markAbsent": "\u062D\u0627\u0636\u0631 \u2014 \u0625\u0644\u063A\u0627\u0621",
   "hwy.meetings.markPresent": "\u062A\u0633\u062C\u064A\u0644 \u062D\u0636\u0648\u0631",
   "hwy.meetings.noAttendanceRows": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
@@ -37364,6 +37380,11 @@ var hawiety_us_default = {
   "hwy.meetings.addMember": "Add member",
   "hwy.meetings.noMembers": "No members on this meeting roster.",
   "hwy.meetings.attendanceTitle": "Instance attendance",
+  "hwy.meetings.rosterYetTitle": "Active roster members",
+  "hwy.meetings.rosterNotTitle": "Inactive roster members",
+  "hwy.meetings.hazerinTitle": "Present at this instance",
+  "hwy.meetings.memberPreviewEmpty": "No members in this list.",
+  "hwy.meetings.deleteInstanceConfirm": "Delete this meeting instance? This cannot be undone.",
   "hwy.meetings.markAbsent": "Present \u2014 clear",
   "hwy.meetings.markPresent": "Mark present",
   "hwy.meetings.noAttendanceRows": "No roster members for this meeting.",
@@ -40860,7 +40881,7 @@ var APP_LIST_PREFERENCE_KEYS = {
   hwyActivitiesAdmin: "hwy-activities-admin",
   hwyActivitiesAdminCentral: "hwy-activities-admin-central",
   hwyCoursesAdmin: "hwy-courses-admin",
-  hwyMeetingsManagement: "hwy-meetings-management-v2",
+  hwyMeetingsManagement: "hwy-meetings-management-v3",
   hwyCoursesParticipants: "hwy-courses-participants",
   hwyTarghinAdmin: "hwy-targhin-requests-admin-v6",
   hwyMembersTarghin: "hwy-members-targhin-v4",
@@ -45415,7 +45436,8 @@ var HwyTarghinMemberFace = ({
   displayNameClassName,
   rootClassName,
   catalogInteractive = false,
-  catalogPreviewState
+  catalogPreviewState,
+  suppressDisplayNameWhenRedundant = false
 }) => {
   const catalogInteractiveRootClass = catalogInteractive ? cn(
     HWY_MEMBER_FACE_SUBTLE_HOVER_CLASS,
@@ -45430,6 +45452,8 @@ var HwyTarghinMemberFace = ({
     username: face.username
   });
   const membership = faceCaption.text;
+  const hideRedundantDisplayName = suppressDisplayNameWhenRedundant && Boolean(membership) && (displayName === membership || displayName === String(face.username ?? "").trim());
+  const showDisplayName = Boolean(displayName) && displayName !== "\u2014" && !hideRedundantDisplayName;
   const genderSlot = resolveHwyGeoResponsibilityGenderSlot(face.genderCode);
   const placeholderAccent = genderSlot === "female" ? "bg-pink-50 text-pink-600" : genderSlot === "male" ? "bg-sky-50 text-sky-600" : "bg-slate-100 text-slate-400";
   const showAvatar = Boolean(face.avatarUrl?.trim()) && !avatarFailed;
@@ -45493,7 +45517,7 @@ var HwyTarghinMemberFace = ({
     `${title}-${index}`
   )) }) : null;
   const textColumn = /* @__PURE__ */ jsxs("div", { className: "mt-[2px] min-w-0 space-y-0.5 text-start", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 w-full flex-row items-baseline", children: [
+    showDisplayName ? /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 w-full flex-row items-baseline", children: [
       /* @__PURE__ */ jsx("span", { className: "w-[3px] shrink-0", "aria-hidden": true }),
       /* @__PURE__ */ jsx(
         "span",
@@ -45506,7 +45530,7 @@ var HwyTarghinMemberFace = ({
           children: displayName
         }
       )
-    ] }),
+    ] }) : null,
     face.phone?.trim() ? /* @__PURE__ */ jsx(
       PhoneNumberDisplay2,
       {

@@ -38,6 +38,8 @@ import type { SemverBump } from './semver';
 import { pushAppEndOReleaseTree } from './pushAppEndORelease';
 import { pushAppEndOHawietyTree } from './pushAppEndOHawiety';
 import { cloneProfilesForSchemaSync } from './cloneProfilesForSchemaSync';
+import { deployReleaseCutTargets } from './releaseDeployIncremental';
+import type { ReleaseCutServerDeployTargetId } from './releaseCutServerDeployTargets';
 
 type CliOptions = {
   dryRun: boolean;
@@ -53,6 +55,9 @@ type CliOptions = {
   allowPlatformBuildFail: boolean;
   pushAppEndORelease: boolean;
   pushAppEndOHawiety: boolean;
+  deployOss: boolean;
+  deployHawiety: boolean;
+  deployFull: boolean;
   syncCloneSchemas: boolean;
   resumeRunId?: string;
   mainBranchOnly: boolean;
@@ -73,6 +78,9 @@ function parseArgs(argv: string[]): CliOptions {
   let allowPlatformBuildFail = false;
   let pushAppEndORelease = false;
   let pushAppEndOHawiety = false;
+  let deployOss = false;
+  let deployHawiety = false;
+  let deployFull = false;
   let syncCloneSchemas: boolean | undefined;
   let resumeRunId: string | undefined;
 
@@ -89,6 +97,12 @@ function parseArgs(argv: string[]): CliOptions {
     else if (arg === '--allow-platform-build-fail') allowPlatformBuildFail = true;
     else if (arg === '--push-appendo-release') pushAppEndORelease = true;
     else if (arg === '--push-appendo-hawiety') pushAppEndOHawiety = true;
+    else if (arg === '--deploy-oss') deployOss = true;
+    else if (arg === '--deploy-hawiety') deployHawiety = true;
+    else if (arg === '--deploy-all') {
+      deployOss = true;
+      deployHawiety = true;
+    } else if (arg === '--deploy-full') deployFull = true;
     else if (arg === '--bump') bump = (argv[++i] as SemverBump) ?? 'patch';
     else if (arg === '--publish-packages') {
       publishPackageIds = (argv[++i] ?? '').split(',').map((s) => s.trim()).filter(Boolean);
@@ -116,6 +130,9 @@ function parseArgs(argv: string[]): CliOptions {
     allowPlatformBuildFail,
     pushAppEndORelease,
     pushAppEndOHawiety,
+    deployOss,
+    deployHawiety,
+    deployFull,
     syncCloneSchemas: resolvedSyncCloneSchemas,
     resumeRunId,
     mainBranchOnly: !argv.includes('--no-main-guard'),
@@ -593,6 +610,25 @@ async function main(): Promise<void> {
         }
         markPhase(checkpoint, phase);
         writeCheckpoint(runRoot, checkpoint);
+      }
+    }
+
+    if (!options.dryRun) {
+      const deployTargets: ReleaseCutServerDeployTargetId[] = [];
+      if (options.deployOss) deployTargets.push('oss');
+      if (options.deployHawiety) deployTargets.push('hawiety');
+      if (deployTargets.length > 0) {
+        const deployResults = deployReleaseCutTargets({
+          targetIds: deployTargets,
+          repoRoot,
+          full: options.deployFull,
+        });
+        for (const row of deployResults) {
+          appendReportLine(
+            runRoot,
+            `- RCUT-9 deploy ${row.targetId}: copied=${row.copied} skipped=${row.skipped} → ${row.targetRoot}`,
+          );
+        }
       }
     }
 

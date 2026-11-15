@@ -19,8 +19,10 @@ function makeOssDir(manifest: PublicOssManifest, zipNames: string[]): string {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'release-cut-oss-'));
   tempDirs.push(dir);
   fs.writeFileSync(path.join(dir, 'MANIFEST.json'), JSON.stringify(manifest, null, 2), 'utf8');
+  const packagesDir = path.join(dir, 'packages');
+  fs.mkdirSync(packagesDir, { recursive: true });
   for (const name of zipNames) {
-    fs.writeFileSync(path.join(dir, name), 'zip-bytes', 'utf8');
+    fs.writeFileSync(path.join(packagesDir, name), 'zip-bytes', 'utf8');
   }
   return dir;
 }

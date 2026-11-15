@@ -9,6 +9,7 @@ import { appendoHawietyStagingDir, APPENDO_HAWIETY_REPO_NAME } from './appendoHa
 import { copyFileEnsured, sha256File } from './artifacts';
 import { renderInternalDeployReadme } from './renderInternalDeployReadme';
 import { copyReleaseCutSourceSnapshot } from './releaseCutSourceSnapshot';
+import { materializeDeployTargetArtifacts } from './materializeDeployTargetArtifacts';
 import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
@@ -93,7 +94,6 @@ function main(): void {
   for (const zip of resolveDeployZips()) {
     const dest = path.join(packagesDir, zip.fileName);
     copyFileEnsured(zip.abs, dest);
-    copyFileEnsured(zip.abs, path.join(outDir, zip.fileName));
     manifest.bundledPackageIds.push(zip.packageId);
     manifest.packageArtifacts.push({
       packageId: zip.packageId,
@@ -103,6 +103,7 @@ function main(): void {
   }
 
   fs.writeFileSync(path.join(outDir, 'MANIFEST.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  materializeDeployTargetArtifacts(outDir, 'hawiety');
   assertInternalDeployScope(outDir);
 
   const readme = renderInternalDeployReadme(version, versions.packages.hawiety ?? '', manifest.bundledPackageIds);

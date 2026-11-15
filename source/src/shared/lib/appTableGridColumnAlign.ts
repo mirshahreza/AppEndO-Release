@@ -22,6 +22,9 @@ export function resolveAppTableGridHeaderLabelClassName(headerClassName?: string
   if (headerClassName?.includes('text-end') || headerClassName?.includes('text-right')) {
     return 'min-w-0 flex-1 truncate text-end';
   }
+  if (headerClassName?.includes('text-start') || headerClassName?.includes('text-left')) {
+    return 'min-w-0 w-full truncate text-start';
+  }
   return 'min-w-0 flex-1 truncate';
 }
 

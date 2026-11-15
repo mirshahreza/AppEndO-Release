@@ -28,7 +28,16 @@ export function assertPublicOssReleaseScope(publicOssDir: string): void {
     );
   }
 
-  const entries = fs.readdirSync(publicOssDir).filter((name) => name.toLowerCase().endsWith('.zip'));
+  const packagesDir = path.join(publicOssDir, 'packages');
+  const zipRoots = fs.existsSync(packagesDir) ? [packagesDir] : [publicOssDir];
+  const entries: string[] = [];
+  for (const root of zipRoots) {
+    for (const name of fs.readdirSync(root)) {
+      if (name.toLowerCase().endsWith('.zip')) {
+        entries.push(name);
+      }
+    }
+  }
   for (const fileName of entries) {
     const allowed = ALLOWED_ZIP_PREFIXES.some((prefix) => fileName.startsWith(prefix));
     if (!allowed) {

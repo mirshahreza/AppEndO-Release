@@ -11,7 +11,9 @@ Dry run: `npm run release:cut:dry-run -- --allow-dirty` (or `npx tsx scripts/rel
 
 **Public repo `AppEndO-Release`:** after `npm run build`, `npm run release:export-appendo-release` (or release-cut P8 when `dist/server.cjs` exists). Push with `npm run release:push-appendo-release` or `npm run release:cut -- --push-appendo-release` after cloning `../AppEndO-Release`. Do not use `releases/public/` in the private monorepo.
 
-**Private repo `AppEndO-Hawiety`:** `npm run release:export-appendo-hawiety` copies **full source** + `dist/` + promotes existing `hawiety-*.zip` (no pack on export). Push: `npm run release:push-appendo-hawiety` or `npm run release:cut -- --push-appendo-hawiety` to sibling `../AppEndO-Hawiety` (private GitHub). Tag: `hawiety/vX.Y.Z`. Server upload (FTP/rsync) is RCUT-9. Locale: Hawiety README/templates **English**; product UI **Arabic (iq)** — **no Persian** in Hawiety seeds or repo-facing docs (`package-hawiety-locale-policy`).
+**Private repo `AppEndO-Hawiety`:** `npm run release:export-appendo-hawiety` copies **full source** + `dist/` + promotes existing `hawiety-*.zip` (no pack on export). Push: `npm run release:push-appendo-hawiety` or `npm run release:cut -- --push-appendo-hawiety` to sibling `../AppEndO-Hawiety` (private GitHub). Tag: `hawiety/vX.Y.Z`. Locale: Hawiety README/templates **English**; product UI **Arabic (iq)** — **no Persian** in Hawiety seeds or repo-facing docs (`package-hawiety-locale-policy`).
+
+**RCUT-9 — server deploy (incremental):** config lives in the **publish clone** (not the private monorepo): `../AppEndO-Release/deploy.target.local.json` and `../AppEndO-Hawiety/deploy.target.local.json` (copy from `deploy.target.example.json` shipped on export — see `DEPLOY.md`). Push preserves `deploy.target.local.json`. Env fallback: `APPENDO_DEPLOY_ROOT_*` / `APPENDO_DEPLOY_URL_*`. Incremental: staging `dist/` + `packages/` only. `npm run release:deploy -- --target oss|hawiety|all`.
 
 P5 tests default to `test:release-cut` and `test:release-cut-packaging` (package pipelines run in P4). Optional: `--with-test-critical`, `--with-repo-lint`.
 
@@ -23,8 +25,8 @@ Each export ships a **clone profile** so AppEndO-Release and AppEndO-Hawiety (an
 
 | Profile | Repo line | Recommended DB | Dev port |
 | --- | --- | --- | --- |
-| `oss` | AppEndO-Release | `AppEndORelease` | 3000 |
-| `hawiety` | AppEndO-Hawiety | `AppEndOHawiety` | 3001 |
+| `oss` | AppEndO-Release | `AppEndORelease` | 3100 |
+| `hawiety` | AppEndO-Hawiety | `AppEndOHawiety` | 3200 |
 
 **Export behavior:** snapshots exclude operator `settings.json`, `.env`, `settings.json.*.tmp`, `workspace/models/` (local ONNX), appendoo agent runtime state dirs, and `*.onnx` blobs; each `source/` tree includes `settings.recommended.json`, `CLONE_PROFILE.md`, and `CLONE_PROFILE.json`. Push refuses dirty snapshots (`assertReleaseCutSourceSnapshotSanitized`). Clone push resets to `origin/main` before replacing the tree (drops failed local-only commits).
 
@@ -45,4 +47,4 @@ npx tsx scripts/release-cut/provision-clone-database.ts --profile hawiety
 
 `npm run clone:bootstrap` · `npm run clone:install-wizard` · `clone:provision` · `clone:db-from-template` (backup/restore; skip when disk is tight). On Windows use `npx tsx scripts/release-cut/... --profile oss|hawiety` when npm swallows `--profile`. Manual Hawiety install on an empty DB: `npm run hawiety:install -- --skip-legacy-parity`.
 
-**Dev beside monorepo:** from monorepo root, set `APPENDO_SETTINGS_PATH` to the clone `source/settings.json`, set `APPENDO_CLONE_SQL_PASSWORD` (or rely on `passwordCipher`), then `npm run dev` — server honors the clone port in that file (3000 OSS / 3001 Hawiety).
+**Dev beside monorepo:** fixed API ports — monorepo **3000**, Release OSS **3100**, Hawiety **3200** (Vite child API+200). Set `APPENDO_SETTINGS_PATH` to the clone `source/settings.json`, then `npm run restart` from monorepo root; default **strict** mode (`APPENDO_DEV_PORT_STRICT=1`) stops only that line’s ports and refuses port hopping.

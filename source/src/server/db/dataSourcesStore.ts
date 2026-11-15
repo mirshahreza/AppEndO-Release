@@ -465,13 +465,42 @@ const getDefaultDataSourcesFromSettings = (settingsPath: string): StoredDataSour
   return sources;
 };
 
+/** Legacy disk ids that must resolve to the single default source for edge Data API models. */
+const DEFAULT_DATA_SOURCE_RUNTIME_ALIASES = [
+  DEFAULT_DATA_SOURCE_ID,
+  'ds_pg18_local',
+] as const;
+
+export const withDefaultDataSourceAliases = (sources: StoredDataSource[]): StoredDataSource[] => {
+  const defaultSource = sources.find((item) => item.isDefault) ?? sources[0];
+  if (!defaultSource) {
+    return sources;
+  }
+
+  const knownIds = new Set(sources.map((item) => item.id));
+  const aliases: StoredDataSource[] = [];
+  for (const aliasId of DEFAULT_DATA_SOURCE_RUNTIME_ALIASES) {
+    if (aliasId === defaultSource.id || knownIds.has(aliasId)) {
+      continue;
+    }
+    aliases.push({
+      ...defaultSource,
+      id: aliasId,
+      isDefault: false,
+    });
+  }
+
+  return aliases.length > 0 ? [...sources, ...aliases] : sources;
+};
+
 export const getDataSourcesFromSettings = (settingsPath: string): StoredDataSource[] => {
   const defaults = getDefaultDataSourcesFromSettings(settingsPath);
   const defaultIds = new Set(defaults.map((item) => item.id));
-  return [
+  const merged = [
     ...defaults,
     ...edgeDataSourcesCatalog.filter((item) => !defaultIds.has(item.id)),
   ];
+  return withDefaultDataSourceAliases(merged);
 };
 
 const toPersistedDefaultDataSource = (

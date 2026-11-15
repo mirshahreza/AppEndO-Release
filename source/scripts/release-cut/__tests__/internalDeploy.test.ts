@@ -25,7 +25,8 @@ describe('assertInternalDeployScope', () => {
         packageArtifacts: [{ packageId: 'hawiety', fileName: 'hawiety-0.3.6.zip' }],
       }),
     );
-    fs.writeFileSync(path.join(dir, 'hawiety-0.3.6.zip'), 'zip');
+    fs.mkdirSync(path.join(dir, 'packages'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'packages', 'hawiety-0.3.6.zip'), 'zip');
     expect(() => assertInternalDeployScope(dir)).not.toThrow();
   });
 });

@@ -1,7 +1,7 @@
 {
   "name": "react-example",
   "private": true,
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "main": "electron-main.js",
   "scripts": {
@@ -255,6 +255,9 @@
     "release:push-appendo-release": "tsx scripts/release-cut/pushAppEndORelease.ts",
     "release:export-appendo-hawiety": "tsx scripts/release-cut/assembleInternalDeployTree.ts",
     "release:push-appendo-hawiety": "tsx scripts/release-cut/pushAppEndOHawiety.ts",
+    "release:deploy": "tsx scripts/release-cut/run-release-deploy.ts",
+    "release:bootstrap-deploy-config": "tsx scripts/release-cut/bootstrapPublishCloneDeployConfig.ts",
+    "test:release-deploy": "vitest run scripts/release-cut/__tests__/releaseDeployIncremental.test.ts",
     "release:cleanup-legacy": "tsx scripts/release-cut/removeLegacyReleasesPublic.ts",
     "test:release-cut": "vitest run scripts/release-cut/__tests__",
     "test:release-cut-packaging": "vitest run src/core/packages/__tests__/pEcosystemZipMatrix.exit.test.ts src/server/services/package/__tests__/p32PackagingSurface.exit.test.ts",

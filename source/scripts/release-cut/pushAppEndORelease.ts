@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { appendoReleaseStagingDir, APPENDO_RELEASE_REPO_NAME, resolveAppEndOReleaseClonePath } from './appendoReleaseRepo';
 import { assertReleaseCutSourceSnapshotSanitized } from './releaseCutSnapshotSanitize';
+import { PUBLISH_CLONE_PRESERVE_ON_PUSH } from './materializeDeployTargetArtifacts';
 import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
@@ -59,6 +60,14 @@ export function syncStagingToClone(stagingDir: string, clonePath: string): void 
   }
   assertReleaseCutSourceSnapshotSanitized(sourceDir);
 
+  const preserved: Record<string, Buffer> = {};
+  for (const name of PUBLISH_CLONE_PRESERVE_ON_PUSH) {
+    const preservedPath = path.join(clonePath, name);
+    if (fs.existsSync(preservedPath)) {
+      preserved[name] = fs.readFileSync(preservedPath);
+    }
+  }
+
   for (const name of fs.readdirSync(clonePath)) {
     if (name === '.git') continue;
     fs.rmSync(path.join(clonePath, name), { recursive: true, force: true });
@@ -72,6 +81,10 @@ export function syncStagingToClone(stagingDir: string, clonePath: string): void 
     } else {
       fs.copyFileSync(src, dest);
     }
+  }
+
+  for (const [name, bytes] of Object.entries(preserved)) {
+    fs.writeFileSync(path.join(clonePath, name), bytes);
   }
 }
 

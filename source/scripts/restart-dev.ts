@@ -3,6 +3,10 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { removePendingInstallSqliteLeftovers } from './lib/sqliteInstallResetFiles';
+import {
+  collectStrictDevLinePorts,
+  isOperatorDevPortStrict,
+} from '../src/shared/lib/operatorDevPortPolicy';
 
 const resolveActiveSettingsPath = (): string => {
   const fromEnv = process.env.APPENDO_SETTINGS_PATH?.trim();
@@ -53,15 +57,17 @@ const readRuntimePorts = (): { basePort: number; hmrPort: number } => {
 };
 
 const collectTargetPorts = (basePort: number, hmrPort: number): number[] => {
+  if (isOperatorDevPortStrict()) {
+    return [...new Set([...collectStrictDevLinePorts(basePort, hmrPort), ...VITE_WS_PORTS])];
+  }
+
   const ports = new Set<number>(VITE_WS_PORTS);
   for (let offset = 0; offset < PORT_SCAN_ATTEMPTS; offset += 1) {
     ports.add(basePort + offset);
   }
-  // Prior sessions may have bound HMR to base+100+N when the preferred port was busy.
   for (let offset = 0; offset < PORT_SCAN_ATTEMPTS; offset += 1) {
     ports.add(hmrPort + offset);
   }
-  // Isolated Vite child process (devViteChild) prefers base+200+N.
   for (let offset = 0; offset < PORT_SCAN_ATTEMPTS; offset += 1) {
     ports.add(basePort + 200 + offset);
   }
@@ -236,7 +242,12 @@ const main = async (): Promise<void> => {
 
   console.log('[AppEndO] Restart requested.');
   console.log(`[AppEndO] Mode: ${mode}`);
-  console.log(`[AppEndO] Stopping existing AppEndO processes (ports ${basePort}-${basePort + PORT_SCAN_ATTEMPTS - 1}, HMR ${hmrPort}+)…`);
+  if (isOperatorDevPortStrict()) {
+    const slot = collectStrictDevLinePorts(basePort, hmrPort);
+    console.log(`[AppEndO] Stopping this dev line only (API ${slot[0]}, HMR ${slot[1]}, Vite ${slot[2]})…`);
+  } else {
+    console.log(`[AppEndO] Stopping existing AppEndO processes (ports ${basePort}-${basePort + PORT_SCAN_ATTEMPTS - 1}, HMR ${hmrPort}+)…`);
+  }
 
   stopExistingServer(targetPorts);
 

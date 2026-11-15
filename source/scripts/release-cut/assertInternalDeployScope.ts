@@ -19,10 +19,15 @@ export function assertInternalDeployScope(deployDir: string): void {
     throw new Error('Deploy gate: manifest must bundle vertical');
   }
 
-  const names = fs.readdirSync(deployDir).filter((n) => n.endsWith('.zip'));
-  const verticalZips = names.filter((n) => n.startsWith('vertical-'));
+  const packagesDir = path.join(deployDir, 'packages');
+  if (!fs.existsSync(packagesDir)) {
+    throw new Error('Deploy gate: missing packages/ directory');
+  }
+  const verticalZips = fs
+    .readdirSync(packagesDir)
+    .filter((n) => n.startsWith('vertical-') && n.endsWith('.zip'));
   if (verticalZips.length === 0) {
-    throw new Error('Deploy gate: missing vertical-*.zip at deploy root');
+    throw new Error('Deploy gate: missing vertical-*.zip under packages/');
   }
 
   if (manifest.verticalPromoteMode !== 'reuse-zip') {

@@ -25,7 +25,8 @@ describe('assertInternalDeployScope', () => {
         packageArtifacts: [{ packageId: 'vertical', fileName: 'vertical-0.3.6.zip' }],
       }),
     );
-    fs.writeFileSync(path.join(dir, 'vertical-0.3.6.zip'), 'zip');
+    fs.mkdirSync(path.join(dir, 'packages'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'packages', 'vertical-0.3.6.zip'), 'zip');
     expect(() => assertInternalDeployScope(dir)).not.toThrow();
   });
 });

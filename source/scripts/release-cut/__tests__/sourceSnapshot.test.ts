@@ -56,7 +56,7 @@ describe('copyReleaseCutSourceSnapshot', () => {
       runtime: { port: number };
     };
     expect(recommended.database.url).toContain('AppEndOVertical');
-    expect(recommended.runtime.port).toBe(3001);
+    expect(recommended.runtime.port).toBe(3200);
 
     assertReleaseCutSourceSnapshotSanitized(sourceRoot);
   });

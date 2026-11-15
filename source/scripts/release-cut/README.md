@@ -23,3 +23,5 @@ Staging (gitignored in private repo): `.appendo-release-staging/vX.Y.Z/`.
 **Vertical (private):** `npm run release:export-appendo-vertical` · `npm run release:push-appendo-vertical` → **`AppEndO-Vertical`**. ZIP **promoted**, not re-packed on export.
 
 **Clone profiles (isolated DB):** exports strip `settings.json` and emit `source/settings.recommended.json` + `CLONE_PROFILE.md`. Registry: `releaseCutCloneProfiles.ts` · package deploy lines: `releaseCutPackageDeployLines.ts`. Bootstrap: `npm run clone:bootstrap -- --profile oss|vertical`.
+
+**RCUT-9 server deploy:** `deploy.target.local.json` in each **publish clone** (`../AppEndO-Release`, `../AppEndO-Vertical`). Example file ships on export (`DEPLOY.md`). Then `npm run release:deploy -- --target oss|vertical|all`.

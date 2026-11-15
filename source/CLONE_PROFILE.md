@@ -5,7 +5,7 @@ Use this **AppEndO-Release** snapshot with a **dedicated control-plane database*
 | Item | Value |
 | --- | --- |
 | Recommended database | `AppEndORelease` |
-| Dev port (beside monorepo) | `3000` |
+| Dev port (beside monorepo) | `3100` |
 | Settings starter | `settings.recommended.json` |
 
 ## Bootstrap (first run)
@@ -20,7 +20,7 @@ npx tsx ../AppEndO/scripts/release-cut/run-clone-install-wizard.ts --profile oss
 npx tsx ../AppEndO/scripts/release-cut/provision-clone-database.ts --profile oss
 ```
 
-3. On a **fresh** database, finish install once (headless wizard above, or browser: `http://localhost:3000/install`) **before** provision.
+3. On a **fresh** database, finish install once (headless wizard above, or browser: `http://localhost:3100/install`) **before** provision.
 4. Install bundled ZIPs from `../packages/` (cms, remote-hubs) via Package Manager.
 
 ## Rules

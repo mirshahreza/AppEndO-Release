@@ -6875,7 +6875,7 @@ var init_controlPlaneInstall = __esm({
 });
 
 // src/server/db/dataSourcesStore.ts
-var import_fs6, SUPPORTED_DATA_SOURCE_TYPES, DATA_SOURCES_SETTINGS_KEY2, DEFAULT_DATA_SOURCE_ID, PLACEHOLDER_DEFAULT_DATA_SOURCE_ID, DEFAULT_INSTALL_DATA_SOURCE_NAME, DEFAULT_DATA_SOURCE_CREATED_BY, EMPTY_DEFAULT_DATA_SOURCE_UPDATE_AUDIT, normalizeStoredActorLabel, applyDefaultDataSourceSetupAudit, preserveDefaultDataSourceUpdateAudit, dataSourcesSettingsCache, edgeDataSourcesCatalog, invalidateDataSourcesSettingsCache, readSettingsMtimeMs, parseBooleanLike2, parseStoredOptions, toDataSourceStatus, normalizeStoredDataSource, buildStoredDataSourceFromInstallConnection, parseControlPlaneConnection, shouldRepairDefaultDataSource, repairDefaultDataSourceIfNeeded, resolveInitialDataSources, readDefaultRawFromSettings, getDefaultDataSourcesFromSettings, getDataSourcesFromSettings, toPersistedDefaultDataSource, saveDefaultDataSourceToSettings, upsertDefaultDataSourceFromInstall, persistControlPlaneFromDefaultDataSource, ensureDataSourcesSettings, toEdgeWriteInput, toStoredEdgeDataSource, refreshEdgeDataSourcesCatalog, persistStoredDataSource, removeStoredEdgeDataSource, toApiDataSource;
+var import_fs6, SUPPORTED_DATA_SOURCE_TYPES, DATA_SOURCES_SETTINGS_KEY2, DEFAULT_DATA_SOURCE_ID, PLACEHOLDER_DEFAULT_DATA_SOURCE_ID, DEFAULT_INSTALL_DATA_SOURCE_NAME, DEFAULT_DATA_SOURCE_CREATED_BY, EMPTY_DEFAULT_DATA_SOURCE_UPDATE_AUDIT, normalizeStoredActorLabel, applyDefaultDataSourceSetupAudit, preserveDefaultDataSourceUpdateAudit, dataSourcesSettingsCache, edgeDataSourcesCatalog, invalidateDataSourcesSettingsCache, readSettingsMtimeMs, parseBooleanLike2, parseStoredOptions, toDataSourceStatus, normalizeStoredDataSource, buildStoredDataSourceFromInstallConnection, parseControlPlaneConnection, shouldRepairDefaultDataSource, repairDefaultDataSourceIfNeeded, resolveInitialDataSources, readDefaultRawFromSettings, getDefaultDataSourcesFromSettings, DEFAULT_DATA_SOURCE_RUNTIME_ALIASES, withDefaultDataSourceAliases, getDataSourcesFromSettings, toPersistedDefaultDataSource, saveDefaultDataSourceToSettings, upsertDefaultDataSourceFromInstall, persistControlPlaneFromDefaultDataSource, ensureDataSourcesSettings, toEdgeWriteInput, toStoredEdgeDataSource, refreshEdgeDataSourcesCatalog, persistStoredDataSource, removeStoredEdgeDataSource, toApiDataSource;
 var init_dataSourcesStore = __esm({
   "src/server/db/dataSourcesStore.ts"() {
     import_fs6 = __toESM(require("fs"), 1);
@@ -7190,13 +7190,37 @@ var init_dataSourcesStore = __esm({
       dataSourcesSettingsCache = { settingsPath, mtimeMs, sources };
       return sources;
     };
+    DEFAULT_DATA_SOURCE_RUNTIME_ALIASES = [
+      DEFAULT_DATA_SOURCE_ID,
+      "ds_pg18_local"
+    ];
+    withDefaultDataSourceAliases = (sources) => {
+      const defaultSource = sources.find((item3) => item3.isDefault) ?? sources[0];
+      if (!defaultSource) {
+        return sources;
+      }
+      const knownIds = new Set(sources.map((item3) => item3.id));
+      const aliases = [];
+      for (const aliasId of DEFAULT_DATA_SOURCE_RUNTIME_ALIASES) {
+        if (aliasId === defaultSource.id || knownIds.has(aliasId)) {
+          continue;
+        }
+        aliases.push({
+          ...defaultSource,
+          id: aliasId,
+          isDefault: false
+        });
+      }
+      return aliases.length > 0 ? [...sources, ...aliases] : sources;
+    };
     getDataSourcesFromSettings = (settingsPath) => {
       const defaults = getDefaultDataSourcesFromSettings(settingsPath);
       const defaultIds = new Set(defaults.map((item3) => item3.id));
-      return [
+      const merged = [
         ...defaults,
         ...edgeDataSourcesCatalog.filter((item3) => !defaultIds.has(item3.id))
       ];
+      return withDefaultDataSourceAliases(merged);
     };
     toPersistedDefaultDataSource = (source, options2) => {
       const secretFields = toPersistedDefaultSecretFields(source, options2);
@@ -45996,7 +46020,7 @@ var init_vertical_iq = __esm({
       "vx.meetings.filter.meeting": "\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
       "vx.meetings.search.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
       "vx.meetings.search.aria": "\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062C\u0644\u0633\u0627\u062A \u0628\u0631\u0642\u0645 \u0627\u0646\u062A\u0645\u0627\u0621 \u0623\u062D\u062F \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646",
-      "vx.meetings.manageMembers": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+      "vx.meetings.manageMembers": "\u0623\u0639\u0636\u0627\u0621",
       "vx.meetings.addInstance": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629",
       "vx.meetings.exportPivot": "\u062A\u0635\u062F\u064A\u0631 \u062D\u0636\u0648\u0631 \u0645\u062D\u0648\u0631\u064A",
       "vx.meetings.totalCount": "{count} \u0633\u062C\u0644",
@@ -46016,6 +46040,17 @@ var init_vertical_iq = __esm({
       "vx.meetings.column.rosterNot": "\u063A\u064A\u0631 \u0645\u0646\u062A\u0638\u0645",
       "vx.meetings.column.hazerin": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646",
       "vx.meetings.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+      "vx.meetings.column.delete": "\u062D\u0630\u0641",
+      "vx.meetings.column.instanceId": "\u0645",
+      "vx.meetings.column.memberName": "\u0627\u0644\u0627\u0633\u0645",
+      "vx.meetings.column.rosterRecordedOn": "\u0627\u0644\u0625\u0646\u0634\u0627\u0621",
+      "vx.meetings.column.rosterIsMember": "\u0639\u0636\u0648",
+      "vx.meetings.viewHazerin": "\u0639\u0631\u0636 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0644\u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629",
+      "vx.meetings.rosterFilter.all": "\u0627\u0644\u0643\u0644",
+      "vx.meetings.rosterFilter.yet": "\u0639\u0636\u0648",
+      "vx.meetings.rosterFilter.not": "\u0644\u064A\u0633 \u0639\u0636\u0648",
+      "vx.meetings.rosterFilter.aria": "\u062A\u0635\u0641\u064A\u0629 \u062D\u0633\u0628 \u062D\u0627\u0644\u0629 \u0627\u0644\u0639\u0636\u0648\u064A\u0629 \u0641\u064A \u0627\u0644\u0643\u0634\u0641",
+      "vx.meetings.rosterSearch.aria": "\u0628\u062D\u062B \u0641\u064A \u0627\u0644\u0643\u0634\u0641 \u0628\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621 \u0623\u0648 \u0627\u0644\u0627\u0633\u0645",
       "vx.meetings.column.memberYet": "\u062D\u0627\u0644\u0629 \u0627\u0644\u0643\u0634\u0641",
       "vx.meetings.column.present": "\u0627\u0644\u062D\u0636\u0648\u0631",
       "vx.meetings.viewAttendance": "\u0627\u0644\u062D\u0636\u0648\u0631",
@@ -46023,11 +46058,16 @@ var init_vertical_iq = __esm({
       "vx.meetings.deleteBlocked": "\u0623\u0632\u0644 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0642\u0628\u0644 \u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629.",
       "vx.meetings.addInstanceTitle": "\u0625\u0636\u0627\u0641\u0629 \u062C\u0644\u0633\u0629 \u0627\u062C\u062A\u0645\u0627\u0639",
       "vx.meetings.instanceDate": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062C\u0644\u0633\u0629",
-      "vx.meetings.membersTitle": "\u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639 \u0627\u0644\u062A\u064A\u0627\u0631\u064A",
+      "vx.meetings.membersTitle": "\u0623\u0639\u0636\u0627\u0621",
       "vx.meetings.addMemberUsername": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
       "vx.meetings.addMember": "\u0625\u0636\u0627\u0641\u0629 \u0639\u0636\u0648",
       "vx.meetings.noMembers": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
       "vx.meetings.attendanceTitle": "\u062D\u0636\u0648\u0631 \u0627\u0644\u062C\u0644\u0633\u0629",
+      "vx.meetings.rosterYetTitle": "\u0627\u0644\u0645\u0646\u062A\u0638\u0645\u0648\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+      "vx.meetings.rosterNotTitle": "\u063A\u064A\u0631 \u0627\u0644\u0645\u0646\u062A\u0638\u0645\u064A\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
+      "vx.meetings.hazerinTitle": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629",
+      "vx.meetings.memberPreviewEmpty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u0642\u0627\u0626\u0645\u0629.",
+      "vx.meetings.deleteInstanceConfirm": "\u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629\u061F \u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u062A\u0631\u0627\u062C\u0639.",
       "vx.meetings.markAbsent": "\u062D\u0627\u0636\u0631 \u2014 \u0625\u0644\u063A\u0627\u0621",
       "vx.meetings.markPresent": "\u062A\u0633\u062C\u064A\u0644 \u062D\u0636\u0648\u0631",
       "vx.meetings.noAttendanceRows": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
@@ -48464,6 +48504,11 @@ var init_vertical_us = __esm({
       "vx.meetings.addMember": "Add member",
       "vx.meetings.noMembers": "No members on this meeting roster.",
       "vx.meetings.attendanceTitle": "Instance attendance",
+      "vx.meetings.rosterYetTitle": "Active roster members",
+      "vx.meetings.rosterNotTitle": "Inactive roster members",
+      "vx.meetings.hazerinTitle": "Present at this instance",
+      "vx.meetings.memberPreviewEmpty": "No members in this list.",
+      "vx.meetings.deleteInstanceConfirm": "Delete this meeting instance? This cannot be undone.",
       "vx.meetings.markAbsent": "Present \u2014 clear",
       "vx.meetings.markPresent": "Mark present",
       "vx.meetings.noAttendanceRows": "No roster members for this meeting.",
@@ -122242,7 +122287,7 @@ var init_verticalPackage = __esm({
     init_verticalApp();
     VERTICAL_PACKAGE_ID = "vertical";
     VERTICAL_PACKAGE_NAME = "Vertical";
-    VERTICAL_PACKAGE_VERSION = "0.3.14";
+    VERTICAL_PACKAGE_VERSION = "0.3.15";
     VERTICAL_PORTAL_SEGMENT = "vertical";
     VERTICAL_MOUNT_PATH_PREFIX = "/vertical";
     VERTICAL_HOST_PAGE_KEYS = [
@@ -154800,6 +154845,21 @@ var init_httpLogging = __esm({
   }
 });
 
+// src/shared/lib/operatorDevPortPolicy.ts
+var VITE_CHILD_PORT_OFFSET, isOperatorDevPortStrict;
+var init_operatorDevPortPolicy = __esm({
+  "src/shared/lib/operatorDevPortPolicy.ts"() {
+    VITE_CHILD_PORT_OFFSET = 200;
+    isOperatorDevPortStrict = () => {
+      const raw = process.env.APPENDO_DEV_PORT_STRICT?.trim().toLowerCase();
+      if (raw === "0" || raw === "false" || raw === "off") {
+        return false;
+      }
+      return true;
+    };
+  }
+});
+
 // src/server/utils/tcpPort.ts
 var import_net, isTcpPortInUse;
 var init_tcpPort = __esm({
@@ -154828,16 +154888,25 @@ var init_tcpPort = __esm({
 });
 
 // src/server/utils/devViteChild.ts
-var import_node_child_process4, import_node_http, import_node_path19, VITE_CHILD_PORT_OFFSET, VITE_CHILD_PORT_SCAN, resolveViteChildPort, waitForListen, hopByHop, fetchFromChild, startDevViteChild;
+var import_node_child_process4, import_node_http, import_node_path19, VITE_CHILD_PORT_SCAN, resolveViteChildPort, waitForListen, hopByHop, fetchFromChild, startDevViteChild;
 var init_devViteChild = __esm({
   "src/server/utils/devViteChild.ts"() {
     import_node_child_process4 = require("node:child_process");
     import_node_http = __toESM(require("node:http"), 1);
     import_node_path19 = __toESM(require("node:path"), 1);
+    init_operatorDevPortPolicy();
     init_tcpPort();
-    VITE_CHILD_PORT_OFFSET = 200;
     VITE_CHILD_PORT_SCAN = 25;
     resolveViteChildPort = async (serverPort) => {
+      if (isOperatorDevPortStrict()) {
+        const candidate = serverPort + VITE_CHILD_PORT_OFFSET;
+        if (!await isTcpPortInUse(candidate)) {
+          return candidate;
+        }
+        throw new Error(
+          `Vite child port ${candidate} is in use (strict dev line for API ${serverPort}). Stop the other process or set APPENDO_DEV_PORT_STRICT=0 to scan adjacent ports.`
+        );
+      }
       for (let offset = 0; offset < VITE_CHILD_PORT_SCAN; offset += 1) {
         const candidate = serverPort + VITE_CHILD_PORT_OFFSET + offset;
         if (!await isTcpPortInUse(candidate)) {
@@ -252339,15 +252408,17 @@ async function resolveNegoNoteAuthorsBatch(rawRows) {
     }
     if (/^\d+$/.test(legacy)) {
       memberIds.add(Number(legacy));
+      usernames.add(legacy);
     } else if (legacy) {
       usernames.add(legacy);
     }
   }
-  const [accountFaces, memberById, memberByUsername, memberByPlatformUserId] = await Promise.all([
+  const [accountFaces, memberById, memberByUsername, memberByPlatformUserId, legacyFacesByUsername] = await Promise.all([
     loadHwyAccountUserFacesByUserIds([...userIds]),
     loadMemberFacesByMemberIds([...memberIds]),
     loadMemberFacesByUsernames([...usernames]),
-    loadHwyMemberFacesByPlatformUserIds([...userIds])
+    loadHwyMemberFacesByPlatformUserIds([...userIds]),
+    loadLegacyHwyMemberFacesByUsernames([...usernames])
   ]);
   for (const row of rawRows) {
     if (negoAuthorHasLabel(row.author)) {
@@ -252367,6 +252438,11 @@ async function resolveNegoNoteAuthorsBatch(rawRows) {
     const memberByUser = memberByUsername.get(legacy);
     if (memberByUser && negoAuthorHasLabel(memberByUser)) {
       result.set(row.id, memberByUser);
+      continue;
+    }
+    const legacyMemberFace = legacyFacesByUsername.get(legacy);
+    if (legacyMemberFace && negoAuthorHasLabel(legacyMemberFace)) {
+      result.set(row.id, legacyMemberFace);
       continue;
     }
     for (const platformUserId of [resolvedUserId, storedUserId]) {
@@ -252395,6 +252471,18 @@ async function resolveNegoNoteAuthorsBatch(rawRows) {
     if (legacy && !/^\d+$/.test(legacy)) {
       result.set(row.id, {
         id: legacy,
+        username: legacy,
+        displayFullName: legacy,
+        genderCode: null,
+        avatarUrl: null,
+        phone: null,
+        electoralDivisionPath: null
+      });
+      continue;
+    }
+    if (legacy && /^\d+$/.test(legacy) && !result.has(row.id)) {
+      result.set(row.id, {
+        id: `legacy-membership-${legacy}`,
         username: legacy,
         displayFullName: legacy,
         genderCode: null,
@@ -252671,6 +252759,144 @@ var init_vxMemberTarghinNegoAuthorResolve = __esm({
       }
       const face = mapVmRowToFace(rows[0]);
       return negoAuthorHasLabel(face) ? face : null;
+    };
+  }
+});
+
+// src/domain/vx/vxPlatformRoleDisplay.ts
+function formatHwyPlatformRoleDisplayLabel(roleName, roleNote) {
+  const name = String(roleName ?? "").trim();
+  const note = String(roleNote ?? "").trim();
+  const legacyMatch = note.match(LEGACY_APPEND_ROLE_NOTE);
+  if (legacyMatch?.[1]?.trim()) {
+    return legacyMatch[1].trim();
+  }
+  const geoSpec = findHwyGeoResponsibilityRoleSpecByRoleName(name);
+  if (geoSpec) {
+    return geoSpec.level;
+  }
+  return name || note;
+}
+function sortHwyPlatformRoleDisplayLabels(labels) {
+  const unique = Array.from(new Set(labels.map((label) => label.trim()).filter(Boolean)));
+  return unique.sort((left, right) => left.localeCompare(right, void 0, { sensitivity: "base" }));
+}
+var LEGACY_APPEND_ROLE_NOTE;
+var init_vxPlatformRoleDisplay = __esm({
+  "src/domain/vx/vxPlatformRoleDisplay.ts"() {
+    init_vxGeoResponsibilityCatalog();
+    LEGACY_APPEND_ROLE_NOTE = /^Legacy AppEnd role \d+:\s*(.+)$/i;
+  }
+});
+
+// src/server/domain/vx/vxMemberTarghinExecutorRoles.ts
+async function listHwyMemberIdsByUserIds(userIds) {
+  const uniqueUserIds = Array.from(new Set(
+    userIds.filter((id) => Number.isFinite(id) && id > 0)
+  ));
+  const result = /* @__PURE__ */ new Map();
+  if (uniqueUserIds.length === 0) {
+    return result;
+  }
+  const sequelize = getControlPlaneSequelize();
+  const rows = await sequelize.query(
+    `SELECT id, user_id
+     FROM dbo.vx_members
+     WHERE user_id IN (:userIds)`,
+    { replacements: { userIds: uniqueUserIds }, type: import_sequelize100.QueryTypes.SELECT }
+  );
+  for (const row of rows) {
+    const memberId = Number(row.id);
+    const userId = Number(row.user_id);
+    if (Number.isFinite(memberId) && memberId > 0 && Number.isFinite(userId) && userId > 0) {
+      result.set(userId, memberId);
+    }
+  }
+  return result;
+}
+async function listPlatformUserIdsByHwyMemberIds(memberIds) {
+  const uniqueMemberIds = Array.from(new Set(
+    memberIds.filter((id) => Number.isFinite(id) && id > 0)
+  ));
+  const result = /* @__PURE__ */ new Map();
+  if (uniqueMemberIds.length === 0) {
+    return result;
+  }
+  const sequelize = getControlPlaneSequelize();
+  const rows = await sequelize.query(
+    `SELECT id, user_id
+     FROM dbo.vx_members
+     WHERE id IN (:memberIds)
+       AND user_id IS NOT NULL`,
+    { replacements: { memberIds: uniqueMemberIds }, type: import_sequelize100.QueryTypes.SELECT }
+  );
+  for (const row of rows) {
+    const memberId = Number(row.id);
+    const userId = Number(row.user_id);
+    if (Number.isFinite(memberId) && memberId > 0 && Number.isFinite(userId) && userId > 0) {
+      result.set(memberId, userId);
+    }
+  }
+  return result;
+}
+async function listHwyMemberTarghinExecutorRoleTitlesByUserId(userIds) {
+  const uniqueUserIds = Array.from(new Set(
+    userIds.filter((id) => Number.isFinite(id) && id > 0)
+  ));
+  const result = /* @__PURE__ */ new Map();
+  if (uniqueUserIds.length === 0) {
+    return result;
+  }
+  const roleRows = await prisma().baseUserRole.findMany({
+    where: { userId: { in: uniqueUserIds.map((id) => toUserId(id)) } },
+    select: {
+      userId: true,
+      roleName: true,
+      role: { select: { note: true } }
+    },
+    orderBy: [{ userId: "asc" }, { roleName: "asc" }]
+  });
+  const labelsByUserId = /* @__PURE__ */ new Map();
+  for (const row of roleRows) {
+    const userId = fromUserId(row.userId);
+    const label = formatHwyPlatformRoleDisplayLabel(row.roleName, row.role.note);
+    const bucket = labelsByUserId.get(userId) ?? [];
+    bucket.push(label);
+    labelsByUserId.set(userId, bucket);
+  }
+  for (const [userId, labels] of labelsByUserId) {
+    result.set(userId, sortHwyPlatformRoleDisplayLabels(labels));
+  }
+  return result;
+}
+async function listHwyMemberTarghinExecutorRoleTitlesByMemberId(memberIds) {
+  const userIdByMemberId = await listPlatformUserIdsByHwyMemberIds(memberIds);
+  const roleTitlesByUserId = await listHwyMemberTarghinExecutorRoleTitlesByUserId(
+    [...userIdByMemberId.values()]
+  );
+  const result = /* @__PURE__ */ new Map();
+  for (const [memberId, userId] of userIdByMemberId) {
+    result.set(memberId, roleTitlesByUserId.get(userId) ?? []);
+  }
+  return result;
+}
+function parseHwyTarghinExecutorMemberId(executorMemberId) {
+  return parseMemberId11(executorMemberId);
+}
+var import_sequelize100, parseMemberId11;
+var init_vxMemberTarghinExecutorRoles = __esm({
+  "src/server/domain/vx/vxMemberTarghinExecutorRoles.ts"() {
+    import_sequelize100 = require("sequelize");
+    init_vxPlatformRoleDisplay();
+    init_controlPlaneSequelize();
+    init_prismaHelpers();
+    parseMemberId11 = (raw) => {
+      const trimmed = String(raw ?? "").trim();
+      if (!/^\d+$/.test(trimmed)) {
+        return null;
+      }
+      const id = Number(trimmed);
+      return Number.isFinite(id) && id > 0 ? id : null;
     };
   }
 });
@@ -252989,7 +253215,7 @@ async function readHwyActivityFileContent(fileIdRaw) {
   const sequelize = getControlPlaneSequelize();
   const rows = await sequelize.query(
     `SELECT original_file_name, mime, content, thumbnail_content FROM dbo.vx_activity_files WHERE id = :fileId`,
-    { replacements: { fileId }, type: import_sequelize100.QueryTypes.SELECT }
+    { replacements: { fileId }, type: import_sequelize101.QueryTypes.SELECT }
   );
   if (!rows.length) {
     throw new Error("File not found.");
@@ -253018,7 +253244,7 @@ async function readHwyActivityAttendanceSelfieContent(attendanceIdRaw) {
     FROM dbo.vx_activity_attendances
     WHERE id = :attendanceId
     `,
-    { replacements: { attendanceId }, type: import_sequelize100.QueryTypes.SELECT }
+    { replacements: { attendanceId }, type: import_sequelize101.QueryTypes.SELECT }
   );
   if (!rows.length) {
     throw new Error("Attendance not found.");
@@ -253153,14 +253379,14 @@ async function listHwyTajammoatOrganizationPickerOptions() {
     WHERE is_active = 1
     ORDER BY title_ar, id
     `,
-    { type: import_sequelize100.QueryTypes.SELECT }
+    { type: import_sequelize101.QueryTypes.SELECT }
   );
   return rows.map((row) => ({ id: trim12(String(row.id)), label: trim12(String(row.label)) })).filter((row) => row.id && row.label);
 }
-var import_sequelize100, DEFAULT_PAGE_SIZE5, MAX_PAGE_SIZE5, mapAuditActorMemberFaceFromDetailRow, resolveDetailAuditActor, mergeAuditActorMemberMedia, scoreAuditListFace, pickRicherAuditListFace, enrichActivityAuditFaceAvatars, enrichActivityListAuditActors, enrichAttendanceRowsCreatedBy, trim12, resolveLegacyGeoNodeTitle, attachCoursesActivitiesDetailGeoTitles, assertSqlServer3, clampPage2, enrichActivityRows, enrichCourseRows, normalizeActivityListRecordId, likeWrap;
+var import_sequelize101, DEFAULT_PAGE_SIZE5, MAX_PAGE_SIZE5, mapAuditActorMemberFaceFromDetailRow, resolveDetailAuditActor, mergeAuditActorMemberMedia, scoreAuditListFace, pickRicherAuditListFace, enrichActivityAuditFaceAvatars, enrichActivityListAuditActors, enrichAttendanceRowsCreatedBy, trim12, resolveLegacyGeoNodeTitle, attachCoursesActivitiesDetailGeoTitles, assertSqlServer3, clampPage2, enrichActivityRows, enrichCourseRows, normalizeActivityListRecordId, likeWrap;
 var init_vxCoursesActivitiesAdmin_service = __esm({
   "src/server/domain/vx/vxCoursesActivitiesAdmin.service.ts"() {
-    import_sequelize100 = require("sequelize");
+    import_sequelize101 = require("sequelize");
     init_vxCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -253180,6 +253406,7 @@ var init_vxCoursesActivitiesAdmin_service = __esm({
     init_vxMemberListFaceMap();
     init_vxMemberDirectoryListImageFixThumbs();
     init_vxMemberTarghinNegoAuthorResolve();
+    init_vxMemberTarghinExecutorRoles();
     DEFAULT_PAGE_SIZE5 = 25;
     MAX_PAGE_SIZE5 = 100;
     mapAuditActorMemberFaceFromDetailRow = (row, prefix) => {
@@ -253260,10 +253487,11 @@ var init_vxCoursesActivitiesAdmin_service = __esm({
         }
       }
       if (platformUserIds.size) {
-        await Promise.all([...platformUserIds].map(async (userId) => {
-          const memberId = await loadMemberIdByUserId(userId);
+        const memberIdByUserId = await listHwyMemberIdsByUserIds([...platformUserIds]);
+        for (const userId of platformUserIds) {
+          const memberId = memberIdByUserId.get(userId);
           if (memberId == null) {
-            return;
+            continue;
           }
           memberIds.add(memberId);
           for (const face of faces) {
@@ -253271,7 +253499,7 @@ var init_vxCoursesActivitiesAdmin_service = __esm({
               faceMemberPairs.push({ face, memberId: String(memberId) });
             }
           }
-        }));
+        }
       }
       if (memberIds.size) {
         const loadedByMemberId = await loadMemberFacesByMemberIds([...memberIds]);
@@ -253311,25 +253539,25 @@ var init_vxCoursesActivitiesAdmin_service = __esm({
       if (!rows.length) {
         return;
       }
-      const legacyCache = /* @__PURE__ */ new Map();
-      const resolveLegacyCached = async (legacyRaw) => {
-        const legacy = trim12(legacyRaw ?? "");
-        if (!legacy) {
-          return null;
-        }
-        if (legacyCache.has(legacy)) {
-          return legacyCache.get(legacy) ?? null;
-        }
-        const face = await resolveHwyMemberListFaceForLegacyActor(legacy);
-        legacyCache.set(legacy, face);
-        return face;
-      };
-      await Promise.all(rows.map(async (row) => {
-        const resolvedCreate = await resolveLegacyCached(row.legacyCreatedBy);
-        const resolvedUpdate = await resolveLegacyCached(row.legacyUpdatedBy);
+      const legacyKeys = [
+        ...new Set(
+          rows.flatMap((row) => [trim12(row.legacyCreatedBy ?? ""), trim12(row.legacyUpdatedBy ?? "")].filter(Boolean))
+        )
+      ];
+      const faceByLegacy = legacyKeys.length ? await resolveNegoNoteAuthorsBatch(
+        legacyKeys.map((legacy) => ({
+          id: legacy,
+          createdByLegacy: legacy,
+          createdByUserId: null,
+          author: null
+        }))
+      ) : /* @__PURE__ */ new Map();
+      for (const row of rows) {
+        const resolvedCreate = faceByLegacy.get(trim12(row.legacyCreatedBy ?? "")) ?? null;
+        const resolvedUpdate = faceByLegacy.get(trim12(row.legacyUpdatedBy ?? "")) ?? null;
         row.createdBy = pickRicherAuditListFace(row.createdBy, resolvedCreate);
         row.updatedBy = pickRicherAuditListFace(row.updatedBy, resolvedUpdate);
-      }));
+      }
       const platformUserIds = /* @__PURE__ */ new Set();
       for (const row of rows) {
         for (const face of [row.createdBy, row.updatedBy]) {
@@ -253531,7 +253759,7 @@ async function listHwyMemberNbSelfieHistory(memberIdRaw) {
       COALESCE(TRY_CONVERT(DATETIME2, att.nb_device_datetime), att.created_at) DESC,
       att.id DESC
     `,
-    { replacements: { memberId }, type: import_sequelize101.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize102.QueryTypes.SELECT }
   );
   return rows.filter((row) => Number(row.has_selfie) === 1).map((row) => {
     const recordId = String(row.id);
@@ -253554,17 +253782,17 @@ async function readHwyMemberDirectoryActivityAttendanceSelfie(memberIdRaw, atten
   const sequelize = getControlPlaneSequelize();
   const ownerRows = await sequelize.query(
     `SELECT member_id FROM dbo.vx_activity_attendances WHERE id = :attendanceId`,
-    { replacements: { attendanceId }, type: import_sequelize101.QueryTypes.SELECT }
+    { replacements: { attendanceId }, type: import_sequelize102.QueryTypes.SELECT }
   );
   if (!ownerRows.length || Number(ownerRows[0].member_id) !== memberId) {
     throw new Error("Attendance not found.");
   }
   return readHwyActivityAttendanceSelfieContent(attendanceIdRaw);
 }
-var import_sequelize101;
+var import_sequelize102;
 var init_vxMemberNbSelfieHistory_service = __esm({
   "src/server/domain/vx/vxMemberNbSelfieHistory.service.ts"() {
-    import_sequelize101 = require("sequelize");
+    import_sequelize102 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyCoursesActivitiesSchema();
@@ -253729,11 +253957,11 @@ async function applyHwyCourseWorkflowAction(input) {
   });
   return readHwyCourseAdminDetail(String(courseId), input.queryLang ?? "iq");
 }
-var import_node_crypto47, import_sequelize102, trim14, assertSqlServer4, resolveActorUsername2, readActivityStatus, readCourseStatus, assertActivityTransition, assertCourseTransition;
+var import_node_crypto47, import_sequelize103, trim14, assertSqlServer4, resolveActorUsername2, readActivityStatus, readCourseStatus, assertActivityTransition, assertCourseTransition;
 var init_vxCoursesActivitiesWorkflow_service = __esm({
   "src/server/domain/vx/vxCoursesActivitiesWorkflow.service.ts"() {
     import_node_crypto47 = require("node:crypto");
-    import_sequelize102 = require("sequelize");
+    import_sequelize103 = require("sequelize");
     init_vxCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -253756,7 +253984,7 @@ var init_vxCoursesActivitiesWorkflow_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT username FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId }, type: import_sequelize102.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize103.QueryTypes.SELECT }
       );
       return trim14(rows[0]?.username) || "admin";
     };
@@ -253771,7 +253999,7 @@ var init_vxCoursesActivitiesWorkflow_service = __esm({
     FROM dbo.vx_activities a
     WHERE a.id = :activityId
     `,
-        { replacements: { activityId }, type: import_sequelize102.QueryTypes.SELECT }
+        { replacements: { activityId }, type: import_sequelize103.QueryTypes.SELECT }
       );
       if (!rows.length) {
         throw new Error("Activity not found.");
@@ -253793,7 +254021,7 @@ var init_vxCoursesActivitiesWorkflow_service = __esm({
     FROM dbo.vx_courses c
     WHERE c.id = :courseId
     `,
-        { replacements: { courseId }, type: import_sequelize102.QueryTypes.SELECT }
+        { replacements: { courseId }, type: import_sequelize103.QueryTypes.SELECT }
       );
       if (!rows.length) {
         throw new Error("Course not found.");
@@ -253887,7 +254115,7 @@ async function addHwyActivityAdminAttendance(input) {
   const sequelize = getControlPlaneSequelize();
   const activityRows = await sequelize.query(
     `SELECT status_code FROM dbo.vx_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize103.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize104.QueryTypes.SELECT }
   );
   if (!activityRows.length) {
     throw new Error("Activity not found.");
@@ -253925,7 +254153,7 @@ async function removeHwyActivityAdminAttendance(input) {
   const sequelize = getControlPlaneSequelize();
   const activityRows = await sequelize.query(
     `SELECT status_code FROM dbo.vx_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize103.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize104.QueryTypes.SELECT }
   );
   if (!activityRows.length) {
     throw new Error("Activity not found.");
@@ -253951,7 +254179,7 @@ async function addHwyCourseAdminAttendance(input) {
   const sequelize = getControlPlaneSequelize();
   const courseRows = await sequelize.query(
     `SELECT status_code FROM dbo.vx_courses WHERE id = :courseId`,
-    { replacements: { courseId }, type: import_sequelize103.QueryTypes.SELECT }
+    { replacements: { courseId }, type: import_sequelize104.QueryTypes.SELECT }
   );
   if (!courseRows.length) {
     throw new Error("Course not found.");
@@ -253991,7 +254219,7 @@ async function removeHwyCourseAdminAttendance(input) {
   const sequelize = getControlPlaneSequelize();
   const courseRows = await sequelize.query(
     `SELECT status_code FROM dbo.vx_courses WHERE id = :courseId`,
-    { replacements: { courseId }, type: import_sequelize103.QueryTypes.SELECT }
+    { replacements: { courseId }, type: import_sequelize104.QueryTypes.SELECT }
   );
   if (!courseRows.length) {
     throw new Error("Course not found.");
@@ -254014,7 +254242,7 @@ async function deleteHwyActivityAdminFile(input) {
   const sequelize = getControlPlaneSequelize();
   const activityRows = await sequelize.query(
     `SELECT status_code FROM dbo.vx_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize103.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize104.QueryTypes.SELECT }
   );
   if (!activityRows.length) {
     throw new Error("Activity not found.");
@@ -254027,10 +254255,10 @@ async function deleteHwyActivityAdminFile(input) {
     activity_id: activityId
   });
 }
-var import_sequelize103, trim15, assertSqlServer5, resolveActorUsername3, allocateNextAttendanceId;
+var import_sequelize104, trim15, assertSqlServer5, resolveActorUsername3, allocateNextAttendanceId;
 var init_vxCoursesActivitiesAttendanceWrite_service = __esm({
   "src/server/domain/vx/vxCoursesActivitiesAttendanceWrite.service.ts"() {
-    import_sequelize103 = require("sequelize");
+    import_sequelize104 = require("sequelize");
     init_vxCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -254052,7 +254280,7 @@ var init_vxCoursesActivitiesAttendanceWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT username FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId }, type: import_sequelize103.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize104.QueryTypes.SELECT }
       );
       return trim15(rows[0]?.username) || "admin";
     };
@@ -254060,7 +254288,7 @@ var init_vxCoursesActivitiesAttendanceWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ISNULL(MAX(id), 0) + 1 AS next_id FROM dbo.${table} WITH (UPDLOCK, HOLDLOCK)`,
-        { type: import_sequelize103.QueryTypes.SELECT }
+        { type: import_sequelize104.QueryTypes.SELECT }
       );
       const nextId = Number(rows[0]?.next_id);
       if (!Number.isFinite(nextId) || nextId <= 0) {
@@ -254144,7 +254372,7 @@ async function updateHwyActivityDraft(activityIdRaw, input, actorUserId2, queryL
   const sequelize = getControlPlaneSequelize();
   const existing = await sequelize.query(
     `SELECT status_code FROM dbo.vx_activities WHERE id = :activityId`,
-    { replacements: { activityId }, type: import_sequelize104.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize105.QueryTypes.SELECT }
   );
   if (!existing.length) {
     throw new Error("Activity not found.");
@@ -254235,7 +254463,7 @@ async function updateHwyCourseDraft(courseIdRaw, input, actorUserId2, queryLang)
   const sequelize = getControlPlaneSequelize();
   const existing = await sequelize.query(
     `SELECT status_code FROM dbo.vx_courses WHERE id = :courseId`,
-    { replacements: { courseId }, type: import_sequelize104.QueryTypes.SELECT }
+    { replacements: { courseId }, type: import_sequelize105.QueryTypes.SELECT }
   );
   if (!existing.length) {
     throw new Error("Course not found.");
@@ -254295,7 +254523,7 @@ async function uploadHwyActivityFile(input) {
     FROM dbo.vx_activities a
     WHERE a.id = :activityId
     `,
-    { replacements: { activityId }, type: import_sequelize104.QueryTypes.SELECT }
+    { replacements: { activityId }, type: import_sequelize105.QueryTypes.SELECT }
   );
   if (!rows.length) {
     throw new Error("Activity not found.");
@@ -254342,11 +254570,11 @@ async function uploadHwyActivityFile(input) {
   }
   return { id: fileId };
 }
-var import_node_crypto48, import_sequelize104, trim16, ACTIVITY_TYPE_CATEGORY, COURSE_TYPE_CATEGORY, assertSqlServer6, resolveActorUsername4, findBaseInfoCategoryId, assertBaseInfoNode, allocateNextId, readBodyField, readOptionalBodyBoolean, readOptionalBodyNumber, readUpsertHwyActivityDraftInput, parseLegacyProvinceId, execHwyActivityUpdateTajammoat, parseOptionalLegacyProvinceId;
+var import_node_crypto48, import_sequelize105, trim16, ACTIVITY_TYPE_CATEGORY, COURSE_TYPE_CATEGORY, assertSqlServer6, resolveActorUsername4, findBaseInfoCategoryId, assertBaseInfoNode, allocateNextId, readBodyField, readOptionalBodyBoolean, readOptionalBodyNumber, readUpsertHwyActivityDraftInput, parseLegacyProvinceId, execHwyActivityUpdateTajammoat, parseOptionalLegacyProvinceId;
 var init_vxCoursesActivitiesWrite_service = __esm({
   "src/server/domain/vx/vxCoursesActivitiesWrite.service.ts"() {
     import_node_crypto48 = require("node:crypto");
-    import_sequelize104 = require("sequelize");
+    import_sequelize105 = require("sequelize");
     init_vxCoursesActivitiesCatalog();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -254371,7 +254599,7 @@ var init_vxCoursesActivitiesWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT username FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId }, type: import_sequelize104.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize105.QueryTypes.SELECT }
       );
       return trim16(rows[0]?.username) || "admin";
     };
@@ -254419,7 +254647,7 @@ var init_vxCoursesActivitiesWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ISNULL(MAX(id), 0) + 1 AS next_id FROM dbo.${table} WITH (UPDLOCK, HOLDLOCK)`,
-        { type: import_sequelize104.QueryTypes.SELECT }
+        { type: import_sequelize105.QueryTypes.SELECT }
       );
       const nextId = Number(rows[0]?.next_id);
       if (!Number.isFinite(nextId) || nextId <= 0) {
@@ -254612,14 +254840,14 @@ async function countHwyActivityNbTargetAudience(activityIdRaw) {
   }
   return countFromLegacyMembersSql(crit);
 }
-var import_mssql10, import_sequelize105, NB_ACTIVE_MEMBER_SQL, NB_KASHAFEH_CORE_SQL, NB_GOV_CORE_SQL, NB_ORGANIZATION_MEMBER_MATCH_SQL, NB_NO_ORGANIZATION_AFFILIATION_SQL, readSqlBit, loadActivityNbRow, appendAudienceSegmentOr, appendDemoFilters, bindDemoParams, countFromLegacyMembersSql, countGovListDefault, countKashafehListDefault;
+var import_mssql10, import_sequelize106, NB_ACTIVE_MEMBER_SQL, NB_KASHAFEH_CORE_SQL, NB_GOV_CORE_SQL, NB_ORGANIZATION_MEMBER_MATCH_SQL, NB_NO_ORGANIZATION_AFFILIATION_SQL, readSqlBit, loadActivityNbRow, appendAudienceSegmentOr, appendDemoFilters, bindDemoParams, countFromLegacyMembersSql, countGovListDefault, countKashafehListDefault;
 var init_vxActivityNbTargetAudienceCount_service = __esm({
   "src/server/domain/vx/vxActivityNbTargetAudienceCount.service.ts"() {
     import_mssql10 = __toESM(require("mssql"), 1);
     init_vxActivityNbTargetAudience();
     init_controlPlaneSequelize();
     init_prismaHelpers();
-    import_sequelize105 = require("sequelize");
+    import_sequelize106 = require("sequelize");
     NB_ACTIVE_MEMBER_SQL = "Mem.MembershipStatus=10851";
     NB_KASHAFEH_CORE_SQL = `
   ISNULL(Mem.DeviceOsTypeId,0)<>213991
@@ -254666,7 +254894,7 @@ NOT EXISTS (SELECT 1 FROM dbo.VX_Members_Organizations O WITH (NOLOCK) WHERE O.M
     FROM dbo.vx_activities
     WHERE id = :activityId
     `,
-        { replacements: { activityId }, type: import_sequelize105.QueryTypes.SELECT }
+        { replacements: { activityId }, type: import_sequelize106.QueryTypes.SELECT }
       );
       return rows[0] ?? null;
     };
@@ -254969,7 +255197,7 @@ async function loadHwyMemberListScopedEditFields(input) {
   if (!profile) {
     throw new Error("List scoped edit is not available for this list.");
   }
-  const memberId = parseMemberId11(input.memberIdRaw);
+  const memberId = parseMemberId12(input.memberIdRaw);
   const sequelize = getControlPlaneSequelize();
   const memberRows = await sequelize.query(
     `
@@ -254990,7 +255218,7 @@ async function loadHwyMemberListScopedEditFields(input) {
     FROM dbo.vx_members m
     WHERE m.id = :memberId
     `,
-    { replacements: { memberId }, type: import_sequelize106.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize107.QueryTypes.SELECT }
   );
   const memberRow = memberRows[0];
   if (!memberRow) {
@@ -255013,7 +255241,7 @@ async function loadHwyMemberListScopedEditFields(input) {
       `,
       {
         replacements: { memberId, instituteId },
-        type: import_sequelize106.QueryTypes.SELECT
+        type: import_sequelize107.QueryTypes.SELECT
       }
     );
     characterCode = trimOptional3(linkRows[0]?.characterCode ?? null, 128);
@@ -255093,7 +255321,7 @@ async function patchHwyMemberListScopedEditFields(input) {
     return;
   }
   if (profile.kind === "mehani_professional" && input.body.kind === "mehani_professional") {
-    const memberId = parseMemberId11(memberIdRaw);
+    const memberId = parseMemberId12(memberIdRaw);
     const sequelize = getControlPlaneSequelize();
     const assignments = [];
     const replacements = {
@@ -255139,7 +255367,7 @@ async function patchHwyMemberListScopedEditFields(input) {
           updated_by = :updatedBy
       WHERE id = :memberId
       `,
-      { replacements, type: import_sequelize106.QueryTypes.UPDATE }
+      { replacements, type: import_sequelize107.QueryTypes.UPDATE }
     );
     invalidateHwyMemberDirectoryListCache();
     return;
@@ -255153,7 +255381,7 @@ async function patchHwyMemberListScopedEditFields(input) {
     if (instituteId == null) {
       throw new Error("Institute is not configured for this list.");
     }
-    const memberId = parseMemberId11(memberIdRaw);
+    const memberId = parseMemberId12(memberIdRaw);
     const characterCode = trimOptional3(input.body.characterCode ?? null, 128);
     const sequelize = getControlPlaneSequelize();
     const now = /* @__PURE__ */ new Date();
@@ -255164,7 +255392,7 @@ async function patchHwyMemberListScopedEditFields(input) {
       WHERE mi.member_id = :memberId AND mi.institute_id = :instituteId
       ORDER BY mi.id DESC
       `,
-      { replacements: { memberId, instituteId }, type: import_sequelize106.QueryTypes.SELECT }
+      { replacements: { memberId, instituteId }, type: import_sequelize107.QueryTypes.SELECT }
     );
     if (!linkRows[0]?.linkId) {
       throw new Error("Institute membership link not found for this member.");
@@ -255184,16 +255412,16 @@ async function patchHwyMemberListScopedEditFields(input) {
           updatedAt: now,
           updatedBy: input.actorUserId ?? null
         },
-        type: import_sequelize106.QueryTypes.UPDATE
+        type: import_sequelize107.QueryTypes.UPDATE
       }
     );
     invalidateHwyMemberDirectoryListCache();
   }
 }
-var import_sequelize106, trimOptional3, parseMemberId11, scopedEditAllowsCache, SCOPED_EDIT_ALLOWS_CACHE_MS, loadInstituteAllowsScopedEditSet, resolveListScopedEditProfile;
+var import_sequelize107, trimOptional3, parseMemberId12, scopedEditAllowsCache, SCOPED_EDIT_ALLOWS_CACHE_MS, loadInstituteAllowsScopedEditSet, resolveListScopedEditProfile;
 var init_vxMemberListScopedEdit_service = __esm({
   "src/server/domain/vx/vxMemberListScopedEdit.service.ts"() {
-    import_sequelize106 = require("sequelize");
+    import_sequelize107 = require("sequelize");
     init_vxMemberListScopedEditCatalog();
     init_vxInstituteScopedEditConfig_service();
     init_vxMemberInstituteCodes();
@@ -255215,7 +255443,7 @@ var init_vxMemberListScopedEdit_service = __esm({
       }
       return trimmed.length > max ? trimmed.slice(0, max) : trimmed;
     };
-    parseMemberId11 = (raw) => {
+    parseMemberId12 = (raw) => {
       const trimmed = raw.trim();
       if (!/^\d+$/.test(trimmed)) {
         throw new Error("Member id is invalid.");
@@ -255249,7 +255477,7 @@ var init_vxMemberListScopedEdit_service = __esm({
 
 // src/server/domain/vx/vxMemberDirectoryIdentityPolicy.service.ts
 async function loadHwyMemberDirectoryIdentityFieldPolicyForMember(memberIdRaw, session) {
-  const memberId = typeof memberIdRaw === "number" ? memberIdRaw : parseMemberId12(memberIdRaw);
+  const memberId = typeof memberIdRaw === "number" ? memberIdRaw : parseMemberId13(memberIdRaw);
   const sequelize = getControlPlaneSequelize();
   const rows = await sequelize.query(
     `
@@ -255257,7 +255485,7 @@ async function loadHwyMemberDirectoryIdentityFieldPolicyForMember(memberIdRaw, s
       FROM dbo.vx_members
       WHERE id = :id
     `,
-    { replacements: { id: memberId }, type: import_sequelize107.QueryTypes.SELECT }
+    { replacements: { id: memberId }, type: import_sequelize108.QueryTypes.SELECT }
   );
   if (!rows[0]) {
     throw new Error("Member not found.");
@@ -255284,15 +255512,15 @@ async function assertHwyMemberDossierFileUploadAllowed(input) {
     throw new Error("Forbidden.");
   }
 }
-var import_sequelize107, parseMemberId12;
+var import_sequelize108, parseMemberId13;
 var init_vxMemberDirectoryIdentityPolicy_service = __esm({
   "src/server/domain/vx/vxMemberDirectoryIdentityPolicy.service.ts"() {
-    import_sequelize107 = require("sequelize");
+    import_sequelize108 = require("sequelize");
     init_vxMemberFileKindCatalog();
     init_controlPlaneSequelize();
     init_applyHwyMemberIdentityFieldMasks();
     init_vxMemberFileKindResolve_service();
-    parseMemberId12 = (raw) => {
+    parseMemberId13 = (raw) => {
       const trimmed = raw.trim();
       if (!/^\d+$/.test(trimmed)) {
         throw new Error("Member id is invalid.");
@@ -256241,14 +256469,14 @@ function cancelHwyEtlConsoleRun() {
   }
   return { ok: true, message: "Cancel requested." };
 }
-var import_node_child_process12, import_node_fs33, import_node_path37, import_node_url7, import_sequelize108, import_meta8, repoRoot2, MAX_LOG_LINES, activeRun, queue, nowIso6, appendLog, serializeRun, envFromOptions, envTruthy, cliArgsFromOptions, spawnStepScript, finishStep, runJob, drainQueue, enqueueJob, mergeRunOptions, getHwyEtlConsoleCatalog, readLocalCountsRow, buildJobFromSteps;
+var import_node_child_process12, import_node_fs33, import_node_path37, import_node_url7, import_sequelize109, import_meta8, repoRoot2, MAX_LOG_LINES, activeRun, queue, nowIso6, appendLog, serializeRun, envFromOptions, envTruthy, cliArgsFromOptions, spawnStepScript, finishStep, runJob, drainQueue, enqueueJob, mergeRunOptions, getHwyEtlConsoleCatalog, readLocalCountsRow, buildJobFromSteps;
 var init_vxEtlConsole_service = __esm({
   "src/server/domain/vx/vxEtlConsole.service.ts"() {
     import_node_child_process12 = require("node:child_process");
     import_node_fs33 = __toESM(require("node:fs"), 1);
     import_node_path37 = __toESM(require("node:path"), 1);
     import_node_url7 = require("node:url");
-    import_sequelize108 = require("sequelize");
+    import_sequelize109 = require("sequelize");
     init_vxEtlConsoleCatalog();
     init_vxEtlIncremental();
     init_vxEtlSyncStateSummary();
@@ -256479,7 +256707,7 @@ var init_vxEtlConsole_service = __esm({
       (SELECT COUNT(*) FROM dbo.base_record_events WHERE idempotency_key LIKE N'vx-etl:ch:%') AS events,
       ${geoSql}
     `,
-        { type: import_sequelize108.QueryTypes.SELECT }
+        { type: import_sequelize109.QueryTypes.SELECT }
       ))[0];
       return {
         members: Number(row?.members ?? 0),
@@ -256556,7 +256784,7 @@ var init_vxEtlSyncEnv = __esm({
 async function localMaxHwyMemberId() {
   const row = (await getControlPlaneSequelize().query(
     "SELECT MAX(id) AS maxId FROM dbo.vx_members",
-    { type: import_sequelize109.QueryTypes.SELECT }
+    { type: import_sequelize110.QueryTypes.SELECT }
   ))[0];
   return Math.max(0, Number(row?.maxId ?? 0));
 }
@@ -256573,7 +256801,7 @@ async function filterIdsExistingInHwyMembers(memberIds) {
     });
     const rows = await getControlPlaneSequelize().query(
       `SELECT id FROM dbo.vx_members WHERE id IN (${placeholders.join(", ")})`,
-      { replacements, type: import_sequelize109.QueryTypes.SELECT }
+      { replacements, type: import_sequelize110.QueryTypes.SELECT }
     );
     existing.push(...rows.map((r) => Number(r.id)));
   }
@@ -256618,11 +256846,11 @@ async function queryChangeHistoryMemberIdsSince(legacy, afterChangeHistoryId) {
   }
   return [...memberIds];
 }
-var import_mssql11, import_sequelize109, LEGACY_MEMBER_FILTER, chunkIds;
+var import_mssql11, import_sequelize110, LEGACY_MEMBER_FILTER, chunkIds;
 var init_memberLegacyQueries = __esm({
   "scripts/vx-etl/memberLegacyQueries.ts"() {
     import_mssql11 = __toESM(require("mssql"), 1);
-    import_sequelize109 = require("sequelize");
+    import_sequelize110 = require("sequelize");
     init_controlPlaneSequelize();
     LEGACY_MEMBER_FILTER = "ISNULL(DeviceOsTypeId, 0) != 213991";
     chunkIds = (ids2, size) => {
@@ -259904,11 +260132,11 @@ var init_vxMembershipDecisionParse = __esm({
 });
 
 // src/server/domain/vx/vxMembershipDecision.service.ts
-var import_node_crypto49, import_sequelize110, NOTE_MAX, trimRequired, trimOptional4, LEGACY_LOCAL_REJECTION_BANK_NOTE_MIN, parseTosighConfirmCode, parseMemberId13, assertSqlServer7, formatDecisionNote, readHistorySnapshot, buildMemberActivationPassword, parseClearReferrer, runDecision, applyHwyMembershipCallCenterDecision, applyHwyMembershipLocalDecision, mapMembershipProcError, REASON_CATEGORY, listHwyMembershipDecisionReasonOptions;
+var import_node_crypto49, import_sequelize111, NOTE_MAX, trimRequired, trimOptional4, LEGACY_LOCAL_REJECTION_BANK_NOTE_MIN, parseTosighConfirmCode, parseMemberId14, assertSqlServer7, formatDecisionNote, readHistorySnapshot, buildMemberActivationPassword, parseClearReferrer, runDecision, applyHwyMembershipCallCenterDecision, applyHwyMembershipLocalDecision, mapMembershipProcError, REASON_CATEGORY, listHwyMembershipDecisionReasonOptions;
 var init_vxMembershipDecision_service = __esm({
   "src/server/domain/vx/vxMembershipDecision.service.ts"() {
     import_node_crypto49 = __toESM(require("node:crypto"), 1);
-    import_sequelize110 = require("sequelize");
+    import_sequelize111 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_vxMemberHistory();
@@ -259950,7 +260178,7 @@ var init_vxMembershipDecision_service = __esm({
       }
       return code;
     };
-    parseMemberId13 = (raw) => {
+    parseMemberId14 = (raw) => {
       const trimmed = raw.trim();
       if (!/^\d+$/.test(trimmed)) {
         throw new Error("Member id is invalid.");
@@ -259980,7 +260208,7 @@ var init_vxMembershipDecision_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ${VX_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.vx_members WHERE id = :id`,
-        { replacements: { id: memberId }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { id: memberId }, type: import_sequelize111.QueryTypes.SELECT }
       );
       return rows[0] ? vxMemberRowToHistorySnapshot(rows[0]) : null;
     };
@@ -260074,7 +260302,7 @@ var init_vxMembershipDecision_service = __esm({
     };
     applyHwyMembershipCallCenterDecision = async (input) => {
       await assertSqlServer7();
-      const memberId = parseMemberId13(input.memberIdRaw);
+      const memberId = parseMemberId14(input.memberIdRaw);
       const noteRequired = input.action !== "unreject";
       const decisionNote = noteRequired ? trimRequired(input.decisionNote) : trimOptional4(input.decisionNote);
       const reasonRequired = input.action === "reject";
@@ -260100,7 +260328,7 @@ var init_vxMembershipDecision_service = __esm({
     };
     applyHwyMembershipLocalDecision = async (input) => {
       await assertSqlServer7();
-      const memberId = parseMemberId13(input.memberIdRaw);
+      const memberId = parseMemberId14(input.memberIdRaw);
       const reasonRequired = input.action === "reject_final" || input.action === "reject_returnable" || input.action === "reject_verification_bank" || input.action === "unreject";
       const noteRequired = input.action !== "approve";
       let decisionNote = noteRequired ? trimRequired(input.decisionNote) : trimOptional4(input.decisionNote);
@@ -260189,7 +260417,7 @@ var init_vxMembershipDecision_service = __esm({
     WHERE cat.title = :categoryTitle AND bi.is_active = 1
     ORDER BY bi.view_order, bi.id
     `,
-        { replacements: { categoryTitle }, type: import_sequelize110.QueryTypes.SELECT }
+        { replacements: { categoryTitle }, type: import_sequelize111.QueryTypes.SELECT }
       );
       const cultureId = resolveBaseInfoCultureId(input.cultureId);
       const bundle4 = buildMergedCultureBundle(cultureId);
@@ -260277,7 +260505,7 @@ async function lookupHwyMembershipReferrerByCode(codeRaw) {
       LEFT JOIN dbo.base_user_profiles p WITH (NOLOCK) ON p.user_id = m.user_id
       WHERE m.id = :memberId
     `,
-    { replacements: { memberId }, type: import_sequelize111.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize112.QueryTypes.SELECT }
   );
   const row = rows[0];
   const mapped = row ? mapRow12(row) : null;
@@ -260296,11 +260524,11 @@ async function lookupHwyMembershipReferrerByCode(codeRaw) {
     avatarUrl: faceRow.avatarUrl?.trim() || resolvedAvatar
   };
 }
-var import_mssql21, import_sequelize111, mapRow12, resolveReferrerLookupMemberId;
+var import_mssql21, import_sequelize112, mapRow12, resolveReferrerLookupMemberId;
 var init_vxMembershipReferrerLookup_service = __esm({
   "src/server/domain/vx/vxMembershipReferrerLookup.service.ts"() {
     import_mssql21 = __toESM(require("mssql"), 1);
-    import_sequelize111 = require("sequelize");
+    import_sequelize112 = require("sequelize");
     init_vxMemberPersonDisplayName();
     init_vxGeoResponsibilityMemberDisplay();
     init_controlPlaneSequelize();
@@ -260345,7 +260573,7 @@ var init_vxMembershipReferrerLookup_service = __esm({
       FROM dbo.vw_vx_members vm WITH (NOLOCK)
       WHERE LTRIM(RTRIM(vm.username)) = :code
     `,
-        { replacements: { code }, type: import_sequelize111.QueryTypes.SELECT }
+        { replacements: { code }, type: import_sequelize112.QueryTypes.SELECT }
       );
       const vmId = vmRows[0]?.id != null ? Number(vmRows[0].id) : null;
       if (vmId != null && Number.isFinite(vmId) && vmId > 0) {
@@ -260463,10 +260691,10 @@ var init_vxMemberDossierNakhebinRecordEvents = __esm({
 });
 
 // src/server/domain/vx/vxMemberNakhebinWrite.service.ts
-var import_sequelize112, parseMemberId14, parseNakhebinId, assertSqlServer8, readSnapshot, emitIfChanged, execNakhebinMutation, linkHwyMemberNakhebinBallot, linkHwyMemberNakhebinFamily, linkHwyMemberNakhebinWithProblem, linkHwyMemberNakhebinEghtera, clearHwyMemberNakhebinLink, changeHwyMemberNakhebinRoghe, setHwyMemberAddrEghtera;
+var import_sequelize113, parseMemberId15, parseNakhebinId, assertSqlServer8, readSnapshot, emitIfChanged, execNakhebinMutation, linkHwyMemberNakhebinBallot, linkHwyMemberNakhebinFamily, linkHwyMemberNakhebinWithProblem, linkHwyMemberNakhebinEghtera, clearHwyMemberNakhebinLink, changeHwyMemberNakhebinRoghe, setHwyMemberAddrEghtera;
 var init_vxMemberNakhebinWrite_service = __esm({
   "src/server/domain/vx/vxMemberNakhebinWrite.service.ts"() {
-    import_sequelize112 = require("sequelize");
+    import_sequelize113 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_vxMemberHistory();
@@ -260477,7 +260705,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     init_vxMemberDossierRecordEventEmitters();
     init_vxMemberDossierNakhebinRecordEvents();
     init_vxMemberDossierSummaryRead();
-    parseMemberId14 = (raw) => {
+    parseMemberId15 = (raw) => {
       const trimmed = raw.trim();
       if (!/^\d+$/.test(trimmed)) {
         throw new Error("Member id is invalid.");
@@ -260509,7 +260737,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT ${VX_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.vx_members WHERE id = :id`,
-        { replacements: { id: memberId }, type: import_sequelize112.QueryTypes.SELECT }
+        { replacements: { id: memberId }, type: import_sequelize113.QueryTypes.SELECT }
       );
       return rows[0] ? vxMemberRowToHistorySnapshot(rows[0]) : null;
     };
@@ -260563,7 +260791,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     };
     linkHwyMemberNakhebinBallot = async (input) => {
       await assertSqlServer8();
-      const memberId = parseMemberId14(input.memberIdRaw);
+      const memberId = parseMemberId15(input.memberIdRaw);
       const nakhebinId = parseNakhebinId(input.nakhebinIdRaw);
       await execNakhebinMutation(memberId, "vx_member_nakhebin_link", {
         member_id: memberId,
@@ -260574,7 +260802,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     };
     linkHwyMemberNakhebinFamily = async (input) => {
       await assertSqlServer8();
-      const memberId = parseMemberId14(input.memberIdRaw);
+      const memberId = parseMemberId15(input.memberIdRaw);
       const nakhebinId = parseNakhebinId(input.nakhebinIdRaw);
       await execNakhebinMutation(memberId, "vx_member_nakhebin_link_family", {
         member_id: memberId,
@@ -260586,7 +260814,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     };
     linkHwyMemberNakhebinWithProblem = async (input) => {
       await assertSqlServer8();
-      const memberId = parseMemberId14(input.memberIdRaw);
+      const memberId = parseMemberId15(input.memberIdRaw);
       const nakhebinId = parseNakhebinId(input.nakhebinIdRaw);
       const reasonId = input.nakhebinLinkProblemReasonId.trim();
       if (!reasonId) {
@@ -260604,7 +260832,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     };
     linkHwyMemberNakhebinEghtera = async (input) => {
       await assertSqlServer8();
-      const memberId = parseMemberId14(input.memberIdRaw);
+      const memberId = parseMemberId15(input.memberIdRaw);
       const nakhebinId = parseNakhebinId(input.nakhebinIdRaw);
       await execNakhebinMutation(memberId, "vx_member_nakhebin_link_eghtera", {
         member_id: memberId,
@@ -260615,7 +260843,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     };
     clearHwyMemberNakhebinLink = async (input) => {
       await assertSqlServer8();
-      const memberId = parseMemberId14(input.memberIdRaw);
+      const memberId = parseMemberId15(input.memberIdRaw);
       await execNakhebinMutation(memberId, "vx_member_nakhebin_clear", {
         member_id: memberId,
         actor_user_id: input.actorUserId
@@ -260623,7 +260851,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     };
     changeHwyMemberNakhebinRoghe = async (input) => {
       await assertSqlServer8();
-      const memberId = parseMemberId14(input.memberIdRaw);
+      const memberId = parseMemberId15(input.memberIdRaw);
       const regionId = input.nakhebinLinkRegionId.trim();
       if (!regionId) {
         throw new Error("Nakhebin link region is required.");
@@ -260636,7 +260864,7 @@ var init_vxMemberNakhebinWrite_service = __esm({
     };
     setHwyMemberAddrEghtera = async (input) => {
       await assertSqlServer8();
-      const memberId = parseMemberId14(input.memberIdRaw);
+      const memberId = parseMemberId15(input.memberIdRaw);
       await execNakhebinMutation(memberId, "vx_member_set_addr_eghtera", {
         member_id: memberId,
         addr_region_id: input.addrRegionId?.trim() || null,
@@ -260787,10 +261015,10 @@ var init_ensureHwyRegistrationChannelStudioStaff = __esm({
 });
 
 // src/server/domain/vx/vxStaffMemberCreateReferrer.service.ts
-var import_sequelize113, trim17, isHwyStaffRegistrarEmployee, loadMemberUsernameByUserId, resolveStaffCreateReferrer;
+var import_sequelize114, trim17, isHwyStaffRegistrarEmployee, loadMemberUsernameByUserId, resolveStaffCreateReferrer;
 var init_vxStaffMemberCreateReferrer_service = __esm({
   "src/server/domain/vx/vxStaffMemberCreateReferrer.service.ts"() {
-    import_sequelize113 = require("sequelize");
+    import_sequelize114 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     trim17 = (value, max = 500) => {
@@ -260809,7 +261037,7 @@ var init_vxStaffMemberCreateReferrer_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT TOP (1) id FROM dbo.vx_members WITH (NOLOCK) WHERE user_id = :userId`,
-        { replacements: { userId: actorUserId2 }, type: import_sequelize113.QueryTypes.SELECT }
+        { replacements: { userId: actorUserId2 }, type: import_sequelize114.QueryTypes.SELECT }
       );
       return rows.length > 0;
     };
@@ -260817,7 +261045,7 @@ var init_vxStaffMemberCreateReferrer_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT TOP (1) username FROM dbo.vx_members WITH (NOLOCK) WHERE user_id = :userId`,
-        { replacements: { userId }, type: import_sequelize113.QueryTypes.SELECT }
+        { replacements: { userId }, type: import_sequelize114.QueryTypes.SELECT }
       );
       const username = rows[0]?.username;
       return username != null ? String(username).trim() || null : null;
@@ -260847,7 +261075,7 @@ var init_vxStaffMemberCreateReferrer_service = __esm({
 });
 
 // src/server/domain/vx/staffMemberCreate.service.ts
-var import_sequelize114, trim18, resolveInstituteIdByCode, submitHwyStaffMemberCreate;
+var import_sequelize115, trim18, resolveInstituteIdByCode, submitHwyStaffMemberCreate;
 var init_staffMemberCreate_service = __esm({
   "src/server/domain/vx/staffMemberCreate.service.ts"() {
     init_selfRegistration_service();
@@ -260856,7 +261084,7 @@ var init_staffMemberCreate_service = __esm({
     init_vxStaffMemberCreateReferrer_service();
     init_controlPlaneSequelize();
     init_prismaHelpers();
-    import_sequelize114 = require("sequelize");
+    import_sequelize115 = require("sequelize");
     init_vxSelfRegistrationFieldValidation();
     trim18 = (value, max = 32) => {
       if (value == null) return null;
@@ -260872,7 +261100,7 @@ var init_staffMemberCreate_service = __esm({
     FROM dbo.vx_institutes i
     WHERE LOWER(i.code) = LOWER(:code) AND i.is_active = 1
     `,
-        { replacements: { code: instituteCode }, type: import_sequelize114.QueryTypes.SELECT }
+        { replacements: { code: instituteCode }, type: import_sequelize115.QueryTypes.SELECT }
       );
       const id = rows[0]?.id;
       return id != null && Number.isFinite(Number(id)) ? Number(id) : null;
@@ -260915,7 +261143,7 @@ var init_staffMemberCreate_service = __esm({
 });
 
 // src/server/domain/vx/vxMemberInstituteAdminAssign.service.ts
-var import_sequelize115, parseMemberId15, resolveInstituteIdByCode2, assignHwyMemberInstituteByAdmin;
+var import_sequelize116, parseMemberId16, resolveInstituteIdByCode2, assignHwyMemberInstituteByAdmin;
 var init_vxMemberInstituteAdminAssign_service = __esm({
   "src/server/domain/vx/vxMemberInstituteAdminAssign.service.ts"() {
     init_ensureHwyDbObjects();
@@ -260923,10 +261151,10 @@ var init_vxMemberInstituteAdminAssign_service = __esm({
     init_vxBaseInfoRuntime();
     init_prismaHelpers();
     init_controlPlaneSequelize();
-    import_sequelize115 = require("sequelize");
+    import_sequelize116 = require("sequelize");
     init_vxSelfRegistrationFieldValidation();
     init_vxMemberDossierRecordEventEmitters();
-    parseMemberId15 = (raw) => {
+    parseMemberId16 = (raw) => {
       const trimmed = raw.trim();
       if (!/^\d+$/.test(trimmed)) {
         throw new Error("Member id is invalid.");
@@ -260945,7 +261173,7 @@ var init_vxMemberInstituteAdminAssign_service = __esm({
     FROM dbo.vx_institutes i
     WHERE LOWER(i.code) = LOWER(:code) AND i.is_active = 1
     `,
-        { replacements: { code: instituteCode }, type: import_sequelize115.QueryTypes.SELECT }
+        { replacements: { code: instituteCode }, type: import_sequelize116.QueryTypes.SELECT }
       );
       const id = rows[0]?.id;
       if (id == null || !Number.isFinite(Number(id))) {
@@ -260961,7 +261189,7 @@ var init_vxMemberInstituteAdminAssign_service = __esm({
       if (!isValidHwySelfRegistrationInstituteCode(instituteCode)) {
         throw new Error("Institute code must be three digits.");
       }
-      const memberId = parseMemberId15(input.memberIdRaw);
+      const memberId = parseMemberId16(input.memberIdRaw);
       const instituteId = await resolveInstituteIdByCode2(instituteCode);
       await ensureHwyDbObjects();
       const statusCode = await resolveHwyBaseInfoItemId("Institute Membership Status", "active");
@@ -261662,10 +261890,10 @@ var init_vxOrgMembershipTransferCatalog = __esm({
 });
 
 // src/server/domain/vx/vxOrgMembershipTransfer.service.ts
-var import_sequelize116, DEFAULT_PAGE_SIZE6, MAX_PAGE_SIZE6, trim19, loadResolvedTransferInstitutes, userCanRequestForInstitute, readHwyOrgMembershipTransferConfig, loadInstituteMembershipByMemberIds, buildMemberDisplayFullName, buildNakhebinPatchSummary, buildInstituteLinks, searchHwyOrgMembershipTransferMembers, resolveInstituteForMutation, requestHwyOrgMembershipTransferForMember, rollbackHwyOrgMembershipTransferForMember;
+var import_sequelize117, DEFAULT_PAGE_SIZE6, MAX_PAGE_SIZE6, trim19, loadResolvedTransferInstitutes, userCanRequestForInstitute, readHwyOrgMembershipTransferConfig, loadInstituteMembershipByMemberIds, buildMemberDisplayFullName, buildNakhebinPatchSummary, buildInstituteLinks, searchHwyOrgMembershipTransferMembers, resolveInstituteForMutation, requestHwyOrgMembershipTransferForMember, rollbackHwyOrgMembershipTransferForMember;
 var init_vxOrgMembershipTransfer_service = __esm({
   "src/server/domain/vx/vxOrgMembershipTransfer.service.ts"() {
-    import_sequelize116 = require("sequelize");
+    import_sequelize117 = require("sequelize");
     init_vxOrgMembershipTransferCatalog();
     init_vxMemberPersonDisplayName();
     init_controlPlaneSequelize();
@@ -261693,7 +261921,7 @@ var init_vxOrgMembershipTransfer_service = __esm({
     FROM dbo.vx_institutes
     WHERE code IN (:codes) AND is_active = 1
     `,
-        { replacements: { codes }, type: import_sequelize116.QueryTypes.SELECT }
+        { replacements: { codes }, type: import_sequelize117.QueryTypes.SELECT }
       );
       const byCode = new Map(rows.map((row) => [String(row.code), row]));
       const resolved = [];
@@ -261742,7 +261970,7 @@ var init_vxOrgMembershipTransfer_service = __esm({
     `,
         {
           replacements: { memberIds: [...memberIds], instituteIds: [...instituteIds] },
-          type: import_sequelize116.QueryTypes.SELECT
+          type: import_sequelize117.QueryTypes.SELECT
         }
       );
       for (const row of rows) {
@@ -262293,7 +262521,7 @@ async function upsertHwyPatchHistoryEventsBatch(events) {
         s.actor_display_name, s.actor_username, s.source, s.request_id
       );
       `,
-      { replacements, type: import_sequelize117.QueryTypes.RAW }
+      { replacements, type: import_sequelize118.QueryTypes.RAW }
     );
     await emitHwyGeoResponsibilityPatchHistoryRecordEvents(chunk2);
   }
@@ -262306,7 +262534,7 @@ async function syncHwyGeoResponsibilityPatchHistoryForRequest(requestId) {
   const rows = await getControlPlaneSequelize().query(
     `${STUDIO_REQUEST_HISTORY_SQL}
      WHERE r.id = :requestId`,
-    { replacements: { requestId: id }, type: import_sequelize117.QueryTypes.SELECT }
+    { replacements: { requestId: id }, type: import_sequelize118.QueryTypes.SELECT }
   );
   const row = rows[0];
   if (!row) {
@@ -262314,10 +262542,10 @@ async function syncHwyGeoResponsibilityPatchHistoryForRequest(requestId) {
   }
   await upsertHwyPatchHistoryEventsBatch(studioEventsFromRequestRow(row));
 }
-var import_sequelize117, PATCH_HISTORY_UPSERT_CHUNK, isGeoLevel, normalizePatchHistoryActor, studioEventsFromRequestRow, STUDIO_REQUEST_HISTORY_SQL;
+var import_sequelize118, PATCH_HISTORY_UPSERT_CHUNK, isGeoLevel, normalizePatchHistoryActor, studioEventsFromRequestRow, STUDIO_REQUEST_HISTORY_SQL;
 var init_vxGeoResponsibilityPatchHistory_store = __esm({
   "src/server/domain/vx/vxGeoResponsibilityPatchHistory.store.ts"() {
-    import_sequelize117 = require("sequelize");
+    import_sequelize118 = require("sequelize");
     init_vxLegacyPlatformAdminActor();
     init_vxMemberPersonDisplayName();
     init_controlPlaneSequelize();
@@ -262424,10 +262652,10 @@ var init_vxGeoResponsibilityPatchHistory_store = __esm({
 });
 
 // src/server/domain/vx/vxGeoResponsibility.service.ts
-var import_sequelize118, hasHwyGeoOrCoursesActivitiesAccess, DEFAULT_PAGE_SIZE7, MAX_PAGE_SIZE7, MAX_NODE_LIST_PAGE_SIZE, SUBMITTED_STATUS, trim21, bestEffortSyncGeoResponsibilityPatchHistory, clampPage3, clampNodeListPage, canNominateLevel, canApproveLevel, assertSqlServer9, ensureGeoResponsibilitySqlServerReady, buildMemberDisplayName, readHwyGeoResponsibilityConfig, readNominationGenderFilter, nominationMemberFiltersActive, readNominationProvinceScopeId, listHwyGeoResponsibilityNominationCandidates, lookupHwyGeoResponsibilityMemberByUsername, enrichHwyGeoResponsibilityNodeOfficialSlotAvatars, listHwyGeoResponsibilityNodes, listHwyGeoResponsibilityElectoralOptions, fetchHwyGeoResponsibilityProvinceHasGhavateh, resolveHwyGeoResponsibilityElectoralSelection, listHwyGeoResponsibilityRequests, ensureMemberEligible, submitHwyGeoResponsibilityNomination, applyApprovedNomination, readActiveGeoResponsibilityOfficialRequest, resolveActiveGeoResponsibilityOfficialForMember, applyApprovedOfficialRemoval, applyApprovedScopeOnlyOfficialRemoval, findSubmittedHwyGeoResponsibilityNominationRequestId, findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId, readHwyGeoResponsibilityAssigneePendingRemovalRequestId, cancelHwyGeoResponsibilityPendingNominationForSlot, cancelHwyGeoResponsibilityNominationRequest, submitHwyGeoResponsibilityOfficialRemovalRequest, approveHwyGeoResponsibilityRequest, rejectHwyGeoResponsibilityRequest, geoResponsibilityPatchMemberCountProc, readGeoPatchCountTotal, readGeoPatchNakhebinCount, getHwyGeoResponsibilityPatchMemberCount, getHwyGeoResponsibilityPatchNakhebinCount, getHwyGeoResponsibilityCenterStats, isPatchHistoryEventKind, isPatchHistorySource, getHwyGeoResponsibilityPatchHistory;
+var import_sequelize119, hasHwyGeoOrCoursesActivitiesAccess, DEFAULT_PAGE_SIZE7, MAX_PAGE_SIZE7, MAX_NODE_LIST_PAGE_SIZE, SUBMITTED_STATUS, trim21, bestEffortSyncGeoResponsibilityPatchHistory, clampPage3, clampNodeListPage, canNominateLevel, canApproveLevel, assertSqlServer9, ensureGeoResponsibilitySqlServerReady, buildMemberDisplayName, readHwyGeoResponsibilityConfig, readNominationGenderFilter, nominationMemberFiltersActive, readNominationProvinceScopeId, listHwyGeoResponsibilityNominationCandidates, lookupHwyGeoResponsibilityMemberByUsername, enrichHwyGeoResponsibilityNodeOfficialSlotAvatars, listHwyGeoResponsibilityNodes, listHwyGeoResponsibilityElectoralOptions, fetchHwyGeoResponsibilityProvinceHasGhavateh, resolveHwyGeoResponsibilityElectoralSelection, listHwyGeoResponsibilityRequests, ensureMemberEligible, submitHwyGeoResponsibilityNomination, applyApprovedNomination, readActiveGeoResponsibilityOfficialRequest, resolveActiveGeoResponsibilityOfficialForMember, applyApprovedOfficialRemoval, applyApprovedScopeOnlyOfficialRemoval, findSubmittedHwyGeoResponsibilityNominationRequestId, findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId, readHwyGeoResponsibilityAssigneePendingRemovalRequestId, cancelHwyGeoResponsibilityPendingNominationForSlot, cancelHwyGeoResponsibilityNominationRequest, submitHwyGeoResponsibilityOfficialRemovalRequest, approveHwyGeoResponsibilityRequest, rejectHwyGeoResponsibilityRequest, geoResponsibilityPatchMemberCountProc, readGeoPatchCountTotal, readGeoPatchNakhebinCount, getHwyGeoResponsibilityPatchMemberCount, getHwyGeoResponsibilityPatchNakhebinCount, getHwyGeoResponsibilityCenterStats, isPatchHistoryEventKind, isPatchHistorySource, getHwyGeoResponsibilityPatchHistory;
 var init_vxGeoResponsibility_service = __esm({
   "src/server/domain/vx/vxGeoResponsibility.service.ts"() {
-    import_sequelize118 = require("sequelize");
+    import_sequelize119 = require("sequelize");
     init_vxGeoResponsibilityNomination();
     init_vxGeoResponsibilityNominationSearch();
     init_ensureHwyGeoResponsibilitySchema();
@@ -263048,7 +263276,7 @@ var init_vxGeoResponsibility_service = __esm({
     `,
         {
           replacements: { geoBaseInfoId, kind: spec.geoMapKind },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       if (!mapRows2[0]) {
@@ -263059,7 +263287,7 @@ var init_vxGeoResponsibility_service = __esm({
     SELECT CAST(id AS VARCHAR(32)) AS id, CAST(user_id AS VARCHAR(32)) AS user_id, gender_code
     FROM dbo.vx_members WHERE id = :memberId
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize118.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow) {
@@ -263084,7 +263312,7 @@ var init_vxGeoResponsibility_service = __esm({
       AND ${vxGeoResponsibilitySqlActiveNominationAssignment("r")}
     ORDER BY COALESCE(r.decided_at, r.nominated_at) DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize118.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
       );
       const clearanceRows = await sequelize.query(
         `
@@ -263094,7 +263322,7 @@ var init_vxGeoResponsibility_service = __esm({
     WHERE sp.member_id = :memberId
     ORDER BY sp.id DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize118.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
       );
       const nominationGate = resolveHwyGeoResponsibilityNominationSelectable({
         userId: memberLookup.userId,
@@ -263132,7 +263360,7 @@ var init_vxGeoResponsibility_service = __esm({
             memberId: Number(memberId),
             montadheminMembershipStatusCode: montadheminScope.membershipStatusCodes.active
           },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       if (!montadheminRows[0]) {
@@ -263152,7 +263380,7 @@ var init_vxGeoResponsibility_service = __esm({
     `,
         {
           replacements: { memberId: Number(memberId) },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       if (memberPending[0]) {
@@ -263206,7 +263434,7 @@ var init_vxGeoResponsibility_service = __esm({
             roleName: input.roleName,
             memberId: input.memberId
           },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       const row = rows[0];
@@ -263255,7 +263483,7 @@ var init_vxGeoResponsibility_service = __esm({
             memberId: input.memberId,
             level: input.level
           },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       if (scopeRows[0]?.id != null) {
@@ -263306,7 +263534,7 @@ var init_vxGeoResponsibility_service = __esm({
             level: input.level,
             roleName: input.roleName
           },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       const id = rows[0]?.id ? trim21(rows[0].id) : "";
@@ -263332,7 +263560,7 @@ var init_vxGeoResponsibility_service = __esm({
             level: input.level,
             roleName: input.roleName
           },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       const id = rows[0]?.id ? trim21(rows[0].id) : "";
@@ -263406,7 +263634,7 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize118.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize119.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -263443,7 +263671,7 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_members
     WHERE id = :memberId
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize118.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow) {
@@ -263481,7 +263709,7 @@ var init_vxGeoResponsibility_service = __esm({
             geoBaseInfoId,
             roleName: spec.roleName
           },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       if (pendingDuplicate[0]) {
@@ -263495,7 +263723,7 @@ var init_vxGeoResponsibility_service = __esm({
     `,
         {
           replacements: { geoBaseInfoId, kind: spec.geoMapKind },
-          type: import_sequelize118.QueryTypes.SELECT
+          type: import_sequelize119.QueryTypes.SELECT
         }
       );
       if (!mapRows2[0]) {
@@ -263544,7 +263772,7 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize118.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize119.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -263619,7 +263847,7 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize118.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize119.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -263840,13 +264068,13 @@ var init_vxGeoResponsibility_service = __esm({
 });
 
 // src/server/domain/vx/ensureHwyMemberPassedNecessaryDoratSql.ts
-var import_node_fs36, import_node_path41, import_node_url11, import_sequelize119, import_meta13, ensurePromise11, ddlPath3, applyDdl, ensureHwyMemberPassedNecessaryDoratSql;
+var import_node_fs36, import_node_path41, import_node_url11, import_sequelize120, import_meta13, ensurePromise11, ddlPath3, applyDdl, ensureHwyMemberPassedNecessaryDoratSql;
 var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
   "src/server/domain/vx/ensureHwyMemberPassedNecessaryDoratSql.ts"() {
     import_node_fs36 = require("node:fs");
     import_node_path41 = __toESM(require("node:path"), 1);
     import_node_url11 = require("node:url");
-    import_sequelize119 = require("sequelize");
+    import_sequelize120 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     import_meta13 = {};
@@ -263860,7 +264088,7 @@ var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
       const ddl = (0, import_node_fs36.readFileSync)(ddlPath3, "utf8");
       const batches = ddl.split(/^\s*GO\s*$/gim).map((chunk2) => chunk2.trim()).filter(Boolean);
       for (const batch of batches) {
-        await sequelize.query(batch, { type: import_sequelize119.QueryTypes.RAW });
+        await sequelize.query(batch, { type: import_sequelize120.QueryTypes.RAW });
       }
     };
     ensureHwyMemberPassedNecessaryDoratSql = async () => {
@@ -264273,7 +264501,7 @@ var init_vxLegacyParitySqlBuilders = __esm({
 });
 
 // src/server/domain/vx/vxLegacyParityRead.service.ts
-var latestStepSubquery, queryLegacyCandidatePipelineCount, queryLegacyCandidatePipelineList, queryLegacyCardFlowCount, queryLegacyCardFlowList, queryLegacyCardFlowPrintedHistoryCount, queryLegacyCardFlowPrintedHistoryList, queryLegacyMeetingDefinitions, queryLegacyMeetingInstancesCount, queryLegacyMeetingInstancesList, toCandidatePipelineWhereInput, toCardFlowWhereInput;
+var latestStepSubquery, queryLegacyCandidatePipelineCount, queryLegacyCandidatePipelineList, queryLegacyCardFlowCount, queryLegacyCardFlowList, queryLegacyCardFlowPrintedHistoryCount, queryLegacyCardFlowPrintedHistoryList, queryLegacyMeetingDefinitions, queryLegacyMeetingInstancesCount, queryLegacyMeetingMembers, queryLegacyMeetingInstanceHazerin, queryLegacyMeetingInstancesList, toCandidatePipelineWhereInput, toCardFlowWhereInput;
 var init_vxLegacyParityRead_service = __esm({
   "src/server/domain/vx/vxLegacyParityRead.service.ts"() {
     init_vxCandidatePipelineViewNames();
@@ -264484,6 +264712,56 @@ var init_vxLegacyParityRead_service = __esm({
         await pool.close();
       }
     };
+    queryLegacyMeetingMembers = async (meetingId) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const request = pool.request();
+        request.input("meeting_id", meetingId);
+        const result = await request.query(`
+      SELECT
+        CAST(mm.Id AS VARCHAR(32)) AS id,
+        CAST(mm.MeetingId AS VARCHAR(32)) AS meetingId,
+        CAST(mm.MemberId AS VARCHAR(32)) AS memberId,
+        CAST(mm.IsMemberYet AS BIT) AS isMemberYet,
+        CONVERT(VARCHAR(32), mm.IsMemberYetUpdatedOn, 126) AS isMemberYetUpdatedOn,
+        M.UserName AS username,
+        M.FirstName AS firstName,
+        M.FatherName AS fatherName,
+        M.LastName AS lastName
+      FROM dbo.VX_Meetings_Members mm WITH (NOLOCK)
+      LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = mm.MemberId
+      WHERE mm.MeetingId = @meeting_id
+      ORDER BY M.UserName ASC
+    `);
+        return result.recordset;
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyMeetingInstanceHazerin = async (instanceId) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const request = pool.request();
+        request.input("instance_id", instanceId);
+        const result = await request.query(`
+      SELECT
+        CAST(H.MemberId AS VARCHAR(32)) AS memberId,
+        M.UserName AS username,
+        M.FirstName AS firstName,
+        M.FatherName AS fatherName,
+        M.LastName AS lastName
+      FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
+      LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = H.MemberId
+      WHERE H.InstanceId = @instance_id
+      ORDER BY M.UserName ASC, H.MemberId ASC
+    `);
+        return result.recordset;
+      } finally {
+        await pool.close();
+      }
+    };
     queryLegacyMeetingInstancesList = async (meetingId, username, offset, pageSize) => {
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
@@ -264632,7 +264910,7 @@ async function attachHwyCandidatePipelineNominationRoles(rows) {
          ON ur.UserId = m.UserId AND ur.RoleId IN (1000004, 1000005)
        LEFT JOIN dbo.vw_vx_platform_roles R WITH (NOLOCK) ON R.Id = ur.RoleId
        WHERE m.Id IN (:memberIds)`,
-      { replacements: { memberIds }, type: import_sequelize120.QueryTypes.SELECT }
+      { replacements: { memberIds }, type: import_sequelize121.QueryTypes.SELECT }
     );
   } catch {
     return;
@@ -264670,10 +264948,10 @@ async function attachHwyCandidatePipelineNominationRoles(rows) {
     }
   }
 }
-var import_sequelize120, readStringField5;
+var import_sequelize121, readStringField5;
 var init_vxCandidatePipelineNominationRole_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineNominationRole.service.ts"() {
-    import_sequelize120 = require("sequelize");
+    import_sequelize121 = require("sequelize");
     init_controlPlaneSequelize();
     readStringField5 = (row, key) => String(row[key] ?? "").trim();
   }
@@ -264695,7 +264973,7 @@ async function attachHwyCandidatePipelineResponsibilityPatchPaths(rows, queryLan
        WHERE al.member_id IN (:memberIds)
          AND (al.approved = 1 OR al.approved = 0)
        ORDER BY al.member_id, al.approved DESC, al.id`,
-      { replacements: { memberIds }, type: import_sequelize121.QueryTypes.SELECT }
+      { replacements: { memberIds }, type: import_sequelize122.QueryTypes.SELECT }
     );
     for (const limit of limits) {
       const memberId = String(limit.member_id ?? "").trim();
@@ -264724,10 +265002,10 @@ async function attachHwyCandidatePipelineResponsibilityPatchPaths(rows, queryLan
   }
   await attachFromLegacyGeoIdLists(rows, memberIdToLegacyIds, queryLang);
 }
-var import_sequelize121, readStringField6, GEO_KIND_PRIORITY, LEGACY_ROLE_ID_TO_GEO_LEVEL, isGeoResponsibilityLevel, memberItemKey, resolveGeoLevelFromLegacyKind, pickLegacyKindForItemId, parseLegacyGeoIds, pickBestBaseInfoIdPerLegacyId, loadIqTitlePathsByBaseInfoId, loadTitlePathsByItemIdSql, resolveHwyLegacyGeoIdTitlePaths, loadNominationGeoLevelByMemberItem, resolvePatchGeoLevelForRow, attachFromLegacyGeoIdLists;
+var import_sequelize122, readStringField6, GEO_KIND_PRIORITY, LEGACY_ROLE_ID_TO_GEO_LEVEL, isGeoResponsibilityLevel, memberItemKey, resolveGeoLevelFromLegacyKind, pickLegacyKindForItemId, parseLegacyGeoIds, pickBestBaseInfoIdPerLegacyId, loadIqTitlePathsByBaseInfoId, loadTitlePathsByItemIdSql, resolveHwyLegacyGeoIdTitlePaths, loadNominationGeoLevelByMemberItem, resolvePatchGeoLevelForRow, attachFromLegacyGeoIdLists;
 var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineResponsibilityPatchDisplay.service.ts"() {
-    import_sequelize121 = require("sequelize");
+    import_sequelize122 = require("sequelize");
     init_baseInfoCultureTranslations();
     init_vxMemberDirectoryPathDisplay();
     init_controlPlaneSequelize();
@@ -264816,7 +265094,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
        WHERE bi.id IN (:baseInfoIds)`,
           {
             replacements: { baseInfoIds },
-            type: import_sequelize121.QueryTypes.SELECT
+            type: import_sequelize122.QueryTypes.SELECT
           }
         );
         const map = /* @__PURE__ */ new Map();
@@ -264848,7 +265126,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
                 dbo.vx_region_electoral_title_path(CAST(ids.item_id AS NVARCHAR(128)))
               ))), N'') AS title_path
        FROM (SELECT CAST(value AS VARCHAR(32)) AS item_id FROM STRING_SPLIT(:itemIdsCsv, N',')) ids`,
-          { replacements: { itemIdsCsv: ids2.join(",") }, type: import_sequelize121.QueryTypes.SELECT }
+          { replacements: { itemIdsCsv: ids2.join(",") }, type: import_sequelize122.QueryTypes.SELECT }
         );
         const map = /* @__PURE__ */ new Map();
         for (const row of rows) {
@@ -264877,7 +265155,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
             legacy_kind
      FROM dbo.vx_etl_geo_map WITH (NOLOCK)
      WHERE legacy_id IN (:legacyIds)`,
-        { replacements: { legacyIds: numericIds }, type: import_sequelize121.QueryTypes.SELECT }
+        { replacements: { legacyIds: numericIds }, type: import_sequelize122.QueryTypes.SELECT }
       );
       const baseInfoByLegacyId = pickBestBaseInfoIdPerLegacyId(mapRows2);
       const baseInfoIds = [...new Set(baseInfoByLegacyId.values())];
@@ -264923,7 +265201,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
          AND r.status IN (N'submitted', N'approved')
          AND r.revoked_at IS NULL
          AND r.legacy_geo_id IS NOT NULL`,
-          { replacements: { memberIds }, type: import_sequelize121.QueryTypes.SELECT }
+          { replacements: { memberIds }, type: import_sequelize122.QueryTypes.SELECT }
         );
         for (const row of requestRows) {
           const memberId = String(row.member_id ?? "").trim();
@@ -264945,7 +265223,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
           `SELECT CAST(legacy_id AS VARCHAR(32)) AS legacy_id, legacy_kind
        FROM dbo.vx_etl_geo_map WITH (NOLOCK)
        WHERE legacy_id IN (:itemIds)`,
-          { replacements: { itemIds: missingItemIds.map((id) => Number(id)).filter(Number.isFinite) }, type: import_sequelize121.QueryTypes.SELECT }
+          { replacements: { itemIds: missingItemIds.map((id) => Number(id)).filter(Number.isFinite) }, type: import_sequelize122.QueryTypes.SELECT }
         );
         for (const [memberId, legacyIds] of memberIdToLegacyIds) {
           for (const itemId of legacyIds) {
@@ -265024,7 +265302,7 @@ async function attachHwyCandidatePipelineElectoralCenterPaths(rows, queryLang) {
          FROM dbo.vx_members m WITH (NOLOCK)
          LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = m.id
          WHERE m.id IN (:memberIds)`,
-        { replacements: { memberIds: missingMemberIds }, type: import_sequelize122.QueryTypes.SELECT }
+        { replacements: { memberIds: missingMemberIds }, type: import_sequelize123.QueryTypes.SELECT }
       );
       for (const row of joinRows) {
         const memberId = String(row.member_id ?? "").trim();
@@ -265047,10 +265325,10 @@ async function attachHwyCandidatePipelineElectoralCenterPaths(rows, queryLang) {
     }
   }
 }
-var import_sequelize122, readStringField7;
+var import_sequelize123, readStringField7;
 var init_vxCandidatePipelineElectoralCenterDisplay_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineElectoralCenterDisplay.service.ts"() {
-    import_sequelize122 = require("sequelize");
+    import_sequelize123 = require("sequelize");
     init_vxMemberDirectoryPathDisplay();
     init_controlPlaneSequelize();
     init_vxCandidatePipelineResponsibilityPatchDisplay_service();
@@ -265229,7 +265507,7 @@ var init_vxCandidatePipelineInterviewMapper = __esm({
 });
 
 // src/server/domain/vx/vxCandidatePipelineInterview.service.ts
-var import_sequelize123, trim25, assertSqlServer11, validFinalResults, listHwyInterview2022ScoreOptions, getHwyCandidatePipelineInterviewLast, lookupHwyInterview2022HazerinMember, applyHwyCandidatePipelineInterviewCreateFull;
+var import_sequelize124, trim25, assertSqlServer11, validFinalResults, listHwyInterview2022ScoreOptions, getHwyCandidatePipelineInterviewLast, lookupHwyInterview2022HazerinMember, applyHwyCandidatePipelineInterviewCreateFull;
 var init_vxCandidatePipelineInterview_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineInterview.service.ts"() {
     init_vxCandidatePipelineInterviewCatalog();
@@ -265240,7 +265518,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
     init_vxLegacyBaseInformationReader();
     init_prismaHelpers();
     init_controlPlaneSequelize();
-    import_sequelize123 = require("sequelize");
+    import_sequelize124 = require("sequelize");
     init_vxCandidatePipelineInterviewMapper();
     init_vxMemberDossierRecordEventEmitters();
     trim25 = (value) => String(value ?? "").trim();
@@ -265297,7 +265575,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
     FROM dbo.VX_Members M WITH (NOLOCK)
     WHERE M.UserName = :username
     `,
-        { replacements: { username: uname }, type: import_sequelize123.QueryTypes.SELECT }
+        { replacements: { username: uname }, type: import_sequelize124.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow?.memberId) {
@@ -265312,7 +265590,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
       FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK)
       WHERE URR.UserId = :userId
       `,
-          { replacements: { userId: Number(userId) }, type: import_sequelize123.QueryTypes.SELECT }
+          { replacements: { userId: Number(userId) }, type: import_sequelize124.QueryTypes.SELECT }
         );
         roleIds = roleRows.map((r) => Number(r.roleId)).filter((n) => Number.isFinite(n));
       }
@@ -265343,7 +265621,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
       for (const hazerId of uniqueHazerIds) {
         const memberRows = await getControlPlaneSequelize().query(
           `SELECT TOP 1 UserName AS username FROM dbo.VX_Members WITH (NOLOCK) WHERE Id = :id`,
-          { replacements: { id: Number(hazerId) }, type: import_sequelize123.QueryTypes.SELECT }
+          { replacements: { id: Number(hazerId) }, type: import_sequelize124.QueryTypes.SELECT }
         );
         const username = memberRows[0]?.username ? trim25(memberRows[0].username) : "";
         if (!username) {
@@ -265635,10 +265913,10 @@ var init_vxGeoResponsibilityNominationGeo = __esm({
 });
 
 // src/server/domain/vx/vxCandidatePipelineTarshihGeoOptions.service.ts
-var import_sequelize124, VX_COUNTRY_AREA_LIMIT_ID, parsePositiveIntCsv, assertGeoLevel, listHwyCandidatePipelineTarshihGeoOptions;
+var import_sequelize125, VX_COUNTRY_AREA_LIMIT_ID, parsePositiveIntCsv, assertGeoLevel, listHwyCandidatePipelineTarshihGeoOptions;
 var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineTarshihGeoOptions.service.ts"() {
-    import_sequelize124 = require("sequelize");
+    import_sequelize125 = require("sequelize");
     init_vxGeoResponsibilityNominationGeo();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -265702,7 +265980,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
         ${scopeWhere2}
       ORDER BY BI.title
     `;
-        return sequelize.query(sql24, { type: import_sequelize124.QueryTypes.SELECT });
+        return sequelize.query(sql24, { type: import_sequelize125.QueryTypes.SELECT });
       }
       if (level === "circle") {
         let scopeWhere2 = "";
@@ -265724,7 +266002,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
         ${scopeWhere2}
       ORDER BY C.circle_name
     `;
-        return sequelize.query(sql24, { type: import_sequelize124.QueryTypes.SELECT });
+        return sequelize.query(sql24, { type: import_sequelize125.QueryTypes.SELECT });
       }
       let scopeWhere = "";
       if (!geo.unrestricted && geo.areaLimitId != null && geo.areaLimitId !== VX_COUNTRY_AREA_LIMIT_ID) {
@@ -265745,7 +266023,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
       ${scopeWhere}
     ORDER BY T.tamvin_name
   `;
-      return sequelize.query(sql23, { type: import_sequelize124.QueryTypes.SELECT });
+      return sequelize.query(sql23, { type: import_sequelize125.QueryTypes.SELECT });
     };
   }
 });
@@ -267107,7 +267385,7 @@ var init_vxEmployeesListLegacyRead_service = __esm({
 });
 
 // src/server/domain/vx/vxEmployeesList.service.ts
-var import_sequelize125, trim28, VX_EMPLOYEES_LIST_SCOPE, assertSqlServer14, mapRow15, finalizeRows, listHwyEmployees, removeHwyEmployeePlatformRoles;
+var import_sequelize126, trim28, VX_EMPLOYEES_LIST_SCOPE, assertSqlServer14, mapRow15, finalizeRows, listHwyEmployees, removeHwyEmployeePlatformRoles;
 var init_vxEmployeesList_service = __esm({
   "src/server/domain/vx/vxEmployeesList.service.ts"() {
     init_vxEmployeesListFilterMapping();
@@ -267120,7 +267398,7 @@ var init_vxEmployeesList_service = __esm({
     init_vxMemberDirectoryDetailDisplay();
     init_vxMemberDirectoryListCache();
     init_controlPlaneSequelize();
-    import_sequelize125 = require("sequelize");
+    import_sequelize126 = require("sequelize");
     trim28 = (value) => String(value ?? "").trim();
     VX_EMPLOYEES_LIST_SCOPE = "VX_Members_List_AlMontadhemin";
     assertSqlServer14 = () => {
@@ -267230,7 +267508,7 @@ var init_vxEmployeesList_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const memberRows = await sequelize.query(
         `SELECT TOP 1 user_id FROM dbo.vx_members WITH (NOLOCK) WHERE id = :memberId`,
-        { replacements: { memberId: trim28(memberId) }, type: import_sequelize125.QueryTypes.SELECT }
+        { replacements: { memberId: trim28(memberId) }, type: import_sequelize126.QueryTypes.SELECT }
       );
       const userId = memberRows[0]?.user_id;
       if (!userId) {
@@ -267238,7 +267516,7 @@ var init_vxEmployeesList_service = __esm({
       }
       await sequelize.query(
         `DELETE FROM dbo.base_user_roles WHERE user_id = :userId AND role_name LIKE 'VX_R[_]%' ESCAPE '\\'`,
-        { replacements: { userId }, type: import_sequelize125.QueryTypes.RAW }
+        { replacements: { userId }, type: import_sequelize126.QueryTypes.RAW }
       );
       await invalidateHwyMemberDirectoryListCache();
     };
@@ -268469,10 +268747,10 @@ var init_vxPaymentDocumentsMembers_service = __esm({
 });
 
 // src/server/domain/vx/vxMeetings.service.ts
-var import_sequelize126, DEFAULT_PAGE_SIZE11, MAX_PAGE_SIZE11, trim33, assertSqlServer15, clampPage7, assertAccess, vxMeetingsEdgeDataReady, useHwyMeetingsLegacyRead, listHwyMeetingDefinitions, mapInstance, listHwyMeetingInstances, removeHwyMeetingInstance, addHwyMeetingInstance, listHwyMeetingAttendancePivot, mapMeetingMember, mapAttendance, listHwyMeetingMembers, addHwyMeetingMember, removeHwyMeetingMember, listHwyMeetingInstanceAttendance, addHwyMeetingInstanceHazer, removeHwyMeetingInstanceHazer, listHwyMeetingInstanceHazerin;
+var import_sequelize127, DEFAULT_PAGE_SIZE11, MAX_PAGE_SIZE11, trim33, readRowField, readRowString6, readRowNumber, assertSqlServer15, clampPage7, assertAccess, vxMeetingsEdgeDataReady, useHwyMeetingsLegacyRead, listHwyMeetingDefinitions, mapInstance, listHwyMeetingInstances, removeHwyMeetingInstance, addHwyMeetingInstance, listHwyMeetingAttendancePivot, readRowFlag, mapMeetingMember, mapAttendance, listHwyMeetingMembers, addHwyMeetingMember, removeHwyMeetingMember, listHwyMeetingInstanceAttendance, addHwyMeetingInstanceHazer, removeHwyMeetingInstanceHazer, listHwyMeetingInstanceHazerin;
 var init_vxMeetings_service = __esm({
   "src/server/domain/vx/vxMeetings.service.ts"() {
-    import_sequelize126 = require("sequelize");
+    import_sequelize127 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyDbObjects();
@@ -268483,6 +268761,23 @@ var init_vxMeetings_service = __esm({
     DEFAULT_PAGE_SIZE11 = 25;
     MAX_PAGE_SIZE11 = 100;
     trim33 = (value) => String(value ?? "").trim();
+    readRowField = (row, keys) => {
+      for (const key of keys) {
+        if (row[key] !== void 0 && row[key] !== null) {
+          return row[key];
+        }
+      }
+      return void 0;
+    };
+    readRowString6 = (row, keys) => {
+      const raw = readRowField(row, keys);
+      if (raw == null) {
+        return null;
+      }
+      const text2 = trim33(raw);
+      return text2 || null;
+    };
+    readRowNumber = (row, keys) => Number(readRowField(row, keys) ?? 0);
     assertSqlServer15 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Vx meetings requires SQL Server control plane.");
@@ -268505,7 +268800,7 @@ var init_vxMeetings_service = __esm({
       ELSE 1
     END AS ok
     `,
-        { type: import_sequelize126.QueryTypes.SELECT }
+        { type: import_sequelize127.QueryTypes.SELECT }
       );
       return Number(rows[0]?.ok) === 1;
     };
@@ -268524,7 +268819,7 @@ var init_vxMeetings_service = __esm({
         return legacyRows.map((row) => ({
           id: trim33(row.id),
           title: trim33(row.title),
-          viewOrder: row.view_order != null ? Number(row.view_order) : null
+          viewOrder: readRowField(row, ["view_order", "viewOrder"]) != null ? Number(readRowField(row, ["view_order", "viewOrder"])) : null
         }));
       }
       const rows = await execHwyProcedure(
@@ -268538,20 +268833,20 @@ var init_vxMeetings_service = __esm({
       }));
     };
     mapInstance = (row) => ({
-      id: trim33(row.id),
-      meetingId: row.meeting_id ? trim33(row.meeting_id) : null,
-      memberId: row.member_id ? trim33(row.member_id) : null,
-      createdOn: row.created_on ? trim33(row.created_on) : null,
-      eventDate: row.event_date ? trim33(row.event_date) : null,
-      title: row.title ? trim33(row.title) : null,
-      meetingTitle: row.meeting_title ? trim33(row.meeting_title) : null,
-      username: row.username ? trim33(row.username) : null,
-      firstName: row.first_name ? trim33(row.first_name) : null,
-      fatherName: row.father_name ? trim33(row.father_name) : null,
-      lastName: row.last_name ? trim33(row.last_name) : null,
-      hazerinCount: Number(row.hazerin_count ?? 0),
-      membersYetCount: Number(row.members_yet_count ?? 0),
-      membersNotCount: Number(row.members_not_count ?? 0)
+      id: readRowString6(row, ["id"]) ?? "",
+      meetingId: readRowString6(row, ["meeting_id", "meetingId"]),
+      memberId: readRowString6(row, ["member_id", "memberId"]),
+      createdOn: readRowString6(row, ["created_on", "createdOn", "created_at", "createdAt"]),
+      eventDate: readRowString6(row, ["event_date", "eventDate", "EventDate"]),
+      title: readRowString6(row, ["title"]),
+      meetingTitle: readRowString6(row, ["meeting_title", "meetingTitle"]),
+      username: readRowString6(row, ["username", "UserName"]),
+      firstName: readRowString6(row, ["first_name", "firstName", "FirstName"]),
+      fatherName: readRowString6(row, ["father_name", "fatherName", "FatherName"]),
+      lastName: readRowString6(row, ["last_name", "lastName", "LastName", "family_name", "familyName", "FamilyName"]),
+      hazerinCount: readRowNumber(row, ["hazerin_count", "hazerinCount"]),
+      membersYetCount: readRowNumber(row, ["members_yet_count", "membersYetCount"]),
+      membersNotCount: readRowNumber(row, ["members_not_count", "membersNotCount"])
     });
     listHwyMeetingInstances = async (input, roleNames) => {
       assertSqlServer15();
@@ -268630,28 +268925,32 @@ var init_vxMeetings_service = __esm({
         meeting_id: id
       });
     };
+    readRowFlag = (row, keys) => {
+      const raw = readRowField(row, keys);
+      return raw === true || raw === 1 || raw === "1";
+    };
     mapMeetingMember = (row) => ({
-      id: trim33(row.id),
-      meetingId: row.meeting_id ? trim33(row.meeting_id) : null,
-      memberId: row.member_id ? trim33(row.member_id) : null,
-      isMemberYet: row.is_member_yet === true || row.is_member_yet === 1,
-      isMemberYetUpdatedOn: row.is_member_yet_updated_on ? trim33(row.is_member_yet_updated_on) : null,
-      username: row.username ? trim33(row.username) : null,
-      firstName: row.first_name ? trim33(row.first_name) : null,
-      fatherName: row.father_name ? trim33(row.father_name) : null,
-      lastName: row.last_name ? trim33(row.last_name) : null
+      id: readRowString6(row, ["id"]) ?? "",
+      meetingId: readRowString6(row, ["meeting_id", "meetingId"]),
+      memberId: readRowString6(row, ["member_id", "memberId"]),
+      isMemberYet: readRowFlag(row, ["is_member_yet", "isMemberYet"]),
+      isMemberYetUpdatedOn: readRowString6(row, ["is_member_yet_updated_on", "isMemberYetUpdatedOn"]),
+      username: readRowString6(row, ["username", "UserName"]),
+      firstName: readRowString6(row, ["first_name", "firstName", "FirstName"]),
+      fatherName: readRowString6(row, ["father_name", "fatherName", "FatherName"]),
+      lastName: readRowString6(row, ["last_name", "lastName", "LastName", "family_name", "familyName", "FamilyName"])
     });
     mapAttendance = (row) => ({
-      id: trim33(row.id),
-      instanceId: trim33(row.instance_id),
-      meetingId: row.meeting_id ? trim33(row.meeting_id) : null,
-      memberId: row.member_id ? trim33(row.member_id) : null,
-      username: row.username ? trim33(row.username) : null,
-      firstName: row.first_name ? trim33(row.first_name) : null,
-      fatherName: row.father_name ? trim33(row.father_name) : null,
-      lastName: row.last_name ? trim33(row.last_name) : null,
-      isMemberYet: row.is_member_yet === true || row.is_member_yet === 1,
-      present: row.present === true || row.present === 1
+      id: readRowString6(row, ["id"]) ?? "",
+      instanceId: readRowString6(row, ["instance_id", "instanceId"]) ?? "",
+      meetingId: readRowString6(row, ["meeting_id", "meetingId"]),
+      memberId: readRowString6(row, ["member_id", "memberId"]),
+      username: readRowString6(row, ["username", "UserName"]),
+      firstName: readRowString6(row, ["first_name", "firstName", "FirstName"]),
+      fatherName: readRowString6(row, ["father_name", "fatherName", "FatherName"]),
+      lastName: readRowString6(row, ["last_name", "lastName", "LastName", "family_name", "familyName", "FamilyName"]),
+      isMemberYet: readRowFlag(row, ["is_member_yet", "isMemberYet"]),
+      present: readRowFlag(row, ["present", "Present"])
     });
     listHwyMeetingMembers = async (meetingId, roleNames) => {
       assertSqlServer15();
@@ -268659,6 +268958,10 @@ var init_vxMeetings_service = __esm({
       await ensureHwyDbObjects();
       const id = Number(trim33(meetingId));
       if (!id) throw new Error("meetingId is required.");
+      if (await useHwyMeetingsLegacyRead()) {
+        const legacyRows = await queryLegacyMeetingMembers(id);
+        return legacyRows.map(mapMeetingMember);
+      }
       const rows = await execHwyProcedure("vx_meetings_members_list", {
         meeting_id: id
       });
@@ -268739,16 +269042,27 @@ var init_vxMeetings_service = __esm({
       await ensureHwyDbObjects();
       const id = Number(trim33(instanceId));
       if (!id) throw new Error("instanceId is required.");
-      const rows = await execHwyProcedure("vx_meetings_instance_hazerin_list", {
+      const rawRows = await useHwyMeetingsLegacyRead() ? await queryLegacyMeetingInstanceHazerin(id) : await execHwyProcedure("vx_meetings_instance_hazerin_list", {
         instance_id: id
       });
-      return rows.map((row) => ({
-        memberId: trim33(row.member_id),
-        username: row.username ? trim33(row.username) : null,
-        firstName: row.first_name ? trim33(row.first_name) : null,
-        fatherName: row.father_name ? trim33(row.father_name) : null,
-        lastName: row.last_name ? trim33(row.last_name) : null
-      }));
+      const mapped = rawRows.map((row) => ({
+        memberId: readRowString6(row, ["member_id", "memberId", "MemberId"]) ?? "",
+        username: readRowString6(row, ["username", "UserName"]),
+        firstName: readRowString6(row, ["first_name", "firstName", "FirstName"]),
+        fatherName: readRowString6(row, ["father_name", "fatherName", "FatherName"]),
+        lastName: readRowString6(row, ["last_name", "lastName", "LastName", "family_name", "familyName", "FamilyName"])
+      })).filter((row) => row.memberId);
+      if (mapped.length > 0) {
+        return mapped;
+      }
+      const attendance = await listHwyMeetingInstanceAttendance(instanceId, roleNames);
+      return attendance.filter((row) => row.present).map((row) => ({
+        memberId: row.memberId ?? row.id,
+        username: row.username,
+        firstName: row.firstName,
+        fatherName: row.fatherName,
+        lastName: row.lastName
+      })).filter((row) => row.memberId);
     };
   }
 });
@@ -269000,7 +269314,7 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       WHERE id IN (${idPlaceholders})
          OR username IN (${usernamePlaceholders})
       `,
-      { replacements, type: import_sequelize127.QueryTypes.SELECT }
+      { replacements, type: import_sequelize128.QueryTypes.SELECT }
     );
     for (const row of rows) {
       const face = mapVmRowToFace2(row);
@@ -269026,7 +269340,7 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       FROM dbo.vw_vx_members WITH (NOLOCK)
       WHERE username IN (${unPlaceholders})
       `,
-      { replacements: unReplacements, type: import_sequelize127.QueryTypes.SELECT }
+      { replacements: unReplacements, type: import_sequelize128.QueryTypes.SELECT }
     );
     for (const row of rows) {
       const face = mapVmRowToFace2(row);
@@ -269108,10 +269422,10 @@ async function finalizeTarghinMemberFacesForDossier(rows, readFace, writeFace) {
     }
   }
 }
-var import_sequelize127, trim34, mapVmRowToFace2, collectLookupKeysFromFace, mergeCpFaceOntoTarghinFace;
+var import_sequelize128, trim34, mapVmRowToFace2, collectLookupKeysFromFace, mergeCpFaceOntoTarghinFace;
 var init_vxMemberTarghinDossierFaceFinalize_service = __esm({
   "src/server/domain/vx/vxMemberTarghinDossierFaceFinalize.service.ts"() {
-    import_sequelize127 = require("sequelize");
+    import_sequelize128 = require("sequelize");
     init_vxMemberTarghinAdmin();
     init_vxGeoResponsibilityMemberDisplay();
     init_vxMemberPersonDisplayName();
@@ -269155,144 +269469,6 @@ var init_vxMemberTarghinDossierFaceFinalize_service = __esm({
       target.avatarUrl = cpFace.avatarUrl ?? target.avatarUrl;
       target.phone = cpFace.phone ?? target.phone;
       target.electoralDivisionPath = cpFace.electoralDivisionPath ?? target.electoralDivisionPath;
-    };
-  }
-});
-
-// src/domain/vx/vxPlatformRoleDisplay.ts
-function formatHwyPlatformRoleDisplayLabel(roleName, roleNote) {
-  const name = String(roleName ?? "").trim();
-  const note = String(roleNote ?? "").trim();
-  const legacyMatch = note.match(LEGACY_APPEND_ROLE_NOTE);
-  if (legacyMatch?.[1]?.trim()) {
-    return legacyMatch[1].trim();
-  }
-  const geoSpec = findHwyGeoResponsibilityRoleSpecByRoleName(name);
-  if (geoSpec) {
-    return geoSpec.level;
-  }
-  return name || note;
-}
-function sortHwyPlatformRoleDisplayLabels(labels) {
-  const unique = Array.from(new Set(labels.map((label) => label.trim()).filter(Boolean)));
-  return unique.sort((left, right) => left.localeCompare(right, void 0, { sensitivity: "base" }));
-}
-var LEGACY_APPEND_ROLE_NOTE;
-var init_vxPlatformRoleDisplay = __esm({
-  "src/domain/vx/vxPlatformRoleDisplay.ts"() {
-    init_vxGeoResponsibilityCatalog();
-    LEGACY_APPEND_ROLE_NOTE = /^Legacy AppEnd role \d+:\s*(.+)$/i;
-  }
-});
-
-// src/server/domain/vx/vxMemberTarghinExecutorRoles.ts
-async function listHwyMemberIdsByUserIds(userIds) {
-  const uniqueUserIds = Array.from(new Set(
-    userIds.filter((id) => Number.isFinite(id) && id > 0)
-  ));
-  const result = /* @__PURE__ */ new Map();
-  if (uniqueUserIds.length === 0) {
-    return result;
-  }
-  const sequelize = getControlPlaneSequelize();
-  const rows = await sequelize.query(
-    `SELECT id, user_id
-     FROM dbo.vx_members
-     WHERE user_id IN (:userIds)`,
-    { replacements: { userIds: uniqueUserIds }, type: import_sequelize128.QueryTypes.SELECT }
-  );
-  for (const row of rows) {
-    const memberId = Number(row.id);
-    const userId = Number(row.user_id);
-    if (Number.isFinite(memberId) && memberId > 0 && Number.isFinite(userId) && userId > 0) {
-      result.set(userId, memberId);
-    }
-  }
-  return result;
-}
-async function listPlatformUserIdsByHwyMemberIds(memberIds) {
-  const uniqueMemberIds = Array.from(new Set(
-    memberIds.filter((id) => Number.isFinite(id) && id > 0)
-  ));
-  const result = /* @__PURE__ */ new Map();
-  if (uniqueMemberIds.length === 0) {
-    return result;
-  }
-  const sequelize = getControlPlaneSequelize();
-  const rows = await sequelize.query(
-    `SELECT id, user_id
-     FROM dbo.vx_members
-     WHERE id IN (:memberIds)
-       AND user_id IS NOT NULL`,
-    { replacements: { memberIds: uniqueMemberIds }, type: import_sequelize128.QueryTypes.SELECT }
-  );
-  for (const row of rows) {
-    const memberId = Number(row.id);
-    const userId = Number(row.user_id);
-    if (Number.isFinite(memberId) && memberId > 0 && Number.isFinite(userId) && userId > 0) {
-      result.set(memberId, userId);
-    }
-  }
-  return result;
-}
-async function listHwyMemberTarghinExecutorRoleTitlesByUserId(userIds) {
-  const uniqueUserIds = Array.from(new Set(
-    userIds.filter((id) => Number.isFinite(id) && id > 0)
-  ));
-  const result = /* @__PURE__ */ new Map();
-  if (uniqueUserIds.length === 0) {
-    return result;
-  }
-  const roleRows = await prisma().baseUserRole.findMany({
-    where: { userId: { in: uniqueUserIds.map((id) => toUserId(id)) } },
-    select: {
-      userId: true,
-      roleName: true,
-      role: { select: { note: true } }
-    },
-    orderBy: [{ userId: "asc" }, { roleName: "asc" }]
-  });
-  const labelsByUserId = /* @__PURE__ */ new Map();
-  for (const row of roleRows) {
-    const userId = fromUserId(row.userId);
-    const label = formatHwyPlatformRoleDisplayLabel(row.roleName, row.role.note);
-    const bucket = labelsByUserId.get(userId) ?? [];
-    bucket.push(label);
-    labelsByUserId.set(userId, bucket);
-  }
-  for (const [userId, labels] of labelsByUserId) {
-    result.set(userId, sortHwyPlatformRoleDisplayLabels(labels));
-  }
-  return result;
-}
-async function listHwyMemberTarghinExecutorRoleTitlesByMemberId(memberIds) {
-  const userIdByMemberId = await listPlatformUserIdsByHwyMemberIds(memberIds);
-  const roleTitlesByUserId = await listHwyMemberTarghinExecutorRoleTitlesByUserId(
-    [...userIdByMemberId.values()]
-  );
-  const result = /* @__PURE__ */ new Map();
-  for (const [memberId, userId] of userIdByMemberId) {
-    result.set(memberId, roleTitlesByUserId.get(userId) ?? []);
-  }
-  return result;
-}
-function parseHwyTarghinExecutorMemberId(executorMemberId) {
-  return parseMemberId16(executorMemberId);
-}
-var import_sequelize128, parseMemberId16;
-var init_vxMemberTarghinExecutorRoles = __esm({
-  "src/server/domain/vx/vxMemberTarghinExecutorRoles.ts"() {
-    import_sequelize128 = require("sequelize");
-    init_vxPlatformRoleDisplay();
-    init_controlPlaneSequelize();
-    init_prismaHelpers();
-    parseMemberId16 = (raw) => {
-      const trimmed = String(raw ?? "").trim();
-      if (!/^\d+$/.test(trimmed)) {
-        return null;
-      }
-      const id = Number(trimmed);
-      return Number.isFinite(id) && id > 0 ? id : null;
     };
   }
 });
@@ -278050,6 +278226,7 @@ init_httpLogging();
 init_devViteChild();
 init_requestPaths();
 init_dashboardCanvas();
+init_operatorDevPortPolicy();
 init_dashboardEmbedHeaders();
 init_settingsFile();
 import_pg7.types.setTypeParser(20, (value) => parseInt(value, 10));
@@ -278225,7 +278402,8 @@ async function startServer() {
   }
   try {
     const listenHost = env.isProduction ? "::" : "127.0.0.1";
-    const { port: activePort, server } = await listenOnAvailablePort(app, PORT, 25, listenHost);
+    const portAttempts = !env.isProduction && isOperatorDevPortStrict() ? 1 : 25;
+    const { port: activePort, server } = await listenOnAvailablePort(app, PORT, portAttempts, listenHost);
     const sshHub = await Promise.resolve().then(() => (init_sshHubSession(), sshHubSession_exports));
     const rdpHub = await Promise.resolve().then(() => (init_rdpHubSession(), rdpHubSession_exports));
     const fileHub = await Promise.resolve().then(() => (init_fileHubSession(), fileHubSession_exports));

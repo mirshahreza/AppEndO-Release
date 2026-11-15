@@ -614,7 +614,10 @@ export const AppTableGridColumnHeader: React.FC<AppTableGridColumnHeaderProps> =
       <div
         className={cn(
           'flex min-w-0 items-center gap-1',
-          effectiveHeaderClassName?.includes('text-center') && 'w-full',
+          (effectiveHeaderClassName?.includes('text-center')
+            || effectiveHeaderClassName?.includes('text-start')
+            || effectiveHeaderClassName?.includes('text-left'))
+          && 'w-full',
           resolveAppTableGridHeaderFlexJustify(effectiveHeaderClassName),
         )}
       >

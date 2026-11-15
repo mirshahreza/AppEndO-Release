@@ -9,6 +9,7 @@ import { copyFileEnsured, sha256File } from './artifacts';
 import { appendoReleaseStagingDir, APPENDO_RELEASE_REPO_NAME } from './appendoReleaseRepo';
 import { renderPublicReleaseReadme } from './renderPublicReleaseReadme';
 import { copyReleaseCutSourceSnapshot } from './releaseCutSourceSnapshot';
+import { materializeDeployTargetArtifacts } from './materializeDeployTargetArtifacts';
 import { readReleaseCutVersions, releaseCutRepoRoot } from './versionManifest';
 
 const REPO_ROOT = releaseCutRepoRoot();
@@ -89,7 +90,6 @@ function main(): void {
   for (const zip of resolveOssZips()) {
     const dest = path.join(packagesDir, zip.fileName);
     copyFileEnsured(zip.abs, dest);
-    copyFileEnsured(zip.abs, path.join(outDir, zip.fileName));
     manifest.packageArtifacts.push({
       packageId: zip.packageId,
       fileName: zip.fileName,
@@ -98,6 +98,7 @@ function main(): void {
   }
 
   fs.writeFileSync(path.join(outDir, 'MANIFEST.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  materializeDeployTargetArtifacts(outDir, 'oss');
   assertPublicOssReleaseScope(outDir);
 
   const readme = renderPublicReleaseReadme(version, cutVersions.publicOssPackageIds);

@@ -3,12 +3,23 @@ import http from 'node:http';
 import type { IncomingMessage, Server, ServerResponse } from 'node:http';
 import type { Duplex } from 'node:stream';
 import path from 'node:path';
+import { isOperatorDevPortStrict, VITE_CHILD_PORT_OFFSET } from '../../shared/lib/operatorDevPortPolicy';
 import { isTcpPortInUse } from './tcpPort';
 
-const VITE_CHILD_PORT_OFFSET = 200;
 const VITE_CHILD_PORT_SCAN = 25;
 
 const resolveViteChildPort = async (serverPort: number): Promise<number> => {
+  if (isOperatorDevPortStrict()) {
+    const candidate = serverPort + VITE_CHILD_PORT_OFFSET;
+    if (!(await isTcpPortInUse(candidate))) {
+      return candidate;
+    }
+    throw new Error(
+      `Vite child port ${candidate} is in use (strict dev line for API ${serverPort}). `
+      + 'Stop the other process or set APPENDO_DEV_PORT_STRICT=0 to scan adjacent ports.',
+    );
+  }
+
   for (let offset = 0; offset < VITE_CHILD_PORT_SCAN; offset += 1) {
     const candidate = serverPort + VITE_CHILD_PORT_OFFSET + offset;
     if (!(await isTcpPortInUse(candidate))) {

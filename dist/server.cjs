@@ -676,9 +676,9 @@ var init_executeDataSourceQuery = __esm({
   "src/shared/lib/executeDataSourceQuery.ts"() {
     EXECUTE_DATA_SOURCE_QUERY_MAX_ROWS = 200;
     EXECUTE_DATA_SOURCE_QUERY_MAX_BYTES = 512e3;
-    stripSqlComments = (sql23) => sql23.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
-    unwrapLeadingExplainSql = (sql23) => {
-      const match = stripSqlComments(sql23).trim().match(/^explain\s+(?:analyze\s+)?([\s\S]+)$/i);
+    stripSqlComments = (sql25) => sql25.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
+    unwrapLeadingExplainSql = (sql25) => {
+      const match = stripSqlComments(sql25).trim().match(/^explain\s+(?:analyze\s+)?([\s\S]+)$/i);
       if (!match) {
         return null;
       }
@@ -697,8 +697,8 @@ var init_executeDataSourceQuery = __esm({
     FORBIDDEN_EXECUTE_SQL_PATTERN = /\b(insert|update|delete|merge|drop|alter|truncate|create|replace|grant|revoke|attach|detach)\b/i;
     ALLOWED_EXECUTE_SQL_START = /^(select|with|pragma|call|exec|execute|explain)\b/i;
     ALLOWED_EXECUTE_SQL_START_WITH_WRITE = /^(select|with|pragma|call|exec|execute|explain|insert|update|delete|merge)\b/i;
-    validateExecuteDataSourceSql = (sql23, options2) => {
-      const trimmed = sql23.trim();
+    validateExecuteDataSourceSql = (sql25, options2) => {
+      const trimmed = sql25.trim();
       if (!trimmed) {
         return { ok: false, reason: "SQL is empty." };
       }
@@ -1000,10 +1000,10 @@ var init_EdgeDbRouter = __esm({
       sqliteConnectionCache.set(resolvedPath, connection);
       return connection;
     };
-    runSqliteQuery = async (source, sql23, params = [], context) => {
+    runSqliteQuery = async (source, sql25, params = [], context) => {
       const connection = ensureSqliteConnection(source, context);
-      const stmt = connection.prepare(sql23);
-      const isRead = /^\s*(select|pragma|with|explain)\b/i.test(sql23);
+      const stmt = connection.prepare(sql25);
+      const isRead = /^\s*(select|pragma|with|explain)\b/i.test(sql25);
       if (isRead) {
         const rows = stmt.all(...params);
         return {
@@ -1020,12 +1020,12 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    convertQuestionMarkSql = (sql23, params, prefix) => {
+    convertQuestionMarkSql = (sql25, params, prefix) => {
       if (!Array.isArray(params) || params.length === 0) {
-        return { sql: sql23, binds: [] };
+        return { sql: sql25, binds: [] };
       }
       let index = 0;
-      const nextSql = sql23.replace(/\?/g, () => {
+      const nextSql = sql25.replace(/\?/g, () => {
         index += 1;
         return `${prefix}${index}`;
       });
@@ -1148,8 +1148,8 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    querySqlServerPool = async (source, pool, sql23, params = []) => {
-      const converted = convertQuestionMarkSql(sql23, params, "@p");
+    querySqlServerPool = async (source, pool, sql25, params = []) => {
+      const converted = convertQuestionMarkSql(sql25, params, "@p");
       const request = pool.request();
       for (const bind of converted.binds) {
         request.input(bind.name, bind.value);
@@ -1229,24 +1229,24 @@ var init_EdgeDbRouter = __esm({
         connection.close();
       }
     };
-    runSqlServerQuery = async (source, sql23, params = []) => {
-      const explainInner = unwrapLeadingExplainSql(sql23);
+    runSqlServerQuery = async (source, sql25, params = []) => {
+      const explainInner = unwrapLeadingExplainSql(sql25);
       if (explainInner) {
         return runSqlServerShowPlan(source, explainInner);
       }
       const pool = await ensureSqlServerPool(source);
       try {
-        return await querySqlServerPool(source, pool, sql23, params);
+        return await querySqlServerPool(source, pool, sql25, params);
       } catch (error) {
         if (!isSqlServerConnectionClosedError(error)) {
           throw error;
         }
         await dropCachedSqlServerPool(source);
         const retryPool = await ensureSqlServerPool(source);
-        return querySqlServerPool(source, retryPool, sql23, params);
+        return querySqlServerPool(source, retryPool, sql25, params);
       }
     };
-    runPostgresQuery = async (source, sql23, params = []) => {
+    runPostgresQuery = async (source, sql25, params = []) => {
       let pool = pgPoolCache.get(`pg:${source.id}`);
       if (!pool) {
         const moduleName = "pg";
@@ -1263,7 +1263,7 @@ var init_EdgeDbRouter = __esm({
         pgPoolCache.set(`pg:${source.id}`, pool);
       }
       let pIndex = 0;
-      const pgSql = sql23.replace(/\?/g, () => {
+      const pgSql = sql25.replace(/\?/g, () => {
         const value = params[pIndex];
         const placeholder = `$${++pIndex}`;
         return typeof value === "string" ? `${placeholder}::text` : placeholder;
@@ -1276,7 +1276,7 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    runMySqlQuery = async (source, sql23, params = []) => {
+    runMySqlQuery = async (source, sql25, params = []) => {
       let pool = mysqlPoolCache.get(source.id);
       if (!pool) {
         const moduleName = "mysql2/promise";
@@ -1294,7 +1294,7 @@ var init_EdgeDbRouter = __esm({
         });
         mysqlPoolCache.set(source.id, pool);
       }
-      const [rows] = await pool.execute(sql23, params);
+      const [rows] = await pool.execute(sql25, params);
       if (Array.isArray(rows)) {
         return {
           data: rows,
@@ -1309,7 +1309,7 @@ var init_EdgeDbRouter = __esm({
         source: { id: source.id, name: source.name, type: source.type }
       };
     };
-    runOracleQuery = async (source, sql23, params = []) => {
+    runOracleQuery = async (source, sql25, params = []) => {
       let connection = oracleConnectionCache.get(source.id);
       if (!connection) {
         const moduleName = "oracledb";
@@ -1323,7 +1323,7 @@ var init_EdgeDbRouter = __esm({
         });
         oracleConnectionCache.set(source.id, connection);
       }
-      const converted = convertQuestionMarkSql(sql23, params, ":p");
+      const converted = convertQuestionMarkSql(sql25, params, ":p");
       const binds = {};
       for (const bind of converted.binds) {
         binds[bind.name] = bind.value;
@@ -2728,10 +2728,10 @@ var init_controlPlaneSchemaDiff = __esm({
       const last = parts[parts.length - 1] ?? raw.trim();
       return last.toLowerCase();
     };
-    extractSqlTargetTables = (sql23) => {
+    extractSqlTargetTables = (sql25) => {
       const tables = [];
       const seen = /* @__PURE__ */ new Set();
-      for (const match of sql23.matchAll(SQL_TABLE_REF_RE)) {
+      for (const match of sql25.matchAll(SQL_TABLE_REF_RE)) {
         const name = normalizeSqlTableName(match[1] ?? "");
         if (!name || seen.has(name)) continue;
         if (name === "select") continue;
@@ -5336,9 +5336,9 @@ var init_database = __esm({
     ];
     SEED_ELEVATED_PLATFORM_ROLES = ["ADMIN", "DEVELOPER"];
     ROLE_ID_SEQUENCE_START = 1e3;
-    toPositionalParams = (sql23) => {
+    toPositionalParams = (sql25) => {
       let i = 0;
-      return sql23.replace(/\?/g, () => `$${++i}`);
+      return sql25.replace(/\?/g, () => `$${++i}`);
     };
   }
 });
@@ -5453,9 +5453,9 @@ var init_AuthAuditDbBatcher = __esm({
       insertBatch: async (entries) => {
         if (entries.length === 0) return;
         const rows = entries.map(mapAuthAuditEntryToRowValues);
-        const sql23 = buildAuthAuditBatchInsertSql(rows.length);
+        const sql25 = buildAuthAuditBatchInsertSql(rows.length);
         const values = flattenAuthAuditRowValues(rows);
-        await pool.query(sql23, values);
+        await pool.query(sql25, values);
       }
     });
   }
@@ -5539,9 +5539,9 @@ var init_LogDbBatcher = __esm({
       insertBatch: async (batch) => {
         if (batch.length === 0) return;
         const rows = batch.map(mapLogRecordToRowValues);
-        const sql23 = buildAppLogBatchInsertSql(rows.length);
+        const sql25 = buildAppLogBatchInsertSql(rows.length);
         const values = flattenAppLogRowValues(rows);
-        await pool.query(sql23, values);
+        await pool.query(sql25, values);
       }
     });
   }
@@ -5875,14 +5875,14 @@ var init_requestPerfAls = __esm({
       queryCount: 0,
       queries: []
     });
-    truncateSql = (sql23) => {
-      const normalized = sql23.replace(/\s+/g, " ").trim();
+    truncateSql = (sql25) => {
+      const normalized = sql25.replace(/\s+/g, " ").trim();
       if (normalized.length <= MAX_SQL_LENGTH) {
         return normalized;
       }
       return `${normalized.slice(0, MAX_SQL_LENGTH)}\u2026`;
     };
-    recordSequelizeQueryTiming = (source, sql23, timingMs) => {
+    recordSequelizeQueryTiming = (source, sql25, timingMs) => {
       const store = getRequestPerfStore();
       if (!store) {
         return;
@@ -5895,7 +5895,7 @@ var init_requestPerfAls = __esm({
       if (store.queries.length < MAX_QUERIES_PER_REQUEST) {
         store.queries.push({
           ms,
-          sql: truncateSql(sql23),
+          sql: truncateSql(sql25),
           source,
           rowCount: null
         });
@@ -5926,8 +5926,8 @@ var createSequelizeProfilerLogging, appendoSequelizeProfilerOptions;
 var init_sequelizeQueryLogger = __esm({
   "src/server/domain/perf/sequelizeQueryLogger.ts"() {
     init_requestPerfAls();
-    createSequelizeProfilerLogging = (source) => (sql23, timingMs) => {
-      recordSequelizeQueryTiming(source, sql23, timingMs);
+    createSequelizeProfilerLogging = (source) => (sql25, timingMs) => {
+      recordSequelizeQueryTiming(source, sql25, timingMs);
     };
     appendoSequelizeProfilerOptions = (source) => ({
       logging: createSequelizeProfilerLogging(source),
@@ -9557,18 +9557,18 @@ function buildDatasheetSelectSql(input) {
   }
   return `SELECT ${cols} FROM ${table}${where} LIMIT ${limit}`;
 }
-function stripQuotedSqlRegions(sql23) {
+function stripQuotedSqlRegions(sql25) {
   let out = "";
   let index = 0;
-  while (index < sql23.length) {
-    const char = sql23[index];
+  while (index < sql25.length) {
+    const char = sql25[index];
     if (char === "'" || char === '"' || char === "`") {
       const quote = char;
       out += " ";
       index += 1;
-      while (index < sql23.length) {
-        if (sql23[index] === quote) {
-          if (sql23[index + 1] === quote) {
+      while (index < sql25.length) {
+        if (sql25[index] === quote) {
+          if (sql25[index + 1] === quote) {
             out += "  ";
             index += 2;
             continue;
@@ -9585,11 +9585,11 @@ function stripQuotedSqlRegions(sql23) {
     if (char === "[") {
       out += " ";
       index += 1;
-      while (index < sql23.length && sql23[index] !== "]") {
+      while (index < sql25.length && sql25[index] !== "]") {
         out += " ";
         index += 1;
       }
-      if (index < sql23.length) {
+      if (index < sql25.length) {
         out += " ";
         index += 1;
       }
@@ -9737,12 +9737,12 @@ var init_datasheetWhereSql = __esm({
         throw new Error("Only a filter expression is allowed \u2014 not a changing statement.");
       }
     };
-    extractLimit = (sql23) => {
-      const top = sql23.match(/^select\s+top\s*\(?\s*(\d+)\s*\)?/i);
+    extractLimit = (sql25) => {
+      const top = sql25.match(/^select\s+top\s*\(?\s*(\d+)\s*\)?/i);
       if (top) {
         return assertDatasheetLimit(top[1]);
       }
-      const exposed = stripQuotedSqlRegions(sql23);
+      const exposed = stripQuotedSqlRegions(sql25);
       const fetch2 = exposed.match(/\bfetch\s+(?:first|next)\s+(\d+)/i);
       if (fetch2) {
         return assertDatasheetLimit(fetch2[1]);
@@ -9753,8 +9753,8 @@ var init_datasheetWhereSql = __esm({
       }
       return DATASHEET_WINDOW_DEFAULT_PAGE_SIZE;
     };
-    extractSelectList = (sql23) => {
-      let rest = sql23.replace(/^select\s+/i, "");
+    extractSelectList = (sql25) => {
+      let rest = sql25.replace(/^select\s+/i, "");
       rest = rest.replace(/^top\s*\(?\s*\d+\s*\)?\s+/i, "");
       rest = rest.replace(/^distinct\s+/i, "");
       const fromMatch = rest.match(/^([\s\S]+?)\s+from\b/i);
@@ -15176,8 +15176,14 @@ var init_projectStandards = __esm({
         {
           id: "ui.shell.loading-alive-surface",
           title: "Portal Shell Loading \u2014 Alive Surface (No Blank White)",
-          value: "every portal shell (studio and future shells) must show an alive loading surface while boot, shell chunks, auth/config, or page modules load \u2014 never a blank white viewport; use AppRouteLoading (src/components/AppRouteLoading.tsx): variant fullscreen (default) for platform boot, PortalHost shell Suspense, and auth/config gates \u2014 must match #app-boot-splash look (logo + bar + dots on --gradient-shell-atmosphere / --app-accent-* from the active accent theme; never a hardcoded teal palette; no alternate spinner/atmosphere style); first paint hydrates cached theme CSS vars from localStorage (appendo-accent-css-v3) in index.html; variant embedded for lazy pages inside an already-mounted shell (LazyRoute, shell Outlet Suspense) so chrome stays visible with the same compact bar + dots activity; after load, formatted reveal via ShellFormattedReveal + useFormattedRevealReady \u2014 keep opaque loading cover until DOM childList is quiet AND nested [data-testid=app-route-loading] is gone, then one cover/content crossfade; fullscreen cover is position:fixed; ShellChromeEnter for first surface \u2014 dismiss #app-boot-splash only on onRevealed (after cover exit), never mid-crossfade; put AtmosphereBackdrop inside ShellChromeEnter content not as an outside sibling; ShellRouteEnter for in-shell navigation (disabled during first surface); in-shell menu/link clicks must raise that embedded cover from the click (useShellNavigate / beginShellNavigationPending) so the previous page is not left on screen with no feedback while React keeps it until the next route/chunk is ready; same-path and CMS Settings soft-nav stay uncovered; non-shell auth/public dismiss when UI painted without AppRouteLoading; respect prefers-reduced-motion; see docs/standards/ui-core.md \xA7Portal / shell loading",
+          value: "every portal shell (studio and future shells) must show an alive loading surface while boot, shell chunks, auth/config, or page modules load \u2014 never a blank white viewport; use AppRouteLoading (src/components/AppRouteLoading.tsx): variant fullscreen (default) for platform boot, PortalHost shell Suspense, and auth/config gates \u2014 must match #app-boot-splash look (portal brand logo + accent orbital ring on --gradient-shell-atmosphere / --app-accent-* from the active accent theme; never a hardcoded teal palette; no ECG/heartbeat, progress bars, visible loading copy, or alternate spinners); first paint hydrates cached theme CSS vars from localStorage (appendo-accent-css-v3) in index.html; variant embedded for lazy pages inside an already-mounted shell (LazyRoute, shell Outlet Suspense) with the same logo + ring model (size/ring from platformRouteLoading Settings); after load, formatted reveal via ShellFormattedReveal + useFormattedRevealReady \u2014 keep opaque loading cover until DOM childList is quiet AND nested [data-testid=app-route-loading] is gone, then one cover/content crossfade; fullscreen cover is position:fixed; ShellChromeEnter for first surface \u2014 dismiss #app-boot-splash only on onRevealed (after cover exit), never mid-crossfade; put AtmosphereBackdrop inside ShellChromeEnter content not as an outside sibling; ShellRouteEnter for in-shell navigation (disabled during first surface); in-shell menu/link clicks must raise that embedded cover from the click (useShellNavigate / beginShellNavigationPending) so the previous page is not left on screen with no feedback while React keeps it until the next route/chunk is ready; same-path and CMS Settings soft-nav stay uncovered; non-shell auth/public dismiss when UI painted without AppRouteLoading; respect prefers-reduced-motion; visual contract docs/standards/ui-route-loading.md; lifecycle docs/standards/ui-core.md \xA7Shell loading",
           appliesTo: ["portal shells", "studio shell", "AppShell", "AdminLayout", "DesignerShell", "route Suspense", "boot splash", "lazy pages"]
+        },
+        {
+          id: "ui.route-loading",
+          title: "Portal route loading \u2014 logo + orbital ring",
+          value: "one loading model for boot splash, fullscreen gates, embedded Suspense, and AppTableGrid isLoading: portal brand logo (or AppEnd mark on studio) with accent orbital ring only; AppTableGridRouteLoading wraps AppRouteLoading variant embedded \u2014 loadingMessage is sr-only, never visible culture copy in the grid body; platformRouteLoading config schema v2 exposes logoSize, logoGlow (ring), logoBreathe (ring pulse), optional embedded overrides; no ECG/heartbeat traces, no progress bars under the logo, no visible culture strings in the stack (sr-only label only); forbid custom route loaders \u2014 AppRouteLoading + #app-boot-splash must stay matched; see docs/standards/ui-route-loading.md",
+          appliesTo: ["AppRouteLoading", "app-boot-splash", "platformRouteLoading settings", "portal shells", "lazy routes"]
         },
         {
           id: "ui.admin-shell.surface-continuity",
@@ -25690,12 +25696,12 @@ var init_catalogSections_options = __esm({
         ["orbit.reverseColors", "appearance", "public-prop", "checkbox", true, bool2, "reverseColors"],
         ["orbit.colorSteps", "appearance", "public-prop", "range", 6, [4, 5, 6, 7, 8, 9, 10], "colorSteps"],
         ["orbit.intensity", "preset", "catalog-only", "select", "standard", ["subtle", "standard", "expressive"]],
-        ["orbit.width", "appearance", "public-prop", "range", 1.5, [1, 1.5, 2, 3], "borderWidth"],
-        ["orbit.tail", "appearance", "public-prop", "range", 5, [5, 18, 50, 100], "tailLength"],
+        ["orbit.width", "appearance", "public-prop", "range", 1.25, [1, 1.25, 1.5, 2, 3], "borderWidth"],
+        ["orbit.tail", "appearance", "public-prop", "range", 10, [5, 10, 18, 50, 100], "tailLength"],
         ["orbit.comets", "appearance", "public-prop", "range", 1, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "cometCount"],
         ["orbit.radius", "appearance", "public-prop", "range", 12, [0, 4, 8, 12, 16, 20, 24], "borderRadius"],
         ["orbit.glow", "appearance", "public-prop", "range", 30, [0, 15, 30, 60, 100], "glow"],
-        ["orbit.speed", "behavior", "public-prop", "range", 5, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "durationSeconds"],
+        ["orbit.speed", "behavior", "public-prop", "range", 6, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "durationSeconds"],
         ["orbit.direction", "behavior", "public-prop", "segmented", "forward", ["forward", "reverse"], "direction"],
         ["orbit.motionPreference", "accessibility", "scenario", "segmented", "normal", ["normal", "reduced"]]
       ]),
@@ -40882,24 +40888,17 @@ var init_settingsFormsEn = __esm({
       "settings.forms.routeLoading.previewFullscreen": "Fullscreen (boot / shell)",
       "settings.forms.routeLoading.previewEmbedded": "Embedded (lazy page)",
       "settings.forms.routeLoading.fullscreenTitle": "Fullscreen loading",
+      "settings.forms.routeLoading.fullscreenIntro": "Boot, auth, and shell gates: portal brand logo with accent orbital ring only \u2014 no visible loading copy.",
       "settings.forms.routeLoading.embeddedTitle": "Embedded overrides",
-      "settings.forms.routeLoading.embeddedIntro": "Optional tweaks for lazy routes inside an already-mounted shell. Unset fields inherit fullscreen values.",
-      "settings.forms.routeLoading.showLogo": "Show logo",
-      "settings.forms.routeLoading.showLogoHint": "Portal brand or AppEnd mark when no custom logo is configured.",
+      "settings.forms.routeLoading.embeddedIntro": "Optional overrides when a lazy route loads inside an already-mounted shell (logo size and orbital ring).",
       "settings.forms.routeLoading.logoSize": "Logo size",
       "settings.forms.routeLoading.logoSize.compact": "Compact",
       "settings.forms.routeLoading.logoSize.default": "Default",
       "settings.forms.routeLoading.logoSize.large": "Large",
       "settings.forms.routeLoading.logoSize.xlarge": "Extra large",
-      "settings.forms.routeLoading.logoGlow": "Logo glow",
-      "settings.forms.routeLoading.logoBreathe": "Logo breathe animation",
-      "settings.forms.routeLoading.stackOrder": "Stack order",
-      "settings.forms.routeLoading.stackOrder.logo-first": "Logo above activity",
-      "settings.forms.routeLoading.stackOrder.activity-first": "Activity above logo",
-      "settings.forms.routeLoading.progressStyle": "Progress signal",
-      "settings.forms.routeLoading.progressStyle.ecg": "ECG trace (default)",
-      "settings.forms.routeLoading.progressStyle.simple-line": "Simple line",
-      "settings.forms.routeLoading.progressStyle.none": "Hidden",
+      "settings.forms.routeLoading.orbitalRing": "Accent orbital ring",
+      "settings.forms.routeLoading.orbitalRingHint": "Base Components orbit-border \u2014 accent comet travels the logo perimeter.",
+      "settings.forms.routeLoading.orbitalRingMotion": "Orbit comet motion",
       "settings.forms.feedback.loading": "Loading feedback settings\u2026",
       "settings.forms.feedback.loadError": "Failed to load feedback settings.",
       "settings.forms.feedback.policyTitle": "Policy",
@@ -41866,7 +41865,7 @@ var init_extensionsEn = __esm({
       "settings.sections.pwa": "PWA",
       "settings.sections.pwa.description": "Web manifest, install icons, in-app messages, and update notices.",
       "settings.sections.route-loading": "Route loading",
-      "settings.sections.route-loading.description": "Boot and lazy-route loading chrome \u2014 logo, progress signal, and layout.",
+      "settings.sections.route-loading.description": "Boot and lazy-route loading chrome \u2014 portal logo and accent orbital ring.",
       "settings.sections.cache": "Cache",
       "settings.sections.cache.description": "Platform cache storage driver, TTL defaults, and Redis connection.",
       "settings.sections.auth": "Auth & Security",
@@ -46062,10 +46061,19 @@ var init_vertical_iq = __esm({
       "vx.meetings.addMemberUsername": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
       "vx.meetings.addMember": "\u0625\u0636\u0627\u0641\u0629 \u0639\u0636\u0648",
       "vx.meetings.noMembers": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0639\u0644\u0649 \u0643\u0634\u0641 \u0647\u0630\u0627 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639.",
+      "vx.meetings.rosterAttendedOnly": "\u062D\u0636\u0631 \u0633\u0627\u0628\u0642\u0627\u064B \u2014 \u0623\u0636\u0641\u0647 \u0628\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621 \u0644\u0625\u062F\u0631\u0627\u062C\u0647 \u0641\u064A \u0627\u0644\u0643\u0634\u0641 \u0627\u0644\u0631\u0633\u0645\u064A.",
       "vx.meetings.attendanceTitle": "\u062D\u0636\u0648\u0631 \u0627\u0644\u062C\u0644\u0633\u0629",
       "vx.meetings.rosterYetTitle": "\u0627\u0644\u0645\u0646\u062A\u0638\u0645\u0648\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
       "vx.meetings.rosterNotTitle": "\u063A\u064A\u0631 \u0627\u0644\u0645\u0646\u062A\u0638\u0645\u064A\u0646 \u2014 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639",
       "vx.meetings.hazerinTitle": "\u0627\u0644\u062D\u0627\u0636\u0631\u0648\u0646 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629",
+      "vx.meetings.addHazerin": "\u0625\u0636\u0627\u0641\u0629 \u062D\u0627\u0636\u0631",
+      "vx.meetings.hazerinSearch.placeholder": "\u0627\u0644\u0628\u062D\u062B \u0628\u0627\u0644\u0627\u0633\u0645 \u0623\u0648 \u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "vx.meetings.hazerinSearch.aria": "\u062A\u0635\u0641\u064A\u0629 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062D\u0627\u0636\u0631\u064A\u0646",
+      "vx.meetings.hazerinSearchEmpty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u062D\u0627\u0636\u0631\u0648\u0646 \u0645\u0637\u0627\u0628\u0642\u0648\u0646 \u0644\u0644\u0628\u062D\u062B.",
+      "vx.meetings.removeHazerin": "\u0625\u0632\u0627\u0644\u0629 \u0627\u0644\u062D\u0627\u0636\u0631",
+      "vx.meetings.hazerinAdded": "\u062A\u0645\u062A \u0625\u0636\u0627\u0641\u0629 \u0627\u0644\u062D\u0627\u0636\u0631.",
+      "vx.meetings.hazerinNotSaved": "\u0644\u0645 \u062A\u064F\u062D\u0641\u0638 \u0627\u0644\u062D\u0636\u0648\u0631. \u0623\u0636\u0641 \u0627\u0644\u0639\u0636\u0648 \u0625\u0644\u0649 \u0643\u0634\u0641 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639 \u0623\u0648\u0644\u0627\u064B \u062B\u0645 \u0623\u0639\u062F \u0627\u0644\u0645\u062D\u0627\u0648\u0644\u0629.",
+      "vx.meetings.hazerinRemoved": "\u062A\u0645\u062A \u0625\u0632\u0627\u0644\u0629 \u0627\u0644\u062D\u0627\u0636\u0631.",
       "vx.meetings.memberPreviewEmpty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0623\u0639\u0636\u0627\u0621 \u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u0642\u0627\u0626\u0645\u0629.",
       "vx.meetings.deleteInstanceConfirm": "\u062D\u0630\u0641 \u0647\u0630\u0647 \u0627\u0644\u062C\u0644\u0633\u0629\u061F \u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u062A\u0631\u0627\u062C\u0639.",
       "vx.meetings.markAbsent": "\u062D\u0627\u0636\u0631 \u2014 \u0625\u0644\u063A\u0627\u0621",
@@ -46088,7 +46096,7 @@ var init_vertical_iq = __esm({
       "vx.masoolinPerformance.exportEmpty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0635\u0641\u0648\u0641 \u0644\u0644\u062A\u0635\u062F\u064A\u0631.",
       "vx.masoolinPerformance.exportError": "\u0641\u0634\u0644 \u0627\u0644\u062A\u0635\u062F\u064A\u0631.",
       "vx.masoolinPerformance.empty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0646\u062A\u0627\u0626\u062C \u0645\u0637\u0627\u0628\u0642\u0629 \u0644\u0644\u062A\u0635\u0641\u064A\u0629 \u0627\u0644\u062D\u0627\u0644\u064A\u0629.",
-      "vx.masoolinPerformance.emptyHint": "\u062D\u062F\u0651\u062F \u0627\u0644\u0641\u0644\u0627\u062A\u0631 \u062B\u0645 \u0627\u0636\u063A\u0637 \u0627\u0628\u062D\u062B.",
+      "vx.masoolinPerformance.emptyHint": "\u062D\u062F\u0651\u062F \u0627\u0644\u0641\u0644\u0627\u062A\u0631 \u062B\u0645 \u0627\u0636\u063A\u0637 \u0632\u0631 \u0627\u0644\u062A\u062D\u062F\u064A\u062B.",
       "vx.masoolinPerformance.filter.gender": "\u0627\u0644\u062C\u0646\u0633",
       "vx.masoolinPerformance.filter.genderAll": "\u0627\u0644\u062C\u0646\u0633 (\u0627\u0644\u0643\u0644)",
       "vx.masoolinPerformance.filter.role": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
@@ -46100,9 +46108,34 @@ var init_vertical_iq = __esm({
       "vx.masoolinPerformance.filter.tamvin": "\u0627\u0644\u0645\u0643\u062A\u0628",
       "vx.masoolinPerformance.filter.tamvinAll": "\u0627\u0644\u0645\u0643\u062A\u0628 (\u0627\u0644\u0643\u0644)",
       "vx.masoolinPerformance.filter.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
+      "vx.masoolinPerformance.filter.bicLevel": "\u0641\u0639\u0627\u0644\u064A\u0629 \u0627\u0644\u0634\u0647\u0631 \u0627\u0644\u062D\u0627\u0644\u064A",
+      "vx.masoolinPerformance.filter.bi1Level": "\u0641\u0639\u0627\u0644\u064A\u0629 \u0627\u0644\u0634\u0647\u0631 \u0627\u0644\u0645\u0627\u0636\u064A",
+      "vx.masoolinPerformance.filter.bi2Level": "\u0641\u0639\u0627\u0644\u064A\u0629 \u0642\u0628\u0644 \u0634\u0647\u0631\u064A\u0646",
+      "vx.masoolinPerformance.filter.bi3Level": "\u0641\u0639\u0627\u0644\u064A\u0629 \u0642\u0628\u0644 3 \u0623\u0634\u0647\u0631",
+      "vx.masoolinPerformance.filter.moneyAmount1": "\u062F\u0641\u0639 \u0627\u0644\u0634\u0647\u0631 \u0627\u0644\u0645\u0627\u0636\u064A",
+      "vx.masoolinPerformance.filter.moneyAmount2": "\u062F\u0641\u0639 \u0642\u0628\u0644 \u0634\u0647\u0631\u064A\u0646",
+      "vx.masoolinPerformance.filter.moneyAmount3": "\u062F\u0641\u0639 \u0642\u0628\u0644 3 \u0623\u0634\u0647\u0631",
+      "vx.masoolinPerformance.filter.moneyAmount.MoneyAmount1": "\u062F\u0641\u0639 \u0627\u0644\u0634\u0647\u0631 \u0627\u0644\u0645\u0627\u0636\u064A (\u0627\u0641\u062A\u0631\u0627\u0636\u064A)",
+      "vx.masoolinPerformance.filter.moneyAmount.MoneyAmount2": "\u062F\u0641\u0639 \u0642\u0628\u0644 \u0634\u0647\u0631\u064A\u0646 (\u0627\u0641\u062A\u0631\u0627\u0636\u064A)",
+      "vx.masoolinPerformance.filter.moneyAmount.MoneyAmount3": "\u062F\u0641\u0639 \u0642\u0628\u0644 3 \u0623\u0634\u0647\u0631 (\u0627\u0641\u062A\u0631\u0627\u0636\u064A)",
+      "vx.masoolinPerformance.filter.moneyAmount.Blank": "\u0641\u0627\u0631\u063A",
+      "vx.masoolinPerformance.filter.moneyAmount.Zero": "\u0635\u0641\u0631",
+      "vx.masoolinPerformance.filter.moneyAmount.BlankAndZero": "\u0641\u0627\u0631\u063A \u0648\u0635\u0641\u0631",
+      "vx.masoolinPerformance.filter.moneyAmount.UpperZero": "\u0623\u0643\u0628\u0631 \u0645\u0646 \u0635\u0641\u0631",
+      "vx.masoolinPerformance.filter.payable": "\u0631\u0626\u064A\u0633\u064A/\u0645\u0639\u0627\u0648\u0646",
+      "vx.masoolinPerformance.filter.sameRoghe": "\u0639\u062F\u062F \u0627\u0644\u0631\u0626\u064A\u0633\u064A \u0641\u064A \u0627\u0644\u0631\u0642\u0639\u0629",
+      "vx.masoolinPerformance.filter.sameRogheZero": "\u0635\u0641\u0631",
+      "vx.masoolinPerformance.filter.sameRogheOne": "\u0648\u0627\u062D\u062F",
+      "vx.masoolinPerformance.filter.sameRogheMoreThanZero": "\u0623\u0643\u062B\u0631 \u0645\u0646 \u0635\u0641\u0631",
+      "vx.masoolinPerformance.filter.sameRogheMoreThanOne": "\u0623\u0643\u062B\u0631 \u0645\u0646 \u0648\u0627\u062D\u062F",
+      "vx.masoolinPerformance.filter.conflict": "\u062A\u0636\u0627\u0631\u0628 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646",
+      "vx.masoolinPerformance.filter.conflictYes": "\u064A\u0648\u062C\u062F \u062A\u0636\u0627\u0631\u0628",
+      "vx.masoolinPerformance.filter.conflictNo": "\u0628\u0644\u0627 \u062A\u0636\u0627\u0631\u0628",
+      "vx.masoolinPerformance.gridAria": "\u062C\u062F\u0648\u0644 \u062A\u0642\u0627\u0631\u064A\u0631 \u0641\u0639\u0627\u0644\u064A\u0629 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646",
       "vx.masoolinPerformance.column.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
       "vx.masoolinPerformance.column.name": "\u0627\u0644\u0627\u0633\u0645",
       "vx.masoolinPerformance.column.geo": "\u0627\u0644\u0631\u0642\u0639\u0629",
+      "vx.masoolinPerformance.column.responsibilityCenter": "\u0645\u0631\u0643\u0632 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
       "vx.masoolinPerformance.column.role": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
       "vx.masoolinPerformance.column.daysInRole": "\u0639\u062F\u062F \u0623\u064A\u0627\u0645 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
       "vx.masoolinPerformance.column.chiefRole": "\u0631\u0626\u064A\u0633\u064A/\u0645\u0639\u0627\u0648\u0646",
@@ -46114,6 +46147,23 @@ var init_vertical_iq = __esm({
       "vx.masoolinPerformance.chiefRole.chief": "\u0631\u0626\u064A\u0633\u064A",
       "vx.masoolinPerformance.chiefRole.deputy": "\u0645\u0639\u0627\u0648\u0646",
       "vx.masoolinPerformance.setChiefMasool": "\u062A\u0639\u064A\u064A\u0646 \u0645\u0633\u0624\u0648\u0644 \u0631\u0626\u064A\u0633\u064A",
+      "vx.masoolinPerformance.calcStars": "\u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u062C\u0648\u0645",
+      "vx.masoolinPerformance.calcStarsDone": "\u0627\u0643\u062A\u0645\u0644 \u0627\u062D\u062A\u0633\u0627\u0628 \u0646\u062C\u0648\u0645 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646 \u0644\u0644\u0634\u0647\u0631 \u0627\u0644\u062D\u0627\u0644\u064A.",
+      "vx.masoolinPerformance.calcStarsError": "\u0641\u0634\u0644 \u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u062C\u0648\u0645.",
+      "vx.masoolinPerformance.calcStarsTitle": "\u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u062C\u0648\u0645",
+      "vx.masoolinPerformance.calcStarsIntro": "\u062D\u062F\u0651\u062F \u0627\u0644\u0634\u0647\u0631 \u0648\u0627\u0644\u0633\u0646\u0629 \u0644\u062A\u0634\u063A\u064A\u0644 \u0627\u062D\u062A\u0633\u0627\u0628 \u0646\u062C\u0648\u0645 \u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0646.",
+      "vx.masoolinPerformance.calcStarsMonthLabel": "\u0627\u0644\u0634\u0647\u0631 / \u0627\u0644\u0633\u0646\u0629",
+      "vx.masoolinPerformance.calcStarsStart": "\u0628\u062F\u0621 \u0627\u0644\u0627\u062D\u062A\u0633\u0627\u0628",
+      "vx.masoolinPerformance.calcStarsConfirm": "\u062A\u0623\u0643\u064A\u062F",
+      "vx.masoolinPerformance.calcStarsCancel": "\u0625\u063A\u0644\u0627\u0642",
+      "vx.masoolinPerformance.calcStarsConfirmTitle": "\u062A\u0623\u0643\u064A\u062F \u0627\u0644\u0639\u0645\u0644\u064A\u0629",
+      "vx.masoolinPerformance.calcStarsConfirmBody": "\u0647\u0644 \u062A\u0631\u064A\u062F \u0628\u062F\u0621 \u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u062C\u0648\u0645 \u0644\u0644\u0634\u0647\u0631 \u0627\u0644\u0645\u062D\u062F\u062F\u061F",
+      "vx.masoolinPerformance.calcStarsConfirmCancel": "\u0625\u0644\u063A\u0627\u0621",
+      "vx.masoolinPerformance.calcStarsRunning": "\u062C\u0627\u0631\u064A \u062A\u0646\u0641\u064A\u0630 \u0639\u0645\u0644\u064A\u0629 \u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u062C\u0648\u0645\u2026",
+      "vx.masoolinPerformance.calcStarsElapsed": "\u0627\u0644\u0648\u0642\u062A \u0627\u0644\u0645\u0646\u0642\u0636\u064A",
+      "vx.masoolinPerformance.calcStarsWaitHint": "\u0642\u062F \u062A\u0633\u062A\u063A\u0631\u0642 \u0627\u0644\u0639\u0645\u0644\u064A\u0629 \u0639\u062F\u0629 \u062F\u0642\u0627\u0626\u0642. \u0623\u0628\u0642\u0650 \u0627\u0644\u0646\u0627\u0641\u0630\u0629 \u0645\u0641\u062A\u0648\u062D\u0629.",
+      "vx.masoolinPerformance.calcStarsMonthInvalid": "\u064A\u0631\u062C\u0649 \u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0634\u0647\u0631 \u0648\u0627\u0644\u0633\u0646\u0629 \u0628\u0634\u0643\u0644 \u0635\u062D\u064A\u062D.",
+      "vx.masoolinPerformance.loadError": "\u062A\u0639\u0630\u0631 \u062A\u062D\u0645\u064A\u0644 \u062A\u0642\u0631\u064A\u0631 \u0627\u0644\u0641\u0639\u0627\u0644\u064A\u0629.",
       "vx.masoolinPerformance.role.circleOfficer": "\u0645\u0633\u0624\u0648\u0644 \u062F\u0627\u0626\u0631\u0629",
       "vx.masoolinPerformance.role.officeOfficer": "\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0643\u062A\u0628",
       "vx.masoolinPerformance.role.regionOfficer": "\u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0645\u0646\u0637\u0642\u0629",
@@ -46133,6 +46183,7 @@ var init_vertical_iq = __esm({
       "vx.membersSocialScreens.listType.rejected": "\u0645\u0631\u0641\u0648\u0636\u0627\u062A",
       "vx.membersSocialScreens.listType.onGoing": "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u0643\u0645\u064A\u0644",
       "vx.membersSocialScreens.loading": "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0645\u064A\u0644\u2026",
+      "vx.membersSocialScreens.loadError": "\u062A\u0639\u0630\u0631 \u062A\u062D\u0645\u064A\u0644 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062D\u0636\u0648\u0631 \u0627\u0644\u0625\u0639\u0644\u0627\u0645\u064A.",
       "vx.membersSocialScreens.empty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0634\u064A\u0621 \u0644\u0644\u0645\u0631\u0627\u062C\u0639\u0629 \u0648\u0641\u0642 \u0627\u0644\u0641\u0644\u0627\u062A\u0631 \u0627\u0644\u062D\u0627\u0644\u064A\u0629.",
       "vx.membersSocialScreens.screenAlt": "\u0627\u0633\u0643\u0631\u064A\u0646 \u0634\u0648\u062A",
       "vx.membersSocialScreens.noImage": "\u0644\u0627 \u0645\u0639\u0627\u064A\u0646\u0629",
@@ -46142,10 +46193,25 @@ var init_vertical_iq = __esm({
       "vx.membersSocialScreens.reject": "\u0631\u0641\u0636",
       "vx.membersSocialScreens.actionDone": "\u062A\u0645 \u062A\u0646\u0641\u064A\u0630 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
       "vx.membersSocialScreens.actionError": "\u0641\u0634\u0644 \u0627\u0644\u0625\u062C\u0631\u0627\u0621.",
+      "vx.membersSocialScreens.saveSocialIds": "\u062D\u0641\u0638",
+      "vx.membersSocialScreens.social.section": "\u0631\u0648\u0627\u0628\u0637 \u0627\u0644\u062A\u0648\u0627\u0635\u0644 \u0644\u0644\u0639\u0636\u0648",
+      "vx.membersSocialScreens.social.facebook": "\u0631\u0627\u0628\u0637 \u062D\u0633\u0627\u0628 \u0641\u064A\u0633\u0628\u0648\u0643",
+      "vx.membersSocialScreens.social.tweeter": "\u0631\u0627\u0628\u0637 \u062D\u0633\u0627\u0628 \u0627\u0644\u062A\u0648\u064A\u062A\u0631 (X)",
+      "vx.membersSocialScreens.social.tiktok": "\u0631\u0627\u0628\u0637 \u062D\u0633\u0627\u0628 \u062A\u064A\u0643 \u062A\u0648\u0643",
+      "vx.membersSocialScreens.reopenForMember": "\u0627\u0639\u0627\u062F\u0629 \u0627\u0644\u0633\u062C\u0644 \u0644\u0644\u0645\u0646\u062A\u0638\u0645",
+      "vx.membersSocialScreens.switchToAccepted": "\u062D\u0648\u0644 \u0627\u0644\u0642\u0631\u0627\u0631 \u0627\u0644\u0649 \u0645\u0642\u0628\u0648\u0644",
+      "vx.membersSocialScreens.switchToRejected": "\u062D\u0648\u0644 \u0627\u0644\u0642\u0631\u0627\u0631 \u0625\u0644\u0649 \u0627\u0644\u0631\u0641\u0636",
+      "vx.membersSocialScreens.deleteScreen": "\u062D\u0630\u0641",
+      "vx.membersSocialScreens.deleteScreenConfirm": "\u0647\u0644 \u062A\u0631\u064A\u062F \u062D\u0630\u0641 \u0644\u0642\u0637\u0629 \u0627\u0644\u0634\u0627\u0634\u0629 \u0647\u0630\u0647 \u0645\u0646 \u0633\u062C\u0644 \u0627\u0644\u0639\u0636\u0648\u061F",
+      "vx.membersSocialScreens.viewLarger": "\u0645\u0639\u0627\u064A\u0646\u0629 \u0623\u0643\u0628\u0631",
+      "vx.membersSocialScreens.download": "\u062A\u0646\u0632\u064A\u0644",
+      "vx.membersSocialScreens.cancel": "\u0625\u0644\u063A\u0627\u0621",
+      "vx.membersSocialScreens.memberApprovedOn": "\u0648\u0642\u062A \u062A\u0623\u0643\u064A\u062F \u0627\u0644\u0639\u0636\u0648 \u0644\u0644\u0625\u0631\u0633\u0627\u0644",
       "vx.finance.comingSoon": "\u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0642\u064A\u062F \u0627\u0644\u062A\u0637\u0648\u064A\u0631.",
       "vx.paymentDocuments.column.id": "\u0627\u0644\u0645\u0639\u0631\u0651\u0641",
       "vx.paymentDocuments.column.year": "\u0627\u0644\u0633\u0646\u0629",
       "vx.paymentDocuments.column.month": "\u0627\u0644\u0634\u0647\u0631",
+      "vx.paymentDocuments.column.docPeriod": "\u0627\u0644\u0641\u062A\u0631\u0629",
       "vx.paymentDocuments.column.gender": "\u0627\u0644\u062C\u0646\u0633",
       "vx.paymentDocuments.column.province": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
       "vx.paymentDocuments.column.circle": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629",
@@ -46153,6 +46219,19 @@ var init_vertical_iq = __esm({
       "vx.paymentDocuments.column.paidAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062F\u0641\u0648\u0639",
       "vx.paymentDocuments.column.pendingAmount": "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062A\u0628\u0642\u064A",
       "vx.paymentDocuments.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
+      "vx.paymentDocuments.filter.fieldFiltersActive": "\u0641\u0644\u0627\u062A\u0631 \u0627\u0644\u062D\u0642\u0648\u0644",
+      "vx.paymentDocuments.filter.quickSearchField": "\u062D\u0642\u0644 \u0627\u0644\u0628\u062D\u062B",
+      "vx.paymentDocuments.filter.docPeriod": "\u0641\u062A\u0631\u0629 \u0627\u0644\u0645\u0646\u062D\u0629 (\u0633\u0646\u0629/\u0634\u0647\u0631)",
+      "vx.paymentDocuments.filter.docPeriodPlaceholder": "\u0645\u062B\u0627\u0644: 2026/10",
+      "vx.paymentDocuments.filter.documentId": "\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0633\u0646\u062F",
+      "vx.paymentDocuments.filter.documentIdPlaceholder": "\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0633\u0646\u062F",
+      "vx.paymentDocuments.filter.provinceId": "\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
+      "vx.paymentDocuments.filter.provinceIdPlaceholder": "\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
+      "vx.paymentDocuments.filter.circleId": "\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u062F\u0627\u0626\u0631\u0629",
+      "vx.paymentDocuments.filter.circleIdPlaceholder": "\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u062F\u0627\u0626\u0631\u0629",
+      "vx.paymentDocuments.publish": "\u0646\u0634\u0631",
+      "vx.paymentDocuments.confirm.publishTitle": "\u0646\u0634\u0631 \u0627\u0644\u0633\u0646\u062F",
+      "vx.paymentDocuments.confirm.publishBody": "\u0646\u0634\u0631 \u0647\u0630\u0627 \u0627\u0644\u0633\u0646\u062F \u0625\u0644\u0649 \u0627\u0644\u0645\u0627\u0644\u064A\u0629\u061F",
       "vx.paymentDocuments.filter.genderAll": "\u0627\u0644\u062C\u0646\u0633 (\u0627\u0644\u0643\u0644)",
       "vx.paymentDocuments.filter.provinceAll": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629 (\u0627\u0644\u0643\u0644)",
       "vx.paymentDocuments.filter.circleAll": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629 (\u0627\u0644\u0643\u0644)",
@@ -46192,10 +46271,18 @@ var init_vertical_iq = __esm({
       "vx.paymentDocumentsMembers.column.username": "\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621",
       "vx.paymentDocumentsMembers.column.name": "\u0627\u0644\u0627\u0633\u0645",
       "vx.paymentDocumentsMembers.column.role": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629",
-      "vx.paymentDocumentsMembers.column.docPeriod": "\u0627\u0644\u0633\u0646\u0629 / \u0627\u0644\u0634\u0647\u0631",
+      "vx.paymentDocumentsMembers.column.docPeriod": "\u0641\u062A\u0631\u0629 \u0627\u0644\u0645\u0646\u062D\u0629",
+      "vx.paymentDocumentsMembers.filter.quickSearchField": "\u062D\u0642\u0644 \u0627\u0644\u0628\u062D\u062B",
+      "vx.paymentDocumentsMembers.filter.docPeriod": "\u0641\u062A\u0631\u0629 \u0627\u0644\u0645\u0646\u062D\u0629 (\u0633\u0646\u0629/\u0634\u0647\u0631)",
+      "vx.paymentDocumentsMembers.filter.docPeriodPlaceholder": "\u0645\u062B\u0627\u0644: 2026/10",
+      "vx.paymentDocumentsMembers.column.sameDeviceCount": "\u062A\u0645 \u0627\u0644\u062A\u0643\u0631\u0627\u0631",
+      "vx.paymentDocumentsMembers.column.levelTitle": "\u0627\u0644\u0641\u0627\u0639\u0644\u064A\u0629",
       "vx.paymentDocumentsMembers.column.payAmount": "\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u0646\u062D\u0629",
       "vx.paymentDocumentsMembers.column.payableReason": "\u0633\u0628\u0628 \u0627\u0644\u0627\u0633\u062A\u062D\u0642\u0627\u0642",
       "vx.paymentDocumentsMembers.column.payOk": "\u062A\u0648\u0642\u064A\u0639 \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645",
+      "vx.paymentDocumentsMembers.column.receipt": "\u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645",
+      "vx.paymentDocumentsMembers.receipt.serverOn": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062E\u0627\u062F\u0645",
+      "vx.paymentDocumentsMembers.receipt.deviceOn": "\u062A\u0627\u0631\u064A\u062E \u0627\u0644\u062C\u0647\u0627\u0632",
       "vx.paymentDocumentsMembers.column.actions": "\u0625\u062C\u0631\u0627\u0621\u0627\u062A",
       "vx.paymentDocumentsMembers.filter.roleAll": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 (\u0627\u0644\u0643\u0644)",
       "vx.paymentDocumentsMembers.filter.payOkAll": "\u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645 (\u0627\u0644\u0643\u0644)",
@@ -46243,6 +46330,10 @@ var init_vertical_iq = __esm({
       "vx.paymentDocumentsMembers.confirm.switchBody": "\u062A\u0628\u062F\u064A\u0644 \u062D\u0627\u0644\u0629 \u0627\u0644\u0627\u0633\u062A\u062D\u0642\u0627\u0642 \u0644\u0647\u0630\u0627 \u0627\u0644\u0633\u062C\u0644\u061F",
       "vx.paymentDocumentsMembers.editAmountTitle": "\u062A\u0639\u062F\u064A\u0644 \u0645\u0628\u0644\u063A \u0627\u0644\u0645\u0646\u062D\u0629",
       "vx.paymentDocumentsMembers.imagesTitle": "\u0635\u0648\u0631 \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645",
+      "vx.paymentDocumentsMembers.compareImages.title": "\u0645\u0642\u0627\u0631\u0646\u0629 \u0627\u0644\u0635\u0648\u0631",
+      "vx.paymentDocumentsMembers.compareImages.receiptPhoto": "\u0635\u0648\u0631\u0629 \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645",
+      "vx.paymentDocumentsMembers.compareImages.personalPhoto": "\u0627\u0644\u0635\u0648\u0631\u0629 \u0627\u0644\u0634\u062E\u0635\u064A\u0629",
+      "vx.paymentDocumentsMembers.compareImages.loadError": "\u062A\u0639\u0630\u0651\u0631 \u062A\u062D\u0645\u064A\u0644 \u0627\u0644\u0635\u0648\u0631.",
       "vx.paymentDocumentsMembers.image.selfie": "\u0627\u0644\u0633\u064A\u0644\u0641\u064A",
       "vx.paymentDocumentsMembers.image.member": "\u0635\u0648\u0631\u0629 \u0627\u0644\u0639\u0636\u0648",
       "vx.paymentDocumentsMembers.image.missing": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0635\u0648\u0631\u0629",
@@ -46456,6 +46547,13 @@ var init_vertical_iq = __esm({
       "vx.memberPicker.search.hint": "\u0627\u0643\u062A\u0628 \u062D\u0631\u0641\u064A\u0646 \u0639\u0644\u0649 \u0627\u0644\u0627\u0642\u0644 \u0627\u0648 \u0631\u0642\u0645 \u0627\u0644\u0639\u0636\u0648.",
       "vx.memberPicker.search.empty": "\u0644\u0627 \u064A\u0648\u062C\u062F \u0627\u0639\u0636\u0627\u0621 \u0645\u0637\u0627\u0628\u0642\u0648\u0646.",
       "vx.memberPicker.search.failed": "\u0641\u0634\u0644 \u0627\u0644\u0628\u062D\u062B.",
+      "vx.memberPicker.awaitingScope": "\u0623\u0643\u0645\u0644 \u0645\u0633\u0627\u0631 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A\u0627 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628\u064A\u0629 \u0625\u0644\u0649 \u0627\u0644\u0631\u0642\u0639\u0629\u060C \u0623\u0648 \u0627\u0643\u062A\u0628 \u0627\u0633\u0645\u0627\u064B \u0623\u0648 \u0631\u0642\u0645 \u0627\u0646\u062A\u0645\u0627\u0621 \u0644\u0644\u0628\u062D\u062B.",
+      "vx.memberPicker.filter.gender": "\u0627\u0644\u062C\u0646\u0633",
+      "vx.memberPicker.filter.genderAll": "\u0627\u0644\u062C\u0646\u0633 (\u0627\u0644\u0643\u0644)",
+      "vx.memberPicker.cardList": "\u0628\u0637\u0627\u0642\u0627\u062A \u0627\u0644\u0623\u0639\u0636\u0627\u0621",
+      "vx.memberPicker.card.moreInstitutesCount": "\u0645\u0624\u0633\u0633\u0629 \u0623\u062E\u0631\u0649",
+      "vx.memberPicker.confirmMultiple": "\u0625\u0636\u0627\u0641\u0629 {count} \u0623\u0639\u0636\u0627\u0621",
+      "vx.memberPicker.toast.selectionCap": "\u064A\u0645\u0643\u0646\u0643 \u0627\u062E\u062A\u064A\u0627\u0631 {count} \u0639\u0636\u0648\u0627\u064B \u0643\u062D\u062F \u0623\u0642\u0635\u0649.",
       "vx.phoneRequests.requestChange": "\u0637\u0644\u0628 \u062A\u063A\u064A\u064A\u0631",
       "vx.phoneRequests.swap": "\u062A\u0628\u062F\u064A\u0644 \u0627\u0644\u0647\u0627\u062A\u0641\u064A\u0646",
       "vx.phoneRequests.history": "\u0633\u062C\u0644 \u0627\u0644\u0637\u0644\u0628\u0627\u062A",
@@ -46877,6 +46975,16 @@ var init_vertical_iq = __esm({
       "vx.identityComponents.section.list-toolbar-quick-search.hint": "\u0648\u0636\u0639 \u0661 \u2014 \u062D\u0642\u0644 \u0627\u0644\u0628\u062D\u062B \u0639\u0646\u062F \u0625\u062E\u0641\u0627\u0621 \u0634\u0631\u064A\u0637 \u0627\u0644\u062D\u0642\u0648\u0644.",
       "vx.identityComponents.section.phone-number-display.label": "\u0639\u0631\u0636 \u0631\u0642\u0645 \u0627\u0644\u0647\u0627\u062A\u0641",
       "vx.identityComponents.section.phone-number-display.hint": "\u0634\u0627\u0631\u0629 \u0645\u0636\u063A\u0648\u0637\u0629 \u0641\u064A \u0627\u0644\u0634\u0628\u0643\u0629 \u0648\u0639\u0631\u0636 \u0643\u0627\u0645\u0644 \u0641\u064A \u0627\u0644\u0646\u0645\u0627\u0630\u062C \u0645\u0639 \u0627\u062A\u0635\u0627\u0644 \u0648\u0648\u0627\u062A\u0633\u0627\u0628.",
+      "vx.identityComponents.section.member-rashh-picker-dialog.label": "\u062D\u0648\u0627\u0631 \u0627\u062E\u062A\u064A\u0627\u0631 \u0627\u0644\u0639\u0636\u0648 (\u0631\u0634\u0651\u062D)",
+      "vx.identityComponents.section.member-rashh-picker-dialog.hint": "\u0645\u064F\u0646\u062A\u0642\u0650\u064A \u0623\u0639\u0636\u0627\u0621 \u0645\u0643\u0628\u0651\u0631 \u2014 \u0633\u0644\u0633\u0644\u0629 \u0627\u0646\u062A\u062E\u0627\u0628\u064A\u0629\u060C \u0645\u0631\u0634\u0651\u062D\u0627\u062A \u0627\u0644\u0623\u0633\u0645\u0627\u0621\u060C \u0634\u0628\u0643\u0629 \u0628\u0637\u0627\u0642\u0627\u062A. \u0639\u0646\u062F \u0627\u0644\u0641\u062A\u062D \u0639\u064A\u0651\u0646 `selectionMode` \u0625\u0644\u0649 `single` \u0623\u0648 `multiple`.",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.single.title": "\u0627\u062E\u062A\u064A\u0627\u0631 \u0645\u0641\u0631\u062F",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.single.description": "\u0628\u0637\u0627\u0642\u0629 \u0648\u0627\u062D\u062F\u0629 \u0641\u064A \u0643\u0644 \u0645\u0631\u0629 \u2014 \u0627\u0644\u0627\u0641\u062A\u0631\u0627\u0636\u064A \u0644\u062D\u0627\u0636\u0631\u064A\u0646 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639 \u0648\u0627\u0644\u062A\u0631\u0634\u064A\u062D.",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.multiple.title": "\u0627\u062E\u062A\u064A\u0627\u0631 \u0645\u062A\u0639\u062F\u062F",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.multiple.description": '\u062A\u0628\u062F\u064A\u0644 \u0639\u062F\u0629 \u0628\u0637\u0627\u0642\u0627\u062A \u062B\u0645 \u062A\u0623\u0643\u064A\u062F \u0645\u0631\u0629 \u0648\u0627\u062D\u062F\u0629 \u2014 `selectionMode="multiple"`.',
+      "vx.identityComponents.preview.member-rashh-picker-dialog.openSingle": "\u0641\u062A\u062D \u0627\u0644\u0645\u064F\u0646\u062A\u0642\u0650\u064A (\u0645\u0641\u0631\u062F)",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.openMultiple": "\u0641\u062A\u062D \u0627\u0644\u0645\u064F\u0646\u062A\u0642\u0650\u064A (\u0645\u062A\u0639\u062F\u062F)",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.confirmedSingle": "\u062A\u0645 \u0627\u0644\u0627\u062E\u062A\u064A\u0627\u0631: {name}",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.confirmedMultiple": "\u062A\u0645 \u0627\u062E\u062A\u064A\u0627\u0631 {count} \u0623\u0639\u0636\u0627\u0621",
       "vx.identityComponents.preview.member-directory-face.registered.title": "\u0639\u0636\u0648 \u0645\u0633\u062C\u0651\u0644 (\u0627\u0633\u0645 \u0645\u0633\u062A\u062E\u062F\u0645 \u0623\u0632\u0631\u0642)",
       "vx.identityComponents.preview.member-directory-face.registered.description": "\u0645\u0646\u062A\u0638\u0645\u0648\u0646 / \u062C\u0645\u064A\u0639 \u0627\u0644\u0623\u0634\u062E\u0627\u0635 \u2014 \u0627\u0633\u0645 \u0645\u0633\u062A\u062E\u062F\u0645 \u0645\u062E\u0635\u0651\u0635 \u0645\u0646 \u0633\u062A\u0629 \u0623\u0631\u0642\u0627\u0645 \u062A\u062D\u062A \u0627\u0644\u0635\u0648\u0631\u0629 \u0627\u0644\u0631\u0645\u0632\u064A\u0629.",
       "vx.identityComponents.preview.member-directory-face.tracking.title": "\u0646\u0637\u0627\u0642 \u0631\u0645\u0632 \u0645\u062A\u0627\u0628\u0639\u0629 \u0641\u0642\u0637 (\u0623\u062D\u0645\u0631)",
@@ -48009,6 +48117,16 @@ var init_vertical_us = __esm({
       "vx.identityComponents.section.list-toolbar-quick-search.hint": "Toolbar mode 1 \u2014 quick search visible when field bar is collapsed.",
       "vx.identityComponents.section.phone-number-display.label": "Phone number display",
       "vx.identityComponents.section.phone-number-display.hint": "Compact grid badge and full-width form phone with call / WhatsApp actions.",
+      "vx.identityComponents.section.member-rashh-picker-dialog.label": "Member rashh picker dialog",
+      "vx.identityComponents.section.member-rashh-picker-dialog.hint": "Maximized member picker \u2014 electoral cascade, name filters, card grid. Set `selectionMode` to `single` or `multiple` when opening.",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.single.title": "Single select",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.single.description": "One card at a time \u2014 default for hazerin and nominate flows.",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.multiple.title": "Multiple select",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.multiple.description": 'Toggle several cards, confirm once \u2014 `selectionMode="multiple"`.',
+      "vx.identityComponents.preview.member-rashh-picker-dialog.openSingle": "Open single-select picker",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.openMultiple": "Open multi-select picker",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.confirmedSingle": "Selected: {name}",
+      "vx.identityComponents.preview.member-rashh-picker-dialog.confirmedMultiple": "Selected {count} members",
       "vx.identityComponents.preview.member-directory-face.registered.title": "Registered member (blue username)",
       "vx.identityComponents.preview.member-directory-face.registered.description": "Montadhemin / all-people \u2014 six-digit allocated username under avatar.",
       "vx.identityComponents.preview.member-directory-face.tracking.title": "Tracking-only scope (red code)",
@@ -48503,10 +48621,19 @@ var init_vertical_us = __esm({
       "vx.meetings.addMemberUsername": "Membership number",
       "vx.meetings.addMember": "Add member",
       "vx.meetings.noMembers": "No members on this meeting roster.",
+      "vx.meetings.rosterAttendedOnly": "Attended before \u2014 add by membership number to authorize on the roster.",
       "vx.meetings.attendanceTitle": "Instance attendance",
       "vx.meetings.rosterYetTitle": "Active roster members",
       "vx.meetings.rosterNotTitle": "Inactive roster members",
       "vx.meetings.hazerinTitle": "Present at this instance",
+      "vx.meetings.addHazerin": "Add attendee",
+      "vx.meetings.hazerinSearch.placeholder": "Search by name or membership number",
+      "vx.meetings.hazerinSearch.aria": "Filter attendees in this list",
+      "vx.meetings.hazerinSearchEmpty": "No attendees match this search.",
+      "vx.meetings.removeHazerin": "Remove attendee",
+      "vx.meetings.hazerinAdded": "Attendee added.",
+      "vx.meetings.hazerinNotSaved": "Attendee was not saved. Add the member to the meeting roster first, then try again.",
+      "vx.meetings.hazerinRemoved": "Attendee removed.",
       "vx.meetings.memberPreviewEmpty": "No members in this list.",
       "vx.meetings.deleteInstanceConfirm": "Delete this meeting instance? This cannot be undone.",
       "vx.meetings.markAbsent": "Present \u2014 clear",
@@ -48527,7 +48654,7 @@ var init_vertical_us = __esm({
       "vx.masoolinPerformance.exportEmpty": "No rows to export.",
       "vx.masoolinPerformance.exportError": "Export failed.",
       "vx.masoolinPerformance.empty": "No rows match the current filters.",
-      "vx.masoolinPerformance.emptyHint": "Set filters and press Search.",
+      "vx.masoolinPerformance.emptyHint": "Set filters and press Refresh.",
       "vx.masoolinPerformance.filter.gender": "Gender",
       "vx.masoolinPerformance.filter.genderAll": "Gender (all)",
       "vx.masoolinPerformance.filter.role": "Responsibility",
@@ -48539,9 +48666,33 @@ var init_vertical_us = __esm({
       "vx.masoolinPerformance.filter.tamvin": "Maktab",
       "vx.masoolinPerformance.filter.tamvinAll": "Maktab (all)",
       "vx.masoolinPerformance.filter.username": "Username",
+      "vx.masoolinPerformance.filter.bicLevel": "Current month activity",
+      "vx.masoolinPerformance.filter.bi1Level": "Last month activity",
+      "vx.masoolinPerformance.filter.bi2Level": "Two months ago activity",
+      "vx.masoolinPerformance.filter.bi3Level": "Three months ago activity",
+      "vx.masoolinPerformance.filter.moneyAmount1": "Current month pay",
+      "vx.masoolinPerformance.filter.moneyAmount2": "Last month pay",
+      "vx.masoolinPerformance.filter.moneyAmount3": "Two months ago pay",
+      "vx.masoolinPerformance.filter.moneyAmount.MoneyAmount1": "Amount rule 1",
+      "vx.masoolinPerformance.filter.moneyAmount.MoneyAmount2": "Amount rule 2",
+      "vx.masoolinPerformance.filter.moneyAmount.MoneyAmount3": "Amount rule 3",
+      "vx.masoolinPerformance.filter.moneyAmount.Blank": "Blank",
+      "vx.masoolinPerformance.filter.moneyAmount.Zero": "Zero",
+      "vx.masoolinPerformance.filter.moneyAmount.BlankAndZero": "Blank and zero",
+      "vx.masoolinPerformance.filter.moneyAmount.UpperZero": "Greater than zero",
+      "vx.masoolinPerformance.filter.payable": "Chief / deputy",
+      "vx.masoolinPerformance.filter.sameRoghe": "Roghe chiefs count",
+      "vx.masoolinPerformance.filter.sameRogheZero": "Zero",
+      "vx.masoolinPerformance.filter.sameRogheOne": "One",
+      "vx.masoolinPerformance.filter.sameRogheMoreThanZero": "More than zero",
+      "vx.masoolinPerformance.filter.sameRogheMoreThanOne": "More than one",
+      "vx.masoolinPerformance.filter.conflict": "Official conflict",
+      "vx.masoolinPerformance.filter.conflictYes": "Conflict",
+      "vx.masoolinPerformance.filter.conflictNo": "No conflict",
       "vx.masoolinPerformance.column.username": "Username",
       "vx.masoolinPerformance.column.name": "Name",
       "vx.masoolinPerformance.column.geo": "Area",
+      "vx.masoolinPerformance.column.responsibilityCenter": "Responsibility center",
       "vx.masoolinPerformance.column.role": "Responsibility",
       "vx.masoolinPerformance.column.daysInRole": "Days in role",
       "vx.masoolinPerformance.column.chiefRole": "Chief / deputy",
@@ -48553,6 +48704,9 @@ var init_vertical_us = __esm({
       "vx.masoolinPerformance.chiefRole.chief": "Chief",
       "vx.masoolinPerformance.chiefRole.deputy": "Deputy",
       "vx.masoolinPerformance.setChiefMasool": "Set as chief",
+      "vx.masoolinPerformance.calcStars": "Calculate stars",
+      "vx.masoolinPerformance.calcStarsDone": "Monthly masoolin stars batch finished.",
+      "vx.masoolinPerformance.calcStarsError": "Stars batch failed.",
       "vx.masoolinPerformance.role.circleOfficer": "Circle officer",
       "vx.masoolinPerformance.role.officeOfficer": "Office officer",
       "vx.masoolinPerformance.role.regionOfficer": "Region officer",
@@ -48572,6 +48726,7 @@ var init_vertical_us = __esm({
       "vx.membersSocialScreens.listType.rejected": "Rejected",
       "vx.membersSocialScreens.listType.onGoing": "In progress",
       "vx.membersSocialScreens.loading": "Loading\u2026",
+      "vx.membersSocialScreens.loadError": "Could not load social screen review.",
       "vx.membersSocialScreens.empty": "Nothing to review for the current filters.",
       "vx.membersSocialScreens.screenAlt": "Screenshot",
       "vx.membersSocialScreens.noImage": "No preview",
@@ -48581,10 +48736,25 @@ var init_vertical_us = __esm({
       "vx.membersSocialScreens.reject": "Reject",
       "vx.membersSocialScreens.actionDone": "Action completed.",
       "vx.membersSocialScreens.actionError": "Action failed.",
+      "vx.membersSocialScreens.saveSocialIds": "Save links",
+      "vx.membersSocialScreens.social.section": "Member social links",
+      "vx.membersSocialScreens.social.facebook": "Facebook profile URL",
+      "vx.membersSocialScreens.social.tweeter": "X (Twitter) profile URL",
+      "vx.membersSocialScreens.social.tiktok": "TikTok profile URL",
+      "vx.membersSocialScreens.reopenForMember": "Return record to member",
+      "vx.membersSocialScreens.switchToAccepted": "Switch decision to accepted",
+      "vx.membersSocialScreens.switchToRejected": "Switch decision to rejected",
+      "vx.membersSocialScreens.deleteScreen": "Delete",
+      "vx.membersSocialScreens.deleteScreenConfirm": "Remove this screenshot from the member record?",
+      "vx.membersSocialScreens.viewLarger": "View larger",
+      "vx.membersSocialScreens.download": "Download",
+      "vx.membersSocialScreens.cancel": "Cancel",
+      "vx.membersSocialScreens.memberApprovedOn": "Member confirmed submission",
       "vx.finance.comingSoon": "This page is coming soon.",
       "vx.paymentDocuments.column.id": "Id",
       "vx.paymentDocuments.column.year": "Year",
       "vx.paymentDocuments.column.month": "Month",
+      "vx.paymentDocuments.column.docPeriod": "Grant period",
       "vx.paymentDocuments.column.gender": "Gender",
       "vx.paymentDocuments.column.province": "Province",
       "vx.paymentDocuments.column.circle": "Circle",
@@ -48592,6 +48762,19 @@ var init_vertical_us = __esm({
       "vx.paymentDocuments.column.paidAmount": "Paid amount",
       "vx.paymentDocuments.column.pendingAmount": "Pending amount",
       "vx.paymentDocuments.column.actions": "Actions",
+      "vx.paymentDocuments.filter.fieldFiltersActive": "Field filters",
+      "vx.paymentDocuments.filter.quickSearchField": "Search field",
+      "vx.paymentDocuments.filter.docPeriod": "Grant period (year/month)",
+      "vx.paymentDocuments.filter.docPeriodPlaceholder": "e.g. 2026/10",
+      "vx.paymentDocuments.filter.documentId": "Document id",
+      "vx.paymentDocuments.filter.documentIdPlaceholder": "Document id",
+      "vx.paymentDocuments.filter.provinceId": "Province id",
+      "vx.paymentDocuments.filter.provinceIdPlaceholder": "Province id",
+      "vx.paymentDocuments.filter.circleId": "Circle id",
+      "vx.paymentDocuments.filter.circleIdPlaceholder": "Circle id",
+      "vx.paymentDocuments.publish": "Publish",
+      "vx.paymentDocuments.confirm.publishTitle": "Publish document",
+      "vx.paymentDocuments.confirm.publishBody": "Publish this document to finance?",
       "vx.paymentDocuments.filter.genderAll": "Gender (all)",
       "vx.paymentDocuments.filter.provinceAll": "Province (all)",
       "vx.paymentDocuments.filter.circleAll": "Circle (all)",
@@ -48631,12 +48814,20 @@ var init_vertical_us = __esm({
       "vx.paymentDocumentsMembers.column.username": "Username",
       "vx.paymentDocumentsMembers.column.name": "Name",
       "vx.paymentDocumentsMembers.column.role": "Role",
-      "vx.paymentDocumentsMembers.column.docPeriod": "Year / month",
+      "vx.paymentDocumentsMembers.column.docPeriod": "Grant period",
+      "vx.paymentDocumentsMembers.filter.quickSearchField": "Search field",
+      "vx.paymentDocumentsMembers.filter.docPeriod": "Grant period (year/month)",
+      "vx.paymentDocumentsMembers.filter.docPeriodPlaceholder": "e.g. 2026/10",
       "vx.paymentDocumentsMembers.column.year": "Year",
       "vx.paymentDocumentsMembers.column.month": "Month",
+      "vx.paymentDocumentsMembers.column.sameDeviceCount": "Same device uses",
+      "vx.paymentDocumentsMembers.column.levelTitle": "Activity level",
       "vx.paymentDocumentsMembers.column.payAmount": "Pay amount",
       "vx.paymentDocumentsMembers.column.payableReason": "Payable reason",
       "vx.paymentDocumentsMembers.column.payOk": "Receipt signed",
+      "vx.paymentDocumentsMembers.column.receipt": "Receipt",
+      "vx.paymentDocumentsMembers.receipt.serverOn": "Server",
+      "vx.paymentDocumentsMembers.receipt.deviceOn": "Device",
       "vx.paymentDocumentsMembers.column.actions": "Actions",
       "vx.paymentDocumentsMembers.filter.role": "Responsibility",
       "vx.paymentDocumentsMembers.filter.roleAll": "Responsibility (all)",
@@ -48682,6 +48873,10 @@ var init_vertical_us = __esm({
       "vx.paymentDocumentsMembers.confirm.switchBody": "Toggle payability for this member line?",
       "vx.paymentDocumentsMembers.editAmountTitle": "Edit pay amount",
       "vx.paymentDocumentsMembers.imagesTitle": "Receipt images",
+      "vx.paymentDocumentsMembers.compareImages.title": "Compare photos",
+      "vx.paymentDocumentsMembers.compareImages.receiptPhoto": "Receipt photo",
+      "vx.paymentDocumentsMembers.compareImages.personalPhoto": "Personal photo",
+      "vx.paymentDocumentsMembers.compareImages.loadError": "Could not load images.",
       "vx.paymentDocumentsMembers.image.selfie": "Selfie",
       "vx.paymentDocumentsMembers.image.member": "Member picture",
       "vx.paymentDocumentsMembers.image.missing": "No image",
@@ -48895,6 +49090,13 @@ var init_vertical_us = __esm({
       "vx.memberPicker.search.hint": "Type at least 2 characters or a member id.",
       "vx.memberPicker.search.empty": "No members match this search.",
       "vx.memberPicker.search.failed": "Search failed.",
+      "vx.memberPicker.awaitingScope": "Select the full electoral path to this patch, or type a name or membership number to search.",
+      "vx.memberPicker.filter.gender": "Gender",
+      "vx.memberPicker.filter.genderAll": "Gender (all)",
+      "vx.memberPicker.cardList": "Member cards",
+      "vx.memberPicker.card.moreInstitutesCount": "more institutes",
+      "vx.memberPicker.confirmMultiple": "Add {count} members",
+      "vx.memberPicker.toast.selectionCap": "You can select at most {count} members.",
       "vx.phoneRequests.requestChange": "Request change",
       "vx.phoneRequests.swap": "Swap phones",
       "vx.phoneRequests.history": "Request history",
@@ -91974,25 +92176,25 @@ var init_schemaObjectDefinition = __esm({
     quoteSqlServer = (name) => `[${name.replace(/]/g, "]]")}]`;
     startsWithCreate = (value) => /^\s*CREATE\b/i.test(value);
     escapeRegExp2 = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    expandPostgreSqlDollarQuotedBodies = (sql23) => sql23.replace(/\bAS\s+(\$[A-Za-z0-9_]*\$)([\s\S]*?)\1/g, (_match, tag, body) => `AS ${tag}
+    expandPostgreSqlDollarQuotedBodies = (sql25) => sql25.replace(/\bAS\s+(\$[A-Za-z0-9_]*\$)([\s\S]*?)\1/g, (_match, tag, body) => `AS ${tag}
 ${body.trim()}
 ${tag}`);
     formatPostgreSqlRoutineForEditor = (objectName, rawDefinition) => {
       const quotedName = quotePg(objectName);
-      let sql23 = expandPostgreSqlDollarQuotedBodies(rawDefinition.replace(/\r\n/g, "\n").trim());
-      sql23 = sql23.replace(
+      let sql25 = expandPostgreSqlDollarQuotedBodies(rawDefinition.replace(/\r\n/g, "\n").trim());
+      sql25 = sql25.replace(
         new RegExp(`\\bpublic\\.${escapeRegExp2(objectName)}\\b`, "gi"),
         quotedName
       );
-      sql23 = sql23.replace(
+      sql25 = sql25.replace(
         new RegExp(
           `(CREATE(?:\\s+OR\\s+REPLACE)?\\s+(?:PROCEDURE|FUNCTION)\\s+)${escapeRegExp2(objectName)}(?=\\s*\\()`,
           "gi"
         ),
         `$1${quotedName}`
       );
-      sql23 = sql23.replace(/\n[ \t]*LANGUAGE\s+/gi, "\nLANGUAGE ");
-      const simpleLanguageSqlMatch = sql23.match(
+      sql25 = sql25.replace(/\n[ \t]*LANGUAGE\s+/gi, "\nLANGUAGE ");
+      const simpleLanguageSqlMatch = sql25.match(
         /^([\s\S]*?\bLANGUAGE\s+sql\s+)AS\s+\$[A-Za-z0-9_]*\$\s*([\s\S]*?)\s*\$[A-Za-z0-9_]*\$\s*$/i
       );
       if (simpleLanguageSqlMatch) {
@@ -92003,11 +92205,11 @@ ${tag}`);
           if (!body.endsWith(";")) {
             body = `${body};`;
           }
-          sql23 = `${header}
+          sql25 = `${header}
 AS '${body}'`;
         }
       }
-      return sql23;
+      return sql25;
     };
     extractSchemaObjectDefinitionRow = (row) => {
       if (!row || typeof row !== "object") {
@@ -92107,11 +92309,11 @@ ${definition}`;
 
 // src/server/utils/dataSourceSchemaIntrospection.ts
 async function listDataSourceSchemaObjects(dbQuery, sourceType, objectType, context) {
-  const sql23 = buildIntrospectionSql(sourceType, objectType, context.functionKind);
-  if (!sql23) {
+  const sql25 = buildIntrospectionSql(sourceType, objectType, context.functionKind);
+  if (!sql25) {
     return [];
   }
-  const result = await dbQuery(sql23, [], context);
+  const result = await dbQuery(sql25, [], context);
   const names = result.data.map(extractName).filter((name) => Boolean(name));
   return Array.from(new Set(names)).sort((left, right) => left.localeCompare(right));
 }
@@ -93159,9 +93361,9 @@ var init_dataTools = __esm({
       updated_at: source.updated_at,
       hasPassword: source.hasPassword
     });
-    stripSqlComments2 = (sql23) => sql23.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
-    validateReadOnlySql = (sql23) => {
-      const trimmed = sql23.trim();
+    stripSqlComments2 = (sql25) => sql25.replace(/--[^\n\r]*/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
+    validateReadOnlySql = (sql25) => {
+      const trimmed = sql25.trim();
       if (!trimmed) {
         return { ok: false, reason: "SQL is empty." };
       }
@@ -93312,7 +93514,7 @@ var init_dataTools = __esm({
     };
     executeQueryReadonly = async (args, deps) => {
       const dataSourceId = typeof args.dataSourceId === "string" ? args.dataSourceId : "";
-      const sql23 = typeof args.sql === "string" ? args.sql : "";
+      const sql25 = typeof args.sql === "string" ? args.sql : "";
       const params = parseQueryParams(args.params);
       const resolved = resolveDataSource2(deps.getSettingsPath(), dataSourceId);
       if (!resolved.ok) {
@@ -93325,7 +93527,7 @@ var init_dataTools = __esm({
           error: "unsupported_data_source_type"
         };
       }
-      const validation = validateReadOnlySql(sql23);
+      const validation = validateReadOnlySql(sql25);
       if (!validation.ok) {
         return {
           ok: false,
@@ -93335,7 +93537,7 @@ var init_dataTools = __esm({
       }
       try {
         const queryResult = await deps.edgeDbQuery(
-          sql23.trim(),
+          sql25.trim(),
           params,
           {
             dataSourceId: resolved.source.id,
@@ -102103,7 +102305,7 @@ const ALLOW_SORT = ${operation.query?.allowSort !== false};`;
       const qualifiedName = model.schema ? `${model.schema}.${model.objectName}` : model.objectName;
       const paramEntries = Object.entries(routine.paramMap).map(([paramName, sourceKey]) => `    ${JSON.stringify(paramName)}: payload[${JSON.stringify(sourceKey)}] ?? params?.[${JSON.stringify(sourceKey)}] ?? query?.[${JSON.stringify(sourceKey)}],`).join("\n");
       const placeholders = Object.keys(routine.paramMap).map(() => "?").join(", ");
-      const sql23 = routine.objectType === "PROCEDURE" ? `CALL ${qualifiedName}(${placeholders})` : `SELECT * FROM ${qualifiedName}(${placeholders})`;
+      const sql25 = routine.objectType === "PROCEDURE" ? `CALL ${qualifiedName}(${placeholders})` : `SELECT * FROM ${qualifiedName}(${placeholders})`;
       return `const query = req.query ?? {};
   const params = req.params ?? {};
   const payload = {
@@ -102116,7 +102318,7 @@ const ALLOW_SORT = ${operation.query?.allowSort !== false};`;
 ${paramEntries}
   };
   const replacements = Object.values(routineParams);
-  const results = await sequelize.query(${JSON.stringify(sql23)}, {
+  const results = await sequelize.query(${JSON.stringify(sql25)}, {
     replacements,
     type: QueryTypes.SELECT,
   });
@@ -113232,8 +113434,8 @@ async function loadActiveMemberInstituteTitlesForList(memberIds) {
     }
   );
   const mapped = queryRows2.map((row) => ({
-    memberId: String(row.member_id ?? "").trim(),
-    instituteTitle: String(row.institute_title ?? "").trim()
+    memberId: String(row.memberId ?? row.member_id ?? "").trim(),
+    instituteTitle: String(row.instituteTitle ?? row.institute_title ?? "").trim()
   }));
   return buildMemberInstitutesSummaryByMemberId(mapped);
 }
@@ -113413,14 +113615,32 @@ async function fetchLegacyPlatformRolesByAction(pool, actions) {
 async function connectLegacyReadPool() {
   const { readLegacyConn: readLegacyConn2, withLegacyReadOnlyIntent: withLegacyReadOnlyIntent2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
   const cfg = withLegacyReadOnlyIntent2(readLegacyConn2());
-  return import_mssql2.default.connect({
+  const connectConfig = {
     user: cfg.user,
     password: cfg.password,
     server: cfg.server,
     database: cfg.database,
     options: cfg.options,
     pool: cfg.pool
-  });
+  };
+  const attempts = Math.max(1, Number(process.env.VX_LEGACY_READ_CONNECT_ATTEMPTS ?? 3));
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await import_mssql2.default.connect(connectConfig);
+    } catch (error) {
+      lastError = error;
+      const message = error instanceof Error ? error.message : String(error);
+      const retryable = /ECONNRESET|ETIMEDOUT|Connection lost|Failed to connect|ETIMEOUT/i.test(message);
+      if (!retryable || attempt >= attempts) {
+        break;
+      }
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1500 * attempt);
+      });
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error(String(lastError));
 }
 var import_mssql2, mapLegacyHwyRoleRow;
 var init_legacyHwyRoleAuth = __esm({
@@ -115082,12 +115302,12 @@ OUTER APPLY (
       }
       const dialect = sequelize.getDialect();
       const idCast = dialect === "mssql" ? "CAST(m.id AS NVARCHAR(32))" : "CAST(m.id AS TEXT)";
-      const sql23 = `AND (
+      const sql25 = `AND (
     m.phone1 LIKE :searchLike OR m.phone2 LIKE :searchLike OR m.username LIKE :searchLike
     OR m.first_name LIKE :searchLike OR m.family_name LIKE :searchLike OR m.national_id LIKE :searchLike
     OR ${idCast} LIKE :searchLike
   )`;
-      return { sql: sql23, replacements: { searchLike: `%${trimmed}%` } };
+      return { sql: sql25, replacements: { searchLike: `%${trimmed}%` } };
     };
     resolveScopeQueryPlan = async (sequelize, scope) => {
       const ctx3 = await loadHwyMemberListScopeContext();
@@ -115238,7 +115458,7 @@ INNER JOIN ${membersTable2} m ON m.id = mi.member_id
       if (joinNeeds.memberLinkedNakhebin) {
         joinClauses.push(memberLinkedNakhebinApplyClause(nakhebinTable));
       }
-      const sql23 = `
+      const sql25 = `
 SELECT ${selectList}
 ${fromSql}
 ${joinClauses.join("\n")}
@@ -115248,7 +115468,7 @@ ${joinTasjilSql}
 ${montadheminInstituteSql}
 ORDER BY ${orderBy}
 OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY`;
-      const rows = await sequelize.query(sql23, {
+      const rows = await sequelize.query(sql25, {
         type: import_sequelize25.QueryTypes.SELECT,
         replacements: {
           ...replacements,
@@ -115279,14 +115499,14 @@ OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY`;
       );
       const instituteScoped = definition.scope.type === "active_institute" || definition.scope.type === "pending_local_institute";
       const countExpr = instituteScoped ? "COUNT(DISTINCT m.id)" : "COUNT(*)";
-      const sql23 = `
+      const sql25 = `
 SELECT ${countExpr} AS cnt
 ${fromSql}
 ${whereSql}
 ${searchSql}
 ${joinTasjilSql}
 ${montadheminInstituteSql}`;
-      const rows = await sequelize.query(sql23, {
+      const rows = await sequelize.query(sql25, {
         type: import_sequelize25.QueryTypes.SELECT,
         replacements: {
           ...replacements,
@@ -115341,13 +115561,13 @@ ${montadheminInstituteSql}`;
       if (joinNeeds.memberLinkedNakhebin) {
         joinClauses.push(memberLinkedNakhebinApplyClause(nakhebinTable));
       }
-      const sql23 = `
+      const sql25 = `
 SELECT ${selectList}
 FROM ${membersTable2} m
 ${joinClauses.join("\n")}
 WHERE m.username = :lookup
    OR CAST(m.id AS NVARCHAR(32)) = :lookup`;
-      const rows = await sequelize.query(sql23, {
+      const rows = await sequelize.query(sql25, {
         type: import_sequelize25.QueryTypes.SELECT,
         replacements: { lookup: trimmedId }
       });
@@ -115960,8 +116180,8 @@ var init_vxGeoResponsibilityLegacyCenterStats_service = __esm({
       if (!Number.isFinite(input.legacyGeoId) || input.legacyGeoId <= 0) {
         return null;
       }
-      const runQuery = async (sql24) => {
-        const rows = await getControlPlaneSequelize().query(sql24, { type: import_sequelize26.QueryTypes.SELECT });
+      const runQuery = async (sql26) => {
+        const rows = await getControlPlaneSequelize().query(sql26, { type: import_sequelize26.QueryTypes.SELECT });
         const row = rows[0];
         if (!row) {
           return null;
@@ -115975,10 +116195,10 @@ var init_vxGeoResponsibilityLegacyCenterStats_service = __esm({
           totalMembers: montadheminCount
         };
       };
-      const sql23 = legacyStatsSql(input.level, input.legacyGeoId);
+      const sql25 = legacyStatsSql(input.level, input.legacyGeoId);
       if (await controlPlaneHasLegacyHwyMembersTable()) {
         try {
-          return await runQuery(sql23);
+          return await runQuery(sql25);
         } catch {
         }
       }
@@ -115986,7 +116206,7 @@ var init_vxGeoResponsibilityLegacyCenterStats_service = __esm({
         const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
         const pool = await connectLegacyReadPool2();
         try {
-          const result = await pool.request().query(sql23);
+          const result = await pool.request().query(sql25);
           const row = result.recordset[0];
           if (!row) {
             return null;
@@ -122287,7 +122507,7 @@ var init_verticalPackage = __esm({
     init_verticalApp();
     VERTICAL_PACKAGE_ID = "vertical";
     VERTICAL_PACKAGE_NAME = "Vertical";
-    VERTICAL_PACKAGE_VERSION = "0.3.15";
+    VERTICAL_PACKAGE_VERSION = "0.3.17";
     VERTICAL_PORTAL_SEGMENT = "vertical";
     VERTICAL_MOUNT_PATH_PREFIX = "/vertical";
     VERTICAL_HOST_PAGE_KEYS = [
@@ -122421,9 +122641,9 @@ var init_vxFinanceParityState_service = __esm({
     import_sequelize36 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
-    queryOk = async (sql23) => {
+    queryOk = async (sql25) => {
       if (readControlPlaneProvider() !== "sqlserver") return false;
-      const rows = await getControlPlaneSequelize().query(sql23, { type: import_sequelize36.QueryTypes.SELECT });
+      const rows = await getControlPlaneSequelize().query(sql25, { type: import_sequelize36.QueryTypes.SELECT });
       return Number(rows[0]?.ok) === 1;
     };
     vxFinancePaymentTablesReady = () => queryOk(`
@@ -122478,8 +122698,10 @@ var init_vxFinanceParityState_service = __esm({
     vxFinanceMasoolinDeferredReady = () => queryOk(`
     SELECT CASE
       WHEN OBJECT_ID(N'dbo.vx_members', N'U') IS NULL THEN 0
-      WHEN COL_LENGTH(N'dbo.vx_members', N'payable') IS NULL THEN 0
-      WHEN COL_LENGTH(N'dbo.vw_vx_platform_roles', N'IsExecutive') IS NULL THEN 0
+      WHEN COL_LENGTH(N'dbo.vx_members', N'chief_masool') IS NULL
+        AND COL_LENGTH(N'dbo.vx_members', N'payable') IS NULL THEN 0
+      WHEN COL_LENGTH(N'dbo.vw_vx_platform_roles', N'is_executive') IS NULL
+        AND COL_LENGTH(N'dbo.vw_vx_platform_roles', N'IsExecutive') IS NULL THEN 0
       ELSE 1
     END AS ok
   `);
@@ -122595,7 +122817,7 @@ var init_vxLegacyImportParityState_service = __esm({
 });
 
 // src/server/domain/vx/ensureHwyDbObjects.ts
-var import_node_fs12, import_node_path13, import_node_url2, import_sequelize38, import_meta2, ensurePromise2, resetHwyDbObjectsInstallState, installDir, SQL_INSTALL_ORDER, formatInstallError, VX_LEGACY_IMPORT_PARITY_FILES, VX_FINANCE_EDGE_COMPAT_FILES, VX_FINANCE_PAYMENT_FILES, VX_FINANCE_MASOOLIN_PROCESS_FILES, VX_FINANCE_MASOOLIN_FILES, VX_FINANCE_LEGACY_RETIRE_FILE, VX_FINANCE_DEFERRED_FILE, applySqlFile, ensureHwyDbObjects;
+var import_node_fs12, import_node_path13, import_node_url2, import_sequelize38, import_meta2, ensurePromise2, resetHwyDbObjectsInstallState, installDir, SQL_INSTALL_ORDER, formatInstallError, VX_LEGACY_IMPORT_PARITY_FILES, VX_FINANCE_EDGE_COMPAT_FILES, VX_FINANCE_PAYMENT_FILES, VX_FINANCE_MASOOLIN_PROCESS_FILES, VX_FINANCE_MASOOLIN_FILES, VX_FINANCE_LEGACY_RETIRE_FILE, VX_FINANCE_DEFERRED_FILE, applySqlFile, ensureHwyDbObjects, MASOOLIN_PERFORMANCE_PREREQ_SQL_FILES, masoolinPerformancePrereqPromise, ensureHwyMasoolinPerformanceDbPrerequisites;
 var init_ensureHwyDbObjects = __esm({
   "src/server/domain/vx/ensureHwyDbObjects.ts"() {
     import_node_fs12 = require("node:fs");
@@ -122676,13 +122898,23 @@ var init_ensureHwyDbObjects = __esm({
       "vx_finance_edge_table_rename.sqlserver.sql",
       "vx_finance_edge_column_rename.sqlserver.sql",
       "vx_finance_edge_functions.sqlserver.sql",
+      "vx_finance_member_legacy_exprs.sqlserver.sql",
       "vx_db_procedures_finance_payment.sqlserver.sql",
       "vx_db_procedures_writes_finance.sqlserver.sql",
       "vx_db_procedures_reads_finance.sqlserver.sql",
       "vx_db_views_finance_payment.sqlserver.sql",
+      "vx_masoolin_same_roghe_members.sqlserver.sql",
       "vx_db_procedures_finance_masoolin_process.sqlserver.sql",
       "vx_db_views_finance_masoolin.sqlserver.sql",
+      "vx_finance_month_boundary.sqlserver.sql",
+      "vx_finance_masoolin_agg.sqlserver.sql",
+      "vx_member_social_screen_months.sqlserver.sql",
+      "vx_masoolin_activity_star_counts.sqlserver.sql",
+      "vx_masoolin_social_activities_passed.sqlserver.sql",
+      "vx_member_social_screen_months_sync.sqlserver.sql",
       "vx_db_procedures_finance_masoolin.sqlserver.sql",
+      "vx_db_procedures_finance_masoolin_stars_recalc.sqlserver.sql",
+      "vx_finance_retire_computed_member_cols.sqlserver.sql",
       "vx_db_procedures_finance_deferred.sqlserver.sql",
       "vx_db_procedures_finance_legacy_retire.sqlserver.sql"
     ];
@@ -122733,11 +122965,20 @@ var init_ensureHwyDbObjects = __esm({
       "vx_member_masooliat_star_columns.sqlserver.sql"
     ]);
     VX_FINANCE_MASOOLIN_PROCESS_FILES = /* @__PURE__ */ new Set([
+      "vx_masoolin_same_roghe_members.sqlserver.sql",
       "vx_db_procedures_finance_masoolin_process.sqlserver.sql"
     ]);
     VX_FINANCE_MASOOLIN_FILES = /* @__PURE__ */ new Set([
       "vx_db_views_finance_masoolin.sqlserver.sql",
-      "vx_db_procedures_finance_masoolin.sqlserver.sql"
+      "vx_finance_month_boundary.sqlserver.sql",
+      "vx_finance_masoolin_agg.sqlserver.sql",
+      "vx_member_social_screen_months.sqlserver.sql",
+      "vx_masoolin_activity_star_counts.sqlserver.sql",
+      "vx_masoolin_social_activities_passed.sqlserver.sql",
+      "vx_member_social_screen_months_sync.sqlserver.sql",
+      "vx_db_procedures_finance_masoolin.sqlserver.sql",
+      "vx_db_procedures_finance_masoolin_stars_recalc.sqlserver.sql",
+      "vx_finance_retire_computed_member_cols.sqlserver.sql"
     ]);
     VX_FINANCE_LEGACY_RETIRE_FILE = "vx_db_procedures_finance_legacy_retire.sqlserver.sql";
     VX_FINANCE_DEFERRED_FILE = "vx_db_procedures_finance_deferred.sqlserver.sql";
@@ -122779,7 +123020,7 @@ var init_ensureHwyDbObjects = __esm({
               }
               if (!await vxFinanceMasoolinDeferredReady()) {
                 console.warn(
-                  `[VX DB objects] Skipping ${file} \u2014 masoolin deferred schema parity incomplete (IsExecutive / payable).`
+                  `[VX DB objects] Skipping ${file} \u2014 masoolin deferred schema parity incomplete (is_executive / chief_masool).`
                 );
                 continue;
               }
@@ -122912,6 +123153,41 @@ var init_ensureHwyDbObjects = __esm({
         });
       }
       await ensurePromise2;
+    };
+    MASOOLIN_PERFORMANCE_PREREQ_SQL_FILES = [
+      "vx_legacy_edge_pipeline_compat.sqlserver.sql",
+      "vx_finance_greenfield_compat.sqlserver.sql",
+      "vx_finance_member_legacy_exprs.sqlserver.sql",
+      "vx_finance_split2_compat.sqlserver.sql",
+      "vx_finance_masoolin_list_stub_compat.sqlserver.sql",
+      "vw_vx_members_masoolin.sqlserver.sql"
+    ];
+    masoolinPerformancePrereqPromise = null;
+    ensureHwyMasoolinPerformanceDbPrerequisites = async () => {
+      if (!isVerticalRuntimeEnabled()) {
+        return;
+      }
+      if (readControlPlaneProvider() !== "sqlserver") {
+        return;
+      }
+      if (!masoolinPerformancePrereqPromise) {
+        masoolinPerformancePrereqPromise = (async () => {
+          for (const file of MASOOLIN_PERFORMANCE_PREREQ_SQL_FILES) {
+            try {
+              await applySqlFile(file);
+            } catch (error) {
+              throw new Error(
+                `Masoolin performance DB prerequisites failed in ${file}: ${formatInstallError(error)}`,
+                { cause: error }
+              );
+            }
+          }
+        })().catch((error) => {
+          masoolinPerformancePrereqPromise = null;
+          throw error;
+        });
+      }
+      await masoolinPerformancePrereqPromise;
     };
   }
 });
@@ -123768,8 +124044,8 @@ var init_dataApiExecutor = __esm({
               }
               return value;
             });
-            const sql23 = buildRoutineSql(model, operation, dialect2);
-            const results = await sequelize.query(sql23, {
+            const sql25 = buildRoutineSql(model, operation, dialect2);
+            const results = await sequelize.query(sql25, {
               replacements,
               type: import_sequelize40.QueryTypes.SELECT
             });
@@ -126922,11 +127198,14 @@ var init_jobsPack = __esm({
 });
 
 // src/shared/packages/packageArtifactHash.ts
-var normalizeEntryName, uint8ArrayToBase64, encodePackageArtifactFile, buildPackageArtifactHashPayload;
+var normalizeEntryName, uint8ArrayToBase64, encodePackageArtifactFile;
 var init_packageArtifactHash = __esm({
   "src/shared/packages/packageArtifactHash.ts"() {
     normalizeEntryName = (entryName) => entryName.replace(/\\/g, "/");
     uint8ArrayToBase64 = (data) => {
+      if (typeof Buffer !== "undefined") {
+        return Buffer.from(data).toString("base64");
+      }
       let binary = "";
       for (let index = 0; index < data.length; index += 1) {
         binary += String.fromCharCode(data[index]);
@@ -126934,14 +127213,25 @@ var init_packageArtifactHash = __esm({
       return btoa(binary);
     };
     encodePackageArtifactFile = (entryName, data) => `${normalizeEntryName(entryName)}\0${uint8ArrayToBase64(data)}`;
-    buildPackageArtifactHashPayload = (files) => files.filter((file) => normalizeEntryName(file.entryName) !== "package.json").sort((left, right) => left.entryName.localeCompare(right.entryName)).map((file) => encodePackageArtifactFile(file.entryName, file.data)).join("\n");
   }
 });
 
 // src/core/packages/packageArtifactHash.ts
+function digestPackageArtifactFiles(files) {
+  const hash = import_crypto22.default.createHash("sha256");
+  const sorted = files.filter((file) => file.entryName.replace(/\\/g, "/") !== "package.json").sort((left, right) => left.entryName.localeCompare(right.entryName));
+  for (let index = 0; index < sorted.length; index += 1) {
+    if (index > 0) {
+      hash.update("\n");
+    }
+    const file = sorted[index];
+    hash.update(encodePackageArtifactFile(file.entryName, file.data));
+  }
+  return hash.digest("hex");
+}
 function computePackageArtifactHashFromZip(zip) {
   const files = zip.getEntries().filter((entry) => !entry.isDirectory).map((entry) => ({ entryName: entry.entryName, data: new Uint8Array(entry.getData()) }));
-  return import_crypto22.default.createHash("sha256").update(buildPackageArtifactHashPayload(files)).digest("hex");
+  return digestPackageArtifactFiles(files);
 }
 var import_crypto22;
 var init_packageArtifactHash2 = __esm({
@@ -150738,8 +151028,8 @@ var init_userRoleListFilter = __esm({
 
 // src/server/db/sqlServerIdentityUserInsert.ts
 async function insertSqlServerUserWithIdentity(input) {
-  const { sql: sql23, values } = buildSqlServerUserIdentityInsertBatch(input);
-  await prisma().$executeRawUnsafe(sql23, ...values);
+  const { sql: sql25, values } = buildSqlServerUserIdentityInsertBatch(input);
+  await prisma().$executeRawUnsafe(sql25, ...values);
 }
 var requireSafeInt, buildSqlServerUserIdentityInsertBatch;
 var init_sqlServerIdentityUserInsert = __esm({
@@ -152855,9 +153145,9 @@ Output: {"tablePurpose":"Stores customer purchase orders.","columns":[{"columnNa
               return candidate;
             }
             const edge = outgoingEdgeByColumn.get(candidate.field.name);
-            const sql23 = buildScopedReferenceRowsSql(dialectLabel, edge, MAX_DISTINCT_VALUES + 1);
-            if (!sql23) return candidate;
-            const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql23 })).body.data;
+            const sql25 = buildScopedReferenceRowsSql(dialectLabel, edge, MAX_DISTINCT_VALUES + 1);
+            if (!sql25) return candidate;
+            const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql25 })).body.data;
             if (Array.isArray(rows) && rows.length > 0 && rows.length <= MAX_DISTINCT_VALUES) {
               return { ...candidate, fkGlossarySample: rows };
             }
@@ -152866,9 +153156,9 @@ Output: {"tablePurpose":"Stores customer purchase orders.","columns":[{"columnNa
           return candidate;
         }
         try {
-          const sql23 = buildFrequentValuesSql(dialectLabel, item3.name, candidate.field.name, MAX_DISTINCT_VALUES + 1);
-          if (!sql23) return candidate;
-          const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql23 })).body.data;
+          const sql25 = buildFrequentValuesSql(dialectLabel, item3.name, candidate.field.name, MAX_DISTINCT_VALUES + 1);
+          if (!sql25) return candidate;
+          const rows = (await dataSourcesService.executeDataSourceQuery({ dataSourceId, sql: sql25 })).body.data;
           if (Array.isArray(rows) && rows.length > 0) {
             const truncated = rows.length > MAX_DISTINCT_VALUES;
             return {
@@ -155008,11 +155298,14 @@ var init_devViteChild = __esm({
       const HEALTH_INTERVAL_MS = 1e4;
       const HEALTH_TIMEOUT_MS = 3e4;
       const FAILURE_THRESHOLD = 4;
+      const HEALTH_GRACE_AFTER_WARMUP_MS = 18e4;
       let consecutiveFailures = 0;
       let restarting = false;
+      let healthChecksPaused = false;
+      let pauseHealthUntil = Date.now() + 45e3;
       const pingChild = () => new Promise((resolve) => {
         const req = import_node_http.default.request(
-          { hostname: "127.0.0.1", port, path: "/", method: "GET", timeout: HEALTH_TIMEOUT_MS },
+          { hostname: "127.0.0.1", port, path: "/@vite/client", method: "GET", timeout: HEALTH_TIMEOUT_MS },
           (res) => {
             res.resume();
             resolve(true);
@@ -155026,7 +155319,7 @@ var init_devViteChild = __esm({
         req.end();
       });
       const healthTimer = setInterval(() => {
-        if (stopped || restarting) return;
+        if (stopped || restarting || healthChecksPaused || Date.now() < pauseHealthUntil) return;
         void pingChild().then(async (healthy) => {
           if (stopped || restarting) return;
           if (healthy) {
@@ -155049,6 +155342,8 @@ var init_devViteChild = __esm({
           try {
             currentChild = spawnChild();
             await waitForListen(port, 3e4);
+            pauseHealthUntil = Date.now() + HEALTH_GRACE_AFTER_WARMUP_MS;
+            consecutiveFailures = 0;
             console.log(`[AppEndO] Vite child on :${port} restarted.`);
           } catch (error) {
             console.error(`[AppEndO] Failed to restart Vite child on :${port}:`, error);
@@ -155139,10 +155434,16 @@ var init_devViteChild = __esm({
         });
       };
       const warmUp = (specifiers) => (async () => {
-        for (const specifier of specifiers) {
-          await fetchFromChild(port, specifier);
+        healthChecksPaused = true;
+        try {
+          for (const specifier of specifiers) {
+            await fetchFromChild(port, specifier);
+          }
+          console.log(`[vite:${port}] warm-up complete (${specifiers.join(", ")}).`);
+        } finally {
+          healthChecksPaused = false;
+          pauseHealthUntil = Date.now() + HEALTH_GRACE_AFTER_WARMUP_MS;
         }
-        console.log(`[vite:${port}] warm-up complete (${specifiers.join(", ")}).`);
       })();
       return {
         port,
@@ -156802,12 +157103,12 @@ SET IDENTITY_INSERT [base_roles] OFF;
 // src/server/db/controlPlaneEnrichmentSchemaPatches.ts
 async function ensureDbEnrichmentRunProgressLogColumn(provider) {
   const prisma3 = getPrismaControlPlane();
-  const sql23 = STATEMENTS[provider];
-  if (!sql23) {
+  const sql25 = STATEMENTS[provider];
+  if (!sql25) {
     return;
   }
   try {
-    await prisma3.$executeRawUnsafe(sql23);
+    await prisma3.$executeRawUnsafe(sql25);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     if (provider === "sqlite" && /duplicate column name/i.test(message)) {
@@ -157024,9 +157325,9 @@ async function ensureUserProfileLegalEntityColumns(provider) {
       default:
         break;
     }
-    for (const sql23 of statements) {
+    for (const sql25 of statements) {
       try {
-        await prisma3.$executeRawUnsafe(sql23);
+        await prisma3.$executeRawUnsafe(sql25);
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         if (provider === "sqlite" && /duplicate column name/i.test(message)) {
@@ -157272,8 +157573,8 @@ async function ensureSampleMockSchema(settings) {
   if (!await sampleMockTablesExist(settings.provider)) {
     console.log("[AppEndO] Creating base_sample_mock_* tables\u2026");
     const prisma3 = getPrismaControlPlane();
-    for (const sql23 of statementsFor(settings.provider)) {
-      await prisma3.$executeRawUnsafe(sql23);
+    for (const sql25 of statementsFor(settings.provider)) {
+      await prisma3.$executeRawUnsafe(sql25);
     }
   }
   await ensureSampleMockGeoColumns(settings.provider);
@@ -157585,8 +157886,8 @@ END
     CONSTRAINT fk_base_sample_mock_record_tags_tag FOREIGN KEY (tag_id) REFERENCES base_sample_mock_tags(id) ON DELETE CASCADE
   )`)
     ];
-    mysqlCreateIfMissing = (sql23) => sql23.replace(/^CREATE TABLE IF NOT EXISTS/i, "CREATE TABLE IF NOT EXISTS");
-    MYSQL_STATEMENTS = POSTGRES_STATEMENTS.map((sql23) => mysqlCreateIfMissing(sql23).replace(/BIGSERIAL PRIMARY KEY/g, "BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY").replace(/TIMESTAMPTZ/g, "DATETIME(3)").replace(/NOW\(\)/g, "CURRENT_TIMESTAMP(3)").replace(/BOOLEAN/g, "TINYINT(1)").replace(/FALSE/g, "0").replace(/TRUE/g, "1").replace(/::text/g, ""));
+    mysqlCreateIfMissing = (sql25) => sql25.replace(/^CREATE TABLE IF NOT EXISTS/i, "CREATE TABLE IF NOT EXISTS");
+    MYSQL_STATEMENTS = POSTGRES_STATEMENTS.map((sql25) => mysqlCreateIfMissing(sql25).replace(/BIGSERIAL PRIMARY KEY/g, "BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY").replace(/TIMESTAMPTZ/g, "DATETIME(3)").replace(/NOW\(\)/g, "CURRENT_TIMESTAMP(3)").replace(/BOOLEAN/g, "TINYINT(1)").replace(/FALSE/g, "0").replace(/TRUE/g, "1").replace(/::text/g, ""));
     statementsFor = (provider) => {
       switch (provider) {
         case "postgresql":
@@ -157629,9 +157930,9 @@ END
     };
     ensureSampleMockGeoColumns = async (provider) => {
       const prisma3 = getPrismaControlPlane();
-      for (const sql23 of geoAlterStatements(provider)) {
+      for (const sql25 of geoAlterStatements(provider)) {
         try {
-          await prisma3.$executeRawUnsafe(sql23);
+          await prisma3.$executeRawUnsafe(sql25);
         } catch {
         }
       }
@@ -158354,13 +158655,11 @@ var DEFAULT_PLATFORM_ROUTE_LOADING_CONFIG;
 var init_constants11 = __esm({
   "src/shared/api/contracts/routeLoading/constants.ts"() {
     DEFAULT_PLATFORM_ROUTE_LOADING_CONFIG = {
-      version: 1,
+      version: 2,
       showLogo: true,
       logoSize: "default",
       logoGlow: true,
       logoBreathe: true,
-      stackOrder: "logo-first",
-      progressStyle: "ecg",
       stackGapRem: void 0,
       embedded: {
         logoSize: "compact",
@@ -160838,7 +161137,7 @@ SELECT
 FROM base_logs_auth_audit a
 LEFT JOIN base_users u ON u.id = a.user_id
 `;
-    trimSql = (sql23) => sql23.replace(/^\s+/gm, "  ").trim();
+    trimSql = (sql25) => sql25.replace(/^\s+/gm, "  ").trim();
     buildOpsDashboardViewStatements = (dialect) => {
       const bodies = {
         base_ops_work_item_queue: trimSql(workItemQueueBody(dialect)),
@@ -165618,7 +165917,7 @@ var init_data_sources_service = __esm({
           objectName,
           objectType,
           functionKind,
-          sql: sql23
+          sql: sql25
         } = parsed.data;
         const sources = getDataSourcesFromSettings(this.deps.settingsPath);
         const source = sources.find((item3) => item3.id === dataSourceId);
@@ -165628,7 +165927,7 @@ var init_data_sources_service = __esm({
         if (!this.deps.edgeDbQuery) {
           throw new HttpError2(500, "Schema object creation is unavailable.");
         }
-        const statement = sql23?.trim() ? assertCreateSchemaSql(sql23) : buildCreateSchemaObjectStatement(source.type, {
+        const statement = sql25?.trim() ? assertCreateSchemaSql(sql25) : buildCreateSchemaObjectStatement(source.type, {
           objectName: assertSchemaObjectName(objectName ?? ""),
           objectType,
           functionKind
@@ -165897,7 +166196,7 @@ var init_data_sources_service = __esm({
           dataSourceId,
           objectType,
           functionKind,
-          sql: sql23
+          sql: sql25
         } = parsed.data;
         const sources = getDataSourcesFromSettings(this.deps.settingsPath);
         const source = sources.find((item3) => item3.id === dataSourceId);
@@ -165907,7 +166206,7 @@ var init_data_sources_service = __esm({
         if (!this.deps.edgeDbQuery) {
           throw new HttpError2(500, "Schema object update is unavailable.");
         }
-        const statement = assertAlterSchemaSql(sql23);
+        const statement = assertAlterSchemaSql(sql25);
         try {
           await this.deps.edgeDbQuery(statement, [], { dataSourceId: source.id });
         } catch (error) {
@@ -165927,8 +166226,8 @@ var init_data_sources_service = __esm({
         if (!parsed.success) {
           throw new HttpError2(400, parsed.error.issues[0]?.message ?? "Invalid execute query payload.");
         }
-        const { dataSourceId, sql: sql23, allowWrite } = parsed.data;
-        const validation = validateExecuteDataSourceSql(sql23, { allowWrite });
+        const { dataSourceId, sql: sql25, allowWrite } = parsed.data;
+        const validation = validateExecuteDataSourceSql(sql25, { allowWrite });
         if (!validation.ok) {
           throw new HttpError2(400, validation.reason);
         }
@@ -165942,7 +166241,7 @@ var init_data_sources_service = __esm({
         }
         try {
           const queryResult = await this.deps.edgeDbQuery(
-            sql23.trim(),
+            sql25.trim(),
             [],
             { dataSourceId: source.id, database: source.database }
           );
@@ -173586,8 +173885,8 @@ var init_sql_console_routes = __esm({
       });
       router.post("/collections/:collectionId/scripts", (req, res) => {
         const name = String(req.body?.name || "").trim();
-        const sql23 = String(req.body?.sql || "").trim();
-        if (!name || !sql23) {
+        const sql25 = String(req.body?.sql || "").trim();
+        if (!name || !sql25) {
           res.status(400).json({ success: false, error: "name and sql are required." });
           return;
         }
@@ -173595,7 +173894,7 @@ var init_sql_console_routes = __esm({
           collectionId: req.params.collectionId,
           folderId: typeof req.body?.folderId === "string" ? req.body.folderId : null,
           name,
-          sql: sql23,
+          sql: sql25,
           dataSourceId: String(req.body?.dataSourceId || "").trim()
         });
         if (!item3) {
@@ -173609,8 +173908,8 @@ var init_sql_console_routes = __esm({
       });
       router.post("/scripts", (req, res) => {
         const name = String(req.body?.name || "").trim();
-        const sql23 = String(req.body?.sql || "").trim();
-        if (!name || !sql23) {
+        const sql25 = String(req.body?.sql || "").trim();
+        if (!name || !sql25) {
           res.status(400).json({ success: false, error: "name and sql are required." });
           return;
         }
@@ -173619,7 +173918,7 @@ var init_sql_console_routes = __esm({
           collectionId: collectionId || null,
           folderId: typeof req.body?.folderId === "string" ? req.body.folderId : null,
           name,
-          sql: sql23,
+          sql: sql25,
           dataSourceId: String(req.body?.dataSourceId || "").trim()
         });
         if (!item3) {
@@ -187690,7 +187989,7 @@ var init_runtime = __esm({
     resolveRuntimeBinding = async (definition, options2 = {}) => {
       const fetchImpl = options2.fetchImpl ?? globalThis.fetch;
       const now = options2.now ?? (() => Date.now());
-      const sleep = options2.sleep ?? ((ms) => Promise.resolve(ms));
+      const sleep2 = options2.sleep ?? ((ms) => Promise.resolve(ms));
       const context = options2.context ?? {};
       const startedAtMs = now();
       const startedAt = new Date(startedAtMs).toISOString();
@@ -187890,7 +188189,7 @@ var init_runtime = __esm({
           lastErrorCode = "binding-runtime";
           if (attempts < maxAttempts && shouldRetryStatus(response.status, definition)) {
             if (retryDelayMs > 0) {
-              await sleep(retryDelayMs);
+              await sleep2(retryDelayMs);
             }
             continue;
           }
@@ -187901,7 +188200,7 @@ var init_runtime = __esm({
           lastErrorMessage = lastErrorCode === "preview-timeout" ? `Runtime preview timed out after ${timeoutMs}ms.` : message;
           if (attempts < maxAttempts) {
             if (retryDelayMs > 0) {
-              await sleep(retryDelayMs);
+              await sleep2(retryDelayMs);
             }
             continue;
           }
@@ -207418,8 +207717,8 @@ var init_cryptoActions = __esm({
 });
 
 // src/server/domain/workflow/actions/corePack/dbActions.ts
-function stripSqlComments3(sql23) {
-  return sql23.replace(/--.*$/gm, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
+function stripSqlComments3(sql25) {
+  return sql25.replace(/--.*$/gm, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
 }
 function assertReadOnlySelect(rawSql) {
   const stripped = stripSqlComments3(rawSql).trim();
@@ -207522,18 +207821,18 @@ var init_dbActions = __esm({
         if (typeof dataSourceId !== "string" || dataSourceId.trim().length === 0) {
           return { status: "FAILED", errorCode: "DB_QUERY_DATASOURCE_REQUIRED", errorClass: "VALIDATION", safeMessage: "config.dataSourceId is required." };
         }
-        const sql23 = input?.sql;
-        if (typeof sql23 !== "string" || sql23.trim().length === 0) {
+        const sql25 = input?.sql;
+        if (typeof sql25 !== "string" || sql25.trim().length === 0) {
           return { status: "FAILED", errorCode: "DB_QUERY_SQL_REQUIRED", errorClass: "VALIDATION", safeMessage: "input.sql is required." };
         }
         const paramsInput = input?.params;
         const params = Array.isArray(paramsInput) ? paramsInput : [];
-        const guard = assertReadOnlySelect(sql23);
+        const guard = assertReadOnlySelect(sql25);
         if (guard.ok === false) {
           return { status: "FAILED", errorCode: "DB_QUERY_NOT_READ_ONLY", errorClass: "VALIDATION", safeMessage: guard.reason };
         }
         try {
-          const result = await edgeDbQuery2(sql23, params, { dataSourceId });
+          const result = await edgeDbQuery2(sql25, params, { dataSourceId });
           const truncated = result.data.length > MAX_ROWS;
           const rows = truncated ? result.data.slice(0, MAX_ROWS) : result.data;
           return { status: "SUCCEEDED", output: { rows, count: rows.length, truncated } };
@@ -212530,8 +212829,8 @@ var init_data_api_controller = __esm({
         this.queryDatasheet = async (req, res) => {
           try {
             const body = req.body && typeof req.body === "object" ? req.body : {};
-            const sql23 = typeof body.sql === "string" ? body.sql : typeof req.query.sql === "string" ? req.query.sql : "";
-            const data = await this.datasheetService.query(req.params.id, { sql: sql23 });
+            const sql25 = typeof body.sql === "string" ? body.sql : typeof req.query.sql === "string" ? req.query.sql : "";
+            const data = await this.datasheetService.query(req.params.id, { sql: sql25 });
             res.json({ success: true, data });
           } catch (error) {
             sendDatasheetError(res, error, "Failed to load datasheet.");
@@ -223831,9 +224130,9 @@ function decodeBinaryColumnValue(value) {
   }
   return null;
 }
-function expandPackageBlobTokens(sql23, blobsByEntry, dialect) {
+function expandPackageBlobTokens(sql25, blobsByEntry, dialect) {
   BLOB_TOKEN_PATTERN.lastIndex = 0;
-  return sql23.replace(BLOB_TOKEN_PATTERN, (_full, entry) => {
+  return sql25.replace(BLOB_TOKEN_PATTERN, (_full, entry) => {
     const bytes = blobsByEntry.get(entry);
     if (!bytes) {
       throw new Error(`Package blob "${entry}" is missing from the ZIP.`);
@@ -223913,10 +224212,10 @@ function sqlBooleanLiteral(value, dialect) {
 function sqlBooleanLiteralForSourceType(value, sourceType) {
   return sqlBooleanLiteral(value, dialectFamilyFromDataSourceType(sourceType));
 }
-function splitSqlGoBatches(sql23) {
+function splitSqlGoBatches(sql25) {
   const batches = [];
   let current = [];
-  for (const line of sql23.split(/\r?\n/)) {
+  for (const line of sql25.split(/\r?\n/)) {
     if (/^\s*GO\s*$/i.test(line)) {
       const batch = current.join("\n").trim();
       if (batch) batches.push(batch);
@@ -223929,17 +224228,17 @@ function splitSqlGoBatches(sql23) {
   if (last) batches.push(last);
   return batches.length > 0 ? batches : [];
 }
-function rewriteUnquotedBooleanKeywords(sql23, dialect) {
-  if (dialect === "postgres") return sql23;
+function rewriteUnquotedBooleanKeywords(sql25, dialect) {
+  if (dialect === "postgres") return sql25;
   let out = "";
   let index = 0;
   let inSingle = false;
-  while (index < sql23.length) {
-    const char = sql23[index];
+  while (index < sql25.length) {
+    const char = sql25[index];
     if (inSingle) {
       out += char;
-      if (char === "'" && sql23[index + 1] === "'") {
-        out += sql23[index + 1];
+      if (char === "'" && sql25[index + 1] === "'") {
+        out += sql25[index + 1];
         index += 2;
         continue;
       }
@@ -223953,14 +224252,14 @@ function rewriteUnquotedBooleanKeywords(sql23, dialect) {
       index += 1;
       continue;
     }
-    const prev = index === 0 ? "" : sql23[index - 1];
+    const prev = index === 0 ? "" : sql25[index - 1];
     const isBoundary = (ch) => !ch || !/[A-Za-z0-9_]/.test(ch);
-    if (sql23.slice(index, index + 4).toUpperCase() === "TRUE" && isBoundary(prev) && isBoundary(sql23[index + 4])) {
+    if (sql25.slice(index, index + 4).toUpperCase() === "TRUE" && isBoundary(prev) && isBoundary(sql25[index + 4])) {
       out += "1";
       index += 4;
       continue;
     }
-    if (sql23.slice(index, index + 5).toUpperCase() === "FALSE" && isBoundary(prev) && isBoundary(sql23[index + 5])) {
+    if (sql25.slice(index, index + 5).toUpperCase() === "FALSE" && isBoundary(prev) && isBoundary(sql25[index + 5])) {
       out += "0";
       index += 5;
       continue;
@@ -223984,16 +224283,16 @@ function escapeSqlStringLiteral(value, sourceType) {
   }
   return `'${cleaned.replace(/'/g, "''")}'`;
 }
-function splitSqlStatementsRespectingQuotes(sql23) {
+function splitSqlStatementsRespectingQuotes(sql25) {
   const statements = [];
   let current = "";
   let inSingle = false;
-  for (let index = 0; index < sql23.length; index += 1) {
-    const char = sql23[index];
+  for (let index = 0; index < sql25.length; index += 1) {
+    const char = sql25[index];
     if (inSingle) {
       current += char;
-      if (char === "'" && sql23[index + 1] === "'") {
-        current += sql23[index + 1];
+      if (char === "'" && sql25[index + 1] === "'") {
+        current += sql25[index + 1];
         index += 1;
         continue;
       }
@@ -224016,11 +224315,11 @@ function splitSqlStatementsRespectingQuotes(sql23) {
   if (current.trim()) statements.push(current);
   return statements;
 }
-function wrapSqlServerIdentityInserts(sql23, identityTables) {
-  if (identityTables.size === 0) return sql23;
-  const statements = splitSqlStatementsRespectingQuotes(sql23);
+function wrapSqlServerIdentityInserts(sql25, identityTables) {
+  if (identityTables.size === 0) return sql25;
+  const statements = splitSqlStatementsRespectingQuotes(sql25);
   if (statements.some((statement) => /^\s*SET\s+IDENTITY_INSERT\b/i.test(statement))) {
-    return sql23;
+    return sql25;
   }
   const identity = new Set([...identityTables].map((name) => name.trim().toLowerCase()));
   const out = [];
@@ -224098,9 +224397,9 @@ async function planBaseInfoHidRewrite(captured, existingById, allocateId) {
   }
   return map;
 }
-function applyHidRewriteMap(sql23, map) {
+function applyHidRewriteMap(sql25, map) {
   const entries = Object.entries(map).filter(([from, to]) => from && to && from !== to).sort((left, right) => right[0].length - left[0].length);
-  let rewritten = sql23;
+  let rewritten = sql25;
   for (const [from, to] of entries) {
     rewritten = rewritten.split(`'${from}'`).join(`'${to}'`);
   }
@@ -224220,8 +224519,8 @@ function dialectForDataSource(dataSourceId) {
   const source = sources.find((item3) => item3.id === dataSourceId) ?? sources.find((item3) => item3.isDefault);
   return dialectFamilyFromDataSourceType(source?.type ?? "");
 }
-function expandPackageDbScriptSql(sql23, blobs, dialect, hidMap = {}) {
-  const expanded = expandPackageBlobTokens(sql23.trim(), blobs, dialect);
+function expandPackageDbScriptSql(sql25, blobs, dialect, hidMap = {}) {
+  const expanded = expandPackageBlobTokens(sql25.trim(), blobs, dialect);
   return applyHidRewriteMap(expanded, hidMap);
 }
 async function listSqlServerIdentityTables(execute, dataSourceId) {
@@ -224282,8 +224581,8 @@ function collectSqlFailureLines(error) {
   walk2(error, 0);
   return lines.length > 0 ? lines : ["SQL execution failed."];
 }
-async function executeSqlScript(sql23, dataSourceId, blobs, hidMap) {
-  const trimmed = sql23.trim();
+async function executeSqlScript(sql25, dataSourceId, blobs, hidMap) {
+  const trimmed = sql25.trim();
   if (!trimmed) return;
   const dialect = dialectForDataSource(dataSourceId);
   const expanded = rewriteUnquotedBooleanKeywords(
@@ -226315,15 +226614,58 @@ function collectValueExportNamesFromBarrel(source) {
   }
   return [...names].sort();
 }
+function collectBarrelExportNames(absPath, visited = /* @__PURE__ */ new Set()) {
+  const norm = import_path88.default.normalize(absPath);
+  if (visited.has(norm)) {
+    return [];
+  }
+  visited.add(norm);
+  if (!import_fs88.default.existsSync(absPath)) {
+    return [];
+  }
+  const source = import_fs88.default.readFileSync(absPath, "utf8");
+  const names = new Set(collectValueExportNamesFromBarrel(source));
+  const starRe = /export\s+\*\s+from\s+['"]([^'"]+)['"]/g;
+  let star;
+  while ((star = starRe.exec(source)) !== null) {
+    const resolved = resolveExistingModulePath(import_path88.default.resolve(import_path88.default.dirname(absPath), star[1]));
+    if (!resolved) {
+      continue;
+    }
+    for (const nested of collectBarrelExportNames(resolved, visited)) {
+      names.add(nested);
+    }
+  }
+  return [...names];
+}
 function namedExportsFromSourceFile(relPath, fallback) {
   const absPath = import_path88.default.join(process.cwd(), relPath);
   try {
     if (!import_fs88.default.existsSync(absPath)) return fallback;
-    const parsed = collectValueExportNamesFromBarrel(import_fs88.default.readFileSync(absPath, "utf8"));
+    const parsed = collectBarrelExportNames(absPath);
     return parsed.length > 0 ? [.../* @__PURE__ */ new Set([...parsed, ...fallback])].sort() : fallback;
   } catch {
     return fallback;
   }
+}
+function buildInternalModuleShimSource(specifier, namedExports) {
+  const lines = [
+    "const __runtime = globalThis.__APPENDO_PACKAGE_RUNTIME__;",
+    `const __mod = __runtime?.AppInternalModules?.[${JSON.stringify(specifier)}];`,
+    "if (!__mod) {",
+    "  throw new Error('Package UI runtime is not initialized. Reload the app and try again.');",
+    "}"
+  ];
+  if (namedExports.includes("default")) {
+    lines.push("export default __mod.default;");
+  }
+  const valueExports = namedExports.filter((name) => name !== "default");
+  if (valueExports.length > 0) {
+    lines.push(`export const {
+  ${valueExports.join(",\n  ")},
+} = __mod;`);
+  }
+  return lines.join("\n");
 }
 function buildHeavyInternalShimPathIndex() {
   const index = /* @__PURE__ */ new Map();
@@ -226735,17 +227077,7 @@ export const Fragment = __runtime.ReactJSXRuntime.Fragment;
       ])
     );
     for (const [specifier, namedExports] of Object.entries(KNOWN_HEAVY_INTERNAL_MODULES)) {
-      const lines = [
-        "const __runtime = globalThis.__APPENDO_PACKAGE_RUNTIME__;",
-        `const __mod = __runtime?.AppInternalModules?.[${JSON.stringify(specifier)}];`,
-        "if (!__mod) {",
-        "  throw new Error('Package UI runtime is not initialized. Reload the app and try again.');",
-        "}",
-        `export const {
-  ${namedExports.join(",\n  ")},
-} = __mod;`
-      ];
-      GLOBAL_MODULE_BY_SPECIFIER.set(specifier, lines.join("\n"));
+      GLOBAL_MODULE_BY_SPECIFIER.set(specifier, buildInternalModuleShimSource(specifier, namedExports));
     }
     HEAVY_INTERNAL_SHIM_PATHS = buildHeavyInternalShimPathIndex();
     COMPILE_CACHE_EPOCH = 9;
@@ -230180,8 +230512,8 @@ var init_packageDbCapture_service = __esm({
       ].filter(Boolean).join(" ");
       return sourceType === "SQL Server" ? selectSql.replace(/^SELECT /, `SELECT TOP ${fetchLimit} `) : selectSql;
     };
-    queryRows = async (edgeDbQuery3, sql23, context) => {
-      const result = await edgeDbQuery3(sql23, [], context);
+    queryRows = async (edgeDbQuery3, sql25, context) => {
+      const result = await edgeDbQuery3(sql25, [], context);
       return Array.isArray(result.data) ? result.data : [];
     };
   }
@@ -232644,7 +232976,7 @@ var init_platformTransfer = __esm({
       { key: "platformCultureTranslations", group: "platform-blobs", label: "Culture Translations", description: "Platform UI translation bundles and per-culture overrides.", defaultSelected: true },
       { key: "platformWebFonts", group: "platform-blobs", label: "Web Fonts", description: "Uploaded self-hosted web font metadata.", defaultSelected: true },
       { key: "platformFeedback", group: "platform-blobs", label: "Feedback", description: "Embedded feedback policy, topics, and routing rules.", defaultSelected: true },
-      { key: "platformRouteLoading", group: "platform-blobs", label: "Route loading", description: "Boot and lazy-route loading chrome (logo, progress).", defaultSelected: true },
+      { key: "platformRouteLoading", group: "platform-blobs", label: "Route loading", description: "Boot and lazy-route loading chrome (portal logo + orbital ring).", defaultSelected: true },
       { key: "identity-providers", group: "platform-blobs", label: "Identity Providers", description: "OAuth and external identity provider configuration.", defaultSelected: true },
       { key: "security", group: "platform-blobs", label: "JWT Secrets", description: "Platform-wide token signing secrets.", sensitive: true, defaultSelected: false },
       { key: "scheduler", group: "platform-blobs", label: "Scheduler", description: "Scheduled task definitions.", defaultSelected: true },
@@ -233800,21 +234132,16 @@ var init_session_context_settings_controller = __esm({
 });
 
 // src/shared/api/contracts/routeLoading/schema.ts
-var import_zod40, ROUTE_LOADING_SCHEMA_VERSION, routeLoadingLogoSizeSchema, routeLoadingProgressStyleSchema, routeLoadingStackOrderSchema, routeLoadingVariantOverridesSchema, platformRouteLoadingConfigSchema;
+var import_zod40, ROUTE_LOADING_SCHEMA_VERSION, routeLoadingLogoSizeSchema, routeLoadingVariantOverridesSchema, platformRouteLoadingConfigSchema;
 var init_schema2 = __esm({
   "src/shared/api/contracts/routeLoading/schema.ts"() {
     import_zod40 = require("zod");
-    ROUTE_LOADING_SCHEMA_VERSION = 1;
+    ROUTE_LOADING_SCHEMA_VERSION = 2;
     routeLoadingLogoSizeSchema = import_zod40.z.enum(["compact", "default", "large", "xlarge"]);
-    routeLoadingProgressStyleSchema = import_zod40.z.enum(["ecg", "simple-line", "none"]);
-    routeLoadingStackOrderSchema = import_zod40.z.enum(["logo-first", "activity-first"]);
     routeLoadingVariantOverridesSchema = import_zod40.z.object({
-      showLogo: import_zod40.z.boolean().optional(),
       logoSize: routeLoadingLogoSizeSchema.optional(),
       logoGlow: import_zod40.z.boolean().optional(),
       logoBreathe: import_zod40.z.boolean().optional(),
-      stackOrder: routeLoadingStackOrderSchema.optional(),
-      progressStyle: routeLoadingProgressStyleSchema.optional(),
       stackGapRem: import_zod40.z.number().min(0).max(4).optional()
     });
     platformRouteLoadingConfigSchema = import_zod40.z.object({
@@ -233823,8 +234150,6 @@ var init_schema2 = __esm({
       logoSize: routeLoadingLogoSizeSchema,
       logoGlow: import_zod40.z.boolean(),
       logoBreathe: import_zod40.z.boolean(),
-      stackOrder: routeLoadingStackOrderSchema,
-      progressStyle: routeLoadingProgressStyleSchema,
       stackGapRem: import_zod40.z.number().min(0).max(4).optional(),
       embedded: routeLoadingVariantOverridesSchema.optional()
     });
@@ -233838,12 +234163,6 @@ function readBoolean4(value, fallback) {
 function readLogoSize(value, fallback) {
   return typeof value === "string" && LOGO_SIZES.has(value) ? value : fallback;
 }
-function readProgressStyle(value, fallback) {
-  return typeof value === "string" && PROGRESS_STYLES.has(value) ? value : fallback;
-}
-function readStackOrder(value, fallback) {
-  return typeof value === "string" && STACK_ORDERS.has(value) ? value : fallback;
-}
 function readGapRem(value, fallback) {
   if (typeof value !== "number" || !Number.isFinite(value)) {
     return fallback;
@@ -233856,9 +234175,6 @@ function normalizeVariantOverrides(raw) {
   }
   const source = raw;
   const next = {};
-  if (typeof source.showLogo === "boolean") {
-    next.showLogo = source.showLogo;
-  }
   if (typeof source.logoGlow === "boolean") {
     next.logoGlow = source.logoGlow;
   }
@@ -233867,12 +234183,6 @@ function normalizeVariantOverrides(raw) {
   }
   if (typeof source.logoSize === "string" && LOGO_SIZES.has(source.logoSize)) {
     next.logoSize = source.logoSize;
-  }
-  if (typeof source.stackOrder === "string" && STACK_ORDERS.has(source.stackOrder)) {
-    next.stackOrder = source.stackOrder;
-  }
-  if (typeof source.progressStyle === "string" && PROGRESS_STYLES.has(source.progressStyle)) {
-    next.progressStyle = source.progressStyle;
   }
   if (typeof source.stackGapRem === "number") {
     next.stackGapRem = readGapRem(source.stackGapRem, 1.25);
@@ -233886,27 +234196,23 @@ function normalizePlatformRouteLoadingConfig(raw) {
   }
   const source = raw;
   const merged = {
-    version: 1,
+    version: ROUTE_LOADING_SCHEMA_VERSION,
     showLogo: readBoolean4(source.showLogo, defaults.showLogo),
     logoSize: readLogoSize(source.logoSize, defaults.logoSize),
     logoGlow: readBoolean4(source.logoGlow, defaults.logoGlow),
     logoBreathe: readBoolean4(source.logoBreathe, defaults.logoBreathe),
-    stackOrder: readStackOrder(source.stackOrder, defaults.stackOrder),
-    progressStyle: readProgressStyle(source.progressStyle, defaults.progressStyle),
     stackGapRem: typeof source.stackGapRem === "number" ? readGapRem(source.stackGapRem, defaults.stackGapRem ?? 1.25) : defaults.stackGapRem,
     embedded: normalizeVariantOverrides(source.embedded) ?? defaults.embedded
   };
   const parsed = platformRouteLoadingConfigSchema.safeParse(merged);
   return parsed.success ? parsed.data : { ...defaults };
 }
-var LOGO_SIZES, PROGRESS_STYLES, STACK_ORDERS;
+var LOGO_SIZES;
 var init_normalizers2 = __esm({
   "src/shared/api/contracts/routeLoading/normalizers.ts"() {
     init_constants11();
     init_schema2();
     LOGO_SIZES = new Set(routeLoadingLogoSizeSchema.options);
-    PROGRESS_STYLES = new Set(routeLoadingProgressStyleSchema.options);
-    STACK_ORDERS = new Set(routeLoadingStackOrderSchema.options);
   }
 });
 
@@ -234514,6 +234820,66 @@ var init_users_controller = __esm({
   }
 });
 
+// src/domain/vx/vxMeetingsNav.ts
+var init_vxMeetingsNav = __esm({
+  "src/domain/vx/vxMeetingsNav.ts"() {
+  }
+});
+
+// src/domain/vx/vxMeetingsLegacyAccess.ts
+var VX_MEETINGS_MANAGEMENT_LEGACY_READ, buildHwyMeetingsManagementPortalAllowRoles;
+var init_vxMeetingsLegacyAccess = __esm({
+  "src/domain/vx/vxMeetingsLegacyAccess.ts"() {
+    init_vxMemberListLegacyAccess();
+    init_vxMeetingsNav();
+    VX_MEETINGS_MANAGEMENT_LEGACY_READ = {
+      controller: "VX_BaseInformation",
+      method: "Read_Meetings"
+    };
+    buildHwyMeetingsManagementPortalAllowRoles = (rolesByAction) => {
+      const roles = rolesByAction.get(legacyHwyActionKey(VX_MEETINGS_MANAGEMENT_LEGACY_READ)) ?? [];
+      return buildHwyMemberListRouteAllowRoles(roles);
+    };
+  }
+});
+
+// src/server/domain/vx/vxMeetingsAccess.service.ts
+async function resolveHwyMeetingsManagementAllowRoles() {
+  const now = Date.now();
+  if (portalRolesCache && now - portalRolesCache.loadedAt < CACHE_MS) {
+    return portalRolesCache.roles;
+  }
+  try {
+    const pool = await connectLegacyReadPool();
+    let byAction;
+    try {
+      byAction = await fetchLegacyPlatformRolesByAction(pool, [VX_MEETINGS_MANAGEMENT_LEGACY_READ]);
+    } finally {
+      await pool.close();
+    }
+    const roles = buildHwyMeetingsManagementPortalAllowRoles(byAction);
+    portalRolesCache = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+    return portalRolesCache.roles;
+  } catch {
+    return ["ADMIN"];
+  }
+}
+async function assertHwyMeetingsManagementAccess(roleNames) {
+  if (roleNames.includes("ADMIN")) return;
+  const allowed = await resolveHwyMeetingsManagementAllowRoles();
+  if (allowed.some((role) => roleNames.includes(role))) return;
+  throw new Error("Forbidden.");
+}
+var CACHE_MS, portalRolesCache;
+var init_vxMeetingsAccess_service = __esm({
+  "src/server/domain/vx/vxMeetingsAccess.service.ts"() {
+    init_legacyHwyRoleAuth();
+    init_vxMeetingsLegacyAccess();
+    CACHE_MS = 3e4;
+    portalRolesCache = null;
+  }
+});
+
 // src/server/middleware/vxCoursesActivitiesAccess.middleware.ts
 async function resolveHwyCoursesActivitiesApiAllowRoles() {
   const now = Date.now();
@@ -234535,6 +234901,7 @@ var init_vxCoursesActivitiesAccess_middleware = __esm({
   "src/server/middleware/vxCoursesActivitiesAccess.middleware.ts"() {
     init_vxGeoResponsibilityCatalog();
     init_routeBindingRepository();
+    init_vxMeetingsAccess_service();
     init_auth_middleware();
     VX_COURSES_ACTIVITIES_ROUTE_BINDING_ID = 126;
     ALLOW_ROLES_CACHE_MS = 3e4;
@@ -234589,6 +234956,11 @@ var init_vxCoursesActivitiesAccess_middleware = __esm({
           }
           const allowed = await resolveHwyCoursesActivitiesApiAllowRoles();
           if (allowed.some((role) => authRoles.includes(role))) {
+            next();
+            return;
+          }
+          const meetingsAllowed = await resolveHwyMeetingsManagementAllowRoles();
+          if (meetingsAllowed.some((role) => authRoles.includes(role))) {
             next();
             return;
           }
@@ -244947,13 +245319,23 @@ var init_vxMemberDossierFileUploadPolicy = __esm({
 async function execHwyProcedure(procedureName, replacements, options2) {
   const keys = Object.keys(replacements);
   const argList = keys.map((key) => `@${key} = :${key}`).join(", ");
-  const sql23 = argList.length ? `EXEC dbo.${procedureName} ${argList}` : `EXEC dbo.${procedureName}`;
+  const sql25 = argList.length ? `EXEC dbo.${procedureName} ${argList}` : `EXEC dbo.${procedureName}`;
   const sequelize = getControlPlaneSequelize();
-  return sequelize.query(sql23, {
-    replacements,
-    type: import_sequelize71.QueryTypes.SELECT,
-    transaction: options2?.transaction
-  });
+  const priorTimeout = sequelize.options.dialectOptions?.options?.requestTimeout;
+  if (options2?.requestTimeoutMs != null && sequelize.options.dialectOptions?.options) {
+    sequelize.options.dialectOptions.options.requestTimeout = options2.requestTimeoutMs;
+  }
+  try {
+    return await sequelize.query(sql25, {
+      replacements,
+      type: import_sequelize71.QueryTypes.SELECT,
+      transaction: options2?.transaction
+    });
+  } finally {
+    if (options2?.requestTimeoutMs != null && sequelize.options.dialectOptions?.options) {
+      sequelize.options.dialectOptions.options.requestTimeout = priorTimeout;
+    }
+  }
 }
 var import_sequelize71;
 var init_vxExecDbObject = __esm({
@@ -248047,18 +248429,18 @@ async function appendHwyMemberDossierSecurityProfileOpinion(memberIdRaw, input) 
   }
   await ensureHwyDbObjects();
   const memberId = await resolveHwyMemberPrimaryKey(memberIdRaw);
-  const trim41 = (value) => String(value ?? "").trim();
+  const trim42 = (value) => String(value ?? "").trim();
   await execHwyProcedure("vx_candidate_pipeline_security_record", {
     member_id: memberId,
     can_get_identity_card: input.canGetIdentityCard,
-    can_get_identity_card_note: trim41(input.canGetIdentityCardNote) || null,
+    can_get_identity_card_note: trim42(input.canGetIdentityCardNote) || null,
     can_get_masooliat: input.canGetMasooliat,
-    can_get_masooliat_note: trim41(input.canGetMasooliatNote) || null,
+    can_get_masooliat_note: trim42(input.canGetMasooliatNote) || null,
     can_be_member_of_aammeh: input.canBeMemberOfAammeh,
-    can_be_member_of_aammeh_note: trim41(input.canBeMemberOfAammehNote) || null,
+    can_be_member_of_aammeh_note: trim42(input.canBeMemberOfAammehNote) || null,
     allows_responsibility: input.allowsResponsibility,
-    allows_responsibility_note: trim41(input.allowsResponsibilityNote) || null,
-    actor: trim41(input.actorUsername) || null
+    allows_responsibility_note: trim42(input.allowsResponsibilityNote) || null,
+    actor: trim42(input.actorUsername) || null
   });
   await emitHwyMemberSecurityOpinionRecordedForMember(memberId);
 }
@@ -251726,10 +252108,10 @@ var init_vxMemberStatsRecalcLegacy_service = __esm({
     runLegacyMemberUpdateStatsAndRead = async (memberId) => {
       try {
         const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-        const sql23 = await import("mssql");
-        const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
+        const sql25 = await import("mssql");
+        const pool = await new sql25.ConnectionPool(readLegacyConn2()).connect();
         try {
-          const update = await pool.request().input("MemberId", sql23.BigInt, memberId).query(`
+          const update = await pool.request().input("MemberId", sql25.BigInt, memberId).query(`
           IF OBJECT_ID(N'dbo.VX_SP_Members_UpdateStats', N'P') IS NULL
             SELECT CAST(0 AS BIT) AS ok;
           ELSE
@@ -251742,7 +252124,7 @@ var init_vxMemberStatsRecalcLegacy_service = __esm({
           if (!ok) {
             return null;
           }
-          const read = await pool.request().input("MemberId", sql23.BigInt, memberId).query(LEGACY_MEMBER_STATS_SELECT);
+          const read = await pool.request().input("MemberId", sql25.BigInt, memberId).query(LEGACY_MEMBER_STATS_SELECT);
           const row = read.recordset[0];
           return row ?? null;
         } finally {
@@ -252197,7 +252579,7 @@ var init_vxLegacyMemberFaceByUsername_service = __esm({
 });
 
 // src/domain/vx/vxLegacyPlatformAdminActor.ts
-var VX_PLATFORM_ADMIN_USERNAME, VX_PLATFORM_ADMIN_DISPLAY_NAME, normalizeActorToken, normalizeDisplayKey, isHwyLegacyPlatformAdminActorKey, isHwyLegacyPlatformAdminActorDisplayName, isHwyLegacyPlatformAdminActor, normalizeHwyPlatformAdminActorFields;
+var VX_PLATFORM_ADMIN_USERNAME, VX_PLATFORM_ADMIN_DISPLAY_NAME, normalizeActorToken, normalizeDisplayKey, isHwyLegacyPlatformAdminActorKey, isHwyLegacyPlatformAdminActorDisplayName, isHwyLegacyPlatformAdminActor, normalizeHwyLegacyPlatformAdminActorKey, normalizeHwyPlatformAdminActorFields;
 var init_vxLegacyPlatformAdminActor = __esm({
   "src/domain/vx/vxLegacyPlatformAdminActor.ts"() {
     init_profileDisplayName();
@@ -252228,6 +252610,16 @@ var init_vxLegacyPlatformAdminActor = __esm({
       return key === "admin admin" || key === "sys admin";
     };
     isHwyLegacyPlatformAdminActor = (input) => isHwyLegacyPlatformAdminActorKey(input.actorUsername) || isHwyLegacyPlatformAdminActorKey(input.legacyActorKey) || isHwyLegacyPlatformAdminActorDisplayName(input.actorDisplayName);
+    normalizeHwyLegacyPlatformAdminActorKey = (raw) => {
+      const trimmed = String(raw ?? "").trim();
+      if (!trimmed) {
+        return null;
+      }
+      if (isHwyLegacyPlatformAdminActorKey(trimmed)) {
+        return VX_PLATFORM_ADMIN_USERNAME;
+      }
+      return trimmed;
+    };
     normalizeHwyPlatformAdminActorFields = (fields) => {
       if (!isHwyLegacyPlatformAdminActor(fields)) {
         return fields;
@@ -256034,6 +256426,16 @@ var init_vxEtlConsoleCatalog = __esm({
         ]
       },
       {
+        id: "finance-social-screen-months-sync",
+        categoryId: "finance",
+        title: "Sync social-screen month pass flags",
+        description: "MERGE legacy VX_Members_SocialScreensHeaders into dbo.vx_member_social_screen_months for masoolin stars.",
+        scriptRel: "scripts/vx-etl/sync-member-social-screen-months-from-legacy.ts",
+        npmScript: "vx:etl:sync-social-screen-months",
+        kind: "backfill",
+        risk: "mutating"
+      },
+      {
         id: "finance-gen-procs",
         categoryId: "finance",
         title: "Generate finance SQL from legacy",
@@ -256281,7 +256683,13 @@ var init_vxEtlConsoleCatalog = __esm({
         id: "finance-wave",
         title: "Finance wave (import + SQL)",
         description: "Import payment/masoolin tables from legacy, regenerate finance procs, install dbo.vx_* on control plane. Use replace mode for full table rebuild.",
-        stepIds: ["finance-payment-import", "finance-gen-procs", "finance-db-objects-install", "finance-parity-count"],
+        stepIds: [
+          "finance-payment-import",
+          "finance-social-screen-months-sync",
+          "finance-gen-procs",
+          "finance-db-objects-install",
+          "finance-parity-count"
+        ],
         defaultRunOptions: {
           syncMode: "incremental"
         },
@@ -262651,11 +263059,228 @@ var init_vxGeoResponsibilityPatchHistory_store = __esm({
   }
 });
 
+// src/server/domain/vx/vxOpenMemberPickCandidates.service.ts
+async function queryOpenMemberPickCandidates(input) {
+  const geoId = trim21(input.geoBaseInfoId);
+  const provinceScope = trim21(input.nominationProvinceId);
+  const { whereSql, needsNakhebinJoin } = buildOpenMemberPickGeoScopeSql(input.level);
+  const replacements = {
+    geoId,
+    montadheminCode: trim21(input.montadheminMembershipStatusCode),
+    offset: Math.max(0, input.offset),
+    pageSize: Math.max(1, input.pageSize),
+    nominationProvinceId: provinceScope || null
+  };
+  const genderSql = buildOpenMemberPickGenderSql(input.genderFilter);
+  const memberFilterSql = buildOpenMemberPickMemberFilterSql(input.memberFilters, replacements);
+  const provinceSql = input.level === "province" ? "" : " AND (:nominationProvinceId IS NULL OR CAST(m.addr_province_id AS NVARCHAR(128)) = :nominationProvinceId)";
+  const nakhebinJoin = needsNakhebinJoin ? "LEFT JOIN dbo.vx_nakhebin n WITH (NOLOCK) ON n.id = m.nakhebin_id" : "";
+  const sql25 = `
+    SELECT
+      CAST(m.id AS VARCHAR(32)) AS id,
+      CAST(m.user_id AS VARCHAR(32)) AS user_id,
+      m.username,
+      m.display_full_name,
+      m.gender_code,
+      CAST(m.birth_year AS NVARCHAR(16)) AS birth_year,
+      m.avatar_url,
+      m.has_profile_image,
+      m.electoral_division_path
+    FROM dbo.vw_vx_members m WITH (NOLOCK)
+    ${nakhebinJoin}
+    INNER JOIN dbo.vx_members hm WITH (NOLOCK) ON hm.id = m.id
+      AND hm.membership_status_code = :montadheminCode
+    WHERE (${whereSql})
+    ${provinceSql}
+    ${genderSql}
+    ${memberFilterSql}
+    ORDER BY m.display_full_name ASC, m.username ASC
+    OFFSET :offset ROWS FETCH NEXT :pageSize ROWS ONLY
+  `;
+  const sequelize = getControlPlaneSequelize();
+  return sequelize.query(sql25, {
+    replacements,
+    type: import_sequelize119.QueryTypes.SELECT
+  });
+}
+async function enrichOpenMemberPickRowMetadata(rows) {
+  const memberIds = rows.map((row) => String(row.id ?? "").trim()).filter(Boolean);
+  if (memberIds.length === 0) {
+    return;
+  }
+  const sequelize = getControlPlaneSequelize();
+  const [institutesByMember, responsibilityRows] = await Promise.all([
+    loadActiveMemberInstituteTitlesForList(memberIds),
+    sequelize.query(
+      `
+      SELECT
+        CAST(ranked.member_id AS VARCHAR(32)) AS member_id,
+        ranked.role_name,
+        ranked.geo_title
+      FROM (
+        SELECT
+          a.member_id,
+          a.role_name,
+          dbo.vx_geo_leaf_title(a.geo_base_info_id) AS geo_title,
+          ROW_NUMBER() OVER (
+            PARTITION BY a.member_id
+            ORDER BY COALESCE(a.decided_at, a.nominated_at) DESC
+          ) AS rn
+        FROM dbo.vx_geo_responsibility_requests a WITH (NOLOCK)
+        WHERE a.member_id IN (:memberIds)
+          AND a.status = N'approved'
+          AND a.revoked_at IS NULL
+          AND a.request_kind = N'nomination'
+      ) ranked
+      WHERE ranked.rn = 1
+      `,
+      {
+        replacements: { memberIds },
+        type: import_sequelize119.QueryTypes.SELECT
+      }
+    )
+  ]);
+  const responsibilityByMember = /* @__PURE__ */ new Map();
+  for (const row of responsibilityRows) {
+    const memberId = readQueryStringField(row, "member_id", "memberId");
+    if (!memberId) {
+      continue;
+    }
+    responsibilityByMember.set(memberId, {
+      roleName: readQueryStringField(row, "role_name", "roleName"),
+      geoTitle: readQueryStringField(row, "geo_title", "geoTitle")
+    });
+  }
+  for (const row of rows) {
+    const memberId = String(row.id ?? "").trim();
+    const institutes = institutesByMember.get(memberId);
+    if (institutes) {
+      row.memberInstitutesSummary = institutes;
+    }
+    const responsibility = responsibilityByMember.get(memberId);
+    if (responsibility?.roleName) {
+      row.activeRoleName = responsibility.roleName;
+      row.activeGeoTitle = responsibility.geoTitle || null;
+      row.hasOtherResponsibility = true;
+    }
+  }
+}
+var import_sequelize119, trim21, VX_OPEN_MEMBER_PICK_FAST_LEVELS, isHwyOpenMemberPickFastLevel, buildOpenMemberPickGenderSql, buildOpenMemberPickMemberFilterSql, buildOpenMemberPickGeoScopeSql, readQueryStringField;
+var init_vxOpenMemberPickCandidates_service = __esm({
+  "src/server/domain/vx/vxOpenMemberPickCandidates.service.ts"() {
+    import_sequelize119 = require("sequelize");
+    init_controlPlaneSequelize();
+    init_vxMemberDirectoryListInstitutes();
+    trim21 = (value) => String(value ?? "").trim();
+    VX_OPEN_MEMBER_PICK_FAST_LEVELS = [
+      "province",
+      "ghavateh",
+      "circle",
+      "maktab",
+      "region"
+    ];
+    isHwyOpenMemberPickFastLevel = (level) => VX_OPEN_MEMBER_PICK_FAST_LEVELS.includes(level);
+    buildOpenMemberPickGenderSql = (genderFilter) => {
+      if (!genderFilter) {
+        return "";
+      }
+      if (genderFilter === "male") {
+        return ` AND (
+      m.gender_code = N'100.1.1'
+      OR m.gender_code LIKE N'%10011%'
+      OR LOWER(COALESCE(m.gender_code, N'')) LIKE N'%male%'
+      OR m.gender_code LIKE N'%\u0630\u0643\u0631%'
+    )`;
+      }
+      return ` AND (
+    m.gender_code = N'100.1.2'
+    OR m.gender_code LIKE N'%10012%'
+    OR LOWER(COALESCE(m.gender_code, N'')) LIKE N'%female%'
+    OR m.gender_code LIKE N'%\u0627\u0646\u062B%'
+    OR m.gender_code LIKE N'%\u0623\u0646\u062B%'
+  )`;
+    };
+    buildOpenMemberPickMemberFilterSql = (filters, replacements) => {
+      if (!filters) {
+        return "";
+      }
+      const parts = [];
+      const membershipNumber = trim21(filters.membershipNumber);
+      if (membershipNumber) {
+        replacements.filterMembershipNumber = membershipNumber;
+        parts.push("m.username = :filterMembershipNumber");
+      }
+      const like = (param, column, raw) => {
+        const value = trim21(raw);
+        if (!value) {
+          return;
+        }
+        replacements[param] = `%${value}%`;
+        parts.push(`EXISTS (
+      SELECT 1 FROM dbo.vx_members hm WITH (NOLOCK)
+      WHERE hm.id = m.id AND ${column} LIKE :${param}
+    )`);
+      };
+      like("filterFirstName", "hm.first_name", filters.firstName);
+      like("filterFatherName", "hm.father_name", filters.fatherName);
+      like("filterGrandfatherName", "hm.grandfather_name", filters.grandfatherName);
+      like("filterFamilyName", "hm.family_name", filters.familyName);
+      if (!parts.length) {
+        return "";
+      }
+      return ` AND (${parts.join(" AND ")})`;
+    };
+    buildOpenMemberPickGeoScopeSql = (level) => {
+      switch (level) {
+        case "province":
+          return {
+            whereSql: "CAST(m.addr_province_id AS NVARCHAR(128)) = :geoId",
+            needsNakhebinJoin: false
+          };
+        case "ghavateh":
+          return {
+            whereSql: "CAST(m.addr_district_id AS NVARCHAR(128)) = :geoId",
+            needsNakhebinJoin: false
+          };
+        case "circle":
+          return {
+            whereSql: "CAST(m.addr_circle_id AS NVARCHAR(128)) = :geoId",
+            needsNakhebinJoin: false
+          };
+        case "maktab":
+          return {
+            whereSql: "CAST(m.addr_maktab_id AS NVARCHAR(128)) = :geoId",
+            needsNakhebinJoin: false
+          };
+        case "region":
+          return {
+            whereSql: `(
+          CAST(m.addr_region_id AS NVARCHAR(128)) = :geoId
+          OR CAST(n.region_id AS NVARCHAR(128)) = :geoId
+        )`,
+            needsNakhebinJoin: true
+          };
+        default:
+          return { whereSql: "1 = 0", needsNakhebinJoin: false };
+      }
+    };
+    readQueryStringField = (row, ...keys) => {
+      for (const key of keys) {
+        const value = String(row[key] ?? "").trim();
+        if (value) {
+          return value;
+        }
+      }
+      return "";
+    };
+  }
+});
+
 // src/server/domain/vx/vxGeoResponsibility.service.ts
-var import_sequelize119, hasHwyGeoOrCoursesActivitiesAccess, DEFAULT_PAGE_SIZE7, MAX_PAGE_SIZE7, MAX_NODE_LIST_PAGE_SIZE, SUBMITTED_STATUS, trim21, bestEffortSyncGeoResponsibilityPatchHistory, clampPage3, clampNodeListPage, canNominateLevel, canApproveLevel, assertSqlServer9, ensureGeoResponsibilitySqlServerReady, buildMemberDisplayName, readHwyGeoResponsibilityConfig, readNominationGenderFilter, nominationMemberFiltersActive, readNominationProvinceScopeId, listHwyGeoResponsibilityNominationCandidates, lookupHwyGeoResponsibilityMemberByUsername, enrichHwyGeoResponsibilityNodeOfficialSlotAvatars, listHwyGeoResponsibilityNodes, listHwyGeoResponsibilityElectoralOptions, fetchHwyGeoResponsibilityProvinceHasGhavateh, resolveHwyGeoResponsibilityElectoralSelection, listHwyGeoResponsibilityRequests, ensureMemberEligible, submitHwyGeoResponsibilityNomination, applyApprovedNomination, readActiveGeoResponsibilityOfficialRequest, resolveActiveGeoResponsibilityOfficialForMember, applyApprovedOfficialRemoval, applyApprovedScopeOnlyOfficialRemoval, findSubmittedHwyGeoResponsibilityNominationRequestId, findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId, readHwyGeoResponsibilityAssigneePendingRemovalRequestId, cancelHwyGeoResponsibilityPendingNominationForSlot, cancelHwyGeoResponsibilityNominationRequest, submitHwyGeoResponsibilityOfficialRemovalRequest, approveHwyGeoResponsibilityRequest, rejectHwyGeoResponsibilityRequest, geoResponsibilityPatchMemberCountProc, readGeoPatchCountTotal, readGeoPatchNakhebinCount, getHwyGeoResponsibilityPatchMemberCount, getHwyGeoResponsibilityPatchNakhebinCount, getHwyGeoResponsibilityCenterStats, isPatchHistoryEventKind, isPatchHistorySource, getHwyGeoResponsibilityPatchHistory;
+var import_sequelize120, hasHwyGeoOrCoursesActivitiesAccess, DEFAULT_PAGE_SIZE7, MAX_PAGE_SIZE7, MAX_NODE_LIST_PAGE_SIZE, SUBMITTED_STATUS, trim22, bestEffortSyncGeoResponsibilityPatchHistory, clampPage3, clampNodeListPage, canNominateLevel, canApproveLevel, assertSqlServer9, ensureGeoResponsibilitySqlServerReady, buildMemberDisplayName, readHwyGeoResponsibilityConfig, readNominationGenderFilter, nominationMemberFiltersActive, readNominationProvinceScopeId, listHwyGeoResponsibilityNominationCandidates, lookupHwyGeoResponsibilityMemberByUsername, enrichHwyGeoResponsibilityNodeOfficialSlotAvatars, listHwyGeoResponsibilityNodes, listHwyGeoResponsibilityElectoralOptions, fetchHwyGeoResponsibilityProvinceHasGhavateh, resolveHwyGeoResponsibilityElectoralSelection, listHwyGeoResponsibilityRequests, ensureMemberEligible, submitHwyGeoResponsibilityNomination, applyApprovedNomination, readActiveGeoResponsibilityOfficialRequest, resolveActiveGeoResponsibilityOfficialForMember, applyApprovedOfficialRemoval, applyApprovedScopeOnlyOfficialRemoval, findSubmittedHwyGeoResponsibilityNominationRequestId, findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId, readHwyGeoResponsibilityAssigneePendingRemovalRequestId, cancelHwyGeoResponsibilityPendingNominationForSlot, cancelHwyGeoResponsibilityNominationRequest, submitHwyGeoResponsibilityOfficialRemovalRequest, approveHwyGeoResponsibilityRequest, rejectHwyGeoResponsibilityRequest, geoResponsibilityPatchMemberCountProc, readGeoPatchCountTotal, readGeoPatchNakhebinCount, getHwyGeoResponsibilityPatchMemberCount, getHwyGeoResponsibilityPatchNakhebinCount, getHwyGeoResponsibilityCenterStats, isPatchHistoryEventKind, isPatchHistorySource, getHwyGeoResponsibilityPatchHistory;
 var init_vxGeoResponsibility_service = __esm({
   "src/server/domain/vx/vxGeoResponsibility.service.ts"() {
-    import_sequelize119 = require("sequelize");
+    import_sequelize120 = require("sequelize");
     init_vxGeoResponsibilityNomination();
     init_vxGeoResponsibilityNominationSearch();
     init_ensureHwyGeoResponsibilitySchema();
@@ -262677,7 +263302,9 @@ var init_vxGeoResponsibility_service = __esm({
     init_vxGeoResponsibilityPatchHistoryParity();
     init_vxGeoResponsibilityPatchHistory_store();
     init_vxCoursesActivitiesAccess_middleware();
+    init_vxMeetingsAccess_service();
     init_prismaHelpers();
+    init_vxOpenMemberPickCandidates_service();
     init_sessionContextCache();
     init_userRolesCache();
     hasHwyGeoOrCoursesActivitiesAccess = async (roleNames) => {
@@ -262685,15 +263312,19 @@ var init_vxGeoResponsibility_service = __esm({
         return true;
       }
       const coursesRoles = await resolveHwyCoursesActivitiesApiAllowRoles();
-      return coursesRoles.some((role) => roleNames.includes(role));
+      if (coursesRoles.some((role) => roleNames.includes(role))) {
+        return true;
+      }
+      const meetingsRoles = await resolveHwyMeetingsManagementAllowRoles();
+      return meetingsRoles.some((role) => roleNames.includes(role));
     };
     DEFAULT_PAGE_SIZE7 = 25;
     MAX_PAGE_SIZE7 = 100;
     MAX_NODE_LIST_PAGE_SIZE = 1e3;
     SUBMITTED_STATUS = "submitted";
-    trim21 = (value) => String(value ?? "").trim();
+    trim22 = (value) => String(value ?? "").trim();
     bestEffortSyncGeoResponsibilityPatchHistory = (requestId) => {
-      const id = trim21(requestId);
+      const id = trim22(requestId);
       if (!id) {
         return;
       }
@@ -262748,7 +263379,7 @@ var init_vxGeoResponsibility_service = __esm({
         row.father_name,
         row.grandfather_name,
         row.family_name
-      ].map((part) => trim21(part)).filter(Boolean);
+      ].map((part) => trim22(part)).filter(Boolean);
       return parts.length > 0 ? parts.join(" ") : null;
     };
     readHwyGeoResponsibilityConfig = (roleNames) => ({
@@ -262761,7 +263392,7 @@ var init_vxGeoResponsibility_service = __esm({
       }))
     });
     readNominationGenderFilter = (raw) => {
-      const value = trim21(raw);
+      const value = trim22(raw);
       if (value === "male" || value === "female") {
         return value;
       }
@@ -262772,7 +263403,7 @@ var init_vxGeoResponsibility_service = __esm({
         return false;
       }
       return Boolean(
-        trim21(filters.membershipNumber) || trim21(filters.firstName) || trim21(filters.fatherName) || trim21(filters.grandfatherName) || trim21(filters.familyName)
+        trim22(filters.membershipNumber) || trim22(filters.firstName) || trim22(filters.fatherName) || trim22(filters.grandfatherName) || trim22(filters.familyName)
       );
     };
     readNominationProvinceScopeId = async (geoBaseInfoId, level) => {
@@ -262781,7 +263412,7 @@ var init_vxGeoResponsibility_service = __esm({
         geo_level: level
       });
       const id = rows[0]?.province_id;
-      return id ? trim21(id) : null;
+      return id ? trim22(id) : null;
     };
     listHwyGeoResponsibilityNominationCandidates = async (input, roleNames) => {
       await ensureGeoResponsibilitySqlServerReady();
@@ -262795,7 +263426,7 @@ var init_vxGeoResponsibility_service = __esm({
           throw new Error("Forbidden.");
         }
       }
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -262803,34 +263434,50 @@ var init_vxGeoResponsibility_service = __esm({
       const montadheminScope = await loadHwyMemberListScopeContext();
       const genderFilter = readNominationGenderFilter(input.genderFilter);
       const memberFilterParams = vxGeoResponsibilityNominationMemberFilterProcParams(input.memberFilters);
-      const nominationProvinceId = await readNominationProvinceScopeId(
-        geoBaseInfoId,
-        input.level
-      );
+      const openMemberPickFast = openMemberPick && isHwyOpenMemberPickFastLevel(input.level);
+      const nominationProvinceId = openMemberPickFast && input.level === "province" ? geoBaseInfoId : await readNominationProvinceScopeId(geoBaseInfoId, input.level);
       if ((input.level === "circle" || input.level === "maktab") && !nominationProvinceId) {
         throw new Error("Could not resolve province scope for this patch.");
       }
-      const titleRows = await execHwyProcedure("vx_geo_responsibility_geo_leaf_title", {
-        geo_base_info_id: geoBaseInfoId
-      });
-      const geoTitle = titleRows[0]?.title ? trim21(titleRows[0].title) : null;
-      const useBalancedGenderPage = offset === 0 && pageSize <= 50 && !nominationMemberFiltersActive(input.memberFilters);
+      let geoTitle = null;
+      if (!openMemberPickFast) {
+        const titleRows = await execHwyProcedure("vx_geo_responsibility_geo_leaf_title", {
+          geo_base_info_id: geoBaseInfoId
+        });
+        geoTitle = titleRows[0]?.title ? trim22(titleRows[0].title) : null;
+      }
+      const useBalancedGenderPage = !openMemberPick && offset === 0 && pageSize <= 50 && !nominationMemberFiltersActive(input.memberFilters);
       const nominationPerGenderCap = useBalancedGenderPage ? Math.ceil(pageSize / 2) : 25;
+      const effectivePageSize = openMemberPick ? Math.min(pageSize, 25) : pageSize;
       const geoRoleNamesCsv = vxGeoResponsibilityPatchRoleNames().join(",");
-      const listProcName = `vx_geo_responsibility_nomination_candidates_list_${input.level}`;
-      const rows = await execHwyProcedure(listProcName, {
-        geo_base_info_id: geoBaseInfoId,
-        nomination_province_id: nominationProvinceId,
-        montadhemin_membership_status_code: montadheminScope.membershipStatusCodes.active,
-        gender_filter: genderFilter,
-        ...memberFilterParams,
-        use_balanced_gender_page: useBalancedGenderPage ? 1 : 0,
-        nomination_per_gender_cap: nominationPerGenderCap,
-        offset,
-        page_size: pageSize,
-        geo_role_names_csv: geoRoleNamesCsv,
-        nomination_level: input.level
-      });
+      let rows;
+      if (openMemberPickFast) {
+        rows = await queryOpenMemberPickCandidates({
+          level: input.level,
+          geoBaseInfoId,
+          nominationProvinceId,
+          montadheminMembershipStatusCode: montadheminScope.membershipStatusCodes.active,
+          genderFilter,
+          memberFilters: input.memberFilters,
+          offset,
+          pageSize: effectivePageSize
+        });
+      } else {
+        const listProcName = `vx_geo_responsibility_nomination_candidates_list_${input.level}`;
+        rows = await execHwyProcedure(listProcName, {
+          geo_base_info_id: geoBaseInfoId,
+          nomination_province_id: nominationProvinceId,
+          montadhemin_membership_status_code: montadheminScope.membershipStatusCodes.active,
+          gender_filter: genderFilter,
+          ...memberFilterParams,
+          use_balanced_gender_page: useBalancedGenderPage ? 1 : 0,
+          nomination_per_gender_cap: nominationPerGenderCap,
+          offset,
+          page_size: effectivePageSize,
+          geo_role_names_csv: geoRoleNamesCsv,
+          nomination_level: input.level
+        });
+      }
       let total;
       if (rows.length < pageSize && page === 1) {
         total = rows.length;
@@ -262849,13 +263496,13 @@ var init_vxGeoResponsibility_service = __esm({
         });
         total = Number(countRows[0]?.total ?? offset + rows.length);
       }
-      const nominationTargetGeoBaseInfoId = trim21(input.nominationTargetGeoBaseInfoId ?? "");
+      const nominationTargetGeoBaseInfoId = trim22(input.nominationTargetGeoBaseInfoId ?? "");
       const mappedRows = rows.map((row) => {
-        const userId = row.user_id ? trim21(row.user_id) : null;
-        const activeRoleName = row.active_role_name ? trim21(row.active_role_name) : null;
-        const activeGeoBaseInfoId = row.active_geo_base_info_id ? trim21(row.active_geo_base_info_id) : null;
-        const genderCode = row.gender_code ? trim21(row.gender_code) : null;
-        const canGetResponsibilityTitle = row.can_get_responsibility_title ? trim21(row.can_get_responsibility_title) : null;
+        const userId = row.user_id ? trim22(row.user_id) : null;
+        const activeRoleName = row.active_role_name ? trim22(row.active_role_name) : null;
+        const activeGeoBaseInfoId = row.active_geo_base_info_id ? trim22(row.active_geo_base_info_id) : null;
+        const genderCode = row.gender_code ? trim22(row.gender_code) : null;
+        const canGetResponsibilityTitle = row.can_get_responsibility_title ? trim22(row.can_get_responsibility_title) : null;
         const nodeGeoBaseInfoId = nominationTargetGeoBaseInfoId || geoBaseInfoId;
         const nominationGate = openMemberPick ? { selectable: true, blockedReason: null } : resolveHwyGeoResponsibilityNominationSelectable({
           userId,
@@ -262867,29 +263514,33 @@ var init_vxGeoResponsibility_service = __esm({
         });
         const { selectable: baseSelectable, blockedReason } = nominationGate;
         return {
-          id: trim21(row.id),
-          username: row.username ? trim21(row.username) : null,
-          displayFullName: formatHwyMemberPersonDisplayName(trim21(row.display_full_name)) || null,
+          id: trim22(row.id),
+          username: row.username ? trim22(row.username) : null,
+          displayFullName: formatHwyMemberPersonDisplayName(trim22(row.display_full_name)) || null,
           genderCode,
-          birthYear: row.birth_year ? trim21(row.birth_year) : null,
+          birthYear: row.birth_year ? trim22(row.birth_year) : null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: row.avatar_url ? trim21(row.avatar_url) : null,
+            avatarUrl: row.avatar_url ? trim22(row.avatar_url) : null,
             userId: userId ? Number(userId) : null,
             hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1
           }),
-          electoralDivisionPath: row.electoral_division_path ? trim21(row.electoral_division_path) : null,
+          electoralDivisionPath: row.electoral_division_path ? trim22(row.electoral_division_path) : null,
           selectable: baseSelectable,
           blockedReason,
           activeRoleName,
           activeGeoBaseInfoId,
-          activeGeoTitle: row.active_geo_title ? trim21(row.active_geo_title) : null,
-          activeGeoTitlePath: row.active_geo_title_path ? trim21(row.active_geo_title_path) : null,
+          activeGeoTitle: row.active_geo_title ? trim22(row.active_geo_title) : null,
+          activeGeoTitlePath: row.active_geo_title_path ? trim22(row.active_geo_title_path) : null,
           canGetResponsibilityTitle,
-          canGetResponsibilityNote: row.can_get_responsibility_note ? trim21(row.can_get_responsibility_note) : null,
-          allowsResponsibilityTitle: row.allows_responsibility_title ? trim21(row.allows_responsibility_title) : null,
-          hasOtherResponsibility: Boolean(activeRoleName)
+          canGetResponsibilityNote: row.can_get_responsibility_note ? trim22(row.can_get_responsibility_note) : null,
+          allowsResponsibilityTitle: row.allows_responsibility_title ? trim22(row.allows_responsibility_title) : null,
+          hasOtherResponsibility: Boolean(activeRoleName),
+          memberInstitutesSummary: null
         };
       });
+      if (openMemberPick && mappedRows.length > 0) {
+        await enrichOpenMemberPickRowMetadata(mappedRows);
+      }
       if (mappedRows.length > 0) {
         await enrichMemberRowAvatarsFromRegistrationPhotos(mappedRows);
         for (const row of mappedRows) {
@@ -262912,19 +263563,19 @@ var init_vxGeoResponsibility_service = __esm({
     lookupHwyGeoResponsibilityMemberByUsername = async (username) => {
       await ensureGeoResponsibilitySqlServerReady();
       const rows = await execHwyProcedure("vx_geo_responsibility_member_lookup", {
-        username: trim21(username)
+        username: trim22(username)
       });
       const row = rows[0];
       if (!row) {
         throw new Error("Member not found.");
       }
       return {
-        id: trim21(row.id),
-        userId: row.user_id ? trim21(row.user_id) : null,
-        username: row.username ? trim21(row.username) : null,
+        id: trim22(row.id),
+        userId: row.user_id ? trim22(row.user_id) : null,
+        username: row.username ? trim22(row.username) : null,
         displayFullName: buildMemberDisplayName(row),
-        genderCode: row.gender_code ? trim21(row.gender_code) : null,
-        canGetResponsibilityCode: row.can_get_responsibility_code ? trim21(row.can_get_responsibility_code) : null
+        genderCode: row.gender_code ? trim22(row.gender_code) : null,
+        canGetResponsibilityCode: row.can_get_responsibility_code ? trim22(row.can_get_responsibility_code) : null
       };
     };
     enrichHwyGeoResponsibilityNodeOfficialSlotAvatars = async (rows) => {
@@ -262985,7 +263636,7 @@ var init_vxGeoResponsibility_service = __esm({
         throw new Error("Invalid level.");
       }
       const { page, pageSize, offset } = clampNodeListPage(input.page, input.pageSize);
-      const search = trim21(input.search);
+      const search = trim22(input.search);
       const searchLike = search ? `%${search}%` : null;
       const countRows = await execHwyProcedure("vx_geo_responsibility_nodes_count", {
         legacy_kind: spec.geoMapKind,
@@ -263001,7 +263652,7 @@ var init_vxGeoResponsibility_service = __esm({
         page_size: pageSize
       });
       const mapMemberFace2 = (displayName, username, avatarUrl, electoralDivisionPath, memberId, userId, hasProfileImage) => {
-        const trimmedName = formatHwyMemberPersonDisplayName(displayName != null ? trim21(displayName) : null) || null;
+        const trimmedName = formatHwyMemberPersonDisplayName(displayName != null ? trim22(displayName) : null) || null;
         if (!trimmedName) {
           return {
             displayName: null,
@@ -263014,13 +263665,13 @@ var init_vxGeoResponsibility_service = __esm({
         const numericUserId = Number(userId);
         return {
           displayName: trimmedName,
-          username: username ? trim21(username) : null,
+          username: username ? trim22(username) : null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: avatarUrl ? trim21(avatarUrl) : null,
+            avatarUrl: avatarUrl ? trim22(avatarUrl) : null,
             userId: Number.isFinite(numericUserId) && numericUserId > 0 ? numericUserId : null,
             hasProfileImage: hasProfileImage === true || hasProfileImage === 1
           }),
-          electoralDivisionPath: electoralDivisionPath ? trim21(electoralDivisionPath) : null
+          electoralDivisionPath: electoralDivisionPath ? trim22(electoralDivisionPath) : null
         };
       };
       const mapMemberId = (value) => {
@@ -263062,20 +263713,20 @@ var init_vxGeoResponsibility_service = __esm({
           assigneeAvatarUrl: assignee.avatarUrl,
           assigneeElectoralDivisionPath: assignee.electoralDivisionPath,
           pendingMemberId: pending.displayName ? mappedPendingMemberId : null,
-          pendingRequestId: pending.displayName && pendingRequestId != null && String(pendingRequestId).trim() ? trim21(String(pendingRequestId)) : null,
+          pendingRequestId: pending.displayName && pendingRequestId != null && String(pendingRequestId).trim() ? trim22(String(pendingRequestId)) : null,
           pendingMemberDisplayName: pending.displayName,
           pendingMemberUsername: pending.username,
           pendingMemberAvatarUrl: pending.avatarUrl,
           pendingElectoralDivisionPath: pending.electoralDivisionPath,
-          assigneePendingRemovalRequestId: assignee.displayName && assigneePendingRemovalRequestId != null && String(assigneePendingRemovalRequestId).trim() ? trim21(String(assigneePendingRemovalRequestId)) : null
+          assigneePendingRemovalRequestId: assignee.displayName && assigneePendingRemovalRequestId != null && String(assigneePendingRemovalRequestId).trim() ? trim22(String(assigneePendingRemovalRequestId)) : null
         };
       };
       const mappedRows = rows.map((row) => ({
-        geoBaseInfoId: trim21(row.geo_base_info_id),
+        geoBaseInfoId: trim22(row.geo_base_info_id),
         legacyGeoId: Number.isFinite(Number(row.legacy_geo_id)) ? Number(row.legacy_geo_id) : null,
-        title: trim21(row.title),
-        parentTitle: row.parent_title ? trim21(row.parent_title) : null,
-        titlePath: row.title_path ? trim21(row.title_path) : null,
+        title: trim22(row.title),
+        parentTitle: row.parent_title ? trim22(row.parent_title) : null,
+        titlePath: row.title_path ? trim22(row.title_path) : null,
         level: input.level,
         male: mapSlot(
           row.male_assignee_display_name,
@@ -263130,7 +263781,7 @@ var init_vxGeoResponsibility_service = __esm({
       if (!isHwyElectoralGeoKind(input.kind)) {
         throw new Error("Invalid electoral kind.");
       }
-      const parentId = trim21(input.parentBaseInfoId);
+      const parentId = trim22(input.parentBaseInfoId);
       if (input.kind !== "province" && !parentId) {
         throw new Error("parentBaseInfoId is required for this electoral kind.");
       }
@@ -263140,9 +263791,9 @@ var init_vxGeoResponsibility_service = __esm({
       });
       return {
         rows: rows.map((row) => ({
-          geoBaseInfoId: trim21(row.geo_base_info_id),
+          geoBaseInfoId: trim22(row.geo_base_info_id),
           legacyGeoId: Number.isFinite(Number(row.legacy_geo_id)) ? Number(row.legacy_geo_id) : null,
-          title: trim21(row.title)
+          title: trim22(row.title)
         }))
       };
     };
@@ -263151,7 +263802,7 @@ var init_vxGeoResponsibility_service = __esm({
       if (!await hasHwyGeoOrCoursesActivitiesAccess(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const provinceId = trim21(provinceBaseInfoId);
+      const provinceId = trim22(provinceBaseInfoId);
       if (!provinceId) {
         throw new Error("provinceBaseInfoId is required.");
       }
@@ -263166,7 +263817,7 @@ var init_vxGeoResponsibility_service = __esm({
       if (!await hasHwyGeoOrCoursesActivitiesAccess(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const startId = trim21(geoBaseInfoId);
+      const startId = trim22(geoBaseInfoId);
       if (!startId) {
         throw new Error("geoBaseInfoId is required.");
       }
@@ -263176,9 +263827,9 @@ var init_vxGeoResponsibility_service = __esm({
       );
       const selection = {};
       for (const row of rows) {
-        const kind = trim21(row.legacy_kind);
+        const kind = trim22(row.legacy_kind);
         if (isHwyElectoralGeoKind(kind)) {
-          selection[kind] = trim21(row.id);
+          selection[kind] = trim22(row.id);
         }
       }
       return selection;
@@ -263203,29 +263854,29 @@ var init_vxGeoResponsibility_service = __esm({
         page_size: pageSize
       });
       const mappedRows = rows.map((row) => {
-        const requestKindRaw = trim21(row.request_kind);
+        const requestKindRaw = trim22(row.request_kind);
         return {
-          id: trim21(row.id),
+          id: trim22(row.id),
           status: row.status,
           level: row.geo_level,
-          geoBaseInfoId: trim21(row.geo_base_info_id),
-          geoTitle: row.geo_title ? trim21(row.geo_title) : null,
-          memberId: trim21(row.member_id),
-          memberDisplayName: formatHwyMemberPersonDisplayName(trim21(row.member_display_name)) || null,
-          memberUsername: row.member_username ? trim21(row.member_username) : null,
-          memberPhone: row.member_phone ? trim21(row.member_phone) : null,
-          geoTitlePath: row.geo_title_path ? trim21(row.geo_title_path) : null,
+          geoBaseInfoId: trim22(row.geo_base_info_id),
+          geoTitle: row.geo_title ? trim22(row.geo_title) : null,
+          memberId: trim22(row.member_id),
+          memberDisplayName: formatHwyMemberPersonDisplayName(trim22(row.member_display_name)) || null,
+          memberUsername: row.member_username ? trim22(row.member_username) : null,
+          memberPhone: row.member_phone ? trim22(row.member_phone) : null,
+          geoTitlePath: row.geo_title_path ? trim22(row.geo_title_path) : null,
           memberAvatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: row.member_avatar_url ? trim21(row.member_avatar_url) : null,
+            avatarUrl: row.member_avatar_url ? trim22(row.member_avatar_url) : null,
             userId: Number(row.member_user_id),
             hasProfileImage: row.member_has_profile_image === true || row.member_has_profile_image === 1
           }),
-          memberGenderCode: row.member_gender_code ? trim21(row.member_gender_code) : null,
-          roleName: trim21(row.role_name),
-          nominatedAt: row.nominated_at ? new Date(trim21(row.nominated_at)).toISOString() : null,
-          nominatedByDisplayName: row.nominated_by_display_name ? trim21(row.nominated_by_display_name) : null,
-          nominatedByUsername: row.nominated_by_username ? trim21(row.nominated_by_username) : null,
-          decisionNote: row.decision_note ? trim21(row.decision_note) : null,
+          memberGenderCode: row.member_gender_code ? trim22(row.member_gender_code) : null,
+          roleName: trim22(row.role_name),
+          nominatedAt: row.nominated_at ? new Date(trim22(row.nominated_at)).toISOString() : null,
+          nominatedByDisplayName: row.nominated_by_display_name ? trim22(row.nominated_by_display_name) : null,
+          nominatedByUsername: row.nominated_by_username ? trim22(row.nominated_by_username) : null,
+          decisionNote: row.decision_note ? trim22(row.decision_note) : null,
           requestKind: isHwyGeoResponsibilityRequestKind(requestKindRaw) ? requestKindRaw : VX_GEO_RESPONSIBILITY_REQUEST_KIND_NOMINATION,
           isOfficialRemovalRequest: isHwyGeoResponsibilityOfficialRemovalRequestKind(requestKindRaw)
         };
@@ -263262,8 +263913,8 @@ var init_vxGeoResponsibility_service = __esm({
       if (!spec) {
         throw new Error("Invalid level.");
       }
-      const memberId = trim21(input.memberId);
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const memberId = trim22(input.memberId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!memberId || !geoBaseInfoId) {
         throw new Error("Member and geographic node are required.");
       }
@@ -263276,7 +263927,7 @@ var init_vxGeoResponsibility_service = __esm({
     `,
         {
           replacements: { geoBaseInfoId, kind: spec.geoMapKind },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
       if (!mapRows2[0]) {
@@ -263287,18 +263938,18 @@ var init_vxGeoResponsibility_service = __esm({
     SELECT CAST(id AS VARCHAR(32)) AS id, CAST(user_id AS VARCHAR(32)) AS user_id, gender_code
     FROM dbo.vx_members WHERE id = :memberId
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize120.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow) {
         throw new Error("Member not found.");
       }
       const memberLookup = {
-        id: trim21(memberRow.id) || memberId,
-        userId: memberRow.user_id ? trim21(memberRow.user_id) : null,
+        id: trim22(memberRow.id) || memberId,
+        userId: memberRow.user_id ? trim22(memberRow.user_id) : null,
         username: null,
         displayFullName: null,
-        genderCode: memberRow.gender_code ? trim21(memberRow.gender_code) : null,
+        genderCode: memberRow.gender_code ? trim22(memberRow.gender_code) : null,
         canGetResponsibilityCode: null
       };
       ensureMemberEligible(memberLookup);
@@ -263312,7 +263963,7 @@ var init_vxGeoResponsibility_service = __esm({
       AND ${vxGeoResponsibilitySqlActiveNominationAssignment("r")}
     ORDER BY COALESCE(r.decided_at, r.nominated_at) DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize120.QueryTypes.SELECT }
       );
       const clearanceRows = await sequelize.query(
         `
@@ -263322,15 +263973,15 @@ var init_vxGeoResponsibility_service = __esm({
     WHERE sp.member_id = :memberId
     ORDER BY sp.id DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize120.QueryTypes.SELECT }
       );
       const nominationGate = resolveHwyGeoResponsibilityNominationSelectable({
         userId: memberLookup.userId,
-        activeRoleName: activeRows[0]?.role_name ? trim21(activeRows[0].role_name) : null,
-        activeGeoBaseInfoId: activeRows[0]?.geo_base_info_id ? trim21(activeRows[0].geo_base_info_id) : null,
+        activeRoleName: activeRows[0]?.role_name ? trim22(activeRows[0].role_name) : null,
+        activeGeoBaseInfoId: activeRows[0]?.geo_base_info_id ? trim22(activeRows[0].geo_base_info_id) : null,
         nodeGeoBaseInfoId: geoBaseInfoId,
         genderCode: memberLookup.genderCode,
-        canGetResponsibilityTitle: clearanceRows[0]?.can_get_title ? trim21(clearanceRows[0].can_get_title) : null
+        canGetResponsibilityTitle: clearanceRows[0]?.can_get_title ? trim22(clearanceRows[0].can_get_title) : null
       });
       if (!nominationGate.selectable) {
         if (nominationGate.blockedReason === "official_at_node") {
@@ -263360,7 +264011,7 @@ var init_vxGeoResponsibility_service = __esm({
             memberId: Number(memberId),
             montadheminMembershipStatusCode: montadheminScope.membershipStatusCodes.active
           },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
       if (!montadheminRows[0]) {
@@ -263380,7 +264031,7 @@ var init_vxGeoResponsibility_service = __esm({
     `,
         {
           replacements: { memberId: Number(memberId) },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
       if (memberPending[0]) {
@@ -263395,7 +264046,7 @@ var init_vxGeoResponsibility_service = __esm({
         role_name: spec.roleName,
         nominated_by: nominatedBy
       });
-      const requestId = trim21(inserted[0]?.requestId);
+      const requestId = trim22(inserted[0]?.requestId);
       if (!requestId) {
         throw new Error("Could not create nomination request.");
       }
@@ -263434,14 +264085,14 @@ var init_vxGeoResponsibility_service = __esm({
             roleName: input.roleName,
             memberId: input.memberId
           },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
       const row = rows[0];
       if (!row?.id || row.user_id == null) {
         return null;
       }
-      return { id: trim21(row.id), user_id: Number(row.user_id) };
+      return { id: trim22(row.id), user_id: Number(row.user_id) };
     };
     resolveActiveGeoResponsibilityOfficialForMember = async (input) => {
       const officialRequest = await readActiveGeoResponsibilityOfficialRequest({
@@ -263483,7 +264134,7 @@ var init_vxGeoResponsibility_service = __esm({
             memberId: input.memberId,
             level: input.level
           },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
       if (scopeRows[0]?.id != null) {
@@ -263534,10 +264185,10 @@ var init_vxGeoResponsibility_service = __esm({
             level: input.level,
             roleName: input.roleName
           },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
-      const id = rows[0]?.id ? trim21(rows[0].id) : "";
+      const id = rows[0]?.id ? trim22(rows[0].id) : "";
       return id || null;
     };
     findSubmittedHwyGeoResponsibilityOfficialRemovalRequestId = async (input) => {
@@ -263560,17 +264211,17 @@ var init_vxGeoResponsibility_service = __esm({
             level: input.level,
             roleName: input.roleName
           },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
-      const id = rows[0]?.id ? trim21(rows[0].id) : "";
+      const id = rows[0]?.id ? trim22(rows[0].id) : "";
       return id || null;
     };
     readHwyGeoResponsibilityAssigneePendingRemovalRequestId = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
       const spec = findHwyGeoResponsibilityRoleSpec(input.level);
-      const memberId = trim21(input.memberId);
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const memberId = trim22(input.memberId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!spec || !memberId || !geoBaseInfoId) {
         return { requestId: null };
       }
@@ -263594,8 +264245,8 @@ var init_vxGeoResponsibility_service = __esm({
         throw new Error("Forbidden.");
       }
       const spec = findHwyGeoResponsibilityRoleSpec(input.level);
-      const memberId = trim21(input.memberId);
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const memberId = trim22(input.memberId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!spec || !memberId || !geoBaseInfoId) {
         throw new Error("Invalid cancel request.");
       }
@@ -263622,7 +264273,7 @@ var init_vxGeoResponsibility_service = __esm({
     };
     cancelHwyGeoResponsibilityNominationRequest = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
-      const requestId = trim21(input.requestId);
+      const requestId = trim22(input.requestId);
       const actorUserId2 = input.actorUserId;
       if (actorUserId2 == null || !Number.isFinite(actorUserId2)) {
         throw new Error("Authenticated user required.");
@@ -263634,7 +264285,7 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize119.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize120.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -263654,8 +264305,8 @@ var init_vxGeoResponsibility_service = __esm({
       if (!canNominateLevel(input.roleNames, input.level)) {
         throw new Error("Forbidden.");
       }
-      const memberId = trim21(input.memberId);
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const memberId = trim22(input.memberId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       const spec = findHwyGeoResponsibilityRoleSpec(input.level);
       if (!spec || !memberId || !geoBaseInfoId) {
         throw new Error("Invalid removal request.");
@@ -263671,14 +264322,14 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_members
     WHERE id = :memberId
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize119.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize120.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow) {
         throw new Error("Member not found.");
       }
       const memberGenderSlot = resolveHwyGeoResponsibilityGenderSlot(
-        memberRow.gender_code ? trim21(memberRow.gender_code) : null
+        memberRow.gender_code ? trim22(memberRow.gender_code) : null
       );
       if (memberGenderSlot !== "male" && memberGenderSlot !== "female") {
         throw new Error("Member gender is required.");
@@ -263709,7 +264360,7 @@ var init_vxGeoResponsibility_service = __esm({
             geoBaseInfoId,
             roleName: spec.roleName
           },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
       if (pendingDuplicate[0]) {
@@ -263723,7 +264374,7 @@ var init_vxGeoResponsibility_service = __esm({
     `,
         {
           replacements: { geoBaseInfoId, kind: spec.geoMapKind },
-          type: import_sequelize119.QueryTypes.SELECT
+          type: import_sequelize120.QueryTypes.SELECT
         }
       );
       if (!mapRows2[0]) {
@@ -263741,7 +264392,7 @@ var init_vxGeoResponsibility_service = __esm({
           nominated_by: nominatedBy
         }
       );
-      const requestId = trim21(inserted[0]?.requestId);
+      const requestId = trim22(inserted[0]?.requestId);
       if (!requestId) {
         throw new Error("Could not create removal request.");
       }
@@ -263749,7 +264400,7 @@ var init_vxGeoResponsibility_service = __esm({
     };
     approveHwyGeoResponsibilityRequest = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
-      const requestId = trim21(input.requestId);
+      const requestId = trim22(input.requestId);
       if (!requestId) {
         throw new Error("Request id is required.");
       }
@@ -263772,7 +264423,7 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize119.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize120.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -263785,9 +264436,9 @@ var init_vxGeoResponsibility_service = __esm({
       if (row.user_id == null) {
         throw new Error("Member has no linked user account.");
       }
-      const geoBaseInfoId = trim21(row.geo_base_info_id);
-      const roleName = trim21(row.role_name);
-      const requestKind = trim21(row.request_kind);
+      const geoBaseInfoId = trim22(row.geo_base_info_id);
+      const roleName = trim22(row.role_name);
+      const requestKind = trim22(row.request_kind);
       if (isHwyGeoResponsibilityOfficialRemovalRequestKind(requestKind)) {
         const officialForMember = await resolveActiveGeoResponsibilityOfficialForMember({
           sequelize,
@@ -263835,7 +264486,7 @@ var init_vxGeoResponsibility_service = __esm({
     };
     rejectHwyGeoResponsibilityRequest = async (input) => {
       await ensureGeoResponsibilitySqlServerReady();
-      const requestId = trim21(input.requestId);
+      const requestId = trim22(input.requestId);
       const actorUserId2 = input.actorUserId;
       if (actorUserId2 == null || !Number.isFinite(actorUserId2)) {
         throw new Error("Authenticated user required.");
@@ -263847,7 +264498,7 @@ var init_vxGeoResponsibility_service = __esm({
     FROM dbo.vx_geo_responsibility_requests
     WHERE id = :requestId
     `,
-        { replacements: { requestId }, type: import_sequelize119.QueryTypes.SELECT }
+        { replacements: { requestId }, type: import_sequelize120.QueryTypes.SELECT }
       );
       const row = rows[0];
       if (!row || row.status !== SUBMITTED_STATUS) {
@@ -263860,7 +264511,7 @@ var init_vxGeoResponsibility_service = __esm({
         await execHwyProcedure("vx_geo_responsibility_reject_request", {
           request_id: requestId,
           actor_user_id: actorUserId2,
-          note: trim21(input.note) || null
+          note: trim22(input.note) || null
         });
       } catch (error) {
         const message = error instanceof Error ? error.message : "";
@@ -263904,7 +264555,7 @@ var init_vxGeoResponsibility_service = __esm({
       if (!vxGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -263927,7 +264578,7 @@ var init_vxGeoResponsibility_service = __esm({
       if (!vxGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -263947,7 +264598,7 @@ var init_vxGeoResponsibility_service = __esm({
       if (!vxGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -264025,7 +264676,7 @@ var init_vxGeoResponsibility_service = __esm({
       if (!vxGeoResponsibilityCanAccessSection(roleNames)) {
         throw new Error("Forbidden.");
       }
-      const geoBaseInfoId = trim21(input.geoBaseInfoId);
+      const geoBaseInfoId = trim22(input.geoBaseInfoId);
       if (!geoBaseInfoId) {
         throw new Error("Geographic node is required.");
       }
@@ -264042,21 +264693,21 @@ var init_vxGeoResponsibility_service = __esm({
       });
       const events = [];
       for (const row of rows) {
-        const eventKind = trim21(row.event_kind);
-        const source = trim21(row.source);
+        const eventKind = trim22(row.event_kind);
+        const source = trim22(row.source);
         if (!isPatchHistoryEventKind(eventKind) || !isPatchHistorySource(source)) {
           continue;
         }
         const actor = normalizeHwyPlatformAdminActorFields({
-          actorDisplayName: row.actor_display_name ? trim21(row.actor_display_name) : null,
-          actorUsername: row.actor_username ? trim21(row.actor_username) : null
+          actorDisplayName: row.actor_display_name ? trim22(row.actor_display_name) : null,
+          actorUsername: row.actor_username ? trim22(row.actor_username) : null
         });
         events.push({
           eventKind,
-          eventOn: trim21(row.event_on),
-          memberId: row.member_id ? trim21(row.member_id) : null,
-          memberDisplayName: row.member_display_name ? formatHwyMemberPersonDisplayName(trim21(row.member_display_name)) : null,
-          memberUsername: row.member_username ? trim21(row.member_username) : null,
+          eventOn: trim22(row.event_on),
+          memberId: row.member_id ? trim22(row.member_id) : null,
+          memberDisplayName: row.member_display_name ? formatHwyMemberPersonDisplayName(trim22(row.member_display_name)) : null,
+          memberUsername: row.member_username ? trim22(row.member_username) : null,
           actorDisplayName: actor.actorDisplayName,
           actorUsername: actor.actorUsername,
           source
@@ -264068,13 +264719,13 @@ var init_vxGeoResponsibility_service = __esm({
 });
 
 // src/server/domain/vx/ensureHwyMemberPassedNecessaryDoratSql.ts
-var import_node_fs36, import_node_path41, import_node_url11, import_sequelize120, import_meta13, ensurePromise11, ddlPath3, applyDdl, ensureHwyMemberPassedNecessaryDoratSql;
+var import_node_fs36, import_node_path41, import_node_url11, import_sequelize121, import_meta13, ensurePromise11, ddlPath3, applyDdl, ensureHwyMemberPassedNecessaryDoratSql;
 var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
   "src/server/domain/vx/ensureHwyMemberPassedNecessaryDoratSql.ts"() {
     import_node_fs36 = require("node:fs");
     import_node_path41 = __toESM(require("node:path"), 1);
     import_node_url11 = require("node:url");
-    import_sequelize120 = require("sequelize");
+    import_sequelize121 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     import_meta13 = {};
@@ -264088,7 +264739,7 @@ var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
       const ddl = (0, import_node_fs36.readFileSync)(ddlPath3, "utf8");
       const batches = ddl.split(/^\s*GO\s*$/gim).map((chunk2) => chunk2.trim()).filter(Boolean);
       for (const batch of batches) {
-        await sequelize.query(batch, { type: import_sequelize120.QueryTypes.RAW });
+        await sequelize.query(batch, { type: import_sequelize121.QueryTypes.RAW });
       }
     };
     ensureHwyMemberPassedNecessaryDoratSql = async () => {
@@ -264107,7 +264758,7 @@ var init_ensureHwyMemberPassedNecessaryDoratSql = __esm({
 });
 
 // src/server/domain/vx/vxGeoResponsibilityMontadheminAdmin.service.ts
-var DEFAULT_PAGE_SIZE8, MAX_PAGE_SIZE8, trim22, assertSqlServer10, clampPage4, listHwyGeoResponsibilityMontadheminAdmin;
+var DEFAULT_PAGE_SIZE8, MAX_PAGE_SIZE8, trim23, assertSqlServer10, clampPage4, listHwyGeoResponsibilityMontadheminAdmin;
 var init_vxGeoResponsibilityMontadheminAdmin_service = __esm({
   "src/server/domain/vx/vxGeoResponsibilityMontadheminAdmin.service.ts"() {
     init_vxGeoResponsibilityCatalog();
@@ -264121,7 +264772,7 @@ var init_vxGeoResponsibilityMontadheminAdmin_service = __esm({
     init_vxExecDbObject();
     DEFAULT_PAGE_SIZE8 = 25;
     MAX_PAGE_SIZE8 = 100;
-    trim22 = (value) => String(value ?? "").trim();
+    trim23 = (value) => String(value ?? "").trim();
     assertSqlServer10 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Vx geo-responsibility montadhemin admin requires SQL Server control plane.");
@@ -264148,7 +264799,7 @@ var init_vxGeoResponsibilityMontadheminAdmin_service = __esm({
       const scope = await loadHwyMemberListScopeContext();
       const activeMembership = scope.membershipStatusCodes.active;
       const geoRoleNamesCsv = vxGeoResponsibilityPatchRoleNames().join(",");
-      const search = trim22(input.search);
+      const search = trim23(input.search);
       const searchLike = search ? `%${search}%` : null;
       const procBase = {
         active_membership_code: activeMembership,
@@ -264170,22 +264821,22 @@ var init_vxGeoResponsibilityMontadheminAdmin_service = __esm({
         page,
         pageSize,
         rows: rows.map((row) => ({
-          id: trim22(row.id),
-          username: row.username ? trim22(row.username) : null,
-          displayFullName: formatHwyMemberPersonDisplayName(trim22(row.display_full_name)) || null,
-          genderCode: row.gender_code ? trim22(row.gender_code) : null,
+          id: trim23(row.id),
+          username: row.username ? trim23(row.username) : null,
+          displayFullName: formatHwyMemberPersonDisplayName(trim23(row.display_full_name)) || null,
+          genderCode: row.gender_code ? trim23(row.gender_code) : null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: row.avatar_url ? trim22(row.avatar_url) : null,
+            avatarUrl: row.avatar_url ? trim23(row.avatar_url) : null,
             hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1,
             userId: row.user_id ? Number(row.user_id) : null
           }),
-          electoralDivisionPath: row.electoral_division_path ? trim22(row.electoral_division_path) : null,
+          electoralDivisionPath: row.electoral_division_path ? trim23(row.electoral_division_path) : null,
           passedNecessaryDorat: row.passed_necessary_dorat === true || row.passed_necessary_dorat === 1,
-          canGetResponsibilityTitle: row.can_get_responsibility_title ? trim22(row.can_get_responsibility_title) : null,
-          canGetResponsibilityNote: row.can_get_responsibility_note ? trim22(row.can_get_responsibility_note) : null,
-          allowsResponsibilityTitle: row.allows_responsibility_title ? trim22(row.allows_responsibility_title) : null,
-          activeResponsibilityRole: row.active_responsibility_role ? trim22(row.active_responsibility_role) : null,
-          activeResponsibilityGeoTitlePath: row.active_responsibility_geo_title_path ? trim22(row.active_responsibility_geo_title_path) : null,
+          canGetResponsibilityTitle: row.can_get_responsibility_title ? trim23(row.can_get_responsibility_title) : null,
+          canGetResponsibilityNote: row.can_get_responsibility_note ? trim23(row.can_get_responsibility_note) : null,
+          allowsResponsibilityTitle: row.allows_responsibility_title ? trim23(row.allows_responsibility_title) : null,
+          activeResponsibilityRole: row.active_responsibility_role ? trim23(row.active_responsibility_role) : null,
+          activeResponsibilityGeoTitlePath: row.active_responsibility_geo_title_path ? trim23(row.active_responsibility_geo_title_path) : null,
           profileComplete: null,
           interviewResultTitle: null,
           allDocumentsApproved: null,
@@ -264236,14 +264887,14 @@ var init_vxCandidatePipelineLegacyAccess = __esm({
 // src/server/domain/vx/vxCandidatePipelineAccess.service.ts
 async function resolveHwyCandidatePipelinePortalAllowRoles() {
   const now = Date.now();
-  if (portalRolesCache && now - portalRolesCache.loadedAt < CACHE_MS) {
-    return portalRolesCache.roles;
+  if (portalRolesCache2 && now - portalRolesCache2.loadedAt < CACHE_MS2) {
+    return portalRolesCache2.roles;
   }
   try {
     const byAction = await loadRolesByAction();
     const roles = buildHwyCandidatePipelinePortalAllowRoles(byAction);
-    portalRolesCache = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
-    return portalRolesCache.roles;
+    portalRolesCache2 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+    return portalRolesCache2.roles;
   } catch {
     return ["ADMIN"];
   }
@@ -264260,14 +264911,14 @@ async function assertHwyCandidatePipelineStageAccess(stage, roleNames) {
   if (portal.some((role) => roleNames.includes(role))) return;
   throw new Error("Forbidden.");
 }
-var CACHE_MS, portalRolesCache, loadRolesByAction;
+var CACHE_MS2, portalRolesCache2, loadRolesByAction;
 var init_vxCandidatePipelineAccess_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineAccess.service.ts"() {
     init_legacyHwyRoleAuth();
     init_vxCandidatePipelineLegacyAccess();
     init_vxMemberListLegacyAccess();
-    CACHE_MS = 3e4;
-    portalRolesCache = null;
+    CACHE_MS2 = 3e4;
+    portalRolesCache2 = null;
     loadRolesByAction = async () => {
       const pool = await connectLegacyReadPool();
       try {
@@ -264501,7 +265152,7 @@ var init_vxLegacyParitySqlBuilders = __esm({
 });
 
 // src/server/domain/vx/vxLegacyParityRead.service.ts
-var latestStepSubquery, queryLegacyCandidatePipelineCount, queryLegacyCandidatePipelineList, queryLegacyCardFlowCount, queryLegacyCardFlowList, queryLegacyCardFlowPrintedHistoryCount, queryLegacyCardFlowPrintedHistoryList, queryLegacyMeetingDefinitions, queryLegacyMeetingInstancesCount, queryLegacyMeetingMembers, queryLegacyMeetingInstanceHazerin, queryLegacyMeetingInstancesList, toCandidatePipelineWhereInput, toCardFlowWhereInput;
+var latestStepSubquery, queryLegacyCandidatePipelineCount, queryLegacyCandidatePipelineList, queryLegacyCardFlowCount, queryLegacyCardFlowList, queryLegacyCardFlowPrintedHistoryCount, queryLegacyCardFlowPrintedHistoryList, queryLegacyMeetingDefinitions, queryLegacyMeetingInstancesCount, queryLegacyMeetingMembers, removeLegacyMeetingInstanceHazer, queryLegacyMeetingInstanceMeetingId, queryLegacyMeetingInstanceHazerin, queryLegacyMeetingInstancesList, toCandidatePipelineWhereInput, toCardFlowWhereInput;
 var init_vxLegacyParityRead_service = __esm({
   "src/server/domain/vx/vxLegacyParityRead.service.ts"() {
     init_vxCandidatePipelineViewNames();
@@ -264535,7 +265186,7 @@ var init_vxLegacyParityRead_service = __esm({
         areaCol = `, CAST(V.AreaId AS VARCHAR(32)) AS areaId, CAST(V.NecessaryDoratPassed AS BIT) AS necessaryDoratPassed, V.InterviewFinalResultTitle AS interviewFinalResultTitle, CAST(V.ProfilePerfect AS INT) AS profilePerfect, CAST(V.AllImagesApproved AS BIT) AS allImagesApproved, CAST(V.HasOath AS BIT) AS hasOath, V.GenderLimits AS gender_limits, V.AreasLimits AS areas_limits, V.RolesLimits AS roles_limits`;
       }
       const passedDoratCol = input.stage === "courses" ? "V.PassedDorat AS passedDoratHtml" : "CAST(NULL AS NVARCHAR(MAX)) AS passedDoratHtml";
-      const sql23 = `
+      const sql25 = `
     SELECT
       CAST(V.Id AS VARCHAR(32)) AS id,
       V.UserName AS username,
@@ -264563,7 +265214,7 @@ var init_vxLegacyParityRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql23);
+        const result = await pool.request().query(sql25);
         return result.recordset;
       } finally {
         await pool.close();
@@ -264585,7 +265236,7 @@ var init_vxLegacyParityRead_service = __esm({
     queryLegacyCardFlowList = async (input, offset, pageSize) => {
       const where = buildHwyCardFlowWhereSql(input);
       const latest = latestStepSubquery("M");
-      const sql23 = `
+      const sql25 = `
     SELECT
       CAST(M.Id AS VARCHAR(32)) AS id,
       M.UserName AS username,
@@ -264613,7 +265264,7 @@ var init_vxLegacyParityRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql23);
+        const result = await pool.request().query(sql25);
         return result.recordset;
       } finally {
         await pool.close();
@@ -264676,9 +265327,12 @@ var init_vxLegacyParityRead_service = __esm({
       const pool = await connectLegacyReadPool2();
       try {
         const result = await pool.request().query(`
-      SELECT CAST(bi.Id AS VARCHAR(32)) AS id, bi.Title AS title, CAST(bi.ViewOrder AS INT) AS viewOrder
+      SELECT DISTINCT
+        CAST(bi.Id AS VARCHAR(32)) AS id,
+        bi.Title AS title,
+        CAST(bi.ViewOrder AS INT) AS viewOrder
       FROM dbo.VX_BaseInformation bi WITH (NOLOCK)
-      WHERE bi.ParentId = 214040
+      WHERE bi.ParentId IN (214040, 214993)
       ORDER BY bi.ViewOrder ASC, bi.Id ASC
     `);
         return result.recordset;
@@ -264732,9 +265386,75 @@ var init_vxLegacyParityRead_service = __esm({
       FROM dbo.VX_Meetings_Members mm WITH (NOLOCK)
       LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = mm.MemberId
       WHERE mm.MeetingId = @meeting_id
-      ORDER BY M.UserName ASC
+
+      UNION ALL
+
+      SELECT DISTINCT
+        CONCAT(N'h', CAST(H.MemberId AS VARCHAR(31))) AS id,
+        CAST(@meeting_id AS VARCHAR(32)) AS meetingId,
+        CAST(H.MemberId AS VARCHAR(32)) AS memberId,
+        CAST(0 AS BIT) AS isMemberYet,
+        NULL AS isMemberYetUpdatedOn,
+        M.UserName AS username,
+        M.FirstName AS firstName,
+        M.FatherName AS fatherName,
+        M.LastName AS lastName
+      FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
+      INNER JOIN dbo.VX_Meetings_Instances mi WITH (NOLOCK) ON mi.Id = H.InstanceId AND mi.MeetingId = @meeting_id
+      LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = H.MemberId
+      WHERE NOT EXISTS (
+        SELECT 1
+        FROM dbo.VX_Meetings_Members mm2 WITH (NOLOCK)
+        WHERE mm2.MeetingId = @meeting_id AND mm2.MemberId = H.MemberId
+      )
+
+      ORDER BY username ASC
     `);
         return result.recordset;
+      } finally {
+        await pool.close();
+      }
+    };
+    removeLegacyMeetingInstanceHazer = async (instanceId, memberId) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const request = pool.request();
+        request.input("instance_id", instanceId);
+        request.input("member_id", memberId);
+        const pascalResult = await request.query(`
+      DELETE FROM dbo.VX_Meetings_Hazerin
+      WHERE InstanceId = @instance_id AND MemberId = @member_id
+    `);
+        const pascalAffected = pascalResult.rowsAffected.reduce((sum, count) => sum + count, 0);
+        let snakeAffected = 0;
+        if (pascalAffected === 0) {
+          const snakeResult = await request.query(`
+      DELETE FROM dbo.VX_Meetings_Hazerin
+      WHERE InstanceId = @instance_id AND member_id = @member_id
+    `);
+          snakeAffected = snakeResult.rowsAffected.reduce((sum, count) => sum + count, 0);
+        }
+        if (pascalAffected + snakeAffected === 0) {
+          throw new Error("Attendee was not found or could not be removed.");
+        }
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyMeetingInstanceMeetingId = async (instanceId) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const request = pool.request();
+        request.input("instance_id", instanceId);
+        const result = await request.query(`
+      SELECT TOP 1 CAST(MeetingId AS BIGINT) AS meeting_id
+      FROM dbo.VX_Meetings_Instances WITH (NOLOCK)
+      WHERE Id = @instance_id OR id = @instance_id
+    `);
+        const meetingId = Number(result.recordset[0]?.meeting_id ?? 0);
+        return meetingId > 0 ? meetingId : null;
       } finally {
         await pool.close();
       }
@@ -264743,20 +265463,39 @@ var init_vxLegacyParityRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
+        const colResult = await pool.request().query(`
+      SELECT CASE
+        WHEN COL_LENGTH(N'dbo.VX_Meetings_Hazerin', N'member_id') IS NOT NULL THEN N'snake'
+        ELSE N'pascal'
+      END AS member_col
+    `);
+        const memberCol = String(colResult.recordset[0]?.member_col ?? "pascal") === "snake" ? "snake" : "pascal";
         const request = pool.request();
         request.input("instance_id", instanceId);
-        const result = await request.query(`
+        const sql25 = memberCol === "snake" ? `
       SELECT
-        CAST(H.MemberId AS VARCHAR(32)) AS memberId,
+        CAST(H.member_id AS VARCHAR(32)) AS member_id,
+        M.username AS username,
+        M.first_name AS first_name,
+        M.father_name AS father_name,
+        M.family_name AS family_name
+      FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
+      LEFT JOIN dbo.vx_members M WITH (NOLOCK) ON M.id = H.member_id
+      WHERE H.InstanceId = @instance_id
+      ORDER BY M.username ASC, H.member_id ASC
+    ` : `
+      SELECT
+        CAST(H.MemberId AS VARCHAR(32)) AS member_id,
         M.UserName AS username,
-        M.FirstName AS firstName,
-        M.FatherName AS fatherName,
-        M.LastName AS lastName
+        M.FirstName AS first_name,
+        M.FatherName AS father_name,
+        M.LastName AS family_name
       FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
       LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = H.MemberId
       WHERE H.InstanceId = @instance_id
       ORDER BY M.UserName ASC, H.MemberId ASC
-    `);
+    `;
+        const result = await request.query(sql25);
         return result.recordset;
       } finally {
         await pool.close();
@@ -264910,7 +265649,7 @@ async function attachHwyCandidatePipelineNominationRoles(rows) {
          ON ur.UserId = m.UserId AND ur.RoleId IN (1000004, 1000005)
        LEFT JOIN dbo.vw_vx_platform_roles R WITH (NOLOCK) ON R.Id = ur.RoleId
        WHERE m.Id IN (:memberIds)`,
-      { replacements: { memberIds }, type: import_sequelize121.QueryTypes.SELECT }
+      { replacements: { memberIds }, type: import_sequelize122.QueryTypes.SELECT }
     );
   } catch {
     return;
@@ -264948,10 +265687,10 @@ async function attachHwyCandidatePipelineNominationRoles(rows) {
     }
   }
 }
-var import_sequelize121, readStringField5;
+var import_sequelize122, readStringField5;
 var init_vxCandidatePipelineNominationRole_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineNominationRole.service.ts"() {
-    import_sequelize121 = require("sequelize");
+    import_sequelize122 = require("sequelize");
     init_controlPlaneSequelize();
     readStringField5 = (row, key) => String(row[key] ?? "").trim();
   }
@@ -264973,7 +265712,7 @@ async function attachHwyCandidatePipelineResponsibilityPatchPaths(rows, queryLan
        WHERE al.member_id IN (:memberIds)
          AND (al.approved = 1 OR al.approved = 0)
        ORDER BY al.member_id, al.approved DESC, al.id`,
-      { replacements: { memberIds }, type: import_sequelize122.QueryTypes.SELECT }
+      { replacements: { memberIds }, type: import_sequelize123.QueryTypes.SELECT }
     );
     for (const limit of limits) {
       const memberId = String(limit.member_id ?? "").trim();
@@ -265002,10 +265741,10 @@ async function attachHwyCandidatePipelineResponsibilityPatchPaths(rows, queryLan
   }
   await attachFromLegacyGeoIdLists(rows, memberIdToLegacyIds, queryLang);
 }
-var import_sequelize122, readStringField6, GEO_KIND_PRIORITY, LEGACY_ROLE_ID_TO_GEO_LEVEL, isGeoResponsibilityLevel, memberItemKey, resolveGeoLevelFromLegacyKind, pickLegacyKindForItemId, parseLegacyGeoIds, pickBestBaseInfoIdPerLegacyId, loadIqTitlePathsByBaseInfoId, loadTitlePathsByItemIdSql, resolveHwyLegacyGeoIdTitlePaths, loadNominationGeoLevelByMemberItem, resolvePatchGeoLevelForRow, attachFromLegacyGeoIdLists;
+var import_sequelize123, readStringField6, GEO_KIND_PRIORITY, LEGACY_ROLE_ID_TO_GEO_LEVEL, isGeoResponsibilityLevel, memberItemKey, resolveGeoLevelFromLegacyKind, pickLegacyKindForItemId, parseLegacyGeoIds, pickBestBaseInfoIdPerLegacyId, loadIqTitlePathsByBaseInfoId, loadTitlePathsByItemIdSql, resolveHwyLegacyGeoIdTitlePaths, loadNominationGeoLevelByMemberItem, resolvePatchGeoLevelForRow, attachFromLegacyGeoIdLists;
 var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineResponsibilityPatchDisplay.service.ts"() {
-    import_sequelize122 = require("sequelize");
+    import_sequelize123 = require("sequelize");
     init_baseInfoCultureTranslations();
     init_vxMemberDirectoryPathDisplay();
     init_controlPlaneSequelize();
@@ -265094,7 +265833,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
        WHERE bi.id IN (:baseInfoIds)`,
           {
             replacements: { baseInfoIds },
-            type: import_sequelize122.QueryTypes.SELECT
+            type: import_sequelize123.QueryTypes.SELECT
           }
         );
         const map = /* @__PURE__ */ new Map();
@@ -265126,7 +265865,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
                 dbo.vx_region_electoral_title_path(CAST(ids.item_id AS NVARCHAR(128)))
               ))), N'') AS title_path
        FROM (SELECT CAST(value AS VARCHAR(32)) AS item_id FROM STRING_SPLIT(:itemIdsCsv, N',')) ids`,
-          { replacements: { itemIdsCsv: ids2.join(",") }, type: import_sequelize122.QueryTypes.SELECT }
+          { replacements: { itemIdsCsv: ids2.join(",") }, type: import_sequelize123.QueryTypes.SELECT }
         );
         const map = /* @__PURE__ */ new Map();
         for (const row of rows) {
@@ -265155,7 +265894,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
             legacy_kind
      FROM dbo.vx_etl_geo_map WITH (NOLOCK)
      WHERE legacy_id IN (:legacyIds)`,
-        { replacements: { legacyIds: numericIds }, type: import_sequelize122.QueryTypes.SELECT }
+        { replacements: { legacyIds: numericIds }, type: import_sequelize123.QueryTypes.SELECT }
       );
       const baseInfoByLegacyId = pickBestBaseInfoIdPerLegacyId(mapRows2);
       const baseInfoIds = [...new Set(baseInfoByLegacyId.values())];
@@ -265201,7 +265940,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
          AND r.status IN (N'submitted', N'approved')
          AND r.revoked_at IS NULL
          AND r.legacy_geo_id IS NOT NULL`,
-          { replacements: { memberIds }, type: import_sequelize122.QueryTypes.SELECT }
+          { replacements: { memberIds }, type: import_sequelize123.QueryTypes.SELECT }
         );
         for (const row of requestRows) {
           const memberId = String(row.member_id ?? "").trim();
@@ -265223,7 +265962,7 @@ var init_vxCandidatePipelineResponsibilityPatchDisplay_service = __esm({
           `SELECT CAST(legacy_id AS VARCHAR(32)) AS legacy_id, legacy_kind
        FROM dbo.vx_etl_geo_map WITH (NOLOCK)
        WHERE legacy_id IN (:itemIds)`,
-          { replacements: { itemIds: missingItemIds.map((id) => Number(id)).filter(Number.isFinite) }, type: import_sequelize122.QueryTypes.SELECT }
+          { replacements: { itemIds: missingItemIds.map((id) => Number(id)).filter(Number.isFinite) }, type: import_sequelize123.QueryTypes.SELECT }
         );
         for (const [memberId, legacyIds] of memberIdToLegacyIds) {
           for (const itemId of legacyIds) {
@@ -265302,7 +266041,7 @@ async function attachHwyCandidatePipelineElectoralCenterPaths(rows, queryLang) {
          FROM dbo.vx_members m WITH (NOLOCK)
          LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = m.id
          WHERE m.id IN (:memberIds)`,
-        { replacements: { memberIds: missingMemberIds }, type: import_sequelize123.QueryTypes.SELECT }
+        { replacements: { memberIds: missingMemberIds }, type: import_sequelize124.QueryTypes.SELECT }
       );
       for (const row of joinRows) {
         const memberId = String(row.member_id ?? "").trim();
@@ -265325,10 +266064,10 @@ async function attachHwyCandidatePipelineElectoralCenterPaths(rows, queryLang) {
     }
   }
 }
-var import_sequelize123, readStringField7;
+var import_sequelize124, readStringField7;
 var init_vxCandidatePipelineElectoralCenterDisplay_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineElectoralCenterDisplay.service.ts"() {
-    import_sequelize123 = require("sequelize");
+    import_sequelize124 = require("sequelize");
     init_vxMemberDirectoryPathDisplay();
     init_controlPlaneSequelize();
     init_vxCandidatePipelineResponsibilityPatchDisplay_service();
@@ -265337,7 +266076,7 @@ var init_vxCandidatePipelineElectoralCenterDisplay_service = __esm({
 });
 
 // src/domain/vx/vxCandidatePipelineInterviewCatalog.ts
-var VX_INTERVIEW_2022_SCORE_PARENT_ID, VX_INTERVIEW_2022_SCORE_UNSET_ID, VX_INTERVIEW_2022_REQUIRED_HAZER_ROLE_ID, VX_INTERVIEW_2022_HAZER_ALLOWED_ROLE_IDS, VX_INTERVIEW_2022_NOTE_MIN_LENGTH, VX_INTERVIEW_2022_NOTE_MAX_LENGTH, VX_INTERVIEW_2022_HOURS_MIN, VX_INTERVIEW_2022_HOURS_MAX, VX_INTERVIEW_2022_SCORE_FIELDS, isHwyInterview2022ScoreAnswered, trim23, validateHwyCandidatePipelineInterviewCreate;
+var VX_INTERVIEW_2022_SCORE_PARENT_ID, VX_INTERVIEW_2022_SCORE_UNSET_ID, VX_INTERVIEW_2022_REQUIRED_HAZER_ROLE_ID, VX_INTERVIEW_2022_HAZER_ALLOWED_ROLE_IDS, VX_INTERVIEW_2022_NOTE_MIN_LENGTH, VX_INTERVIEW_2022_NOTE_MAX_LENGTH, VX_INTERVIEW_2022_HOURS_MIN, VX_INTERVIEW_2022_HOURS_MAX, VX_INTERVIEW_2022_SCORE_FIELDS, isHwyInterview2022ScoreAnswered, trim24, validateHwyCandidatePipelineInterviewCreate;
 var init_vxCandidatePipelineInterviewCatalog = __esm({
   "src/domain/vx/vxCandidatePipelineInterviewCatalog.ts"() {
     VX_INTERVIEW_2022_SCORE_PARENT_ID = 211520;
@@ -265396,12 +266135,12 @@ var init_vxCandidatePipelineInterviewCatalog = __esm({
       }
     ];
     isHwyInterview2022ScoreAnswered = (scoreId) => scoreId != null && Number.isFinite(scoreId) && scoreId !== VX_INTERVIEW_2022_SCORE_UNSET_ID;
-    trim23 = (value) => String(value ?? "").trim();
+    trim24 = (value) => String(value ?? "").trim();
     validateHwyCandidatePipelineInterviewCreate = (input, hazerinRoleIdsByMember, validFinalResults2) => {
-      if (!trim23(input.memberId)) {
+      if (!trim24(input.memberId)) {
         throw new Error("memberId is required.");
       }
-      if (!trim23(input.interviewOn)) {
+      if (!trim24(input.interviewOn)) {
         throw new Error("interviewOn is required.");
       }
       if (!validFinalResults2.has(input.finalResult)) {
@@ -265420,14 +266159,14 @@ var init_vxCandidatePipelineInterviewCatalog = __esm({
       if (!Number.isFinite(hours) || hours < VX_INTERVIEW_2022_HOURS_MIN || hours > VX_INTERVIEW_2022_HOURS_MAX) {
         throw new Error(`Daily availability hours must be between ${VX_INTERVIEW_2022_HOURS_MIN} and ${VX_INTERVIEW_2022_HOURS_MAX}.`);
       }
-      const note = trim23(input.note);
+      const note = trim24(input.note);
       if (note.length < VX_INTERVIEW_2022_NOTE_MIN_LENGTH) {
         throw new Error(`Interview note must be at least ${VX_INTERVIEW_2022_NOTE_MIN_LENGTH} characters.`);
       }
       if (note.length > VX_INTERVIEW_2022_NOTE_MAX_LENGTH) {
         throw new Error(`Interview note must be at most ${VX_INTERVIEW_2022_NOTE_MAX_LENGTH} characters.`);
       }
-      const hazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim23(id)).filter(Boolean))];
+      const hazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim24(id)).filter(Boolean))];
       if (hazerIds.length === 0) {
         throw new Error("At least one committee member (hazer) is required.");
       }
@@ -265456,10 +266195,10 @@ var init_vxCandidatePipelineUiConstants = __esm({
 });
 
 // src/server/domain/vx/vxCandidatePipelineInterviewMapper.ts
-var trim24, mapHwyCandidatePipelineInterviewRow;
+var trim25, mapHwyCandidatePipelineInterviewRow;
 var init_vxCandidatePipelineInterviewMapper = __esm({
   "src/server/domain/vx/vxCandidatePipelineInterviewMapper.ts"() {
-    trim24 = (value) => String(value ?? "").trim();
+    trim25 = (value) => String(value ?? "").trim();
     mapHwyCandidatePipelineInterviewRow = (row) => {
       let hazerin = [];
       const rawHazerin = row.hazerin_json;
@@ -265470,12 +266209,12 @@ var init_vxCandidatePipelineInterviewMapper = __esm({
             hazerin = parsed.map((item3) => {
               const o = item3;
               return {
-                memberId: trim24(o.memberId ?? o.Id ?? o.id),
-                username: o.username ? trim24(o.username) : o.UserName ? trim24(o.UserName) : null,
-                firstName: o.firstName ? trim24(o.firstName) : o.FirstName ? trim24(o.FirstName) : null,
-                fatherName: o.fatherName ? trim24(o.fatherName) : o.FatherName ? trim24(o.FatherName) : null,
-                grandFatherName: o.grandFatherName ? trim24(o.grandFatherName) : o.GrandFatherName ? trim24(o.GrandFatherName) : null,
-                lastName: o.lastName ? trim24(o.lastName) : o.LastName ? trim24(o.LastName) : null
+                memberId: trim25(o.memberId ?? o.Id ?? o.id),
+                username: o.username ? trim25(o.username) : o.UserName ? trim25(o.UserName) : null,
+                firstName: o.firstName ? trim25(o.firstName) : o.FirstName ? trim25(o.FirstName) : null,
+                fatherName: o.fatherName ? trim25(o.fatherName) : o.FatherName ? trim25(o.FatherName) : null,
+                grandFatherName: o.grandFatherName ? trim25(o.grandFatherName) : o.GrandFatherName ? trim25(o.GrandFatherName) : null,
+                lastName: o.lastName ? trim25(o.lastName) : o.LastName ? trim25(o.LastName) : null
               };
             }).filter((h) => h.memberId);
           }
@@ -265484,9 +266223,9 @@ var init_vxCandidatePipelineInterviewMapper = __esm({
         }
       }
       return {
-        interviewId: trim24(row.interview_id),
-        memberId: trim24(row.member_id),
-        interviewOn: trim24(row.interview_on),
+        interviewId: trim25(row.interview_id),
+        memberId: trim25(row.member_id),
+        interviewOn: trim25(row.interview_on),
         karizma: Number(row.karizma),
         likeToLearnMore: Number(row.like_to_learn_more),
         showIsFan: Number(row.show_is_fan),
@@ -265495,11 +266234,11 @@ var init_vxCandidatePipelineInterviewMapper = __esm({
         knowsMasoolin: Number(row.knows_masoolin),
         isMotefaregh: row.is_motefaregh === true || row.is_motefaregh === 1,
         isMotefareghSaat: Number(row.is_motefaregh_saat),
-        note: trim24(row.note),
+        note: trim25(row.note),
         finalResult: Number(row.final_result),
-        finalResultTitle: row.final_result_title ? trim24(row.final_result_title) : null,
-        createdBy: row.created_by ? trim24(row.created_by) : null,
-        createdOn: row.created_on ? trim24(row.created_on) : null,
+        finalResultTitle: row.final_result_title ? trim25(row.final_result_title) : null,
+        createdBy: row.created_by ? trim25(row.created_by) : null,
+        createdOn: row.created_on ? trim25(row.created_on) : null,
         hazerin
       };
     };
@@ -265507,7 +266246,7 @@ var init_vxCandidatePipelineInterviewMapper = __esm({
 });
 
 // src/server/domain/vx/vxCandidatePipelineInterview.service.ts
-var import_sequelize124, trim25, assertSqlServer11, validFinalResults, listHwyInterview2022ScoreOptions, getHwyCandidatePipelineInterviewLast, lookupHwyInterview2022HazerinMember, applyHwyCandidatePipelineInterviewCreateFull;
+var import_sequelize125, trim26, assertSqlServer11, validFinalResults, listHwyInterview2022ScoreOptions, getHwyCandidatePipelineInterviewLast, lookupHwyInterview2022HazerinMember, applyHwyCandidatePipelineInterviewCreateFull;
 var init_vxCandidatePipelineInterview_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineInterview.service.ts"() {
     init_vxCandidatePipelineInterviewCatalog();
@@ -265518,10 +266257,10 @@ var init_vxCandidatePipelineInterview_service = __esm({
     init_vxLegacyBaseInformationReader();
     init_prismaHelpers();
     init_controlPlaneSequelize();
-    import_sequelize124 = require("sequelize");
+    import_sequelize125 = require("sequelize");
     init_vxCandidatePipelineInterviewMapper();
     init_vxMemberDossierRecordEventEmitters();
-    trim25 = (value) => String(value ?? "").trim();
+    trim26 = (value) => String(value ?? "").trim();
     assertSqlServer11 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Vx candidate pipeline requires SQL Server control plane.");
@@ -265537,7 +266276,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
       assertSqlServer11();
       await assertHwyCandidatePipelineStageAccess("interview", roleNames);
       await ensureHwyDbObjects();
-      const id = trim25(memberId);
+      const id = trim26(memberId);
       if (!id) {
         throw new Error("memberId is required.");
       }
@@ -265553,11 +266292,11 @@ var init_vxCandidatePipelineInterview_service = __esm({
     lookupHwyInterview2022HazerinMember = async (username, actorUsername2, roleNames) => {
       assertSqlServer11();
       await assertHwyCandidatePipelineStageAccess("interview", roleNames);
-      const uname = trim25(username);
+      const uname = trim26(username);
       if (!/^\d{6}$/.test(uname)) {
         throw new Error("Membership number must be exactly 6 digits.");
       }
-      const actor = trim25(actorUsername2);
+      const actor = trim26(actorUsername2);
       if (actor && actor === uname) {
         throw new Error("You are already the interview operator; do not add your own membership number.");
       }
@@ -265575,7 +266314,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
     FROM dbo.VX_Members M WITH (NOLOCK)
     WHERE M.UserName = :username
     `,
-        { replacements: { username: uname }, type: import_sequelize124.QueryTypes.SELECT }
+        { replacements: { username: uname }, type: import_sequelize125.QueryTypes.SELECT }
       );
       const memberRow = memberRows[0];
       if (!memberRow?.memberId) {
@@ -265590,7 +266329,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
       FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK)
       WHERE URR.UserId = :userId
       `,
-          { replacements: { userId: Number(userId) }, type: import_sequelize124.QueryTypes.SELECT }
+          { replacements: { userId: Number(userId) }, type: import_sequelize125.QueryTypes.SELECT }
         );
         roleIds = roleRows.map((r) => Number(r.roleId)).filter((n) => Number.isFinite(n));
       }
@@ -265602,12 +266341,12 @@ var init_vxCandidatePipelineInterview_service = __esm({
       }
       return {
         member: {
-          memberId: trim25(memberRow.memberId),
-          username: memberRow.username ? trim25(memberRow.username) : null,
-          firstName: memberRow.firstName ? trim25(memberRow.firstName) : null,
-          fatherName: memberRow.fatherName ? trim25(memberRow.fatherName) : null,
-          grandFatherName: memberRow.grandFatherName ? trim25(memberRow.grandFatherName) : null,
-          lastName: memberRow.lastName ? trim25(memberRow.lastName) : null
+          memberId: trim26(memberRow.memberId),
+          username: memberRow.username ? trim26(memberRow.username) : null,
+          firstName: memberRow.firstName ? trim26(memberRow.firstName) : null,
+          fatherName: memberRow.fatherName ? trim26(memberRow.fatherName) : null,
+          grandFatherName: memberRow.grandFatherName ? trim26(memberRow.grandFatherName) : null,
+          lastName: memberRow.lastName ? trim26(memberRow.lastName) : null
         },
         roleIds
       };
@@ -265617,13 +266356,13 @@ var init_vxCandidatePipelineInterview_service = __esm({
       await assertHwyCandidatePipelineStageAccess("interview", roleNames);
       await ensureHwyDbObjects();
       const hazerinRoleIdsByMember = /* @__PURE__ */ new Map();
-      const uniqueHazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim25(id)).filter(Boolean))];
+      const uniqueHazerIds = [...new Set(input.hazerinMemberIds.map((id) => trim26(id)).filter(Boolean))];
       for (const hazerId of uniqueHazerIds) {
         const memberRows = await getControlPlaneSequelize().query(
           `SELECT TOP 1 UserName AS username FROM dbo.VX_Members WITH (NOLOCK) WHERE Id = :id`,
-          { replacements: { id: Number(hazerId) }, type: import_sequelize124.QueryTypes.SELECT }
+          { replacements: { id: Number(hazerId) }, type: import_sequelize125.QueryTypes.SELECT }
         );
-        const username = memberRows[0]?.username ? trim25(memberRows[0].username) : "";
+        const username = memberRows[0]?.username ? trim26(memberRows[0].username) : "";
         if (!username) {
           throw new Error(`Committee member ${hazerId} was not found.`);
         }
@@ -265633,8 +266372,8 @@ var init_vxCandidatePipelineInterview_service = __esm({
       validateHwyCandidatePipelineInterviewCreate(input, hazerinRoleIdsByMember, validFinalResults);
       const hazerinJson = JSON.stringify(uniqueHazerIds.map((id) => ({ hazer_id: Number(id) })));
       await execHwyProcedure("vx_candidate_pipeline_interview_create", {
-        member_id: Number(trim25(input.memberId)),
-        interview_on: trim25(input.interviewOn),
+        member_id: Number(trim26(input.memberId)),
+        interview_on: trim26(input.interviewOn),
         karizma: input.karizma,
         like_to_learn_more: input.likeToLearnMore,
         show_is_fan: input.showIsFan,
@@ -265643,21 +266382,21 @@ var init_vxCandidatePipelineInterview_service = __esm({
         knows_masoolin: input.knowsMasoolin,
         is_motefaregh: input.isMotefaregh ? 1 : 0,
         is_motefaregh_saat: input.isMotefareghSaat,
-        note: trim25(input.note),
+        note: trim26(input.note),
         final_result: input.finalResult,
         hazerin_json: hazerinJson,
-        actor: trim25(actorUsername2) || null
+        actor: trim26(actorUsername2) || null
       });
       await execHwyProcedure("vx_member_stat_recalc_interviews_2022_count", {
-        member_id: Number(trim25(input.memberId))
+        member_id: Number(trim26(input.memberId))
       });
-      await emitHwyMemberInterviewRecordedForMember(Number(trim25(input.memberId)));
+      await emitHwyMemberInterviewRecordedForMember(Number(trim26(input.memberId)));
     };
   }
 });
 
 // src/server/domain/vx/vxCandidatePipeline.service.ts
-var DEFAULT_PAGE_SIZE9, INSTALL_PAGE_SIZE, MAX_PAGE_SIZE9, trim26, ELECTORAL_PATH_JOIN, buildCandidatePipelineElectoralPath, assertSqlServer12, clampPage5, composePipelineDisplayName, mapRow13, PIPELINE_TOTAL_COLUMN, VX_MONTADHEMIN_LIST_SCOPE, finalizePipelineListRows, mapPipelineListResult, buildProcBase, listHwyCandidatePipeline, applyHwyCandidatePipelineInstallAction, applyHwyCandidatePipelineSecurityRecord;
+var DEFAULT_PAGE_SIZE9, INSTALL_PAGE_SIZE, MAX_PAGE_SIZE9, trim27, ELECTORAL_PATH_JOIN, buildCandidatePipelineElectoralPath, assertSqlServer12, clampPage5, composePipelineDisplayName, mapRow13, PIPELINE_TOTAL_COLUMN, VX_MONTADHEMIN_LIST_SCOPE, finalizePipelineListRows, mapPipelineListResult, buildProcBase, listHwyCandidatePipeline, applyHwyCandidatePipelineInstallAction, applyHwyCandidatePipelineSecurityRecord;
 var init_vxCandidatePipeline_service = __esm({
   "src/server/domain/vx/vxCandidatePipeline.service.ts"() {
     init_vxCandidatePipelineAccess_service();
@@ -265678,7 +266417,7 @@ var init_vxCandidatePipeline_service = __esm({
     DEFAULT_PAGE_SIZE9 = 25;
     INSTALL_PAGE_SIZE = 15;
     MAX_PAGE_SIZE9 = 100;
-    trim26 = (value) => String(value ?? "").trim();
+    trim27 = (value) => String(value ?? "").trim();
     ELECTORAL_PATH_JOIN = " | ";
     buildCandidatePipelineElectoralPath = (row) => {
       const parts = [
@@ -265686,7 +266425,7 @@ var init_vxCandidatePipeline_service = __esm({
         row.nakheb_join_circle_name,
         row.nakheb_join_tamvin_name,
         row.nakheb_join_eghtera_name
-      ].map((part) => trim26(part)).filter(Boolean);
+      ].map((part) => trim27(part)).filter(Boolean);
       return parts.length > 0 ? parts.join(ELECTORAL_PATH_JOIN) : null;
     };
     assertSqlServer12 = () => {
@@ -265705,40 +266444,40 @@ var init_vxCandidatePipeline_service = __esm({
       row.father_name,
       row.grand_father_name,
       row.last_name
-    ].map((part) => trim26(part)).filter(Boolean).join(" ");
+    ].map((part) => trim27(part)).filter(Boolean).join(" ");
     mapRow13 = (row) => ({
-      id: trim26(row.id),
-      username: row.username ? trim26(row.username) : null,
-      userId: row.user_id ? trim26(row.user_id) : null,
-      firstName: row.first_name ? trim26(row.first_name) : null,
-      fatherName: row.father_name ? trim26(row.father_name) : null,
-      grandFatherName: row.grand_father_name ? trim26(row.grand_father_name) : null,
-      lastName: row.last_name ? trim26(row.last_name) : null,
-      displayFullName: trim26(row.display_full_name) || composePipelineDisplayName(row) || null,
-      avatarUrl: row.avatar_url ? trim26(row.avatar_url) : null,
+      id: trim27(row.id),
+      username: row.username ? trim27(row.username) : null,
+      userId: row.user_id ? trim27(row.user_id) : null,
+      firstName: row.first_name ? trim27(row.first_name) : null,
+      fatherName: row.father_name ? trim27(row.father_name) : null,
+      grandFatherName: row.grand_father_name ? trim27(row.grand_father_name) : null,
+      lastName: row.last_name ? trim27(row.last_name) : null,
+      displayFullName: trim27(row.display_full_name) || composePipelineDisplayName(row) || null,
+      avatarUrl: row.avatar_url ? trim27(row.avatar_url) : null,
       birthYear: row.birth_year != null && String(row.birth_year).trim() !== "" ? String(row.birth_year).trim() : null,
-      genderCode: row.gender_code ? trim26(row.gender_code) : row.gender_id ? trim26(row.gender_id) : null,
-      membershipOn: row.membership_on ? trim26(row.membership_on) : null,
-      trackingCode: trim26(row.tracking_code) || trim26(row.tracking_code) || null,
-      phone1: row.phone1 ? trim26(row.phone1) : null,
-      phone2: row.phone2 ? trim26(row.phone2) : null,
+      genderCode: row.gender_code ? trim27(row.gender_code) : row.gender_id ? trim27(row.gender_id) : null,
+      membershipOn: row.membership_on ? trim27(row.membership_on) : null,
+      trackingCode: trim27(row.tracking_code) || trim27(row.tracking_code) || null,
+      phone1: row.phone1 ? trim27(row.phone1) : null,
+      phone2: row.phone2 ? trim27(row.phone2) : null,
       electoralDivisionPath: buildCandidatePipelineElectoralPath(row),
-      genderId: row.gender_id ? trim26(row.gender_id) : null,
-      roleOfTarshih: row.role_of_tarshih ? trim26(row.role_of_tarshih) : null,
+      genderId: row.gender_id ? trim27(row.gender_id) : null,
+      roleOfTarshih: row.role_of_tarshih ? trim27(row.role_of_tarshih) : null,
       areaOfTarshih: row.area_of_tarshih ? String(row.area_of_tarshih) : null,
-      dateOfTarshih: row.date_of_tarshih ? trim26(row.date_of_tarshih) : null,
-      moarasshehOfTarshih: row.moarassheh_of_tarshih ? trim26(row.moarassheh_of_tarshih) : null,
+      dateOfTarshih: row.date_of_tarshih ? trim27(row.date_of_tarshih) : null,
+      moarasshehOfTarshih: row.moarassheh_of_tarshih ? trim27(row.moarassheh_of_tarshih) : null,
       passedDoratHtml: row.passed_dorat_html ? String(row.passed_dorat_html) : null,
-      areaId: row.area_id ? trim26(row.area_id) : null,
+      areaId: row.area_id ? trim27(row.area_id) : null,
       necessaryDoratPassed: row.necessary_dorat_passed === true || row.necessary_dorat_passed === 1,
       daysFrom: row.days_from != null ? Number(row.days_from) : null,
       lastSecurityProfileCanGetMasooliat: row.last_security_profile_can_get_masooliat != null ? Number(row.last_security_profile_can_get_masooliat) : null,
       isApprovedRow: row.is_approved_row != null ? Number(row.is_approved_row) : null,
-      interviewOn: row.interview_on ? trim26(row.interview_on) : null,
-      interviewFinalResult: row.interview_final_result ? trim26(row.interview_final_result) : null,
-      roleId: row.role_id ? trim26(row.role_id) : null,
+      interviewOn: row.interview_on ? trim27(row.interview_on) : null,
+      interviewFinalResult: row.interview_final_result ? trim27(row.interview_final_result) : null,
+      roleId: row.role_id ? trim27(row.role_id) : null,
       passedNecessaryDorat: row.passed_necessary_dorat === true || row.passed_necessary_dorat === 1,
-      interviewFinalResultTitle: row.interview_final_result_title ? trim26(row.interview_final_result_title) : null,
+      interviewFinalResultTitle: row.interview_final_result_title ? trim27(row.interview_final_result_title) : null,
       profilePerfect: row.profile_perfect != null ? Number(row.profile_perfect) : null,
       allImagesApproved: row.all_images_approved === true || row.all_images_approved === 1,
       hasOath: row.has_oath === true || row.has_oath === 1,
@@ -265761,7 +266500,7 @@ var init_vxCandidatePipeline_service = __esm({
         ]) {
           const raw = row[key];
           if (raw !== null && raw !== void 0 && String(raw).trim() !== "") {
-            passthrough2[key] = trim26(String(raw));
+            passthrough2[key] = trim27(String(raw));
           }
         }
         return passthrough2;
@@ -265804,24 +266543,24 @@ var init_vxCandidatePipeline_service = __esm({
       const geo = await resolveHwyLegacyOperatorGeoScope(actorUsername2, roleNames);
       return {
         stage: input.stage,
-        list_type: trim26(input.listType) || null,
-        role_id: trim26(input.roleId) || null,
-        is_approved: trim26(input.isApproved) || null,
-        approve_state: trim26(input.approveState) || null,
-        passed_or_not: trim26(input.passedOrNot) || null,
-        interview_approve_state: trim26(input.interviewApproveState) || null,
+        list_type: trim27(input.listType) || null,
+        role_id: trim27(input.roleId) || null,
+        is_approved: trim27(input.isApproved) || null,
+        approve_state: trim27(input.approveState) || null,
+        passed_or_not: trim27(input.passedOrNot) || null,
+        interview_approve_state: trim27(input.interviewApproveState) || null,
         scope_unrestricted: geo.unrestricted ? 1 : 0,
         nakheb_province_id: input.nakhebProvinceId ? Number(input.nakhebProvinceId) : null,
         nakheb_circle_id: input.nakhebCircleId ? Number(input.nakhebCircleId) : null,
         nakheb_tamvin_id: input.nakhebTamvinId ? Number(input.nakhebTamvinId) : null,
-        date_start: trim26(input.dateStart) || null,
-        date_end: trim26(input.dateEnd) || null,
-        username: trim26(input.username) || null,
-        phone: trim26(input.phone) || null,
-        gender_id: trim26(input.genderId) || null,
-        actor_user_name: trim26(input.actorUserName) || null,
-        member_name: trim26(input.memberName) || null,
-        extra_search_csv: input.stage === "courses" ? trim26(input.extraSearchCsv) || null : null,
+        date_start: trim27(input.dateStart) || null,
+        date_end: trim27(input.dateEnd) || null,
+        username: trim27(input.username) || null,
+        phone: trim27(input.phone) || null,
+        gender_id: trim27(input.genderId) || null,
+        actor_user_name: trim27(input.actorUserName) || null,
+        member_name: trim27(input.memberName) || null,
+        extra_search_csv: input.stage === "courses" ? trim27(input.extraSearchCsv) || null : null,
         extra_search_and_or: input.stage === "courses" && input.extraSearchAndOr ? input.extraSearchAndOr : null,
         area_limit_id: geo.unrestricted ? null : geo.areaLimitId,
         geo_limits_csv: geo.unrestricted ? null : geo.geoLimitsCsv
@@ -265832,7 +266571,7 @@ var init_vxCandidatePipeline_service = __esm({
       await assertHwyCandidatePipelineStageAccess(input.stage, roleNames);
       await ensureHwyDbObjects();
       const { page, pageSize, offset } = clampPage5(input.page, input.pageSize, input.stage);
-      const queryLang = trim26(input.queryLang) || "ar";
+      const queryLang = trim27(input.queryLang) || "ar";
       const procBase = await buildProcBase(input, roleNames, actorUsername2);
       if (!await vxLegacyImportParityReady()) {
         const whereInput = toCandidatePipelineWhereInput(procBase, input.stage);
@@ -265862,8 +266601,8 @@ var init_vxCandidatePipeline_service = __esm({
       assertSqlServer12();
       await assertHwyCandidatePipelineStageAccess("install", roleNames);
       await ensureHwyDbObjects();
-      const memberId = trim26(input.memberId);
-      const areaId = trim26(input.areaId);
+      const memberId = trim27(input.memberId);
+      const areaId = trim27(input.areaId);
       if (!memberId || !areaId) {
         throw new Error("memberId and areaId are required.");
       }
@@ -265871,28 +266610,28 @@ var init_vxCandidatePipeline_service = __esm({
       await execHwyProcedure(procName, {
         member_id: Number(memberId),
         area_id: Number(areaId),
-        actor: trim26(input.actorUsername) || null
+        actor: trim27(input.actorUsername) || null
       });
     };
     applyHwyCandidatePipelineSecurityRecord = async (input, roleNames) => {
       assertSqlServer12();
       await assertHwyCandidatePipelineStageAccess("security", roleNames);
       await ensureHwyDbObjects();
-      const memberId = trim26(input.memberId);
+      const memberId = trim27(input.memberId);
       if (!memberId) {
         throw new Error("memberId is required.");
       }
       await execHwyProcedure("vx_candidate_pipeline_security_record", {
         member_id: Number(memberId),
         can_get_identity_card: input.canGetIdentityCard,
-        can_get_identity_card_note: trim26(input.canGetIdentityCardNote) || null,
+        can_get_identity_card_note: trim27(input.canGetIdentityCardNote) || null,
         can_get_masooliat: input.canGetMasooliat,
-        can_get_masooliat_note: trim26(input.canGetMasooliatNote) || null,
+        can_get_masooliat_note: trim27(input.canGetMasooliatNote) || null,
         can_be_member_of_aammeh: input.canBeMemberOfAammeh,
-        can_be_member_of_aammeh_note: trim26(input.canBeMemberOfAammehNote) || null,
+        can_be_member_of_aammeh_note: trim27(input.canBeMemberOfAammehNote) || null,
         allows_responsibility: input.allowsResponsibility,
-        allows_responsibility_note: trim26(input.allowsResponsibilityNote) || null,
-        actor: trim26(input.actorUsername) || null
+        allows_responsibility_note: trim27(input.allowsResponsibilityNote) || null,
+        actor: trim27(input.actorUsername) || null
       });
       await emitHwyMemberSecurityOpinionRecordedForMember(Number(memberId));
     };
@@ -265913,10 +266652,10 @@ var init_vxGeoResponsibilityNominationGeo = __esm({
 });
 
 // src/server/domain/vx/vxCandidatePipelineTarshihGeoOptions.service.ts
-var import_sequelize125, VX_COUNTRY_AREA_LIMIT_ID, parsePositiveIntCsv, assertGeoLevel, listHwyCandidatePipelineTarshihGeoOptions;
+var import_sequelize126, VX_COUNTRY_AREA_LIMIT_ID, parsePositiveIntCsv, assertGeoLevel, listHwyCandidatePipelineTarshihGeoOptions;
 var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
   "src/server/domain/vx/vxCandidatePipelineTarshihGeoOptions.service.ts"() {
-    import_sequelize125 = require("sequelize");
+    import_sequelize126 = require("sequelize");
     init_vxGeoResponsibilityNominationGeo();
     init_controlPlaneSequelize();
     init_prismaHelpers();
@@ -265970,7 +266709,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
             scopeWhere2 = ` AND BI.id IN (${geoCsv})`;
           }
         }
-        const sql24 = `
+        const sql26 = `
       SELECT DISTINCT CAST(BI.id AS VARCHAR(32)) AS id, BI.title AS label
       FROM dbo.vx_ref_base_information BI WITH (NOLOCK)
       INNER JOIN dbo.vx_ref_h_circles C WITH (NOLOCK)
@@ -265980,7 +266719,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
         ${scopeWhere2}
       ORDER BY BI.title
     `;
-        return sequelize.query(sql24, { type: import_sequelize125.QueryTypes.SELECT });
+        return sequelize.query(sql26, { type: import_sequelize126.QueryTypes.SELECT });
       }
       if (level === "circle") {
         let scopeWhere2 = "";
@@ -265994,7 +266733,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
           }
         }
         const parentFilter2 = parentId != null ? ` AND C.vx_state_id = ${parentId}` : "";
-        const sql24 = `
+        const sql26 = `
       SELECT CAST(C.circle_id AS VARCHAR(32)) AS id, C.circle_name AS label
       FROM dbo.vx_ref_h_circles C WITH (NOLOCK)
       WHERE ISNULL(C.deleted, 0) = 0 AND C.circle_name IS NOT NULL
@@ -266002,7 +266741,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
         ${scopeWhere2}
       ORDER BY C.circle_name
     `;
-        return sequelize.query(sql24, { type: import_sequelize125.QueryTypes.SELECT });
+        return sequelize.query(sql26, { type: import_sequelize126.QueryTypes.SELECT });
       }
       let scopeWhere = "";
       if (!geo.unrestricted && geo.areaLimitId != null && geo.areaLimitId !== VX_COUNTRY_AREA_LIMIT_ID) {
@@ -266015,7 +266754,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
         }
       }
       const parentFilter = parentId != null ? ` AND T.circle_id = ${parentId}` : "";
-      const sql23 = `
+      const sql25 = `
     SELECT CAST(T.tamvin_id AS VARCHAR(32)) AS id, T.tamvin_name AS label
     FROM dbo.vx_ref_h_tamvinat T WITH (NOLOCK)
     WHERE ISNULL(T.deleted, 0) = 0 AND T.tamvin_name IS NOT NULL
@@ -266023,7 +266762,7 @@ var init_vxCandidatePipelineTarshihGeoOptions_service = __esm({
       ${scopeWhere}
     ORDER BY T.tamvin_name
   `;
-      return sequelize.query(sql23, { type: import_sequelize125.QueryTypes.SELECT });
+      return sequelize.query(sql25, { type: import_sequelize126.QueryTypes.SELECT });
     };
   }
 });
@@ -266082,14 +266821,14 @@ var init_vxCardFlowLegacyAccess = __esm({
 // src/server/domain/vx/vxCardFlowAccess.service.ts
 async function resolveHwyCardFlowPortalAllowRoles() {
   const now = Date.now();
-  if (portalRolesCache2 && now - portalRolesCache2.loadedAt < CACHE_MS2) {
-    return portalRolesCache2.roles;
+  if (portalRolesCache3 && now - portalRolesCache3.loadedAt < CACHE_MS3) {
+    return portalRolesCache3.roles;
   }
   try {
     const byAction = await loadRolesByAction2();
     const roles = buildHwyCardFlowPortalAllowRoles(byAction);
-    portalRolesCache2 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
-    return portalRolesCache2.roles;
+    portalRolesCache3 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
+    return portalRolesCache3.roles;
   } catch {
     return ["ADMIN"];
   }
@@ -266106,14 +266845,14 @@ async function assertHwyCardFlowStepAccess(step, roleNames) {
   if (portal.some((role) => roleNames.includes(role))) return;
   throw new Error("Forbidden.");
 }
-var CACHE_MS2, portalRolesCache2, loadRolesByAction2;
+var CACHE_MS3, portalRolesCache3, loadRolesByAction2;
 var init_vxCardFlowAccess_service = __esm({
   "src/server/domain/vx/vxCardFlowAccess.service.ts"() {
     init_legacyHwyRoleAuth();
     init_vxCardFlowLegacyAccess();
     init_vxMemberListLegacyAccess();
-    CACHE_MS2 = 3e4;
-    portalRolesCache2 = null;
+    CACHE_MS3 = 3e4;
+    portalRolesCache3 = null;
     loadRolesByAction2 = async () => {
       const pool = await connectLegacyReadPool();
       try {
@@ -266129,7 +266868,7 @@ var init_vxCardFlowAccess_service = __esm({
 });
 
 // src/server/domain/vx/vxCardFlow.service.ts
-var DEFAULT_PAGE_SIZE10, MAX_PAGE_SIZE10, trim27, execLegacyCardFlowRecalcCanStart, assertSqlServer13, clampPage6, mapRow14, mapHistoryRow, buildListProcBase, listHwyCardFlow, applyHwyCardFlowStep, applyHwyCardFlowSecurityRecord;
+var DEFAULT_PAGE_SIZE10, MAX_PAGE_SIZE10, trim28, execLegacyCardFlowRecalcCanStart, assertSqlServer13, clampPage6, mapRow14, mapHistoryRow, buildListProcBase, listHwyCardFlow, applyHwyCardFlowStep, applyHwyCardFlowSecurityRecord;
 var init_vxCardFlow_service = __esm({
   "src/server/domain/vx/vxCardFlow.service.ts"() {
     init_prismaHelpers();
@@ -266142,11 +266881,11 @@ var init_vxCardFlow_service = __esm({
     init_vxMemberDossierRecordEventEmitters();
     DEFAULT_PAGE_SIZE10 = 25;
     MAX_PAGE_SIZE10 = 100;
-    trim27 = (value) => String(value ?? "").trim();
+    trim28 = (value) => String(value ?? "").trim();
     execLegacyCardFlowRecalcCanStart = async () => {
       const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-      const sql23 = await import("mssql");
-      const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
+      const sql25 = await import("mssql");
+      const pool = await new sql25.ConnectionPool(readLegacyConn2()).connect();
       try {
         await pool.request().query("EXEC dbo.VX_SP_Members_CalcStats2 NULL");
       } finally {
@@ -266164,48 +266903,48 @@ var init_vxCardFlow_service = __esm({
       return { page: safePage, pageSize: safePageSize, offset: (safePage - 1) * safePageSize };
     };
     mapRow14 = (row) => ({
-      id: trim27(row.id),
-      username: row.username ? trim27(row.username) : null,
-      firstName: row.first_name ? trim27(row.first_name) : null,
-      fatherName: row.father_name ? trim27(row.father_name) : null,
-      grandFatherName: row.grand_father_name ? trim27(row.grand_father_name) : null,
-      lastName: row.last_name ? trim27(row.last_name) : null,
-      phone1: row.phone1 ? trim27(row.phone1) : null,
-      genderId: row.gender_id ? trim27(row.gender_id) : null,
-      cardFlowLastStatusId: row.card_flow_last_status_id ? trim27(row.card_flow_last_status_id) : null,
-      cardFlowStartedOn: row.card_flow_started_on ? trim27(row.card_flow_started_on) : null,
+      id: trim28(row.id),
+      username: row.username ? trim28(row.username) : null,
+      firstName: row.first_name ? trim28(row.first_name) : null,
+      fatherName: row.father_name ? trim28(row.father_name) : null,
+      grandFatherName: row.grand_father_name ? trim28(row.grand_father_name) : null,
+      lastName: row.last_name ? trim28(row.last_name) : null,
+      phone1: row.phone1 ? trim28(row.phone1) : null,
+      genderId: row.gender_id ? trim28(row.gender_id) : null,
+      cardFlowLastStatusId: row.card_flow_last_status_id ? trim28(row.card_flow_last_status_id) : null,
+      cardFlowStartedOn: row.card_flow_started_on ? trim28(row.card_flow_started_on) : null,
       cardFlowVisibility: row.card_flow_visibility === true || row.card_flow_visibility === 1,
-      latestStepId: row.latest_step_id ? trim27(row.latest_step_id) : null,
+      latestStepId: row.latest_step_id ? trim28(row.latest_step_id) : null,
       lastCanGetIdentityCard: row.last_can_get_identity_card != null ? Number(row.last_can_get_identity_card) : null,
-      nakhebJoinProvinceName: row.nakheb_join_province_name ? trim27(row.nakheb_join_province_name) : null,
-      nakhebJoinCircleName: row.nakheb_join_circle_name ? trim27(row.nakheb_join_circle_name) : null,
-      nakhebJoinTamvinName: row.nakheb_join_tamvin_name ? trim27(row.nakheb_join_tamvin_name) : null,
+      nakhebJoinProvinceName: row.nakheb_join_province_name ? trim28(row.nakheb_join_province_name) : null,
+      nakhebJoinCircleName: row.nakheb_join_circle_name ? trim28(row.nakheb_join_circle_name) : null,
+      nakhebJoinTamvinName: row.nakheb_join_tamvin_name ? trim28(row.nakheb_join_tamvin_name) : null,
       lastSecurityProfileCanGetIdentityCard: row.last_security_profile_can_get_identity_card != null ? Number(row.last_security_profile_can_get_identity_card) : row.last_can_get_identity_card != null ? Number(row.last_can_get_identity_card) : null,
       statFieldsCompleted: row.stat_fields_completed != null ? Number(row.stat_fields_completed) : null
     });
     mapHistoryRow = (row) => ({
-      id: trim27(row.id),
-      memberId: row.member_id ? trim27(row.member_id) : null,
-      rfid: row.rfid ? trim27(row.rfid) : null,
-      typeId: row.type_id ? trim27(row.type_id) : null,
-      typeTitle: row.type_title ? trim27(row.type_title) : null,
-      expirationDate: row.expiration_date ? trim27(row.expiration_date) : null,
-      createdBy: row.created_by ? trim27(row.created_by) : null,
-      createdOn: row.created_on ? trim27(row.created_on) : null,
-      username: row.username ? trim27(row.username) : null,
-      firstName: row.first_name ? trim27(row.first_name) : null,
-      fatherName: row.father_name ? trim27(row.father_name) : null,
-      lastName: row.last_name ? trim27(row.last_name) : null
+      id: trim28(row.id),
+      memberId: row.member_id ? trim28(row.member_id) : null,
+      rfid: row.rfid ? trim28(row.rfid) : null,
+      typeId: row.type_id ? trim28(row.type_id) : null,
+      typeTitle: row.type_title ? trim28(row.type_title) : null,
+      expirationDate: row.expiration_date ? trim28(row.expiration_date) : null,
+      createdBy: row.created_by ? trim28(row.created_by) : null,
+      createdOn: row.created_on ? trim28(row.created_on) : null,
+      username: row.username ? trim28(row.username) : null,
+      firstName: row.first_name ? trim28(row.first_name) : null,
+      fatherName: row.father_name ? trim28(row.father_name) : null,
+      lastName: row.last_name ? trim28(row.last_name) : null
     });
     buildListProcBase = async (input, roleNames, actorUsername2) => {
       const geo = await resolveHwyLegacyOperatorGeoScope(actorUsername2, roleNames);
       return {
         step: input.step,
-        list_type: trim27(input.listType) || null,
-        visibility: trim27(input.visibility) || null,
-        role_id: trim27(input.roleId) || null,
-        username: trim27(input.username) || null,
-        phone: trim27(input.phone) || null,
+        list_type: trim28(input.listType) || null,
+        visibility: trim28(input.visibility) || null,
+        role_id: trim28(input.roleId) || null,
+        username: trim28(input.username) || null,
+        phone: trim28(input.phone) || null,
         scope_unrestricted: geo.unrestricted ? 1 : 0,
         area_limit_id: geo.unrestricted ? null : geo.areaLimitId,
         geo_limits_csv: geo.unrestricted ? null : geo.geoLimitsCsv,
@@ -266222,7 +266961,7 @@ var init_vxCardFlow_service = __esm({
       const { page, pageSize, offset } = clampPage6(input.page, input.pageSize);
       const edgeReady = await vxLegacyImportParityReady();
       if (input.step === "printed-history") {
-        const username = trim27(input.username) || null;
+        const username = trim28(input.username) || null;
         if (!edgeReady) {
           const total3 = await queryLegacyCardFlowPrintedHistoryCount(username);
           const legacyRows = await queryLegacyCardFlowPrintedHistoryList(username, offset, pageSize);
@@ -266283,7 +267022,7 @@ var init_vxCardFlow_service = __esm({
         await assertHwyCardFlowStepAccess(input.step, roleNames);
       }
       await ensureHwyDbObjects();
-      const memberId = trim27(input.memberId);
+      const memberId = trim28(input.memberId);
       if (input.action !== "recalc-can-start" && !memberId) {
         throw new Error("memberId is required.");
       }
@@ -266298,30 +267037,30 @@ var init_vxCardFlow_service = __esm({
         step: input.step,
         action: input.action,
         member_id: memberId ? Number(memberId) : null,
-        actor: trim27(input.actorUsername) || null,
+        actor: trim28(input.actorUsername) || null,
         reason_id: input.reasonId ? Number(input.reasonId) : null,
-        note: trim27(input.note) || null
+        note: trim28(input.note) || null
       });
     };
     applyHwyCardFlowSecurityRecord = async (input, roleNames) => {
       assertSqlServer13();
       await assertHwyCardFlowStepAccess("security", roleNames);
       await ensureHwyDbObjects();
-      const memberId = trim27(input.memberId);
+      const memberId = trim28(input.memberId);
       if (!memberId) {
         throw new Error("memberId is required.");
       }
       await execHwyProcedure("vx_candidate_pipeline_security_record", {
         member_id: Number(memberId),
         can_get_identity_card: input.canGetIdentityCard,
-        can_get_identity_card_note: trim27(input.canGetIdentityCardNote) || null,
+        can_get_identity_card_note: trim28(input.canGetIdentityCardNote) || null,
         can_get_masooliat: input.canGetMasooliat,
-        can_get_masooliat_note: trim27(input.canGetMasooliatNote) || null,
+        can_get_masooliat_note: trim28(input.canGetMasooliatNote) || null,
         can_be_member_of_aammeh: input.canBeMemberOfAammeh,
-        can_be_member_of_aammeh_note: trim27(input.canBeMemberOfAammehNote) || null,
+        can_be_member_of_aammeh_note: trim28(input.canBeMemberOfAammehNote) || null,
         allows_responsibility: input.allowsResponsibility,
-        allows_responsibility_note: trim27(input.allowsResponsibilityNote) || null,
-        actor: trim27(input.actorUsername) || null
+        allows_responsibility_note: trim28(input.allowsResponsibilityNote) || null,
+        actor: trim28(input.actorUsername) || null
       });
       await emitHwyMemberSecurityOpinionRecordedForMember(Number(memberId));
     };
@@ -266388,66 +267127,6 @@ var init_vxCandidatePipelineAccess_middleware = __esm({
         }
       })();
     };
-  }
-});
-
-// src/domain/vx/vxMeetingsNav.ts
-var init_vxMeetingsNav = __esm({
-  "src/domain/vx/vxMeetingsNav.ts"() {
-  }
-});
-
-// src/domain/vx/vxMeetingsLegacyAccess.ts
-var VX_MEETINGS_MANAGEMENT_LEGACY_READ, buildHwyMeetingsManagementPortalAllowRoles;
-var init_vxMeetingsLegacyAccess = __esm({
-  "src/domain/vx/vxMeetingsLegacyAccess.ts"() {
-    init_vxMemberListLegacyAccess();
-    init_vxMeetingsNav();
-    VX_MEETINGS_MANAGEMENT_LEGACY_READ = {
-      controller: "VX_BaseInformation",
-      method: "Read_Meetings"
-    };
-    buildHwyMeetingsManagementPortalAllowRoles = (rolesByAction) => {
-      const roles = rolesByAction.get(legacyHwyActionKey(VX_MEETINGS_MANAGEMENT_LEGACY_READ)) ?? [];
-      return buildHwyMemberListRouteAllowRoles(roles);
-    };
-  }
-});
-
-// src/server/domain/vx/vxMeetingsAccess.service.ts
-async function resolveHwyMeetingsManagementAllowRoles() {
-  const now = Date.now();
-  if (portalRolesCache3 && now - portalRolesCache3.loadedAt < CACHE_MS3) {
-    return portalRolesCache3.roles;
-  }
-  try {
-    const pool = await connectLegacyReadPool();
-    let byAction;
-    try {
-      byAction = await fetchLegacyPlatformRolesByAction(pool, [VX_MEETINGS_MANAGEMENT_LEGACY_READ]);
-    } finally {
-      await pool.close();
-    }
-    const roles = buildHwyMeetingsManagementPortalAllowRoles(byAction);
-    portalRolesCache3 = { roles: roles.length > 0 ? roles : ["ADMIN"], loadedAt: now };
-    return portalRolesCache3.roles;
-  } catch {
-    return ["ADMIN"];
-  }
-}
-async function assertHwyMeetingsManagementAccess(roleNames) {
-  if (roleNames.includes("ADMIN")) return;
-  const allowed = await resolveHwyMeetingsManagementAllowRoles();
-  if (allowed.some((role) => roleNames.includes(role))) return;
-  throw new Error("Forbidden.");
-}
-var CACHE_MS3, portalRolesCache3;
-var init_vxMeetingsAccess_service = __esm({
-  "src/server/domain/vx/vxMeetingsAccess.service.ts"() {
-    init_legacyHwyRoleAuth();
-    init_vxMeetingsLegacyAccess();
-    CACHE_MS3 = 3e4;
-    portalRolesCache3 = null;
   }
 });
 
@@ -266620,6 +267299,10 @@ var init_vxPaymentDocumentsLegacyAccess = __esm({
     };
     buildHwyPaymentDocumentsLegacyFilterWhere = (input, tableAlias = "D") => {
       let where = "";
+      const documentId = String(input.documentId ?? "").trim();
+      if (documentId && /^\d+$/.test(documentId)) {
+        where += ` AND ${tableAlias}.id = ${Number(documentId)}`;
+      }
       const year = String(input.docYear ?? "").trim();
       if (year && /^\d{4}$/.test(year)) {
         where += ` AND ${tableAlias}.doc_year = ${Number(year)}`;
@@ -266795,24 +267478,24 @@ var init_vxPaymentDocumentsMembersLegacyAccess = __esm({
       }
       const username = String(input.username ?? "").trim();
       if (username) {
-        where += ` AND ${memberScalar("UserName", tableAlias)} = '${escSqlLiteral(username)}'`;
+        where += ` AND ${memberScalar("username", tableAlias)} = '${escSqlLiteral(username)}'`;
       }
       const phone = String(input.phone ?? "").trim();
       if (phone) {
-        where += ` AND ${memberScalar("Phone1", tableAlias)} = '${escSqlLiteral(phone)}'`;
+        where += ` AND ${memberScalar("phone1", tableAlias)} = '${escSqlLiteral(phone)}'`;
       }
       const likeField = (param, field3) => {
         const raw = String(param ?? "").trim();
         if (!raw) return;
         where += ` AND ${memberScalar(field3, tableAlias)} LIKE N'%${escLikeFragment(raw)}%'`;
       };
-      likeField(input.firstName, "FirstName");
-      likeField(input.fatherName, "FatherName");
-      likeField(input.grandFatherName, "GrandFatherName");
-      likeField(input.lastName, "LastName");
+      likeField(input.firstName, "first_name");
+      likeField(input.fatherName, "father_name");
+      likeField(input.grandFatherName, "grandfather_name");
+      likeField(input.lastName, "family_name");
       const birthYear = String(input.birthYear ?? "").trim();
       if (birthYear && /^\d+$/.test(birthYear)) {
-        where += ` AND ${memberScalar("BirthYear", tableAlias)} = ${Number(birthYear)}`;
+        where += ` AND ${memberScalar("birth_year", tableAlias)} = ${Number(birthYear)}`;
       }
       const genderId = String(input.genderId ?? "").trim();
       if (genderId && genderId !== "-1" && /^\d+$/.test(genderId)) {
@@ -266836,7 +267519,7 @@ var init_vxPaymentDocumentsMembersLegacyAccess = __esm({
       }
       const sameDevice = String(input.vSameDeviceCount ?? "0").trim();
       if (sameDevice === "1") {
-        where += ` AND ISNULL(${tableAlias}.SameDeviceCount, 0) > 0`;
+        where += ` AND ISNULL(${tableAlias}.same_device_count, 0) > 0`;
       }
       return where;
     };
@@ -266924,11 +267607,13 @@ var init_vxMasoolinPerformance = __esm({
 });
 
 // src/domain/vx/vxMasoolinPerformanceLegacyAccess.ts
-var VX_MASOOLIN_PERFORMANCE_LEGACY_READ, VX_MASOOLIN_PERFORMANCE_LEGACY_SET_MAIN_PAYABLE, buildHwyMasoolinPerformancePortalAllowRoles, intOrZero, strOrDefault, buildHwyMasoolinPerformanceProcParams, buildHwyMasoolinPerformanceExecReplacements, formatHwyMasoolinPerformanceProcSql;
+var resolveHwyMasoolinPerformanceSpIsAdmin, VX_MASOOLIN_PERFORMANCE_LEGACY_READ, VX_MASOOLIN_PERFORMANCE_LEGACY_SET_MAIN_PAYABLE, buildHwyMasoolinPerformancePortalAllowRoles, intOrZero, normalizeMasoolinPerformanceProcGenderId, strOrDefault, buildHwyMasoolinPerformanceProcParams, buildHwyMasoolinPerformanceExecReplacements, formatHwyMasoolinPerformanceProcSql;
 var init_vxMasoolinPerformanceLegacyAccess = __esm({
   "src/domain/vx/vxMasoolinPerformanceLegacyAccess.ts"() {
     init_vxMemberListLegacyAccess();
+    init_vxLegacyPlatformAdminActor();
     init_vxMasoolinPerformance();
+    resolveHwyMasoolinPerformanceSpIsAdmin = (roleNames, actorUsername2) => roleNames.some((role) => role.toUpperCase() === "ADMIN") || isHwyLegacyPlatformAdminActorKey(actorUsername2);
     VX_MASOOLIN_PERFORMANCE_LEGACY_READ = {
       controller: "VX_Members",
       method: "Read_MasoolinPerformance"
@@ -266946,19 +267631,29 @@ var init_vxMasoolinPerformanceLegacyAccess = __esm({
       if (!trimmed || !/^-?\d+$/.test(trimmed)) return 0;
       return Number(trimmed);
     };
+    normalizeMasoolinPerformanceProcGenderId = (value) => {
+      const raw = intOrZero(value);
+      if (raw === 10011) {
+        return 1;
+      }
+      if (raw === 10012) {
+        return 2;
+      }
+      return raw;
+    };
     strOrDefault = (value, fallback) => {
       const trimmed = String(value ?? "").trim();
       return trimmed || fallback;
     };
     buildHwyMasoolinPerformanceProcParams = (input, context) => {
-      const selectedProvinces = String(input.selectedProvinces ?? "").trim() || "0";
+      const selectedProvinces = String(input.selectedProvinces ?? "").trim();
       return {
         userProfileId: Math.max(0, Math.floor(context.userProfileId)),
         isAdmin: context.isAdmin ? 1 : 0,
         selectedProvinces,
         circleId: intOrZero(input.circleId),
         tamvinId: intOrZero(input.tamvinId),
-        genderId: intOrZero(input.genderId),
+        genderId: normalizeMasoolinPerformanceProcGenderId(input.genderId),
         roleId: intOrZero(input.roleId),
         levelId1: intOrZero(input.bi1LevelId),
         levelId2: intOrZero(input.bi2LevelId),
@@ -266969,7 +267664,11 @@ var init_vxMasoolinPerformanceLegacyAccess = __esm({
         moneyAmount3: strOrDefault(input.moneyAmount3, "MoneyAmount3"),
         userName: String(input.userName ?? "").trim(),
         payable: String(input.chiefMasool ?? "").trim(),
-        confilictState: String(input.confilictState ?? "").trim() || "0",
+        /** Legacy `MasterFilter.ConfilictState` default `""` — `@ConfilictState='0'` matches no rows. */
+        confilictState: (() => {
+          const trimmed = String(input.confilictState ?? "").trim();
+          return trimmed === "0" ? "" : trimmed;
+        })(),
         sameRogheCount: String(input.sameRogheCount ?? "").trim()
       };
     };
@@ -266977,10 +267676,10 @@ var init_vxMasoolinPerformanceLegacyAccess = __esm({
       ActorId: params.userProfileId,
       IsPublicKey: params.isAdmin,
       SelectedProvinces: params.selectedProvinces,
-      CircleId: params.circleId,
-      TamvinId: params.tamvinId,
-      GenderId: params.genderId,
-      RoleId: params.roleId,
+      circle_id: params.circleId,
+      tamvin_id: params.tamvinId,
+      gender_id: params.genderId,
+      role_id: params.roleId,
       BI1LevelId: params.levelId1,
       BI2LevelId: params.levelId2,
       BI3LevelId: params.levelId3,
@@ -266988,8 +267687,8 @@ var init_vxMasoolinPerformanceLegacyAccess = __esm({
       MoneyAmount1: params.moneyAmount1,
       MoneyAmount2: params.moneyAmount2,
       MoneyAmount3: params.moneyAmount3,
-      UserName: params.userName,
-      Payable: params.payable,
+      user_name: params.userName,
+      payable: params.payable,
       ConfilictState: params.confilictState,
       SameRogheCount: params.sameRogheCount
     });
@@ -267337,7 +268036,7 @@ var init_vxEmployeesListLegacyRead_service = __esm({
     queryLegacyEmployeesList = async (input) => {
       const params = buildHwyEmployeesListProcParams(input);
       const filterWhere = buildHwyEmployeesListLegacyWhereSql(params);
-      const sql23 = `
+      const sql25 = `
     SELECT
       CAST(M.Id AS VARCHAR(32)) AS id,
       M.UserName AS username,
@@ -267375,7 +268074,7 @@ var init_vxEmployeesListLegacyRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql23);
+        const result = await pool.request().query(sql25);
         return result.recordset;
       } finally {
         await pool.close();
@@ -267385,7 +268084,7 @@ var init_vxEmployeesListLegacyRead_service = __esm({
 });
 
 // src/server/domain/vx/vxEmployeesList.service.ts
-var import_sequelize126, trim28, VX_EMPLOYEES_LIST_SCOPE, assertSqlServer14, mapRow15, finalizeRows, listHwyEmployees, removeHwyEmployeePlatformRoles;
+var import_sequelize127, trim29, VX_EMPLOYEES_LIST_SCOPE, assertSqlServer14, mapRow15, finalizeRows, listHwyEmployees, removeHwyEmployeePlatformRoles;
 var init_vxEmployeesList_service = __esm({
   "src/server/domain/vx/vxEmployeesList.service.ts"() {
     init_vxEmployeesListFilterMapping();
@@ -267398,8 +268097,8 @@ var init_vxEmployeesList_service = __esm({
     init_vxMemberDirectoryDetailDisplay();
     init_vxMemberDirectoryListCache();
     init_controlPlaneSequelize();
-    import_sequelize126 = require("sequelize");
-    trim28 = (value) => String(value ?? "").trim();
+    import_sequelize127 = require("sequelize");
+    trim29 = (value) => String(value ?? "").trim();
     VX_EMPLOYEES_LIST_SCOPE = "VX_Members_List_AlMontadhemin";
     assertSqlServer14 = () => {
       if (readControlPlaneProvider() !== "sqlserver") {
@@ -267407,24 +268106,24 @@ var init_vxEmployeesList_service = __esm({
       }
     };
     mapRow15 = (row) => ({
-      id: trim28(row.id),
-      username: row.username ? trim28(row.username) : null,
-      userId: row.user_id ? trim28(row.user_id) : null,
-      firstName: row.first_name ? trim28(row.first_name) : null,
-      fatherName: row.father_name ? trim28(row.father_name) : null,
-      grandFatherName: row.grand_father_name ? trim28(row.grand_father_name) : null,
-      lastName: row.last_name ? trim28(row.last_name) : null,
-      displayFullName: row.display_full_name ? trim28(row.display_full_name) : null,
-      avatarUrl: row.avatar_url ? trim28(row.avatar_url) : null,
-      birthYear: row.birth_year != null ? trim28(row.birth_year) : null,
-      genderCode: row.gender_code ? trim28(row.gender_code) : null,
-      trackingCode: row.tracking_code ? trim28(row.tracking_code) : null,
-      phone1: row.phone1 ? trim28(row.phone1) : null,
-      genderId: row.gender_id ? trim28(row.gender_id) : null,
-      genderIdTitle: row.gender_id_title ? trim28(row.gender_id_title) : null,
+      id: trim29(row.id),
+      username: row.username ? trim29(row.username) : null,
+      userId: row.user_id ? trim29(row.user_id) : null,
+      firstName: row.first_name ? trim29(row.first_name) : null,
+      fatherName: row.father_name ? trim29(row.father_name) : null,
+      grandFatherName: row.grand_father_name ? trim29(row.grand_father_name) : null,
+      lastName: row.last_name ? trim29(row.last_name) : null,
+      displayFullName: row.display_full_name ? trim29(row.display_full_name) : null,
+      avatarUrl: row.avatar_url ? trim29(row.avatar_url) : null,
+      birthYear: row.birth_year != null ? trim29(row.birth_year) : null,
+      genderCode: row.gender_code ? trim29(row.gender_code) : null,
+      trackingCode: row.tracking_code ? trim29(row.tracking_code) : null,
+      phone1: row.phone1 ? trim29(row.phone1) : null,
+      genderId: row.gender_id ? trim29(row.gender_id) : null,
+      genderIdTitle: row.gender_id_title ? trim29(row.gender_id_title) : null,
       statFieldsCompleted: row.stat_fields_completed != null ? Number(row.stat_fields_completed) : null,
-      statOath: row.stat_oath ? trim28(row.stat_oath) : null,
-      masooliatRoleOn: row.masooliat_role_on ? trim28(String(row.masooliat_role_on)) : null,
+      statOath: row.stat_oath ? trim29(row.stat_oath) : null,
+      masooliatRoleOn: row.masooliat_role_on ? trim29(String(row.masooliat_role_on)) : null,
       rolesLimits: row.roles_limits ? String(row.roles_limits) : null,
       areasLimits: row.areas_limits ? String(row.areas_limits) : null,
       genderLimits: row.gender_limits ? String(row.gender_limits) : null,
@@ -267432,14 +268131,14 @@ var init_vxEmployeesList_service = __esm({
       uniLimits: row.uni_limits ? String(row.uni_limits) : null,
       jobL1Limits: row.job_l1_limits ? String(row.job_l1_limits) : null,
       ettehadLimits: row.ettehad_limits ? String(row.ettehad_limits) : null,
-      nakhebJoinProvinceName: row.nakheb_join_province_name ? trim28(row.nakheb_join_province_name) : null,
-      nakhebJoinCircleName: row.nakheb_join_circle_name ? trim28(row.nakheb_join_circle_name) : null,
-      nakhebJoinTamvinName: row.nakheb_join_tamvin_name ? trim28(row.nakheb_join_tamvin_name) : null,
-      nakhebJoinEghteraName: row.nakheb_join_eghtera_name ? trim28(row.nakheb_join_eghtera_name) : null,
-      educationLevelIdTitle: row.education_level_id_title ? trim28(row.education_level_id_title) : null,
-      jobTypeIdTitle: row.job_type_id_title ? trim28(row.job_type_id_title) : null,
-      membershipOn: row.membership_on ? trim28(row.membership_on) : null,
-      updatedOn: row.updated_on ? trim28(row.updated_on) : null
+      nakhebJoinProvinceName: row.nakheb_join_province_name ? trim29(row.nakheb_join_province_name) : null,
+      nakhebJoinCircleName: row.nakheb_join_circle_name ? trim29(row.nakheb_join_circle_name) : null,
+      nakhebJoinTamvinName: row.nakheb_join_tamvin_name ? trim29(row.nakheb_join_tamvin_name) : null,
+      nakhebJoinEghteraName: row.nakheb_join_eghtera_name ? trim29(row.nakheb_join_eghtera_name) : null,
+      educationLevelIdTitle: row.education_level_id_title ? trim29(row.education_level_id_title) : null,
+      jobTypeIdTitle: row.job_type_id_title ? trim29(row.job_type_id_title) : null,
+      membershipOn: row.membership_on ? trim29(row.membership_on) : null,
+      updatedOn: row.updated_on ? trim29(row.updated_on) : null
     });
     finalizeRows = async (rows, queryLang) => {
       if (rows.length === 0) return rows;
@@ -267508,7 +268207,7 @@ var init_vxEmployeesList_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const memberRows = await sequelize.query(
         `SELECT TOP 1 user_id FROM dbo.vx_members WITH (NOLOCK) WHERE id = :memberId`,
-        { replacements: { memberId: trim28(memberId) }, type: import_sequelize126.QueryTypes.SELECT }
+        { replacements: { memberId: trim29(memberId) }, type: import_sequelize127.QueryTypes.SELECT }
       );
       const userId = memberRows[0]?.user_id;
       if (!userId) {
@@ -267516,7 +268215,7 @@ var init_vxEmployeesList_service = __esm({
       }
       await sequelize.query(
         `DELETE FROM dbo.base_user_roles WHERE user_id = :userId AND role_name LIKE 'VX_R[_]%' ESCAPE '\\'`,
-        { replacements: { userId }, type: import_sequelize126.QueryTypes.RAW }
+        { replacements: { userId }, type: import_sequelize127.QueryTypes.RAW }
       );
       await invalidateHwyMemberDirectoryListCache();
     };
@@ -267524,7 +268223,7 @@ var init_vxEmployeesList_service = __esm({
 });
 
 // src/server/domain/vx/vxPaymentDocumentsLegacyRead.service.ts
-var LEGACY_GENDER_PARENT_ID, LEGACY_PROVINCE_PARENT_ID, listSelectSql, resolveLegacyOperatorGenderLimitsCsv, listLegacyHwyPaymentDocumentCircles, listLegacyHwyPaymentDocumentFilterBaseInfo, loadLegacyHwyPaymentDocumentsGenders, loadLegacyHwyPaymentDocumentsProvinces, buildScopeInput, buildWhereClause, toExtraWhere, aggregateField, mapAggregates, queryLegacyPaymentDocumentsCount, queryLegacyPaymentDocumentsAggregates, queryLegacyPaymentDocumentsList;
+var LEGACY_GENDER_PARENT_ID, LEGACY_PROVINCE_PARENT_ID, listSelectSql, resolveLegacyOperatorGenderLimitsCsv, listLegacyHwyPaymentDocumentCircles, dedupeLegacyFilterBaseInfoRows, listLegacyHwyPaymentDocumentFilterBaseInfo, loadLegacyHwyPaymentDocumentsGenders, loadLegacyHwyPaymentDocumentsProvinces, buildScopeInput, buildWhereClause, toExtraWhere, aggregateField, mapAggregates, queryLegacyPaymentDocumentsCount, queryLegacyPaymentDocumentsAggregates, queryLegacyPaymentDocumentsList;
 var init_vxPaymentDocumentsLegacyRead_service = __esm({
   "src/server/domain/vx/vxPaymentDocumentsLegacyRead.service.ts"() {
     init_vxPaymentDocumentsLegacyAccess();
@@ -267567,7 +268266,7 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
     resolveLegacyOperatorGenderLimitsCsv = async (username) => {
       if (await vxFinancePaymentReadsReady()) {
         const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
-        const { QueryTypes: QueryTypes97 } = await import("sequelize");
+        const { QueryTypes: QueryTypes99 } = await import("sequelize");
         const sequelize = getControlPlaneSequelize2();
         const rows = await sequelize.query(
           `
@@ -267576,7 +268275,7 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
       INNER JOIN dbo.vx_ref_members_gender_limits GL WITH (NOLOCK) ON GL.member_id = M.id
       WHERE M.username = :username
       `,
-          { replacements: { username }, type: QueryTypes97.SELECT }
+          { replacements: { username }, type: QueryTypes99.SELECT }
         );
         const csv = rows[0]?.csv;
         return csv?.trim() || null;
@@ -267599,7 +268298,7 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
     listLegacyHwyPaymentDocumentCircles = async (docProvinceId) => {
       if (!Number.isFinite(docProvinceId) || docProvinceId <= 0) return [];
       if (await vxFinancePaymentReadsReady()) {
-        const { QueryTypes: QueryTypes97 } = await import("sequelize");
+        const { QueryTypes: QueryTypes99 } = await import("sequelize");
         const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
         const rows = await getControlPlaneSequelize2().query(
           `
@@ -267608,7 +268307,7 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
       WHERE vx_state_id = :provinceId AND ISNULL(deleted, 0) = 0
       ORDER BY circle_name
       `,
-          { replacements: { provinceId: docProvinceId }, type: QueryTypes97.SELECT }
+          { replacements: { provinceId: docProvinceId }, type: QueryTypes99.SELECT }
         );
         return rows.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
       }
@@ -267626,10 +268325,22 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
         await pool.close();
       }
     };
+    dedupeLegacyFilterBaseInfoRows = (rows) => {
+      const seen = /* @__PURE__ */ new Set();
+      const unique = [];
+      for (const row of rows) {
+        if (seen.has(row.id)) {
+          continue;
+        }
+        seen.add(row.id);
+        unique.push(row);
+      }
+      return unique;
+    };
     listLegacyHwyPaymentDocumentFilterBaseInfo = async (parentId) => {
       if (!Number.isFinite(parentId) || parentId <= 0) return [];
       if (await vxFinancePaymentReadsReady()) {
-        const { QueryTypes: QueryTypes97 } = await import("sequelize");
+        const { QueryTypes: QueryTypes99 } = await import("sequelize");
         const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
         const rows = await getControlPlaneSequelize2().query(
           `
@@ -267638,9 +268349,11 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
       WHERE parent_id = :parentId AND is_active = 1
       ORDER BY view_order, id
       `,
-          { replacements: { parentId }, type: QueryTypes97.SELECT }
+          { replacements: { parentId }, type: QueryTypes99.SELECT }
         );
-        return rows.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+        return dedupeLegacyFilterBaseInfoRows(
+          rows.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title)
+        );
       }
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
@@ -267651,7 +268364,9 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
         WHERE ParentId = @parentId AND IsActive = 1
         ORDER BY ViewOrder, Id
       `);
-        return result.recordset.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
+        return dedupeLegacyFilterBaseInfoRows(
+          result.recordset.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title)
+        );
       } finally {
         await pool.close();
       }
@@ -267753,7 +268468,7 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
           page_size: params.page_size
         });
       }
-      const sql23 = `
+      const sql25 = `
     ${listSelectSql}
     ${where}
     ORDER BY D.CreatedOn DESC, D.Id DESC
@@ -267762,7 +268477,7 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql23);
+        const result = await pool.request().query(sql25);
         return result.recordset;
       } finally {
         await pool.close();
@@ -267772,19 +268487,21 @@ var init_vxPaymentDocumentsLegacyRead_service = __esm({
 });
 
 // src/server/domain/vx/vxFinanceDbWrite.service.ts
-var financeObjectsReady, masoolinObjectsReady, execLegacyPaymentSql, legacyCreatePaymentDocuments, dbCreatePaymentDocuments, dbRemovePaymentDocumentById, dbSendPaymentDocumentToArea, dbSendPaymentDocumentToMali, dbMarkPaymentDocumentFinalOk, dbMarkPaymentDocumentClosed, dbSwitchPaymentDocumentsMemberPayability, dbUpdatePaymentDocumentsMemberPayAmount, dbMasoolinStarsCreateOrUpdateMonth, dbMasoolinStarsRecalcMember, dbMasoolinSetAsMainPayable;
+var import_mssql22, financeObjectsReady, masoolinObjectsReady, execLegacyPaymentSql, legacyCreatePaymentDocuments, dbCreatePaymentDocuments, dbRemovePaymentDocumentById, dbSendPaymentDocumentToArea, dbSendPaymentDocumentToMali, dbMarkPaymentDocumentFinalOk, dbMarkPaymentDocumentClosed, dbSwitchPaymentDocumentsMemberPayability, dbUpdatePaymentDocumentsMemberPayAmount, MASOOLIN_STARS_BATCH_TIMEOUT_MS, dbMasoolinStarsCreateOrUpdateMonth, dbMasoolinStarsRecalcMember, dbMasoolinSetAsMainPayable;
 var init_vxFinanceDbWrite_service = __esm({
   "src/server/domain/vx/vxFinanceDbWrite.service.ts"() {
+    import_mssql22 = __toESM(require("mssql"), 1);
     init_vxExecDbObject();
     init_vxFinanceParityState_service();
     financeObjectsReady = vxFinancePaymentWritesReady;
     masoolinObjectsReady = vxFinanceMasoolinInstallReady;
-    execLegacyPaymentSql = async (statement) => {
+    execLegacyPaymentSql = async (statement, requestTimeoutMs = 6e4) => {
       const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-      const sql23 = await import("mssql");
-      const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
+      const pool = await new import_mssql22.default.ConnectionPool(readLegacyConn2()).connect();
       try {
-        await pool.request().query(statement);
+        const request = pool.request();
+        request.timeout = requestTimeoutMs;
+        await request.query(statement);
       } finally {
         await pool.close();
       }
@@ -267885,25 +268602,29 @@ var init_vxFinanceDbWrite_service = __esm({
         });
         return;
       }
-      const sql23 = await import("mssql");
       const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-      const pool = await new sql23.ConnectionPool(readLegacyConn2()).connect();
+      const pool = await new import_mssql22.default.ConnectionPool(readLegacyConn2()).connect();
       try {
-        await pool.request().input("PaymentId", sql23.BigInt, input.lineId).input("NewPayAmount", sql23.Int, input.payAmount).input("Note", sql23.NVarChar, input.note).input("Actor", sql23.NVarChar, input.actorUserName).input("IsAdmin", sql23.Bit, input.isAdmin).query(`EXEC [dbo].[VX_SP_PaymentDocuments_UpdatePayAmount] @PaymentId,@NewPayAmount,@Note,@Actor,@IsAdmin`);
+        await pool.request().input("PaymentId", import_mssql22.default.BigInt, input.lineId).input("NewPayAmount", import_mssql22.default.Int, input.payAmount).input("Note", import_mssql22.default.NVarChar, input.note).input("Actor", import_mssql22.default.NVarChar, input.actorUserName).input("IsAdmin", import_mssql22.default.Bit, input.isAdmin).query(`EXEC [dbo].[VX_SP_PaymentDocuments_UpdatePayAmount] @PaymentId,@NewPayAmount,@Note,@Actor,@IsAdmin`);
       } finally {
         await pool.close();
       }
     };
+    MASOOLIN_STARS_BATCH_TIMEOUT_MS = 12e5;
     dbMasoolinStarsCreateOrUpdateMonth = async (year, month) => {
+      const y = Math.floor(year);
+      const m = Math.floor(month);
       if (await masoolinObjectsReady()) {
-        await execHwyProcedure("vx_masoolin_stars_create_or_update_month", {
-          YEAR: year,
-          MONTH: month
-        });
+        await execHwyProcedure(
+          "vx_masoolin_stars_create_or_update_month",
+          { YEAR: y, MONTH: m },
+          { requestTimeoutMs: MASOOLIN_STARS_BATCH_TIMEOUT_MS }
+        );
         return;
       }
       await execLegacyPaymentSql(
-        `EXEC [dbo].[VX_SP_Masoolin_CreateOrUpdateStars] ${Math.floor(year)},${Math.floor(month)}`
+        `EXEC [dbo].[VX_SP_Masoolin_CreateOrUpdateStars] ${y},${m}`,
+        MASOOLIN_STARS_BATCH_TIMEOUT_MS
       );
     };
     dbMasoolinStarsRecalcMember = async (memberId) => {
@@ -267939,24 +268660,24 @@ var init_vxPaymentDocumentsLegacyWrite_service = __esm({
 });
 
 // src/server/domain/vx/vxPaymentDocuments.service.ts
-var trim29, mapRow16, listHwyPaymentDocuments, loadHwyPaymentDocumentsFilterOptions, createHwyPaymentDocumentsBatch, removeHwyPaymentDocumentById, sendHwyPaymentDocumentToArea, sendHwyPaymentDocumentToMali, markHwyPaymentDocumentFinalOk, markHwyPaymentDocumentClosed;
+var trim30, mapRow16, listHwyPaymentDocuments, loadHwyPaymentDocumentsFilterOptions, createHwyPaymentDocumentsBatch, removeHwyPaymentDocumentById, sendHwyPaymentDocumentToArea, sendHwyPaymentDocumentToMali, markHwyPaymentDocumentFinalOk, markHwyPaymentDocumentClosed;
 var init_vxPaymentDocuments_service = __esm({
   "src/server/domain/vx/vxPaymentDocuments.service.ts"() {
     init_vxPaymentDocumentsLegacyAccess();
     init_vxPaymentDocumentsAccess_service();
     init_vxPaymentDocumentsLegacyRead_service();
     init_vxPaymentDocumentsLegacyWrite_service();
-    trim29 = (v) => String(v ?? "").trim();
+    trim30 = (v) => String(v ?? "").trim();
     mapRow16 = (row) => ({
-      id: trim29(row.id),
+      id: trim30(row.id),
       docYear: row.doc_year != null ? Number(row.doc_year) : null,
       docMonth: row.doc_month != null ? Number(row.doc_month) : null,
-      docGenderId: row.doc_gender_id ? trim29(row.doc_gender_id) : null,
-      docGenderIdTitle: row.doc_gender_id_title ? trim29(row.doc_gender_id_title) : null,
-      docProvinceId: row.doc_province_id ? trim29(row.doc_province_id) : null,
-      docProvinceIdTitle: row.doc_province_id_title ? trim29(row.doc_province_id_title) : null,
-      docCircleId: row.doc_circle_id ? trim29(row.doc_circle_id) : null,
-      docCircleIdTitle: row.doc_circle_id_title ? trim29(row.doc_circle_id_title) : null,
+      docGenderId: row.doc_gender_id ? trim30(row.doc_gender_id) : null,
+      docGenderIdTitle: row.doc_gender_id_title ? trim30(row.doc_gender_id_title) : null,
+      docProvinceId: row.doc_province_id ? trim30(row.doc_province_id) : null,
+      docProvinceIdTitle: row.doc_province_id_title ? trim30(row.doc_province_id_title) : null,
+      docCircleId: row.doc_circle_id ? trim30(row.doc_circle_id) : null,
+      docCircleIdTitle: row.doc_circle_id_title ? trim30(row.doc_circle_id_title) : null,
       totalMembersCount: row.total_members_count != null ? Number(row.total_members_count) : null,
       payableMembersCountOk: row.payable_members_count_ok != null ? Number(row.payable_members_count_ok) : null,
       payableMembersCountNok: row.payable_members_count_nok != null ? Number(row.payable_members_count_nok) : null,
@@ -267966,16 +268687,16 @@ var init_vxPaymentDocuments_service = __esm({
       payableAmountNok: row.payable_amount_nok != null ? Number(row.payable_amount_nok) : null,
       notPayableAmount: row.not_payable_amount != null ? Number(row.not_payable_amount) : null,
       areaOk: row.area_ok === true || row.area_ok === 1,
-      areaOkBy: row.area_ok_by ? trim29(row.area_ok_by) : null,
-      areaOkOn: row.area_ok_on ? trim29(row.area_ok_on) : null,
+      areaOkBy: row.area_ok_by ? trim30(row.area_ok_by) : null,
+      areaOkOn: row.area_ok_on ? trim30(row.area_ok_on) : null,
       finalOk: row.final_ok === true || row.final_ok === 1,
-      finalOkBy: row.final_ok_by ? trim29(row.final_ok_by) : null,
-      finalOkOn: row.final_ok_on ? trim29(row.final_ok_on) : null,
+      finalOkBy: row.final_ok_by ? trim30(row.final_ok_by) : null,
+      finalOkOn: row.final_ok_on ? trim30(row.final_ok_on) : null,
       closed: row.closed === true || row.closed === 1,
-      closedBy: row.closed_by ? trim29(row.closed_by) : null,
-      closedOn: row.closed_on ? trim29(row.closed_on) : null,
-      createdBy: row.created_by ? trim29(row.created_by) : null,
-      createdOn: row.created_on ? trim29(row.created_on) : row.created_at ? trim29(row.created_at) : null
+      closedBy: row.closed_by ? trim30(row.closed_by) : null,
+      closedOn: row.closed_on ? trim30(row.closed_on) : null,
+      createdBy: row.created_by ? trim30(row.created_by) : null,
+      createdOn: row.created_on ? trim30(row.created_on) : row.created_at ? trim30(row.created_at) : null
     });
     listHwyPaymentDocuments = async (input, roleNames, actorUsername2) => {
       await assertHwyPaymentDocumentsAccess(roleNames);
@@ -268016,33 +268737,33 @@ var init_vxPaymentDocuments_service = __esm({
     };
     removeHwyPaymentDocumentById = async (documentId, roleNames) => {
       await assertHwyPaymentDocumentsAccess(roleNames);
-      const id = Number(trim29(documentId));
+      const id = Number(trim30(documentId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
       await dbRemovePaymentDocumentById(id);
     };
     sendHwyPaymentDocumentToArea = async (documentId, roleNames) => {
       await assertHwyPaymentDocumentsAccess(roleNames);
-      const id = Number(trim29(documentId));
+      const id = Number(trim30(documentId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
       await dbSendPaymentDocumentToArea(id);
     };
     sendHwyPaymentDocumentToMali = async (documentId, roleNames, actorUsername2) => {
       await assertHwyPaymentDocumentsAccess(roleNames);
-      const actor = trim29(actorUsername2);
+      const actor = trim30(actorUsername2);
       if (!actor) throw new Error("Actor username is required.");
-      const id = Number(trim29(documentId));
+      const id = Number(trim30(documentId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
       await dbSendPaymentDocumentToMali(id, actor);
     };
     markHwyPaymentDocumentFinalOk = async (documentId, roleNames, actorUsername2) => {
       await assertHwyPaymentDocumentsAccess(roleNames);
-      const id = Number(trim29(documentId));
+      const id = Number(trim30(documentId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
       await dbMarkPaymentDocumentFinalOk(id, actorUsername2);
     };
     markHwyPaymentDocumentClosed = async (documentId, roleNames, actorUsername2) => {
       await assertHwyPaymentDocumentsAccess(roleNames);
-      const id = Number(trim29(documentId));
+      const id = Number(trim30(documentId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid document id.");
       await dbMarkPaymentDocumentClosed(id, actorUsername2);
     };
@@ -268050,7 +268771,24 @@ var init_vxPaymentDocuments_service = __esm({
 });
 
 // src/server/domain/vx/vxPaymentDocumentsMembersLegacyRead.service.ts
-var listLegacyHwyPaymentDocumentTamvins, listSelectSql2, buildScopeInput2, buildWhereClause2, toExtraWhere2, paymentDocumentsMembersReadsReady, queryLegacyPaymentDocumentsMembersCount, queryLegacyPaymentDocumentsMembersList, queryLegacyPaymentDocumentsMemberImages;
+var vxPaymentDocumentsMembersLegacyRead_service_exports = {};
+__export(vxPaymentDocumentsMembersLegacyRead_service_exports, {
+  listLegacyHwyPaymentDocumentCircles: () => listLegacyHwyPaymentDocumentCircles,
+  listLegacyHwyPaymentDocumentTamvins: () => listLegacyHwyPaymentDocumentTamvins,
+  loadLegacyHwyPaymentDocumentsGenders: () => loadLegacyHwyPaymentDocumentsGenders,
+  loadLegacyHwyPaymentDocumentsProvinces: () => loadLegacyHwyPaymentDocumentsProvinces,
+  patchRawPaymentDocumentsMembersRowsWithLegacySelfieMeta: () => patchRawPaymentDocumentsMembersRowsWithLegacySelfieMeta,
+  queryEdgePaymentDocumentsMembersSelfieMetaByLineIds: () => queryEdgePaymentDocumentsMembersSelfieMetaByLineIds,
+  queryLegacyPaymentDocumentsMemberImages: () => queryLegacyPaymentDocumentsMemberImages,
+  queryLegacyPaymentDocumentsMemberSelfie: () => queryLegacyPaymentDocumentsMemberSelfie,
+  queryLegacyPaymentDocumentsMembersCount: () => queryLegacyPaymentDocumentsMembersCount,
+  queryLegacyPaymentDocumentsMembersLineMetaByLineIds: () => queryLegacyPaymentDocumentsMembersLineMetaByLineIds,
+  queryLegacyPaymentDocumentsMembersList: () => queryLegacyPaymentDocumentsMembersList,
+  queryLegacyPaymentDocumentsMembersSelfieMetaByLineIds: () => queryLegacyPaymentDocumentsMembersSelfieMetaByLineIds,
+  resolvePaymentDocumentsMembersLineMetaByLineIds: () => resolvePaymentDocumentsMembersLineMetaByLineIds,
+  resolvePaymentDocumentsMembersSelfieMetaByLineIds: () => resolvePaymentDocumentsMembersSelfieMetaByLineIds
+});
+var listLegacyHwyPaymentDocumentTamvins, listSelectSql2, buildScopeInput2, buildWhereClause2, toExtraWhere2, paymentDocumentsMembersReadsReady, queryLegacyPaymentDocumentsMembersCount, queryLegacyPaymentDocumentsMembersList, readPaymentDocumentsMemberSelfieBuffer, queryPaymentDocumentsMemberSelfieFromLegacyDb, queryPaymentDocumentsMemberSelfieFromEdgeDb, queryPaymentDocumentsMemberImagesFromLegacyDb, queryPaymentDocumentsMemberImagesFromEdgeDb, queryLegacyPaymentDocumentsMemberImages, queryLegacyPaymentDocumentsMemberSelfie, LEGACY_SELFIE_LINE_IDS_CHUNK, SELFIE_META_RETRY_ATTEMPTS, SELFIE_META_RETRY_DELAY_MS, sleep, withSelfieMetaRetries, parseSelfieSizeValue, queryEdgePaymentDocumentsMembersSelfieMetaByLineIds, trimLegacyMetaText, queryLegacyPaymentDocumentsMembersLineMetaByLineIds, queryLegacyPaymentDocumentsMembersSelfieMetaByLineIds, rawRowHasSelfieMeta, rawRowText, rawRowHasReceiptMeta, mergeTextOntoRawRow, applyLegacyLineMetaToRawRows, resolvePaymentDocumentsMembersSelfieMetaByLineIds, resolvePaymentDocumentsMembersLineMetaByLineIds, patchRawPaymentDocumentsMembersRowsWithLegacySelfieMeta;
 var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
   "src/server/domain/vx/vxPaymentDocumentsMembersLegacyRead.service.ts"() {
     init_vxPaymentDocumentsMembersLegacyAccess();
@@ -268060,7 +268798,7 @@ var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
     listLegacyHwyPaymentDocumentTamvins = async (circleId) => {
       if (!Number.isFinite(circleId) || circleId <= 0) return [];
       if (await vxFinancePaymentReadsReady()) {
-        const { QueryTypes: QueryTypes97 } = await import("sequelize");
+        const { QueryTypes: QueryTypes99 } = await import("sequelize");
         const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
         const rows = await getControlPlaneSequelize2().query(
           `
@@ -268069,7 +268807,7 @@ var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
       WHERE circle_id = :circleId
       ORDER BY tamvin_name
       `,
-          { replacements: { circleId }, type: QueryTypes97.SELECT }
+          { replacements: { circleId }, type: QueryTypes99.SELECT }
         );
         return rows.map((row) => ({ id: Number(row.id), title: String(row.title ?? "").trim() })).filter((row) => row.title);
       }
@@ -268090,22 +268828,56 @@ var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
     listSelectSql2 = `
   SELECT
     CAST(V.id AS VARCHAR(32)) AS id,
-    M.UserName AS username,
-    M.FirstName AS firstName,
-    M.FatherName AS fatherName,
-    M.GrandFatherName AS grandFatherName,
-    M.LastName AS lastName,
-    R.RoleName AS roleName,
-    PD.doc_year AS docYear,
-    PD.doc_month AS docMonth,
-    V.pay_amount AS payAmount,
-    (SELECT TOP 1 BI.title FROM dbo.vx_ref_base_information BI WITH (NOLOCK) WHERE BI.id = V.payable_reason_id) AS payableReasonTitle,
-    V.pay_ok AS payOk,
-    V.payable AS payable
+    CAST(M.id AS VARCHAR(32)) AS member_id,
+    CAST(M.user_id AS VARCHAR(32)) AS user_id,
+    M.username AS username,
+    M.first_name AS first_name,
+    M.father_name AS father_name,
+    M.grandfather_name AS grandfather_name,
+    M.family_name AS family_name,
+    CAST(M.gender_id AS VARCHAR(32)) AS gender_id,
+    CAST(M.birth_year AS VARCHAR(16)) AS birth_year,
+    CONVERT(VARCHAR(32), M.membership_on, 126) AS membership_on,
+    M.phone1 AS phone1,
+    CASE
+      WHEN p.profile_image_body IS NOT NULL AND M.user_id IS NOT NULL
+        THEN CONCAT(N'/api/users/', CAST(M.user_id AS VARCHAR(20)), N'/avatar-xs')
+      WHEN ISNULL(M.picture_file_size, 0) > 0
+        OR DATALENGTH(COALESCE(M.picture_file_body_xs, M.picture_file_body)) > 0
+        THEN CONCAT(N'/api/vx/members/', CAST(M.id AS VARCHAR(32)), N'/legacy-picture')
+      ELSE NULL
+    END AS avatar_url,
+    CAST(V.role_id AS VARCHAR(32)) AS role_id,
+    R.role_name AS role_name,
+    CAST(V.document_id AS VARCHAR(32)) AS document_id,
+    PD.doc_year AS doc_year,
+    PD.doc_month AS doc_month,
+    V.pay_amount AS pay_amount,
+    (SELECT TOP 1 BI.title FROM dbo.vx_ref_base_information BI WITH (NOLOCK) WHERE BI.id = V.payable_reason_id) AS payable_reason_title,
+    (
+      SELECT TOP 1 BI.title
+      FROM dbo.vx_masoolin_stars_overal SO WITH (NOLOCK)
+      LEFT JOIN dbo.vx_ref_base_information BI WITH (NOLOCK) ON BI.id = SO.level_id
+      WHERE SO.member_id = V.member_id
+        AND SO.calc_year = PD.doc_year
+        AND SO.calc_month = PD.doc_month
+    ) AS level_title,
+    V.pay_ok AS pay_ok,
+    V.payable AS payable,
+    CONVERT(VARCHAR(32), V.pay_ok_on, 126) AS pay_ok_on,
+    V.nb_device_os AS nb_device_os,
+    V.nb_device_id AS nb_device_id,
+    CONVERT(VARCHAR(32), V.nb_device_datetime, 126) AS nb_device_datetime,
+    CAST(V.nb_location_lat AS VARCHAR(32)) AS nb_location_lat,
+    CAST(V.nb_location_lon AS VARCHAR(32)) AS nb_location_lon,
+    V.nb_selfi_file_size AS nb_selfi_file_size,
+    CAST(CASE WHEN ISNULL(V.nb_selfi_file_size, 0) > 0 THEN 1 ELSE 0 END AS BIT) AS has_selfie_file,
+    V.same_device_count AS same_device_count
   FROM dbo.vw_vx_payment_documents_members V WITH (NOLOCK)
-  INNER JOIN dbo.vw_vx_members_legacy_row M WITH (NOLOCK) ON M.Id = V.member_id
+  INNER JOIN dbo.vw_vx_members_legacy_row M WITH (NOLOCK) ON M.id = V.member_id
   INNER JOIN dbo.vx_payment_documents PD WITH (NOLOCK) ON PD.id = V.document_id
-  LEFT JOIN dbo.vw_vx_platform_roles R WITH (NOLOCK) ON R.Id = V.role_id
+  LEFT JOIN dbo.vw_vx_platform_roles R WITH (NOLOCK) ON R.id = V.role_id
+  LEFT JOIN dbo.base_user_profiles p WITH (NOLOCK) ON p.user_id = M.user_id
 `;
     buildScopeInput2 = async (roleNames, actorUsername2) => {
       const { resolveHwyLegacyOperatorGeoScope: resolveHwyLegacyOperatorGeoScope2 } = await Promise.resolve().then(() => (init_vxLegacyOperatorGeoScope_service(), vxLegacyOperatorGeoScope_service_exports));
@@ -268165,7 +268937,7 @@ var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
           page_size: params.page_size
         });
       }
-      const sql23 = `
+      const sql25 = `
     ${listSelectSql2}
     ${where}
     ORDER BY V.Id DESC
@@ -268174,69 +268946,516 @@ var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql23);
+        const result = await pool.request().query(sql25);
         return result.recordset;
       } finally {
         await pool.close();
       }
     };
+    readPaymentDocumentsMemberSelfieBuffer = (preferXs, selfieXs, selfieFull) => {
+      if (preferXs && selfieXs?.length) {
+        return Buffer.from(selfieXs);
+      }
+      if (selfieFull?.length) {
+        return Buffer.from(selfieFull);
+      }
+      if (selfieXs?.length) {
+        return Buffer.from(selfieXs);
+      }
+      return null;
+    };
+    queryPaymentDocumentsMemberSelfieFromLegacyDb = async (lineId, preferXs) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("id", lineId).query(`
+      SELECT
+        pm.NbSelfi_FileBody_xs AS nb_selfi_xs,
+        pm.NbSelfi_FileBody AS nb_selfi,
+        pm.NbSelfi_FileMime AS nb_mime,
+        pm.NbSelfi_FileName AS nb_name
+      FROM dbo.VX_PaymentDocuments_Members pm WITH (NOLOCK)
+      WHERE pm.Id = @id
+    `);
+        const row = result.recordset[0];
+        if (!row) {
+          return null;
+        }
+        const buffer4 = readPaymentDocumentsMemberSelfieBuffer(preferXs, row.nb_selfi_xs, row.nb_selfi);
+        if (!buffer4) {
+          return null;
+        }
+        return {
+          mime: String(row.nb_mime ?? "").trim() || "image/jpeg",
+          fileName: String(row.nb_name ?? "").trim() || "selfie.jpg",
+          buffer: buffer4
+        };
+      } finally {
+        await pool.close();
+      }
+    };
+    queryPaymentDocumentsMemberSelfieFromEdgeDb = async (lineId, preferXs) => {
+      const { QueryTypes: QueryTypes99 } = await import("sequelize");
+      const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+      const rows = await getControlPlaneSequelize2().query(
+        `
+    SELECT
+      pm.nb_selfi_file_body_xs AS selfie_xs,
+      pm.nb_selfi_file_body AS selfie_full,
+      pm.nb_selfi_file_mime AS selfie_mime,
+      pm.nb_selfi_file_name AS selfie_name
+    FROM dbo.vx_payment_documents_members pm WITH (NOLOCK)
+    WHERE pm.id = :id
+    `,
+        { replacements: { id: lineId }, type: QueryTypes99.SELECT }
+      );
+      const row = rows[0];
+      if (!row) {
+        return null;
+      }
+      const buffer4 = readPaymentDocumentsMemberSelfieBuffer(preferXs, row.selfie_xs, row.selfie_full);
+      if (!buffer4) {
+        return null;
+      }
+      return {
+        mime: String(row.selfie_mime ?? "").trim() || "image/jpeg",
+        fileName: String(row.selfie_name ?? "").trim() || "selfie.jpg",
+        buffer: buffer4
+      };
+    };
+    queryPaymentDocumentsMemberImagesFromLegacyDb = async (lineId) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("id", lineId).query(`
+      SELECT pm.NbSelfi_FileBody AS selfie, m.Picture_FileBody AS picture
+      FROM dbo.VX_PaymentDocuments_Members pm WITH (NOLOCK)
+      LEFT JOIN dbo.VX_Members m WITH (NOLOCK) ON m.Id = pm.MemberId
+      WHERE pm.Id = @id
+    `);
+        return result.recordset[0];
+      } finally {
+        await pool.close();
+      }
+    };
+    queryPaymentDocumentsMemberImagesFromEdgeDb = async (lineId) => {
+      const { QueryTypes: QueryTypes99 } = await import("sequelize");
+      const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+      const rows = await getControlPlaneSequelize2().query(
+        `
+    SELECT pm.nb_selfi_file_body AS selfie, m.picture_file_body AS picture
+    FROM dbo.vx_payment_documents_members pm WITH (NOLOCK)
+    LEFT JOIN dbo.vw_vx_members_legacy_row m WITH (NOLOCK) ON m.id = pm.member_id
+    WHERE pm.id = :id
+    `,
+        { replacements: { id: lineId }, type: QueryTypes99.SELECT }
+      );
+      return rows[0];
+    };
     queryLegacyPaymentDocumentsMemberImages = async (lineId) => {
       const useEdge = await paymentDocumentsMembersReadsReady();
-      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
-      let row;
+      let selfie = null;
+      let picture = null;
       if (useEdge) {
-        const { QueryTypes: QueryTypes97 } = await import("sequelize");
-        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
-        const rows = await getControlPlaneSequelize2().query(
-          `
-      SELECT pm.nb_selfi_file_body AS selfie, m.Picture_FileBody AS picture
-      FROM dbo.vx_payment_documents_members pm WITH (NOLOCK)
-      LEFT JOIN dbo.vw_vx_members_legacy_row m WITH (NOLOCK) ON m.Id = pm.member_id
-      WHERE pm.id = :id
-      `,
-          { replacements: { id: lineId }, type: QueryTypes97.SELECT }
-        );
-        row = rows[0];
-      } else {
-        const pool = await connectLegacyReadPool2();
         try {
-          const result = await pool.request().input("id", lineId).query(`
-        SELECT pm.NbSelfi_FileBody AS selfie, m.Picture_FileBody AS picture
-        FROM dbo.VX_PaymentDocuments_Members pm WITH (NOLOCK)
-        LEFT JOIN dbo.VX_Members m WITH (NOLOCK) ON m.Id = pm.MemberId
-        WHERE pm.Id = @id
-      `);
-          row = result.recordset[0];
-        } finally {
-          await pool.close();
+          const edgeRow = await queryPaymentDocumentsMemberImagesFromEdgeDb(lineId);
+          if (edgeRow?.selfie?.length) {
+            selfie = Buffer.from(edgeRow.selfie);
+          }
+          if (edgeRow?.picture?.length) {
+            picture = Buffer.from(edgeRow.picture);
+          }
+        } catch {
         }
       }
-      if (!row) return { selfieBase64: null, memberPictureBase64: null };
-      const selfieBase64 = row.selfie ? Buffer.from(row.selfie).toString("base64") : null;
-      const memberPictureBase64 = row.picture ? Buffer.from(row.picture).toString("base64") : null;
-      return { selfieBase64, memberPictureBase64 };
+      if (!useEdge || !selfie?.length || !picture?.length) {
+        try {
+          const legacyRow = await queryPaymentDocumentsMemberImagesFromLegacyDb(lineId);
+          if (!selfie?.length && legacyRow?.selfie?.length) {
+            selfie = Buffer.from(legacyRow.selfie);
+          }
+          if (!picture?.length && legacyRow?.picture?.length) {
+            picture = Buffer.from(legacyRow.picture);
+          }
+        } catch {
+        }
+      }
+      return {
+        selfieBase64: selfie?.length ? selfie.toString("base64") : null,
+        memberPictureBase64: picture?.length ? picture.toString("base64") : null
+      };
+    };
+    queryLegacyPaymentDocumentsMemberSelfie = async (lineId, size) => {
+      const useEdge = await paymentDocumentsMembersReadsReady();
+      const preferXs = size !== "full";
+      if (useEdge) {
+        try {
+          const edgePayload = await queryPaymentDocumentsMemberSelfieFromEdgeDb(lineId, preferXs);
+          if (edgePayload) {
+            return edgePayload;
+          }
+        } catch {
+        }
+        try {
+          return await queryPaymentDocumentsMemberSelfieFromLegacyDb(lineId, preferXs);
+        } catch {
+          return null;
+        }
+      }
+      try {
+        return await queryPaymentDocumentsMemberSelfieFromLegacyDb(lineId, preferXs);
+      } catch {
+        return null;
+      }
+    };
+    LEGACY_SELFIE_LINE_IDS_CHUNK = 80;
+    SELFIE_META_RETRY_ATTEMPTS = 3;
+    SELFIE_META_RETRY_DELAY_MS = 400;
+    sleep = (ms) => new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+    withSelfieMetaRetries = async (label, task) => {
+      let lastError;
+      for (let attempt = 1; attempt <= SELFIE_META_RETRY_ATTEMPTS; attempt += 1) {
+        try {
+          return await task();
+        } catch (error) {
+          lastError = error;
+          if (attempt < SELFIE_META_RETRY_ATTEMPTS) {
+            console.warn(
+              `[vx-payment-documents-members] ${label} attempt ${attempt} failed; retrying\u2026`,
+              error
+            );
+            await sleep(SELFIE_META_RETRY_DELAY_MS * attempt);
+          }
+        }
+      }
+      throw lastError;
+    };
+    parseSelfieSizeValue = (declared, xsLen, fullLen) => {
+      if (declared > 0) {
+        return declared;
+      }
+      if (xsLen > 0) {
+        return xsLen;
+      }
+      if (fullLen > 0) {
+        return fullLen;
+      }
+      return 1;
+    };
+    queryEdgePaymentDocumentsMembersSelfieMetaByLineIds = async (lineIds) => {
+      const unique = [...new Set(lineIds.filter((id) => Number.isFinite(id) && id > 0))];
+      if (unique.length === 0 || !await paymentDocumentsMembersReadsReady()) {
+        return /* @__PURE__ */ new Map();
+      }
+      const { QueryTypes: QueryTypes99 } = await import("sequelize");
+      const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+      const out = /* @__PURE__ */ new Map();
+      for (let offset = 0; offset < unique.length; offset += LEGACY_SELFIE_LINE_IDS_CHUNK) {
+        const chunk2 = unique.slice(offset, offset + LEGACY_SELFIE_LINE_IDS_CHUNK);
+        const rows = await getControlPlaneSequelize2().query(
+          `
+      SELECT
+        pm.id,
+        pm.nb_selfi_file_size,
+        pm.nb_selfi_file_name
+      FROM dbo.vx_payment_documents_members pm WITH (NOLOCK)
+      WHERE pm.id IN (:ids)
+        AND (
+          ISNULL(pm.nb_selfi_file_size, 0) > 0
+          OR NULLIF(LTRIM(RTRIM(pm.nb_selfi_file_name)), N'') IS NOT NULL
+        )
+      `,
+          { replacements: { ids: chunk2 }, type: QueryTypes99.SELECT }
+        );
+        for (const row of rows) {
+          const id = Number(row.id);
+          const declared = Number(row.nb_selfi_file_size ?? 0);
+          const hasName = String(row.nb_selfi_file_name ?? "").trim().length > 0;
+          const size = declared > 0 ? declared : hasName ? 1 : 0;
+          if (size > 0) {
+            out.set(id, size);
+          }
+        }
+      }
+      return out;
+    };
+    trimLegacyMetaText = (value) => {
+      const text2 = String(value ?? "").trim();
+      return text2 || null;
+    };
+    queryLegacyPaymentDocumentsMembersLineMetaByLineIds = async (lineIds) => {
+      const unique = [...new Set(lineIds.filter((id) => Number.isFinite(id) && id > 0))];
+      if (unique.length === 0) {
+        return /* @__PURE__ */ new Map();
+      }
+      const out = /* @__PURE__ */ new Map();
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        for (let offset = 0; offset < unique.length; offset += LEGACY_SELFIE_LINE_IDS_CHUNK) {
+          const chunk2 = unique.slice(offset, offset + LEGACY_SELFIE_LINE_IDS_CHUNK);
+          const request = pool.request();
+          const params = [];
+          chunk2.forEach((id, index) => {
+            const key = `id${index}`;
+            request.input(key, id);
+            params.push(`@${key}`);
+          });
+          const result = await request.query(`
+        SELECT
+          pm.Id AS id,
+          pm.PayOk AS pay_ok,
+          CONVERT(VARCHAR(32), pm.PayOkOn, 126) AS pay_ok_on,
+          CONVERT(VARCHAR(32), pm.NbDeviceDateTime, 126) AS nb_device_datetime,
+          pm.NbDeviceOs AS nb_device_os,
+          pm.NbDeviceId AS nb_device_id,
+          CAST(pm.NbLocationLat AS VARCHAR(32)) AS nb_location_lat,
+          CAST(pm.NbLocationLon AS VARCHAR(32)) AS nb_location_lon,
+          ISNULL(pm.NbSelfi_FileSize, 0) AS nb_selfi_file_size,
+          DATALENGTH(pm.NbSelfi_FileBody_xs) AS xs_len,
+          DATALENGTH(pm.NbSelfi_FileBody) AS full_len,
+          m.UserName AS username
+        FROM dbo.VX_PaymentDocuments_Members pm WITH (NOLOCK)
+        LEFT JOIN dbo.VX_Members m WITH (NOLOCK) ON m.Id = pm.MemberId
+        WHERE pm.Id IN (${params.join(",")})
+      `);
+          for (const row of result.recordset) {
+            const id = Number(row.id);
+            const declared = Number(row.nb_selfi_file_size ?? 0);
+            const xsLen = Number(row.xs_len ?? 0);
+            const fullLen = Number(row.full_len ?? 0);
+            const selfieSize = parseSelfieSizeValue(declared, xsLen, fullLen);
+            out.set(id, {
+              pay_ok: row.pay_ok ?? null,
+              pay_ok_on: trimLegacyMetaText(row.pay_ok_on),
+              nb_device_datetime: trimLegacyMetaText(row.nb_device_datetime),
+              nb_device_os: trimLegacyMetaText(row.nb_device_os),
+              nb_device_id: trimLegacyMetaText(row.nb_device_id),
+              nb_location_lat: trimLegacyMetaText(row.nb_location_lat),
+              nb_location_lon: trimLegacyMetaText(row.nb_location_lon),
+              selfie_size: selfieSize > 0 ? selfieSize : 0,
+              username: trimLegacyMetaText(row.username)
+            });
+          }
+        }
+      } finally {
+        await pool.close();
+      }
+      return out;
+    };
+    queryLegacyPaymentDocumentsMembersSelfieMetaByLineIds = async (lineIds) => {
+      const lineMeta = await queryLegacyPaymentDocumentsMembersLineMetaByLineIds(lineIds);
+      const out = /* @__PURE__ */ new Map();
+      for (const [id, meta] of lineMeta) {
+        if (meta.selfie_size > 0) {
+          out.set(id, meta.selfie_size);
+        }
+      }
+      return out;
+    };
+    rawRowHasSelfieMeta = (row) => {
+      const declaredSize = Number(row.nb_selfi_file_size ?? row.nbSelfiFileSize ?? 0);
+      const hasFlag = row.has_selfie_file === true || row.has_selfie_file === 1 || row.hasSelfieFile === true || row.hasSelfieFile === 1;
+      return hasFlag || declaredSize > 0;
+    };
+    rawRowText = (row, ...keys) => {
+      for (const key of keys) {
+        const text2 = String(row[key] ?? "").trim();
+        if (text2) {
+          return text2;
+        }
+      }
+      return "";
+    };
+    rawRowHasReceiptMeta = (row) => Boolean(
+      rawRowText(row, "pay_ok_on", "payOkOn") || rawRowText(row, "nb_device_datetime", "nbDeviceDatetime") || rawRowText(row, "nb_device_os", "nbDeviceOs") || rawRowText(row, "nb_device_id", "nbDeviceId") || rawRowText(row, "nb_location_lat", "nbLocationLat") || rawRowText(row, "nb_location_lon", "nbLocationLon")
+    );
+    mergeTextOntoRawRow = (row, snakeKey, camelKey, value) => {
+      const next = trimLegacyMetaText(value);
+      if (!next || rawRowText(row, snakeKey, camelKey)) {
+        return;
+      }
+      row[snakeKey] = next;
+      row[camelKey] = next;
+    };
+    applyLegacyLineMetaToRawRows = (rawRows, legacyMeta, edgeSelfieSizes) => {
+      for (const row of rawRows) {
+        const id = Number(String(row.id ?? "").trim());
+        const legacy = legacyMeta.get(id);
+        const edgeSelfie = edgeSelfieSizes.get(id);
+        if (edgeSelfie != null && edgeSelfie > 0 && !rawRowHasSelfieMeta(row)) {
+          row.has_selfie_file = 1;
+          row.hasSelfieFile = true;
+          row.nb_selfi_file_size = edgeSelfie;
+          row.nbSelfiFileSize = edgeSelfie;
+        }
+        if (!legacy) {
+          continue;
+        }
+        if (legacy.selfie_size > 0 && !rawRowHasSelfieMeta(row)) {
+          row.has_selfie_file = 1;
+          row.hasSelfieFile = true;
+          row.nb_selfi_file_size = legacy.selfie_size;
+          row.nbSelfiFileSize = legacy.selfie_size;
+        }
+        if (legacy.pay_ok === true || legacy.pay_ok === 1) {
+          if (row.pay_ok == null && row.payOk == null) {
+            row.pay_ok = 1;
+            row.payOk = true;
+          }
+        }
+        mergeTextOntoRawRow(row, "pay_ok_on", "payOkOn", legacy.pay_ok_on);
+        mergeTextOntoRawRow(row, "nb_device_datetime", "nbDeviceDatetime", legacy.nb_device_datetime);
+        mergeTextOntoRawRow(row, "nb_device_os", "nbDeviceOs", legacy.nb_device_os);
+        mergeTextOntoRawRow(row, "nb_device_id", "nbDeviceId", legacy.nb_device_id);
+        mergeTextOntoRawRow(row, "nb_location_lat", "nbLocationLat", legacy.nb_location_lat);
+        mergeTextOntoRawRow(row, "nb_location_lon", "nbLocationLon", legacy.nb_location_lon);
+        if (legacy.username && !rawRowText(row, "username")) {
+          row.username = legacy.username;
+        }
+      }
+    };
+    resolvePaymentDocumentsMembersSelfieMetaByLineIds = async (lineIds) => {
+      const lineMeta = await resolvePaymentDocumentsMembersLineMetaByLineIds(lineIds);
+      const out = /* @__PURE__ */ new Map();
+      for (const [id, meta] of lineMeta) {
+        if (meta.selfie_size > 0) {
+          out.set(id, meta.selfie_size);
+        }
+      }
+      return out;
+    };
+    resolvePaymentDocumentsMembersLineMetaByLineIds = async (lineIds) => {
+      const unique = [...new Set(lineIds.filter((id) => Number.isFinite(id) && id > 0))];
+      if (unique.length === 0) {
+        return /* @__PURE__ */ new Map();
+      }
+      const merged = /* @__PURE__ */ new Map();
+      let edgeSelfie = /* @__PURE__ */ new Map();
+      try {
+        edgeSelfie = await queryEdgePaymentDocumentsMembersSelfieMetaByLineIds(unique);
+      } catch (error) {
+        console.warn("[vx-payment-documents-members] edge selfie meta batch failed:", error);
+      }
+      let legacyMeta = /* @__PURE__ */ new Map();
+      try {
+        legacyMeta = await withSelfieMetaRetries(
+          "legacy line meta batch",
+          () => queryLegacyPaymentDocumentsMembersLineMetaByLineIds(unique)
+        );
+      } catch (error) {
+        console.error("[vx-payment-documents-members] legacy line meta batch failed:", error);
+      }
+      for (const id of unique) {
+        const legacy = legacyMeta.get(id);
+        const edgeSize = edgeSelfie.get(id) ?? 0;
+        if (!legacy && edgeSize <= 0) {
+          continue;
+        }
+        const legacySize = legacy?.selfie_size ?? 0;
+        merged.set(id, {
+          pay_ok: legacy?.pay_ok ?? null,
+          pay_ok_on: legacy?.pay_ok_on ?? null,
+          nb_device_datetime: legacy?.nb_device_datetime ?? null,
+          nb_device_os: legacy?.nb_device_os ?? null,
+          nb_device_id: legacy?.nb_device_id ?? null,
+          nb_location_lat: legacy?.nb_location_lat ?? null,
+          nb_location_lon: legacy?.nb_location_lon ?? null,
+          selfie_size: Math.max(legacySize, edgeSize),
+          username: legacy?.username ?? null
+        });
+      }
+      return merged;
+    };
+    patchRawPaymentDocumentsMembersRowsWithLegacySelfieMeta = async (rawRows) => {
+      const legacyIds = [];
+      for (const row of rawRows) {
+        const id = Number(String(row.id ?? "").trim());
+        if (!Number.isFinite(id) || id <= 0) {
+          continue;
+        }
+        if (!rawRowHasSelfieMeta(row) || !rawRowHasReceiptMeta(row)) {
+          legacyIds.push(id);
+        }
+      }
+      if (legacyIds.length === 0) {
+        return;
+      }
+      let edgeSelfie = /* @__PURE__ */ new Map();
+      try {
+        edgeSelfie = await queryEdgePaymentDocumentsMembersSelfieMetaByLineIds(legacyIds);
+      } catch (error) {
+        console.warn("[vx-payment-documents-members] edge selfie meta during list patch failed:", error);
+      }
+      let legacyMeta = /* @__PURE__ */ new Map();
+      try {
+        legacyMeta = await withSelfieMetaRetries(
+          "legacy line meta list patch",
+          () => queryLegacyPaymentDocumentsMembersLineMetaByLineIds(legacyIds)
+        );
+      } catch (error) {
+        console.error("[vx-payment-documents-members] legacy line meta list patch failed:", error);
+      }
+      applyLegacyLineMetaToRawRows(rawRows, legacyMeta, edgeSelfie);
     };
   }
 });
 
 // src/server/domain/vx/vxMasoolinPerformanceLegacyRead.service.ts
-var readMemberIdByUsername, resolveLegacyMasoolinPerformanceProcContext, buildLegacyMasoolinPerformanceProcParams, execLegacyMasoolinPerformance, queryLegacyMasoolinPerformance, queryLegacyMasoolinPerformanceExport;
+var resolveHwyMasoolinPerformanceActorLogin, readMasoolinActorMemberId, resolveLegacyMasoolinPerformanceProcContext, buildLegacyMasoolinPerformanceProcParams, execLegacyMasoolinPerformance, queryLegacyMasoolinPerformance, queryLegacyMasoolinPerformanceExport;
 var init_vxMasoolinPerformanceLegacyRead_service = __esm({
   "src/server/domain/vx/vxMasoolinPerformanceLegacyRead.service.ts"() {
     init_vxMasoolinPerformanceLegacyAccess();
+    init_vxLegacyPlatformAdminActor();
     init_vxExecDbObject();
     init_vxFinanceDbWrite_service();
-    readMemberIdByUsername = async (username) => {
-      const trimmed = username.trim();
-      if (!trimmed) return 0;
+    resolveHwyMasoolinPerformanceActorLogin = async (authEmail) => {
+      const email = String(authEmail ?? "").trim();
+      if (!email) {
+        return null;
+      }
+      if (isHwyLegacyPlatformAdminActorKey(email)) {
+        return email;
+      }
+      try {
+        const { QueryTypes: QueryTypes99 } = await import("sequelize");
+        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+        const rows = await getControlPlaneSequelize2().query(
+          `
+      SELECT TOP 1 username
+      FROM dbo.base_users WITH (NOLOCK)
+      WHERE LOWER(email) = LOWER(:email) OR LOWER(username) = LOWER(:email)
+      ORDER BY id ASC
+      `,
+          { replacements: { email }, type: QueryTypes99.SELECT }
+        );
+        const username = String(rows[0]?.username ?? "").trim();
+        if (username) {
+          return username;
+        }
+      } catch {
+      }
+      return email;
+    };
+    readMasoolinActorMemberId = async (actorLogin) => {
+      const trimmed = actorLogin.trim();
+      if (!trimmed || isHwyLegacyPlatformAdminActorKey(trimmed)) {
+        return 0;
+      }
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
         const byUserName = await pool.request().input("username", trimmed).query(
           `SELECT TOP 1 Id AS memberId FROM dbo.VX_Members WITH (NOLOCK) WHERE UserName = @username ORDER BY Id`
         );
-        const direct = Number(byUserName.recordset[0]?.memberId ?? 0);
-        if (direct > 0) return direct;
+        const direct = Number(
+          byUserName.recordset[0]?.memberId ?? 0
+        );
+        if (direct > 0) {
+          return direct;
+        }
         const byUserId = await pool.request().input("username", trimmed).query(`
       SELECT TOP 1 M.Id AS memberId
       FROM dbo.vw_vx_platform_users U WITH (NOLOCK)
@@ -268245,13 +269464,15 @@ var init_vxMasoolinPerformanceLegacyRead_service = __esm({
       ORDER BY M.Id
     `);
         return Number(byUserId.recordset[0]?.memberId ?? 0);
+      } catch {
+        return 0;
       } finally {
         await pool.close();
       }
     };
     resolveLegacyMasoolinPerformanceProcContext = async (actorUsername2, roleNames) => {
-      const isAdmin4 = roleNames.includes("ADMIN");
-      const userProfileId = actorUsername2 ? await readMemberIdByUsername(actorUsername2) : 0;
+      const isAdmin4 = resolveHwyMasoolinPerformanceSpIsAdmin(roleNames, actorUsername2);
+      const userProfileId = actorUsername2 ? await readMasoolinActorMemberId(actorUsername2) : 0;
       return { userProfileId, isAdmin: isAdmin4 };
     };
     buildLegacyMasoolinPerformanceProcParams = async (input, actorUsername2, roleNames) => {
@@ -268273,7 +269494,8 @@ var init_vxMasoolinPerformanceLegacyRead_service = __esm({
       if (await masoolinObjectsReady()) {
         return execHwyProcedure(
           "vx_masoolin_performance_list",
-          buildHwyMasoolinPerformanceExecReplacements(procParams)
+          buildHwyMasoolinPerformanceExecReplacements(procParams),
+          { requestTimeoutMs: 18e4 }
         );
       }
       return execLegacyMasoolinPerformance(formatHwyMasoolinPerformanceProcSql(procParams));
@@ -268288,15 +269510,16 @@ var init_vxMasoolinPerformanceLegacyRead_service = __esm({
 });
 
 // src/server/domain/vx/vxMasoolinPerformance.service.ts
-var trim30, readRow, readBool2, readNumber2, mapRow17, finalizeResult, listHwyMasoolinPerformance, exportHwyMasoolinPerformance, setHwyMasoolinChiefMasool, loadHwyMasoolinPerformanceFilterOptions;
+var trim31, readRow, readBool2, readNumber2, mapRow17, finalizeResult, listHwyMasoolinPerformance, exportHwyMasoolinPerformance, setHwyMasoolinChiefMasool, MASOOLIN_ACTIVITY_LEVEL_PARENT_ID, loadHwyMasoolinPerformanceFilterOptions;
 var init_vxMasoolinPerformance_service = __esm({
   "src/server/domain/vx/vxMasoolinPerformance.service.ts"() {
     init_vxPaymentDocumentsLegacyRead_service();
     init_vxPaymentDocumentsMembersLegacyRead_service();
     init_vxMasoolinPerformanceAccess_service();
     init_vxFinanceDbWrite_service();
+    init_ensureHwyDbObjects();
     init_vxMasoolinPerformanceLegacyRead_service();
-    trim30 = (value) => String(value ?? "").trim();
+    trim31 = (value) => String(value ?? "").trim();
     readRow = (row, keys) => {
       for (const key of keys) {
         if (key in row) return row[key];
@@ -268316,44 +269539,45 @@ var init_vxMasoolinPerformance_service = __esm({
       return Number.isFinite(numeric) ? numeric : null;
     };
     mapRow17 = (row) => {
-      const firstName = trim30(readRow(row, ["first_name", "firstName", "FirstName"]) ?? "");
-      const fatherName = trim30(readRow(row, ["father_name", "fatherName", "FatherName"]) ?? "");
-      const grandFatherName = trim30(readRow(row, ["grand_father_name", "grandFatherName", "GrandFatherName"]) ?? "");
-      const lastName = trim30(readRow(row, ["last_name", "lastName", "LastName"]) ?? "");
-      const fullNameLegacy = trim30(readRow(row, ["full_name", "fullName", "FullName"]) ?? "");
+      const firstName = trim31(readRow(row, ["first_name", "firstName", "FirstName"]) ?? "");
+      const fatherName = trim31(readRow(row, ["father_name", "fatherName", "FatherName"]) ?? "");
+      const grandFatherName = trim31(readRow(row, ["grand_father_name", "grandFatherName", "GrandFatherName"]) ?? "");
+      const lastName = trim31(readRow(row, ["last_name", "lastName", "LastName"]) ?? "");
+      const fullNameLegacy = trim31(readRow(row, ["full_name", "fullName", "FullName"]) ?? "");
       return {
-        memberId: trim30(readRow(row, ["member_id", "memberId", "MemberId"]) ?? "") || null,
-        userName: trim30(readRow(row, ["user_name", "userName", "UserName"]) ?? "") || null,
-        genderId: trim30(readRow(row, ["gender_id", "genderId", "GenderId"]) ?? "") || null,
+        memberId: trim31(readRow(row, ["member_id", "memberId", "MemberId"]) ?? "") || null,
+        userName: trim31(readRow(row, ["user_name", "userName", "UserName"]) ?? "") || null,
+        genderId: trim31(readRow(row, ["gender_id", "genderId", "GenderId"]) ?? "") || null,
         firstName: firstName || null,
         fatherName: fatherName || null,
         grandFatherName: grandFatherName || null,
         lastName: lastName || null,
-        roleName: trim30(readRow(row, ["role_name", "roleName", "RoleName"]) ?? "") || null,
-        phone1: trim30(readRow(row, ["phone1", "Phone1"]) ?? "") || null,
-        areaLimitProvince: trim30(readRow(row, ["area_limit_province", "areaLimitProvince", "AreaLimitProvince"]) ?? "") || null,
-        areaLimitCircle: trim30(readRow(row, ["area_limit_circle", "areaLimitCircle", "AreaLimitCircle"]) ?? "") || null,
-        areaLimitTamvin: trim30(readRow(row, ["area_limit_tamvin", "areaLimitTamvin", "AreaLimitTamvin"]) ?? "") || null,
-        areaLimitCenterName: trim30(readRow(row, ["area_limit_center_name", "areaLimitCenterName", "AreaLimitCenterName"]) ?? "") || null,
+        roleId: trim31(readRow(row, ["role_id", "roleId", "RoleId"]) ?? "") || null,
+        roleName: trim31(readRow(row, ["role_name", "roleName", "RoleName"]) ?? "") || null,
+        phone1: trim31(readRow(row, ["phone1", "Phone1"]) ?? "") || null,
+        areaLimitProvince: trim31(readRow(row, ["area_limit_province", "areaLimitProvince", "AreaLimitProvince"]) ?? "") || null,
+        areaLimitCircle: trim31(readRow(row, ["area_limit_circle", "areaLimitCircle", "AreaLimitCircle"]) ?? "") || null,
+        areaLimitTamvin: trim31(readRow(row, ["area_limit_tamvin", "areaLimitTamvin", "AreaLimitTamvin"]) ?? "") || null,
+        areaLimitCenterName: trim31(readRow(row, ["area_limit_center_name", "areaLimitCenterName", "AreaLimitCenterName"]) ?? "") || null,
         daysInRole: readNumber2(readRow(row, ["days_in_role", "daysInRole", "DaysInRole"])),
         chiefMasool: readBool2(readRow(row, ["chief_masool", "chiefMasool", "ChiefMasool", "payable", "Payable", "main_masool", "mainMasool", "MainMasool"])),
         sameRogheCount: readNumber2(readRow(row, ["same_roghe_count", "sameRogheCount", "SameRogheCount"])),
         hasRemoveRequest: readBool2(readRow(row, ["has_remove_request", "hasRemoveRequest", "HasRemoveRequest"])),
         scStarsSum: readNumber2(readRow(row, ["sc_stars_sum", "scStarsSum", "SC_StarsSum"])),
-        bicLevelIdTitle: trim30(readRow(row, ["bic_level_id_title", "bicLevelIdTitle", "BICLevelId_Title"]) ?? "") || null,
+        bicLevelIdTitle: trim31(readRow(row, ["bic_level_id_title", "bicLevelIdTitle", "BICLevelId_Title"]) ?? "") || null,
         s1StarsSum: readNumber2(readRow(row, ["s1_stars_sum", "s1StarsSum", "S1_StarsSum"])),
-        bi1LevelIdTitle: trim30(readRow(row, ["bi1_level_id_title", "bi1LevelIdTitle", "BI1LevelId_Title"]) ?? "") || null,
+        bi1LevelIdTitle: trim31(readRow(row, ["bi1_level_id_title", "bi1LevelIdTitle", "BI1LevelId_Title"]) ?? "") || null,
         pm1PayAmount: readNumber2(readRow(row, ["pm1_pay_amount", "pm1PayAmount", "PM1_PayAmount"])),
         s2StarsSum: readNumber2(readRow(row, ["s2_stars_sum", "s2StarsSum", "S2_StarsSum"])),
-        bi2LevelIdTitle: trim30(readRow(row, ["bi2_level_id_title", "bi2LevelIdTitle", "BI2LevelId_Title"]) ?? "") || null,
+        bi2LevelIdTitle: trim31(readRow(row, ["bi2_level_id_title", "bi2LevelIdTitle", "BI2LevelId_Title"]) ?? "") || null,
         pm2PayAmount: readNumber2(readRow(row, ["pm2_pay_amount", "pm2PayAmount", "PM2_PayAmount"])),
         s3StarsSum: readNumber2(readRow(row, ["s3_stars_sum", "s3StarsSum", "S3_StarsSum"])),
-        bi3LevelIdTitle: trim30(readRow(row, ["bi3_level_id_title", "bi3LevelIdTitle", "BI3LevelId_Title"]) ?? "") || null,
+        bi3LevelIdTitle: trim31(readRow(row, ["bi3_level_id_title", "bi3LevelIdTitle", "BI3LevelId_Title"]) ?? "") || null,
         pm3PayAmount: readNumber2(readRow(row, ["pm3_pay_amount", "pm3PayAmount", "PM3_PayAmount"])),
-        roles: trim30(readRow(row, ["roles", "Roles"]) ?? "") || null,
-        orgs: trim30(readRow(row, ["orgs", "Orgs"]) ?? "") || null,
-        levelTitle: trim30(readRow(row, ["level_title", "levelTitle", "LevelTitle"]) ?? "") || null,
-        gender: trim30(readRow(row, ["gender", "Gender"]) ?? "") || null,
+        roles: trim31(readRow(row, ["roles", "Roles"]) ?? "") || null,
+        orgs: trim31(readRow(row, ["orgs", "Orgs"]) ?? "") || null,
+        levelTitle: trim31(readRow(row, ["level_title", "levelTitle", "LevelTitle"]) ?? "") || null,
+        gender: trim31(readRow(row, ["gender", "Gender"]) ?? "") || null,
         fullName: fullNameLegacy || [firstName, fatherName, grandFatherName, lastName].filter(Boolean).join(" ") || null
       };
     };
@@ -268363,11 +269587,13 @@ var init_vxMasoolinPerformance_service = __esm({
     };
     listHwyMasoolinPerformance = async (input, roleNames, actorUsername2) => {
       await assertHwyMasoolinPerformanceAccess(roleNames);
+      await ensureHwyMasoolinPerformanceDbPrerequisites();
       const rawRows = await queryLegacyMasoolinPerformance(input, actorUsername2, roleNames);
       return finalizeResult(rawRows);
     };
     exportHwyMasoolinPerformance = async (input, roleNames, actorUsername2, mode) => {
       await assertHwyMasoolinPerformanceAccess(roleNames);
+      await ensureHwyMasoolinPerformanceDbPrerequisites();
       const rawRows = mode === "legacy-sp" ? await queryLegacyMasoolinPerformanceExport() : await queryLegacyMasoolinPerformance(input, actorUsername2, roleNames);
       return finalizeResult(rawRows);
     };
@@ -268378,11 +269604,14 @@ var init_vxMasoolinPerformance_service = __esm({
       await assertHwyMasoolinSetChiefMasoolAccess(roleNames);
       await dbMasoolinSetAsMainPayable(memberId);
     };
+    MASOOLIN_ACTIVITY_LEVEL_PARENT_ID = 214986;
     loadHwyMasoolinPerformanceFilterOptions = async (provinceId, circleId, roleNames) => {
       await assertHwyMasoolinPerformanceAccess(roleNames);
-      const [genders, provinces] = await Promise.all([
+      await ensureHwyMasoolinPerformanceDbPrerequisites();
+      const [genders, provinces, activityLevels] = await Promise.all([
         loadLegacyHwyPaymentDocumentsGenders(),
-        loadLegacyHwyPaymentDocumentsProvinces()
+        loadLegacyHwyPaymentDocumentsProvinces(),
+        listLegacyHwyPaymentDocumentFilterBaseInfo(MASOOLIN_ACTIVITY_LEVEL_PARENT_ID)
       ]);
       const provinceNum = Number(provinceId);
       const circleNum = Number(circleId);
@@ -268392,7 +269621,8 @@ var init_vxMasoolinPerformance_service = __esm({
         genders: genders.map((row) => ({ id: String(row.id), title: row.title })),
         provinces: provinces.map((row) => ({ id: String(row.id), title: row.title })),
         circles: circles.map((row) => ({ id: String(row.id), title: row.title })),
-        tamvins: tamvins.map((row) => ({ id: String(row.id), title: row.title }))
+        tamvins: tamvins.map((row) => ({ id: String(row.id), title: row.title })),
+        activityLevels: activityLevels.map((row) => ({ id: String(row.id), title: row.title }))
       };
     };
   }
@@ -268419,15 +269649,15 @@ var init_vxMasoolinStars_service = __esm({
 });
 
 // src/server/domain/vx/vxMembersSocialScreensLegacyWrite.service.ts
-var import_mssql22, legacyFinalAcceptMembersSocialScreen, legacyFinalRejectMembersSocialScreen;
+var import_mssql23, legacyFinalAcceptMembersSocialScreen, legacyFinalRejectMembersSocialScreen, legacyFinalSwitchMembersSocialScreen, legacyOpenMembersSocialScreenForMemberEdit, legacyDeleteMembersSocialScreen, legacyUpdateMemberSocialIds;
 var init_vxMembersSocialScreensLegacyWrite_service = __esm({
   "src/server/domain/vx/vxMembersSocialScreensLegacyWrite.service.ts"() {
-    import_mssql22 = __toESM(require("mssql"), 1);
+    import_mssql23 = __toESM(require("mssql"), 1);
     legacyFinalAcceptMembersSocialScreen = async (headerId, actorUserName) => {
       const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-      const pool = await new import_mssql22.default.ConnectionPool(readLegacyConn2()).connect();
+      const pool = await new import_mssql23.default.ConnectionPool(readLegacyConn2()).connect();
       try {
-        await pool.request().input("UserName", import_mssql22.default.NVarChar, actorUserName).input("Id", import_mssql22.default.Int, headerId).query(`
+        await pool.request().input("UserName", import_mssql23.default.NVarChar, actorUserName).input("Id", import_mssql23.default.Int, headerId).query(`
         UPDATE dbo.VX_Members_SocialScreensHeaders
         SET FinalApproved = 1, FinalApprovedBy = @UserName, FinalApprovedOn = GETDATE()
         WHERE Id = @Id
@@ -268438,11 +269668,69 @@ var init_vxMembersSocialScreensLegacyWrite_service = __esm({
     };
     legacyFinalRejectMembersSocialScreen = async (headerId, actorUserName) => {
       const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
-      const pool = await new import_mssql22.default.ConnectionPool(readLegacyConn2()).connect();
+      const pool = await new import_mssql23.default.ConnectionPool(readLegacyConn2()).connect();
       try {
-        await pool.request().input("UserName", import_mssql22.default.NVarChar, actorUserName).input("Id", import_mssql22.default.Int, headerId).query(`
+        await pool.request().input("UserName", import_mssql23.default.NVarChar, actorUserName).input("Id", import_mssql23.default.Int, headerId).query(`
         UPDATE dbo.VX_Members_SocialScreensHeaders
         SET FinalApproved = 0, FinalApprovedBy = @UserName, FinalApprovedOn = GETDATE()
+        WHERE Id = @Id
+      `);
+      } finally {
+        await pool.close();
+      }
+    };
+    legacyFinalSwitchMembersSocialScreen = async (headerId, actorUserName) => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const pool = await new import_mssql23.default.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().input("UserName", import_mssql23.default.NVarChar, actorUserName).input("Id", import_mssql23.default.Int, headerId).query(`
+        UPDATE dbo.VX_Members_SocialScreensHeaders
+        SET FinalApproved = ~FinalApproved, FinalApprovedBy = @UserName, FinalApprovedOn = GETDATE()
+        WHERE Id = @Id
+      `);
+      } finally {
+        await pool.close();
+      }
+    };
+    legacyOpenMembersSocialScreenForMemberEdit = async (headerId) => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const pool = await new import_mssql23.default.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().input("Id", import_mssql23.default.Int, headerId).query(`
+      UPDATE dbo.VX_Members_SocialScreensHeaders
+      SET
+        FinalApproved = NULL,
+        FinalApprovedBy = NULL,
+        FinalApprovedOn = NULL,
+        MemberApproved = NULL,
+        MemberApprovedOn = NULL
+      WHERE Id = @Id
+    `);
+      } finally {
+        await pool.close();
+      }
+    };
+    legacyDeleteMembersSocialScreen = async (screenId) => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const pool = await new import_mssql23.default.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().input("Id", import_mssql23.default.Int, screenId).query(`DELETE FROM dbo.VX_Members_SocialScreens WHERE Id = @Id`);
+      } finally {
+        await pool.close();
+      }
+    };
+    legacyUpdateMemberSocialIds = async (input) => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const pool = await new import_mssql23.default.ConnectionPool(readLegacyConn2()).connect();
+      try {
+        await pool.request().input("Id", import_mssql23.default.Int, input.memberId).input("FacebookId", import_mssql23.default.NVarChar, input.facebookId ?? "").input("TweeterId", import_mssql23.default.NVarChar, input.tweeterId ?? "").input("TikTokId", import_mssql23.default.NVarChar, input.tikTokId ?? "").input("UserName", import_mssql23.default.NVarChar, input.actorUserName).query(`
+        UPDATE dbo.VX_Members
+        SET
+          FacebookId = @FacebookId,
+          TweeterId = @TweeterId,
+          TikTokId = @TikTokId,
+          UpdatedBy = @UserName,
+          UpdatedOn = GETDATE()
         WHERE Id = @Id
       `);
       } finally {
@@ -268453,50 +269741,117 @@ var init_vxMembersSocialScreensLegacyWrite_service = __esm({
 });
 
 // src/server/domain/vx/vxMembersSocialScreensLegacyRead.service.ts
-var readMemberIdByUsername2, resolveLegacyMembersSocialScreensReviewerMemberId, execLegacyReadQuery, queryLegacyMembersSocialScreensHistoryMonths, queryLegacyMembersSocialScreensNextPerson, queryLegacyMembersSocialScreensForMember;
+var readPositiveInt, readLegacyProfileIdByAppUserName, readMemberIdByUsername, readLegacyProfileIdByPlatformUserId, resolveLegacyMembersSocialScreensReviewerMemberId, execLegacyReadQuery, queryLegacyMembersSocialScreensHistoryMonths, queryLegacyMembersSocialScreensNextPerson, queryLegacyMembersSocialScreensForMember;
 var init_vxMembersSocialScreensLegacyRead_service = __esm({
   "src/server/domain/vx/vxMembersSocialScreensLegacyRead.service.ts"() {
     init_vxMembersSocialScreensLegacyAccess();
-    readMemberIdByUsername2 = async (username) => {
+    init_vxLegacyPlatformAdminActor();
+    readPositiveInt = (value) => {
+      const numeric = Number(value);
+      return Number.isFinite(numeric) && numeric > 0 ? Math.trunc(numeric) : 0;
+    };
+    readLegacyProfileIdByAppUserName = async (pool, username) => {
+      const trimmed = username.trim();
+      if (!trimmed) return 0;
+      const byAppUser = await pool.request().input("username", trimmed).query(`
+      SELECT TOP 1 ProfileId AS profileId
+      FROM dbo.AppEnd_Users WITH (NOLOCK)
+      WHERE UserName = @username OR LOWER(UserName) = LOWER(@username)
+      ORDER BY Id
+    `);
+      return readPositiveInt(byAppUser.recordset[0]?.profileId);
+    };
+    readMemberIdByUsername = async (username) => {
       const trimmed = username.trim();
       if (!trimmed) return 0;
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
+        const actorKeys = /* @__PURE__ */ new Set([trimmed]);
+        if (isHwyLegacyPlatformAdminActorKey(trimmed)) {
+          actorKeys.add("admin");
+          actorKeys.add("ADMIN");
+        }
+        for (const key of actorKeys) {
+          const fromProfile = await readLegacyProfileIdByAppUserName(pool, key);
+          if (fromProfile > 0) return fromProfile;
+        }
         const byUserName = await pool.request().input("username", trimmed).query(
           `SELECT TOP 1 Id AS memberId FROM dbo.VX_Members WITH (NOLOCK) WHERE UserName = @username ORDER BY Id`
         );
-        const direct = Number(byUserName.recordset[0]?.memberId ?? 0);
+        const direct = readPositiveInt(
+          byUserName.recordset[0]?.memberId
+        );
         if (direct > 0) return direct;
-        const byUserId = await pool.request().input("username", trimmed).query(`
-      SELECT TOP 1 M.Id AS memberId
-      FROM dbo.vw_vx_platform_users U WITH (NOLOCK)
-      INNER JOIN dbo.VX_Members M WITH (NOLOCK) ON M.UserId = U.Id
-      WHERE U.UserName = @username
-      ORDER BY M.Id
-    `);
-        return Number(byUserId.recordset[0]?.memberId ?? 0);
+        try {
+          const byUserId = await pool.request().input("username", trimmed).query(`
+        SELECT TOP 1 M.Id AS memberId
+        FROM dbo.vw_vx_platform_users U WITH (NOLOCK)
+        INNER JOIN dbo.VX_Members M WITH (NOLOCK) ON M.UserId = U.Id
+        WHERE U.UserName = @username
+        ORDER BY M.Id
+      `);
+          const linked = readPositiveInt(byUserId.recordset[0]?.memberId);
+          if (linked > 0) return linked;
+        } catch {
+        }
+        return 0;
       } finally {
         await pool.close();
       }
     };
-    resolveLegacyMembersSocialScreensReviewerMemberId = async (actorUsername2) => actorUsername2 ? readMemberIdByUsername2(actorUsername2) : 0;
-    execLegacyReadQuery = async (sql23) => {
+    readLegacyProfileIdByPlatformUserId = async (pool, platformUserId) => {
+      if (!Number.isFinite(platformUserId) || platformUserId <= 0) return 0;
+      const byId = await pool.request().input("userId", platformUserId).query(`
+      SELECT TOP 1 ProfileId AS profileId
+      FROM dbo.AppEnd_Users WITH (NOLOCK)
+      WHERE Id = @userId
+      ORDER BY Id
+    `);
+      return readPositiveInt(byId.recordset[0]?.profileId);
+    };
+    resolveLegacyMembersSocialScreensReviewerMemberId = async (actorUsername2, roleNames, platformUserId) => {
       const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
       const pool = await connectLegacyReadPool2();
       try {
-        const result = await pool.request().query(sql23);
+        if (platformUserId != null && Number.isFinite(Number(platformUserId))) {
+          const fromPlatformId = await readLegacyProfileIdByPlatformUserId(pool, Number(platformUserId));
+          if (fromPlatformId > 0) return fromPlatformId;
+        }
+      } finally {
+        await pool.close();
+      }
+      const normalizedLogin = actorUsername2 ? normalizeHwyLegacyPlatformAdminActorKey(actorUsername2) ?? actorUsername2 : null;
+      if (normalizedLogin) {
+        const fromActor = await readMemberIdByUsername(normalizedLogin);
+        if (fromActor > 0) return fromActor;
+      }
+      if (roleNames?.some((role) => role.toUpperCase() === "ADMIN")) {
+        const fromAdmin = await readMemberIdByUsername(VX_PLATFORM_ADMIN_USERNAME);
+        if (fromAdmin > 0) return fromAdmin;
+      }
+      return 0;
+    };
+    execLegacyReadQuery = async (sql25) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().query(sql25);
         return result.recordset ?? [];
       } finally {
         await pool.close();
       }
     };
     queryLegacyMembersSocialScreensHistoryMonths = async () => execLegacyReadQuery(VX_MEMBERS_SOCIAL_SCREENS_HISTORY_MONTHS_SQL);
-    queryLegacyMembersSocialScreensNextPerson = async (input, actorUsername2) => {
-      const reviewerMemberId = await resolveLegacyMembersSocialScreensReviewerMemberId(actorUsername2);
+    queryLegacyMembersSocialScreensNextPerson = async (input, actorUsername2, roleNames, platformUserId) => {
+      const reviewerMemberId = await resolveLegacyMembersSocialScreensReviewerMemberId(
+        actorUsername2,
+        roleNames,
+        platformUserId
+      );
       const procParams = buildHwyMembersSocialScreensNextPersonProcParams(input, reviewerMemberId);
-      const sql23 = formatHwyMembersSocialScreensNextPersonSql(procParams);
-      return execLegacyReadQuery(sql23);
+      const sql25 = formatHwyMembersSocialScreensNextPersonSql(procParams);
+      return execLegacyReadQuery(sql25);
     };
     queryLegacyMembersSocialScreensForMember = async (memberId, year, month) => {
       if (!Number.isFinite(memberId) || memberId <= 0) return [];
@@ -268520,7 +269875,7 @@ var init_vxMembersSocialScreensLegacyRead_service = __esm({
         ORDER BY S.CreatedOn ASC
       `);
         return result.recordset.map((row) => {
-          const imageBody = row.image_body;
+          const imageBody = row.imageBody ?? row.image_body;
           return {
             ...row,
             imageBase64: imageBody ? Buffer.from(imageBody).toString("base64") : null,
@@ -268535,14 +269890,41 @@ var init_vxMembersSocialScreensLegacyRead_service = __esm({
 });
 
 // src/server/domain/vx/vxMembersSocialScreens.service.ts
-var trim31, readRow2, readNumber3, readBool3, mapHistoryMonth, mapMember, mapScreenRow, loadHwyMembersSocialScreensHistoryMonths, loadHwyMembersSocialScreensWorkflow, loadHwyMembersSocialScreensFilterOptions, applyHwyMembersSocialScreensFinalAccept, applyHwyMembersSocialScreensFinalReject, parseMembersSocialScreensListType, parseMembersSocialScreensMoveDir;
+var resolveHwyMembersSocialScreensActorLogin, trim32, readRow2, readNumber3, readBool3, mapHistoryMonth, mapMember, mapScreenRow, loadHwyMembersSocialScreensHistoryMonths, loadHwyMembersSocialScreensWorkflow, loadHwyMembersSocialScreensFilterOptions, applyHwyMembersSocialScreensFinalAccept, applyHwyMembersSocialScreensFinalReject, applyHwyMembersSocialScreensFinalSwitch, applyHwyMembersSocialScreensOpenForMemberEdit, applyHwyMembersSocialScreensDeleteScreen, applyHwyMembersSocialScreensUpdateMemberSocialIds, parseMembersSocialScreensListType, parseMembersSocialScreensMoveDir;
 var init_vxMembersSocialScreens_service = __esm({
   "src/server/domain/vx/vxMembersSocialScreens.service.ts"() {
     init_vxPaymentDocumentsLegacyRead_service();
     init_vxMembersSocialScreensAccess_service();
     init_vxMembersSocialScreensLegacyWrite_service();
     init_vxMembersSocialScreensLegacyRead_service();
-    trim31 = (value) => String(value ?? "").trim();
+    init_vxLegacyPlatformAdminActor();
+    init_vxMasoolinPerformanceLegacyRead_service();
+    resolveHwyMembersSocialScreensActorLogin = async (input) => {
+      const roles = input.roles ?? [];
+      const email = String(input.email ?? "").trim();
+      let login2 = null;
+      if (email) {
+        login2 = await resolveHwyMasoolinPerformanceActorLogin(email);
+      }
+      if (!login2 && input.userId != null && Number.isFinite(Number(input.userId))) {
+        const { QueryTypes: QueryTypes99 } = await import("sequelize");
+        const { getControlPlaneSequelize: getControlPlaneSequelize2 } = await Promise.resolve().then(() => (init_controlPlaneSequelize(), controlPlaneSequelize_exports));
+        const rows = await getControlPlaneSequelize2().query(
+          `SELECT TOP 1 username FROM dbo.base_users WITH (NOLOCK) WHERE id = :id`,
+          { replacements: { id: Number(input.userId) }, type: QueryTypes99.SELECT }
+        );
+        login2 = String(rows[0]?.username ?? "").trim() || null;
+      }
+      if (!login2 && email) {
+        login2 = email;
+      }
+      const isAdmin4 = roles.some((role) => role.toUpperCase() === "ADMIN") || isHwyLegacyPlatformAdminActor({ actorUsername: login2, actorDisplayName: email });
+      if (isAdmin4) {
+        return normalizeHwyLegacyPlatformAdminActorKey(login2) ?? VX_PLATFORM_ADMIN_USERNAME;
+      }
+      return normalizeHwyLegacyPlatformAdminActorKey(login2) ?? String(login2 ?? "").trim();
+    };
+    trim32 = (value) => String(value ?? "").trim();
     readRow2 = (row, keys) => {
       for (const key of keys) {
         if (key in row) return row[key];
@@ -268568,40 +269950,50 @@ var init_vxMembersSocialScreens_service = __esm({
     mapMember = (row) => ({
       memberId: readNumber3(readRow2(row, ["member_id", "memberId", "MemberId"])),
       headerId: readNumber3(readRow2(row, ["header_id", "headerId", "HeaderId"])),
-      userName: trim31(readRow2(row, ["user_name", "userName", "UserName"]) ?? "") || null,
-      firstName: trim31(readRow2(row, ["first_name", "firstName", "FirstName"]) ?? "") || null,
-      fatherName: trim31(readRow2(row, ["father_name", "fatherName", "FatherName"]) ?? "") || null,
-      grandFatherName: trim31(readRow2(row, ["grand_father_name", "grandFatherName", "GrandFatherName"]) ?? "") || null,
-      lastName: trim31(readRow2(row, ["last_name", "lastName", "LastName"]) ?? "") || null,
-      phone1: trim31(readRow2(row, ["phone1", "Phone1"]) ?? "") || null,
-      roleNames: trim31(readRow2(row, ["role_names", "roleNames", "RoleNames"]) ?? "") || null,
-      areaLimits: trim31(readRow2(row, ["area_limits", "areaLimits", "AreaLimits"]) ?? "") || null,
+      userName: trim32(readRow2(row, ["user_name", "userName", "UserName"]) ?? "") || null,
+      firstName: trim32(readRow2(row, ["first_name", "firstName", "FirstName"]) ?? "") || null,
+      fatherName: trim32(readRow2(row, ["father_name", "fatherName", "FatherName"]) ?? "") || null,
+      grandFatherName: trim32(readRow2(row, ["grand_father_name", "grandFatherName", "GrandFatherName"]) ?? "") || null,
+      lastName: trim32(readRow2(row, ["last_name", "lastName", "LastName"]) ?? "") || null,
+      phone1: trim32(readRow2(row, ["phone1", "Phone1"]) ?? "") || null,
+      roleNames: trim32(readRow2(row, ["role_names", "roleNames", "RoleNames"]) ?? "") || null,
+      areaLimits: trim32(readRow2(row, ["area_limits", "areaLimits", "AreaLimits"]) ?? "") || null,
       totalCount: readNumber3(readRow2(row, ["total_count", "totalCount", "TotalCount"])),
       memberApprovedOn: readRow2(row, ["member_approved_on", "memberApprovedOn", "MemberApprovedOn"]) ? String(readRow2(row, ["member_approved_on", "memberApprovedOn", "MemberApprovedOn"])) : null,
-      facebookId: trim31(readRow2(row, ["facebook_id", "facebookId", "FacebookId"]) ?? "") || null,
-      tweeterId: trim31(readRow2(row, ["tweeter_id", "tweeterId", "TweeterId"]) ?? "") || null,
-      tikTokId: trim31(readRow2(row, ["tik_tok_id", "tikTokId", "TikTokId"]) ?? "") || null,
+      facebookId: trim32(readRow2(row, ["facebook_id", "facebookId", "FacebookId"]) ?? "") || null,
+      tweeterId: trim32(readRow2(row, ["tweeter_id", "tweeterId", "TweeterId"]) ?? "") || null,
+      tikTokId: trim32(readRow2(row, ["tik_tok_id", "tikTokId", "TikTokId"]) ?? "") || null,
       finalApproved: readBool3(readRow2(row, ["final_approved", "finalApproved", "FinalApproved"]))
     });
     mapScreenRow = (row) => ({
       id: Number(readRow2(row, ["id", "Id"]) ?? 0),
-      fileName: trim31(readRow2(row, ["file_name", "fileName", "FileName"]) ?? "") || null,
-      fileMime: trim31(readRow2(row, ["file_mime", "fileMime", "FileMime"]) ?? "") || null,
+      fileName: trim32(readRow2(row, ["file_name", "fileName", "FileName"]) ?? "") || null,
+      fileMime: trim32(readRow2(row, ["file_mime", "fileMime", "FileMime"]) ?? "") || null,
       createdOn: readRow2(row, ["created_on", "createdOn", "CreatedOn"]) ? String(readRow2(row, ["created_on", "createdOn", "CreatedOn"])) : null,
-      imageBase64: trim31(readRow2(row, ["image_base64", "imageBase64", "ImageBase64"]) ?? "") || null
+      imageBase64: trim32(readRow2(row, ["image_base64", "imageBase64", "ImageBase64"]) ?? "") || null
     });
     loadHwyMembersSocialScreensHistoryMonths = async (roleNames) => {
       await assertHwyMembersSocialScreensAccess(roleNames);
       const raw = await queryLegacyMembersSocialScreensHistoryMonths();
       return raw.map(mapHistoryMonth).filter((row) => row.y > 0 && row.m > 0);
     };
-    loadHwyMembersSocialScreensWorkflow = async (input, roleNames, actorUsername2) => {
+    loadHwyMembersSocialScreensWorkflow = async (input, roleNames, actorUsername2, platformUserId) => {
       await assertHwyMembersSocialScreensAccess(roleNames);
-      const [historyMonthsRaw, nextPersonRaw] = await Promise.all([
-        queryLegacyMembersSocialScreensHistoryMonths(),
-        queryLegacyMembersSocialScreensNextPerson(input, actorUsername2)
-      ]);
-      const historyMonths = historyMonthsRaw.map(mapHistoryMonth).filter((row) => row.y > 0 && row.m > 0);
+      let nextPersonRaw = await queryLegacyMembersSocialScreensNextPerson(
+        input,
+        actorUsername2,
+        roleNames,
+        platformUserId
+      );
+      if (nextPersonRaw.length === 0 && roleNames.some((role) => role.toUpperCase() === "ADMIN")) {
+        nextPersonRaw = await queryLegacyMembersSocialScreensNextPerson(
+          input,
+          VX_PLATFORM_ADMIN_USERNAME,
+          ["ADMIN"],
+          null
+        );
+      }
+      const historyMonths = [];
       const member = nextPersonRaw.length > 0 ? mapMember(nextPersonRaw[0]) : null;
       const screens = member?.memberId && input.y > 0 && input.m > 0 ? (await queryLegacyMembersSocialScreensForMember(member.memberId, input.y, input.m)).map(mapScreenRow) : [];
       return {
@@ -268624,17 +270016,47 @@ var init_vxMembersSocialScreens_service = __esm({
     };
     applyHwyMembersSocialScreensFinalAccept = async (headerId, roleNames, actorUsername2) => {
       await assertHwyMembersSocialScreensAccess(roleNames);
-      const actor = trim31(actorUsername2);
+      const actor = trim32(actorUsername2);
       if (!actor) throw new Error("Actor username is required.");
       if (!Number.isFinite(headerId) || headerId <= 0) throw new Error("headerId is required.");
       await legacyFinalAcceptMembersSocialScreen(headerId, actor);
     };
     applyHwyMembersSocialScreensFinalReject = async (headerId, roleNames, actorUsername2) => {
       await assertHwyMembersSocialScreensAccess(roleNames);
-      const actor = trim31(actorUsername2);
+      const actor = trim32(actorUsername2);
       if (!actor) throw new Error("Actor username is required.");
       if (!Number.isFinite(headerId) || headerId <= 0) throw new Error("headerId is required.");
       await legacyFinalRejectMembersSocialScreen(headerId, actor);
+    };
+    applyHwyMembersSocialScreensFinalSwitch = async (headerId, roleNames, actorUsername2) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      const actor = trim32(actorUsername2);
+      if (!actor) throw new Error("Actor username is required.");
+      if (!Number.isFinite(headerId) || headerId <= 0) throw new Error("headerId is required.");
+      await legacyFinalSwitchMembersSocialScreen(headerId, actor);
+    };
+    applyHwyMembersSocialScreensOpenForMemberEdit = async (headerId, roleNames) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      if (!Number.isFinite(headerId) || headerId <= 0) throw new Error("headerId is required.");
+      await legacyOpenMembersSocialScreenForMemberEdit(headerId);
+    };
+    applyHwyMembersSocialScreensDeleteScreen = async (screenId, roleNames) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      if (!Number.isFinite(screenId) || screenId <= 0) throw new Error("screenId is required.");
+      await legacyDeleteMembersSocialScreen(screenId);
+    };
+    applyHwyMembersSocialScreensUpdateMemberSocialIds = async (input, roleNames, actorUsername2) => {
+      await assertHwyMembersSocialScreensAccess(roleNames);
+      const actor = trim32(actorUsername2);
+      if (!actor) throw new Error("Actor username is required.");
+      if (!Number.isFinite(input.memberId) || input.memberId <= 0) throw new Error("memberId is required.");
+      await legacyUpdateMemberSocialIds({
+        memberId: input.memberId,
+        facebookId: input.facebookId,
+        tweeterId: input.tweeterId,
+        tikTokId: input.tikTokId,
+        actorUserName: actor
+      });
     };
     parseMembersSocialScreensListType = (value) => {
       const trimmed = String(value ?? "").trim();
@@ -268656,30 +270078,405 @@ var init_vxPaymentDocumentsMembersLegacyWrite_service = __esm({
   }
 });
 
+// src/domain/vx/vxMemberLegacyPicture.ts
+var buildHwyMemberLegacyPicturePath, isHwyPlatformUserAvatarXsUrl;
+var init_vxMemberLegacyPicture = __esm({
+  "src/domain/vx/vxMemberLegacyPicture.ts"() {
+    buildHwyMemberLegacyPicturePath = (memberId, size = "xs") => {
+      const id = String(memberId ?? "").trim();
+      const base = `/api/vx/members/${encodeURIComponent(id)}/legacy-picture`;
+      return size === "full" ? `${base}?size=full` : base;
+    };
+    isHwyPlatformUserAvatarXsUrl = (url) => {
+      const trimmed = String(url ?? "").trim();
+      if (!trimmed) {
+        return false;
+      }
+      return /^\/api\/users\/\d+\/avatar-xs\/?$/i.test(trimmed.split("?")[0] ?? "");
+    };
+  }
+});
+
+// src/server/domain/vx/vxMemberLegacyPicture.service.ts
+var vxMemberLegacyPicture_service_exports = {};
+__export(vxMemberLegacyPicture_service_exports, {
+  loadHwyMemberLegacyPicture: () => loadHwyMemberLegacyPicture,
+  patchMemberRowsAvatarsWithLegacyMemberPicture: () => patchMemberRowsAvatarsWithLegacyMemberPicture,
+  queryEdgeMemberIdsWithLegacyPicture: () => queryEdgeMemberIdsWithLegacyPicture,
+  queryLegacyHwyMembersWithPictureByIds: () => queryLegacyHwyMembersWithPictureByIds
+});
+var import_sequelize128, pickBuffer, queryLegacyMemberPictureFromEdge, queryLegacyMemberPictureFromLegacyDb, loadHwyMemberLegacyPicture, MEMBER_ID_CHUNK, queryEdgeMemberIdsWithLegacyPicture, queryLegacyHwyMembersWithPictureByIds, rawRowAvatarUrl, patchMemberRowsAvatarsWithLegacyMemberPicture;
+var init_vxMemberLegacyPicture_service = __esm({
+  "src/server/domain/vx/vxMemberLegacyPicture.service.ts"() {
+    import_sequelize128 = require("sequelize");
+    init_vxMemberLegacyPicture();
+    init_controlPlaneSequelize();
+    pickBuffer = (xs, full, preferXs) => {
+      const xsBuf = xs?.length ? Buffer.from(xs) : null;
+      const fullBuf = full?.length ? Buffer.from(full) : null;
+      if (preferXs) {
+        return xsBuf ?? fullBuf;
+      }
+      return fullBuf ?? xsBuf;
+    };
+    queryLegacyMemberPictureFromEdge = async (memberId) => {
+      const rows = await getControlPlaneSequelize().query(
+        `
+    SELECT
+      m.picture_file_body_xs,
+      m.picture_file_body,
+      m.picture_file_mime,
+      m.picture_file_name
+    FROM dbo.vw_vx_members_legacy_row m WITH (NOLOCK)
+    WHERE m.id = :memberId
+    `,
+        { replacements: { memberId }, type: import_sequelize128.QueryTypes.SELECT }
+      );
+      const row = rows[0];
+      if (!row) {
+        return null;
+      }
+      const xs = row.picture_file_body_xs?.length ? Buffer.from(row.picture_file_body_xs) : null;
+      const full = row.picture_file_body?.length ? Buffer.from(row.picture_file_body) : null;
+      if (!xs?.length && !full?.length) {
+        return null;
+      }
+      return {
+        xs,
+        full,
+        mime: String(row.picture_file_mime ?? "").trim() || "image/jpeg",
+        fileName: String(row.picture_file_name ?? "").trim() || "picture.jpg"
+      };
+    };
+    queryLegacyMemberPictureFromLegacyDb = async (memberId) => {
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        const result = await pool.request().input("memberId", memberId).query(`
+      SELECT
+        m.Picture_FileBody_xs AS picture_xs,
+        m.Picture_FileBody AS picture_full,
+        m.Picture_FileMime AS picture_mime,
+        m.Picture_FileName AS picture_name
+      FROM dbo.VX_Members m WITH (NOLOCK)
+      WHERE m.Id = @memberId
+    `);
+        const row = result.recordset[0];
+        if (!row) {
+          return null;
+        }
+        const xs = row.picture_xs?.length ? Buffer.from(row.picture_xs) : null;
+        const full = row.picture_full?.length ? Buffer.from(row.picture_full) : null;
+        if (!xs?.length && !full?.length) {
+          return null;
+        }
+        return {
+          xs,
+          full,
+          mime: String(row.picture_mime ?? "").trim() || "image/jpeg",
+          fileName: String(row.picture_name ?? "").trim() || "picture.jpg"
+        };
+      } finally {
+        await pool.close();
+      }
+    };
+    loadHwyMemberLegacyPicture = async (memberIdRaw, size) => {
+      const memberId = Number(String(memberIdRaw ?? "").trim());
+      if (!Number.isFinite(memberId) || memberId <= 0) {
+        return null;
+      }
+      const preferXs = size !== "full";
+      let blobRow = null;
+      try {
+        blobRow = await queryLegacyMemberPictureFromEdge(memberId);
+      } catch {
+      }
+      if (!blobRow) {
+        try {
+          blobRow = await queryLegacyMemberPictureFromLegacyDb(memberId);
+        } catch {
+          return null;
+        }
+      }
+      const buffer4 = pickBuffer(blobRow.xs, blobRow.full, preferXs);
+      if (!buffer4?.length) {
+        return null;
+      }
+      return {
+        mime: blobRow.mime,
+        fileName: blobRow.fileName,
+        buffer: buffer4
+      };
+    };
+    MEMBER_ID_CHUNK = 120;
+    queryEdgeMemberIdsWithLegacyPicture = async (memberIds) => {
+      const unique = [...new Set(memberIds.filter((id) => Number.isFinite(id) && id > 0))];
+      if (!unique.length) {
+        return /* @__PURE__ */ new Set();
+      }
+      const out = /* @__PURE__ */ new Set();
+      for (let offset = 0; offset < unique.length; offset += MEMBER_ID_CHUNK) {
+        const chunk2 = unique.slice(offset, offset + MEMBER_ID_CHUNK);
+        const rows = await getControlPlaneSequelize().query(
+          `
+      SELECT m.id, m.picture_file_size
+      FROM dbo.vw_vx_members_legacy_row m WITH (NOLOCK)
+      WHERE m.id IN (:ids)
+        AND (
+          ISNULL(m.picture_file_size, 0) > 0
+          OR DATALENGTH(COALESCE(m.picture_file_body_xs, m.picture_file_body)) > 0
+        )
+      `,
+          { replacements: { ids: chunk2 }, type: import_sequelize128.QueryTypes.SELECT }
+        );
+        for (const row of rows) {
+          out.add(Number(row.id));
+        }
+      }
+      return out;
+    };
+    queryLegacyHwyMembersWithPictureByIds = async (memberIds) => {
+      const unique = [...new Set(memberIds.filter((id) => Number.isFinite(id) && id > 0))];
+      if (!unique.length) {
+        return /* @__PURE__ */ new Set();
+      }
+      const out = /* @__PURE__ */ new Set();
+      const { connectLegacyReadPool: connectLegacyReadPool2 } = await Promise.resolve().then(() => (init_legacyHwyRoleAuth(), legacyHwyRoleAuth_exports));
+      const pool = await connectLegacyReadPool2();
+      try {
+        for (let offset = 0; offset < unique.length; offset += MEMBER_ID_CHUNK) {
+          const chunk2 = unique.slice(offset, offset + MEMBER_ID_CHUNK);
+          const request = pool.request();
+          const params = [];
+          chunk2.forEach((id, index) => {
+            const key = `id${index}`;
+            request.input(key, id);
+            params.push(`@${key}`);
+          });
+          const result = await request.query(`
+        SELECT m.Id AS id
+        FROM dbo.VX_Members m WITH (NOLOCK)
+        WHERE m.Id IN (${params.join(",")})
+          AND (
+            DATALENGTH(m.Picture_FileBody_xs) > 0
+            OR DATALENGTH(m.Picture_FileBody) > 0
+          )
+      `);
+          for (const row of result.recordset) {
+            out.add(Number(row.id));
+          }
+        }
+      } finally {
+        await pool.close();
+      }
+      return out;
+    };
+    rawRowAvatarUrl = (row) => String(row.avatar_url ?? row.avatarUrl ?? "").trim();
+    patchMemberRowsAvatarsWithLegacyMemberPicture = async (rawRows) => {
+      if (!rawRows.length) {
+        return;
+      }
+      const work = [];
+      for (const row of rawRows) {
+        const memberId = Number(String(row.member_id ?? row.memberId ?? row.id ?? "").trim());
+        if (!Number.isFinite(memberId) || memberId <= 0) {
+          continue;
+        }
+        work.push({ row, memberId });
+      }
+      if (!work.length) {
+        return;
+      }
+      const memberIds = work.map((entry) => entry.memberId);
+      const edgeWithPicture = await queryEdgeMemberIdsWithLegacyPicture(memberIds).catch(() => /* @__PURE__ */ new Set());
+      const legacyWithPicture = edgeWithPicture.size < memberIds.length ? await queryLegacyHwyMembersWithPictureByIds(
+        memberIds.filter((id) => !edgeWithPicture.has(id))
+      ).catch(() => /* @__PURE__ */ new Set()) : /* @__PURE__ */ new Set();
+      const hasPicture = (memberId) => edgeWithPicture.has(memberId) || legacyWithPicture.has(memberId);
+      for (const { row, memberId } of work) {
+        if (!hasPicture(memberId)) {
+          continue;
+        }
+        const existing = rawRowAvatarUrl(row);
+        if (existing && !isHwyPlatformUserAvatarXsUrl(existing)) {
+          continue;
+        }
+        const url = buildHwyMemberLegacyPicturePath(memberId);
+        row.avatar_url = url;
+        row.avatarUrl = url;
+      }
+    };
+  }
+});
+
 // src/server/domain/vx/vxPaymentDocumentsMembers.service.ts
-var trim32, mapRow18, listHwyPaymentDocumentsMembers, loadHwyPaymentDocumentsMembersFilterOptions, loadHwyPaymentDocumentsMembersImages, switchHwyPaymentDocumentsMemberPayability, updateHwyPaymentDocumentsMemberPayAmount;
+var vxPaymentDocumentsMembers_service_exports = {};
+__export(vxPaymentDocumentsMembers_service_exports, {
+  listHwyPaymentDocumentsMembers: () => listHwyPaymentDocumentsMembers,
+  loadHwyPaymentDocumentsMembersFilterOptions: () => loadHwyPaymentDocumentsMembersFilterOptions,
+  loadHwyPaymentDocumentsMembersImages: () => loadHwyPaymentDocumentsMembersImages,
+  loadHwyPaymentDocumentsMembersSelfie: () => loadHwyPaymentDocumentsMembersSelfie,
+  loadHwyPaymentDocumentsMembersSelfieFlags: () => loadHwyPaymentDocumentsMembersSelfieFlags,
+  switchHwyPaymentDocumentsMemberPayability: () => switchHwyPaymentDocumentsMemberPayability,
+  updateHwyPaymentDocumentsMemberPayAmount: () => updateHwyPaymentDocumentsMemberPayAmount
+});
+var trim33, pickText, mapRow18, enrichRawPaymentDocumentsMembersListFace, listHwyPaymentDocumentsMembers, loadHwyPaymentDocumentsMembersFilterOptions, loadHwyPaymentDocumentsMembersSelfieFlags, loadHwyPaymentDocumentsMembersSelfie, loadHwyPaymentDocumentsMembersImages, switchHwyPaymentDocumentsMemberPayability, updateHwyPaymentDocumentsMemberPayAmount;
 var init_vxPaymentDocumentsMembers_service = __esm({
   "src/server/domain/vx/vxPaymentDocumentsMembers.service.ts"() {
+    init_vxMembershipUsername();
     init_vxPaymentDocumentsMembersLegacyAccess();
     init_vxPaymentDocumentsMembersAccess_service();
     init_vxPaymentDocumentsMembersLegacyRead_service();
     init_vxPaymentDocumentsMembersLegacyWrite_service();
-    trim32 = (v) => String(v ?? "").trim();
-    mapRow18 = (row) => ({
-      id: trim32(row.id),
-      username: row.username ? trim32(row.username) : null,
-      firstName: row.first_name ? trim32(row.first_name) : null,
-      fatherName: row.father_name ? trim32(row.father_name) : null,
-      grandFatherName: row.grand_father_name ? trim32(row.grand_father_name) : null,
-      lastName: row.last_name ? trim32(row.last_name) : null,
-      roleName: row.role_name ? trim32(row.role_name) : null,
-      docYear: row.doc_year != null ? Number(row.doc_year) : null,
-      docMonth: row.doc_month != null ? Number(row.doc_month) : null,
-      payAmount: row.pay_amount != null ? Number(row.pay_amount) : null,
-      payableReasonTitle: row.payable_reason_title ? trim32(row.payable_reason_title) : null,
-      payOk: row.pay_ok === true || row.pay_ok === 1,
-      payable: row.payable === true || row.payable === 1
-    });
+    init_vxMemberDirectoryListFaceCaption();
+    init_vxMemberDirectoryListImageFixThumbs();
+    init_vxMemberLegacyPicture_service();
+    trim33 = (v) => String(v ?? "").trim();
+    pickText = (row, ...keys) => {
+      for (const key of keys) {
+        const value = row[key];
+        if (value == null || value === "") continue;
+        const text2 = trim33(value);
+        if (text2) return text2;
+      }
+      return null;
+    };
+    mapRow18 = (row) => {
+      const memberId = pickText(row, "member_id", "memberId");
+      const usernameRaw = pickText(row, "username");
+      const username = usernameRaw ? resolveHwyAllocatedMembershipUsername(usernameRaw, memberId) : null;
+      const trackingRaw = pickText(row, "tracking_code", "trackingCode");
+      const trackingCode = trackingRaw && memberId && trackingRaw === memberId ? null : trackingRaw;
+      const selfieSizeBytes = row.nb_selfi_file_size != null ? Number(row.nb_selfi_file_size) : row.nbSelfiFileSize != null ? Number(row.nbSelfiFileSize) : null;
+      const hasSelfieFile = row.has_selfie_file === true || row.has_selfie_file === 1 || row.hasSelfieFile === true || row.hasSelfieFile === 1 || (selfieSizeBytes ?? 0) > 0;
+      return {
+        id: trim33(row.id),
+        memberId,
+        username,
+        firstName: pickText(row, "first_name", "firstName"),
+        fatherName: pickText(row, "father_name", "fatherName"),
+        grandFatherName: pickText(row, "grandfather_name", "grand_father_name", "grandFatherName"),
+        lastName: pickText(row, "family_name", "last_name", "lastName"),
+        genderId: pickText(row, "gender_id", "genderId"),
+        birthYear: pickText(row, "birth_year", "birthYear"),
+        membershipOn: pickText(row, "membership_on", "membershipOn"),
+        trackingCode,
+        avatarUrl: pickText(row, "avatar_url", "avatarUrl"),
+        phone: pickText(row, "phone1", "phone"),
+        roleId: pickText(row, "role_id", "roleId"),
+        roleName: pickText(row, "role_name", "roleName"),
+        roleTitle: pickText(row, "role_title", "roleTitle"),
+        documentId: pickText(row, "document_id", "documentId"),
+        docYear: row.doc_year != null ? Number(row.doc_year) : row.docYear != null ? Number(row.docYear) : null,
+        docMonth: row.doc_month != null ? Number(row.doc_month) : row.docMonth != null ? Number(row.docMonth) : null,
+        payAmount: row.pay_amount != null ? Number(row.pay_amount) : row.payAmount != null ? Number(row.payAmount) : null,
+        levelTitle: pickText(row, "level_title", "levelTitle"),
+        payableReasonTitle: pickText(row, "payable_reason_title", "payableReasonTitle"),
+        payOk: row.pay_ok === true || row.pay_ok === 1 || row.payOk === true || row.payOk === 1,
+        payable: row.payable === true || row.payable === 1,
+        payOkOn: pickText(row, "pay_ok_on", "payOkOn"),
+        nbDeviceOs: pickText(row, "nb_device_os", "nbDeviceOs"),
+        nbDeviceId: pickText(row, "nb_device_id", "nbDeviceId"),
+        nbDeviceDatetime: pickText(row, "nb_device_datetime", "nbDeviceDatetime"),
+        nbLocationLat: pickText(row, "nb_location_lat", "nbLocationLat"),
+        nbLocationLon: pickText(row, "nb_location_lon", "nbLocationLon"),
+        selfieSizeBytes,
+        hasSelfieFile,
+        sameDeviceCount: row.same_device_count != null ? Number(row.same_device_count) : row.sameDeviceCount != null ? Number(row.sameDeviceCount) : null
+      };
+    };
+    enrichRawPaymentDocumentsMembersListFace = async (rawRows) => {
+      if (rawRows.length === 0) {
+        return;
+      }
+      const captionWork = [];
+      for (let index = 0; index < rawRows.length; index += 1) {
+        const row = rawRows[index];
+        const memberId = pickText(row, "member_id", "memberId");
+        if (!memberId) {
+          continue;
+        }
+        const next = {
+          ...row,
+          id: memberId,
+          member_id: memberId,
+          user_id: pickText(row, "user_id", "userId")
+        };
+        const trackingPlaceholder = pickText(row, "tracking_code", "trackingCode");
+        if (trackingPlaceholder === memberId) {
+          delete next.tracking_code;
+          delete next.trackingCode;
+        }
+        captionWork.push({ index, row: next });
+      }
+      if (captionWork.length > 0) {
+        await applyHwyMemberDirectoryListFaceCaptionUsernames(captionWork.map((entry) => entry.row));
+      }
+      for (const { index, row: source } of captionWork) {
+        const target = rawRows[index];
+        const username = pickText(source, "username");
+        if (username) {
+          target.username = username;
+        }
+        const trackingCode = pickText(source, "tracking_code", "trackingCode");
+        if (trackingCode) {
+          target.tracking_code = trackingCode;
+          target.trackingCode = trackingCode;
+        }
+      }
+      const faces = rawRows.map((row) => ({
+        memberId: pickText(row, "member_id", "memberId") ?? "",
+        avatarUrl: pickText(row, "avatar_url", "avatarUrl")
+      }));
+      await enrichMemberDirectoryFaceAvatarsByMemberId(faces);
+      for (let index = 0; index < rawRows.length; index += 1) {
+        const url = String(faces[index]?.avatarUrl ?? "").trim();
+        if (!url) {
+          continue;
+        }
+        rawRows[index].avatar_url = url;
+        rawRows[index].avatarUrl = url;
+      }
+      const avatarEnrichRows = [];
+      for (const row of rawRows) {
+        const memberId = pickText(row, "member_id", "memberId");
+        if (!memberId) {
+          continue;
+        }
+        avatarEnrichRows.push({
+          id: memberId,
+          member_id: memberId,
+          avatar_url: row.avatar_url ?? row.avatarUrl,
+          avatarUrl: row.avatarUrl ?? row.avatar_url
+        });
+      }
+      if (avatarEnrichRows.length > 0) {
+        try {
+          await attachImageFixRegistrationThumbsToMemberDirectoryRows(avatarEnrichRows, {
+            mirrorRegistrationPersonalPhotoToListFace: true
+          });
+        } catch (error) {
+          console.warn("[vx-payment-documents-members] registration photo list-face enrich failed:", error);
+        }
+        const avatarByMemberId = new Map(
+          avatarEnrichRows.map((row) => [pickText(row, "id", "member_id") ?? "", row])
+        );
+        for (const row of rawRows) {
+          const memberId = pickText(row, "member_id", "memberId");
+          const enriched = memberId ? avatarByMemberId.get(memberId) : void 0;
+          const url = enriched ? pickText(enriched, "avatar_url", "avatarUrl") : "";
+          if (url) {
+            row.avatar_url = url;
+            row.avatarUrl = url;
+          }
+        }
+      }
+      try {
+        await patchMemberRowsAvatarsWithLegacyMemberPicture(rawRows);
+      } catch (error) {
+        console.warn("[vx-payment-documents-members] legacy member picture avatar patch failed:", error);
+      }
+    };
     listHwyPaymentDocumentsMembers = async (input, roleNames, actorUsername2) => {
       await assertHwyPaymentDocumentsMembersAccess(roleNames);
       const params = buildHwyPaymentDocumentsMembersProcParams(input);
@@ -268688,6 +270485,16 @@ var init_vxPaymentDocumentsMembers_service = __esm({
         queryLegacyPaymentDocumentsMembersCount(input, roleNames, actorUsername2),
         queryLegacyPaymentDocumentsMembersList(input, roleNames, actorUsername2)
       ]);
+      try {
+        await enrichRawPaymentDocumentsMembersListFace(rawRows);
+      } catch (error) {
+        console.error("[vx-payment-documents-members] list face enrich failed:", error);
+      }
+      try {
+        await patchRawPaymentDocumentsMembersRowsWithLegacySelfieMeta(rawRows);
+      } catch (error) {
+        console.error("[vx-payment-documents-members] list selfie meta enrich failed:", error);
+      }
       return {
         total,
         page,
@@ -268714,31 +270521,88 @@ var init_vxPaymentDocumentsMembers_service = __esm({
         tamvins: toOptions(tamvins)
       };
     };
+    loadHwyPaymentDocumentsMembersSelfieFlags = async (lineIds, roleNames) => {
+      await assertHwyPaymentDocumentsMembersAccess(roleNames);
+      const ids2 = [
+        ...new Set(
+          lineIds.map((lineId) => Number(String(lineId ?? "").trim())).filter((id) => Number.isFinite(id) && id > 0)
+        )
+      ].slice(0, 50);
+      if (ids2.length === 0) {
+        return {};
+      }
+      const { resolvePaymentDocumentsMembersLineMetaByLineIds: resolvePaymentDocumentsMembersLineMetaByLineIds2 } = await Promise.resolve().then(() => (init_vxPaymentDocumentsMembersLegacyRead_service(), vxPaymentDocumentsMembersLegacyRead_service_exports));
+      const meta = await resolvePaymentDocumentsMembersLineMetaByLineIds2(ids2);
+      const out = {};
+      for (const [id, lineMeta] of meta) {
+        const patch = {};
+        if (lineMeta.selfie_size > 0) {
+          patch.hasSelfieFile = true;
+          patch.selfieSizeBytes = lineMeta.selfie_size;
+        }
+        if (lineMeta.pay_ok === true || lineMeta.pay_ok === 1) {
+          patch.payOk = true;
+        }
+        if (lineMeta.pay_ok_on) {
+          patch.payOkOn = lineMeta.pay_ok_on;
+        }
+        if (lineMeta.nb_device_datetime) {
+          patch.nbDeviceDatetime = lineMeta.nb_device_datetime;
+        }
+        if (lineMeta.nb_device_os) {
+          patch.nbDeviceOs = lineMeta.nb_device_os;
+        }
+        if (lineMeta.nb_device_id) {
+          patch.nbDeviceId = lineMeta.nb_device_id;
+        }
+        if (lineMeta.nb_location_lat) {
+          patch.nbLocationLat = lineMeta.nb_location_lat;
+        }
+        if (lineMeta.nb_location_lon) {
+          patch.nbLocationLon = lineMeta.nb_location_lon;
+        }
+        if (lineMeta.username) {
+          patch.username = lineMeta.username;
+        }
+        if (Object.keys(patch).length > 0) {
+          out[String(id)] = patch;
+        }
+      }
+      return out;
+    };
+    loadHwyPaymentDocumentsMembersSelfie = async (lineId, size, roleNames) => {
+      await assertHwyPaymentDocumentsMembersAccess(roleNames);
+      const id = Number(trim33(lineId));
+      if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid line id.");
+      const payload = await queryLegacyPaymentDocumentsMemberSelfie(id, size);
+      if (!payload) throw new Error("Selfie is not available.");
+      return payload;
+    };
     loadHwyPaymentDocumentsMembersImages = async (lineId, roleNames) => {
       await assertHwyPaymentDocumentsMembersAccess(roleNames);
-      const id = Number(trim32(lineId));
+      const id = Number(trim33(lineId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid line id.");
       return queryLegacyPaymentDocumentsMemberImages(id);
     };
     switchHwyPaymentDocumentsMemberPayability = async (lineId, roleNames, actorUsername2) => {
       await assertHwyPaymentDocumentsMembersAccess(roleNames);
-      const actor = trim32(actorUsername2);
+      const actor = trim33(actorUsername2);
       if (!actor) throw new Error("Actor username is required.");
-      const id = Number(trim32(lineId));
+      const id = Number(trim33(lineId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid line id.");
       await dbSwitchPaymentDocumentsMemberPayability(id, actor);
     };
     updateHwyPaymentDocumentsMemberPayAmount = async (lineId, input, roleNames, actorUsername2) => {
       await assertHwyPaymentDocumentsMembersAccess(roleNames);
-      const actor = trim32(actorUsername2);
+      const actor = trim33(actorUsername2);
       if (!actor) throw new Error("Actor username is required.");
-      const id = Number(trim32(lineId));
+      const id = Number(trim33(lineId));
       if (!Number.isFinite(id) || id <= 0) throw new Error("Invalid line id.");
       if (!Number.isFinite(input.payAmount)) throw new Error("payAmount is required.");
       await dbUpdatePaymentDocumentsMemberPayAmount({
         lineId: id,
         payAmount: Math.trunc(input.payAmount),
-        note: trim32(input.note),
+        note: trim33(input.note),
         actorUserName: actor,
         isAdmin: roleNames.includes("ADMIN")
       });
@@ -268746,21 +270610,294 @@ var init_vxPaymentDocumentsMembers_service = __esm({
   }
 });
 
+// src/server/domain/vx/vxMeetingsLegacyWrite.service.ts
+var import_mssql24, connectLegacyWritePool, detectLegacyHazerinMemberCol, legacyMeetingRosterHasMemberOnPool, addLegacyMeetingMemberOnPool, legacyMeetingInstanceHazerHasMemberOnPool, upsertLegacyMeetingInstanceHazerOnPool, execLegacyMeetingInstanceHazerAddOnPool, legacyMeetingInstanceHazerHasMember, addLegacyMeetingInstanceHazerBundled, addLegacyMeetingInstance, addLegacyMeetingMember, removeLegacyMeetingMember, queryLegacyMeetingInstanceHazerinPrimary, upsertLegacyMeetingInstanceHazer;
+var init_vxMeetingsLegacyWrite_service = __esm({
+  "src/server/domain/vx/vxMeetingsLegacyWrite.service.ts"() {
+    import_mssql24 = __toESM(require("mssql"), 1);
+    connectLegacyWritePool = async () => {
+      const { readLegacyConn: readLegacyConn2 } = await Promise.resolve().then(() => (init_legacyConn(), legacyConn_exports));
+      const config = readLegacyConn2();
+      return new import_mssql24.default.ConnectionPool({
+        ...config,
+        options: {
+          ...config.options,
+          /** Vx meetings UI write parity — primary MembersV2 (not read replica). */
+          readOnlyIntent: false
+        }
+      }).connect();
+    };
+    detectLegacyHazerinMemberCol = async (pool) => {
+      const colResult = await pool.request().query(`
+    SELECT CASE
+      WHEN COL_LENGTH(N'dbo.VX_Meetings_Hazerin', N'member_id') IS NOT NULL THEN N'snake'
+      ELSE N'pascal'
+    END AS member_col
+  `);
+      return String(colResult.recordset[0]?.member_col ?? "pascal") === "snake" ? "snake" : "pascal";
+    };
+    legacyMeetingRosterHasMemberOnPool = async (pool, meetingId, memberId) => {
+      const result = await pool.request().input("meeting_id", import_mssql24.default.BigInt, meetingId).input("member_id", import_mssql24.default.BigInt, memberId).query(`
+      SELECT CASE
+        WHEN EXISTS (
+          SELECT 1 FROM dbo.VX_Meetings_Members WITH (NOLOCK)
+          WHERE MeetingId = @meeting_id AND MemberId = @member_id
+        ) THEN 1 ELSE 0
+      END AS on_roster
+    `);
+      return Number(result.recordset[0]?.on_roster ?? 0) === 1;
+    };
+    addLegacyMeetingMemberOnPool = async (pool, meetingId, memberId, username, actorUsername2) => {
+      await pool.request().input("meeting_id", import_mssql24.default.BigInt, meetingId).input("mid", import_mssql24.default.BigInt, memberId ?? -1).input("uname", import_mssql24.default.NVarChar(128), username?.trim() || "-1").input("actor", import_mssql24.default.NVarChar(128), actorUsername2?.trim() || "").query(`
+      EXEC dbo.VX_SP_Meetings_Members_Add @meeting_id, @mid, @uname, @actor
+    `);
+    };
+    legacyMeetingInstanceHazerHasMemberOnPool = async (pool, instanceId, memberId, memberCol) => {
+      const request = pool.request();
+      request.input("instance_id", import_mssql24.default.BigInt, instanceId);
+      request.input("member_id", import_mssql24.default.BigInt, memberId);
+      const sqlText = memberCol === "snake" ? `
+      SELECT CASE
+        WHEN EXISTS (
+          SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (NOLOCK)
+          WHERE InstanceId = @instance_id AND member_id = @member_id
+        ) THEN 1 ELSE 0
+      END AS present
+    ` : `
+      SELECT CASE
+        WHEN EXISTS (
+          SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (NOLOCK)
+          WHERE InstanceId = @instance_id AND MemberId = @member_id
+        ) THEN 1 ELSE 0
+      END AS present
+    `;
+      const result = await request.query(sqlText);
+      return Number(result.recordset[0]?.present ?? 0) === 1;
+    };
+    upsertLegacyMeetingInstanceHazerOnPool = async (pool, instanceId, memberId, memberCol) => {
+      const request = pool.request();
+      request.input("instance_id", import_mssql24.default.BigInt, instanceId);
+      request.input("member_id", import_mssql24.default.BigInt, memberId);
+      const insertSql = memberCol === "snake" ? `
+      IF NOT EXISTS (
+        SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (UPDLOCK, HOLDLOCK)
+        WHERE InstanceId = @instance_id AND member_id = @member_id
+      )
+      INSERT INTO dbo.VX_Meetings_Hazerin (InstanceId, member_id)
+      VALUES (@instance_id, @member_id)
+    ` : `
+      IF NOT EXISTS (
+        SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (UPDLOCK, HOLDLOCK)
+        WHERE InstanceId = @instance_id AND MemberId = @member_id
+      )
+      INSERT INTO dbo.VX_Meetings_Hazerin (InstanceId, MemberId)
+      VALUES (@instance_id, @member_id)
+    `;
+      await request.query(insertSql);
+    };
+    execLegacyMeetingInstanceHazerAddOnPool = async (pool, instanceId, memberId, username, actorUsername2) => {
+      const deviceDateTime = (/* @__PURE__ */ new Date()).toISOString().slice(0, 19).replace("T", " ");
+      const mid = memberId ?? -1;
+      const uname = username?.trim() || "";
+      const actor = actorUsername2?.trim() || "";
+      try {
+        await pool.request().input("instance_id", import_mssql24.default.BigInt, instanceId).input("mid", import_mssql24.default.BigInt, mid).input("uname", import_mssql24.default.NVarChar(128), uname).input("device_lat", import_mssql24.default.VarChar(32), "---").input("device_lon", import_mssql24.default.VarChar(32), "---").input("device_datetime", import_mssql24.default.VarChar(32), deviceDateTime).input("device_id", import_mssql24.default.VarChar(128), "Web").input("actor", import_mssql24.default.NVarChar(128), actor).query(`
+        EXEC dbo.VX_SP_Meetings_Hazerin_Add
+          @instance_id,
+          @mid,
+          @uname,
+          @device_lat,
+          @device_lon,
+          @device_datetime,
+          @device_id,
+          @actor
+      `);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        if (!/too many arguments specified/i.test(message)) {
+          throw error;
+        }
+        await pool.request().input("instance_id", import_mssql24.default.BigInt, instanceId).input("mid", import_mssql24.default.BigInt, mid).input("uname", import_mssql24.default.NVarChar(128), uname || "-1").input("actor", import_mssql24.default.NVarChar(128), actor).query(`
+        EXEC dbo.VX_SP_Meetings_Hazerin_Add @instance_id, @mid, @uname, @actor
+      `);
+      }
+    };
+    legacyMeetingInstanceHazerHasMember = async (instanceId, memberId) => {
+      const pool = await connectLegacyWritePool();
+      try {
+        const memberCol = await detectLegacyHazerinMemberCol(pool);
+        return legacyMeetingInstanceHazerHasMemberOnPool(pool, instanceId, memberId, memberCol);
+      } finally {
+        await pool.close();
+      }
+    };
+    addLegacyMeetingInstanceHazerBundled = async (input) => {
+      const pool = await connectLegacyWritePool();
+      try {
+        if (input.meetingId != null && input.meetingId > 0) {
+          const onRoster = await legacyMeetingRosterHasMemberOnPool(pool, input.meetingId, input.memberId);
+          if (!onRoster) {
+            await addLegacyMeetingMemberOnPool(
+              pool,
+              input.meetingId,
+              input.memberId,
+              input.username,
+              input.actorUsername
+            );
+          }
+        }
+        const memberCol = await detectLegacyHazerinMemberCol(pool);
+        await execLegacyMeetingInstanceHazerAddOnPool(
+          pool,
+          input.instanceId,
+          input.memberId,
+          input.username,
+          input.actorUsername
+        );
+        let present = await legacyMeetingInstanceHazerHasMemberOnPool(
+          pool,
+          input.instanceId,
+          input.memberId,
+          memberCol
+        );
+        if (!present) {
+          await upsertLegacyMeetingInstanceHazerOnPool(pool, input.instanceId, input.memberId, memberCol);
+          present = await legacyMeetingInstanceHazerHasMemberOnPool(
+            pool,
+            input.instanceId,
+            input.memberId,
+            memberCol
+          );
+        }
+        if (!present) {
+          throw new Error("legacy_hazerin_verify_failed");
+        }
+      } finally {
+        await pool.close();
+      }
+    };
+    addLegacyMeetingInstance = async (meetingId, instanceDate, actorUsername2) => {
+      const pool = await connectLegacyWritePool();
+      try {
+        await pool.request().input("MeetingId", import_mssql24.default.Int, meetingId).input("EventDate", import_mssql24.default.Date, instanceDate).input("Actor", import_mssql24.default.NVarChar(128), actorUsername2?.trim() || "").execute("dbo.VX_SP_Meetings_Instances_Add");
+      } finally {
+        await pool.close();
+      }
+    };
+    addLegacyMeetingMember = async (meetingId, memberId, username, actorUsername2) => {
+      const pool = await connectLegacyWritePool();
+      try {
+        await pool.request().input("meeting_id", import_mssql24.default.BigInt, meetingId).input("mid", import_mssql24.default.BigInt, memberId ?? -1).input("uname", import_mssql24.default.NVarChar(128), username?.trim() || "-1").input("actor", import_mssql24.default.NVarChar(128), actorUsername2?.trim() || "").query(`
+        EXEC dbo.VX_SP_Meetings_Members_Add @meeting_id, @mid, @uname, @actor
+      `);
+      } finally {
+        await pool.close();
+      }
+    };
+    removeLegacyMeetingMember = async (rowId, actorUsername2) => {
+      const pool = await connectLegacyWritePool();
+      try {
+        await pool.request().input("row_id", import_mssql24.default.BigInt, rowId).input("actor", import_mssql24.default.NVarChar(128), actorUsername2?.trim() || "").query(`
+        EXEC dbo.VX_SP_Meetings_Members_Remove @row_id, @actor
+      `);
+      } finally {
+        await pool.close();
+      }
+    };
+    queryLegacyMeetingInstanceHazerinPrimary = async (instanceId) => {
+      const pool = await connectLegacyWritePool();
+      try {
+        const colResult = await pool.request().query(`
+      SELECT CASE
+        WHEN COL_LENGTH(N'dbo.VX_Meetings_Hazerin', N'member_id') IS NOT NULL THEN N'snake'
+        ELSE N'pascal'
+      END AS member_col
+    `);
+        const memberCol = String(colResult.recordset[0]?.member_col ?? "pascal") === "snake" ? "snake" : "pascal";
+        const request = pool.request();
+        request.input("instance_id", import_mssql24.default.BigInt, instanceId);
+        const querySql = memberCol === "snake" ? `
+      SELECT
+        CAST(H.member_id AS VARCHAR(32)) AS member_id,
+        M.username AS username,
+        M.first_name AS first_name,
+        M.father_name AS father_name,
+        M.family_name AS family_name
+      FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
+      LEFT JOIN dbo.vx_members M WITH (NOLOCK) ON M.id = H.member_id
+      WHERE H.InstanceId = @instance_id
+      ORDER BY M.username ASC, H.member_id ASC
+    ` : `
+      SELECT
+        CAST(H.MemberId AS VARCHAR(32)) AS member_id,
+        M.UserName AS username,
+        M.FirstName AS first_name,
+        M.FatherName AS father_name,
+        M.LastName AS family_name
+      FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
+      LEFT JOIN dbo.VX_Members M WITH (NOLOCK) ON M.Id = H.MemberId
+      WHERE H.InstanceId = @instance_id
+      ORDER BY M.UserName ASC, H.MemberId ASC
+    `;
+        const result = await request.query(querySql);
+        return result.recordset;
+      } finally {
+        await pool.close();
+      }
+    };
+    upsertLegacyMeetingInstanceHazer = async (instanceId, memberId) => {
+      const pool = await connectLegacyWritePool();
+      try {
+        const colResult = await pool.request().query(`
+      SELECT CASE
+        WHEN COL_LENGTH(N'dbo.VX_Meetings_Hazerin', N'member_id') IS NOT NULL THEN N'snake'
+        ELSE N'pascal'
+      END AS member_col
+    `);
+        const snake = String(colResult.recordset[0]?.member_col ?? "pascal") === "snake";
+        const request = pool.request();
+        request.input("instance_id", import_mssql24.default.BigInt, instanceId);
+        request.input("member_id", import_mssql24.default.BigInt, memberId);
+        const insertSql = snake ? `
+      IF NOT EXISTS (
+        SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (UPDLOCK, HOLDLOCK)
+        WHERE InstanceId = @instance_id AND member_id = @member_id
+      )
+      INSERT INTO dbo.VX_Meetings_Hazerin (InstanceId, member_id)
+      VALUES (@instance_id, @member_id)
+    ` : `
+      IF NOT EXISTS (
+        SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (UPDLOCK, HOLDLOCK)
+        WHERE InstanceId = @instance_id AND MemberId = @member_id
+      )
+      INSERT INTO dbo.VX_Meetings_Hazerin (InstanceId, MemberId)
+      VALUES (@instance_id, @member_id)
+    `;
+        await request.query(insertSql);
+      } finally {
+        await pool.close();
+      }
+    };
+  }
+});
+
 // src/server/domain/vx/vxMeetings.service.ts
-var import_sequelize127, DEFAULT_PAGE_SIZE11, MAX_PAGE_SIZE11, trim33, readRowField, readRowString6, readRowNumber, assertSqlServer15, clampPage7, assertAccess, vxMeetingsEdgeDataReady, useHwyMeetingsLegacyRead, listHwyMeetingDefinitions, mapInstance, listHwyMeetingInstances, removeHwyMeetingInstance, addHwyMeetingInstance, listHwyMeetingAttendancePivot, readRowFlag, mapMeetingMember, mapAttendance, listHwyMeetingMembers, addHwyMeetingMember, removeHwyMeetingMember, listHwyMeetingInstanceAttendance, addHwyMeetingInstanceHazer, removeHwyMeetingInstanceHazer, listHwyMeetingInstanceHazerin;
+var import_sequelize129, DEFAULT_PAGE_SIZE11, MAX_PAGE_SIZE11, trim34, readRowField, readRowString6, readRowNumber, assertSqlServer15, clampPage7, assertAccess, vxMeetingsEdgeInstancesReady, vxMeetingsEdgeDefinitionsReady, useHwyMeetingsLegacyInstancesRead, LEGACY_MEETINGS_REACH_ERROR, wrapLegacyMeetingsReadError, isHwyMeetingsInstancesUnavailableError, isHwyMeetingsInstanceAddUnavailableError, isHwyMeetingsMembersWriteUnavailableError, isHwyMeetingsHazerinAddUnavailableError, mapMeetingDefinitionRows, listMeetingInstancesFromLegacy, listHwyMeetingDefinitions, mapInstance, listHwyMeetingInstances, removeHwyMeetingInstance, addHwyMeetingInstance, listHwyMeetingAttendancePivot, readRowFlag, mapMeetingMember, mapAttendance, listHwyMeetingMembers, addHwyMeetingMember, removeHwyMeetingMember, listHwyMeetingInstanceAttendance, HAZERIN_NOT_SAVED_ERROR, resolveMeetingIdForInstance, edgeMeetingInstanceHazerHasMember, runEdgeHazerinAdd, removeHwyMeetingInstanceHazer, mapMeetingInstanceHazerinRow, isHwyMeetingsHazerinUnavailableError, mapLegacyHazerinRecords, listMeetingInstanceHazerinFromLegacy, resolveHwyMeetingsHazerinMemberColumn, queryEdgeMeetingInstanceHazerin, upsertEdgeMeetingInstanceHazerin, loadMeetingInstanceHazerinRows, addHwyMeetingInstanceHazer, enrichMeetingHazerinAvatars, listHwyMeetingInstanceHazerin;
 var init_vxMeetings_service = __esm({
   "src/server/domain/vx/vxMeetings.service.ts"() {
-    import_sequelize127 = require("sequelize");
+    import_sequelize129 = require("sequelize");
     init_controlPlaneSequelize();
     init_prismaHelpers();
     init_ensureHwyDbObjects();
     init_vxExecDbObject();
     init_vxLegacyImportParityState_service();
     init_vxLegacyParityRead_service();
+    init_vxMeetingsLegacyWrite_service();
     init_vxMeetingsAccess_service();
+    init_vxMemberDirectoryListImageFixThumbs();
     DEFAULT_PAGE_SIZE11 = 25;
     MAX_PAGE_SIZE11 = 100;
-    trim33 = (value) => String(value ?? "").trim();
+    trim34 = (value) => String(value ?? "").trim();
     readRowField = (row, keys) => {
       for (const key of keys) {
         if (row[key] !== void 0 && row[key] !== null) {
@@ -268774,7 +270911,7 @@ var init_vxMeetings_service = __esm({
       if (raw == null) {
         return null;
       }
-      const text2 = trim33(raw);
+      const text2 = trim34(raw);
       return text2 || null;
     };
     readRowNumber = (row, keys) => Number(readRowField(row, keys) ?? 0);
@@ -268791,7 +270928,7 @@ var init_vxMeetings_service = __esm({
     assertAccess = async (roleNames) => {
       await assertHwyMeetingsManagementAccess(roleNames);
     };
-    vxMeetingsEdgeDataReady = async () => {
+    vxMeetingsEdgeInstancesReady = async () => {
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `
@@ -268800,37 +270937,118 @@ var init_vxMeetings_service = __esm({
       ELSE 1
     END AS ok
     `,
-        { type: import_sequelize127.QueryTypes.SELECT }
+        { type: import_sequelize129.QueryTypes.SELECT }
       );
       return Number(rows[0]?.ok) === 1;
     };
-    useHwyMeetingsLegacyRead = async () => {
+    vxMeetingsEdgeDefinitionsReady = async () => {
+      const sequelize = getControlPlaneSequelize();
+      const rows = await sequelize.query(
+        `
+    SELECT CASE
+      WHEN OBJECT_ID(N'dbo.vx_ref_base_information', N'U') IS NULL THEN 0
+      ELSE 1
+    END AS ok
+    `,
+        { type: import_sequelize129.QueryTypes.SELECT }
+      );
+      return Number(rows[0]?.ok) === 1;
+    };
+    useHwyMeetingsLegacyInstancesRead = async () => {
       if (!await vxLegacyImportParityReady()) {
         return true;
       }
-      return !await vxMeetingsEdgeDataReady();
+      return !await vxMeetingsEdgeInstancesReady();
+    };
+    LEGACY_MEETINGS_REACH_ERROR = "Legacy meetings database is unreachable. Verify VX_LEGACY_APPSETTINGS or import VX_Meetings_* into the control plane.";
+    wrapLegacyMeetingsReadError = (error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      if (/ECONNRESET|ETIMEDOUT|Connection lost|Failed to connect|ETIMEOUT/i.test(message)) {
+        return new Error(LEGACY_MEETINGS_REACH_ERROR);
+      }
+      return error instanceof Error ? error : new Error(message);
+    };
+    isHwyMeetingsInstancesUnavailableError = (error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      return message.includes("VX_Meetings_Instances is not available");
+    };
+    isHwyMeetingsInstanceAddUnavailableError = (error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      return message.includes("VX_SP_Meetings_Instances_Add is not available") || message.includes("VX_Meetings_Instances is not available");
+    };
+    isHwyMeetingsMembersWriteUnavailableError = (error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      return message.includes("VX_SP_Meetings_Members_Add is not available") || message.includes("VX_SP_Meetings_Members_Remove is not available") || message.includes("Legacy VX_Meetings_Members is not available");
+    };
+    isHwyMeetingsHazerinAddUnavailableError = (error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      return message.includes("VX_SP_Meetings_Hazerin_Add is not available");
+    };
+    mapMeetingDefinitionRows = (rows, viewOrderKey = "view_order") => {
+      const seen = /* @__PURE__ */ new Set();
+      const defs = [];
+      for (const row of rows) {
+        const id = trim34(readRowField(row, ["id", "Id"]));
+        if (!id || seen.has(id)) {
+          continue;
+        }
+        seen.add(id);
+        const rawOrder = readRowField(row, [viewOrderKey, "view_order", "viewOrder"]);
+        defs.push({
+          id,
+          title: trim34(readRowField(row, ["title", "Title"])),
+          viewOrder: rawOrder != null ? Number(rawOrder) : null
+        });
+      }
+      return defs;
+    };
+    listMeetingInstancesFromLegacy = async (meetingId, username, page, pageSize, offset) => {
+      let total;
+      try {
+        total = await queryLegacyMeetingInstancesCount(meetingId, username);
+      } catch (error) {
+        throw wrapLegacyMeetingsReadError(error);
+      }
+      let legacyRows;
+      try {
+        legacyRows = await queryLegacyMeetingInstancesList(meetingId, username, offset, pageSize);
+      } catch (error) {
+        throw wrapLegacyMeetingsReadError(error);
+      }
+      return {
+        total,
+        page,
+        pageSize,
+        rows: legacyRows.map(mapInstance),
+        parityDataSource: "legacy-read"
+      };
     };
     listHwyMeetingDefinitions = async (roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      if (await useHwyMeetingsLegacyRead()) {
-        const legacyRows = await queryLegacyMeetingDefinitions();
-        return legacyRows.map((row) => ({
-          id: trim33(row.id),
-          title: trim33(row.title),
-          viewOrder: readRowField(row, ["view_order", "viewOrder"]) != null ? Number(readRowField(row, ["view_order", "viewOrder"])) : null
-        }));
+      if (await vxMeetingsEdgeDefinitionsReady()) {
+        const rows = await execHwyProcedure(
+          "vx_meetings_list_definitions",
+          {}
+        );
+        const edgeDefs = mapMeetingDefinitionRows(rows);
+        if (edgeDefs.length > 0) {
+          return edgeDefs;
+        }
       }
-      const rows = await execHwyProcedure(
-        "vx_meetings_list_definitions",
-        {}
-      );
-      return rows.map((row) => ({
-        id: trim33(row.id),
-        title: trim33(row.title),
-        viewOrder: row.view_order != null ? Number(row.view_order) : null
-      }));
+      try {
+        const legacyRows = await queryLegacyMeetingDefinitions();
+        const legacyDefs = mapMeetingDefinitionRows(legacyRows, "viewOrder");
+        if (legacyDefs.length > 0) {
+          return legacyDefs;
+        }
+      } catch (error) {
+        if (!await vxMeetingsEdgeDefinitionsReady()) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+      }
+      return [];
     };
     mapInstance = (row) => ({
       id: readRowString6(row, ["id"]) ?? "",
@@ -268853,73 +271071,97 @@ var init_vxMeetings_service = __esm({
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
       const { page, pageSize, offset } = clampPage7(input.page, input.pageSize);
-      const meetingId = trim33(input.meetingId) ? Number(trim33(input.meetingId)) : null;
+      const meetingId = trim34(input.meetingId) ? Number(trim34(input.meetingId)) : null;
+      const usernameFilter = trim34(input.username) || null;
+      if (await useHwyMeetingsLegacyInstancesRead()) {
+        return listMeetingInstancesFromLegacy(meetingId, usernameFilter, page, pageSize, offset);
+      }
       const procBase = {
         meeting_id: meetingId,
-        username: trim33(input.username) || null
+        username: usernameFilter
       };
-      if (await useHwyMeetingsLegacyRead()) {
-        const total2 = await queryLegacyMeetingInstancesCount(meetingId, procBase.username);
-        const legacyRows = await queryLegacyMeetingInstancesList(
-          meetingId,
-          procBase.username,
-          offset,
-          pageSize
+      try {
+        const countRows = await execHwyProcedure(
+          "vx_meetings_instances_count",
+          procBase
         );
+        const total = Number(countRows[0]?.total ?? 0);
+        const rows = await execHwyProcedure("vx_meetings_instances_list", {
+          ...procBase,
+          offset,
+          page_size: pageSize
+        });
+        if (total === 0 && rows.length === 0) {
+          try {
+            const legacyTotal = await queryLegacyMeetingInstancesCount(meetingId, usernameFilter);
+            if (legacyTotal > 0) {
+              return listMeetingInstancesFromLegacy(meetingId, usernameFilter, page, pageSize, offset);
+            }
+          } catch {
+          }
+        }
         return {
-          total: total2,
+          total,
           page,
           pageSize,
-          rows: legacyRows.map(mapInstance),
-          parityDataSource: "legacy-read"
+          rows: rows.map(mapInstance),
+          parityDataSource: "edge"
         };
+      } catch (error) {
+        if (!isHwyMeetingsInstancesUnavailableError(error) || !await vxLegacyImportParityReady()) {
+          throw error;
+        }
+        return listMeetingInstancesFromLegacy(meetingId, usernameFilter, page, pageSize, offset);
       }
-      const countRows = await execHwyProcedure(
-        "vx_meetings_instances_count",
-        procBase
-      );
-      const total = Number(countRows[0]?.total ?? 0);
-      const rows = await execHwyProcedure("vx_meetings_instances_list", {
-        ...procBase,
-        offset,
-        page_size: pageSize
-      });
-      return {
-        total,
-        page,
-        pageSize,
-        rows: rows.map(mapInstance),
-        parityDataSource: "edge"
-      };
     };
     removeHwyMeetingInstance = async (instanceId, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
       await execHwyProcedure("vx_meetings_remove_instance", {
-        instance_id: Number(trim33(instanceId))
+        instance_id: Number(trim34(instanceId))
       });
     };
     addHwyMeetingInstance = async (input, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const meetingId = Number(trim33(input.meetingId));
-      const instanceDate = trim33(input.instanceDate);
+      const meetingId = Number(trim34(input.meetingId));
+      const instanceDate = trim34(input.instanceDate);
       if (!meetingId || !instanceDate) {
         throw new Error("meetingId and instanceDate are required.");
       }
-      await execHwyProcedure("vx_meetings_add_instance", {
-        meeting_id: meetingId,
-        instance_date: instanceDate,
-        actor: trim33(input.actorUsername) || null
-      });
+      const actor = trim34(input.actorUsername) || null;
+      if (await useHwyMeetingsLegacyInstancesRead()) {
+        try {
+          await addLegacyMeetingInstance(meetingId, instanceDate, actor);
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+        return;
+      }
+      try {
+        await execHwyProcedure("vx_meetings_add_instance", {
+          meeting_id: meetingId,
+          instance_date: instanceDate,
+          actor
+        });
+      } catch (error) {
+        if (!isHwyMeetingsInstanceAddUnavailableError(error)) {
+          throw error;
+        }
+        try {
+          await addLegacyMeetingInstance(meetingId, instanceDate, actor);
+        } catch (legacyError) {
+          throw wrapLegacyMeetingsReadError(legacyError);
+        }
+      }
     };
     listHwyMeetingAttendancePivot = async (meetingId, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim33(meetingId));
+      const id = Number(trim34(meetingId));
       if (!id) throw new Error("meetingId is required.");
       return execHwyProcedure("vx_meetings_attendance_pivot", {
         meeting_id: id
@@ -268956,113 +271198,514 @@ var init_vxMeetings_service = __esm({
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim33(meetingId));
+      const id = Number(trim34(meetingId));
       if (!id) throw new Error("meetingId is required.");
-      if (await useHwyMeetingsLegacyRead()) {
+      if (await useHwyMeetingsLegacyInstancesRead()) {
+        try {
+          const legacyRows = await queryLegacyMeetingMembers(id);
+          return legacyRows.map(mapMeetingMember);
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+      }
+      try {
+        const rows = await execHwyProcedure("vx_meetings_members_list", {
+          meeting_id: id
+        });
+        if (rows.length > 0) {
+          return rows.map(mapMeetingMember);
+        }
+        const legacyRows = await queryLegacyMeetingMembers(id);
+        return legacyRows.map(mapMeetingMember);
+      } catch (error) {
+        if (!isHwyMeetingsMembersWriteUnavailableError(error)) {
+          throw error;
+        }
         const legacyRows = await queryLegacyMeetingMembers(id);
         return legacyRows.map(mapMeetingMember);
       }
-      const rows = await execHwyProcedure("vx_meetings_members_list", {
-        meeting_id: id
-      });
-      return rows.map(mapMeetingMember);
     };
     addHwyMeetingMember = async (input, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const meetingId = Number(trim33(input.meetingId));
+      const meetingId = Number(trim34(input.meetingId));
       if (!meetingId) throw new Error("meetingId is required.");
-      const memberId = trim33(input.memberId) ? Number(trim33(input.memberId)) : null;
-      const username = trim33(input.username) || null;
+      const memberId = trim34(input.memberId) ? Number(trim34(input.memberId)) : null;
+      const username = trim34(input.username) || null;
       if (memberId == null && !username) {
         throw new Error("memberId or username is required.");
       }
-      await execHwyProcedure("vx_meetings_members_add", {
-        meeting_id: meetingId,
-        member_id: memberId,
-        username,
-        actor: trim33(input.actorUsername) || null
-      });
+      const actor = trim34(input.actorUsername) || null;
+      if (await useHwyMeetingsLegacyInstancesRead()) {
+        try {
+          await addLegacyMeetingMember(meetingId, memberId, username, actor);
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+        return;
+      }
+      try {
+        await execHwyProcedure("vx_meetings_members_add", {
+          meeting_id: meetingId,
+          member_id: memberId,
+          username,
+          actor
+        });
+      } catch (error) {
+        if (!isHwyMeetingsMembersWriteUnavailableError(error)) {
+          throw error;
+        }
+        try {
+          await addLegacyMeetingMember(meetingId, memberId, username, actor);
+        } catch (legacyError) {
+          throw wrapLegacyMeetingsReadError(legacyError);
+        }
+      }
     };
     removeHwyMeetingMember = async (input, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const rowId = Number(trim33(input.rowId));
-      if (!rowId) throw new Error("rowId is required.");
-      await execHwyProcedure("vx_meetings_members_remove", {
-        row_id: rowId,
-        actor: trim33(input.actorUsername) || null
-      });
+      const rowIdText = trim34(input.rowId);
+      if (!rowIdText || !/^\d+$/.test(rowIdText)) {
+        throw new Error("rowId is required.");
+      }
+      const rowId = Number(rowIdText);
+      const actor = trim34(input.actorUsername) || null;
+      if (await useHwyMeetingsLegacyInstancesRead()) {
+        try {
+          await removeLegacyMeetingMember(rowId, actor);
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+        return;
+      }
+      try {
+        await execHwyProcedure("vx_meetings_members_remove", {
+          row_id: rowId,
+          actor
+        });
+      } catch (error) {
+        if (!isHwyMeetingsMembersWriteUnavailableError(error)) {
+          throw error;
+        }
+        try {
+          await removeLegacyMeetingMember(rowId, actor);
+        } catch (legacyError) {
+          throw wrapLegacyMeetingsReadError(legacyError);
+        }
+      }
     };
     listHwyMeetingInstanceAttendance = async (instanceId, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim33(instanceId));
+      const id = Number(trim34(instanceId));
       if (!id) throw new Error("instanceId is required.");
       const rows = await execHwyProcedure("vx_meetings_instance_attendance_list", {
         instance_id: id
       });
       return rows.map(mapAttendance);
     };
-    addHwyMeetingInstanceHazer = async (input, roleNames) => {
-      assertSqlServer15();
-      await assertAccess(roleNames);
-      await ensureHwyDbObjects();
-      const instanceId = Number(trim33(input.instanceId));
-      if (!instanceId) throw new Error("instanceId is required.");
+    HAZERIN_NOT_SAVED_ERROR = "Attendee was not saved. Add the member to the meeting roster first, then mark present again.";
+    resolveMeetingIdForInstance = async (instanceId) => {
+      if (await vxMeetingsEdgeInstancesReady()) {
+        const sequelize = getControlPlaneSequelize();
+        const rows = await sequelize.query(
+          `
+      SELECT TOP 1 *
+      FROM dbo.VX_Meetings_Instances WITH (NOLOCK)
+      WHERE id = :instance_id OR Id = :instance_id
+      `,
+          { replacements: { instance_id: instanceId }, type: import_sequelize129.QueryTypes.SELECT }
+        );
+        const meetingId = readRowNumber(rows[0] ?? {}, ["MeetingId", "meeting_id", "meetingId"]);
+        if (meetingId > 0) {
+          return meetingId;
+        }
+      }
+      if (await vxLegacyImportParityReady()) {
+        try {
+          return await queryLegacyMeetingInstanceMeetingId(instanceId);
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+      }
+      return null;
+    };
+    edgeMeetingInstanceHazerHasMember = async (instanceId, memberId) => {
+      const memberCol = await resolveHwyMeetingsHazerinMemberColumn();
+      const sequelize = getControlPlaneSequelize();
+      const colSql = memberCol === "member_id" ? "member_id" : "MemberId";
+      const rows = await sequelize.query(
+        `
+    SELECT CASE
+      WHEN EXISTS (
+        SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (NOLOCK)
+        WHERE InstanceId = :instance_id AND ${colSql} = :member_id
+      ) THEN 1 ELSE 0
+    END AS present
+    `,
+        {
+          replacements: { instance_id: instanceId, member_id: memberId },
+          type: import_sequelize129.QueryTypes.SELECT
+        }
+      );
+      return Number(rows[0]?.present ?? 0) === 1;
+    };
+    runEdgeHazerinAdd = async (instanceId, memberId, username, actor, deviceInput) => {
       await execHwyProcedure("vx_meetings_hazerin_add", {
         instance_id: instanceId,
-        member_id: trim33(input.memberId) ? Number(trim33(input.memberId)) : null,
-        username: trim33(input.username) || null,
-        device_lat: trim33(input.deviceLat) || null,
-        device_lon: trim33(input.deviceLon) || null,
-        device_datetime: trim33(input.deviceDateTime) || null,
-        device_id: trim33(input.deviceId) || null,
-        actor: trim33(input.actorUsername) || null
+        member_id: memberId,
+        username,
+        device_lat: trim34(deviceInput.deviceLat) || null,
+        device_lon: trim34(deviceInput.deviceLon) || null,
+        device_datetime: trim34(deviceInput.deviceDateTime) || null,
+        device_id: trim34(deviceInput.deviceId) || null,
+        actor
       });
     };
     removeHwyMeetingInstanceHazer = async (input, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const instanceId = Number(trim33(input.instanceId));
-      const memberId = Number(trim33(input.memberId));
+      const instanceId = Number(trim34(input.instanceId));
+      const memberId = Number(trim34(input.memberId));
       if (!instanceId || !memberId) throw new Error("instanceId and memberId are required.");
-      await execHwyProcedure("vx_meetings_hazerin_remove", {
-        instance_id: instanceId,
-        member_id: memberId
-      });
+      if (await useHwyMeetingsLegacyInstancesRead()) {
+        await removeLegacyMeetingInstanceHazer(instanceId, memberId);
+        return;
+      }
+      try {
+        await execHwyProcedure("vx_meetings_hazerin_remove", {
+          instance_id: instanceId,
+          member_id: memberId
+        });
+      } catch (error) {
+        if (!isHwyMeetingsHazerinUnavailableError(error)) {
+          throw error;
+        }
+        if (await vxLegacyImportParityReady()) {
+          await removeLegacyMeetingInstanceHazer(instanceId, memberId);
+          return;
+        }
+        throw error;
+      }
+    };
+    mapMeetingInstanceHazerinRow = (row) => ({
+      memberId: readRowString6(row, ["member_id", "memberId", "MemberId"]) ?? "",
+      username: readRowString6(row, ["username", "UserName"]),
+      firstName: readRowString6(row, ["first_name", "firstName", "FirstName"]),
+      fatherName: readRowString6(row, ["father_name", "fatherName", "FatherName"]),
+      lastName: readRowString6(row, ["last_name", "lastName", "LastName", "family_name", "familyName", "FamilyName"]),
+      avatarUrl: readRowString6(row, ["avatar_url", "avatarUrl", "AvatarUrl"]),
+      genderCode: readRowString6(row, ["gender_code", "genderCode", "gender_id", "GenderId"])
+    });
+    isHwyMeetingsHazerinUnavailableError = (error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      return message.includes("VX_Meetings_Hazerin is not available");
+    };
+    mapLegacyHazerinRecords = (legacyRows) => legacyRows.map(mapMeetingInstanceHazerinRow).filter((row) => row.memberId);
+    listMeetingInstanceHazerinFromLegacy = async (instanceId, options2) => {
+      const preferPrimary = options2?.preferPrimary === true;
+      if (preferPrimary && await vxLegacyImportParityReady()) {
+        try {
+          const primaryRows = await queryLegacyMeetingInstanceHazerinPrimary(instanceId);
+          const mapped2 = mapLegacyHazerinRecords(primaryRows);
+          if (mapped2.length > 0) {
+            return mapped2;
+          }
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+      }
+      const legacyRows = await queryLegacyMeetingInstanceHazerin(instanceId);
+      const mapped = mapLegacyHazerinRecords(legacyRows);
+      if (mapped.length === 0 && await vxLegacyImportParityReady()) {
+        try {
+          const primaryRows = await queryLegacyMeetingInstanceHazerinPrimary(instanceId);
+          return mapLegacyHazerinRecords(primaryRows);
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+      }
+      return mapped;
+    };
+    resolveHwyMeetingsHazerinMemberColumn = async () => {
+      const sequelize = getControlPlaneSequelize();
+      const rows = await sequelize.query(
+        `
+    SELECT CASE
+      WHEN COL_LENGTH(N'dbo.VX_Meetings_Hazerin', N'member_id') IS NOT NULL THEN N'member_id'
+      ELSE N'MemberId'
+    END AS member_col
+    `,
+        { type: import_sequelize129.QueryTypes.SELECT }
+      );
+      return rows[0]?.member_col === "member_id" ? "member_id" : "MemberId";
+    };
+    queryEdgeMeetingInstanceHazerin = async (instanceId) => {
+      const memberCol = await resolveHwyMeetingsHazerinMemberColumn();
+      const sequelize = getControlPlaneSequelize();
+      if (memberCol === "member_id") {
+        return sequelize.query(
+          `
+      SELECT
+        CAST(H.member_id AS VARCHAR(32)) AS member_id,
+        M.username AS username,
+        M.first_name AS first_name,
+        M.father_name AS father_name,
+        M.family_name AS family_name,
+        M.gender_code AS gender_code,
+        M.avatar_url AS avatar_url
+      FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
+      LEFT JOIN dbo.vx_members M WITH (NOLOCK) ON M.id = H.member_id
+      WHERE H.InstanceId = :instance_id
+      ORDER BY M.username ASC, H.member_id ASC
+      `,
+          { replacements: { instance_id: instanceId }, type: import_sequelize129.QueryTypes.SELECT }
+        );
+      }
+      return sequelize.query(
+        `
+    SELECT
+      CAST(H.MemberId AS VARCHAR(32)) AS member_id,
+      M.username AS username,
+      M.first_name AS first_name,
+      M.father_name AS father_name,
+      M.family_name AS family_name,
+      M.gender_code AS gender_code,
+      M.avatar_url AS avatar_url
+    FROM dbo.VX_Meetings_Hazerin H WITH (NOLOCK)
+    LEFT JOIN dbo.vx_members M WITH (NOLOCK) ON M.id = H.MemberId
+    WHERE H.InstanceId = :instance_id
+    ORDER BY M.username ASC, H.MemberId ASC
+    `,
+        { replacements: { instance_id: instanceId }, type: import_sequelize129.QueryTypes.SELECT }
+      );
+    };
+    upsertEdgeMeetingInstanceHazerin = async (instanceId, memberId) => {
+      const memberCol = await resolveHwyMeetingsHazerinMemberColumn();
+      const sequelize = getControlPlaneSequelize();
+      if (memberCol === "member_id") {
+        await sequelize.query(
+          `
+      IF NOT EXISTS (
+        SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (UPDLOCK, HOLDLOCK)
+        WHERE InstanceId = :instance_id AND member_id = :member_id
+      )
+      INSERT INTO dbo.VX_Meetings_Hazerin (InstanceId, member_id)
+      VALUES (:instance_id, :member_id)
+      `,
+          { replacements: { instance_id: instanceId, member_id: memberId }, type: import_sequelize129.QueryTypes.INSERT }
+        );
+        return;
+      }
+      await sequelize.query(
+        `
+    IF NOT EXISTS (
+      SELECT 1 FROM dbo.VX_Meetings_Hazerin WITH (UPDLOCK, HOLDLOCK)
+      WHERE InstanceId = :instance_id AND MemberId = :member_id
+    )
+    INSERT INTO dbo.VX_Meetings_Hazerin (InstanceId, MemberId)
+    VALUES (:instance_id, :member_id)
+    `,
+        { replacements: { instance_id: instanceId, member_id: memberId }, type: import_sequelize129.QueryTypes.INSERT }
+      );
+    };
+    loadMeetingInstanceHazerinRows = async (instanceId) => {
+      if (await useHwyMeetingsLegacyInstancesRead()) {
+        try {
+          return await listMeetingInstanceHazerinFromLegacy(instanceId);
+        } catch (error) {
+          throw wrapLegacyMeetingsReadError(error);
+        }
+      }
+      if (await vxMeetingsEdgeInstancesReady()) {
+        try {
+          const edgeRows = await queryEdgeMeetingInstanceHazerin(instanceId);
+          const mapped = edgeRows.map(mapMeetingInstanceHazerinRow).filter((row) => row.memberId);
+          if (mapped.length > 0) {
+            return mapped;
+          }
+        } catch (error) {
+          if (!isHwyMeetingsHazerinUnavailableError(error)) {
+            throw error;
+          }
+        }
+      }
+      try {
+        const rawRows = await execHwyProcedure("vx_meetings_instance_hazerin_list", {
+          instance_id: instanceId
+        });
+        const mapped = rawRows.map(mapMeetingInstanceHazerinRow).filter((row) => row.memberId);
+        if (mapped.length === 0 && await vxLegacyImportParityReady()) {
+          try {
+            return await listMeetingInstanceHazerinFromLegacy(instanceId);
+          } catch (error) {
+            throw wrapLegacyMeetingsReadError(error);
+          }
+        }
+        return mapped;
+      } catch (error) {
+        if (!isHwyMeetingsHazerinUnavailableError(error)) {
+          throw error;
+        }
+        if (await vxLegacyImportParityReady()) {
+          try {
+            return await listMeetingInstanceHazerinFromLegacy(instanceId);
+          } catch (legacyError) {
+            throw wrapLegacyMeetingsReadError(legacyError);
+          }
+        }
+        return [];
+      }
+    };
+    addHwyMeetingInstanceHazer = async (input, roleNames) => {
+      assertSqlServer15();
+      await assertAccess(roleNames);
+      await ensureHwyDbObjects();
+      const instanceId = Number(trim34(input.instanceId));
+      if (!instanceId) throw new Error("instanceId is required.");
+      const memberId = trim34(input.memberId) ? Number(trim34(input.memberId)) : null;
+      const username = trim34(input.username) || null;
+      const actor = trim34(input.actorUsername) || null;
+      const deviceInput = {
+        deviceLat: input.deviceLat,
+        deviceLon: input.deviceLon,
+        deviceDateTime: input.deviceDateTime,
+        deviceId: input.deviceId
+      };
+      const legacyParityReady = await vxLegacyImportParityReady();
+      const legacyInstancesRead = await useHwyMeetingsLegacyInstancesRead();
+      const edgeInstancesReady = await vxMeetingsEdgeInstancesReady();
+      const meetingIdForRoster = memberId != null && memberId > 0 ? await resolveMeetingIdForInstance(instanceId) : null;
+      const runLegacyBundled = async () => {
+        if (memberId == null || memberId <= 0) {
+          throw new Error("memberId is required.");
+        }
+        try {
+          await addLegacyMeetingInstanceHazerBundled({
+            instanceId,
+            memberId,
+            username,
+            actor,
+            meetingId: meetingIdForRoster
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          if (message === "legacy_hazerin_verify_failed") {
+            throw new Error(HAZERIN_NOT_SAVED_ERROR);
+          }
+          throw wrapLegacyMeetingsReadError(error);
+        }
+      };
+      if (legacyInstancesRead && legacyParityReady && memberId != null && memberId > 0) {
+        await runLegacyBundled();
+        return;
+      }
+      let usedEdgeWrite = false;
+      let completedViaLegacyBundled = false;
+      const writeHazerin = async () => {
+        if (edgeInstancesReady) {
+          try {
+            await runEdgeHazerinAdd(instanceId, memberId, username, actor, deviceInput);
+            usedEdgeWrite = true;
+            return;
+          } catch (error) {
+            if (!isHwyMeetingsHazerinAddUnavailableError(error)) {
+              throw error;
+            }
+            if (legacyParityReady && memberId != null && memberId > 0) {
+              await runLegacyBundled();
+              completedViaLegacyBundled = true;
+              return;
+            }
+            throw error;
+          }
+        }
+        try {
+          await runEdgeHazerinAdd(instanceId, memberId, username, actor, deviceInput);
+          usedEdgeWrite = true;
+        } catch (error) {
+          if (!isHwyMeetingsHazerinAddUnavailableError(error)) {
+            throw error;
+          }
+          if (legacyParityReady && memberId != null && memberId > 0) {
+            await runLegacyBundled();
+            completedViaLegacyBundled = true;
+            return;
+          }
+          throw error;
+        }
+      };
+      await writeHazerin();
+      if (completedViaLegacyBundled || memberId == null || memberId <= 0) {
+        return;
+      }
+      if (!usedEdgeWrite || !edgeInstancesReady) {
+        throw new Error(HAZERIN_NOT_SAVED_ERROR);
+      }
+      let recorded = await edgeMeetingInstanceHazerHasMember(instanceId, memberId);
+      if (!recorded) {
+        await upsertEdgeMeetingInstanceHazerin(instanceId, memberId);
+        recorded = await edgeMeetingInstanceHazerHasMember(instanceId, memberId);
+      }
+      if (!recorded && legacyParityReady) {
+        recorded = await legacyMeetingInstanceHazerHasMember(instanceId, memberId);
+        if (!recorded) {
+          await upsertLegacyMeetingInstanceHazer(instanceId, memberId);
+          recorded = await legacyMeetingInstanceHazerHasMember(instanceId, memberId);
+        }
+      }
+      if (!recorded) {
+        throw new Error(HAZERIN_NOT_SAVED_ERROR);
+      }
+    };
+    enrichMeetingHazerinAvatars = async (rows) => {
+      if (!rows.length) {
+        return;
+      }
+      const targets = rows.map((row) => ({
+        memberId: row.memberId,
+        avatarUrl: row.avatarUrl
+      }));
+      await enrichMemberDirectoryFaceAvatarsByMemberId(targets);
+      for (let index = 0; index < rows.length; index += 1) {
+        const url = targets[index]?.avatarUrl;
+        if (url) {
+          rows[index].avatarUrl = url;
+        }
+      }
     };
     listHwyMeetingInstanceHazerin = async (instanceId, roleNames) => {
       assertSqlServer15();
       await assertAccess(roleNames);
       await ensureHwyDbObjects();
-      const id = Number(trim33(instanceId));
+      const id = Number(trim34(instanceId));
       if (!id) throw new Error("instanceId is required.");
-      const rawRows = await useHwyMeetingsLegacyRead() ? await queryLegacyMeetingInstanceHazerin(id) : await execHwyProcedure("vx_meetings_instance_hazerin_list", {
-        instance_id: id
-      });
-      const mapped = rawRows.map((row) => ({
-        memberId: readRowString6(row, ["member_id", "memberId", "MemberId"]) ?? "",
-        username: readRowString6(row, ["username", "UserName"]),
-        firstName: readRowString6(row, ["first_name", "firstName", "FirstName"]),
-        fatherName: readRowString6(row, ["father_name", "fatherName", "FatherName"]),
-        lastName: readRowString6(row, ["last_name", "lastName", "LastName", "family_name", "familyName", "FamilyName"])
-      })).filter((row) => row.memberId);
-      if (mapped.length > 0) {
-        return mapped;
+      let mapped = await loadMeetingInstanceHazerinRows(id);
+      const legacyInstancesRead = await useHwyMeetingsLegacyInstancesRead();
+      const legacyParityReady = await vxLegacyImportParityReady();
+      if (mapped.length === 0 && !legacyInstancesRead && !legacyParityReady) {
+        try {
+          const attendance = await listHwyMeetingInstanceAttendance(instanceId, roleNames);
+          mapped = attendance.filter((row) => row.present).map((row) => mapMeetingInstanceHazerinRow({
+            member_id: row.memberId ?? row.id,
+            username: row.username,
+            first_name: row.firstName,
+            father_name: row.fatherName,
+            family_name: row.lastName
+          })).filter((row) => row.memberId);
+        } catch (error) {
+          if (!isHwyMeetingsMembersWriteUnavailableError(error)) {
+            throw error;
+          }
+        }
       }
-      const attendance = await listHwyMeetingInstanceAttendance(instanceId, roleNames);
-      return attendance.filter((row) => row.present).map((row) => ({
-        memberId: row.memberId ?? row.id,
-        username: row.username,
-        firstName: row.firstName,
-        fatherName: row.fatherName,
-        lastName: row.lastName
-      })).filter((row) => row.memberId);
+      await enrichMeetingHazerinAvatars(mapped);
+      return mapped;
     };
   }
 });
@@ -269291,7 +271934,7 @@ var init_vxProcedureRowRead = __esm({
 
 // src/server/domain/vx/vxMemberTarghinDossierFaceFinalize.service.ts
 async function loadCpMemberFacesByActorKeys(actorKeys) {
-  const keys = [...new Set(actorKeys.map(trim34).filter(Boolean))];
+  const keys = [...new Set(actorKeys.map(trim35).filter(Boolean))];
   const result = /* @__PURE__ */ new Map();
   if (!keys.length) {
     return result;
@@ -269314,15 +271957,15 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       WHERE id IN (${idPlaceholders})
          OR username IN (${usernamePlaceholders})
       `,
-      { replacements, type: import_sequelize128.QueryTypes.SELECT }
+      { replacements, type: import_sequelize130.QueryTypes.SELECT }
     );
     for (const row of rows) {
       const face = mapVmRowToFace2(row);
       if (!negoAuthorHasLabel(face)) {
         continue;
       }
-      const memberId = trim34(row.id);
-      const username = trim34(row.username);
+      const memberId = trim35(row.id);
+      const username = trim35(row.username);
       for (const key of keys) {
         if (key === memberId || key === username) {
           result.set(key, face);
@@ -269340,18 +271983,18 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       FROM dbo.vw_vx_members WITH (NOLOCK)
       WHERE username IN (${unPlaceholders})
       `,
-      { replacements: unReplacements, type: import_sequelize128.QueryTypes.SELECT }
+      { replacements: unReplacements, type: import_sequelize130.QueryTypes.SELECT }
     );
     for (const row of rows) {
       const face = mapVmRowToFace2(row);
       if (!negoAuthorHasLabel(face)) {
         continue;
       }
-      const username = trim34(row.username);
+      const username = trim35(row.username);
       if (username) {
         result.set(username, face);
       }
-      result.set(trim34(row.id), face);
+      result.set(trim35(row.id), face);
     }
   }
   return result;
@@ -269422,36 +272065,36 @@ async function finalizeTarghinMemberFacesForDossier(rows, readFace, writeFace) {
     }
   }
 }
-var import_sequelize128, trim34, mapVmRowToFace2, collectLookupKeysFromFace, mergeCpFaceOntoTarghinFace;
+var import_sequelize130, trim35, mapVmRowToFace2, collectLookupKeysFromFace, mergeCpFaceOntoTarghinFace;
 var init_vxMemberTarghinDossierFaceFinalize_service = __esm({
   "src/server/domain/vx/vxMemberTarghinDossierFaceFinalize.service.ts"() {
-    import_sequelize128 = require("sequelize");
+    import_sequelize130 = require("sequelize");
     init_vxMemberTarghinAdmin();
     init_vxGeoResponsibilityMemberDisplay();
     init_vxMemberPersonDisplayName();
     init_controlPlaneSequelize();
     init_vxMemberTarghinNegoAuthorResolve();
-    trim34 = (value) => String(value ?? "").trim();
+    trim35 = (value) => String(value ?? "").trim();
     mapVmRowToFace2 = (row) => ({
-      id: trim34(row.id),
-      username: trim34(row.username) || null,
-      displayFullName: formatHwyMemberPersonDisplayName(trim34(row.display_full_name)) || null,
-      genderCode: trim34(row.gender_code) || null,
+      id: trim35(row.id),
+      username: trim35(row.username) || null,
+      displayFullName: formatHwyMemberPersonDisplayName(trim35(row.display_full_name)) || null,
+      genderCode: trim35(row.gender_code) || null,
       avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-        avatarUrl: trim34(row.avatar_url) || null,
+        avatarUrl: trim35(row.avatar_url) || null,
         hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1,
         userId: row.user_id != null ? Number(row.user_id) : null
       }),
-      phone: trim34(row.phone1) || null,
-      electoralDivisionPath: trim34(row.electoral_division_path) || null
+      phone: trim35(row.phone1) || null,
+      electoralDivisionPath: trim35(row.electoral_division_path) || null
     });
     collectLookupKeysFromFace = (face) => {
       const keys = [];
-      const id = trim34(face.id);
+      const id = trim35(face.id);
       if (id) {
         keys.push(id);
       }
-      const username = trim34(face.username);
+      const username = trim35(face.username);
       if (username) {
         keys.push(username);
       }
@@ -269505,7 +272148,7 @@ async function enrichTarghinAdminRequesterMemberIdsFromAccounts(rows) {
   }
 }
 async function attachHwyMemberTarghinAdminRequesters(rows) {
-  const rowsWithIds = rows.filter((row) => trim35(row.id));
+  const rowsWithIds = rows.filter((row) => trim36(row.id));
   if (!rowsWithIds.length) {
     await enrichTarghinAdminRequesterMemberIdsFromAccounts(rows);
     await finalizeTarghinMemberFacesForDossier(
@@ -269526,12 +272169,12 @@ async function attachHwyMemberTarghinAdminRequesters(rows) {
     FROM dbo.vx_member_targhin_requests WITH (NOLOCK)
     WHERE id IN (${placeholders})
     `,
-    { replacements, type: import_sequelize129.QueryTypes.SELECT }
+    { replacements, type: import_sequelize131.QueryTypes.SELECT }
   );
   const actorsByRequestId = /* @__PURE__ */ new Map();
   for (const row of historyRows) {
-    const requestId = trim35(row.id);
-    const requestBy = trim35(row.requestByLegacy);
+    const requestId = trim36(row.id);
+    const requestBy = trim36(row.requestByLegacy);
     if (requestId && requestBy) {
       actorsByRequestId.set(requestId, requestBy);
     }
@@ -269557,17 +272200,17 @@ async function attachHwyMemberTarghinAdminRequesters(rows) {
     }
   );
 }
-var import_sequelize129, trim35, parseRequesterAccountUserId;
+var import_sequelize131, trim36, parseRequesterAccountUserId;
 var init_vxMemberTarghinAdminRequesterAttach_service = __esm({
   "src/server/domain/vx/vxMemberTarghinAdminRequesterAttach.service.ts"() {
-    import_sequelize129 = require("sequelize");
+    import_sequelize131 = require("sequelize");
     init_vxMemberTarghinAdmin();
     init_controlPlaneSequelize();
     init_vxMemberTarghinDossierFaceFinalize_service();
     init_vxMemberTarghinExecutorRoles();
-    trim35 = (value) => String(value ?? "").trim();
+    trim36 = (value) => String(value ?? "").trim();
     parseRequesterAccountUserId = (face) => {
-      const id = trim35(face?.id);
+      const id = trim36(face?.id);
       const match = /^user-(\d+)$/.exec(id);
       if (!match) {
         return null;
@@ -269590,36 +272233,36 @@ async function resolveHwyTarghinNegoActorLegacyUsername(actorUserId2) {
     FROM dbo.vw_vx_members WITH (NOLOCK)
     WHERE user_id = :actorUserId
     `,
-    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize130.QueryTypes.SELECT }
+    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize132.QueryTypes.SELECT }
   );
-  const memberUsername = trim36(memberRows[0]?.username);
+  const memberUsername = trim37(memberRows[0]?.username);
   if (memberUsername) {
     return memberUsername;
   }
   const userRows = await sequelize.query(
     `SELECT username FROM dbo.base_users WHERE id = :actorUserId`,
-    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize130.QueryTypes.SELECT }
+    { replacements: { actorUserId: actorUserId2 }, type: import_sequelize132.QueryTypes.SELECT }
   );
-  const baseUsername = trim36(userRows[0]?.username);
+  const baseUsername = trim37(userRows[0]?.username);
   if (baseUsername) {
     return baseUsername;
   }
   return "";
 }
-var import_sequelize130, trim36;
+var import_sequelize132, trim37;
 var init_vxMemberTarghinNegoActor = __esm({
   "src/server/domain/vx/vxMemberTarghinNegoActor.ts"() {
-    import_sequelize130 = require("sequelize");
+    import_sequelize132 = require("sequelize");
     init_controlPlaneSequelize();
-    trim36 = (value) => String(value ?? "").trim();
+    trim37 = (value) => String(value ?? "").trim();
   }
 });
 
 // src/server/domain/vx/vxMemberTarghinAdmin.service.ts
-var import_sequelize131, DEFAULT_PAGE_SIZE12, MAX_PAGE_SIZE12, FINAL_NOTE_MAX_LENGTH, trim37, assertSqlServer16, clampPage8, mapMemberFace, mapRequesterFace, mapAdminRow, listHwyMemberTarghinAdmin, resolveActorUserId, decideHwyMemberTarghinRequest, decideHwyMemberTarghinRequestsBulk;
+var import_sequelize133, DEFAULT_PAGE_SIZE12, MAX_PAGE_SIZE12, FINAL_NOTE_MAX_LENGTH, trim38, assertSqlServer16, clampPage8, mapMemberFace, mapRequesterFace, mapAdminRow, listHwyMemberTarghinAdmin, resolveActorUserId, decideHwyMemberTarghinRequest, decideHwyMemberTarghinRequestsBulk;
 var init_vxMemberTarghinAdmin_service = __esm({
   "src/server/domain/vx/vxMemberTarghinAdmin.service.ts"() {
-    import_sequelize131 = require("sequelize");
+    import_sequelize133 = require("sequelize");
     init_vxMemberTarghinRequestStatus();
     init_vxGeoResponsibilityMemberDisplay();
     init_vxMemberPersonDisplayName();
@@ -269643,7 +272286,7 @@ var init_vxMemberTarghinAdmin_service = __esm({
     DEFAULT_PAGE_SIZE12 = 25;
     MAX_PAGE_SIZE12 = 100;
     FINAL_NOTE_MAX_LENGTH = 1024;
-    trim37 = (value) => String(value ?? "").trim();
+    trim38 = (value) => String(value ?? "").trim();
     assertSqlServer16 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Targhin request administration requires SQL Server control plane.");
@@ -269661,7 +272304,7 @@ var init_vxMemberTarghinAdmin_service = __esm({
       };
     };
     mapMemberFace = (row, prefix) => {
-      const id = trim37(readHwyProcedurePrefixedField(row, prefix, "Id"));
+      const id = trim38(readHwyProcedurePrefixedField(row, prefix, "Id"));
       if (!id) {
         return {
           id: "",
@@ -269677,18 +272320,18 @@ var init_vxMemberTarghinAdmin_service = __esm({
       const userIdRaw = readHwyProcedurePrefixedField(row, prefix, "UserId");
       return {
         id,
-        username: trim37(readHwyProcedurePrefixedField(row, prefix, "Username")) || null,
+        username: trim38(readHwyProcedurePrefixedField(row, prefix, "Username")) || null,
         displayFullName: formatHwyMemberPersonDisplayName(
-          trim37(readHwyProcedurePrefixedField(row, prefix, "DisplayFullName"))
+          trim38(readHwyProcedurePrefixedField(row, prefix, "DisplayFullName"))
         ) || null,
-        genderCode: trim37(readHwyProcedurePrefixedField(row, prefix, "GenderCode")) || null,
+        genderCode: trim38(readHwyProcedurePrefixedField(row, prefix, "GenderCode")) || null,
         avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-          avatarUrl: trim37(readHwyProcedurePrefixedField(row, prefix, "AvatarUrl")) || null,
+          avatarUrl: trim38(readHwyProcedurePrefixedField(row, prefix, "AvatarUrl")) || null,
           hasProfileImage: hasProfileImageRaw === true || hasProfileImageRaw === 1,
           userId: userIdRaw != null ? Number(userIdRaw) : null
         }),
-        phone: trim37(readHwyProcedurePrefixedField(row, prefix, "Phone")) || null,
-        electoralDivisionPath: trim37(
+        phone: trim38(readHwyProcedurePrefixedField(row, prefix, "Phone")) || null,
+        electoralDivisionPath: trim38(
           readHwyProcedurePrefixedField(row, prefix, "ElectoralDivisionPath")
         ) || null
       };
@@ -269698,8 +272341,8 @@ var init_vxMemberTarghinAdmin_service = __esm({
       if (fromMember.id) {
         return fromMember;
       }
-      const accountUserId = trim37(row.requester_account_user_id);
-      const accountUsername = trim37(row.requester_account_username);
+      const accountUserId = trim38(row.requester_account_user_id);
+      const accountUsername = trim38(row.requester_account_username);
       if (!accountUserId && !accountUsername) {
         return null;
       }
@@ -269719,26 +272362,26 @@ var init_vxMemberTarghinAdmin_service = __esm({
     };
     mapAdminRow = (row, viewerNegoActorLegacy) => {
       const member = mapMemberFace(row, "member");
-      const deciderId = trim37(readHwyProcedureRowValue(row, "decider_id"));
-      const lastNegoNoteWriterLegacy = trim37(row.last_nego_note_writer_legacy) || null;
+      const deciderId = trim38(readHwyProcedureRowValue(row, "decider_id"));
+      const lastNegoNoteWriterLegacy = trim38(row.last_nego_note_writer_legacy) || null;
       return {
-        id: trim37(row.id),
+        id: trim38(row.id),
         memberId: member.id,
         member,
-        requestReasonCode: trim37(row.request_reason_code) || null,
-        requestReasonCodeTitle: trim37(row.request_reason_code_title) || void 0,
-        requestNote: trim37(row.request_note) || null,
+        requestReasonCode: trim38(row.request_reason_code) || null,
+        requestReasonCodeTitle: trim38(row.request_reason_code_title) || void 0,
+        requestNote: trim38(row.request_note) || null,
         createdAt: String(row.created_at ?? ""),
-        statusCode: trim37(row.status_code),
+        statusCode: trim38(row.status_code),
         requester: mapRequesterFace(row),
         requesterMemberId: null,
-        finalReasonCode: trim37(row.final_reason_code) || null,
-        finalReasonCodeTitle: trim37(row.final_reason_code_title) || void 0,
-        finalNote: trim37(row.final_note) || null,
+        finalReasonCode: trim38(row.final_reason_code) || null,
+        finalReasonCodeTitle: trim38(row.final_reason_code_title) || void 0,
+        finalNote: trim38(row.final_note) || null,
         finalAt: row.final_at ? String(row.final_at) : null,
         decider: deciderId ? mapMemberFace(row, "decider") : null,
         deciderMemberId: null,
-        lastNegoNote: trim37(row.last_nego_note) || null,
+        lastNegoNote: trim38(row.last_nego_note) || null,
         lastNegoNoteWriterLegacy,
         lastNegoNoteIsByViewer: Boolean(
           lastNegoNoteWriterLegacy && viewerNegoActorLegacy && lastNegoNoteWriterLegacy === viewerNegoActorLegacy
@@ -269758,7 +272401,7 @@ var init_vxMemberTarghinAdmin_service = __esm({
       const viewerNegoActorLegacy = await resolveHwyTarghinNegoActorLegacyUsername(input.actorUserId ?? null);
       const { page, pageSize, offset } = clampPage8(input.page, input.pageSize);
       const statusCode = queue2 === "pending" ? VX_MEMBER_TARGHIN_REQUEST_STATUS.pending : queue2 === "approved" ? VX_MEMBER_TARGHIN_REQUEST_STATUS.approved : queue2 === "rejected" ? VX_MEMBER_TARGHIN_REQUEST_STATUS.rejected : null;
-      const search = trim37(input.search);
+      const search = trim38(input.search);
       const procArgs = {
         status_code: statusCode,
         nego_state: negoState || null,
@@ -269851,18 +272494,18 @@ var init_vxMemberTarghinAdmin_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT id FROM dbo.base_users WHERE id = :userId`,
-        { replacements: { userId: actorUserId2 }, type: import_sequelize131.QueryTypes.SELECT }
+        { replacements: { userId: actorUserId2 }, type: import_sequelize133.QueryTypes.SELECT }
       );
       return rows.length ? actorUserId2 : null;
     };
     decideHwyMemberTarghinRequest = async (input) => {
       await assertSqlServer16();
-      const requestId = trim37(input.requestId);
+      const requestId = trim38(input.requestId);
       if (!requestId) {
         throw new Error("Request id is required.");
       }
       const finalReasonCode = await assertHwyMemberTarghinFinalReasonCode(input.decision, input.finalReasonCode);
-      const finalNote = trim37(input.finalNote);
+      const finalNote = trim38(input.finalNote);
       if (!finalNote) {
         throw new Error("Decision note is required.");
       }
@@ -269914,7 +272557,7 @@ var init_vxMemberTarghinAdmin_service = __esm({
       }
     };
     decideHwyMemberTarghinRequestsBulk = async (input) => {
-      const uniqueIds = [...new Set(input.requestIds.map((id) => trim37(id)).filter(Boolean))];
+      const uniqueIds = [...new Set(input.requestIds.map((id) => trim38(id)).filter(Boolean))];
       if (uniqueIds.length === 0) {
         throw new Error("Select at least one targhin request.");
       }
@@ -269935,7 +272578,7 @@ var init_vxMemberTarghinAdmin_service = __esm({
 
 // src/server/domain/vx/vxMemberTarghinMembersListExecutorAttach.service.ts
 async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
-  const keys = [...new Set(legacyKeys.map(trim38).filter(Boolean))];
+  const keys = [...new Set(legacyKeys.map(trim39).filter(Boolean))];
   const result = /* @__PURE__ */ new Map();
   if (!keys.length) {
     return { faces: result, stillMissingKeys: [] };
@@ -269960,7 +272603,7 @@ async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
       FROM dbo.vw_vx_members WITH (NOLOCK)
       WHERE id IN (${idPlaceholders})
       `,
-      { replacements: idReplacements, type: import_sequelize132.QueryTypes.SELECT }
+      { replacements: idReplacements, type: import_sequelize134.QueryTypes.SELECT }
     );
     for (const row of byIdRows) {
       const face = mapVmRowToFace3(row);
@@ -269992,7 +272635,7 @@ async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
       FROM dbo.vw_vx_members WITH (NOLOCK)
       WHERE username IN (${unPlaceholders})
       `,
-      { replacements: unReplacements, type: import_sequelize132.QueryTypes.SELECT }
+      { replacements: unReplacements, type: import_sequelize134.QueryTypes.SELECT }
     );
     for (const row of byUsernameRows) {
       const face = mapVmRowToFace3(row);
@@ -270042,7 +272685,7 @@ async function loadFinalByLegacyFromControlPlane(memberIds) {
     WHERE rn = 1
       AND final_by_legacy IS NOT NULL
     `,
-    { replacements, type: import_sequelize132.QueryTypes.SELECT }
+    { replacements, type: import_sequelize134.QueryTypes.SELECT }
   );
   for (const row of rows) {
     const memberId = String(row.member_id ?? "").trim();
@@ -270084,29 +272727,29 @@ async function attachHwyTarghinMembersListExecutors(rows) {
   }
   return legacyRoleTitlesByUsername;
 }
-var import_sequelize132, trim38, mapVmRowToFace3, parseMemberId17;
+var import_sequelize134, trim39, mapVmRowToFace3, parseMemberId17;
 var init_vxMemberTarghinMembersListExecutorAttach_service = __esm({
   "src/server/domain/vx/vxMemberTarghinMembersListExecutorAttach.service.ts"() {
-    import_sequelize132 = require("sequelize");
+    import_sequelize134 = require("sequelize");
     init_vxMemberTarghinAdmin();
     init_vxMemberTarghinRequestStatus();
     init_controlPlaneSequelize();
     init_vxGeoResponsibilityMemberDisplay();
     init_vxMemberPersonDisplayName();
     init_vxMemberTarghinNegoAuthorResolve();
-    trim38 = (value) => String(value ?? "").trim();
+    trim39 = (value) => String(value ?? "").trim();
     mapVmRowToFace3 = (row) => ({
-      id: trim38(row.id),
-      username: trim38(row.username) || null,
-      displayFullName: formatHwyMemberPersonDisplayName(trim38(row.display_full_name)) || null,
-      genderCode: trim38(row.gender_code) || null,
+      id: trim39(row.id),
+      username: trim39(row.username) || null,
+      displayFullName: formatHwyMemberPersonDisplayName(trim39(row.display_full_name)) || null,
+      genderCode: trim39(row.gender_code) || null,
       avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-        avatarUrl: trim38(row.avatar_url) || null,
+        avatarUrl: trim39(row.avatar_url) || null,
         hasProfileImage: row.has_profile_image === true || row.has_profile_image === 1,
         userId: row.user_id != null ? Number(row.user_id) : null
       }),
-      phone: trim38(row.phone1) || null,
-      electoralDivisionPath: trim38(row.electoral_division_path) || null
+      phone: trim39(row.phone1) || null,
+      electoralDivisionPath: trim39(row.electoral_division_path) || null
     });
     parseMemberId17 = (memberId) => {
       const trimmed = String(memberId ?? "").trim();
@@ -270143,7 +272786,7 @@ var init_vxTarghinExecutorRoleTitles = __esm({
 });
 
 // src/server/domain/vx/vxMemberTarghinMembersList.service.ts
-var DEFAULT_PAGE_SIZE13, MAX_PAGE_SIZE13, trim39, assertSqlServer17, clampPage9, mapFace, listHwyMemberTarghinMembers;
+var DEFAULT_PAGE_SIZE13, MAX_PAGE_SIZE13, trim40, assertSqlServer17, clampPage9, mapFace, listHwyMemberTarghinMembers;
 var init_vxMemberTarghinMembersList_service = __esm({
   "src/server/domain/vx/vxMemberTarghinMembersList.service.ts"() {
     init_vxGeoResponsibilityMemberDisplay();
@@ -270163,7 +272806,7 @@ var init_vxMemberTarghinMembersList_service = __esm({
     init_vxTarghinExecutorRoleTitles();
     DEFAULT_PAGE_SIZE13 = 25;
     MAX_PAGE_SIZE13 = 100;
-    trim39 = (value) => String(value ?? "").trim();
+    trim40 = (value) => String(value ?? "").trim();
     assertSqlServer17 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Targhined member list requires SQL Server control plane.");
@@ -270181,23 +272824,23 @@ var init_vxMemberTarghinMembersList_service = __esm({
       };
     };
     mapFace = (row, prefix) => {
-      const id = trim39(readHwyProcedurePrefixedField(row, prefix, "Id"));
+      const id = trim40(readHwyProcedurePrefixedField(row, prefix, "Id"));
       const hasProfileImageRaw = readHwyProcedurePrefixedField(row, prefix, "HasProfileImage");
       const userIdRaw = readHwyProcedurePrefixedField(row, prefix, "UserId");
       return {
         id,
-        username: trim39(readHwyProcedurePrefixedField(row, prefix, "Username")) || null,
+        username: trim40(readHwyProcedurePrefixedField(row, prefix, "Username")) || null,
         displayFullName: formatHwyMemberPersonDisplayName(
-          trim39(readHwyProcedurePrefixedField(row, prefix, "DisplayFullName"))
+          trim40(readHwyProcedurePrefixedField(row, prefix, "DisplayFullName"))
         ) || null,
-        genderCode: trim39(readHwyProcedurePrefixedField(row, prefix, "GenderCode")) || null,
+        genderCode: trim40(readHwyProcedurePrefixedField(row, prefix, "GenderCode")) || null,
         avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-          avatarUrl: trim39(readHwyProcedurePrefixedField(row, prefix, "AvatarUrl")) || null,
+          avatarUrl: trim40(readHwyProcedurePrefixedField(row, prefix, "AvatarUrl")) || null,
           hasProfileImage: hasProfileImageRaw === true || hasProfileImageRaw === 1,
           userId: userIdRaw != null ? Number(userIdRaw) : null
         }),
-        phone: trim39(readHwyProcedurePrefixedField(row, prefix, "Phone")) || null,
-        electoralDivisionPath: trim39(
+        phone: trim40(readHwyProcedurePrefixedField(row, prefix, "Phone")) || null,
+        electoralDivisionPath: trim40(
           readHwyProcedurePrefixedField(row, prefix, "ElectoralDivisionPath")
         ) || null
       };
@@ -270209,7 +272852,7 @@ var init_vxMemberTarghinMembersList_service = __esm({
         "pending_cancellation"
       );
       const { page, pageSize, offset } = clampPage9(input.page, input.pageSize);
-      const search = trim39(input.search);
+      const search = trim40(input.search);
       const searchLike = search ? `%${search}%` : null;
       const countRows = await execHwyProcedure("vx_targhin_members_count", {
         targhin_status_code: targhinStatusCode,
@@ -270234,20 +272877,20 @@ var init_vxMemberTarghinMembersList_service = __esm({
       );
       const mappedRows = rows.map((row) => {
         const member = mapFace(row, "member");
-        const executorId = trim39(row.executor_id);
+        const executorId = trim40(row.executor_id);
         const executorMemberId = parseHwyTarghinExecutorMemberId(executorId);
         return {
           memberId: member.id,
           member,
           membershipStatusUpdatedOn: row.membership_status_updated_on ? String(row.membership_status_updated_on) : null,
           membershipOn: row.membership_on ? String(row.membership_on) : null,
-          latestRequestReasonCodeTitle: trim39(row.latest_request_reason_code_title) || void 0,
-          latestRequestNote: trim39(row.latest_request_note) || null,
-          latestFinalReasonCodeTitle: trim39(row.latest_final_reason_code_title) || void 0,
-          latestFinalNote: trim39(row.latest_final_note) || null,
+          latestRequestReasonCodeTitle: trim40(row.latest_request_reason_code_title) || void 0,
+          latestRequestNote: trim40(row.latest_request_note) || null,
+          latestFinalReasonCodeTitle: trim40(row.latest_final_reason_code_title) || void 0,
+          latestFinalNote: trim40(row.latest_final_note) || null,
           latestFinalAt: row.latest_final_at ? String(row.latest_final_at) : null,
-          latestProcessNegoNote: trim39(row.latest_process_nego_note) || null,
-          executor: executorId || trim39(row.executor_username) ? mapFace(row, "executor") : null,
+          latestProcessNegoNote: trim40(row.latest_process_nego_note) || null,
+          executor: executorId || trim40(row.executor_username) ? mapFace(row, "executor") : null,
           executorMemberId,
           executorAccountUserId: readHwyProcedureRowUserId(
             row,
@@ -270265,7 +272908,7 @@ var init_vxMemberTarghinMembersList_service = __esm({
           if (row.executorMemberId != null) {
             return row.executorMemberId;
           }
-          const executorId = trim39(row.executor?.id);
+          const executorId = trim40(row.executor?.id);
           return parseHwyTarghinExecutorMemberId(executorId);
         }).filter((id) => id != null)
       );
@@ -270273,7 +272916,7 @@ var init_vxMemberTarghinMembersList_service = __esm({
         if (row.executorAccountUserId != null && row.executorAccountUserId > 0) {
           return row.executorAccountUserId;
         }
-        const faceId = trim39(row.executor?.id);
+        const faceId = trim40(row.executor?.id);
         const userPrefix = faceId.startsWith("user-") ? faceId.slice("user-".length) : "";
         if (/^\d+$/.test(userPrefix)) {
           return Number(userPrefix);
@@ -270559,7 +273202,7 @@ async function getHwyMemberPhonePendingState(memberIdRaw) {
      LEFT JOIN dbo.base_users u ON u.id = c.request_by
      WHERE c.member_id = :memberId AND c.final_result IS NULL
      ORDER BY c.request_at DESC`,
-    { replacements: { memberId }, type: import_sequelize133.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize135.QueryTypes.SELECT }
   );
   const swapRows = await sequelize.query(
     `SELECT s.*, u.username AS request_by_username,
@@ -270573,7 +273216,7 @@ async function getHwyMemberPhonePendingState(memberIdRaw) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      WHERE s.member_id = :memberId AND s.final_result IS NULL
      ORDER BY s.request_at DESC`,
-    { replacements: { memberId }, type: import_sequelize133.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize135.QueryTypes.SELECT }
   );
   const changeBySlot = { 1: null, 2: null };
   for (const row of changeRows) {
@@ -270606,7 +273249,7 @@ async function listHwyMemberPhoneHistory(memberIdRaw, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = c.final_by
      WHERE c.member_id = :memberId`,
-    { replacements: { memberId }, type: import_sequelize133.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize135.QueryTypes.SELECT }
   );
   const swapRows = await sequelize.query(
     `SELECT s.*, 'swap' AS request_kind, u.username AS request_by_username,
@@ -270623,7 +273266,7 @@ async function listHwyMemberPhoneHistory(memberIdRaw, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = s.final_by
      WHERE s.member_id = :memberId`,
-    { replacements: { memberId }, type: import_sequelize133.QueryTypes.SELECT }
+    { replacements: { memberId }, type: import_sequelize135.QueryTypes.SELECT }
   );
   const merged = [...changeRows, ...swapRows].map((row) => mapAdminRow2(row, cultureLang)).sort((a, b) => b.requestAt.localeCompare(a.requestAt));
   await attachRejectTitles(merged, cultureLang);
@@ -270674,7 +273317,7 @@ async function createHwyMemberPhoneChangeRequest(input) {
         requestNote: (input.requestNote ?? "").trim().slice(0, 512) || null,
         requestBy: input.actorUserId
       },
-      type: import_sequelize133.QueryTypes.INSERT
+      type: import_sequelize135.QueryTypes.INSERT
     }
   );
   const built = buildHwyMemberPhoneWorkflowDossierEmitArgs({
@@ -270732,7 +273375,7 @@ async function createHwyMemberPhoneSwapRequest(input) {
         requestNote: (input.requestNote ?? "").trim().slice(0, 512) || null,
         requestBy: input.actorUserId
       },
-      type: import_sequelize133.QueryTypes.INSERT
+      type: import_sequelize135.QueryTypes.INSERT
     }
   );
   const built = buildHwyMemberPhoneWorkflowDossierEmitArgs({
@@ -270780,7 +273423,7 @@ async function listHwyMemberPhoneAdmin(input, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = c.final_by
      WHERE ${filter}`,
-    { type: import_sequelize133.QueryTypes.SELECT }
+    { type: import_sequelize135.QueryTypes.SELECT }
   );
   const swapRows = await sequelize.query(
     `SELECT s.*, 'swap' AS request_kind, u.username AS request_by_username,
@@ -270797,7 +273440,7 @@ async function listHwyMemberPhoneAdmin(input, cultureOrLang) {
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      LEFT JOIN dbo.base_users fu ON fu.id = s.final_by
      WHERE ${filter}`,
-    { type: import_sequelize133.QueryTypes.SELECT }
+    { type: import_sequelize135.QueryTypes.SELECT }
   );
   let merged = [...changeRows, ...swapRows].map((row) => mapAdminRow2(row, cultureLang));
   if (search) {
@@ -270840,7 +273483,7 @@ async function decideHwyMemberPhoneRequest(input) {
   const table = isSwap ? "vx_member_phone_swap_requests" : "vx_member_phone_change_requests";
   const pendingRows = await sequelize.query(
     `SELECT * FROM dbo.${table} WHERE id = :id AND final_result IS NULL`,
-    { replacements: { id: requestId }, type: import_sequelize133.QueryTypes.SELECT }
+    { replacements: { id: requestId }, type: import_sequelize135.QueryTypes.SELECT }
   );
   const req = pendingRows[0];
   if (!req) {
@@ -270886,7 +273529,7 @@ async function decideHwyMemberPhoneRequest(input) {
         finalNote: finalNote.slice(0, 512),
         finalBy: input.actorUserId
       },
-      type: import_sequelize133.QueryTypes.UPDATE
+      type: import_sequelize135.QueryTypes.UPDATE
     }
   );
   const reasonCode = (input.finalReasonCode ?? "").trim();
@@ -270929,11 +273572,11 @@ async function decideHwyMemberPhoneRequest(input) {
     toValue: built.toValue
   });
 }
-var import_node_crypto50, import_sequelize133, DEFAULT_PAGE_SIZE14, MAX_PAGE_SIZE14, AUTO_DISMISS_CHANGE_NOTE, AUTO_DISMISS_SWAP_NOTE, assertSqlServer18, parseMemberId18, clampPage10, loadMemberPhoneRow, ensurePhoneAvailable, ensureNoPendingSwap, ensureNoPendingChangeForSlot, ensureNoPendingChanges, applyMemberPhones, dismissPendingChangesForSlot, dismissPendingSwap, applyApprovedPhoneChange, applyApprovedPhoneSwap, mapAdminRow2, attachRejectTitles, queueFilterSql, isSwapRequestId;
+var import_node_crypto50, import_sequelize135, DEFAULT_PAGE_SIZE14, MAX_PAGE_SIZE14, AUTO_DISMISS_CHANGE_NOTE, AUTO_DISMISS_SWAP_NOTE, assertSqlServer18, parseMemberId18, clampPage10, loadMemberPhoneRow, ensurePhoneAvailable, ensureNoPendingSwap, ensureNoPendingChangeForSlot, ensureNoPendingChanges, applyMemberPhones, dismissPendingChangesForSlot, dismissPendingSwap, applyApprovedPhoneChange, applyApprovedPhoneSwap, mapAdminRow2, attachRejectTitles, queueFilterSql, isSwapRequestId;
 var init_vxMemberPhoneRequests_service = __esm({
   "src/server/domain/vx/vxMemberPhoneRequests.service.ts"() {
     import_node_crypto50 = __toESM(require("node:crypto"), 1);
-    import_sequelize133 = require("sequelize");
+    import_sequelize135 = require("sequelize");
     init_vxMemberPhoneRequestRules();
     init_vxMemberDirectoryDetail();
     init_vxMemberPersonDisplayName();
@@ -270985,7 +273628,7 @@ var init_vxMemberPhoneRequests_service = __esm({
      LEFT JOIN dbo.base_users u ON u.id = m.user_id
      LEFT JOIN dbo.base_user_profiles p ON p.user_id = m.user_id
      WHERE m.id = :id`,
-        { replacements: { id: memberId }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { id: memberId }, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (!rows[0]) {
         throw new Error("Member not found.");
@@ -271000,7 +273643,7 @@ var init_vxMemberPhoneRequests_service = __esm({
       const usedRows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.vx_members WITH (NOLOCK)
      WHERE id <> :memberId AND (phone1 = :phone OR phone2 = :phone)`,
-        { replacements: { memberId: excludeMemberId, phone }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { memberId: excludeMemberId, phone }, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (Number(usedRows[0]?.c ?? 0) > 0) {
         throw new Error("Phone number is already used by another member.");
@@ -271014,7 +273657,7 @@ var init_vxMemberPhoneRequests_service = __esm({
       const pendingRows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.vx_member_phone_change_requests WITH (NOLOCK)
      WHERE new_phone = :phone AND final_result IS NULL${excludeClause}`,
-        { replacements: pendingReplacements, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: pendingReplacements, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (Number(pendingRows[0]?.c ?? 0) > 0) {
         throw new Error("Phone number is reserved by another pending change request.");
@@ -271025,7 +273668,7 @@ var init_vxMemberPhoneRequests_service = __esm({
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.vx_member_phone_swap_requests WITH (NOLOCK)
      WHERE member_id = :memberId AND final_result IS NULL`,
-        { replacements: { memberId }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { memberId }, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (Number(rows[0]?.c ?? 0) > 0) {
         throw new Error("A pending phone swap request already exists for this member.");
@@ -271036,7 +273679,7 @@ var init_vxMemberPhoneRequests_service = __esm({
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.vx_member_phone_change_requests WITH (NOLOCK)
      WHERE member_id = :memberId AND phone_slot = :phoneSlot AND final_result IS NULL`,
-        { replacements: { memberId, phoneSlot }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { memberId, phoneSlot }, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (Number(rows[0]?.c ?? 0) > 0) {
         throw new Error("A pending change request already exists for this phone slot.");
@@ -271047,7 +273690,7 @@ var init_vxMemberPhoneRequests_service = __esm({
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.vx_member_phone_change_requests WITH (NOLOCK)
      WHERE member_id = :memberId AND final_result IS NULL`,
-        { replacements: { memberId }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { memberId }, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (Number(rows[0]?.c ?? 0) > 0) {
         throw new Error("A pending phone change request already exists for this member.");
@@ -271057,7 +273700,7 @@ var init_vxMemberPhoneRequests_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const beforeRows = await sequelize.query(
         `SELECT ${VX_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.vx_members WHERE id = :id`,
-        { replacements: { id: input.memberId }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { id: input.memberId }, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (!beforeRows[0]) {
         throw new Error("Member not found.");
@@ -271070,12 +273713,12 @@ var init_vxMemberPhoneRequests_service = __esm({
         `UPDATE dbo.vx_members SET phone1 = :phone1, phone2 = :phone2, updated_at = :updated_at WHERE id = :id`,
         {
           replacements: { id: input.memberId, phone1: p1Db, phone2: p2Db, updated_at: now },
-          type: import_sequelize133.QueryTypes.UPDATE
+          type: import_sequelize135.QueryTypes.UPDATE
         }
       );
       const afterRows = await sequelize.query(
         `SELECT ${VX_MEMBER_HISTORY_SNAPSHOT_SQL} FROM dbo.vx_members WHERE id = :id`,
-        { replacements: { id: input.memberId }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { id: input.memberId }, type: import_sequelize135.QueryTypes.SELECT }
       );
       if (afterRows[0]) {
         await emitHwyMemberDirectoryPatchHistory({
@@ -271102,7 +273745,7 @@ var init_vxMemberPhoneRequests_service = __esm({
      WHERE member_id = :memberId AND phone_slot = :phoneSlot AND final_result IS NULL`,
         {
           replacements: { memberId, phoneSlot, note, final_by: actorUserId2 },
-          type: import_sequelize133.QueryTypes.UPDATE
+          type: import_sequelize135.QueryTypes.UPDATE
         }
       );
     };
@@ -271115,7 +273758,7 @@ var init_vxMemberPhoneRequests_service = __esm({
      WHERE member_id = :memberId AND final_result IS NULL`,
         {
           replacements: { memberId, note, final_by: actorUserId2 },
-          type: import_sequelize133.QueryTypes.UPDATE
+          type: import_sequelize135.QueryTypes.UPDATE
         }
       );
     };
@@ -271195,7 +273838,7 @@ var init_vxMemberPhoneRequests_service = __esm({
       const sequelize = getControlPlaneSequelize();
       const rows = await sequelize.query(
         `SELECT COUNT(*) AS c FROM dbo.vx_member_phone_swap_requests WHERE id = :id`,
-        { replacements: { id: requestId }, type: import_sequelize133.QueryTypes.SELECT }
+        { replacements: { id: requestId }, type: import_sequelize135.QueryTypes.SELECT }
       );
       return Number(rows[0]?.c ?? 0) > 0;
     };
@@ -271203,10 +273846,10 @@ var init_vxMemberPhoneRequests_service = __esm({
 });
 
 // src/server/domain/vx/vxMemberTarghinNegoNotes.service.ts
-var import_sequelize134, NOTE_MAX_LENGTH, trim40, assertSqlServer19, mapAuthorFace, listHwyMemberTarghinNegoNotes, createHwyMemberTarghinNegoNote;
+var import_sequelize136, NOTE_MAX_LENGTH, trim41, assertSqlServer19, mapAuthorFace, listHwyMemberTarghinNegoNotes, createHwyMemberTarghinNegoNote;
 var init_vxMemberTarghinNegoNotes_service = __esm({
   "src/server/domain/vx/vxMemberTarghinNegoNotes.service.ts"() {
-    import_sequelize134 = require("sequelize");
+    import_sequelize136 = require("sequelize");
     init_vxGeoResponsibilityMemberDisplay();
     init_vxMemberPersonDisplayName();
     init_controlPlaneSequelize();
@@ -271218,7 +273861,7 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
     init_vxMemberTarghinNegoAuthorResolve();
     init_vxMemberTarghinNegoActor();
     NOTE_MAX_LENGTH = 4e3;
-    trim40 = (value) => String(value ?? "").trim();
+    trim41 = (value) => String(value ?? "").trim();
     assertSqlServer19 = async () => {
       if (readControlPlaneProvider() !== "sqlserver") {
         throw new Error("Targhin negotiation notes require SQL Server control plane.");
@@ -271227,11 +273870,11 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
       await ensureHwyDbObjects();
     };
     mapAuthorFace = (row) => {
-      const memberAuthorId = trim40(row.author_id);
-      const memberDisplay = trim40(row.author_display_full_name);
-      const memberUsername = trim40(row.author_username);
+      const memberAuthorId = trim41(row.author_id);
+      const memberDisplay = trim41(row.author_display_full_name);
+      const memberUsername = trim41(row.author_username);
       const accountUserId = row.created_by_user_id != null ? Number(row.created_by_user_id) : null;
-      const accountUsername = trim40(row.account_username);
+      const accountUsername = trim41(row.account_username);
       const accountDisplay = formatProfileDisplayName({
         firstname: row.account_firstname,
         lastname: row.account_lastname,
@@ -271243,13 +273886,13 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
           id: memberAuthorId,
           username: memberUsername || null,
           displayFullName: formatHwyMemberPersonDisplayName(memberDisplay) || memberUsername || null,
-          genderCode: trim40(row.author_gender_code) || null,
+          genderCode: trim41(row.author_gender_code) || null,
           avatarUrl: resolveHwyGeoResponsibilityAvatarUrl({
-            avatarUrl: trim40(row.author_avatar_url) || null,
+            avatarUrl: trim41(row.author_avatar_url) || null,
             hasProfileImage: row.author_has_profile_image === true || row.author_has_profile_image === 1,
             userId: row.author_user_id != null ? Number(row.author_user_id) : null
           }),
-          phone: trim40(row.author_phone) || null,
+          phone: trim41(row.author_phone) || null,
           electoralDivisionPath: null
         };
       }
@@ -271268,7 +273911,7 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
           electoralDivisionPath: null
         };
       }
-      const legacy = trim40(row.created_by_legacy);
+      const legacy = trim41(row.created_by_legacy);
       if (legacy && !/^\d+$/.test(legacy)) {
         return {
           id: legacy,
@@ -271284,7 +273927,7 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
     };
     listHwyMemberTarghinNegoNotes = async (memberIdRaw) => {
       await assertSqlServer19();
-      const memberId = trim40(memberIdRaw);
+      const memberId = trim41(memberIdRaw);
       if (!memberId) {
         throw new Error("Member id is required.");
       }
@@ -271326,18 +273969,18 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
     WHERE n.member_id = :memberId
     ORDER BY n.created_at DESC, n.id DESC
     `,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize134.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize136.QueryTypes.SELECT }
       );
       const mapped = rows.map((row) => {
         const createdByUserIdRaw = row.created_by_user_id ?? row.createdbyuserid;
         const createdByUserId = createdByUserIdRaw != null ? Number(createdByUserIdRaw) : null;
         const author = mapAuthorFace(row);
         return {
-          id: trim40(row.id),
-          memberId: trim40(row.member_id),
-          note: trim40(row.note),
+          id: trim41(row.id),
+          memberId: trim41(row.member_id),
+          note: trim41(row.note),
           createdAt: String(row.created_at ?? ""),
-          createdByLegacy: trim40(row.created_by_legacy),
+          createdByLegacy: trim41(row.created_by_legacy),
           createdByUserId: Number.isFinite(createdByUserId) && createdByUserId > 0 ? createdByUserId : null,
           author
         };
@@ -271357,8 +274000,8 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
     };
     createHwyMemberTarghinNegoNote = async (input) => {
       await assertSqlServer19();
-      const memberId = trim40(input.memberId);
-      const note = trim40(input.note);
+      const memberId = trim41(input.memberId);
+      const note = trim41(input.note);
       if (!memberId) {
         throw new Error("Member id is required.");
       }
@@ -271370,7 +274013,7 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
       }
       const memberExists = await getControlPlaneSequelize().query(
         `SELECT id FROM dbo.vx_members WHERE id = :memberId`,
-        { replacements: { memberId: Number(memberId) }, type: import_sequelize134.QueryTypes.SELECT }
+        { replacements: { memberId: Number(memberId) }, type: import_sequelize136.QueryTypes.SELECT }
       );
       if (!memberExists.length) {
         throw new Error("Member not found.");
@@ -271609,6 +274252,7 @@ var init_vx_routes = __esm({
     init_vxEmployeesList_service();
     init_vxPaymentDocuments_service();
     init_vxMasoolinPerformance_service();
+    init_vxMasoolinPerformanceLegacyRead_service();
     init_vxMasoolinStars_service();
     init_vxMembersSocialScreens_service();
     init_vxPaymentDocumentsMembers_service();
@@ -271624,6 +274268,7 @@ var init_vx_routes = __esm({
     init_vxMemberPhoneRejectReasons_service();
     init_vxMemberTarghinNegoNotes_service();
     init_auth_middleware();
+    init_vxMasoolinPerformanceLegacyAccess();
     init_vxMemberDossierSelectOptions_service();
     init_vxMemberInstituteCharacterSelectOptions_service();
     init_vxMemberInstituteCharacterVocab();
@@ -273767,6 +276412,34 @@ var init_vx_routes = __esm({
         }
       );
       router.get(
+        "/members/:memberId/legacy-picture",
+        requireAuth,
+        requireHwyMemberListFaceAssetAccess,
+        async (req, res) => {
+          const memberId = String(req.params.memberId ?? "").trim();
+          if (!memberId) {
+            res.status(400).json({ success: false, message: "memberId is required." });
+            return;
+          }
+          const size = String(req.query.size ?? "").trim().toLowerCase() === "full" ? "full" : "xs";
+          try {
+            const { loadHwyMemberLegacyPicture: loadHwyMemberLegacyPicture2 } = await Promise.resolve().then(() => (init_vxMemberLegacyPicture_service(), vxMemberLegacyPicture_service_exports));
+            const payload = await loadHwyMemberLegacyPicture2(memberId, size);
+            if (!payload) {
+              res.status(404).json({ success: false, message: "Picture is not available." });
+              return;
+            }
+            res.setHeader("Content-Type", payload.mime);
+            res.setHeader("Content-Disposition", `inline; filename="${payload.fileName.replace(/"/g, "")}"`);
+            res.setHeader("Cache-Control", "private, max-age=300");
+            res.send(payload.buffer);
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load member picture.";
+            res.status(500).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
         "/member-files/:fileId/content",
         requireAuth,
         requireHwyMemberListFaceAssetAccess,
@@ -274893,6 +277566,7 @@ var init_vx_routes = __esm({
           try {
             const data = await listHwyPaymentDocuments(
               {
+                documentId: readQueryString2(req.query, "documentId"),
                 docYear: readQueryString2(req.query, "docYear"),
                 docMonth: readQueryString2(req.query, "docMonth"),
                 docProvinceId: readQueryString2(req.query, "docProvinceId"),
@@ -275022,6 +277696,31 @@ var init_vx_routes = __esm({
         )
       );
       router.get(
+        "/payment-documents-members/selfie-flags",
+        requireAuth,
+        requireHwyPaymentDocumentsMembersAccess,
+        async (req, res) => {
+          const raw = readQueryString2(req.query, "ids");
+          const lineIds = raw.split(",").map((part) => part.trim()).filter(Boolean);
+          if (lineIds.length === 0) {
+            res.status(400).json({ success: false, message: "ids is required." });
+            return;
+          }
+          try {
+            const { loadHwyPaymentDocumentsMembersSelfieFlags: loadHwyPaymentDocumentsMembersSelfieFlags2 } = await Promise.resolve().then(() => (init_vxPaymentDocumentsMembers_service(), vxPaymentDocumentsMembers_service_exports));
+            const data = await loadHwyPaymentDocumentsMembersSelfieFlags2(
+              lineIds,
+              normalizeAuthRoles(req)
+            );
+            res.json({ success: true, data });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not resolve selfie flags.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
         "/payment-documents-members",
         requireAuth,
         requireHwyPaymentDocumentsMembersAccess,
@@ -275076,6 +277775,33 @@ var init_vx_routes = __esm({
           } catch (error) {
             const message = error instanceof Error ? error.message : "Could not load grant receipt filters.";
             const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.get(
+        "/payment-documents-members/:lineId/selfie",
+        requireAuth,
+        requireHwyPaymentDocumentsMembersAccess,
+        async (req, res) => {
+          const lineId = req.params.lineId?.trim();
+          if (!lineId) {
+            res.status(400).json({ success: false, message: "lineId is required." });
+            return;
+          }
+          const size = String(req.query.size ?? "").trim().toLowerCase() === "full" ? "full" : "xs";
+          try {
+            const payload = await loadHwyPaymentDocumentsMembersSelfie(lineId, size, normalizeAuthRoles(req));
+            res.setHeader("Content-Type", payload.mime);
+            res.setHeader("Content-Disposition", `inline; filename="${payload.fileName.replace(/"/g, "")}"`);
+            res.send(payload.buffer);
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Could not load selfie.";
+            const status2 = message === "Forbidden." ? 403 : message === "Selfie is not available." || message === "Invalid line id." ? 404 : 500;
+            if (status2 === 404) {
+              res.status(404).json({ success: false, message });
+              return;
+            }
             res.status(status2).json({ success: false, message });
           }
         }
@@ -275162,7 +277888,7 @@ var init_vx_routes = __esm({
         requireAuth,
         requireHwyMasoolinPerformanceAccess,
         async (req, res) => {
-          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim() || null;
+          const actorUsername2 = await resolveHwyMasoolinPerformanceActorLogin(req.auth?.email ?? null);
           try {
             const data = await listHwyMasoolinPerformance(
               {
@@ -275199,7 +277925,7 @@ var init_vx_routes = __esm({
         requireAuth,
         requireHwyMasoolinPerformanceAccess,
         async (req, res) => {
-          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim() || null;
+          const actorUsername2 = await resolveHwyMasoolinPerformanceActorLogin(req.auth?.email ?? null);
           const mode = readQueryString2(req.query, "mode") === "legacy-sp" ? "legacy-sp" : "filtered";
           try {
             const data = await exportHwyMasoolinPerformance(
@@ -275273,7 +277999,9 @@ var init_vx_routes = __esm({
         "/masoolin-stars/calc-month",
         requireAuth,
         async (req, res) => {
-          if (!normalizeAuthRoles(req).includes("ADMIN")) {
+          const actorLogin = String(req.auth?.email ?? "").trim() || null;
+          const roles = normalizeAuthRoles(req);
+          if (!resolveHwyMasoolinPerformanceSpIsAdmin(roles, actorLogin)) {
             res.status(403).json({ success: false, message: "Forbidden." });
             return;
           }
@@ -275294,7 +278022,9 @@ var init_vx_routes = __esm({
         "/masoolin-stars/recalc-member",
         requireAuth,
         async (req, res) => {
-          if (!normalizeAuthRoles(req).includes("ADMIN")) {
+          const actorLogin = String(req.auth?.email ?? "").trim() || null;
+          const roles = normalizeAuthRoles(req);
+          if (!resolveHwyMasoolinPerformanceSpIsAdmin(roles, actorLogin)) {
             res.status(403).json({ success: false, message: "Forbidden." });
             return;
           }
@@ -275310,6 +278040,11 @@ var init_vx_routes = __esm({
           }
         }
       );
+      const membersSocialScreensActorContext = (req) => ({
+        email: req.auth?.email ?? null,
+        userId: req.auth?.userId ?? null,
+        roles: normalizeAuthRoles(req)
+      });
       router.get(
         "/members-social-screens/history-months",
         requireAuth,
@@ -275345,7 +278080,7 @@ var init_vx_routes = __esm({
         requireAuth,
         requireHwyMembersSocialScreensAccess,
         async (req, res) => {
-          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim() || null;
+          const actorUsername2 = await resolveHwyMembersSocialScreensActorLogin(membersSocialScreensActorContext(req)) || null;
           const year = Number(readQueryString2(req.query, "year"));
           const month = Number(readQueryString2(req.query, "month"));
           if (!Number.isFinite(year) || !Number.isFinite(month) || year <= 0 || month <= 0) {
@@ -275365,7 +278100,8 @@ var init_vx_routes = __esm({
                 moveDir: parseMembersSocialScreensMoveDir(readQueryString2(req.query, "moveDir"))
               },
               normalizeAuthRoles(req),
-              actorUsername2
+              actorUsername2,
+              req.auth?.userId ?? null
             );
             res.json({ success: true, data });
           } catch (error) {
@@ -275380,7 +278116,9 @@ var init_vx_routes = __esm({
         requireAuth,
         requireHwyMembersSocialScreensAccess,
         async (req, res) => {
-          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim();
+          const actorUsername2 = await resolveHwyMembersSocialScreensActorLogin(
+            membersSocialScreensActorContext(req)
+          );
           const headerId = Number(req.body?.headerId);
           if (!actorUsername2 || !Number.isFinite(headerId) || headerId <= 0) {
             res.status(400).json({ success: false, message: "headerId and actor are required." });
@@ -275401,7 +278139,9 @@ var init_vx_routes = __esm({
         requireAuth,
         requireHwyMembersSocialScreensAccess,
         async (req, res) => {
-          const actorUsername2 = String(req.user?.username ?? req.user?.email ?? "").trim();
+          const actorUsername2 = await resolveHwyMembersSocialScreensActorLogin(
+            membersSocialScreensActorContext(req)
+          );
           const headerId = Number(req.body?.headerId);
           if (!actorUsername2 || !Number.isFinite(headerId) || headerId <= 0) {
             res.status(400).json({ success: false, message: "headerId and actor are required." });
@@ -275412,6 +278152,106 @@ var init_vx_routes = __esm({
             res.json({ success: true });
           } catch (error) {
             const message = error instanceof Error ? error.message : "Final reject failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/members-social-screens/final-switch",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          const actorUsername2 = await resolveHwyMembersSocialScreensActorLogin(
+            membersSocialScreensActorContext(req)
+          );
+          const headerId = Number(req.body?.headerId);
+          if (!actorUsername2 || !Number.isFinite(headerId) || headerId <= 0) {
+            res.status(400).json({ success: false, message: "headerId and actor are required." });
+            return;
+          }
+          try {
+            await applyHwyMembersSocialScreensFinalSwitch(headerId, normalizeAuthRoles(req), actorUsername2);
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Final switch failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/members-social-screens/open-for-member-edit",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          const headerId = Number(req.body?.headerId);
+          if (!Number.isFinite(headerId) || headerId <= 0) {
+            res.status(400).json({ success: false, message: "headerId is required." });
+            return;
+          }
+          try {
+            await applyHwyMembersSocialScreensOpenForMemberEdit(headerId, normalizeAuthRoles(req));
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Open for member edit failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/members-social-screens/delete-screen",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          const screenId = Number(req.body?.screenId);
+          if (!Number.isFinite(screenId) || screenId <= 0) {
+            res.status(400).json({ success: false, message: "screenId is required." });
+            return;
+          }
+          try {
+            await applyHwyMembersSocialScreensDeleteScreen(screenId, normalizeAuthRoles(req));
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Delete screenshot failed.";
+            const status2 = message === "Forbidden." ? 403 : 500;
+            res.status(status2).json({ success: false, message });
+          }
+        }
+      );
+      router.post(
+        "/members-social-screens/update-member-social-ids",
+        requireAuth,
+        requireHwyMembersSocialScreensAccess,
+        async (req, res) => {
+          const actorUsername2 = await resolveHwyMembersSocialScreensActorLogin(
+            membersSocialScreensActorContext(req)
+          );
+          const body = req.body;
+          const memberId = Number(body?.memberId);
+          if (!actorUsername2 || !Number.isFinite(memberId) || memberId <= 0) {
+            res.status(400).json({ success: false, message: "memberId and actor are required." });
+            return;
+          }
+          const normalizeOptional = (value) => {
+            const trimmed = String(value ?? "").trim();
+            return trimmed ? trimmed : null;
+          };
+          try {
+            await applyHwyMembersSocialScreensUpdateMemberSocialIds(
+              {
+                memberId,
+                facebookId: normalizeOptional(body.facebookId),
+                tweeterId: normalizeOptional(body.tweeterId),
+                tikTokId: normalizeOptional(body.tikTokId)
+              },
+              normalizeAuthRoles(req),
+              actorUsername2
+            );
+            res.json({ success: true });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Update social links failed.";
             const status2 = message === "Forbidden." ? 403 : 500;
             res.status(status2).json({ success: false, message });
           }
@@ -278308,7 +281148,7 @@ async function startServer() {
   if (!env.isProduction) {
     const indexHtmlPath = import_path102.default.join(process.cwd(), "index.html");
     const publicDir = import_path102.default.join(process.cwd(), "public");
-    const MAX_VITE_PROXY_IN_FLIGHT = 6;
+    const MAX_VITE_PROXY_IN_FLIGHT = 12;
     let viteProxyInFlight = 0;
     const viteProxyWaiters = [];
     const acquireViteProxySlot = () => new Promise((resolve) => {

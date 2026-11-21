@@ -1150,8 +1150,9 @@ export const APP_TABLE_GRID_ROW_HOVER_REVEAL_CLASS = 'app-table-grid-row-hover-r
 export const APP_TABLE_GRID_WORKFLOW_ACTION_CLASS = 'app-table-grid-workflow-action';
 export const APP_TABLE_GRID_WORKFLOW_ACTION_OPEN_CLASS = 'app-table-grid-workflow-action--open';
 
-/** Centered loading/empty placeholder inside grid scroll area. */
-export const APP_TABLE_GRID_STATE_PANEL_CLASS = 'flex items-center justify-center h-40 text-sm text-slate-400';
+/** Centered loading/empty placeholder inside grid scroll area (matches embedded route loading min height). */
+export const APP_TABLE_GRID_STATE_PANEL_CLASS =
+  'flex h-full min-h-[10rem] w-full flex-1 items-center justify-center text-center text-sm text-slate-400';
 
 /** Fixed width for Created/Updated audit timestamp columns in admin CRUD grids. */
 export const APP_TABLE_GRID_AUDIT_COLUMN_WIDTH = 150;

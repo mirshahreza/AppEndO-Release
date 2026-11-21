@@ -35,7 +35,7 @@ export const PLATFORM_TRANSFER_CATALOG: PlatformTransferCatalogEntry[] = [
   { key: 'platformCultureTranslations', group: 'platform-blobs', label: 'Culture Translations', description: 'Platform UI translation bundles and per-culture overrides.', defaultSelected: true },
   { key: 'platformWebFonts', group: 'platform-blobs', label: 'Web Fonts', description: 'Uploaded self-hosted web font metadata.', defaultSelected: true },
   { key: 'platformFeedback', group: 'platform-blobs', label: 'Feedback', description: 'Embedded feedback policy, topics, and routing rules.', defaultSelected: true },
-  { key: 'platformRouteLoading', group: 'platform-blobs', label: 'Route loading', description: 'Boot and lazy-route loading chrome (logo, progress).', defaultSelected: true },
+  { key: 'platformRouteLoading', group: 'platform-blobs', label: 'Route loading', description: 'Boot and lazy-route loading chrome (portal logo + orbital ring).', defaultSelected: true },
   { key: 'identity-providers', group: 'platform-blobs', label: 'Identity Providers', description: 'OAuth and external identity provider configuration.', defaultSelected: true },
   { key: 'security', group: 'platform-blobs', label: 'JWT Secrets', description: 'Platform-wide token signing secrets.', sensitive: true, defaultSelected: false },
   { key: 'scheduler', group: 'platform-blobs', label: 'Scheduler', description: 'Scheduled task definitions.', defaultSelected: true },

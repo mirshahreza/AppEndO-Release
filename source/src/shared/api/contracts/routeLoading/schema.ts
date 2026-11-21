@@ -1,23 +1,14 @@
 import { z } from 'zod';
 
-export const ROUTE_LOADING_SCHEMA_VERSION = 1 as const;
+export const ROUTE_LOADING_SCHEMA_VERSION = 2 as const;
 
 export const routeLoadingLogoSizeSchema = z.enum(['compact', 'default', 'large', 'xlarge']);
 export type RouteLoadingLogoSize = z.infer<typeof routeLoadingLogoSizeSchema>;
 
-export const routeLoadingProgressStyleSchema = z.enum(['ecg', 'simple-line', 'none']);
-export type RouteLoadingProgressStyle = z.infer<typeof routeLoadingProgressStyleSchema>;
-
-export const routeLoadingStackOrderSchema = z.enum(['logo-first', 'activity-first']);
-export type RouteLoadingStackOrder = z.infer<typeof routeLoadingStackOrderSchema>;
-
 export const routeLoadingVariantOverridesSchema = z.object({
-  showLogo: z.boolean().optional(),
   logoSize: routeLoadingLogoSizeSchema.optional(),
   logoGlow: z.boolean().optional(),
   logoBreathe: z.boolean().optional(),
-  stackOrder: routeLoadingStackOrderSchema.optional(),
-  progressStyle: routeLoadingProgressStyleSchema.optional(),
   stackGapRem: z.number().min(0).max(4).optional(),
 });
 
@@ -29,8 +20,6 @@ export const platformRouteLoadingConfigSchema = z.object({
   logoSize: routeLoadingLogoSizeSchema,
   logoGlow: z.boolean(),
   logoBreathe: z.boolean(),
-  stackOrder: routeLoadingStackOrderSchema,
-  progressStyle: routeLoadingProgressStyleSchema,
   stackGapRem: z.number().min(0).max(4).optional(),
   embedded: routeLoadingVariantOverridesSchema.optional(),
 });
@@ -42,7 +31,5 @@ export type EffectiveRouteLoadingExperience = {
   logoSize: RouteLoadingLogoSize;
   logoGlow: boolean;
   logoBreathe: boolean;
-  stackOrder: RouteLoadingStackOrder;
-  progressStyle: RouteLoadingProgressStyle;
   stackGapRem: number;
 };

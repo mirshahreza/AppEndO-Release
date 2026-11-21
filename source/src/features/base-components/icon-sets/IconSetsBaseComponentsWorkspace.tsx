@@ -1,6 +1,7 @@
 import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Check, Copy } from 'lucide-react';
+import { AppRouteLoading } from '../../../components/AppRouteLoading';
 import {
   FormField,
   FormSection,
@@ -312,11 +313,11 @@ const IconSetsBaseComponentsPreview: React.FC<IconSetsBaseComponentsPreviewProps
           />
         </div>
         <p className="shrink-0 whitespace-nowrap text-xs text-slate-500">
-          {isLoading
-            ? 'Loading…'
-            : isFiltered
+          {!isLoading && (
+            isFiltered
               ? `${filteredIconNames.length.toLocaleString()} / ${totalIconCount.toLocaleString()}`
-              : totalIconCount.toLocaleString()}
+              : totalIconCount.toLocaleString()
+          )}
         </p>
         <div className={cn('ms-auto shrink rounded-md', previewState.selectedLabel && 'ring-2 ring-indigo-300 ring-offset-1')}>
           <button
@@ -340,9 +341,7 @@ const IconSetsBaseComponentsPreview: React.FC<IconSetsBaseComponentsPreviewProps
 
       <div ref={scrollContainerRef} className="min-h-0 flex-1 overflow-auto p-3">
         {isLoading ? (
-          <div className="flex h-full min-h-[240px] items-start justify-start text-sm text-slate-400">
-            Loading icon pack…
-          </div>
+          <AppRouteLoading variant="embedded" label="Loading icon pack" className="h-full min-h-[240px] w-full" />
         ) : loadError ? (
           <div className="flex h-full min-h-[240px] items-start justify-start px-4 text-sm text-rose-600">
             {loadError}

@@ -7,7 +7,8 @@ import {
   UiSelect,
   type AppSurfaceBoxLayout,
 } from '../../../shared/ui';
-import { ArrowRight, Loader2, Package } from 'lucide-react';
+import { ArrowRight, Package } from 'lucide-react';
+import { AppRouteLoading } from '../../../components/AppRouteLoading';
 import type { AppSurfaceBoxTone } from '../../../shared/ui/surfaceClasses';
 import { cn } from '../../../lib/utils';
 import { BaseComponentsHeaderActions } from '../components/BaseComponentsPageHeaderContext';
@@ -173,7 +174,11 @@ const SurfaceBoxBaseComponentsPreview: React.FC<SurfaceBoxBaseComponentsPreviewP
         <p className="text-xs text-slate-600">Strip layout — inline metadata or compact summary row.</p>
       ) : (
         <div className={cn('space-y-2 p-3 text-xs text-slate-600', config.orientation === 'horizontal' && 'flex-1')}>
-          {config.state === 'loading' ? <p className="inline-flex items-center gap-1"><Loader2 className="h-4 w-4 animate-spin" /> Loading package details…</p> : <p>Panel body scrolls when content exceeds the host.</p>}
+          {config.state === 'loading' ? (
+            <AppRouteLoading variant="embedded" label="Loading package details" className="min-h-32 w-full" />
+          ) : (
+            <p>Panel body scrolls when content exceeds the host.</p>
+          )}
           <p>Tone tints the header and border only — body stays neutral white.</p>
         </div>
       )}

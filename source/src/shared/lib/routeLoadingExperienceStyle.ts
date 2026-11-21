@@ -17,11 +17,10 @@ export function routeLoadingExperienceClassName(
   experience: EffectiveRouteLoadingExperience,
 ): string {
   const classes: string[] = [];
-  if (!experience.logoGlow) {
+  if (experience.logoGlow) {
+    classes.push('app-route-loading--orbit-border');
+  } else {
     classes.push('app-route-loading--no-logo-glow');
-  }
-  if (!experience.logoBreathe) {
-    classes.push('app-route-loading--no-logo-breathe');
   }
   return classes.join(' ');
 }

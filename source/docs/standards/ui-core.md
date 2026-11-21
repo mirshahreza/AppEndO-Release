@@ -262,6 +262,8 @@ Studio surfaces are **not text-selectable**. `PlatformMountProvider` sets `data-
 
 ## Shell loading (no blank white)
 
+Canonical visual contract: [`ui-route-loading.md`](./ui-route-loading.md) (**portal logo + accent orbital ring only** — no ECG, bars, or visible loading copy).
+
 - `AppRouteLoading` `variant="fullscreen"` for boot/shell/auth. Same look as `#app-boot-splash`. Colors from **active accent** — never hardcoded teal.
 - `variant="embedded"` for lazy pages inside a mounted shell.
 - In-shell nav: `useShellNavigate` marks pending on click so `ShellRouteEnter` covers the content host immediately (same embedded `AppRouteLoading`), then keeps the cover until formatted reveal. Do not wait for the route to commit. Same-path and CMS Settings soft-nav skip the cover.

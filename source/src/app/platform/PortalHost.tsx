@@ -13,7 +13,9 @@ import { parseDesignerShellEntry } from '../../shared/lib/designerShellEntry';
 import { resolveShellComponent } from './resolvers';
 import { resolvePortalShellFromPathname } from './PortalUrlResolver';
 import { VERTICAL_PORTAL_SEGMENT } from '../../core/packages/verticalPackage';
-import { DeveloperToolbar } from './DeveloperToolbar';
+const DeveloperToolbar = React.lazy(() =>
+  import('./DeveloperToolbar').then((module) => ({ default: module.DeveloperToolbar })),
+);
 import { resolvePortalBrand } from '../../shared/api/contracts/platform/portalBrand';
 import { cachePortalBrand } from '../../shared/lib/portalBrandCache';
 
@@ -111,7 +113,11 @@ export const PortalShell: React.FC = () => {
       <React.Suspense fallback={loading}>
         <ShellLayout key={`${version}:${shell.entry}`} />
       </React.Suspense>
-      {chromeStripped ? null : <DeveloperToolbar />}
+      {chromeStripped ? null : (
+        <React.Suspense fallback={null}>
+          <DeveloperToolbar />
+        </React.Suspense>
+      )}
     </PortalContextProvider>
   );
 };

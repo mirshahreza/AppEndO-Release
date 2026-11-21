@@ -22,7 +22,7 @@ import {
   type LoadingLogoStageShape,
 } from './appRouteLoadingLogoStage';
 import { APPENDO_LOGO_SRC } from './AppEndLogo';
-import { LoadingEcgTrace } from './appRouteLoadingEcg';
+import { RouteLoadingLogoOrbit } from './RouteLoadingLogoOrbit';
 import type { EffectiveRouteLoadingExperience } from '../shared/api/contracts/routeLoading/schema';
 import { useRouteLoadingExperience } from '../shared/hooks/useRouteLoadingExperience';
 import {
@@ -39,50 +39,23 @@ export type AppRouteLoadingProps = {
    */
   variant?: AppRouteLoadingVariant;
   className?: string;
+  /** Screen-reader only — never shown in the loading stack. */
   label?: string;
   /** Portal logo URL. When omitted, uses portal Settings brand (/api/boot shells) or cache. */
   logoSrc?: string;
   logoAlt?: string;
   /** Live preview or tests — skips boot config when set. */
   experienceOverride?: EffectiveRouteLoadingExperience | null;
+  /**
+   * Settings (or other) in-form preview — must not participate in boot splash
+   * handoff or formatted-reveal "nested loader" waits.
+   */
+  preview?: boolean;
 };
-
-const LoadingSimpleLine: React.FC = () => (
-  <div className="app-route-loading__simple-line" aria-hidden />
-);
 
 function isVerticalLoadingIdentity(pathname: string): boolean {
   return guessPortalSegmentFromPathname(pathname) === VX_PUBLIC_PORTAL_SEGMENT;
 }
-
-type LoadingActivityProps = {
-  compact?: boolean;
-  experience: EffectiveRouteLoadingExperience;
-};
-
-const LoadingActivity: React.FC<LoadingActivityProps> = ({ compact = false, experience }) => {
-  const showProgress = experience.progressStyle !== 'none';
-
-  if (!showProgress) {
-    return null;
-  }
-
-  return (
-    <div
-      className={cn('app-route-loading__activity', compact && 'app-route-loading__activity--compact')}
-      aria-hidden
-    >
-      <div
-        className={cn(
-          'app-route-loading__bar',
-          experience.progressStyle === 'simple-line' && 'app-route-loading__bar--simple-line',
-        )}
-      >
-        {experience.progressStyle === 'ecg' ? <LoadingEcgTrace /> : <LoadingSimpleLine />}
-      </div>
-    </div>
-  );
-};
 
 function resolveLoadingLogoFromBrand(
   logoSrc: string | undefined,
@@ -109,6 +82,8 @@ type LoadingLogoStageProps = {
   src?: string;
   alt: string;
   showAppEndMark: boolean;
+  orbitGlow: boolean;
+  orbitAnimate: boolean;
 };
 
 function resolveLogoStageShape(
@@ -129,9 +104,31 @@ const LoadingLogoStage: React.FC<LoadingLogoStageProps> = ({
   src,
   alt,
   showAppEndMark,
+  orbitGlow,
+  orbitAnimate,
 }) => {
-  const shape = resolveLogoStageShape(showAppEndMark, src);
   const embedded = variant === 'embedded';
+  const resolvedSrc = src?.trim();
+  const hasPortalLogo = Boolean(resolvedSrc);
+  const hasVisual = showAppEndMark || hasPortalLogo;
+
+  if (!hasVisual) {
+    return null;
+  }
+
+  const shape = resolveLogoStageShape(showAppEndMark, resolvedSrc);
+
+  const logoInner = showAppEndMark ? (
+    <span className="appendo-logo-themed app-route-loading__logo app-route-loading__logo--appendo" />
+  ) : (
+    <img
+      src={resolvedSrc}
+      alt={alt}
+      className="app-route-loading__logo object-contain"
+      draggable={false}
+      decoding="async"
+    />
+  );
 
   return (
     <div
@@ -140,21 +137,15 @@ const LoadingLogoStage: React.FC<LoadingLogoStageProps> = ({
         `app-route-loading__logo-stage--${shape}`,
         embedded && 'app-route-loading__logo-stage--embedded',
       )}
-      aria-hidden={showAppEndMark || !src ? true : undefined}
+      aria-hidden={showAppEndMark || hasPortalLogo ? true : undefined}
     >
-      <div className="app-route-loading__logo-frame">
-        {showAppEndMark ? (
-          <span className="appendo-logo-themed app-route-loading__logo app-route-loading__logo--appendo" />
-        ) : src ? (
-          <img
-            src={src}
-            alt={alt}
-            className="app-route-loading__logo object-contain"
-            draggable={false}
-            decoding="async"
-          />
-        ) : null}
-      </div>
+      <RouteLoadingLogoOrbit
+        enabled={orbitGlow}
+        animate={orbitAnimate}
+        innerClassName="app-route-loading__logo-frame"
+      >
+        {logoInner}
+      </RouteLoadingLogoOrbit>
     </div>
   );
 };
@@ -171,6 +162,7 @@ export const AppRouteLoading: React.FC<AppRouteLoadingProps> = ({
   logoSrc,
   logoAlt,
   experienceOverride,
+  preview = false,
 }) => {
   const { data: bootPayload } = useAppBootQuery();
   const experience = useRouteLoadingExperience(variant, experienceOverride);
@@ -183,31 +175,32 @@ export const AppRouteLoading: React.FC<AppRouteLoadingProps> = ({
   const portalRouteBoot =
     typeof document !== 'undefined'
     && document.documentElement.hasAttribute('data-portal-route');
-  const showAppEndMark = !logo.custom && !portalRouteBoot;
+  const showAppEndMark = !logo.custom && !logo.src && !portalRouteBoot;
+  const hasLogoStage = showAppEndMark || Boolean(logo.src?.trim());
   const verticalIdentity =
     isVerticalLoadingIdentity(pathname) && isVerticalPackageEnabledOnBoot(bootPayload);
-  const splashDelegated = variant === 'fullscreen' && isAppBootSplashDelegated();
+  const participatesInBootSplash = !preview && variant === 'fullscreen';
+  const splashDelegated = participatesInBootSplash && isAppBootSplashDelegated();
 
   useLayoutEffect(() => {
-    if (!verticalIdentity) {
+    if (preview || !verticalIdentity) {
       return;
     }
     document.documentElement.setAttribute('data-loading-identity', 'vertical');
-    // Keep Vertical splash tokens until #app-boot-splash is gone — removing early
-    // re-styles the HTML loader and causes a visible glow/jump while splash is still up.
-  }, [verticalIdentity]);
+  }, [verticalIdentity, preview]);
 
   useLayoutEffect(() => {
-    if (variant !== 'fullscreen') {
+    if (!participatesInBootSplash) {
       return;
     }
-    if (logo.custom && logo.src) {
-      syncAppBootSplashLogo(logo.src);
+    const logoPath = logo.src?.trim();
+    if (logoPath) {
+      syncAppBootSplashLogo(logoPath);
     }
     return () => {
       dismissAppBootSplashIfNoFullscreenLoading();
     };
-  }, [logo.custom, logo.src, variant]);
+  }, [logo.src, participatesInBootSplash]);
 
   const rootClass = cn(
     variant === 'embedded'
@@ -219,18 +212,16 @@ export const AppRouteLoading: React.FC<AppRouteLoadingProps> = ({
     className,
   );
 
-  const logoStage = experience.showLogo ? (
+  const logoStage = experience.showLogo && hasLogoStage ? (
     <LoadingLogoStage
       variant={variant}
-      src={logo.custom ? logo.src : undefined}
+      src={logo.src}
       alt={alt}
       showAppEndMark={showAppEndMark}
+      orbitGlow={experience.logoGlow}
+      orbitAnimate={experience.logoBreathe}
     />
   ) : null;
-
-  const activityStage = (
-    <LoadingActivity compact={variant === 'embedded'} experience={experience} />
-  );
 
   return (
     <div
@@ -240,6 +231,7 @@ export const AppRouteLoading: React.FC<AppRouteLoadingProps> = ({
       aria-busy="true"
       data-testid="app-route-loading"
       data-variant={variant}
+      data-route-loading-preview={preview ? 'true' : undefined}
     >
       <div
         className={cn(
@@ -248,17 +240,7 @@ export const AppRouteLoading: React.FC<AppRouteLoadingProps> = ({
         )}
         style={buildRouteLoadingExperienceStyle(experience)}
       >
-        {experience.stackOrder === 'activity-first' ? (
-          <>
-            {activityStage}
-            {logoStage}
-          </>
-        ) : (
-          <>
-            {logoStage}
-            {activityStage}
-          </>
-        )}
+        {logoStage}
         <span className="sr-only">{label}</span>
       </div>
     </div>

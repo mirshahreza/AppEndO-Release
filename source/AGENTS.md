@@ -51,6 +51,7 @@ Domain rules (deep links, record policy, workflow-engine testing, package UI) ar
 | Color, type, space, radius, elevation, icons | [`ui-design-system.md`](docs/standards/ui-design-system.md) |
 | Forms, shell loading, English copy, Color it, toasts | [`ui-core.md`](docs/standards/ui-core.md) |
 | Mobile/tablet adaptation, viewport QA | [`ui-responsive.md`](docs/standards/ui-responsive.md) |
+| Portal boot / lazy-route loading (logo + orbital ring) | [`ui-route-loading.md`](docs/standards/ui-route-loading.md) |
 | Dialogs, wizards, access, delete confirm | [`ui-dialog.md`](docs/standards/ui-dialog.md) |
 | Toolbars, buttons, WorkspaceBack, refresh | [`ui-toolbar.md`](docs/standards/ui-toolbar.md) |
 | Grids, columns, paging | [`ui-grid.md`](docs/standards/ui-grid.md) |

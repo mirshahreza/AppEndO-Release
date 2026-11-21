@@ -8,6 +8,8 @@
 
 All table lists use `AppTableGrid`. Page lists use `chrome="classic"` (default). Embedded editors, dialogs, and property panels use `chrome="hero"`. One footer owns paging + sort.
 
+**Initial load:** default `isLoading` chrome is `AppTableGridRouteLoading` (portal logo + orbital ring — see [`ui-route-loading.md`](./ui-route-loading.md)). Do not render visible translated loading strings in the grid body; `loadingMessage` is screen-reader only. Override with `loadingContent` only when the standard embedded loader cannot apply.
+
 ## Grid shell (`AppTableGrid`)
 - All **page / CRUD list** and **embedded** grids through `AppTableGrid` + `APP_TABLE_GRID_*`.
 - **Chrome** (`chrome`, default **`classic`**): same component, two visual treatments. Living sample: Base Components → Grid → Chrome (`classic` | `hero`).

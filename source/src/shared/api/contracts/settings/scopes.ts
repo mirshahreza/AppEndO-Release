@@ -93,7 +93,7 @@ export const SETTINGS_SECTION_SCOPE: Record<SettingsWorkspaceSectionId, Settings
   'route-loading': {
     scope: 'platform',
     label: 'Route loading',
-    description: 'Boot and lazy-route loading chrome — logo, progress signal, and layout.',
+    description: 'Boot and lazy-route loading chrome — portal logo, accent orbital ring, and size.',
   },
   cache: {
     scope: 'platform',

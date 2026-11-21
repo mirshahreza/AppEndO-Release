@@ -119,37 +119,8 @@
       }
       #app-boot-splash .app-boot-logo-stage::before,
       #app-boot-splash .app-boot-logo-stage::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        border-radius: 0.5rem;
-      }
-      #app-boot-splash .app-boot-logo-stage::before {
-        z-index: 0;
-        animation: none;
-      }
-      #app-boot-splash .app-boot-logo-stage::after {
-        z-index: 0;
-        animation: app-boot-logo-glow-pulse 2.4s ease-in-out infinite;
-      }
-      #app-boot-splash .app-boot-logo-stage--appendo::before {
-        opacity: 0.75;
-        border: none;
-        background:
-          radial-gradient(ellipse 85% 70% at 28% 22%, rgb(var(--app-accent-rgb, 0 162 138) / 0.16) 0%, transparent 58%),
-          radial-gradient(ellipse 75% 65% at 72% 78%, rgb(var(--app-accent-secondary-rgb, var(--app-accent-rgb, 0 162 138)) / 0.1) 0%, transparent 55%),
-          radial-gradient(ellipse 55% 45% at 88% 88%, rgb(var(--app-accent-tertiary-rgb, var(--app-accent-rgb, 0 162 138)) / 0.12) 0%, transparent 62%);
-        box-shadow:
-          0 0 0 1px rgb(var(--app-accent-rgb, 0 162 138) / 0.12),
-          0 14px 40px -12px rgb(var(--app-accent-rgb, 0 162 138) / 0.22),
-          inset 0 1px 0 rgb(255 255 255 / 0.42);
-      }
-      #app-boot-splash .app-boot-logo-stage--appendo::after {
-        opacity: 0.35;
-        inset: 0.4rem;
-        border-radius: 0.375rem;
-        background: linear-gradient(145deg, rgb(255 255 255 / 0.65) 0%, rgb(255 255 255 / 0) 48%, transparent 100%);
+        content: none;
+        display: none;
       }
       html[data-boot-splash-logo-locked='1'] #app-boot-splash .app-boot-logo-stage {
         min-inline-size: calc(var(--loading-logo-h) + 1.25rem);
@@ -161,50 +132,17 @@
         min-inline-size: calc(var(--loading-logo-h) + 1rem);
         min-block-size: calc(var(--loading-logo-h) + 0.75rem);
       }
-      #app-boot-splash .app-boot-logo-stage--wide::before {
-        opacity: 0.58;
-        border-radius: 0.5rem;
-        inset: 0.25rem 0.4rem;
-        border: none;
-        background: radial-gradient(ellipse 90% 80% at 50% 50%, color-mix(in srgb, var(--app-route-loading-accent, var(--app-accent-500, #00a28a)) 12%, transparent) 0%, transparent 68%);
-        box-shadow:
-          0 0 0 1px rgb(var(--app-accent-rgb, 0 162 138) / 0.08),
-          0 12px 36px -14px rgb(var(--app-accent-rgb, 0 162 138) / 0.16),
-          inset 0 1px 0 rgb(255 255 255 / 0.35);
-      }
-      html:not([data-loading-identity='vertical']) #app-boot-splash .app-boot-logo-stage--square::before {
-        opacity: 0.55;
-        border: none;
-        border-radius: 0.5rem;
-        background: radial-gradient(ellipse 88% 78% at 50% 45%, color-mix(in srgb, var(--app-route-loading-accent, var(--app-accent-500, #00a28a)) 14%, transparent) 0%, transparent 65%);
-        box-shadow:
-          0 0 0 1px rgb(var(--app-accent-rgb, 0 162 138) / 0.08),
-          0 12px 34px -14px rgb(var(--app-accent-rgb, 0 162 138) / 0.18);
-      }
       html[data-loading-identity='vertical'] #app-boot-splash .app-boot-logo-stage--square {
         padding: 0.375rem 0.5rem;
       }
-      html[data-loading-identity='vertical'] #app-boot-splash .app-boot-logo-stage--square::before {
-        opacity: 0.72;
-        border: none;
-        background:
-          radial-gradient(ellipse 80% 62% at 50% 28%, rgb(255 203 5 / 0.08) 0%, transparent 58%),
-          radial-gradient(ellipse 88% 72% at 50% 68%, rgb(2 63 136 / 0.1) 0%, transparent 62%);
-        box-shadow: 0 10px 28px -14px rgb(2 63 136 / 0.14);
-      }
-      html[data-loading-identity='vertical'] #app-boot-splash .app-boot-logo-stage--square::after {
-        opacity: 0.28;
-        inset: 0.45rem;
-        border-radius: 0.375rem;
-        background: linear-gradient(145deg, rgb(255 255 255 / 0.4) 0%, transparent 52%);
-      }
-      #app-boot-splash .app-boot-logo {
+      #app-boot-splash .app-boot-logo,
+      #app-boot-splash img.app-boot-logo--custom {
+        display: block;
         block-size: 100%;
         inline-size: 100%;
         max-block-size: 100%;
         max-inline-size: 100%;
         object-fit: contain;
-        animation: app-boot-logo 2.4s ease-in-out infinite;
       }
       #app-boot-splash .app-boot-logo:not(.app-boot-logo--custom) {
         aspect-ratio: 1350.33 / 443.31;
@@ -226,41 +164,9 @@
       html[data-loading-identity='vertical'] #app-boot-splash .app-boot-logo-stage--square .app-boot-logo--custom {
         filter: drop-shadow(0 4px 14px rgb(2 63 136 / 0.1));
       }
-      html[data-loading-identity='vertical'] #app-boot-splash .app-boot-activity {
-        width: min(13rem, 58vw);
-      }
       /* Portal routes: never flash AppEnd before Settings → Portals logo is applied. */
       html[data-portal-route]:not([data-portal-logo-ready]) #app-boot-splash .app-boot-logo:not(.app-boot-logo--custom) {
         visibility: hidden;
-      }
-      #app-boot-splash .app-boot-activity {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.625rem;
-        width: min(12rem, 56vw);
-        min-height: 1.125rem;
-      }
-      #app-boot-splash .app-boot-bar {
-        position: relative;
-        width: 100%;
-        height: clamp(4.5rem, 17vw, 7rem);
-        overflow: hidden;
-        background: transparent;
-      }
-      #app-boot-splash .app-loading-ecg-live {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      @keyframes app-boot-logo {
-        0%,
-        100% {
-          opacity: 0.88;
-        }
-        50% {
-          opacity: 1;
-        }
       }
       @keyframes app-boot-logo-glow-pulse {
         0%,
@@ -272,14 +178,84 @@
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        #app-boot-splash .app-boot-logo,
-        #app-boot-splash .app-boot-logo--custom,
-        #app-boot-splash .app-boot-logo-stage::before {
+        #app-boot-splash .app-boot-logo-stage::before,
+        #app-boot-splash .app-boot-logo-stage::after {
           animation: none;
         }
         #app-boot-splash .app-boot-logo-stage::before {
           opacity: 0.45;
           transform: none;
+        }
+      }
+      /* Boot splash — orbit-border comet (must paint before main CSS bundle). */
+      #app-boot-splash .app-boot-orbit-static.orbit-border-host {
+        --route-loading-orbit-gap: 10px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-self: center;
+        inline-size: fit-content;
+        max-inline-size: var(--loading-logo-max-w);
+        overflow: visible;
+        isolation: isolate;
+        border-radius: var(--orbit-border-radius, 0.625rem);
+        background: transparent;
+        box-sizing: border-box;
+        padding: var(--route-loading-orbit-gap);
+      }
+      #app-boot-splash .app-boot-orbit-static .orbit-border-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+        min-block-size: var(--loading-logo-h);
+        border-radius: inherit;
+      }
+      #app-boot-splash .app-boot-orbit-static .orbit-border-svg {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+        display: block;
+      }
+      #app-boot-splash .app-boot-orbit-static .orbit-border-svg path {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+      }
+      #app-boot-splash .app-boot-orbit-static .orbit-border-layer-track {
+        stroke: var(--orbit-color-track, rgb(0 162 138 / 0.22));
+        stroke-width: 1px;
+      }
+      #app-boot-splash .app-boot-orbit-static .orbit-border-layer-glow {
+        stroke: var(--orbit-color-glow, rgb(0 162 138));
+        stroke-width: calc(var(--orbit-border-width, 2px) * 3.4);
+        stroke-dasharray: var(--orbit-dash-tail, 14) var(--orbit-gap-tail, 86);
+        opacity: var(--orbit-border-glow-opacity, 0.55);
+        filter: blur(var(--orbit-border-glow-blur, 8px));
+      }
+      #app-boot-splash .app-boot-orbit-static .orbit-border-comet {
+        animation: orbit-border-travel var(--orbit-border-duration, 8s) linear infinite;
+      }
+      #app-boot-splash .app-boot-orbit-static[data-orbit-motion='reduced'] .orbit-border-comet {
+        animation: none;
+        stroke-dashoffset: calc(var(--orbit-comet-phase-start, 0) + 18);
+      }
+      @keyframes orbit-border-travel {
+        from {
+          stroke-dashoffset: var(--orbit-comet-phase-start, 0);
+        }
+        to {
+          stroke-dashoffset: var(--orbit-comet-phase-end, -100);
         }
       }
     </style>
@@ -389,21 +365,177 @@
     <script>
       document.documentElement.setAttribute('data-app-boot-phase', 'loading');
     </script>
-    <div id="app-boot-splash" role="status" aria-live="polite" aria-busy="true" aria-label="Loading">
+    <div id="app-boot-splash" data-route-loading-orbit="1" role="status" aria-live="polite" aria-busy="true" aria-label="Loading">
       <div class="app-boot-stack">
         <div class="app-boot-logo-stage app-boot-logo-stage--appendo" aria-hidden="true">
-          <div class="app-boot-logo-frame">
-            <span class="app-boot-logo"></span>
-          </div>
-        </div>
-        <div class="app-boot-activity" aria-hidden="true">
-          <div class="app-boot-bar">
-            <canvas class="app-loading-ecg-live" aria-hidden="true"></canvas>
+          <div
+            class="orbit-border-host app-route-loading-logo-orbit app-boot-orbit-static"
+            data-boot-orbit-static="1"
+            style="
+              --orbit-border-width: 1.25px;
+              --orbit-border-radius: 0.625rem;
+              --orbit-border-duration: 8s;
+              --orbit-border-glow-blur: 4px;
+              --orbit-border-glow-opacity: 0.3;
+              --orbit-dash-tail: 10;
+              --orbit-gap-tail: 90;
+              --orbit-color-glow: rgb(var(--app-accent-rgb, 0 162 138));
+              --orbit-color-track: rgb(var(--app-accent-rgb, 0 162 138) / 0.22);
+            "
+          >
+            <svg class="orbit-border-svg" aria-hidden="true"></svg>
+            <div class="orbit-border-inner app-boot-logo-frame">
+              <span class="app-boot-logo"></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <script type="module" src="/src/boot/appBootEcgLive.ts"></script>
+    <script>
+      /* Sync orbit paint — same moment as first logo (before Vite boot module). */
+      (function () {
+        var BORDER = 1.25;
+        var TAIL = 10;
+        var STEPS = [
+          { c: '#ffffff', o: 0.14, w: 0.275, dash: 10, gap: 90, phase: -90 },
+          { c: '#abeee5', o: 0.256, w: 0.5375, dash: 8.24, gap: 91.76, phase: -91.76 },
+          { c: '#57ddcc', o: 0.372, w: 0.8, dash: 6.48, gap: 93.52, phase: -93.52 },
+          { c: '#24cab4', o: 0.488, w: 1.0625, dash: 4.72, gap: 95.28, phase: -95.28 },
+          { c: '#12b69f', o: 0.604, w: 1.325, dash: 2.96, gap: 97.04, phase: -97.04 },
+          { c: '#00a28a', o: 0.72, w: 1.5875, dash: 1.2, gap: 98.8, phase: -98.8 },
+        ];
+        var GLOW_PHASE_START = -90;
+        var GLOW_PHASE_END = -190;
+        function roundedRectPath(width, height, radius, inset) {
+          var x = inset;
+          var y = inset;
+          var w = Math.max(0, width - inset * 2);
+          var h = Math.max(0, height - inset * 2);
+          if (w < 1 || h < 1) return '';
+          var r = Math.min(Math.max(0, radius - inset * 0.15), w / 2, h / 2);
+          if (r <= 0.5) return 'M' + x + ' ' + y + ' H' + (x + w) + ' V' + (y + h) + ' H' + x + ' Z';
+          return [
+            'M' + (x + r) + ' ' + y,
+            'H' + (x + w - r),
+            'A' + r + ' ' + r + ' 0 0 1 ' + (x + w) + ' ' + (y + r),
+            'V' + (y + h - r),
+            'A' + r + ' ' + r + ' 0 0 1 ' + (x + w - r) + ' ' + (y + h),
+            'H' + (x + r),
+            'A' + r + ' ' + r + ' 0 0 1 ' + x + ' ' + (y + h - r),
+            'V' + (y + r),
+            'A' + r + ' ' + r + ' 0 0 1 ' + (x + r) + ' ' + y,
+            'Z',
+          ].join(' ');
+        }
+        function reducedMotion() {
+          try {
+            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          } catch (e) {
+            return false;
+          }
+        }
+        function paint(host) {
+          if (!host) return;
+          host.dataset.orbitMotion = reducedMotion() ? 'reduced' : 'normal';
+          var width = host.clientWidth;
+          var height = host.clientHeight;
+          if (width < 2 || height < 2) return;
+          var svg = host.querySelector('.orbit-border-svg');
+          if (!svg) return;
+          var inset = BORDER * 0.5 + 1;
+          var radius =
+            (parseFloat(getComputedStyle(host).borderTopLeftRadius) || 10) - 0;
+          var d = roundedRectPath(width, height, radius, inset);
+          if (!d) return;
+          svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+          svg.replaceChildren();
+          var ns = 'http://www.w3.org/2000/svg';
+          var track = document.createElementNS(ns, 'path');
+          track.setAttribute('d', d);
+          track.setAttribute('pathLength', '100');
+          track.setAttribute('fill', 'none');
+          track.setAttribute('class', 'orbit-border-layer-track');
+          var group = document.createElementNS(ns, 'g');
+          group.setAttribute('class', 'orbit-border-comets');
+          var glow = document.createElementNS(ns, 'path');
+          glow.setAttribute('d', d);
+          glow.setAttribute('pathLength', '100');
+          glow.setAttribute('fill', 'none');
+          glow.setAttribute('class', 'orbit-border-comet orbit-border-layer-glow');
+          glow.style.setProperty('--orbit-comet-phase-start', String(GLOW_PHASE_START));
+          glow.style.setProperty('--orbit-comet-phase-end', String(GLOW_PHASE_END));
+          group.appendChild(glow);
+          for (var i = 0; i < STEPS.length; i++) {
+            var step = STEPS[i];
+            var path = document.createElementNS(ns, 'path');
+            path.setAttribute('d', d);
+            path.setAttribute('pathLength', '100');
+            path.setAttribute('fill', 'none');
+            path.setAttribute('class', 'orbit-border-comet');
+            path.style.stroke = step.c;
+            path.style.strokeWidth = step.w + 'px';
+            path.style.strokeDasharray = step.dash + ' ' + step.gap;
+            path.style.opacity = String(step.o);
+            path.style.setProperty('--orbit-comet-phase-start', String(step.phase));
+            path.style.setProperty('--orbit-comet-phase-end', String(step.phase - 100));
+            group.appendChild(path);
+          }
+          svg.appendChild(track);
+          svg.appendChild(group);
+          host.setAttribute('data-boot-orbit-painted', '1');
+        }
+        function attach() {
+          var host = document.querySelector('#app-boot-splash .app-boot-orbit-static');
+          if (!host) return;
+          paint(host);
+          if (typeof ResizeObserver !== 'undefined') {
+            new ResizeObserver(function () {
+              paint(host);
+            }).observe(host);
+          }
+        }
+        attach();
+        try {
+          window.__appendoBootSplashOrbitRepaint = attach;
+        } catch (e) {}
+      })();
+    </script>
+    <script>
+      /* First paint — portal logo before paint (no empty / broken flash). */
+      (function () {
+        try {
+          var path = location.pathname;
+          if (path === '/login' || path === '/install') return;
+          var parts = path.split('/').filter(Boolean);
+          var verticalIdx = parts.indexOf('vertical');
+          var segment = verticalIdx !== -1 ? 'vertical' : (parts.length >= 2 ? parts[1] : '');
+          if (!segment || segment === 'home') return;
+          document.documentElement.setAttribute('data-portal-route', segment);
+          if (segment === 'vertical') {
+            document.documentElement.setAttribute('data-loading-identity', 'vertical');
+            var stage = document.querySelector('#app-boot-splash .app-boot-logo-stage');
+            var frame = document.querySelector('#app-boot-splash .app-boot-logo-frame');
+            var logo = frame && frame.querySelector('.app-boot-logo');
+            if (!stage || !frame || !logo) return;
+            var mark = '/assets/vertical/mark-blue.png';
+            stage.className = 'app-boot-logo-stage app-boot-logo-stage--square';
+            var img = document.createElement('img');
+            img.className = 'app-boot-logo app-boot-logo--custom';
+            img.src = mark;
+            img.alt = '';
+            img.setAttribute('aria-hidden', 'true');
+            img.decoding = 'sync';
+            logo.replaceWith(img);
+            document.documentElement.setAttribute('data-portal-logo-ready', '1');
+            try {
+              if (typeof window.__appendoBootSplashOrbitRepaint === 'function') {
+                window.__appendoBootSplashOrbitRepaint();
+              }
+            } catch (e) {}
+          }
+        } catch (e) {}
+      })();
+    </script>
     <script>
       /* Portal splash logo — DOM must exist; sync cache then sync /api/boot (Settings → Portals). */
       (function () {
@@ -534,9 +666,14 @@
             stage.className = 'app-boot-logo-stage app-boot-logo-stage--' + shape;
             var frame = stage.querySelector('.app-boot-logo-frame');
             if (!frame) {
+              var orbitHost = stage.querySelector('.app-boot-orbit-static');
               frame = document.createElement('div');
-              frame.className = 'app-boot-logo-frame';
-              stage.appendChild(frame);
+              frame.className = 'orbit-border-inner app-boot-logo-frame';
+              if (orbitHost) {
+                orbitHost.appendChild(frame);
+              } else {
+                stage.appendChild(frame);
+              }
             }
             return frame;
           }
@@ -569,6 +706,11 @@
             }
             markReady();
             document.documentElement.setAttribute('data-boot-splash-logo-locked', '1');
+            try {
+              if (typeof window.__appendoBootSplashOrbitRepaint === 'function') {
+                window.__appendoBootSplashOrbitRepaint();
+              }
+            } catch (e) {}
             return true;
           }
 
@@ -699,7 +841,8 @@
       })();
     </script>
     <div id="root"></div>
+    <script type="module" src="/src/boot/appBootSplashOrbit.tsx"></script>
     <!-- Static loader: do NOT point at /src/main.tsx directly (stampedes Vite on restart). -->
-    <script type="module" src="/dev-boot.js?v=boot-timeout"></script>
+    <script type="module" src="/dev-boot.js?v=vite-ready-wait"></script>
   </body>
 </html>

@@ -44,8 +44,10 @@ export function syncAppBootSplashLogo(logoUrl: string | undefined): void {
   }
 
   const stage = document.querySelector<HTMLElement>(`#${BOOT_SPLASH_ID} .app-boot-logo-stage`);
-  const logo = document.querySelector<HTMLElement>(`#${BOOT_SPLASH_ID} .app-boot-logo`);
-  if (!stage || !logo) {
+  const frame = document.querySelector<HTMLElement>(`#${BOOT_SPLASH_ID} .app-boot-logo-frame`);
+  const logo = frame?.querySelector<HTMLElement>('.app-boot-logo')
+    ?? document.querySelector<HTMLElement>(`#${BOOT_SPLASH_ID} .app-boot-logo`);
+  if (!stage || !frame || !logo) {
     return;
   }
 
@@ -70,14 +72,13 @@ export function syncAppBootSplashLogo(logoUrl: string | undefined): void {
   }
 
   stage.className = nextStageClass;
-  const frame = logo.parentElement;
   const img = document.createElement('img');
   img.className = 'app-boot-logo app-boot-logo--custom';
   img.src = pathOnly;
   img.alt = '';
   img.setAttribute('aria-hidden', 'true');
   logo.replaceWith(img);
-  if (frame && !frame.classList.contains('app-boot-logo-frame')) {
+  if (!frame.classList.contains('app-boot-logo-frame')) {
     frame.classList.add('app-boot-logo-frame');
   }
   document.documentElement.setAttribute('data-portal-logo-ready', '1');

@@ -212,9 +212,9 @@ export const SystemConfigForm: React.FC<SystemConfigFormProps> = ({ page }) => {
   if (page.activeSection === 'route-loading') {
     return (
       <SettingsFormShell>
-        <SectionSuspense>
+        <Suspense fallback={<AppRouteLoading variant="embedded" />}>
           <RouteLoadingSettingsSection page={page.routeLoadingSettings} />
-        </SectionSuspense>
+        </Suspense>
       </SettingsFormShell>
     );
   }

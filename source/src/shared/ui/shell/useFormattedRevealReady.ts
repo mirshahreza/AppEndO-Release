@@ -28,7 +28,8 @@ const DEFAULT_LOADING_MAX_WAIT_MS = 8000;
 const DEFAULT_MIN_MS = 100;
 
 /** Nested route/page loaders under the reveal content (not the cover sibling). */
-const ROUTE_LOADING_SELECTOR = '[data-testid="app-route-loading"][data-variant="embedded"]';
+const ROUTE_LOADING_SELECTOR =
+  '[data-testid="app-route-loading"][data-variant="embedded"]:not([data-route-loading-preview="true"])';
 
 /**
  * Ready only after the formatted tree under `rootRef` has gone quiet

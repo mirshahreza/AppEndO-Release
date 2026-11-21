@@ -12,6 +12,12 @@ import type {
 } from '../api/contracts/routeLoading/schema';
 import { useAppBootQuery } from '../api/queries/boot';
 
+function isEffectiveRouteLoadingExperience(
+  value: PlatformRouteLoadingConfig | EffectiveRouteLoadingExperience,
+): value is EffectiveRouteLoadingExperience {
+  return !('version' in value);
+}
+
 export function useRouteLoadingExperience(
   variant: AppRouteLoadingVariant,
   override?: PlatformRouteLoadingConfig | EffectiveRouteLoadingExperience | null,
@@ -19,7 +25,7 @@ export function useRouteLoadingExperience(
   const bootQuery = useAppBootQuery();
 
   return useMemo(() => {
-    if (override && 'progressStyle' in override && !('version' in override)) {
+    if (override && isEffectiveRouteLoadingExperience(override)) {
       return override;
     }
 

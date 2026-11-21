@@ -14,6 +14,7 @@ import { renderBooleanIcon } from '../../../shared/lib/gridCellRenderers';
 import {
   APP_TABLE_GRID_ACTION_CELL_CLASS,
   APP_TABLE_GRID_ACTION_HEADER_CLASS,
+  APP_TABLE_GRID_STATE_PANEL_CLASS,
 } from '../../../shared/ui/surfaceClasses';
 import { BaseComponentsHeaderActions } from '../components/BaseComponentsPageHeaderContext';
 import { useBaseComponentsPreviewViewport } from '../components/BaseComponentsPreviewViewport';
@@ -294,15 +295,18 @@ const TreeGridBaseComponentsPreview: React.FC<{
   const stateView = resolveTreeStateView(config.state);
 
   if (stateView.showError) {
-    return <div className="flex min-h-48 items-center justify-center text-sm text-rose-700" role="alert">Tree data could not be loaded.</div>;
-  }
-  if (stateView.showEmpty) {
-    return <div className="flex min-h-48 items-center justify-center text-sm text-slate-500">No tree nodes to display.</div>;
+    return (
+      <div className={fillProps.previewHostClassName}>
+        <div className={cn(APP_TABLE_GRID_STATE_PANEL_CLASS, 'text-rose-700')} role="alert">
+          Tree data could not be loaded.
+        </div>
+      </div>
+    );
   }
 
   const presentation = resolveTreePresentation(config);
   const layout = resolveTreePreviewLayout(config, viewportTier);
-  const displayRows = pagingDemo.sliceRows(visibleRows);
+  const displayRows = stateView.showEmpty ? [] : pagingDemo.sliceRows(visibleRows);
   const stackedFieldLabels = resolveTreeStackedFieldLabels(config.compactFieldLabels);
 
   const columns = presentation.showDataColumns ? [
@@ -342,39 +346,59 @@ const TreeGridBaseComponentsPreview: React.FC<{
 
   return (
     <div className={fillProps.previewHostClassName}>
-      <div className={fillProps.fillHeight ? 'min-h-0 flex-1 overflow-hidden' : 'min-h-0 overflow-auto'}>
-        <BaseTreeGrid<BaseComponentsTreeRow>
-          rows={displayRows}
-          expandedById={expandedById}
-          loadingByParent={stateView.loadingByParent}
-          moveDisabled={config.moveDisabled}
-          hideExpandControls={config.hideExpandControls}
-          showHeader={presentation.showHeader}
-          showIdColumn={presentation.showIdColumn}
-          layout={layout}
-          stickyHeader={config.stickyHeader}
-          stackedFieldLabels={stackedFieldLabels}
-          nodeColumnHeader="Node"
-          rowClassName={(row) => cn(
-            row.kind === 'group' ? 'bg-slate-50/80' : '',
-            row.depth === 0 ? 'font-semibold' : '',
-            selectedIds.includes(row.id) && 'bg-indigo-50 text-indigo-800',
-            config.density === 'compact' && 'text-[11px]',
-            config.showGuides && row.depth > 0 && 'border-s-2 border-slate-200',
+      <div
+        className={cn(
+          fillProps.fillHeight
+            ? 'flex min-h-0 flex-1 flex-col overflow-hidden'
+            : 'min-h-0 overflow-auto',
+          stateView.showEmpty && 'flex flex-col',
+        )}
+      >
+        <div
+          className={cn(
+            stateView.showEmpty
+              ? 'shrink-0 overflow-hidden'
+              : fillProps.fillHeight
+                ? 'min-h-0 flex-1 overflow-hidden'
+                : 'min-h-0 overflow-auto',
           )}
-          onToggleExpand={onToggleExpand}
-          onMove={onMove}
-          onRowClick={config.selection === 'none' ? undefined : onSelect}
-          getNodeLabel={(row) => {
-            if (row.depth === 0) {
-              const rootIndex = Number(row.id.replace('root-', '')) || 0;
-              return <BaseComponentsTreeRootAccent rootIndex={rootIndex} label={row.label} />;
-            }
-            return row.label;
-          }}
-          columns={previewColumns}
-          stackedActionsPlacement={resolveTreeStackedActionsPlacement(config)}
-        />
+        >
+          <BaseTreeGrid<BaseComponentsTreeRow>
+            rows={displayRows}
+            expandedById={expandedById}
+            loadingByParent={stateView.loadingByParent}
+            moveDisabled={config.moveDisabled}
+            hideExpandControls={config.hideExpandControls}
+            showHeader={presentation.showHeader}
+            showIdColumn={presentation.showIdColumn}
+            layout={layout}
+            stickyHeader={config.stickyHeader}
+            stackedFieldLabels={stackedFieldLabels}
+            nodeColumnHeader="Node"
+            rowClassName={(row) => cn(
+              row.kind === 'group' ? 'bg-slate-50/80' : '',
+              row.depth === 0 ? 'font-semibold' : '',
+              selectedIds.includes(row.id) && 'bg-indigo-50 text-indigo-800',
+              config.density === 'compact' && 'text-[11px]',
+              config.showGuides && row.depth > 0 && 'border-s-2 border-slate-200',
+            )}
+            onToggleExpand={onToggleExpand}
+            onMove={onMove}
+            onRowClick={config.selection === 'none' ? undefined : onSelect}
+            getNodeLabel={(row) => {
+              if (row.depth === 0) {
+                const rootIndex = Number(row.id.replace('root-', '')) || 0;
+                return <BaseComponentsTreeRootAccent rootIndex={rootIndex} label={row.label} />;
+              }
+              return row.label;
+            }}
+            columns={previewColumns}
+            stackedActionsPlacement={resolveTreeStackedActionsPlacement(config)}
+          />
+        </div>
+        {stateView.showEmpty ? (
+          <div className={APP_TABLE_GRID_STATE_PANEL_CLASS}>No records found.</div>
+        ) : null}
       </div>
       {pagingDemo.footer ? <div className="shrink-0">{pagingDemo.footer}</div> : null}
     </div>

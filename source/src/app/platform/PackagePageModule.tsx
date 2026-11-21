@@ -32,6 +32,15 @@ async function loadPackagePageModule(moduleUrl: string): Promise<PluginPageCompo
   }
 }
 
+/** Sidebar hover / intent prefetch — shares the same cache as navigation. */
+export function warmPackagePageModuleUrl(moduleUrl: string): void {
+  const trimmed = moduleUrl.trim();
+  if (!trimmed) {
+    return;
+  }
+  void getPackagePageModule(trimmed);
+}
+
 function getPackagePageModule(moduleUrl: string): Promise<PluginPageComponent | null> {
   const cached = moduleCache.get(moduleUrl);
   if (cached) return cached;

@@ -222,7 +222,7 @@ export const TRANSLATION_EXTENSIONS_EN: Record<string, string> = {
   'settings.sections.pwa.description': 'Web manifest, install icons, in-app messages, and update notices.',
   'settings.sections.route-loading': 'Route loading',
   'settings.sections.route-loading.description':
-    'Boot and lazy-route loading chrome — logo, progress signal, and layout.',
+    'Boot and lazy-route loading chrome — portal logo and accent orbital ring.',
   'settings.sections.cache': 'Cache',
   'settings.sections.cache.description': 'Platform cache storage driver, TTL defaults, and Redis connection.',
   'settings.sections.auth': 'Auth & Security',

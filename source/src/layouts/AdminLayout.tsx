@@ -16,7 +16,6 @@ import {
 } from '../shared/ui/adminLayoutPreferences';
 import { useAdminShellSidebarState } from '../shared/ui/useAdminShellSidebarState';
 import { usePersistedAppEndooOpen } from '../shared/ui/shell/usePersistedAppEndooOpen';
-import { AboutAppModal } from '../components/AboutAppModal';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import {
   ADMIN_SHELL_CONTENT_HOST_CLASS,
@@ -48,9 +47,7 @@ import { useAdminShellNav } from './adminShell/useAdminShellNav';
 import { useOptionalCulture } from '../core/culture/CultureContext';
 import { resolveCultureShellIsRtl } from '../core/culture/cultureShellDirection';
 import { CULTURE_SHELL_FALLBACK_LABELS } from '../core/culture/cultureShellKeys';
-import { PageLoadProfileTracker } from '../features/access-assistant/components/PageLoadProfileTracker';
-import { StudioToolsHostProviders } from '../features/access-assistant/components/StudioToolsHostProviders';
-import { FeedbackWindowChromeHostProviders } from '../features/feedback/components/FeedbackWindowChromeHostProviders';
+import { LazyStudioShellFeatureProviders } from '../shared/ui/shell/LazyStudioShellFeatureProviders';
 import { useStudioToolsGate } from '../features/access-assistant/hooks/useStudioToolsGate';
 import { EnsurePlatformMount } from '../app/platform/EnsurePlatformMount';
 import { usePlatformConfig } from '../app/platform/PlatformConfigProvider';
@@ -60,12 +57,32 @@ import { STUDIO_MOUNT_ID } from '../shared/api/contracts/platform/mountConstants
 import { useOptionalPortal } from '../app/platform/PortalContext';
 import { useResolvedPortalBrand } from '../app/platform/usePortalBrand';
 import { useShellNavigate } from '../shared/ui/shell/useShellNavigate';
-import { PackageSlotRegistryHost } from '../core/packages/PackageSlotRegistryHost';
+import { isAdminUser } from '../app/guards/roleAccess';
 import { useMobileShellDrawer } from '../shared/lib/useMobileShellDrawer';
 import { composeStudioSidebarNav } from '../shared/lib/navTreeFilter';
 import { isOverlayNavTier } from '../shared/lib/viewportTokens';
 import { useViewportTier } from '../shared/lib/useViewportTier';
-import { FeedbackShellFab } from '../features/feedback/components/FeedbackShellFab';
+const FeedbackShellFab = React.lazy(() =>
+  import('../features/feedback/components/FeedbackShellFab').then((module) => ({
+    default: module.FeedbackShellFab,
+  })),
+);
+
+const PageLoadProfileTracker = React.lazy(() =>
+  import('../features/access-assistant/components/PageLoadProfileTracker').then((module) => ({
+    default: module.PageLoadProfileTracker,
+  })),
+);
+
+const AboutAppModal = React.lazy(() =>
+  import('../components/AboutAppModal').then((module) => ({ default: module.AboutAppModal })),
+);
+
+const PackageSlotRegistryHost = React.lazy(() =>
+  import('../core/packages/PackageSlotRegistryHost').then((module) => ({
+    default: module.PackageSlotRegistryHost,
+  })),
+);
 import { overlayMotionBackdropProps } from '../shared/ui/overlay-motion/overlayMotion';
 import { isDashboardChromeStrippedView } from '../shared/lib/dashboardCanvas';
 import { AdminChromeLayoutWidthHost } from './adminShell/AdminChromeLayoutWidthHost';
@@ -104,9 +121,16 @@ export const AdminLayoutFrame = () => {
       persistExpandedNavGroups(localExpandedGroups);
     }
   }, [localExpandedGroups, shellExperience]);
+
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [everOpenedAbout, setEverOpenedAbout] = useState(false);
+  useEffect(() => {
+    if (isAboutModalOpen) {
+      setEverOpenedAbout(true);
+    }
+  }, [isAboutModalOpen]);
   const navGroups = useAdminShellNav(currentUser);
   const brand = useResolvedPortalBrand();
   const { config } = usePlatformConfig();
@@ -243,11 +267,9 @@ export const AdminLayoutFrame = () => {
   const studioPageTitle = headerModule.label ?? shellFallbackLabel;
 
   const studioToolsHost = (content: React.ReactNode) => (
-    <StudioToolsHostProviders pageKey={studioPageKey} pageTitle={studioPageTitle}>
-      <FeedbackWindowChromeHostProviders>
-        {content}
-      </FeedbackWindowChromeHostProviders>
-    </StudioToolsHostProviders>
+    <LazyStudioShellFeatureProviders pageKey={studioPageKey} pageTitle={studioPageTitle}>
+      {content}
+    </LazyStudioShellFeatureProviders>
   );
 
   if (chromeStripped) {
@@ -274,7 +296,11 @@ export const AdminLayoutFrame = () => {
 
   return studioToolsHost(
     <AdminChromeLayoutWidthHost portal={application}>
-    {studioToolsGate ? <PageLoadProfileTracker /> : null}
+    {studioToolsGate ? (
+      <React.Suspense fallback={null}>
+        <PageLoadProfileTracker />
+      </React.Suspense>
+    ) : null}
     <div
       className={`${ADMIN_SHELL_ROOT_CLASS} ${APPENDOO_DOCK_LAYOUT_PADDING_CLASS}`}
       data-admin-shell-root
@@ -290,7 +316,11 @@ export const AdminLayoutFrame = () => {
               : formatAdminShellSidebarWidthCss(sidebarExpandedWidthPx),
       }}
     >
-      <PackageSlotRegistryHost />
+      {isAdminUser(currentUser) ? (
+        <Suspense fallback={null}>
+          <PackageSlotRegistryHost />
+        </Suspense>
+      ) : null}
       <ShellChromeEnter className="h-full w-full overflow-hidden">
         <AtmosphereBackdrop className="admin-shell-atmosphere-main" />
         <ShellOverlayPortal active={overlayNav}>
@@ -393,8 +423,18 @@ export const AdminLayoutFrame = () => {
             />
           </Suspense>
         ) : null}
-        <AboutAppModal open={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} brand={brand} />
-        <FeedbackShellFab pageKey={headerContext.item.pageKey} />
+        {everOpenedAbout ? (
+          <Suspense fallback={null}>
+            <AboutAppModal
+              open={isAboutModalOpen}
+              onClose={() => setIsAboutModalOpen(false)}
+              brand={brand}
+            />
+          </Suspense>
+        ) : null}
+        <React.Suspense fallback={null}>
+          <FeedbackShellFab pageKey={headerContext.item.pageKey} />
+        </React.Suspense>
       </ShellChromeEnter>
     </div>
     </AdminChromeLayoutWidthHost>,

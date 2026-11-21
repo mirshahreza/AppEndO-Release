@@ -1,13 +1,11 @@
 import type { PlatformRouteLoadingConfig, RouteLoadingLogoSize } from './schema';
 
 export const DEFAULT_PLATFORM_ROUTE_LOADING_CONFIG: PlatformRouteLoadingConfig = {
-  version: 1,
+  version: 2,
   showLogo: true,
   logoSize: 'default',
   logoGlow: true,
   logoBreathe: true,
-  stackOrder: 'logo-first',
-  progressStyle: 'ecg',
   stackGapRem: undefined,
   embedded: {
     logoSize: 'compact',

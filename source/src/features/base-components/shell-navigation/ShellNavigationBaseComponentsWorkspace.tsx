@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Circle, Menu, Search, Settings } from 'lucide-react';
+import { AppRouteLoading } from '../../../components/AppRouteLoading';
 import { cn } from '../../../lib/utils';
 import {
   AppButton,
@@ -225,7 +226,11 @@ const NavigationPreview: React.FC<{
       {node}
     </div>
   );
-  if (config.state === 'loading') return shell(<p role="status" className="text-sm font-semibold text-slate-600">Loading navigation manifest…</p>);
+  if (config.state === 'loading') {
+    return shell(
+      <AppRouteLoading variant="embedded" label="Loading navigation manifest" className="min-h-40 w-full" />,
+    );
+  }
   if (config.state === 'empty') return shell(<p className="text-sm font-semibold text-slate-600">No navigation items are registered.</p>);
 
   switch (config.component) {

@@ -94,6 +94,10 @@ export type OrbitBorderFrameProps = {
   colorSteps?: number;
   /** When true, the palette ramp runs head ← tail (flipped from the preset order). */
   reverseColors?: boolean;
+  /** Flip dense/fade along the dash so the bright head leads the travel direction (not the tail). */
+  invertCometRamp?: boolean;
+  /** Flip palette tail↔head on stroke color only (geometry still follows `invertCometRamp`). */
+  flipColorAlongTravel?: boolean;
   /** How many comets share the path (1–10). */
   cometCount?: number;
   /** Faint static path the comet travels. */
@@ -138,6 +142,8 @@ type CometStep = {
   color: string;
   dash: number;
   gap: number;
+  /** Align layer stroke to path end so the bright tip leads clockwise travel (pairs with `dash`/`gap`). */
+  dashOffsetPhase: number;
   opacity: number;
   width: number;
 };
@@ -147,21 +153,33 @@ export const resolveOrbitPaletteStops = (
   reverseColors: boolean,
 ): readonly string[] => (reverseColors ? [...stops].reverse() : stops);
 
+export const orderOrbitCometStepsForPaint = (
+  steps: readonly CometStep[],
+  invertCometRamp: boolean,
+): CometStep[] => (invertCometRamp ? [...steps].reverse() : [...steps]);
+
 export const buildOrbitCometSteps = (
   colorSteps: number,
   tailLength: number,
   borderWidth: number,
   stops: readonly string[],
+  invertCometRamp = false,
+  /** Sample palette as tail→head along path while dash width uses `invertCometRamp` geometry. */
+  flipColorAlongTravel = false,
 ): CometStep[] => {
   const count = clampOrbitColorSteps(colorSteps);
   const tail = clampTail(tailLength);
   return Array.from({ length: count }, (_, index) => {
-    const t = count === 1 ? 1 : index / (count - 1);
+    const along = count === 1 ? 1 : index / (count - 1);
+    const t = invertCometRamp ? 1 - along : along;
+    const tColor = flipColorAlongTravel ? 1 - t : t;
     const dash = Math.max(0.8, tail * (1 - t * 0.88));
+    const gap = Math.max(0, 100 - dash);
     return {
-      color: sampleRamp(stops, t),
+      color: sampleRamp(stops, tColor),
       dash,
-      gap: Math.max(0, 100 - dash),
+      gap,
+      dashOffsetPhase: -gap,
       /* Head opaque; tail layers thin + faint (comet tapers along the trail). */
       opacity: 0.14 + t * 0.58,
       width: borderWidth * (0.22 + t * 1.05),
@@ -238,17 +256,19 @@ const OrbitPathLayer: React.FC<OrbitPathLayerProps> = ({ d, className, style }) 
 export const OrbitBorderFrame: React.FC<OrbitBorderFrameProps> = ({
   children,
   enabled = true,
-  borderWidth = 1.5,
+  borderWidth = 1.25,
   borderRadius = 'var(--app-radius-xl)',
   hostBackground = 'transparent',
   showGlow = true,
-  glowBlur = 8,
-  glowOpacity = 0.55,
-  durationSeconds = 12,
+  glowBlur = 4,
+  glowOpacity = 0.3,
+  durationSeconds = 8,
   preset = 'rainbow',
-  tailLength = 5,
+  tailLength = 10,
   colorSteps = 6,
   reverseColors = true,
+  invertCometRamp = false,
+  flipColorAlongTravel = false,
   cometCount = 1,
   showTrack = true,
   direction = 'forward',
@@ -266,8 +286,12 @@ export const OrbitBorderFrame: React.FC<OrbitBorderFrameProps> = ({
     [palette.stops, reverseColors],
   );
   const steps = useMemo(
-    () => buildOrbitCometSteps(colorSteps, tail, borderWidth, stops),
-    [borderWidth, colorSteps, stops, tail],
+    () => buildOrbitCometSteps(colorSteps, tail, borderWidth, stops, invertCometRamp, flipColorAlongTravel),
+  [borderWidth, colorSteps, flipColorAlongTravel, invertCometRamp, stops, tail],
+  );
+  const paintSteps = useMemo(
+    () => orderOrbitCometStepsForPaint(steps, invertCometRamp),
+    [invertCometRamp, steps],
   );
 
   const hostStyle = useMemo(() => ({
@@ -307,10 +331,14 @@ export const OrbitBorderFrame: React.FC<OrbitBorderFrameProps> = ({
           <OrbitPathLayer
             d={path}
             className={cn(motionClass, 'orbit-border-layer-glow')}
-            style={delayStyle}
+            style={{
+              ...delayStyle,
+              ['--orbit-comet-phase-start' as string]: String(-Math.max(0, 100 - tail)),
+              ['--orbit-comet-phase-end' as string]: String(-Math.max(0, 100 - tail) - 100),
+            }}
           />
         ) : null}
-        {steps.map((step, index) => (
+        {paintSteps.map((step, index) => (
           <OrbitPathLayer
             key={`${slot}-${index}`}
             d={path}
@@ -320,6 +348,8 @@ export const OrbitBorderFrame: React.FC<OrbitBorderFrameProps> = ({
               strokeWidth: step.width,
               strokeDasharray: `${step.dash} ${step.gap}`,
               opacity: step.opacity,
+              ['--orbit-comet-phase-start' as string]: String(step.dashOffsetPhase),
+              ['--orbit-comet-phase-end' as string]: String(step.dashOffsetPhase - 100),
               ...delayStyle,
             }}
           />

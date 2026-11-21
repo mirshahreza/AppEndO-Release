@@ -6,6 +6,9 @@ export type PackageArtifactFile = {
 const normalizeEntryName = (entryName: string): string => entryName.replace(/\\/g, '/');
 
 const uint8ArrayToBase64 = (data: Uint8Array): string => {
+  if (typeof Buffer !== 'undefined') {
+    return Buffer.from(data).toString('base64');
+  }
   let binary = '';
   for (let index = 0; index < data.length; index += 1) {
     binary += String.fromCharCode(data[index]);

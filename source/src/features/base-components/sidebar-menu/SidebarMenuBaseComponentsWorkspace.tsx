@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Loader2, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
+import { AppRouteLoading } from '../../../components/AppRouteLoading';
 import {
   AppButton,
   FormField,
@@ -224,7 +225,7 @@ const SidebarMenuBaseComponentsPreview: React.FC<SidebarMenuBaseComponentsPrevie
   const effectiveRenderer = model.renderer;
 
   const navigation = config.state === 'loading' ? (
-    <div className="flex min-h-40 items-center justify-center gap-2 text-sm text-slate-500"><Loader2 className="h-4 w-4 animate-spin" /> Loading navigation…</div>
+    <AppRouteLoading variant="embedded" label="Loading navigation" className="min-h-40 w-full" />
   ) : config.state === 'empty' ? (
     <div className="rounded-lg border border-dashed border-slate-300 p-3 text-sm text-slate-500">No navigation destinations are available.</div>
   ) : config.state === 'unavailable-route' ? (

@@ -15,6 +15,9 @@ import { NavigationIcon } from '../../../shared/lib/navigationIcons/NavigationIc
 import { useViewportTier } from '../../../shared/lib/useViewportTier';
 import { isOverlayNavTier } from '../../../shared/lib/viewportTokens';
 import { isAdminShellNavItemActive } from '../buildAdminShellNav';
+import { useOptionalPlatformMount } from '../../../app/platform/PlatformMountContext';
+import { resolveStudioPageKeyForNavigation } from '../../../app/platform/resolveStudioPageKeyForNavigation';
+import { STUDIO_MOUNT_ID } from '../../../shared/api/contracts/platform/mountConstants';
 import {
   resolveNavGroupCollapsedFullLabel,
   resolveNavGroupCollapsedLabel,
@@ -36,6 +39,8 @@ import {
   filterAdminShellNavByQuery,
   splitNavGroupsAtSearchSlot,
 } from '../../../shared/lib/filterAdminShellNavByQuery';
+import { usePlatformConfig } from '../../../app/platform/PlatformConfigProvider';
+import { preloadStudioPageChunk } from '../../../app/routes/studioPageChunkPreload';
 
 const FLYOUT_CLOSE_DELAY_MS = 250;
 const ADMIN_SHELL_SIDEBAR_SELECTOR = '#admin-shell-sidebar, .designer-shell-sidebar.admin-shell-chrome';
@@ -104,6 +109,8 @@ type NavTreeItemLinkProps = {
   isSidebarCollapsed: boolean;
   isRtl: boolean;
   onNavigate: (path: string) => void;
+  /** Pin-to-home hover affordance is only shown on the dashboard page. */
+  allowNavPinToHome: boolean;
   nested?: boolean;
   /** Link lives under a headed nav group (section sub-items). */
   inGroup?: boolean;
@@ -132,19 +139,26 @@ const NavTreeItemLink = memo(function NavTreeItemLink({
   isSidebarCollapsed,
   isRtl,
   onNavigate,
+  allowNavPinToHome,
   nested = false,
   inGroup = false,
 }: NavTreeItemLinkProps) {
   const t = useOptionalCultureT();
   const isDesigning = useDashboardDesignMode();
+  const { config, version } = usePlatformConfig();
   if (item.type === 'separator' || !item.path) {
     return null;
   }
 
+  const warmPageChunk = useCallback(() => {
+    preloadStudioPageChunk(config, version, item.pageKey);
+  }, [config, item.pageKey, version]);
+
   const isActive = isAdminShellNavItemActive(groups, item, pathname);
   const sideHint = resolveNavItemSideHint(item, isSidebarCollapsed);
-  const canPinToHome = Boolean(item.path) && !isDashboardHomePageKey(item.pageKey);
-  const canDragToHome = canPinToHome && isDesigning;
+  const itemCanBePinned = Boolean(item.path) && !isDashboardHomePageKey(item.pageKey);
+  const showPinToHome = itemCanBePinned && allowNavPinToHome;
+  const canDragToHome = itemCanBePinned && isDesigning;
   const pinToHome = () => {
     if (!item.path) {
       return;
@@ -166,6 +180,7 @@ const NavTreeItemLink = memo(function NavTreeItemLink({
     <NavItemLink
       path={item.path}
       onNavigate={onNavigate}
+      onWarmPointer={warmPageChunk}
       draggable={canDragToHome}
       onDragStart={(event) => {
         if (!canDragToHome || !item.path) {
@@ -189,7 +204,7 @@ const NavTreeItemLink = memo(function NavTreeItemLink({
         canDragToHome && 'admin-nav-item-drag',
         isSidebarCollapsed
           ? cn(COLLAPSED_NAV_ITEM_CLASS, 'flex-col justify-center px-1 gap-0 py-2')
-          : cn('min-w-0 max-w-full ps-3', canPinToHome ? 'pe-[6px]' : 'pe-3'),
+          : cn('min-w-0 max-w-full ps-3', showPinToHome ? 'pe-[6px]' : 'pe-3'),
         !isSidebarCollapsed && 'admin-nav-item-expanded',
         inGroup && !isSidebarCollapsed && 'admin-nav-item-in-group',
         nested && 'admin-nav-item-nested',
@@ -244,7 +259,7 @@ const NavTreeItemLink = memo(function NavTreeItemLink({
               aria-hidden
               className="admin-nav-item-chevron w-3 h-3 rtl:rotate-180"
             />
-            {canPinToHome ? (
+            {showPinToHome ? (
               <NativeButton
                 type="button"
                 className="inline-flex h-5 w-5 items-center justify-center rounded text-text-nav-icon opacity-0 hover:bg-slate-200/70 hover:text-primary-700 group-hover/navpin:opacity-100"
@@ -280,6 +295,7 @@ type NavGroupItemsProps = {
   isSidebarCollapsed: boolean;
   isRtl: boolean;
   onNavigate: (path: string) => void;
+  allowNavPinToHome: boolean;
   nestedContainerClassName?: string;
 };
 
@@ -291,6 +307,7 @@ const NavGroupItems = memo(function NavGroupItems({
   isSidebarCollapsed,
   isRtl,
   onNavigate,
+  allowNavPinToHome,
   nestedContainerClassName,
 }: NavGroupItemsProps) {
   const inGroup = Boolean(group.heading?.trim());
@@ -320,6 +337,7 @@ const NavGroupItems = memo(function NavGroupItems({
               isSidebarCollapsed={isSidebarCollapsed}
               isRtl={isRtl}
               onNavigate={onNavigate}
+              allowNavPinToHome={allowNavPinToHome}
               inGroup={inGroup}
             />
 
@@ -344,6 +362,7 @@ const NavGroupItems = memo(function NavGroupItems({
                       isSidebarCollapsed={isSidebarCollapsed}
                       isRtl={isRtl}
                       onNavigate={onNavigate}
+                      allowNavPinToHome={allowNavPinToHome}
                       inGroup={inGroup}
                       nested
                     />
@@ -366,6 +385,7 @@ type CollapsedNavGroupFlyoutProps = {
   isRtl: boolean;
   isActive: boolean;
   onNavigate: (path: string) => void;
+  allowNavPinToHome: boolean;
   isOpen: boolean;
   onOpen: () => void;
   onScheduleClose: () => void;
@@ -380,6 +400,7 @@ const CollapsedNavGroupFlyout = memo(function CollapsedNavGroupFlyout({
   isRtl,
   isActive,
   onNavigate,
+  allowNavPinToHome,
   isOpen,
   onOpen,
   onScheduleClose,
@@ -511,6 +532,7 @@ const CollapsedNavGroupFlyout = memo(function CollapsedNavGroupFlyout({
                     isSidebarCollapsed={false}
                     isRtl={isRtl}
                     onNavigate={handleNavigate}
+                    allowNavPinToHome={allowNavPinToHome}
                   />
                 </div>
               </div>,
@@ -537,6 +559,18 @@ export const TreeNavTwoLevel: React.FC<NavRendererProps> = ({
   requireOpenGroup = false,
 }) => {
   const t = useOptionalCultureT();
+  const { config } = usePlatformConfig();
+  const mount = useOptionalPlatformMount();
+  const allowNavPinToHome = React.useMemo(
+    () => isDashboardHomePageKey(
+      resolveStudioPageKeyForNavigation(
+        config,
+        mount?.id ?? STUDIO_MOUNT_ID,
+        pathname,
+      ),
+    ),
+    [config, mount?.id, pathname],
+  );
   const viewportTier = useViewportTier();
   const resolvedGroupGapPx = Math.max(0, Math.min(30, Math.round(groupGapPx)));
   const isCollapsedDesktop = isSidebarCollapsed && !isOverlayNavTier(viewportTier);
@@ -887,6 +921,7 @@ export const TreeNavTwoLevel: React.FC<NavRendererProps> = ({
               isSidebarCollapsed
               isRtl={isRtl}
               onNavigate={onNavigate}
+              allowNavPinToHome={allowNavPinToHome}
             />
           </div>
         );
@@ -902,6 +937,7 @@ export const TreeNavTwoLevel: React.FC<NavRendererProps> = ({
             isRtl={isRtl}
             isActive={isActiveGroup}
             onNavigate={onNavigate}
+            allowNavPinToHome={allowNavPinToHome}
             isOpen={activeFlyoutId === resolveFlyoutId(group, groupIdx)}
             onOpen={() => openFlyout(resolveFlyoutId(group, groupIdx))}
             onScheduleClose={() => scheduleCloseFlyout(resolveFlyoutId(group, groupIdx))}
@@ -981,6 +1017,7 @@ export const TreeNavTwoLevel: React.FC<NavRendererProps> = ({
                   isSidebarCollapsed={false}
                   isRtl={isRtl}
                   onNavigate={onNavigate}
+                  allowNavPinToHome={allowNavPinToHome}
                 />
               </div>
             </SidebarMenuScrollArea>
@@ -998,6 +1035,7 @@ export const TreeNavTwoLevel: React.FC<NavRendererProps> = ({
                 isSidebarCollapsed={false}
                 isRtl={isRtl}
                 onNavigate={onNavigate}
+                allowNavPinToHome={allowNavPinToHome}
               />
             </div>
           )

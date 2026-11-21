@@ -35,6 +35,22 @@ const fetchWithTimeout = async (url, timeoutMs) => {
   }
 };
 
+const waitForViteModuleProxy = async () => {
+  const startedAt = Date.now();
+  const deadlineMs = 120_000;
+  while (Date.now() - startedAt < deadlineMs) {
+    try {
+      const response = await fetchWithTimeout('/src/main.tsx', 30_000);
+      if (response.ok) {
+        return;
+      }
+    } catch {
+      // Vite child still warming, proxy slots busy, or SPA gate not open yet.
+    }
+    await sleep(750);
+  }
+};
+
 const waitForBoot = async () => {
   const startedAt = Date.now();
   let attempt = 0;
@@ -79,6 +95,7 @@ const installReactRefreshPreamble = async () => {
 
 const loadApp = async () => {
   await waitForBoot();
+  await waitForViteModuleProxy();
   // Disk-served HTML skips Vite's HTML transform — pull the client + React Refresh preamble.
   await importWithBusyRetry('/@vite/client');
   await installReactRefreshPreamble();

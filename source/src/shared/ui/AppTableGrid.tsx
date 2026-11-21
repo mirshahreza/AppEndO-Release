@@ -91,6 +91,7 @@ import {
   AppTableGridScrollOverflowFrame,
   useTableScrollOverflowHint,
 } from './AppTableGridScrollOverflow';
+import { AppTableGridRouteLoading } from './AppTableGridRouteLoading';
 import {
   AppTableGridCardBody,
 } from './AppTableGridCardBody';
@@ -907,7 +908,7 @@ function AppTableGridColumnMode<TRow>({
 
   const renderLoadingPanel = () => (
     loadingContent ?? (
-      <div className={APP_TABLE_GRID_STATE_PANEL_CLASS}>{loadingMessage}</div>
+      <AppTableGridRouteLoading label={loadingMessage} />
     )
   );
 
@@ -1239,7 +1240,7 @@ function AppTableGridComposed({
   const renderScrollBody = () => {
     if (isLoading) {
       return loadingContent ?? (
-        <div className={APP_TABLE_GRID_STATE_PANEL_CLASS}>{loadingMessage}</div>
+        <AppTableGridRouteLoading label={loadingMessage} />
       );
     }
 

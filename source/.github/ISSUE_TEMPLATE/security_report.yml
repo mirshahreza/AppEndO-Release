@@ -1,0 +1,65 @@
+name: Security report
+description: Report a security vulnerability (no secrets in the issue body)
+title: "[Security]: "
+labels: ["security", "triage"]
+body:
+  - type: markdown
+    validations: []
+    attributes:
+      value: |
+        **Do not** post exploit code, passwords, session cookies, API tokens, or other secrets here.
+        Describe the affected version, component, and impact at a high level so maintainers can follow up in this issue thread.
+
+  - type: input
+    id: version
+    attributes:
+      label: Affected AppEndO version
+      description: Release tag (e.g. v0.0.12) or commit SHA from AppEndO-Release
+      placeholder: v0.0.12
+    validations:
+      required: true
+
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: API route, auth flow, package, file manager, etc.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Estimated severity
+      options:
+        - Critical (remote compromise, auth bypass, data breach)
+        - High
+        - Medium
+        - Low / informational
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is wrong and who is affected (no exploit payloads)
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce (sanitized)
+      description: Numbered steps without sensitive credentials or full exploit chains
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgment
+      options:
+        - label: I have not included secrets, live tokens, or production credentials in this report
+          required: true

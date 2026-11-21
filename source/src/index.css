@@ -1367,20 +1367,23 @@ html[data-loading-identity='vertical'][data-boot-splash-logo-locked='1']
 
 .app-route-loading__logo-stage .app-route-loading__logo,
 .app-boot-logo-frame .app-boot-logo {
+	display: block;
 	max-block-size: 100%;
 	max-inline-size: 100%;
 	object-fit: contain;
 }
 
+.app-route-loading__logo-frame .app-route-loading__logo {
+	margin-inline: auto;
+}
+
+/* Legacy static halos — disabled; orbit-border (OrbitBorderFrame) is the only loading chrome. */
 .app-route-loading__logo-stage::before,
 .app-route-loading__logo-stage::after,
 .app-boot-logo-stage::before,
 .app-boot-logo-stage::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	border-radius: 0.5rem;
+	content: none;
+	display: none;
 }
 
 .app-route-loading__logo-stage::before,
@@ -1487,100 +1490,47 @@ html[data-loading-identity='vertical'] .app-boot-logo-stage--square .app-boot-lo
 		inset 0 1px 0 rgb(255 255 255 / 0.35);
 }
 
-.app-route-loading--vertical .app-route-loading__activity {
-	width: min(13rem, 58vw);
+.app-route-loading-logo-orbit.orbit-border-host {
+	--route-loading-orbit-gap: 10px;
+	flex: 0 0 auto;
+	align-self: center;
+	inline-size: fit-content;
+	max-inline-size: var(--loading-logo-max-w);
+	block-size: auto;
+	box-sizing: border-box;
+	padding: var(--route-loading-orbit-gap);
 }
 
-
-.app-route-loading__logo,
-#app-boot-splash .app-boot-logo {
-	animation: app-route-loading-logo-breathe 2.4s ease-in-out infinite;
-}
-
-.app-route-loading__activity {
+.app-route-loading-logo-orbit .orbit-border-inner {
+	flex: 0 0 auto;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	gap: 0.625rem;
-	width: min(12rem, 56vw);
+	justify-content: center;
+	overflow: visible;
+	min-block-size: var(--loading-logo-h);
 }
 
-.app-route-loading__activity--compact {
-	width: min(9rem, 48vw);
-	gap: 0.5rem;
+#app-boot-splash .app-route-loading-logo-orbit.orbit-border-host {
+	flex-shrink: 0;
 }
 
-.app-route-loading__bar,
-#app-boot-splash .app-boot-bar {
+#app-boot-splash .app-route-loading-logo-orbit .orbit-border-inner.app-boot-logo-frame {
 	position: relative;
-	width: 100%;
-	height: clamp(4.5rem, 17vw, 7rem);
-	overflow: hidden;
-	background: transparent;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	block-size: var(--loading-logo-h);
+	max-block-size: var(--loading-logo-h);
+	max-inline-size: var(--loading-logo-max-w);
 }
 
-.app-route-loading__activity--compact .app-route-loading__bar {
-	height: clamp(3.375rem, 12vw, 4.75rem);
+.app-route-loading__stack {
+	flex-shrink: 0;
 }
 
-.app-loading-ecg-live {
-	display: block;
-	width: 100%;
-	height: 100%;
-}
-
-.app-route-loading--no-logo-glow .app-route-loading__logo-stage::before,
-.app-route-loading--no-logo-glow .app-route-loading__logo-stage::after {
-	display: none;
-}
-
-.app-route-loading--no-logo-breathe .app-route-loading__logo,
-.app-route-loading--no-logo-breathe .appendo-logo-themed.app-route-loading__logo--appendo {
-	animation: none;
-}
-
-.app-route-loading__bar--simple-line {
-	height: 0.375rem;
-}
-
-.app-route-loading__simple-line {
-	display: block;
-	width: 100%;
-	height: 100%;
-	border-radius: 9999px;
-	background: color-mix(in srgb, var(--app-route-loading-accent, var(--app-accent-500, #00a28a)) 22%, transparent);
-	overflow: hidden;
-	position: relative;
-}
-
-.app-route-loading__simple-line::after {
-	content: '';
-	position: absolute;
-	inset-block: 0;
-	inline-size: 38%;
-	border-radius: inherit;
-	background: var(--app-route-loading-accent, var(--app-accent-500, #00a28a));
-	animation: app-route-loading-simple-line 1.35s ease-in-out infinite;
-}
-
-@keyframes app-route-loading-simple-line {
-	0%,
-	100% {
-		transform: translateX(-120%);
-	}
-	50% {
-		transform: translateX(280%);
-	}
-}
-
-@keyframes app-route-loading-logo-breathe {
-	0%,
-	100% {
-		opacity: 0.88;
-	}
-	50% {
-		opacity: 1;
-	}
+.app-route-loading__logo-stage {
+	flex-shrink: 0;
 }
 
 @keyframes app-route-loading-logo-glow-pulse {
@@ -1594,7 +1544,6 @@ html[data-loading-identity='vertical'] .app-boot-logo-stage--square .app-boot-lo
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.app-route-loading__logo,
 	.app-route-loading__logo-stage::before,
 	.app-route-loading__logo-stage::after,
 	.app-boot-logo-stage::before,
@@ -3395,7 +3344,8 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 	animation-delay: 0.05s;
 }
 
-/* OrbitBorderFrame — comet travels the wrapped element's perimeter (SVG pathLength). */
+/* OrbitBorderFrame — comet travels the wrapped element's perimeter (SVG pathLength).
+   Head-leading motion: each path sets --orbit-comet-phase-start/end; keyframes orbit-border-travel. */
 .orbit-border-host {
 	position: relative;
 	display: flex;
@@ -3479,12 +3429,15 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 
 .orbit-border-host[data-orbit-motion="reduced"] .orbit-border-comet,
 .orbit-border-host[data-orbit-motion="reduced"] .orbit-border-layer-glow {
-	stroke-dashoffset: 18;
+	stroke-dashoffset: calc(var(--orbit-comet-phase-start, 0) + 18);
 }
 
 @keyframes orbit-border-travel {
+	from {
+		stroke-dashoffset: var(--orbit-comet-phase-start, 0);
+	}
 	to {
-		stroke-dashoffset: -100;
+		stroke-dashoffset: var(--orbit-comet-phase-end, -100);
 	}
 }
 

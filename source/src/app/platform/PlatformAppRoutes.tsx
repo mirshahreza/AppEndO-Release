@@ -41,9 +41,12 @@ import { PublicCultureScope } from './PublicCultureScope';
 import { resolveInvalidCulturePrefixRedirect } from './LegacyAdminUrlResolver';
 import { VerticalPackagePublicGate } from '../../shared/packages/VerticalPackagePublicGate';
 
-const ExperienceHost = React.lazy(() =>
-  import('./ExperienceHost').then((module) => ({ default: module.ExperienceHost })),
-);
+const ExperienceHost = React.lazy(() => {
+  void import('./LazyExperienceMountRuntimeProviders').then((module) => {
+    void module.preloadExperienceMountRuntimeProviders();
+  });
+  return import('./ExperienceHost').then((module) => ({ default: module.ExperienceHost }));
+});
 
 const UnmatchedPlatformRoute: React.FC = () => {
   const { pathname } = useLocation();

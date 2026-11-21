@@ -1,4 +1,4 @@
-# AppEndO — Public release 0.0.10
+# AppEndO — Public release 0.0.12
 
 [![Release](https://img.shields.io/github/v/tag/mirshahreza/AppEndO-Release?label=release)](https://github.com/mirshahreza/AppEndO-Release/releases)
 
@@ -7,14 +7,14 @@ This repository is the **official public OSS snapshot** of **AppEndO**: platform
 | Path | Contents |
 | --- | --- |
 | **`dist/`** | Production server (`server.cjs`) + Vite client assets — run with Node 22 |
-| **`source/`** | Full platform source to rebuild, audit, or contribute (Vertical private package paths **removed**) |
+| **`source/`** | Scrubbed platform source to rebuild, audit, or contribute (private commercial package paths **removed**) |
 | **`packages/`** | Copy of bundled package ZIPs |
 | **`cms-*.zip`** · **`remote-hubs-*.zip`** | Same ZIPs at repo root for simple download / hosting |
 | **`MANIFEST.json`** | Version, SHA-256 checksums, bundled package ids |
 
-**Bundled in this release:** `cms`, `remote-hubs`. **Not included:** Vertical or other private vertical packages from the commercial monorepo.
+**Bundled in this release:** `cms`, `remote-hubs`. **Not included:** private commercial vertical packages from the upstream monorepo.
 
-Upstream development (private): [mirshahreza/AppEndO](https://github.com/mirshahreza/AppEndO) is not this snapshot; use **this repo** for public distribution of the OSS platform + CMS + Remote Hubs.
+Upstream platform development is maintained privately; **this repository** is the public distribution channel for the OSS platform + CMS + Remote Hubs. Report issues and open pull requests here — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ---
 
@@ -65,7 +65,7 @@ LOB modules (CRM, HR, commerce, …) are **ecosystem packages**. **CMS** is a sh
 - **AI & MCP** — In-app agent, built-in tool packs, inbound MCP host  
 - **Settings** — Central config: auth, email, cultures, AI, PWA, attributes  
 
-Full product narrative and comparison tables: see **`source/README.md`** in this release (mirror of the private monorepo readme).
+Full product narrative: see **`source/README.md`** in this release (scrubbed OSS source readme).
 
 ---
 
@@ -84,16 +84,7 @@ cd dist
 node server.cjs
 ```
 
-For an **isolated dev clone** (separate from the private monorepo database), use the release-cut profile in **`source/CLONE_PROFILE.md`**:
-
-```bash
-cd source
-npm run clone:bootstrap -- --profile oss
-npm install
-npm run dev
-```
-
-Recommended control-plane database: **`AppEndORelease`** (not `AppEnd`). Starter file: `source/settings.recommended.json`.
+For an **isolated dev clone**, follow **`source/CLONE_PROFILE.md`** and `source/settings.recommended.json` (database **`AppEndORelease`**).
 
 For a generic layout, you may instead copy `source/settings.example.json` → `settings.json`, run the install wizard at `/install`, or use `npm run setup` when using PostgreSQL CLI bootstrap.
 
@@ -178,7 +169,7 @@ openssl rand -hex 32
 | Data Studio | `source/docs/standards/data-studio.md` |
 | Packages | `source/docs/standards/package-ui.md` |
 | AI / MCP | `source/docs/standards/ai-mcp.md` |
-| Contributors | `source/AGENTS.md` |
+| Contributors | `CONTRIBUTING.md` · `source/AGENTS.md` · `source/docs/LICENSE-FAQ.md` |
 
 ---
 
@@ -186,7 +177,7 @@ openssl rand -hex 32
 
 AppEndO uses a **custom license** (Apache 2.0 base + **Section A** terms). Read **`source/LICENSE`** in full before redistribution.
 
-This **AppEndO-Release** repository is the designated **public OSS distribution** of the platform snapshot and bundled CMS / Remote Hubs artifacts. **Do not** republish Vertical or other private packages from the commercial monorepo.
+This **AppEndO-Release** repository is the designated **public OSS distribution** of the platform snapshot and bundled CMS / Remote Hubs artifacts. **Do not** republish private commercial packages that are not part of this release manifest.
 
 ---
 
@@ -197,6 +188,6 @@ This **AppEndO-Release** repository is the designated **public OSS distribution*
 sha256sum cms-*.zip
 ```
 
-Platform version: **0.0.10** · Manifest created: see **`MANIFEST.json`**.
+Platform version: **0.0.12** · Manifest created: see **`MANIFEST.json`**.
 
-**Issues & contributions:** use the official upstream project channels; this repo tracks **published releases** (tags `vX.Y.Z`).
+**Issues & contributions:** [GitHub Issues](https://github.com/mirshahreza/AppEndO-Release/issues) and pull requests on **this repo** (tags `vX.Y.Z`). Security: [`SECURITY.md`](SECURITY.md). License FAQ: [`source/docs/LICENSE-FAQ.md`](source/docs/LICENSE-FAQ.md).

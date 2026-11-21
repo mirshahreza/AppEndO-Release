@@ -414,9 +414,7 @@ const GridBaseComponentsPreview: React.FC<{
         borderWidth={config.borderWidth}
         cellPaddingX={config.cellPaddingX}
         isLoading={isLoading}
-        loadingMessage="Loading baseComponents rows…"
         isEmpty={isEmpty}
-        emptyMessage="No rows to display."
         errorContent={isError ? <div className="p-4 text-sm text-rose-700">Failed to load baseComponents rows.</div> : undefined}
         footer={pagingDemo.footer}
         header={(
@@ -477,9 +475,7 @@ const GridBaseComponentsPreview: React.FC<{
       stickyHeader={config.stickyHeader}
       footer={pagingDemo.footer}
       isLoading={isLoading}
-      loadingMessage="Loading baseComponents rows…"
       isEmpty={isEmpty}
-      emptyMessage="No rows to display."
       errorContent={isError ? <div className="p-4 text-sm text-rose-700">Failed to load baseComponents rows.</div> : undefined}
     />
   );

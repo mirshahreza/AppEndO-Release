@@ -153,11 +153,15 @@ export const startDevViteChild = async (options: {
   const HEALTH_INTERVAL_MS = 10_000;
   const HEALTH_TIMEOUT_MS = 30_000;
   const FAILURE_THRESHOLD = 4;
+  /** First-touch `main.tsx` transforms can monopolize the child for minutes — ping failures were SIGKILLing it into a boot loop. */
+  const HEALTH_GRACE_AFTER_WARMUP_MS = 180_000;
   let consecutiveFailures = 0;
   let restarting = false;
+  let healthChecksPaused = false;
+  let pauseHealthUntil = Date.now() + 45_000;
   const pingChild = (): Promise<boolean> => new Promise((resolve) => {
     const req = http.request(
-      { hostname: '127.0.0.1', port, path: '/', method: 'GET', timeout: HEALTH_TIMEOUT_MS },
+      { hostname: '127.0.0.1', port, path: '/@vite/client', method: 'GET', timeout: HEALTH_TIMEOUT_MS },
       (res) => {
         res.resume();
         resolve(true);
@@ -171,7 +175,7 @@ export const startDevViteChild = async (options: {
     req.end();
   });
   const healthTimer = setInterval(() => {
-    if (stopped || restarting) return;
+    if (stopped || restarting || healthChecksPaused || Date.now() < pauseHealthUntil) return;
     void pingChild().then(async (healthy) => {
       if (stopped || restarting) return;
       if (healthy) {
@@ -195,6 +199,8 @@ export const startDevViteChild = async (options: {
       try {
         currentChild = spawnChild();
         await waitForListen(port, 30_000);
+        pauseHealthUntil = Date.now() + HEALTH_GRACE_AFTER_WARMUP_MS;
+        consecutiveFailures = 0;
         console.log(`[AppEndO] Vite child on :${port} restarted.`);
       } catch (error) {
         console.error(`[AppEndO] Failed to restart Vite child on :${port}:`, error);
@@ -295,10 +301,16 @@ export const startDevViteChild = async (options: {
   // that first-touch transform is what made the splash sit for 10-45s.
   const warmUp = (specifiers: string[]): Promise<void> => (
     (async () => {
-      for (const specifier of specifiers) {
-        await fetchFromChild(port, specifier);
+      healthChecksPaused = true;
+      try {
+        for (const specifier of specifiers) {
+          await fetchFromChild(port, specifier);
+        }
+        console.log(`[vite:${port}] warm-up complete (${specifiers.join(', ')}).`);
+      } finally {
+        healthChecksPaused = false;
+        pauseHealthUntil = Date.now() + HEALTH_GRACE_AFTER_WARMUP_MS;
       }
-      console.log(`[vite:${port}] warm-up complete (${specifiers.join(', ')}).`);
     })()
   );
 

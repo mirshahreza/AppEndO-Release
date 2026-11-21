@@ -1,4 +1,5 @@
 import React, { lazy, type ComponentType } from 'react';
+import { preloadStudioShellFeatureProviders } from '../../shared/ui/shell/LazyStudioShellFeatureProviders';
 import { parseDesignerShellEntry } from '../../shared/lib/designerShellEntry';
 import { SITE_SHELL_LAYOUT_KEY } from '../../shared/api/contracts/platform/mountConstants';
 import {
@@ -50,13 +51,25 @@ export type PageResolverEntry = {
 };
 
 const CORE_SHELL_LAZY_LOADERS: Record<string, () => Promise<{ default: ResolvedComponent }>> = {
-  'core:AdminLayout': () => import('../../layouts/AdminLayout').then((module) => ({ default: module.AdminLayout })),
-  'core:AppShell': () => import('../../layouts/appShell').then((module) => ({ default: module.AppShell })),
-  'core:SiteLayout': () => import('./DesignerPublishedShell').then((module) => ({
-    default: module.createDesignerPublishedShellComponent(SITE_SHELL_LAYOUT_KEY),
-  })),
+  'core:AdminLayout': () => {
+    void preloadStudioShellFeatureProviders();
+    return import('../../layouts/AdminLayout').then((module) => ({ default: module.AdminLayout }));
+  },
+  'core:AppShell': () => {
+    void preloadStudioShellFeatureProviders();
+    return import('../../layouts/appShell').then((module) => ({ default: module.AppShell }));
+  },
+  'core:SiteLayout': () => {
+    void preloadStudioShellFeatureProviders();
+    return import('./DesignerPublishedShell').then((module) => ({
+      default: module.createDesignerPublishedShellComponent(SITE_SHELL_LAYOUT_KEY),
+    }));
+  },
   'core:ComponentAlone': () => import('../../layouts/ComponentAloneLayout').then((module) => ({ default: module.ComponentAloneLayout })),
-  'core:DesignerShell': () => import('../../layouts/DesignerShell').then((module) => ({ default: module.DesignerShell })),
+  'core:DesignerShell': () => {
+    void preloadStudioShellFeatureProviders();
+    return import('../../layouts/DesignerShell').then((module) => ({ default: module.DesignerShell }));
+  },
 };
 
 const coreShellComponentCache = new Map<string, ResolvedComponent>();
@@ -102,6 +115,26 @@ const CORE_PAGE_RESOLVERS: Record<string, PageResolverEntry> = {
   'core:PlatformNavigations': { component: PlatformNavigationsPage, lazy: true },
   'core:PlatformTransfer': { component: PlatformTransferPage, lazy: true },
 };
+
+/** Overlap shell layout chunk download with boot (deep links, first studio paint). */
+export function preloadShellLayoutEntry(entry: string): void {
+  const trimmed = entry.trim();
+  if (!trimmed) {
+    return;
+  }
+
+  const designerShell = parseDesignerShellEntry(trimmed);
+  if (designerShell) {
+    void preloadStudioShellFeatureProviders();
+    void import('./DesignerPublishedShell');
+    return;
+  }
+
+  const loader = CORE_SHELL_LAZY_LOADERS[trimmed];
+  if (loader) {
+    void loader();
+  }
+}
 
 export function resolveShellComponent(entry: string): ResolvedComponent | null {
   const designerShell = parseDesignerShellEntry(entry);

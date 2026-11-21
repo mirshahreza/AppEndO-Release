@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
@@ -20,8 +20,13 @@ import { usePlatformConfig } from './PlatformConfigProvider';
 import { PlatformMountProvider } from './PlatformMountContext';
 
 import { CultureProvider } from './CultureContext';
-import { InlineTranslationProvider } from '../../features/access-assistant/inlineTranslation/InlineTranslationProvider';
-import { VxGeoResponsibilityInlineListDialogHost } from '../../features/vx-geo-responsibility/VxGeoResponsibilityInlineListDialogHost';
+import { useAppBootQuery } from '../../shared/api/queries/boot';
+import { isVerticalPackageEnabledOnBoot } from '../../shared/packages/verticalRuntimeClient';
+import {
+  LazyExperienceMountRuntimeProviders,
+  preloadExperienceMountRuntimeProviders,
+} from './LazyExperienceMountRuntimeProviders';
+import { preloadStudioPageChunk } from '../routes/studioPageChunkPreload';
 
 import {
   getMountById,
@@ -48,7 +53,7 @@ const ExperienceRuntimeDisabled: React.FC<{ mountId: string }> = ({ mountId }) =
 
 const ExperiencePageOutlet: React.FC<{ mount: PlatformMount }> = ({ mount }) => {
   const { pathname } = useLocation();
-  const { config } = usePlatformConfig();
+  const { config, version } = usePlatformConfig();
   const applicationResolved = resolvePortalFromPathname(pathname, config);
   const binding = resolveRouteBindingForPortalRemainder(
     config,
@@ -56,6 +61,24 @@ const ExperiencePageOutlet: React.FC<{ mount: PlatformMount }> = ({ mount }) => 
     applicationResolved.pageRemainderPath,
     applicationResolved.portalSegment,
   );
+
+  useLayoutEffect(() => {
+    const pageKey = binding?.pageKey?.trim()
+      ?? (applicationResolved.portalSegment === ROOT_PORTAL_SEGMENT
+        ? (!applicationResolved.pageRemainderPath.trim() || applicationResolved.pageRemainderPath.trim() === '/'
+          ? 'cms-site-home'
+          : 'cms-site-article')
+        : undefined);
+    if (pageKey) {
+      preloadStudioPageChunk(config, version, pageKey);
+    }
+  }, [
+    applicationResolved.pageRemainderPath,
+    applicationResolved.portalSegment,
+    binding?.pageKey,
+    config,
+    version,
+  ]);
 
   if (binding) {
     // Soft section swaps: keep visited Designer pages mounted so Base Info /
@@ -99,9 +122,15 @@ const ExperienceRoutes: React.FC<{ mount: PlatformMount }> = ({ mount }) => {
 export const ExperienceHost: React.FC<ExperienceHostProps> = ({ mountId }) => {
   const { pathname } = useLocation();
   const { config } = usePlatformConfig();
+  const { data: boot } = useAppBootQuery();
   const mount = getMountById(config, mountId);
   const { cultureId } = resolveCultureFromPathname(pathname);
+  const includeVerticalGeoDialogHost = isVerticalPackageEnabledOnBoot(boot);
   const legacyRedirectPath = resolveLegacyRoutingRedirect(pathname, config);
+
+  useEffect(() => {
+    void preloadExperienceMountRuntimeProviders();
+  }, []);
   if (legacyRedirectPath) {
     return <Navigate to={legacyRedirectPath} replace />;
   }
@@ -118,11 +147,9 @@ export const ExperienceHost: React.FC<ExperienceHostProps> = ({ mountId }) => {
     <MountAuthGate mount={mount}>
       <PlatformMountProvider mount={mount}>
         <CultureProvider cultureId={cultureId} timezoneOverride={mount.timezoneOverride}>
-          <InlineTranslationProvider>
-            <VxGeoResponsibilityInlineListDialogHost>
-              <ExperienceRoutes mount={mount} />
-            </VxGeoResponsibilityInlineListDialogHost>
-          </InlineTranslationProvider>
+          <LazyExperienceMountRuntimeProviders includeVerticalGeoDialogHost={includeVerticalGeoDialogHost}>
+            <ExperienceRoutes mount={mount} />
+          </LazyExperienceMountRuntimeProviders>
         </CultureProvider>
       </PlatformMountProvider>
     </MountAuthGate>

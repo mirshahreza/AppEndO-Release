@@ -11,7 +11,6 @@ import {
 } from '../../shared/ui/adminLayoutPreferences';
 import { useAdminShellSidebarState } from '../../shared/ui/useAdminShellSidebarState';
 import { usePersistedAppEndooOpen } from '../../shared/ui/shell/usePersistedAppEndooOpen';
-import { AboutAppModal } from '../../components/AboutAppModal';
 import { AppRouteLoading } from '../../components/AppRouteLoading';
 import { ShellChromeEnter } from '../../shared/ui/shell/ShellChromeEnter';
 import { ShellOverlayPortal } from '../../shared/ui/shell/ShellOverlayPortal';
@@ -45,9 +44,7 @@ import { useAdminShellNav } from '../adminShell/useAdminShellNav';
 import { useOptionalCulture } from '../../core/culture/CultureContext';
 import { resolveCultureShellIsRtl } from '../../core/culture/cultureShellDirection';
 import { CULTURE_SHELL_FALLBACK_LABELS } from '../../core/culture/cultureShellKeys';
-import { PageLoadProfileTracker } from '../../features/access-assistant/components/PageLoadProfileTracker';
-import { StudioToolsHostProviders } from '../../features/access-assistant/components/StudioToolsHostProviders';
-import { FeedbackWindowChromeHostProviders } from '../../features/feedback/components/FeedbackWindowChromeHostProviders';
+import { LazyStudioShellFeatureProviders } from '../../shared/ui/shell/LazyStudioShellFeatureProviders';
 import { useStudioToolsGate } from '../../features/access-assistant/hooks/useStudioToolsGate';
 import { EnsurePlatformMount } from '../../app/platform/EnsurePlatformMount';
 import { usePlatformConfig } from '../../app/platform/PlatformConfigProvider';
@@ -61,7 +58,17 @@ import { useMobileShellDrawer } from '../../shared/lib/useMobileShellDrawer';
 import { composeStudioSidebarNav } from '../../shared/lib/navTreeFilter';
 import { isOverlayNavTier } from '../../shared/lib/viewportTokens';
 import { useViewportTier } from '../../shared/lib/useViewportTier';
-import { FeedbackShellFab } from '../../features/feedback/components/FeedbackShellFab';
+const FeedbackShellFab = React.lazy(() =>
+  import('../../features/feedback/components/FeedbackShellFab').then((module) => ({
+    default: module.FeedbackShellFab,
+  })),
+);
+
+const PageLoadProfileTracker = React.lazy(() =>
+  import('../../features/access-assistant/components/PageLoadProfileTracker').then((module) => ({
+    default: module.PageLoadProfileTracker,
+  })),
+);
 import { overlayMotionBackdropProps } from '../../shared/ui/overlay-motion/overlayMotion';
 import { AdminChromeLayoutWidthHost } from '../adminShell/AdminChromeLayoutWidthHost';
 import { AppShellSidebar } from './AppShellSidebar';
@@ -74,6 +81,10 @@ import {
 
 const ProfileDrawer = React.lazy(() =>
   import('../../components/ProfileDrawer').then((module) => ({ default: module.ProfileDrawer })),
+);
+
+const AboutAppModal = React.lazy(() =>
+  import('../../components/AboutAppModal').then((module) => ({ default: module.AboutAppModal })),
 );
 
 const AppShellFrame: React.FC = () => {
@@ -104,6 +115,12 @@ const AppShellFrame: React.FC = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [everOpenedAbout, setEverOpenedAbout] = useState(false);
+  useEffect(() => {
+    if (isAboutModalOpen) {
+      setEverOpenedAbout(true);
+    }
+  }, [isAboutModalOpen]);
   const navGroups = useAdminShellNav(currentUser);
   const brand = useResolvedPortalBrand();
   const { config } = usePlatformConfig();
@@ -239,10 +256,13 @@ const AppShellFrame: React.FC = () => {
   const studioPageTitle = headerModule.label ?? shellFallbackLabel;
 
   return (
-    <StudioToolsHostProviders pageKey={studioPageKey} pageTitle={studioPageTitle}>
-    <FeedbackWindowChromeHostProviders>
+    <LazyStudioShellFeatureProviders pageKey={studioPageKey} pageTitle={studioPageTitle}>
     <AdminChromeLayoutWidthHost portal={application}>
-    {studioToolsGate ? <PageLoadProfileTracker /> : null}
+    {studioToolsGate ? (
+      <React.Suspense fallback={null}>
+        <PageLoadProfileTracker />
+      </React.Suspense>
+    ) : null}
     <div
       className={`${ADMIN_SHELL_ROOT_CLASS} ${APPENDOO_DOCK_LAYOUT_PADDING_CLASS}`}
       data-admin-shell-root
@@ -362,13 +382,22 @@ const AppShellFrame: React.FC = () => {
             />
           </Suspense>
         ) : null}
-        <AboutAppModal open={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} brand={brand} />
-        <FeedbackShellFab pageKey={headerContext.item.pageKey} />
+        {everOpenedAbout ? (
+          <Suspense fallback={null}>
+            <AboutAppModal
+              open={isAboutModalOpen}
+              onClose={() => setIsAboutModalOpen(false)}
+              brand={brand}
+            />
+          </Suspense>
+        ) : null}
+        <React.Suspense fallback={null}>
+          <FeedbackShellFab pageKey={headerContext.item.pageKey} />
+        </React.Suspense>
       </ShellChromeEnter>
     </div>
     </AdminChromeLayoutWidthHost>
-    </FeedbackWindowChromeHostProviders>
-    </StudioToolsHostProviders>
+    </LazyStudioShellFeatureProviders>
   );
 };
 

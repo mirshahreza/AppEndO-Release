@@ -1,31 +1,31 @@
 # Clone profile — public OSS (`oss`)
 
-Use this **AppEndO-Release** snapshot with a **dedicated control-plane database**, not the private monorepo `AppEnd` database.
+Use this **AppEndO-Release** snapshot with a **dedicated control-plane database**, not a shared development database.
 
 | Item | Value |
 | --- | --- |
 | Recommended database | `AppEndORelease` |
-| Dev port (beside monorepo) | `3100` |
+| Dev port (beside another install) | `3100` |
 | Settings starter | `settings.recommended.json` |
 
 ## Bootstrap (first run)
 
-1. Create empty SQL Server database `AppEndORelease` (or run `ensure-clone-databases.sqlserver.sql` in this folder, or let the install wizard create it).
+1. Create empty SQL Server database `AppEndORelease` (or run `ensure-clone-databases.sqlserver.sql` in this folder).
 2. From **`source/`**:
 
 ```bash
-# From AppEndO monorepo (recommended):
-npx tsx ../AppEndO/scripts/release-cut/bootstrap-clone-profile.ts --profile oss --inherit-credentials --force
-npx tsx ../AppEndO/scripts/release-cut/run-clone-install-wizard.ts --profile oss
-npx tsx ../AppEndO/scripts/release-cut/provision-clone-database.ts --profile oss
+cp settings.recommended.json settings.json   # or merge into your existing settings.json
+cp .env.example .env
+npm install
+npm run dev
 ```
 
-3. On a **fresh** database, finish install once (headless wizard above, or browser: `http://localhost:3100/install`) **before** provision.
+3. Open [http://localhost:3100/install](http://localhost:3100/install) and complete the wizard on a **fresh** database.
 4. Install bundled ZIPs from `../packages/` (cms, remote-hubs) via Package Manager.
 
 ## Rules
 
 - **Never commit** `settings.json`, `.env`, or `settings.json.*.tmp` to this git repo.
-- Copy `settings.example.json` only if you need the full platform template; prefer `settings.recommended.json` for this line.
+- Prefer `settings.recommended.json` for this isolated line.
 
-See root **README.md** for the full public distribution guide.
+See the release repository **README.md** for the full public distribution guide.

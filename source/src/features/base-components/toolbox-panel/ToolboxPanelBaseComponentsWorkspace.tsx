@@ -6,12 +6,12 @@ import {
   Clock,
   GitBranch,
   Mail,
-  Loader2,
   Play,
   Sparkles,
   ToggleLeft,
   XCircle,
 } from 'lucide-react';
+import { AppRouteLoading } from '../../../components/AppRouteLoading';
 import {
   AppButton,
   FormField,
@@ -207,7 +207,9 @@ const ToolboxPanelBaseComponentsPreview: React.FC<ToolboxPanelBaseComponentsPrev
         onSearchChange={setQuery}
       >
         {model.contentMode === 'loading' ? (
-          <ToolboxPanelEmptyState><span className="inline-flex items-center gap-1"><Loader2 className="h-4 w-4 animate-spin" /> Loading toolbox…</span></ToolboxPanelEmptyState>
+          <ToolboxPanelEmptyState className="p-0">
+            <AppRouteLoading variant="embedded" label="Loading toolbox" className="min-h-40 w-full" />
+          </ToolboxPanelEmptyState>
         ) : model.contentMode === 'error' ? (
           <ToolboxPanelEmptyState>Toolbox items could not be loaded. Try again.</ToolboxPanelEmptyState>
         ) : model.contentMode === 'empty' ? (

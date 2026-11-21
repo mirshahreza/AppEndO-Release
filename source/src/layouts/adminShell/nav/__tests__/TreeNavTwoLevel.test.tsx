@@ -13,6 +13,30 @@ vi.mock('../../../../shared/ui/UiTooltip', () => ({
   UiTooltip: ({ children }: { children: unknown }) => children,
 }));
 
+vi.mock('../../../../app/platform/PlatformConfigProvider', () => ({
+  usePlatformConfig: () => ({ config: {}, version: 1 }),
+}));
+
+vi.mock('../../../../app/platform/PlatformMountContext', () => ({
+  useOptionalPlatformMount: () => ({ id: 'studio' }),
+}));
+
+vi.mock('../../../../app/platform/resolveStudioPageKeyForNavigation', () => ({
+  resolveStudioPageKeyForNavigation: (_config: unknown, _mountId: unknown, pathname: string) => {
+    if (pathname === '/studio') {
+      return 'dashboard';
+    }
+    if (pathname.startsWith('/studio/')) {
+      return 'studio-page';
+    }
+    return undefined;
+  },
+}));
+
+vi.mock('../../../../app/routes/studioPageChunkPreload', () => ({
+  preloadStudioPageChunk: vi.fn(),
+}));
+
 const groups: AdminShellNavGroup[] = [
   {
     heading: 'Platform',
@@ -779,6 +803,44 @@ describe('TreeNavTwoLevel', () => {
     expect(designingStudioLink.className).toContain('admin-nav-item-drag');
   });
 
+  it('shows pin-to-home only while the dashboard page is active', () => {
+    const pinGroups: AdminShellNavGroup[] = [
+      {
+        heading: 'Platform',
+        items: [
+          { label: 'Home', path: '/studio', pageKey: 'dashboard', icon: 'Home' },
+          { label: 'Data Studio', path: '/studio/data-studio', pageKey: 'data-studio', icon: 'Database' },
+        ],
+      },
+    ];
+
+    const { rerender } = render(
+      <TreeNavTwoLevel
+        groups={pinGroups}
+        pathname="/studio/data-studio"
+        isSidebarCollapsed={false}
+        isRtl={false}
+        expandedGroups={new Set(['Platform'])}
+        onExpandedGroupsChange={vi.fn()}
+        onNavigate={vi.fn()}
+      />,
+    );
+    expect(screen.queryByRole('button', { name: /pin to home/i })).toBeNull();
+
+    rerender(
+      <TreeNavTwoLevel
+        groups={pinGroups}
+        pathname="/studio"
+        isSidebarCollapsed={false}
+        isRtl={false}
+        expandedGroups={new Set(['Platform'])}
+        onExpandedGroupsChange={vi.fn()}
+        onNavigate={vi.fn()}
+      />,
+    );
+    expect(screen.getByRole('button', { name: /pin to home/i })).toBeTruthy();
+  });
+
   it('lets operators drag and pin sidebar pages onto Home', () => {
     setDashboardDesignMode(true);
     const pinGroups: AdminShellNavGroup[] = [
@@ -794,7 +856,7 @@ describe('TreeNavTwoLevel', () => {
     render(
       <TreeNavTwoLevel
         groups={pinGroups}
-        pathname="/studio/data-studio"
+        pathname="/studio"
         isSidebarCollapsed={false}
         isRtl={false}
         expandedGroups={new Set(['Platform'])}

@@ -46,6 +46,7 @@ export type ToolbarFilterSelectProps = {
   matchLogicAriaLabel?: string;
   /** Default `always` — set per filter when compact tiers should omit a redundant control. */
   visibility?: ComponentViewportVisibility;
+  isDisabled?: boolean;
 };
 
 const MatchLogicPopoverGroup: React.FC<{
@@ -108,6 +109,7 @@ export const ToolbarFilterSelect: React.FC<ToolbarFilterSelectProps> = ({
   onMatchLogicChange,
   matchLogicAriaLabel,
   visibility = 'always',
+  isDisabled = false,
 }) => {
   const visible = useComponentViewportVisible(visibility);
   if (!visible) {
@@ -150,6 +152,7 @@ export const ToolbarFilterSelect: React.FC<ToolbarFilterSelectProps> = ({
         clipSafePopover
         popoverPlacement="bottom"
         shouldFlip
+        isDisabled={isDisabled}
         value={selectValue}
         ariaLabel={ariaLabel}
         placeholder={allOptionLabel}

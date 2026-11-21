@@ -1,7 +1,5 @@
 import React, {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -65,67 +63,30 @@ import {
   useShellHeaderOverrideState,
 } from '../../layouts/adminShell/ShellHeaderOverrideContext';
 import { useAdminShellNav } from '../../layouts/adminShell/useAdminShellNav';
-import { FeedbackShellFab } from '../../features/feedback/components/FeedbackShellFab';
-import { StudioToolsHostProviders } from '../../features/access-assistant/components/StudioToolsHostProviders';
-import { FeedbackWindowChromeHostProviders } from '../../features/feedback/components/FeedbackWindowChromeHostProviders';
+import { LazyStudioShellFeatureProviders } from '../../shared/ui/shell/LazyStudioShellFeatureProviders';
+
+const FeedbackShellFab = React.lazy(() =>
+  import('../../features/feedback/components/FeedbackShellFab').then((module) => ({
+    default: module.FeedbackShellFab,
+  })),
+);
 import {
   ADMIN_SHELL_MOBILE_BACKDROP_CLASS,
   ADMIN_SHELL_SIDEBAR_COLLAPSE_BUTTON_CLASS,
 } from '../../shared/ui/surfaceClasses';
 import { ADMIN_SHELL_SIDEBAR_LOGO_EXPANDED_NUDGE_CLASS } from '../../shared/ui/adminShellSidebarMetrics';
+import {
+  ShellChromeContext,
+  type ShellChromeContextValue,
+  useOptionalPublishedShellChromeContext,
+} from './shellChromeContext';
 
-type ShellChromeContextValue = {
-  isSidebarCollapsed: boolean;
-  isRtl: boolean;
-  isMobileMenuOpen: boolean;
-  setMobileMenuOpen: (open: boolean) => void;
-  isAiPanelOpen: boolean;
-  setAiPanelOpen: (open: boolean) => void;
-  openProfile: () => void;
-  isFullscreen: boolean;
-  toggleFullscreen: () => void;
-  tShell: (key: string) => string;
-  currentModule: AppShellHeaderModule;
-  displayName: string;
-  avatarXs?: string | null;
-  avatarInitial: string;
-  primaryRole: string;
-  pageKey?: string | null;
-  onLogoClick: () => void;
-  onNavigate: (path: string) => void;
-  applicationMenuAriaLabel: string;
-  setSidebarCollapsed: (collapsed: boolean) => void;
-};
-
-const ShellChromeContext = createContext<ShellChromeContextValue | null>(null);
-
-function useShellChrome(): ShellChromeContextValue {
-  const value = useContext(ShellChromeContext);
-  if (!value) {
-    throw new Error('Shell chrome slot rendered outside DesignerPublishedShellChromeProvider.');
-  }
-  return value;
-}
-
-export function useDesignerPublishedShellSidebarCollapsed(): boolean {
-  return useContext(ShellChromeContext)?.isSidebarCollapsed ?? false;
-}
-
-export function useDesignerPublishedShellMobileMenuOpen(): boolean {
-  return useContext(ShellChromeContext)?.isMobileMenuOpen ?? false;
-}
-
-export function useDesignerPublishedShellMobileMenuState(): readonly [
-  boolean,
-  (open: boolean) => void,
-] {
-  const context = useContext(ShellChromeContext);
-  return [context?.isMobileMenuOpen ?? false, context?.setMobileMenuOpen ?? (() => undefined)] as const;
-}
-
-export function useDesignerPublishedShellDirection(): 'ltr' | 'rtl' {
-  return useContext(ShellChromeContext)?.isRtl ? 'rtl' : 'ltr';
-}
+export {
+  useDesignerPublishedShellDirection,
+  useDesignerPublishedShellMobileMenuOpen,
+  useDesignerPublishedShellMobileMenuState,
+  useDesignerPublishedShellSidebarCollapsed,
+} from './shellChromeContext';
 
 export type DesignerPublishedShellChromeProviderProps = {
   children: ReactNode;
@@ -306,39 +267,39 @@ const DesignerPublishedShellChromeProviderInner: React.FC<DesignerPublishedShell
   ]);
 
   return (
-    <StudioToolsHostProviders
-      pageKey={headerContext.item.pageKey}
-      pageTitle={headerModule.label ?? shellFallbackLabel}
-    >
-    <FeedbackWindowChromeHostProviders>
     <ShellChromeContext.Provider value={contextValue}>
-      {children}
+      <LazyStudioShellFeatureProviders
+        pageKey={headerContext.item.pageKey}
+        pageTitle={headerModule.label ?? shellFallbackLabel}
+      >
+        {children}
 
-      {isMobileMenuOpen ? (
-        <div
-          className={ADMIN_SHELL_MOBILE_BACKDROP_CLASS}
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      ) : null}
-
-      {everOpenedProfile ? (
-        <React.Suspense fallback={null}>
-          <ProfileDrawer
-            isOpen={isProfileOpen}
-            onClose={() => setIsProfileOpen(false)}
-            onLogout={handleLogout}
+        {isMobileMenuOpen ? (
+          <div
+            className={ADMIN_SHELL_MOBILE_BACKDROP_CLASS}
+            onClick={() => setIsMobileMenuOpen(false)}
           />
-        </React.Suspense>
-      ) : null}
-      {everOpenedAbout ? (
+        ) : null}
+
+        {everOpenedProfile ? (
+          <React.Suspense fallback={null}>
+            <ProfileDrawer
+              isOpen={isProfileOpen}
+              onClose={() => setIsProfileOpen(false)}
+              onLogout={handleLogout}
+            />
+          </React.Suspense>
+        ) : null}
+        {everOpenedAbout ? (
+          <React.Suspense fallback={null}>
+            <AboutAppModal open={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} brand={brand} />
+          </React.Suspense>
+        ) : null}
         <React.Suspense fallback={null}>
-          <AboutAppModal open={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} brand={brand} />
+          <FeedbackShellFab pageKey={headerContext.item.pageKey} />
         </React.Suspense>
-      ) : null}
-      <FeedbackShellFab pageKey={headerContext.item.pageKey} />
+      </LazyStudioShellFeatureProviders>
     </ShellChromeContext.Provider>
-    </FeedbackWindowChromeHostProviders>
-    </StudioToolsHostProviders>
   );
 };
 
@@ -349,7 +310,11 @@ export const DesignerPublishedShellChromeProvider: React.FC<DesignerPublishedShe
 );
 
 export const ShellLogoSlot: React.FC<{ config?: ShellLogoConfig | null }> = ({ config = null }) => {
-  const { isSidebarCollapsed, onLogoClick } = useShellChrome();
+  const chrome = useOptionalPublishedShellChromeContext();
+  if (!chrome) {
+    return null;
+  }
+  const { isSidebarCollapsed, onLogoClick } = chrome;
 
   return (
     <span data-designer-chrome-interactive="true" className="contents">
@@ -365,12 +330,16 @@ export const ShellLogoSlot: React.FC<{ config?: ShellLogoConfig | null }> = ({ c
 };
 
 export const ShellPortalMenuSlot: React.FC = () => {
+  const chrome = useOptionalPublishedShellChromeContext();
+  if (!chrome) {
+    return null;
+  }
   const {
     isSidebarCollapsed,
     onNavigate,
     applicationMenuAriaLabel,
     isRtl,
-  } = useShellChrome();
+  } = chrome;
 
   return (
     <PortalMenu
@@ -383,11 +352,15 @@ export const ShellPortalMenuSlot: React.FC = () => {
 };
 
 export const ShellSidebarToggleSlot: React.FC = () => {
+  const chrome = useOptionalPublishedShellChromeContext();
+  if (!chrome) {
+    return null;
+  }
   const {
     isRtl,
     isSidebarCollapsed,
     setSidebarCollapsed,
-  } = useShellChrome();
+  } = chrome;
 
   return (
     <button
@@ -408,7 +381,10 @@ export const ShellSidebarToggleSlot: React.FC = () => {
 import { type ShellHeaderConfig } from '../../shared/lib/shellHeaderProps';
 
 export const ShellHeaderChromeSlot: React.FC<{ config?: ShellHeaderConfig | null }> = ({ config = null }) => {
-  const chrome = useShellChrome();
+  const chrome = useOptionalPublishedShellChromeContext();
+  if (!chrome) {
+    return null;
+  }
 
   const showLogo = config ? config.showLogo !== false : true;
   const showBreadcrumb = config ? config.showBreadcrumb !== false : true;

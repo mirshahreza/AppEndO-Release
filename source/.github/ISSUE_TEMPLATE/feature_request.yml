@@ -1,0 +1,45 @@
+name: Feature request
+description: Suggest an enhancement to AppEndO
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    validations: []
+    attributes:
+      value: |
+        Feature requests for the public OSS platform go to [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release).
+        Private commercial vertical packages are out of scope for this public repository.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What pain does this solve? Who benefits (builders, operators, end users)?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: High-level approach; links to standards/docs welcome
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: Fits the core platform (studio, Data API, workflows, packages)
+        - label: Could be an ecosystem package instead of core
+        - label: I am willing to contribute a PR on AppEndO-Release
+    validations:
+      required: false

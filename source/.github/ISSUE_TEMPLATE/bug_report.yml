@@ -1,0 +1,82 @@
+name: Bug report
+description: Report incorrect behavior in an AppEndO release or source checkout
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    validations: []
+    attributes:
+      value: |
+        Thanks for reporting. Use the [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release) repository for public issues.
+        Do **not** attach secrets, `settings.json`, `.env`, or cookie/session files.
+
+  - type: input
+    id: version
+    attributes:
+      label: AppEndO version
+      description: Release tag (e.g. v0.0.12) or `source/package.json` version
+      placeholder: v0.0.12
+    validations:
+      required: true
+
+  - type: dropdown
+    id: checkout
+    attributes:
+      label: How you run AppEndO
+      options:
+        - AppEndO-Release pre-built dist/
+        - AppEndO-Release source/ checkout
+        - Other / unsure
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: v22.x
+    validations:
+      required: true
+
+  - type: dropdown
+    id: database
+    attributes:
+      label: Control-plane database
+      options:
+        - SQL Server
+        - PostgreSQL
+        - MySQL
+        - SQLite
+        - Other / not yet installed
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps from a clean or known state
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Redact tokens and hostnames if needed
+    validations:
+      required: false

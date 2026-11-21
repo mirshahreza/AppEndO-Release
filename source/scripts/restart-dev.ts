@@ -17,7 +17,7 @@ const resolveActiveSettingsPath = (): string => {
 };
 const PORT_SCAN_ATTEMPTS = 25;
 const VITE_WS_PORTS = [24678];
-const SERVER_COMMAND_MARKERS = ['src/server/index.ts', 'dist/server.cjs'];
+const SERVER_COMMAND_MARKERS = ['src/server/index.ts', 'dist/server.cjs', 'vite/bin/vite.js'];
 /** Hung `tsc --noEmit` / project typecheck leftovers that pin multi‑GB RAM across restarts. */
 const ORPHAN_TYPECHECK_MARKERS = ['tsc --noEmit', 'typescript/bin/tsc'];
 
@@ -178,25 +178,38 @@ const parseMode = (argv: string[]): RestartMode => {
 };
 
 const startVerticalDossierBundleWatcher = (): void => {
+  if (process.env.APPENDO_SKIP_VERTICAL_UI_WATCH?.trim() === '1') {
+    console.log('[AppEndO] Vertical package UI bundle watcher skipped (APPENDO_SKIP_VERTICAL_UI_WATCH=1).');
+    return;
+  }
   const runtimeRoot = path.join(process.cwd(), 'packages-storage', 'runtimes', 'vertical');
   if (!fs.existsSync(runtimeRoot)) {
     return;
   }
 
-  const watcher = spawn('npm run vertical:watch-dossier-view-bundle', {
-    cwd: process.cwd(),
-    stdio: 'inherit',
-    env: process.env,
-    shell: true,
-  });
+  const spawnWatcher = () => {
+    const watcher = spawn('npm run vertical:watch-dossier-view-bundle', {
+      cwd: process.cwd(),
+      stdio: 'inherit',
+      env: process.env,
+      shell: true,
+    });
 
-  watcher.on('exit', (code) => {
-    if (code !== 0 && code !== null) {
-      console.warn(`[AppEndO] Vertical dossier bundle watcher exited (${code}).`);
-    }
-  });
+    watcher.on('exit', (code) => {
+      if (code !== 0 && code !== null) {
+        console.warn(`[AppEndO] Vertical dossier bundle watcher exited (${code}).`);
+      }
+    });
 
-  console.log('[AppEndO] Vertical package UI bundle watcher started (package pages sync from src on save).');
+    console.log('[AppEndO] Vertical package UI bundle watcher started (package pages sync from src on save).');
+  };
+
+  // Defer watcher startup so Windows fs.watch storms + esbuild refresh do not wedge the Vite child during studio boot.
+  const watcherDelayMs = 120_000;
+  console.log(
+    `[AppEndO] Vertical package UI bundle watcher scheduled in ${Math.round(watcherDelayMs / 1000)}s (SPA boot first).`,
+  );
+  setTimeout(spawnWatcher, watcherDelayMs);
 };
 
 const startServer = (mode: RestartMode): void => {

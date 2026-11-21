@@ -1,0 +1,40 @@
+name: Conduct report
+description: Report a Code of Conduct violation on AppEndO community spaces
+title: "[Conduct]: "
+labels: ["conduct", "triage"]
+body:
+  - type: markdown
+    validations: []
+    attributes:
+      value: |
+        Reports are handled confidentially. Link to public threads when possible; do not paste others' private information without consent.
+
+  - type: textarea
+    id: incident
+    attributes:
+      label: What happened
+      description: Facts, dates, and links to issues/PRs/comments when applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact on participants
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Where it occurred
+      description: GitHub issue/PR URL, discussion thread, or event name
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+    validations:
+      required: false

@@ -1,5 +1,5 @@
-import crypto from 'crypto';
 import AdmZip from 'adm-zip';
+import { digestPackageArtifactFiles } from '../packageArtifactHash';
 import type {
   VerticalAppDeploymentMount,
   VerticalAppDeploymentRoute,
@@ -267,12 +267,12 @@ function resolveRoutes(
 }
 
 function computeArtifactHash(entries: ZipEntry[]): string {
-  const payload = entries
-    .filter((entry) => entry.path !== 'package.json')
-    .sort((left, right) => left.path.localeCompare(right.path))
-    .map((entry) => `${entry.path}\0${entry.content.toString('base64')}`)
-    .join('\n');
-  return crypto.createHash('sha256').update(payload).digest('hex');
+  return digestPackageArtifactFiles(
+    entries.map((entry) => ({
+      entryName: entry.path,
+      data: new Uint8Array(entry.content),
+    })),
+  );
 }
 
 function extraFileMap(spec: VerticalAppPackageSpec): Map<string, Buffer> {

@@ -4,6 +4,8 @@ import { cn } from '../../../lib/utils';
 export type NavItemLinkProps = {
   path: string;
   onNavigate: (path: string) => void;
+  /** Pointer/focus warmup (e.g. route chunk prefetch) — does not navigate. */
+  onWarmPointer?: () => void;
   className?: string;
   title?: string;
   'aria-current'?: React.AriaAttributes['aria-current'];
@@ -16,6 +18,7 @@ export type NavItemLinkProps = {
 export const NavItemLink: React.FC<NavItemLinkProps> = ({
   path,
   onNavigate,
+  onWarmPointer,
   className,
   title,
   'aria-current': ariaCurrent,
@@ -32,6 +35,8 @@ export const NavItemLink: React.FC<NavItemLinkProps> = ({
     draggable={draggable}
     onDragStart={onDragStart}
     className={cn(className)}
+    onPointerEnter={onWarmPointer}
+    onFocus={onWarmPointer}
     onClick={(event) => {
       if (
         event.defaultPrevented

@@ -15,6 +15,19 @@ import {
   readCachedPortalBrandForPathname,
 } from '../../shared/lib/portalBrandCache';
 import { isPublicAppPath } from './publicAppPaths';
+import { preloadExperienceMountRuntimeProviders } from './LazyExperienceMountRuntimeProviders';
+import { preloadStudioShellFeatureProviders } from '../../shared/ui/shell/LazyStudioShellFeatureProviders';
+import {
+  getShellByKey,
+  resolveExperienceMountForPathname,
+} from './platformConfigHelpers';
+import { resolveStudioPageKeyForNavigation } from './resolveStudioPageKeyForNavigation';
+import { resolvePortalShellFromPathname } from './PortalUrlResolver';
+import { preloadShellLayoutEntry } from './resolvers';
+import {
+  preloadStudioPageChunk,
+  scheduleIdleStudioPageWarmup,
+} from '../routes/studioPageChunkPreload';
 
 type PlatformConfigContextValue = {
   config: PlatformRuntimeConfig;
@@ -75,7 +88,42 @@ export const PlatformConfigProvider: React.FC<{ children: React.ReactNode }> = (
     setPlatformWebFonts(bootPayload.webFonts ?? []);
     bootstrapCultureTranslationRuntime(bootPayload.cultureTranslations);
     primePortalBrandCacheFromShells(bootPayload.runtimeConfig.shells);
+    void preloadStudioShellFeatureProviders();
+    void preloadExperienceMountRuntimeProviders();
   }, [bootPayload]);
+
+  useEffect(() => {
+    if (!bootPayload || isPublicRoute) {
+      return;
+    }
+    const mount = resolveExperienceMountForPathname(bootPayload.runtimeConfig, pathname);
+    if (!mount) {
+      return;
+    }
+    const pageKey = resolveStudioPageKeyForNavigation(
+      bootPayload.runtimeConfig,
+      mount.id,
+      pathname,
+    );
+    preloadStudioPageChunk(bootPayload.runtimeConfig, bootPayload.runtimeConfig.version, pageKey);
+
+    const portalShell = resolvePortalShellFromPathname(
+      pathname,
+      bootPayload.runtimeConfig,
+      mount.id,
+    );
+    const shell = getShellByKey(bootPayload.runtimeConfig, portalShell.shellKey);
+    if (shell?.enabled && shell.entry?.trim()) {
+      preloadShellLayoutEntry(shell.entry);
+    }
+
+    void import('./ExperienceHost');
+    scheduleIdleStudioPageWarmup(
+      bootPayload.runtimeConfig,
+      bootPayload.runtimeConfig.version,
+      pageKey,
+    );
+  }, [bootPayload, isPublicRoute, pathname]);
 
   const value = useMemo<PlatformConfigContextValue | null>(() => {
     if (!bootPayload) {

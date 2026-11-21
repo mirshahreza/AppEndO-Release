@@ -27,8 +27,8 @@ No mandatory follow-up on this initiative unless a second environment is introdu
 | ID | Notes |
 |----|--------|
 | B4–B10 | Product program (FK, workflow, CMS, …) — `plans/` |
-| B12 | `vx:gen-finance-procs` — only if legacy regen requested |
-| B2 optional | Legacy activity ETL (`VX_Nashatat`, …) for full masoolin star parity |
+| B12 | `vx:gen-finance-procs` — regen payment/masoolin; patches in `vxFinanceExportGreenfieldPatches.ts`; recalc hand file `vx_db_procedures_finance_masoolin_stars_recalc.sqlserver.sql` |
+| B2 optional | Legacy activity ETL (`VX_Nashatat`, …) only when `vx_activities` empty; masoolin stars read greenfield first (`vx_masoolin_activity_metric_count`) |
 | M2–M4 | Maintenance (DDL consolidate, Postgres parity, Sequelize index) — low priority |
 
 *B11 in Vertical membership plans (approval dashboard stats) is a different ID — not schema-ownership B11.*

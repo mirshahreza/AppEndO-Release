@@ -138,7 +138,7 @@ export async function startServer() {
     const publicDir = path.join(process.cwd(), 'public');
     // Queue (don't 503) when the Vite child is busy. Hard 503 broke dynamic import()
     // retries while Cursor Simple Browser held every slot open.
-    const MAX_VITE_PROXY_IN_FLIGHT = 6;
+    const MAX_VITE_PROXY_IN_FLIGHT = 12;
     let viteProxyInFlight = 0;
     const viteProxyWaiters: Array<() => void> = [];
     const acquireViteProxySlot = (): Promise<boolean> => new Promise((resolve) => {

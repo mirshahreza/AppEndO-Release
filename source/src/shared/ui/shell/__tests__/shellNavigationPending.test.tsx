@@ -3,6 +3,7 @@
  */
 import * as React from 'react';
 import { act, cleanup, render, screen } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, describe, expect, it } from 'vitest';
 import { navigationGuardRegistry } from '../../../lib/navigationGuardRegistry';
@@ -15,6 +16,16 @@ import {
   resetShellNavigationPendingForTests,
   useShellNavigationPending,
 } from '../shellNavigationPending';
+
+const shellNavigateTestClient = new QueryClient({
+  defaultOptions: { queries: { retry: false } },
+});
+
+const ShellNavigateTestProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <QueryClientProvider client={shellNavigateTestClient}>
+    {children}
+  </QueryClientProvider>
+);
 
 afterEach(() => {
   resetShellNavigationPendingForTests();
@@ -55,14 +66,16 @@ describe('ShellRouteEnter click-pending cover', () => {
     beginShellNavigationPending('/studio/home', '/studio/users');
 
     render(
-      <MemoryRouter initialEntries={['/studio/home']}>
-        <ShellRevealProvider surfaceReady>
-          <PendingProbe />
-          <ShellRouteEnter>
-            <div>Home page</div>
-          </ShellRouteEnter>
-        </ShellRevealProvider>
-      </MemoryRouter>,
+      <ShellNavigateTestProviders>
+        <MemoryRouter initialEntries={['/studio/home']}>
+          <ShellRevealProvider surfaceReady>
+            <PendingProbe />
+            <ShellRouteEnter>
+              <div>Home page</div>
+            </ShellRouteEnter>
+          </ShellRevealProvider>
+        </MemoryRouter>
+      </ShellNavigateTestProviders>,
     );
 
     expect(screen.getByTestId('pending').textContent).toBe('/studio/users');
@@ -76,13 +89,15 @@ describe('ShellRouteEnter click-pending cover', () => {
 describe('useShellNavigate', () => {
   it('marks pending then navigates', () => {
     render(
-      <MemoryRouter initialEntries={['/studio/home']}>
-        <NavigateProbe />
-        <Routes>
-          <Route path="/studio/home" element={<div>Home</div>} />
-          <Route path="/studio/users" element={<div>Users</div>} />
-        </Routes>
-      </MemoryRouter>,
+      <ShellNavigateTestProviders>
+        <MemoryRouter initialEntries={['/studio/home']}>
+          <NavigateProbe />
+          <Routes>
+            <Route path="/studio/home" element={<div>Home</div>} />
+            <Route path="/studio/users" element={<div>Users</div>} />
+          </Routes>
+        </MemoryRouter>
+      </ShellNavigateTestProviders>,
     );
 
     act(() => {
@@ -102,9 +117,11 @@ describe('useShellNavigate', () => {
 
     try {
       render(
-        <MemoryRouter initialEntries={['/studio/home']}>
-          <NavigateProbe />
-        </MemoryRouter>,
+        <ShellNavigateTestProviders>
+          <MemoryRouter initialEntries={['/studio/home']}>
+            <NavigateProbe />
+          </MemoryRouter>
+        </ShellNavigateTestProviders>,
       );
 
       act(() => {

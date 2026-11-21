@@ -148,6 +148,28 @@ export function getMountById(
   return buildCultureRouteMount(config, mountId);
 }
 
+/** Longest matching enabled mount prefix for experience (deep-link prefetch). */
+export function resolveExperienceMountForPathname(
+  config: PlatformRuntimeConfig,
+  pathname: string,
+): PlatformMount | undefined {
+  const normalizedPath = pathname.trim() || '/';
+  const matches = config.mounts.filter((mount) => {
+    if (!mount.enabled) {
+      return false;
+    }
+    const prefix = mount.pathPrefix?.trim();
+    if (!prefix) {
+      return false;
+    }
+    const base = prefix.replace(/\/$/, '') || '/';
+    return normalizedPath === base || normalizedPath.startsWith(`${base}/`);
+  });
+
+  matches.sort((left, right) => (right.pathPrefix?.length ?? 0) - (left.pathPrefix?.length ?? 0));
+  return matches[0];
+}
+
 export function getPageModuleByKey(
   config: PlatformRuntimeConfig,
   pageKey: string,

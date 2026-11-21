@@ -175,11 +175,36 @@ export function collectValueExportNamesFromBarrel(source: string): string[] {
   return [...names].sort();
 }
 
+function collectBarrelExportNames(absPath: string, visited = new Set<string>()): string[] {
+  const norm = path.normalize(absPath);
+  if (visited.has(norm)) {
+    return [];
+  }
+  visited.add(norm);
+  if (!fs.existsSync(absPath)) {
+    return [];
+  }
+  const source = fs.readFileSync(absPath, 'utf8');
+  const names = new Set(collectValueExportNamesFromBarrel(source));
+  const starRe = /export\s+\*\s+from\s+['"]([^'"]+)['"]/g;
+  let star: RegExpExecArray | null;
+  while ((star = starRe.exec(source)) !== null) {
+    const resolved = resolveExistingModulePath(path.resolve(path.dirname(absPath), star[1]));
+    if (!resolved) {
+      continue;
+    }
+    for (const nested of collectBarrelExportNames(resolved, visited)) {
+      names.add(nested);
+    }
+  }
+  return [...names];
+}
+
 function namedExportsFromSourceFile(relPath: string, fallback: string[]): string[] {
   const absPath = path.join(process.cwd(), relPath);
   try {
     if (!fs.existsSync(absPath)) return fallback;
-    const parsed = collectValueExportNamesFromBarrel(fs.readFileSync(absPath, 'utf8'));
+    const parsed = collectBarrelExportNames(absPath);
     return parsed.length > 0 ? [...new Set([...parsed, ...fallback])].sort() : fallback;
   } catch {
     return fallback;
@@ -282,16 +307,69 @@ const KNOWN_HEAVY_INTERNAL_MODULES: Record<string, string[]> = Object.fromEntrie
   ]),
 );
 
-for (const [specifier, namedExports] of Object.entries(KNOWN_HEAVY_INTERNAL_MODULES)) {
+function buildInternalModuleShimSource(specifier: string, namedExports: string[]): string {
   const lines = [
     'const __runtime = globalThis.__APPENDO_PACKAGE_RUNTIME__;',
     `const __mod = __runtime?.AppInternalModules?.[${JSON.stringify(specifier)}];`,
     'if (!__mod) {',
     "  throw new Error('Package UI runtime is not initialized. Reload the app and try again.');",
     '}',
-    `export const {\n  ${namedExports.join(',\n  ')},\n} = __mod;`,
   ];
-  GLOBAL_MODULE_BY_SPECIFIER.set(specifier, lines.join('\n'));
+  if (namedExports.includes('default')) {
+    lines.push('export default __mod.default;');
+  }
+  const valueExports = namedExports.filter((name) => name !== 'default');
+  if (valueExports.length > 0) {
+    lines.push(`export const {\n  ${valueExports.join(',\n  ')},\n} = __mod;`);
+  }
+  return lines.join('\n');
+}
+
+for (const [specifier, namedExports] of Object.entries(KNOWN_HEAVY_INTERNAL_MODULES)) {
+  GLOBAL_MODULE_BY_SPECIFIER.set(specifier, buildInternalModuleShimSource(specifier, namedExports));
+}
+
+/**
+ * Populate compile-time virtual module shims from source barrels only (no dynamic import).
+ * Used by local Vertical bundle refresh scripts where loading full `@/shared/ui` in Node fails on `.css`.
+ */
+export function bootstrapPackageUiCompileShimsFromSourceBarrels(): void {
+  const AppInternalModules: Record<string, Record<string, unknown>> = {};
+  for (const [specifier, spec] of Object.entries(PACKAGE_UI_INTERNAL_SHIMS)) {
+    const names = namedExportsFromSourceFile(spec.sourceFile, spec.fallback);
+    AppInternalModules[specifier] = Object.fromEntries(names.map((name) => [name, null]));
+  }
+  const current = globalThis.__APPENDO_PACKAGE_RUNTIME__ ?? {};
+  globalThis.__APPENDO_PACKAGE_RUNTIME__ = {
+    ...current,
+    AppInternalModules: {
+      ...current.AppInternalModules,
+      ...AppInternalModules,
+    },
+  };
+  syncPackageUiInternalShimsFromRuntime();
+}
+
+/** After `ensurePackageUiRuntime()`, refresh virtual shims so every live export from heavy internal barrels resolves at compile time. */
+export function syncPackageUiInternalShimsFromRuntime(): void {
+  const runtime = globalThis.__APPENDO_PACKAGE_RUNTIME__;
+  const modules = runtime?.AppInternalModules;
+  if (!modules) {
+    return;
+  }
+  for (const specifier of Object.keys(PACKAGE_UI_INTERNAL_SHIMS)) {
+    const mod = modules[specifier];
+    if (!mod || typeof mod !== 'object') {
+      continue;
+    }
+    const namedExports = Object.keys(mod)
+      .filter((key) => key !== '__esModule')
+      .sort();
+    if (namedExports.length === 0) {
+      continue;
+    }
+    GLOBAL_MODULE_BY_SPECIFIER.set(specifier, buildInternalModuleShimSource(specifier, namedExports));
+  }
 }
 
 function buildHeavyInternalShimPathIndex(): Map<string, string> {

@@ -1,10 +1,9 @@
 import React from 'react';
+import { cn } from '../../../../lib/utils';
 import { AppRouteLoading } from '../../../../components/AppRouteLoading';
 import type {
   PlatformRouteLoadingConfig,
   RouteLoadingLogoSize,
-  RouteLoadingProgressStyle,
-  RouteLoadingStackOrder,
 } from '../../../../shared/api/contracts/routeLoading/schema';
 import { AppButton, QueryErrorPanel, UiSelect } from '../../../../shared/ui';
 import { useSettingsFormT } from '../../hooks/useSettingsFormT';
@@ -24,8 +23,6 @@ type RouteLoadingSettingsSectionProps = {
 };
 
 const LOGO_SIZE_OPTIONS: RouteLoadingLogoSize[] = ['compact', 'default', 'large', 'xlarge'];
-const PROGRESS_OPTIONS: RouteLoadingProgressStyle[] = ['ecg', 'simple-line', 'none'];
-const STACK_ORDER_OPTIONS: RouteLoadingStackOrder[] = ['logo-first', 'activity-first'];
 
 function patchEmbedded(
   config: PlatformRouteLoadingConfig,
@@ -87,33 +84,35 @@ export const RouteLoadingSettingsSection: React.FC<RouteLoadingSettingsSectionPr
           </AppButton>
         </div>
         <div
-          className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-100"
+          className={cn(
+            'relative overflow-hidden rounded-xl border border-slate-200',
+            page.previewVariant === 'fullscreen'
+              ? 'bg-[var(--gradient-shell-atmosphere)]'
+              : 'bg-slate-100',
+          )}
           style={{ minHeight: page.previewVariant === 'fullscreen' ? '14rem' : '10rem' }}
         >
           <AppRouteLoading
-            variant={page.previewVariant}
-            className={page.previewVariant === 'fullscreen' ? '!min-h-[14rem] !py-6' : undefined}
+            variant="embedded"
+            preview
+            className={cn(
+              'h-full min-h-0 bg-transparent',
+              page.previewVariant === 'fullscreen' ? 'min-h-[14rem]' : 'min-h-[10rem]',
+            )}
             experienceOverride={page.previewExperience}
           />
         </div>
       </SettingsFormGroup>
 
       <SettingsFormGroup title={t('settings.forms.routeLoading.fullscreenTitle')} sectionId="route-loading" divided>
+        <p className="text-xs text-slate-500">{t('settings.forms.routeLoading.fullscreenIntro')}</p>
         <div className={SETTINGS_FORM_TWO_COL_GRID_GAP_CLASS}>
-          <SettingsToggleField
-            id="route-loading-show-logo"
-            checked={config.showLogo}
-            onChange={(checked) => update({ showLogo: checked })}
-            title={t('settings.forms.routeLoading.showLogo')}
-            description={t('settings.forms.routeLoading.showLogoHint')}
-          />
           <SettingsField label={t('settings.forms.routeLoading.logoSize')} htmlFor="route-loading-logo-size">
             <UiSelect
               id="route-loading-logo-size"
               size="sm"
               className={SETTINGS_CONTROL_CLASS}
               value={config.logoSize}
-              disabled={!config.showLogo}
               onChange={(event) => {
                 const next = event.target.value;
                 if (LOGO_SIZE_OPTIONS.includes(next as RouteLoadingLogoSize)) {
@@ -129,59 +128,19 @@ export const RouteLoadingSettingsSection: React.FC<RouteLoadingSettingsSectionPr
             </UiSelect>
           </SettingsField>
           <SettingsToggleField
-            id="route-loading-logo-glow"
+            id="route-loading-orbital-ring"
             checked={config.logoGlow}
             onChange={(checked) => update({ logoGlow: checked })}
-            title={t('settings.forms.routeLoading.logoGlow')}
-            disabled={!config.showLogo}
+            title={t('settings.forms.routeLoading.orbitalRing')}
+            description={t('settings.forms.routeLoading.orbitalRingHint')}
           />
           <SettingsToggleField
-            id="route-loading-logo-breathe"
+            id="route-loading-orbital-motion"
             checked={config.logoBreathe}
             onChange={(checked) => update({ logoBreathe: checked })}
-            title={t('settings.forms.routeLoading.logoBreathe')}
-            disabled={!config.showLogo}
+            title={t('settings.forms.routeLoading.orbitalRingMotion')}
+            disabled={!config.logoGlow}
           />
-          <SettingsField label={t('settings.forms.routeLoading.stackOrder')} htmlFor="route-loading-stack-order">
-            <UiSelect
-              id="route-loading-stack-order"
-              size="sm"
-              className={SETTINGS_CONTROL_CLASS}
-              value={config.stackOrder}
-              onChange={(event) => {
-                const next = event.target.value;
-                if (STACK_ORDER_OPTIONS.includes(next as RouteLoadingStackOrder)) {
-                  update({ stackOrder: next as RouteLoadingStackOrder });
-                }
-              }}
-            >
-              {STACK_ORDER_OPTIONS.map((value) => (
-                <option key={value} value={value}>
-                  {t(`settings.forms.routeLoading.stackOrder.${value}`)}
-                </option>
-              ))}
-            </UiSelect>
-          </SettingsField>
-          <SettingsField label={t('settings.forms.routeLoading.progressStyle')} htmlFor="route-loading-progress">
-            <UiSelect
-              id="route-loading-progress"
-              size="sm"
-              className={SETTINGS_CONTROL_CLASS}
-              value={config.progressStyle}
-              onChange={(event) => {
-                const next = event.target.value;
-                if (PROGRESS_OPTIONS.includes(next as RouteLoadingProgressStyle)) {
-                  update({ progressStyle: next as RouteLoadingProgressStyle });
-                }
-              }}
-            >
-              {PROGRESS_OPTIONS.map((value) => (
-                <option key={value} value={value}>
-                  {t(`settings.forms.routeLoading.progressStyle.${value}`)}
-                </option>
-              ))}
-            </UiSelect>
-          </SettingsField>
         </div>
       </SettingsFormGroup>
 
@@ -208,26 +167,23 @@ export const RouteLoadingSettingsSection: React.FC<RouteLoadingSettingsSectionPr
               ))}
             </UiSelect>
           </SettingsField>
-          <SettingsField label={t('settings.forms.routeLoading.progressStyle')} htmlFor="route-loading-embedded-progress">
-            <UiSelect
-              id="route-loading-embedded-progress"
-              size="sm"
-              className={SETTINGS_CONTROL_CLASS}
-              value={config.embedded?.progressStyle ?? config.progressStyle}
-              onChange={(event) => {
-                const next = event.target.value;
-                if (PROGRESS_OPTIONS.includes(next as RouteLoadingProgressStyle)) {
-                  page.updateDraft((current) => patchEmbedded(current, { progressStyle: next as RouteLoadingProgressStyle }));
-                }
-              }}
-            >
-              {PROGRESS_OPTIONS.map((value) => (
-                <option key={value} value={value}>
-                  {t(`settings.forms.routeLoading.progressStyle.${value}`)}
-                </option>
-              ))}
-            </UiSelect>
-          </SettingsField>
+          <SettingsToggleField
+            id="route-loading-embedded-orbital-ring"
+            checked={config.embedded?.logoGlow ?? config.logoGlow}
+            onChange={(checked) => {
+              page.updateDraft((current) => patchEmbedded(current, { logoGlow: checked }));
+            }}
+            title={t('settings.forms.routeLoading.orbitalRing')}
+          />
+          <SettingsToggleField
+            id="route-loading-embedded-orbital-motion"
+            checked={config.embedded?.logoBreathe ?? config.logoBreathe}
+            onChange={(checked) => {
+              page.updateDraft((current) => patchEmbedded(current, { logoBreathe: checked }));
+            }}
+            title={t('settings.forms.routeLoading.orbitalRingMotion')}
+            disabled={!(config.embedded?.logoGlow ?? config.logoGlow)}
+          />
         </div>
       </SettingsFormGroup>
 

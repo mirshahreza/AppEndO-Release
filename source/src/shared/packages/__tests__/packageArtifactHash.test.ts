@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import crypto from 'crypto';
+import { digestPackageArtifactFiles } from '../../../core/packages/packageArtifactHash';
 import {
   buildPackageArtifactHashPayload,
   computePackageArtifactHashAsync,
@@ -20,6 +21,16 @@ describe('packageArtifactHash', () => {
     ];
 
     await expect(computePackageArtifactHashAsync(files)).resolves.toBe(computeNodeHash(files));
+  });
+
+  it('digestPackageArtifactFiles matches join-based Node hash', () => {
+    const files: PackageArtifactFile[] = [
+      { entryName: 'package.json', data: toBytes('{"id":"demo"}\n') },
+      { entryName: 'edge/ping.ts', data: toBytes('export default async () => ({ ok: true });\n') },
+      { entryName: 'ui/summary.tsx', data: toBytes('export default function Summary() { return null; }\n') },
+    ];
+
+    expect(digestPackageArtifactFiles(files)).toBe(computeNodeHash(files));
   });
 
   it('excludes package.json from the payload', async () => {

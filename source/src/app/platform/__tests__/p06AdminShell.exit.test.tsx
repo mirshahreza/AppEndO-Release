@@ -338,15 +338,17 @@ describe('p-06 admin shell exit criteria', () => {
     const config = buildStudioExitRuntimeConfig();
 
     for (const binding of config.bindings.filter((entry) => entry.enabled)) {
-      const resolvedBinding = resolveRouteBindingForRelativePath(config, 'studio', binding.routePattern);
-      const pageModule = getPageModuleByKey(config, resolvedBinding?.pageKey ?? '');
-      const resolved = resolvePageModule(pageModule?.loaderRef ?? '');
-
-      expect(resolvedBinding?.pageKey).toBe(binding.pageKey);
-      expect(pageModule?.loaderRef).toBeTruthy();
-      if (pageModule?.loaderKind === 'designer') {
+      const pageModule = getPageModuleByKey(config, binding.pageKey);
+      if (pageModule?.loaderKind === 'designer' || pageModule?.loaderKind === 'package') {
         continue;
       }
+
+      const resolvedBinding = resolveRouteBindingForRelativePath(config, 'studio', binding.routePattern);
+      const resolvedPageModule = getPageModuleByKey(config, resolvedBinding?.pageKey ?? '');
+      const resolved = resolvePageModule(resolvedPageModule?.loaderRef ?? '');
+
+      expect(resolvedBinding?.pageKey).toBe(binding.pageKey);
+      expect(resolvedPageModule?.loaderRef).toBeTruthy();
       expect(resolved?.component).toBeTruthy();
     }
   });

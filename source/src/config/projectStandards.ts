@@ -1567,6 +1567,26 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       ],
     },
     {
+      id: 'package.vertical.legacy-filter-panel-layout',
+      title: 'Vertical legacy filter panel layout (mode 2 spacing)',
+      value:
+        'Mode-2 VxMemberDirectoryLegacyFilterBarPanel: exactly one horizontal px layer on outer fields host (VX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELDS_HOST_CLASS); custom stacks + VxMemberListLegacyFieldByFieldStack use VX_LEGACY_FILTER_FIELDS_STACK_* inset and VX_LEGACY_FILTER_FIELDS_STACK_SECTION_NESTED_HOST_CLASS on section hosts; keep outer py + stack -my inset + section !py-1.25; default panel bleed via vxMemberDirectoryLegacyFilterBar.css; no panelClassName px or fieldFilterFieldsHostClassName !py-0 without full stack pattern; shard package-vertical-legacy-filter-panel-layout',
+      appliesTo: [
+        'Vertical list pages',
+        'src/domain/vx/VxMemberDirectoryLegacyFilterBarPanel.tsx',
+        'src/domain/vx/vxMemberDirectoryLegacyFilterBarLayout.ts',
+        'src/domain/vx/vxMemberDirectoryLegacyFilterBar.css',
+        'src/domain/vx/VxLegacyFilterFieldsStackSection.tsx',
+        'src/domain/vx/VxMemberListLegacyFieldByFieldStack.tsx',
+        'src/domain/vx/VxImageFixListToolbar.tsx',
+        'vx-masoolin-performance',
+        'vx-payment-documents',
+        'vx-payment-documents-members',
+        'vx-meetings-management',
+        'vx-members-image-fix',
+      ],
+    },
+    {
       id: 'package.vertical.domain-invariants',
       title: 'Vertical — electoral tree geo assignment (process vs direct)',
       value:
@@ -2117,6 +2137,7 @@ export const shardForStandardId = (id: string): string => {
   if (id === 'package.vertical.ui-vocab') return 'package-vertical-ui-vocab';
   if (id === 'package.vertical.member-face-caption') return 'package-vertical-member-face-caption';
   if (id === 'package.vertical.member-list-legacy-filters') return 'package-vertical-member-list-legacy-filters';
+  if (id === 'package.vertical.legacy-filter-panel-layout') return 'package-vertical-legacy-filter-panel-layout';
   if (id === 'package.vertical.domain-invariants') return 'package-vertical-domain-invariants';
   if (id.startsWith('package.vertical')) return 'package-vertical-db';
   if (id.startsWith('package.ui')) return 'package-ui';

@@ -74,7 +74,6 @@ export const CONTROL_PLANE_SCHEMA_OWNERSHIP_LAYERS: readonly ControlPlaneSchemaL
 /** Table name prefixes that are never owned by prisma/schema.prisma. */
 export const CONTROL_PLANE_NON_PRISMA_TABLE_PREFIXES = [
   'vx_',
-  'vw_vx_',
   'cms_',
   'zz_',
 ] as const;

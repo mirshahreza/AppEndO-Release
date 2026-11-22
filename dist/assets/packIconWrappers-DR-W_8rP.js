@@ -1,0 +1,1 @@
+import{c as o}from"./react-vendor-DelaA65R.js";import{I as n}from"./iconify-Cw1FXWvc.js";function i(e){return({className:r,...t})=>o.createElement(e,{weight:"BoldDuotone",size:"1em",className:r,...t})}function m(e){return({className:r,...t})=>o.createElement(n,{icon:`marketeq:${e}`,className:r,...t})}export{m as c,i as w};

@@ -1,0 +1,1 @@
+import{ay as B,az as c,aA as n,aB as o}from"./index-DIHG-h7Q.js";const S={[o]:"feedback.subject.bug",[n]:"feedback.subject.suggestion",[c]:"feedback.subject.question",[B]:"feedback.subject.praise"};function u(r,E,e){const t=S[E];if(t){const s=r(t);if(s.trim())return s}return(e==null?void 0:e.trim())||E}export{u as r};

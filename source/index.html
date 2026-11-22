@@ -841,7 +841,7 @@
       })();
     </script>
     <div id="root"></div>
-    <script type="module" src="/src/boot/appBootSplashOrbit.tsx"></script>
+    <!-- Boot orbit paint loads from public/dev-boot.js after React Refresh preamble (see dev-boot.js). -->
     <!-- Static loader: do NOT point at /src/main.tsx directly (stampedes Vite on restart). -->
     <script type="module" src="/dev-boot.js?v=vite-ready-wait"></script>
   </body>

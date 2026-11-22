@@ -99,6 +99,9 @@ const loadApp = async () => {
   // Disk-served HTML skips Vite's HTML transform — pull the client + React Refresh preamble.
   await importWithBusyRetry('/@vite/client');
   await installReactRefreshPreamble();
+  // Orbit splash imports OrbitBorderFrame.tsx — must run only after the preamble above
+  // (do not load appBootSplashOrbit.tsx from index.html in parallel with this script).
+  await importWithBusyRetry('/src/boot/appBootSplashOrbit.tsx');
   await importWithBusyRetry('/src/main.tsx');
 };
 

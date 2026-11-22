@@ -16208,6 +16208,25 @@ var init_projectStandards = __esm({
           ]
         },
         {
+          id: "package.vertical.legacy-filter-panel-layout",
+          title: "Vertical legacy filter panel layout (mode 2 spacing)",
+          value: "Mode-2 VxMemberDirectoryLegacyFilterBarPanel: exactly one horizontal px layer on outer fields host (VX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELDS_HOST_CLASS); custom stacks + VxMemberListLegacyFieldByFieldStack use VX_LEGACY_FILTER_FIELDS_STACK_* inset and VX_LEGACY_FILTER_FIELDS_STACK_SECTION_NESTED_HOST_CLASS on section hosts; keep outer py + stack -my inset + section !py-1.25; default panel bleed via vxMemberDirectoryLegacyFilterBar.css; no panelClassName px or fieldFilterFieldsHostClassName !py-0 without full stack pattern; shard package-vertical-legacy-filter-panel-layout",
+          appliesTo: [
+            "Vertical list pages",
+            "src/domain/vx/VxMemberDirectoryLegacyFilterBarPanel.tsx",
+            "src/domain/vx/vxMemberDirectoryLegacyFilterBarLayout.ts",
+            "src/domain/vx/vxMemberDirectoryLegacyFilterBar.css",
+            "src/domain/vx/VxLegacyFilterFieldsStackSection.tsx",
+            "src/domain/vx/VxMemberListLegacyFieldByFieldStack.tsx",
+            "src/domain/vx/VxImageFixListToolbar.tsx",
+            "vx-masoolin-performance",
+            "vx-payment-documents",
+            "vx-payment-documents-members",
+            "vx-meetings-management",
+            "vx-members-image-fix"
+          ]
+        },
+        {
           id: "package.vertical.domain-invariants",
           title: "Vertical \u2014 electoral tree geo assignment (process vs direct)",
           value: "One member MAY hold multiple roles; one geo_level at a time \u2014 process path (geo responsibility) = exactly one node; direct path (employees list role+region) MAY assign multiple approved nodes on the same level; cross-level approved anchors are drift \u2014 skipped in vx:etl:legacy-edge-parity and geo-responsibility ETL (vxMemberAreaLimitsCrossLevelEtl), purge via vx:etl:purge-cross-level-area-limits; same-level multi-row expected; nakhebin join and plain membership out of scope; operator mirror electoral-tree-role-anchor + vx:business-rules:seed; shard package-vertical-domain-invariants; probe schema:area-limits-invariant fails on cross-level only",
@@ -16695,6 +16714,7 @@ var init_projectStandards = __esm({
       if (id === "package.vertical.ui-vocab") return "package-vertical-ui-vocab";
       if (id === "package.vertical.member-face-caption") return "package-vertical-member-face-caption";
       if (id === "package.vertical.member-list-legacy-filters") return "package-vertical-member-list-legacy-filters";
+      if (id === "package.vertical.legacy-filter-panel-layout") return "package-vertical-legacy-filter-panel-layout";
       if (id === "package.vertical.domain-invariants") return "package-vertical-domain-invariants";
       if (id.startsWith("package.vertical")) return "package-vertical-db";
       if (id.startsWith("package.ui")) return "package-ui";
@@ -46103,6 +46123,9 @@ var init_vertical_iq = __esm({
       "vx.masoolinPerformance.filter.roleAll": "\u0627\u0644\u0645\u0633\u0624\u0648\u0644\u064A\u0629 (\u0627\u0644\u0643\u0644)",
       "vx.masoolinPerformance.filter.province": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629",
       "vx.masoolinPerformance.filter.provinceAll": "\u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0629 (\u0627\u0644\u0643\u0644)",
+      "vx.masoolinPerformance.filter.provincesLoading": "\u062C\u0627\u0631\u064D \u062A\u062D\u0645\u064A\u0644 \u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0627\u062A\u2026",
+      "vx.masoolinPerformance.filter.provincesEmpty": "\u062A\u0639\u0630\u0651\u0631 \u062A\u062D\u0645\u064A\u0644 \u0627\u0644\u0645\u062D\u0627\u0641\u0638\u0627\u062A. \u062D\u062F\u0651\u062B \u0627\u0644\u0635\u0641\u062D\u0629.",
+      "vx.masoolinPerformance.filterOptionsError": "\u062A\u0639\u0630\u0651\u0631 \u062A\u062D\u0645\u064A\u0644 \u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u0641\u0644\u0627\u062A\u0631.",
       "vx.masoolinPerformance.filter.circle": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629",
       "vx.masoolinPerformance.filter.circleAll": "\u0627\u0644\u062F\u0627\u0626\u0631\u0629 (\u0627\u0644\u0643\u0644)",
       "vx.masoolinPerformance.filter.tamvin": "\u0627\u0644\u0645\u0643\u062A\u0628",
@@ -46731,12 +46754,12 @@ var init_vertical_iq = __esm({
       "vx.businessRules.section.electoral-tree-role-anchor.title": "\u0634\u062C\u0631\u0629 \u0627\u0644\u0627\u0646\u062A\u062E\u0627\u0628 \u2014 \u0645\u0633\u0627\u0631\u0627 \u0627\u0644\u062A\u062E\u0635\u064A\u0635 \u0627\u0644\u062C\u063A\u0631\u0627\u0641\u064A",
       "vx.businessRules.section.electoral-tree-role-anchor.intro": "\u064A\u062C\u0648\u0632 \u0644\u0644\u0634\u062E\u0635 \u062D\u0645\u0644 \u0639\u062F\u0629 \u0623\u062F\u0648\u0627\u0631. \u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0625\u062C\u0631\u0627\u0626\u064A (\u0645\u0633\u0624\u0648\u0644\u064A\u0629 geo) = \u0646\u0642\u0637\u0629 \u0648\u0627\u062D\u062F\u0629\u061B \u0627\u0644\u062A\u062E\u0635\u064A\u0635 \u0627\u0644\u0645\u0628\u0627\u0634\u0631 (\u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646: \u062F\u0648\u0631 + \u0645\u0646\u0637\u0642\u0629) \u064A\u062C\u0648\u0632 \u0641\u064A\u0647 \u0639\u062F\u0629 \u0646\u0642\u0627\u0637 \u0639\u0644\u0649 \u0646\u0641\u0633 \u0627\u0644\u0645\u0633\u062A\u0648\u0649 \u2014 \u0644\u0627 \u0645\u0633\u062A\u0648\u064A\u064A\u0646 \u0645\u0639\u0627\u064B.",
       "vx.businessRules.rule.membership-tracking-vs-display.title": "\u0631\u0645\u0632 \u0627\u0644\u0645\u062A\u0627\u0628\u0639\u0629 \u0645\u0642\u0627\u0628\u0644 \u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u062A\u064A\u0627\u0631\u064A",
-      "vx.businessRules.rule.membership-tracking-vs-display.body": "\u0645\u062A\u0627\u0628\u0639\u0629 \u0627\u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u0630\u0627\u062A\u064A \u0627\u0644\u0639\u0627\u0645 = vx_members.id \u062F\u0627\u0626\u0645\u0627\u064B (\u0628\u062F\u0648\u0646 \u062C\u062F\u0648\u0644 vx_tracking_codes). \u0639\u0645\u0648\u062F \xAB\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621\xBB / \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 = vx_members.username (\u0645\u0639 COALESCE \u0641\u064A vw_vx_members) \u0648\u064A\u0628\u0642\u0649 \u0641\u0627\u0631\u063A\u0627\u064B \u062D\u062A\u0649 \u0645\u0648\u0627\u0641\u0642\u0629 \u0627\u0644\u062A\u062D\u0642\u0642 \u0627\u0644\u0645\u062D\u0644\u064A \u0625\u0644\u0649 active \u2014 \u0644\u0627 \u064A\u064F\u0633\u062A\u0628\u062F\u0644 \u0628\u0631\u0645\u0632 \u0627\u0644\u0645\u062A\u0627\u0628\u0639\u0629 \u0641\u064A \u0639\u0645\u0648\u062F \u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u062A\u064A\u0627\u0631\u064A.",
+      "vx.businessRules.rule.membership-tracking-vs-display.body": "\u0645\u062A\u0627\u0628\u0639\u0629 \u0627\u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u0630\u0627\u062A\u064A \u0627\u0644\u0639\u0627\u0645 = vx_members.id \u062F\u0627\u0626\u0645\u0627\u064B (\u0628\u062F\u0648\u0646 \u062C\u062F\u0648\u0644 vx_tracking_codes). \u0639\u0645\u0648\u062F \xAB\u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621\xBB / \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 = vx_members.username (\u0645\u0639 COALESCE \u0641\u064A vx_members_ext) \u0648\u064A\u0628\u0642\u0649 \u0641\u0627\u0631\u063A\u0627\u064B \u062D\u062A\u0649 \u0645\u0648\u0627\u0641\u0642\u0629 \u0627\u0644\u062A\u062D\u0642\u0642 \u0627\u0644\u0645\u062D\u0644\u064A \u0625\u0644\u0649 active \u2014 \u0644\u0627 \u064A\u064F\u0633\u062A\u0628\u062F\u0644 \u0628\u0631\u0645\u0632 \u0627\u0644\u0645\u062A\u0627\u0628\u0639\u0629 \u0641\u064A \u0639\u0645\u0648\u062F \u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u062A\u064A\u0627\u0631\u064A.",
       "vx.businessRules.rule.membership-display-priority.title": "\u0623\u0648\u0644\u0648\u064A\u0629 \u0627\u0644\u0639\u0631\u0636 (\u0627\u0633\u062A\u064A\u0631\u0627\u062F legacy)",
       "vx.businessRules.rule.membership-display-priority.body": "ETL \u0648 resolveLegacyMemberUsername: UserName \u0627\u0644\u0645\u0633\u062A\u0648\u0631\u062F \u0623\u0648\u0644\u0627\u064B\u060C \u0648\u0625\u0644\u0627 TrackingCode \u0639\u0644\u0649 \u0627\u0644\u0635\u0641 \u0627\u0644\u0642\u062F\u064A\u0645. \u0627\u0644\u0645\u062A\u0642\u062F\u0645\u0648\u0646 \u0627\u0644\u062C\u062F\u062F \u0628\u0644\u0627 \u0631\u0642\u0645 \u0627\u0644\u062A\u064A\u0627\u0631\u064A \u062D\u062A\u0649 \u0627\u0644\u062A\u0641\u0639\u064A\u0644\u061B tracking_code \u0641\u064A \u0627\u0644\u0639\u0631\u0636 = \u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0639\u0636\u0648 \u0644\u0644\u0628\u062D\u062B \u0641\u0642\u0637. \u0645\u0645\u0646\u0648\u0639 member-{id} \u0623\u0648 \u0623\u064A \u062A\u0631\u0643\u064A\u0628 \u0627\u0635\u0637\u0646\u0627\u0639\u064A \u0644\u0639\u0645\u0648\u062F \u0631\u0642\u0645 \u0627\u0644\u0627\u0646\u062A\u0645\u0627\u0621.",
       "vx.businessRules.rule.membership-no-synthetic-id.title": "\u0645\u0646\u0639 \u0627\u0644\u0623\u0631\u0642\u0627\u0645 \u0627\u0644\u0645\u062E\u062A\u0644\u0642\u0629",
       "vx.businessRules.rule.membership-no-synthetic-id.body": "\u0633\u0643\u0631\u0628\u062A\u0627\u062A \u0627\u0644\u0627\u0633\u062A\u064A\u0631\u0627\u062F \u0644\u0627 \u062A\u064F\u0648\u0644\u0651\u062F \u0631\u0642\u0645 \u0627\u0644\u062A\u064A\u0627\u0631\u064A \u0645\u0646 \u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0639\u0636\u0648 \u0639\u0646\u062F\u0645\u0627 UserName \u0648 TrackingCode \u0641\u0627\u0631\u063A\u0627\u0646. \u0627\u0644\u0642\u0648\u0627\u0626\u0645 \u0627\u0644\u062D\u064A\u0629 \u062A\u0642\u0631\u0623 username \u0645\u0646 join \u0627\u0644\u0639\u0636\u0648/\u0627\u0644\u0645\u0633\u062A\u062E\u062F\u0645 \u2014 \u0648\u0644\u064A\u0633 \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B \u0645\u0646 id.",
-      "vx.businessRules.rule.membership-view-coalesce.title": "\u0627\u0633\u0645 \u0627\u0644\u0645\u0633\u062A\u062E\u062F\u0645 \u0641\u064A vw_vx_members",
+      "vx.businessRules.rule.membership-view-coalesce.title": "\u0627\u0633\u0645 \u0627\u0644\u0645\u0633\u062A\u062E\u062F\u0645 \u0641\u064A vx_members_ext",
       "vx.businessRules.rule.membership-view-coalesce.body": "\u0641\u064A \u062F\u0644\u064A\u0644 \u0627\u0644\u0623\u0639\u0636\u0627\u0621: username = COALESCE(LTRIM(RTRIM(vx_members.username)), base_users.username) \u062D\u062A\u0649 \u064A\u0638\u0647\u0631 \u0627\u0633\u0645 \u062D\u0633\u0627\u0628 \u0627\u0644\u062F\u062E\u0648\u0644 \u0639\u0646\u062F \u0631\u0628\u0637 user_id.",
       "vx.businessRules.rule.membership-legacy-editor-semantics.title": "\u0645\u0637\u0627\u0628\u0642\u0629 2_Approve \u0627\u0644\u0642\u062F\u064A\u0645",
       "vx.businessRules.rule.membership-legacy-editor-semantics.body": "\u0641\u064A legacy \u064A\u064F\u0645\u0646\u062D UserName \u0639\u0646\u062F \u0627\u0644\u0645\u0648\u0627\u0641\u0642\u0629 (VX_SP_Members_2_Approve) \u0648\u0644\u064A\u0633 \u0639\u0646\u062F \u0623\u0648\u0644 \u062D\u0641\u0638. AppEndO: vx_self_registration_create_member \u0644\u0627 \u064A\u0644\u0645\u0633 vx_username_repo\u061B dbo.vx_membership_apply_local_decision (approve \u2192 active) \u064A\u062E\u0635\u0651\u0635 \u0645\u0646 \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639 \u0648\u064A\u0631\u0628\u0637 base_users \u0639\u0646\u062F\u0645\u0627 user_id \u0643\u0627\u0646 null.",
@@ -46801,7 +46824,7 @@ var init_vertical_iq = __esm({
       "vx.businessRules.rule.mask-apply-surfaces.title": "\u0623\u064A\u0646 \u062A\u064F\u0637\u0628\u0651\u064E\u0642 \u0627\u0644\u0623\u0642\u0646\u0639\u0629",
       "vx.businessRules.rule.mask-apply-surfaces.body": "applyHwyMemberIdentityFieldMasksToRows \u0628\u062C\u0644\u0633\u0629 \u0627\u0644\u0645\u0634\u0627\u0647\u062F: \u0642\u0627\u0626\u0645\u0629/getOne \u062F\u0644\u064A\u0644 \u0627\u0644\u0623\u0639\u0636\u0627\u0621 (getOne \u064A\u064F\u0631\u0641\u0642 identityFieldPolicy)\u060C PATCH \u0627\u0644\u0645\u0644\u0641\u060C \u0628\u062D\u062B \u0646\u0642\u0644 \u0627\u0644\u0645\u0624\u0633\u0633\u0629\u060C \u0646\u062A\u0627\u0626\u062C SP \u0644\u0644\u0623\u0639\u0636\u0627\u0621 \u0627\u0644\u0645\u0634\u0627\u0628\u0647\u0648\u0646 (\u0639\u0645\u0648\u062F genderCode)\u060C member-picker\u060C \u0639\u062F\u0651 similar \u0641\u064A profile-nav. \u0635\u0641\u0648\u0641 \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u0645\u064F\u0642\u0646\u0651\u0639\u0629 \u062F\u0648\u0646 \u0625\u0631\u0633\u0627\u0644 identityFieldPolicy \u0644\u0644\u0634\u0628\u0643\u0629.",
       "vx.businessRules.rule.mask-list-cache-viewer.title": "\u0643\u0627\u0634 \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u0644\u0643\u0644 \u0645\u0634\u0627\u0647\u062F",
-      "vx.businessRules.rule.mask-list-cache-viewer.body": "\u0643\u0627\u0634 GET \u0644\u0644\u0642\u0627\u0626\u0645\u0629 cacheByUser (metadata + ensureHwyMemberDirectoryListRuntime\u061B dataApiRuntimePolicy \u064A\u0641\u0631\u0636 byUser \u0644\u0640 vw-vx-members.vx-member-directory-list) \u0644\u0623\u0646 \u0627\u0644\u0647\u0627\u062A\u0641 \u0648\u0627\u0644\u0627\u0633\u0645 \u064A\u0639\u062A\u0645\u062F\u0627\u0646 \u0639\u0644\u0649 \u0627\u0644\u0645\u0634\u0627\u0647\u062F.",
+      "vx.businessRules.rule.mask-list-cache-viewer.body": "\u0643\u0627\u0634 GET \u0644\u0644\u0642\u0627\u0626\u0645\u0629 cacheByUser (metadata + ensureHwyMemberDirectoryListRuntime\u061B dataApiRuntimePolicy \u064A\u0641\u0631\u0636 byUser \u0644\u0640 vx-members-ext.vx-member-directory-list) \u0644\u0623\u0646 \u0627\u0644\u0647\u0627\u062A\u0641 \u0648\u0627\u0644\u0627\u0633\u0645 \u064A\u0639\u062A\u0645\u062F\u0627\u0646 \u0639\u0644\u0649 \u0627\u0644\u0645\u0634\u0627\u0647\u062F.",
       "vx.businessRules.rule.mask-deferred-show-phones.title": "\u0645\u0624\u062C\u0651\u0644: \u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0647\u0627\u062A\u0641 \u0628\u0627\u0644\u0646\u0642\u0631",
       "vx.businessRules.rule.mask-deferred-show-phones.body": "\u0642\u0648\u0627\u0626\u0645 legacy \u0627\u0633\u062A\u062E\u062F\u0645\u062A shared.showPhones \u0644\u0643\u0634\u0641 ***** \u0628\u0639\u062F \u0627\u0644\u0646\u0642\u0631. AppEndO V2 \u0644\u0645 \u064A\u064F\u0646\u0641\u0651\u0630 \u0647\u0630\u0627 \u0627\u0644\u062A\u0641\u0627\u0639\u0644 \u0628\u0639\u062F\u061B \u0627\u0644\u0642\u064A\u0645 \u062A\u0628\u0642\u0649 ***** \u0623\u0648 \u0646\u0635 \u0627\u0644\u0645\u0624\u0633\u0633\u0629 \u062D\u062A\u0649 \u062A\u064F\u0636\u0627\u0641 \u0642\u0627\u0639\u062F\u0629 \u062A\u0641\u0627\u0639\u0644 \u0644\u0627\u062D\u0642\u0627\u064B.",
       "vx.businessRules.rule.files-registration-vs-other.title": "\u062A\u0633\u062C\u064A\u0644 \u0645\u0642\u0627\u0628\u0644 \u0645\u062A\u0641\u0631\u0642\u0627\u062A",
@@ -47873,12 +47896,12 @@ var init_vertical_us = __esm({
       "vx.businessRules.section.electoral-tree-role-anchor.title": "Electoral tree \u2014 geo assignment paths",
       "vx.businessRules.section.electoral-tree-role-anchor.intro": "One person may hold several roles. Process-path officials get exactly one node; direct assignment (employees list role + region) may attach several nodes on the same level \u2014 never two levels at once.",
       "vx.businessRules.rule.membership-tracking-vs-display.title": "Tracking id vs \u0627\u0644\u062A\u064A\u0627\u0631\u064A number",
-      "vx.businessRules.rule.membership-tracking-vs-display.body": "Public self-registration tracking is always vx_members.id (no vx_tracking_codes table). Staff \xABmembership number\xBB / login UserName is vx_members.username (COALESCE with base_users.username in vw_vx_members) and stays empty until local verification approves to active \u2014 the tracking id is not substituted into that column.",
+      "vx.businessRules.rule.membership-tracking-vs-display.body": "Public self-registration tracking is always vx_members.id (no vx_tracking_codes table). Staff \xABmembership number\xBB / login UserName is vx_members.username (COALESCE with base_users.username in vx_members_ext) and stays empty until local verification approves to active \u2014 the tracking id is not substituted into that column.",
       "vx.businessRules.rule.membership-display-priority.title": "List column priority (legacy import)",
-      "vx.businessRules.rule.membership-display-priority.body": "Legacy ETL and resolveLegacyMemberUsername prefer imported UserName, else legacy TrackingCode on the row. Greenfield pending rows have no \u0627\u0644\u062A\u064A\u0627\u0631\u064A until activation; vw_vx_members.tracking_code exposes member id for search/filters only. Never synthesize m{memberId} or other fake serials for the membership-number column.",
+      "vx.businessRules.rule.membership-display-priority.body": "Legacy ETL and resolveLegacyMemberUsername prefer imported UserName, else legacy TrackingCode on the row. Greenfield pending rows have no \u0627\u0644\u062A\u064A\u0627\u0631\u064A until activation; vx_members_ext.tracking_code exposes member id for search/filters only. Never synthesize m{memberId} or other fake serials for the membership-number column.",
       "vx.businessRules.rule.membership-no-synthetic-id.title": "No fake membership numbers",
       "vx.businessRules.rule.membership-no-synthetic-id.body": "Import and repair scripts must not invent a \u0627\u0644\u062A\u064A\u0627\u0631\u064A from member id when both legacy UserName and TrackingCode are empty. Runtime lists read username from the member/user join \u2014 not auto-generated from id.",
-      "vx.businessRules.rule.membership-view-coalesce.title": "vw_vx_members username",
+      "vx.businessRules.rule.membership-view-coalesce.title": "vx_members_ext username",
       "vx.businessRules.rule.membership-view-coalesce.body": "Directory username is COALESCE(trim(vx_members.username), base_users.username) so linked login accounts show the platform username when the member row is blank.",
       "vx.businessRules.rule.membership-legacy-editor-semantics.title": "Legacy 2_Approve parity",
       "vx.businessRules.rule.membership-legacy-editor-semantics.body": "Legacy assigned UserName only on approval (VX_SP_Members_2_Approve), not on first save. AppEndO mirrors that: vx_self_registration_create_member does not touch vx_username_repo; dbo.vx_membership_apply_local_decision (approve \u2192 active) allocates from the repo and links base_users when user_id was null.",
@@ -47941,9 +47964,9 @@ var init_vertical_us = __esm({
       "vx.businessRules.rule.mask-photo-readonly.title": "Photo read-only",
       "vx.businessRules.rule.mask-photo-readonly.body": "personalPhotoReadOnly when gender-masked. UI disables personal_photo edit; POST /api/vx/member-directory/:id/files rejects personal_photo with 403 when policy forbids upload.",
       "vx.businessRules.rule.mask-apply-surfaces.title": "Where masks run",
-      "vx.businessRules.rule.mask-apply-surfaces.body": "applyHwyMemberIdentityFieldMasksToRows with viewer session: vw-vx-members member-directory list/getOne (getOne also attaches identityFieldPolicy), PATCH /api/vx/member-directory/:id policy strip, org-membership-transfer search, similar-members SP results (genderCode column), member-picker search, profile-nav similar count. List rows are masked but do not ship identityFieldPolicy to the grid client.",
+      "vx.businessRules.rule.mask-apply-surfaces.body": "applyHwyMemberIdentityFieldMasksToRows with viewer session: vx-members-ext member-directory list/getOne (getOne also attaches identityFieldPolicy), PATCH /api/vx/member-directory/:id policy strip, org-membership-transfer search, similar-members SP results (genderCode column), member-picker search, profile-nav similar count. List rows are masked but do not ship identityFieldPolicy to the grid client.",
       "vx.businessRules.rule.mask-list-cache-viewer.title": "List cache per viewer",
-      "vx.businessRules.rule.mask-list-cache-viewer.body": "Directory list GET cache uses cacheByUser (metadata + ensureHwyMemberDirectoryListRuntime pin; dataApiRuntimePolicy forces byUser for vw-vx-members.vx-member-directory-list) because masked phones and names depend on the viewer, not only query params.",
+      "vx.businessRules.rule.mask-list-cache-viewer.body": "Directory list GET cache uses cacheByUser (metadata + ensureHwyMemberDirectoryListRuntime pin; dataApiRuntimePolicy forces byUser for vx-members-ext.vx-member-directory-list) because masked phones and names depend on the viewer, not only query params.",
       "vx.businessRules.rule.mask-deferred-show-phones.title": "Deferred: click-to-reveal phones",
       "vx.businessRules.rule.mask-deferred-show-phones.body": "Legacy list HTML used shared.showPhones to reveal starred phones after click. AppEndO V2 does not implement that UX yet; masked values stay ***** / org text until a future list interaction rule is added.",
       "vx.businessRules.rule.files-registration-vs-other.title": "Registration vs other",
@@ -48661,6 +48684,9 @@ var init_vertical_us = __esm({
       "vx.masoolinPerformance.filter.roleAll": "Responsibility (all)",
       "vx.masoolinPerformance.filter.province": "Province",
       "vx.masoolinPerformance.filter.provinceAll": "Province (all)",
+      "vx.masoolinPerformance.filter.provincesLoading": "Loading provinces\u2026",
+      "vx.masoolinPerformance.filter.provincesEmpty": "Provinces could not be loaded. Refresh the page.",
+      "vx.masoolinPerformance.filterOptionsError": "Could not load filter options.",
       "vx.masoolinPerformance.filter.circle": "Circle",
       "vx.masoolinPerformance.filter.circleAll": "Circle (all)",
       "vx.masoolinPerformance.filter.tamvin": "Maktab",
@@ -84876,7 +84902,7 @@ var init_engineeringKnowledgeRegistry = __esm({
     matchesQuery = (record, query) => {
       const needle = query.trim().toLowerCase();
       if (!needle) return true;
-      return record.sourceId.toLowerCase().includes(needle) || record.title.toLowerCase().includes(needle) || record.statement.toLowerCase().includes(needle) || record.appliesTo.some((scope) => scope.toLowerCase().includes(needle));
+      return record.sourceId.toLowerCase().includes(needle) || (record.title?.toLowerCase().includes(needle) ?? false) || record.statement.toLowerCase().includes(needle) || record.appliesTo.some((scope) => scope.toLowerCase().includes(needle));
     };
     matchesAppliesTo = (record, appliesTo) => {
       const needle = appliesTo.trim().toLowerCase();
@@ -101869,12 +101895,12 @@ var init_dataApiManagedFunctions = __esm({
 // src/server/domain/vx/ensureHwyMemberDirectoryListRuntime.ts
 function ensureHwyMemberDirectoryListRuntime() {
   pinMemberDirectoryFunctionRuntime(
-    "workspace/server-functions/custom/vw-vx-members.vx-member-directory-list.metadata.json",
+    "workspace/server-functions/custom/vx-members-ext.vx-member-directory-list.metadata.json",
     LIST_TIMEOUT_MS,
     { cacheTtlMs: LIST_CACHE_TTL_MS, cacheByUser: true }
   );
   pinMemberDirectoryFunctionRuntime(
-    "workspace/server-functions/custom/vw-vx-members.vx-member-directory-getone.metadata.json",
+    "workspace/server-functions/custom/vx-members-ext.vx-member-directory-getone.metadata.json",
     GETONE_TIMEOUT_MS
   );
   const edgeApiPath = workspacePath("workspace/edge-apis/ea_a140003600ded4e4.json");
@@ -101901,8 +101927,8 @@ var init_ensureHwyMemberDirectoryListRuntime = __esm({
   "src/server/domain/vx/ensureHwyMemberDirectoryListRuntime.ts"() {
     import_node_fs10 = __toESM(require("node:fs"), 1);
     import_node_path12 = __toESM(require("node:path"), 1);
-    LIST_FUNCTION_ID = "vw-vx-members.vx-member-directory-list";
-    GETONE_FUNCTION_ID = "vw-vx-members.vx-member-directory-getone";
+    LIST_FUNCTION_ID = "vx-members-ext.vx-member-directory-list";
+    GETONE_FUNCTION_ID = "vx-members-ext.vx-member-directory-getone";
     VX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS = 15e3;
     LIST_TIMEOUT_MS = VX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS;
     GETONE_TIMEOUT_MS = VX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS;
@@ -112197,8 +112223,8 @@ async function attachNakhebinLinkedMemberDisplay(rows) {
     }
     return;
   }
-  const { Model: VwHwyMembers } = await resolvePublishedEdgeModel(MEMBER_DIRECTORY_MODEL_ID);
-  const memberRows = await VwHwyMembers.findAll({
+  const { Model: VxMembersExt } = await resolvePublishedEdgeModel(MEMBER_DIRECTORY_MODEL_ID);
+  const memberRows = await VxMembersExt.findAll({
     where: { id: { [import_sequelize14.Op.in]: linkedIds } },
     attributes: [
       "id",
@@ -112577,7 +112603,7 @@ var init_vxMemberImageFixCatalog = __esm({
       row.avatar_url = url;
     };
     readHwyMemberImageFixThumbRow = (row) => {
-      const raw = row.registrationImageFixThumbs;
+      const raw = row.registrationImageFixThumbs ?? row.registration_image_fix_thumbs;
       if (!raw || typeof raw !== "object") {
         return null;
       }
@@ -112903,7 +112929,7 @@ var init_vxMemberDirectoryListScope_service = __esm({
               "other_portal"
             );
             if (otherPortalChannelCode) {
-              const regCol = sequelize.getDialect() === "mssql" ? "[VwHwyMembers].[registration_channel_code]" : '"VwHwyMembers"."registration_channel_code"';
+              const regCol = sequelize.getDialect() === "mssql" ? "[VxMembersExt].[registration_channel_code]" : '"VxMembersExt"."registration_channel_code"';
               return {
                 ...where,
                 [import_sequelize16.Op.and]: [
@@ -112934,7 +112960,7 @@ var init_vxMemberDirectoryListScope_service = __esm({
             membershipStatusCode: ctx3.membershipStatusCodes.active,
             [import_sequelize16.Op.and]: [
               sequelize.literal(
-                sequelize.getDialect() === "mssql" ? "TRY_CAST([VwHwyMembers].[birth_year] AS INT) > YEAR(GETDATE()) - 18" : `CAST(NULLIF(TRIM(CAST("VwHwyMembers"."birth_year" AS TEXT)), '') AS INT) > EXTRACT(YEAR FROM CURRENT_DATE)::INT - 18`
+                sequelize.getDialect() === "mssql" ? "TRY_CAST([VxMembersExt].[birth_year] AS INT) > YEAR(GETDATE()) - 18" : `CAST(NULLIF(TRIM(CAST("VxMembersExt"."birth_year" AS TEXT)), '') AS INT) > EXTRACT(YEAR FROM CURRENT_DATE)::INT - 18`
               )
             ]
           };
@@ -112944,7 +112970,7 @@ var init_vxMemberDirectoryListScope_service = __esm({
             findHwyBaseInfoItemIdByLegacyCategoryLeafId("Education Level", LEGACY_TALEB_JAMEEE_EDUCATION_LEVEL_ID),
             findHwyBaseInfoItemIdByShortName("Registration Channel", "other_portal")
           ]);
-          const regCol = sequelize.getDialect() === "mssql" ? "[VwHwyMembers].[registration_channel_code]" : '"VwHwyMembers"."registration_channel_code"';
+          const regCol = sequelize.getDialect() === "mssql" ? "[VxMembersExt].[registration_channel_code]" : '"VxMembersExt"."registration_channel_code"';
           const where = {
             membershipStatusCode: ctx3.membershipStatusCodes.active,
             educationLevelCode,
@@ -113246,7 +113272,8 @@ async function attachImageFixRegistrationThumbsToMemberDirectoryRows(rows, optio
       };
     });
     const payload = { slots };
-    row.registration_image_fix_thumbs = payload;
+    row.registrationImageFixThumbs = payload;
+    delete row.registration_image_fix_thumbs;
     if (mirrorRegistrationPersonalPhotoToListFace) {
       const faceAvatar = resolveHwyMemberImageFixListFaceAvatarUrl(
         row.avatar_url != null ? String(row.avatar_url) : row.avatar_url != null ? String(row.avatar_url) : null,
@@ -113391,6 +113418,7 @@ var init_vxMemberDirectoryListImageFixThumbs = __esm({
       for (const row of rows) {
         const thumbRow = readHwyMemberImageFixThumbRow(row);
         if (!thumbRow?.slots.length) {
+          delete row.registrationImageFixThumbs;
           delete row.registration_image_fix_thumbs;
           continue;
         }
@@ -113398,10 +113426,12 @@ var init_vxMemberDirectoryListImageFixThumbs = __esm({
           (slot) => allowed.has(slot.kindSlug) && slot.previewUrl && slot.hasBlob
         );
         if (!slots.length) {
+          delete row.registrationImageFixThumbs;
           delete row.registration_image_fix_thumbs;
           continue;
         }
-        row.registration_image_fix_thumbs = { slots };
+        row.registrationImageFixThumbs = { slots };
+        delete row.registration_image_fix_thumbs;
       }
     };
   }
@@ -114318,6 +114348,7 @@ async function enrichHwyMemberDirectoryListRows(rows, queryLang, options2 = {}) 
       slimRegistrationImageFixThumbsForListFaceOnly(rows);
     } else {
       for (const row of rows) {
+        delete row.registrationImageFixThumbs;
         delete row.registration_image_fix_thumbs;
       }
     }
@@ -115856,8 +115887,8 @@ async function queryLegacyRejectionListStatusFields(memberIds) {
           WHERE n.MemberId = m.Id
             AND EXISTS (
               SELECT 1
-              FROM dbo.vw_vx_platform_user_roles r WITH (NOLOCK)
-              INNER JOIN dbo.vw_vx_platform_users u WITH (NOLOCK) ON u.Id = r.UserId
+              FROM dbo.vx_platform_user_roles r WITH (NOLOCK)
+              INNER JOIN dbo.vx_platform_users u WITH (NOLOCK) ON u.Id = r.UserId
               WHERE u.UserName = n.CreatedBy
                 AND r.RoleId = 1000006
             )
@@ -115911,7 +115942,7 @@ async function queryLegacyRejectionListStatusFields(memberIds) {
         ON staff_un.UserName = m.MembershipStatus_UpdatedBy
       LEFT JOIN dbo.VX_Members staff_id WITH (NOLOCK)
         ON CAST(staff_id.Id AS VARCHAR(32)) = CAST(m.MembershipStatus_UpdatedBy AS VARCHAR(32))
-      LEFT JOIN dbo.vw_vx_platform_users au WITH (NOLOCK)
+      LEFT JOIN dbo.vx_platform_users au WITH (NOLOCK)
         ON CAST(au.Id AS VARCHAR(32)) = CAST(m.MembershipStatus_UpdatedBy AS VARCHAR(32))
       LEFT JOIN dbo.VX_Members staff_uid WITH (NOLOCK)
         ON staff_uid.UserId = au.Id
@@ -119417,7 +119448,7 @@ async function buildHwyMemberImageFixListMembershipBaseWhere(sequelize) {
     "Registration Channel",
     "other_portal"
   );
-  const regCol = sequelize.getDialect() === "mssql" ? "[VwHwyMembers].[registration_channel_code]" : '"VwHwyMembers"."registration_channel_code"';
+  const regCol = sequelize.getDialect() === "mssql" ? "[VxMembersExt].[registration_channel_code]" : '"VxMembersExt"."registration_channel_code"';
   const andParts = [
     {
       membershipStatusCode: {
@@ -122507,7 +122538,7 @@ var init_verticalPackage = __esm({
     init_verticalApp();
     VERTICAL_PACKAGE_ID = "vertical";
     VERTICAL_PACKAGE_NAME = "Vertical";
-    VERTICAL_PACKAGE_VERSION = "0.3.17";
+    VERTICAL_PACKAGE_VERSION = "0.3.19";
     VERTICAL_PORTAL_SEGMENT = "vertical";
     VERTICAL_MOUNT_PATH_PREFIX = "/vertical";
     VERTICAL_HOST_PAGE_KEYS = [
@@ -122690,7 +122721,7 @@ var init_vxFinanceParityState_service = __esm({
     END AS ok
   `);
     vxFinancePaymentViewsReady = () => queryOk(`
-    SELECT CASE WHEN OBJECT_ID(N'dbo.vw_vx_payment_documents_members', N'V') IS NULL THEN 0 ELSE 1 END AS ok
+    SELECT CASE WHEN OBJECT_ID(N'dbo.vx_payment_documents_members_ext', N'V') IS NULL THEN 0 ELSE 1 END AS ok
   `);
     vxFinanceMasoolinInstallReady = () => queryOk(`
     SELECT CASE WHEN OBJECT_ID(N'dbo.vx_masoolin_performance_list', N'P') IS NULL THEN 0 ELSE 1 END AS ok
@@ -122700,15 +122731,15 @@ var init_vxFinanceParityState_service = __esm({
       WHEN OBJECT_ID(N'dbo.vx_members', N'U') IS NULL THEN 0
       WHEN COL_LENGTH(N'dbo.vx_members', N'chief_masool') IS NULL
         AND COL_LENGTH(N'dbo.vx_members', N'payable') IS NULL THEN 0
-      WHEN COL_LENGTH(N'dbo.vw_vx_platform_roles', N'is_executive') IS NULL
-        AND COL_LENGTH(N'dbo.vw_vx_platform_roles', N'IsExecutive') IS NULL THEN 0
+      WHEN COL_LENGTH(N'dbo.vx_platform_roles', N'is_executive') IS NULL
+        AND COL_LENGTH(N'dbo.vx_platform_roles', N'IsExecutive') IS NULL THEN 0
       ELSE 1
     END AS ok
   `);
     vxFinanceEdgeCompatReady = () => queryOk(`
     SELECT CASE
-      WHEN OBJECT_ID(N'dbo.vw_vx_platform_user_roles_finance', N'V') IS NULL
-        AND OBJECT_ID(N'dbo.vw_vx_platform_user_roles', N'V') IS NULL THEN 0
+      WHEN OBJECT_ID(N'dbo.vx_platform_user_roles_finance', N'V') IS NULL
+        AND OBJECT_ID(N'dbo.vx_platform_user_roles', N'V') IS NULL THEN 0
       WHEN COL_LENGTH(N'dbo.vx_members', N'gender_id') IS NULL
         AND COL_LENGTH(N'dbo.vx_members', N'GenderId') IS NULL
         AND COL_LENGTH(N'dbo.vx_members', N'gender_legacy_id') IS NULL
@@ -122785,7 +122816,7 @@ var init_vxLegacyImportParityState_service = __esm({
     WHEN OBJECT_ID(N'dbo.${securityStatuses}', N'U') IS NULL THEN 0
     WHEN COL_LENGTH(N'dbo.vx_members', N'picture_file_body_xs') IS NULL
       AND COL_LENGTH(N'dbo.VX_Members', N'Picture_FileBody_xs') IS NULL THEN 0
-    WHEN OBJECT_ID(N'dbo.vw_vx_members_legacy_row', N'V') IS NULL THEN 0
+    WHEN OBJECT_ID(N'dbo.vx_members_legacy_row', N'V') IS NULL THEN 0
     ELSE 1
   END AS ok
 `;
@@ -122805,7 +122836,7 @@ var init_vxLegacyImportParityState_service = __esm({
       const rows = await sequelize.query(
         `
     SELECT CASE
-      WHEN OBJECT_ID(N'dbo.vw_vx_candidate_pipeline_security', N'V') IS NULL THEN 0
+      WHEN OBJECT_ID(N'dbo.vx_candidate_pipeline_security', N'V') IS NULL THEN 0
       ELSE 1
     END AS ok
     `,
@@ -122855,7 +122886,7 @@ var init_ensureHwyDbObjects = __esm({
       "vx_registration_state_columns.sqlserver.sql",
       "base_info_title_path.sqlserver.sql",
       "vx_geo_sql_functions.sqlserver.sql",
-      "vw_vx_members.sqlserver.sql",
+      "vx_members_ext.sqlserver.sql",
       "vx_db_procedures_writes_membership.sqlserver.sql",
       "vx_db_procedures_reads.sqlserver.sql",
       "vx_db_procedures_reads_misc.sqlserver.sql",
@@ -122882,7 +122913,7 @@ var init_ensureHwyDbObjects = __esm({
       "vx_ref_mirror_members_gender_limits.sqlserver.sql",
       "vx_ref_mirror_pipeline_reference.sqlserver.sql",
       "vx_member_registration_files_unified.sqlserver.sql",
-      "vw_vx_members_legacy_row.sqlserver.sql",
+      "vx_members_legacy_row.sqlserver.sql",
       "vx_legacy_pipeline_views.sqlserver.sql",
       "vx_legacy_edge_function_retire.sqlserver.sql",
       "vx_member_card_flow_columns.sqlserver.sql",
@@ -123160,7 +123191,7 @@ var init_ensureHwyDbObjects = __esm({
       "vx_finance_member_legacy_exprs.sqlserver.sql",
       "vx_finance_split2_compat.sqlserver.sql",
       "vx_finance_masoolin_list_stub_compat.sqlserver.sql",
-      "vw_vx_members_masoolin.sqlserver.sql"
+      "vx_members_masoolin.sqlserver.sql"
     ];
     masoolinPerformancePrereqPromise = null;
     ensureHwyMasoolinPerformanceDbPrerequisites = async () => {
@@ -243855,7 +243886,7 @@ async function loadHwyFamilyHousehold(query, req) {
   const regionId = normalizeRegionId(query.regionId);
   const familyCode = normalizeFamilyCode(query.familyCode);
   const lang = resolveHwyMemberDirectoryQueryLang(req.query ?? {}, req);
-  const { Model: VwHwyMembers } = await resolvePublishedEdgeModel(MEMBER_DIRECTORY_MODEL_ID2);
+  const { Model: VxMembersExt } = await resolvePublishedEdgeModel(MEMBER_DIRECTORY_MODEL_ID2);
   const { Model: VxNakhebin } = await resolvePublishedEdgeModel(NAKHEBIN_MODEL_ID);
   const nakhebinRows = await VxNakhebin.findAll({
     where: {
@@ -243869,7 +243900,7 @@ async function loadHwyFamilyHousehold(query, req) {
   const nakhebinPlain = nakhebinRows;
   await enrichHwyNakhebinListRows(nakhebinPlain, lang);
   const linkedMemberIds = collectNakhebinLinkedMemberIds(nakhebinPlain);
-  const memberRows = await VwHwyMembers.findAll({
+  const memberRows = await VxMembersExt.findAll({
     where: buildHouseholdMemberDirectoryWhere(regionId, familyCode, linkedMemberIds),
     limit: HOUSEHOLD_ROW_LIMIT,
     order: [["displayFullName", "ASC"]],
@@ -252989,7 +253020,7 @@ var init_vxMemberTarghinNegoAuthorResolve = __esm({
       user_id,
       phone1,
       electoral_division_path
-    FROM dbo.vw_vx_members WITH (NOLOCK)
+    FROM dbo.vx_members_ext WITH (NOLOCK)
     WHERE user_id IN (${placeholders})
     `,
         { replacements, type: import_sequelize99.QueryTypes.SELECT }
@@ -253026,7 +253057,7 @@ var init_vxMemberTarghinNegoAuthorResolve = __esm({
       has_profile_image,
       user_id,
       phone1
-    FROM dbo.vw_vx_members WITH (NOLOCK)
+    FROM dbo.vx_members_ext WITH (NOLOCK)
     WHERE id IN (${placeholders})
     `,
         { replacements, type: import_sequelize99.QueryTypes.SELECT }
@@ -253060,7 +253091,7 @@ var init_vxMemberTarghinNegoAuthorResolve = __esm({
       has_profile_image,
       user_id,
       phone1
-    FROM dbo.vw_vx_members WITH (NOLOCK)
+    FROM dbo.vx_members_ext WITH (NOLOCK)
     WHERE username IN (${placeholders})
     `,
         { replacements, type: import_sequelize99.QueryTypes.SELECT }
@@ -253101,7 +253132,7 @@ var init_vxMemberTarghinNegoAuthorResolve = __esm({
       vm.phone1
     FROM dbo.base_users u WITH (NOLOCK)
     INNER JOIN dbo.vx_members hm WITH (NOLOCK) ON hm.user_id = u.id
-    INNER JOIN dbo.vw_vx_members vm WITH (NOLOCK) ON vm.id = hm.id
+    INNER JOIN dbo.vx_members_ext vm WITH (NOLOCK) ON vm.id = hm.id
     WHERE u.username = :legacy
        OR CAST(u.id AS VARCHAR(32)) = :legacy
        OR (
@@ -253130,7 +253161,7 @@ var init_vxMemberTarghinNegoAuthorResolve = __esm({
       has_profile_image,
       user_id,
       phone1
-    FROM dbo.vw_vx_members WITH (NOLOCK)
+    FROM dbo.vx_members_ext WITH (NOLOCK)
     WHERE CAST(id AS VARCHAR(32)) = :legacy
        OR username = :legacy
        OR (
@@ -255319,7 +255350,7 @@ NOT EXISTS (SELECT 1 FROM dbo.VX_Members_Organizations O WITH (NOLOCK) WHERE O.M
       }
       if (crit.nbAllowedRolesCsv !== "") {
         sqlParts.push(
-          " AND dbo.CheckStringIntersection(@NbAllowedRoles, (SELECT STRING_AGG(CAST(URR.RoleId AS VARCHAR(20)), ',') FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=Mem.UserId), ',')=1"
+          " AND dbo.CheckStringIntersection(@NbAllowedRoles, (SELECT STRING_AGG(CAST(URR.RoleId AS VARCHAR(20)), ',') FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=Mem.UserId), ',')=1"
         );
       }
     };
@@ -257329,9 +257360,9 @@ var init_install_vx_member_view = __esm({
     init_mssqlControlPlaneConfig();
     init_vxDataSource();
     import_meta9 = {};
-    VX_MEMBER_VIEW_OBJECT = "vw_vx_members";
+    VX_MEMBER_VIEW_OBJECT = "vx_members_ext";
     scriptDir = import_path99.default.dirname((0, import_url.fileURLToPath)(import_meta9.url));
-    viewSqlPath = import_path99.default.join(scriptDir, "db", "install", "vw_vx_members.sqlserver.sql");
+    viewSqlPath = import_path99.default.join(scriptDir, "db", "install", "vx_members_ext.sqlserver.sql");
     titlePathColumnSqlPath = import_path99.default.join(scriptDir, "db", "install", "base_info_title_path.sqlserver.sql");
     geoFunctionsSqlPath = import_path99.default.join(scriptDir, "db", "install", "vx_geo_sql_functions.sqlserver.sql");
     runSqlBatches = async (filePath) => {
@@ -257350,7 +257381,7 @@ var init_install_vx_member_view = __esm({
     runViewSql = async () => {
       const { kind } = resolveHwyDefaultDataSource();
       if (kind !== "sqlserver") {
-        throw new Error("vw_vx_members currently requires SQL Server (same as control plane).");
+        throw new Error("vx_members_ext currently requires SQL Server (same as control plane).");
       }
       await runSqlBatches(titlePathColumnSqlPath);
       await runSqlBatches(geoFunctionsSqlPath);
@@ -257387,7 +257418,7 @@ var init_install_vx_member_view = __esm({
     main = async () => {
       resetControlPlaneInitState();
       await ensureControlPlaneInitialized(SETTINGS_PATH, { pushSchema: false });
-      console.log("[VX] Installing vw_vx_members\u2026");
+      console.log("[VX] Installing vx_members_ext\u2026");
       await runInstallHwyMemberView();
       console.log("[VX] Member view ready.");
     };
@@ -259886,7 +259917,7 @@ async function main2() {
       console.log(`migrating platform users + profiles (mode=${platformMode})\u2026`);
       const platform = await migratePlatformUsers(void 0, { closePools: false });
       console.log("platform users:", platform);
-      console.log("refreshing vw_vx_members\u2026");
+      console.log("refreshing vx_members_ext\u2026");
       await runInstallHwyMemberView();
       const mirroredAfter = await finalizeHwyBaseInfoCultureMirror();
       console.log("[vx:etl:sample] culture mirror after import:", mirroredAfter);
@@ -259904,7 +259935,7 @@ async function main2() {
         (SELECT COUNT(*) FROM dbo.vx_member_notes) AS member_notes,
         (SELECT COUNT(*) FROM dbo.vx_member_security_profile) AS security_profiles,
         (SELECT COUNT(*) FROM dbo.vx_username_repo) AS username_repo,
-        (SELECT COUNT(*) FROM dbo.vw_vx_members WHERE username IS NOT NULL) AS directory_with_username
+        (SELECT COUNT(*) FROM dbo.vx_members_ext WHERE username IS NOT NULL) AS directory_with_username
     `);
     const row = counts.recordset[0];
     console.log("done. inserted/attempted members:", inserted, "| table totals:", row);
@@ -260978,7 +261009,7 @@ var init_vxMembershipReferrerLookup_service = __esm({
       const vmRows = await sequelize.query(
         `
       SELECT TOP 1 vm.id
-      FROM dbo.vw_vx_members vm WITH (NOLOCK)
+      FROM dbo.vx_members_ext vm WITH (NOLOCK)
       WHERE LTRIM(RTRIM(vm.username)) = :code
     `,
         { replacements: { code }, type: import_sequelize112.QueryTypes.SELECT }
@@ -263048,7 +263079,7 @@ var init_vxGeoResponsibilityPatchHistory_store = __esm({
     COALESCE(NULLIF(CONCAT(np_rev.firstname, N' ', np_rev.lastname), N' '), ru.username) AS revokedByDisplayName,
     ru.username AS revokedByUsername
   FROM dbo.vx_geo_responsibility_requests r
-  INNER JOIN dbo.vw_vx_members vm ON vm.id = r.member_id
+  INNER JOIN dbo.vx_members_ext vm ON vm.id = r.member_id
   LEFT JOIN dbo.base_users nu ON nu.id = r.nominated_by
   LEFT JOIN dbo.base_user_profiles np_nom ON np_nom.user_id = nu.id
   LEFT JOIN dbo.base_users du ON du.id = r.decided_by
@@ -263086,7 +263117,7 @@ async function queryOpenMemberPickCandidates(input) {
       m.avatar_url,
       m.has_profile_image,
       m.electoral_division_path
-    FROM dbo.vw_vx_members m WITH (NOLOCK)
+    FROM dbo.vx_members_ext m WITH (NOLOCK)
     ${nakhebinJoin}
     INNER JOIN dbo.vx_members hm WITH (NOLOCK) ON hm.id = m.id
       AND hm.membership_status_code = :montadheminCode
@@ -264938,10 +264969,10 @@ var VX_EDGE_CANDIDATE_PIPELINE_VIEW, VX_LEGACY_CANDIDATE_PIPELINE_VIEW, VX_EDGE_
 var init_vxCandidatePipelineViewNames = __esm({
   "src/domain/vx/vxCandidatePipelineViewNames.ts"() {
     VX_EDGE_CANDIDATE_PIPELINE_VIEW = {
-      security: "vw_vx_candidate_pipeline_security",
-      interview: "vw_vx_candidate_pipeline_interview",
-      courses: "vw_vx_candidate_pipeline_courses",
-      install: "vw_vx_candidate_pipeline_install"
+      security: "vx_candidate_pipeline_security",
+      interview: "vx_candidate_pipeline_interview",
+      courses: "vx_candidate_pipeline_courses",
+      install: "vx_candidate_pipeline_install"
     };
     VX_LEGACY_CANDIDATE_PIPELINE_VIEW = {
       security: "VX_VW_Employees_SecurityStatuses",
@@ -264979,7 +265010,7 @@ var init_vxLegacyParitySqlBuilders = __esm({
           w += ` AND ${alias}.IsApproved=${isApproved}`;
         }
         if (rid) {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
         }
       } else if (st === "interview") {
         if (!lt) lt = "NotInterviewed";
@@ -264991,7 +265022,7 @@ var init_vxLegacyParitySqlBuilders = __esm({
         }
         const approveState = input.approveState?.trim();
         if (approveState && approveState !== "-1") {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${alias}.RoleId AND URR.RoleId IN (1000004,1000005) AND URR.Approved=${approveState})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${alias}.RoleId AND URR.RoleId IN (1000004,1000005) AND URR.Approved=${approveState})`;
         }
         if (rid) w += ` AND ${alias}.RoleId=${rid}`;
       } else if (st === "courses") {
@@ -264999,11 +265030,11 @@ var init_vxLegacyParitySqlBuilders = __esm({
         if (lt === "NotPassed") w += ` AND COALESCE(${alias}.PassedNecessaryDorat, 0)=0`;
         else if (lt === "Passed") w += ` AND COALESCE(${alias}.PassedNecessaryDorat, 0)=1`;
         if (rid) {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
         }
         const approveState = input.approveState?.trim();
         if (approveState && approveState !== "-1") {
-          w += ` AND (SELECT TOP 1 URR.Approved FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.RoleId IN (1000004,1000005) AND URR.UserId=${alias}.UserId)=${approveState}`;
+          w += ` AND (SELECT TOP 1 URR.Approved FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.RoleId IN (1000004,1000005) AND URR.UserId=${alias}.UserId)=${approveState}`;
         }
       } else if (st === "install") {
         w += ` AND dbo.VX_FN_CanApproveResponsibility(${alias}.id)=1`;
@@ -265011,7 +265042,7 @@ var init_vxLegacyParitySqlBuilders = __esm({
         let pon = input.passedOrNot?.trim() || "-1";
         if (pon !== "-1") w += ` AND ${alias}.NecessaryDoratPassed=${pon}`;
         if (rid) {
-          w += ` AND EXISTS (SELECT 1 FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+          w += ` AND EXISTS (SELECT 1 FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
         }
       }
       const tarshihProv = `(SELECT TOP 1 A.VX_StateId FROM dbo.vx_member_area_limits AL WITH (NOLOCK) LEFT JOIN dbo.VX_VW_H_AllArea A ON A.AreaId=AL.item_id WHERE AL.member_id=${alias}.id AND AL.approved=1 ORDER BY AL.id DESC)`;
@@ -265134,7 +265165,7 @@ var init_vxLegacyParitySqlBuilders = __esm({
       if (visibility === "visible") w += ` AND ISNULL(${alias}.card_flow_visibility,1)=1`;
       if (visibility === "invisible") w += ` AND ISNULL(${alias}.card_flow_visibility,1)=0`;
       if (rid) {
-        w += ` AND EXISTS (SELECT 1 FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
+        w += ` AND EXISTS (SELECT 1 FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.user_id AND URR.RoleId=${rid})`;
       }
       if (input.nakhebProvinceId != null) w += ` AND ${alias}.nakheb_join_province_id=${input.nakhebProvinceId}`;
       if (input.nakhebCircleId != null) w += ` AND ${alias}.nakheb_join_circle_id=${input.nakhebCircleId}`;
@@ -265645,9 +265676,9 @@ async function attachHwyCandidatePipelineNominationRoles(rows) {
               CAST(ur.Approved AS INT) AS is_approved,
               R.RoleName AS role_name
        FROM dbo.VX_Members m WITH (NOLOCK)
-       INNER JOIN dbo.vw_vx_platform_user_roles ur WITH (NOLOCK)
+       INNER JOIN dbo.vx_platform_user_roles ur WITH (NOLOCK)
          ON ur.UserId = m.UserId AND ur.RoleId IN (1000004, 1000005)
-       LEFT JOIN dbo.vw_vx_platform_roles R WITH (NOLOCK) ON R.Id = ur.RoleId
+       LEFT JOIN dbo.vx_platform_roles R WITH (NOLOCK) ON R.Id = ur.RoleId
        WHERE m.Id IN (:memberIds)`,
       { replacements: { memberIds }, type: import_sequelize122.QueryTypes.SELECT }
     );
@@ -266326,7 +266357,7 @@ var init_vxCandidatePipelineInterview_service = __esm({
         const roleRows = await sequelize.query(
           `
       SELECT URR.RoleId AS roleId
-      FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK)
+      FROM dbo.vx_platform_user_roles URR WITH (NOLOCK)
       WHERE URR.UserId = :userId
       `,
           { replacements: { userId: Number(userId) }, type: import_sequelize125.QueryTypes.SELECT }
@@ -267430,7 +267461,7 @@ var init_vxPaymentDocumentsMembersLegacyAccess = __esm({
       const roles = rolesByAction.get(legacyHwyActionKey(VX_PAYMENT_DOCUMENTS_MEMBERS_LEGACY_READ)) ?? [];
       return buildHwyMemberListRouteAllowRoles(roles);
     };
-    memberScalar = (field3, tableAlias) => `(SELECT TOP 1 T.${field3} FROM dbo.vw_vx_members_legacy_row T WITH (NOLOCK) WHERE T.id = ${tableAlias}.member_id)`;
+    memberScalar = (field3, tableAlias) => `(SELECT TOP 1 T.${field3} FROM dbo.vx_members_legacy_row T WITH (NOLOCK) WHERE T.id = ${tableAlias}.member_id)`;
     buildHwyPaymentDocumentsMembersLegacyScopeWhere = (input, tableAlias = "V") => {
       if (input.scopeUnrestricted) return "";
       if (input.areaLimitId === 111321) return "";
@@ -267986,7 +268017,7 @@ var init_vxEmployeesListFilterMapping = __esm({
       if (params.last_name) w += ` AND ${alias}.LastName LIKE '%${esc2(params.last_name)}%'`;
       if (params.gender_id) w += ` AND CAST(${alias}.GenderId AS VARCHAR(32))='${esc2(params.gender_id)}'`;
       if (params.role_id) {
-        w += ` AND EXISTS (SELECT 1 FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.UserId AND CAST(URR.RoleId AS VARCHAR(32))='${esc2(params.role_id)}')`;
+        w += ` AND EXISTS (SELECT 1 FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=${alias}.UserId AND CAST(URR.RoleId AS VARCHAR(32))='${esc2(params.role_id)}')`;
       }
       if (params.v_province_id !== -1) {
         w += ` AND (${alias}.AreaLimitProvinceId=${params.v_province_id} OR ${params.v_province_id} IN (SELECT ItemId FROM dbo.VX_Members_AreaLimits WITH (NOLOCK) WHERE MemberId=${alias}.Id))`;
@@ -268017,7 +268048,7 @@ var init_vxEmployeesListLegacyRead_service = __esm({
     employeeBaseWhere = `
   M.MembershipStatus=10851
   AND M.UserId IS NOT NULL
-  AND (SELECT COUNT(*) FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=M.UserId AND URR.Approved=1) >= 1
+  AND (SELECT COUNT(*) FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId=M.UserId AND URR.Approved=1) >= 1
 `;
     queryLegacyEmployeesListCount = async (input) => {
       const params = buildHwyEmployeesListProcParams(input);
@@ -268050,8 +268081,8 @@ var init_vxEmployeesListLegacyRead_service = __esm({
       (SELECT TOP 1 BI.Title FROM dbo.VX_BaseInformation BI WITH (NOLOCK) WHERE BI.Id = M.GenderId) AS genderIdTitle,
       ISNULL(M.Stat_FieldsCompleted, 0) AS statFieldsCompleted,
       CASE WHEN M.Oath_FileBody IS NOT NULL THEN N'yes' ELSE N'no' END AS statOath,
-      (SELECT TOP 1 URR.CreatedOn FROM dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId = M.UserId AND URR.Approved = 1 ORDER BY URR.CreatedOn DESC) AS masooliatRoleOn,
-      (SELECT STRING_AGG(R.RoleName, ' , ') FROM dbo.VX_Members ForAgg WITH (NOLOCK) LEFT JOIN dbo.vw_vx_platform_user_roles URR WITH (NOLOCK) ON ForAgg.UserId = URR.UserId LEFT JOIN dbo.vw_vx_platform_roles R WITH (NOLOCK) ON URR.RoleId = R.Id WHERE ForAgg.Id = M.Id AND URR.Approved = 1) AS rolesLimits,
+      (SELECT TOP 1 URR.CreatedOn FROM dbo.vx_platform_user_roles URR WITH (NOLOCK) WHERE URR.UserId = M.UserId AND URR.Approved = 1 ORDER BY URR.CreatedOn DESC) AS masooliatRoleOn,
+      (SELECT STRING_AGG(R.RoleName, ' , ') FROM dbo.VX_Members ForAgg WITH (NOLOCK) LEFT JOIN dbo.vx_platform_user_roles URR WITH (NOLOCK) ON ForAgg.UserId = URR.UserId LEFT JOIN dbo.vx_platform_roles R WITH (NOLOCK) ON URR.RoleId = R.Id WHERE ForAgg.Id = M.Id AND URR.Approved = 1) AS rolesLimits,
       (SELECT dbo.VX_FN_Agg_AreaLimits(M.Id)) AS areasLimits,
       (SELECT STRING_AGG(Title, ' , ') FROM dbo.VX_Members_GenderLimits WITH (NOLOCK) LEFT JOIN dbo.VX_BaseInformation ON VX_BaseInformation.Id = VX_Members_GenderLimits.ItemId WHERE VX_Members_GenderLimits.MemberId = M.Id) AS genderLimits,
       (SELECT STRING_AGG(Title, ' , ') FROM dbo.VX_Members_OrgLimits WITH (NOLOCK) LEFT JOIN dbo.VX_BaseInformation ON VX_BaseInformation.Id = VX_Members_OrgLimits.ItemId WHERE VX_Members_OrgLimits.MemberId = M.Id) AS orgLimits,
@@ -268873,10 +268904,10 @@ var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
     V.nb_selfi_file_size AS nb_selfi_file_size,
     CAST(CASE WHEN ISNULL(V.nb_selfi_file_size, 0) > 0 THEN 1 ELSE 0 END AS BIT) AS has_selfie_file,
     V.same_device_count AS same_device_count
-  FROM dbo.vw_vx_payment_documents_members V WITH (NOLOCK)
-  INNER JOIN dbo.vw_vx_members_legacy_row M WITH (NOLOCK) ON M.id = V.member_id
+  FROM dbo.vx_payment_documents_members_ext V WITH (NOLOCK)
+  INNER JOIN dbo.vx_members_legacy_row M WITH (NOLOCK) ON M.id = V.member_id
   INNER JOIN dbo.vx_payment_documents PD WITH (NOLOCK) ON PD.id = V.document_id
-  LEFT JOIN dbo.vw_vx_platform_roles R WITH (NOLOCK) ON R.id = V.role_id
+  LEFT JOIN dbo.vx_platform_roles R WITH (NOLOCK) ON R.id = V.role_id
   LEFT JOIN dbo.base_user_profiles p WITH (NOLOCK) ON p.user_id = M.user_id
 `;
     buildScopeInput2 = async (roleNames, actorUsername2) => {
@@ -269045,7 +269076,7 @@ var init_vxPaymentDocumentsMembersLegacyRead_service = __esm({
         `
     SELECT pm.nb_selfi_file_body AS selfie, m.picture_file_body AS picture
     FROM dbo.vx_payment_documents_members pm WITH (NOLOCK)
-    LEFT JOIN dbo.vw_vx_members_legacy_row m WITH (NOLOCK) ON m.id = pm.member_id
+    LEFT JOIN dbo.vx_members_legacy_row m WITH (NOLOCK) ON m.id = pm.member_id
     WHERE pm.id = :id
     `,
         { replacements: { id: lineId }, type: QueryTypes99.SELECT }
@@ -269458,7 +269489,7 @@ var init_vxMasoolinPerformanceLegacyRead_service = __esm({
         }
         const byUserId = await pool.request().input("username", trimmed).query(`
       SELECT TOP 1 M.Id AS memberId
-      FROM dbo.vw_vx_platform_users U WITH (NOLOCK)
+      FROM dbo.vx_platform_users U WITH (NOLOCK)
       INNER JOIN dbo.VX_Members M WITH (NOLOCK) ON M.UserId = U.Id
       WHERE U.UserName = @username
       ORDER BY M.Id
@@ -269607,7 +269638,6 @@ var init_vxMasoolinPerformance_service = __esm({
     MASOOLIN_ACTIVITY_LEVEL_PARENT_ID = 214986;
     loadHwyMasoolinPerformanceFilterOptions = async (provinceId, circleId, roleNames) => {
       await assertHwyMasoolinPerformanceAccess(roleNames);
-      await ensureHwyMasoolinPerformanceDbPrerequisites();
       const [genders, provinces, activityLevels] = await Promise.all([
         loadLegacyHwyPaymentDocumentsGenders(),
         loadLegacyHwyPaymentDocumentsProvinces(),
@@ -269786,7 +269816,7 @@ var init_vxMembersSocialScreensLegacyRead_service = __esm({
         try {
           const byUserId = await pool.request().input("username", trimmed).query(`
         SELECT TOP 1 M.Id AS memberId
-        FROM dbo.vw_vx_platform_users U WITH (NOLOCK)
+        FROM dbo.vx_platform_users U WITH (NOLOCK)
         INNER JOIN dbo.VX_Members M WITH (NOLOCK) ON M.UserId = U.Id
         WHERE U.UserName = @username
         ORDER BY M.Id
@@ -270127,7 +270157,7 @@ var init_vxMemberLegacyPicture_service = __esm({
       m.picture_file_body,
       m.picture_file_mime,
       m.picture_file_name
-    FROM dbo.vw_vx_members_legacy_row m WITH (NOLOCK)
+    FROM dbo.vx_members_legacy_row m WITH (NOLOCK)
     WHERE m.id = :memberId
     `,
         { replacements: { memberId }, type: import_sequelize128.QueryTypes.SELECT }
@@ -270220,7 +270250,7 @@ var init_vxMemberLegacyPicture_service = __esm({
         const rows = await getControlPlaneSequelize().query(
           `
       SELECT m.id, m.picture_file_size
-      FROM dbo.vw_vx_members_legacy_row m WITH (NOLOCK)
+      FROM dbo.vx_members_legacy_row m WITH (NOLOCK)
       WHERE m.id IN (:ids)
         AND (
           ISNULL(m.picture_file_size, 0) > 0
@@ -271953,7 +271983,7 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       `
       SELECT CAST(id AS VARCHAR(32)) AS id, username, display_full_name, gender_code,
         avatar_url, has_profile_image, user_id, phone1, electoral_division_path
-      FROM dbo.vw_vx_members WITH (NOLOCK)
+      FROM dbo.vx_members_ext WITH (NOLOCK)
       WHERE id IN (${idPlaceholders})
          OR username IN (${usernamePlaceholders})
       `,
@@ -271980,7 +272010,7 @@ async function loadCpMemberFacesByActorKeys(actorKeys) {
       `
       SELECT CAST(id AS VARCHAR(32)) AS id, username, display_full_name, gender_code,
         avatar_url, has_profile_image, user_id, phone1, electoral_division_path
-      FROM dbo.vw_vx_members WITH (NOLOCK)
+      FROM dbo.vx_members_ext WITH (NOLOCK)
       WHERE username IN (${unPlaceholders})
       `,
       { replacements: unReplacements, type: import_sequelize130.QueryTypes.SELECT }
@@ -272230,7 +272260,7 @@ async function resolveHwyTarghinNegoActorLegacyUsername(actorUserId2) {
   const memberRows = await sequelize.query(
     `
     SELECT TOP 1 username
-    FROM dbo.vw_vx_members WITH (NOLOCK)
+    FROM dbo.vx_members_ext WITH (NOLOCK)
     WHERE user_id = :actorUserId
     `,
     { replacements: { actorUserId: actorUserId2 }, type: import_sequelize132.QueryTypes.SELECT }
@@ -272600,7 +272630,7 @@ async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
         user_id,
         phone1,
         electoral_division_path
-      FROM dbo.vw_vx_members WITH (NOLOCK)
+      FROM dbo.vx_members_ext WITH (NOLOCK)
       WHERE id IN (${idPlaceholders})
       `,
       { replacements: idReplacements, type: import_sequelize134.QueryTypes.SELECT }
@@ -272632,7 +272662,7 @@ async function loadExecutorFacesByLegacyKeysFromControlPlane(legacyKeys) {
         user_id,
         phone1,
         electoral_division_path
-      FROM dbo.vw_vx_members WITH (NOLOCK)
+      FROM dbo.vx_members_ext WITH (NOLOCK)
       WHERE username IN (${unPlaceholders})
       `,
       { replacements: unReplacements, type: import_sequelize134.QueryTypes.SELECT }
@@ -273961,7 +273991,7 @@ var init_vxMemberTarghinNegoNotes_service = __esm({
         TRY_CAST(NULLIF(n.created_by_legacy, '') AS BIGINT)
       )
     LEFT JOIN dbo.base_user_profiles bp WITH (NOLOCK) ON bp.user_id = bu.id
-    LEFT JOIN dbo.vw_vx_members vm WITH (NOLOCK)
+    LEFT JOIN dbo.vx_members_ext vm WITH (NOLOCK)
       ON (n.created_by_user_id IS NOT NULL AND vm.user_id = n.created_by_user_id)
       OR vm.username = n.created_by_legacy
       OR CAST(vm.id AS VARCHAR(32)) = n.created_by_legacy

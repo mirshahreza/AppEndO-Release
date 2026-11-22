@@ -457,7 +457,7 @@ describe('prepareDataApiRuntime / finalizeDataApiRuntime parity (SEA-4.8)', () =
     const res = createRuntimeResponse();
     const listRecord = {
       ...record,
-      id: 'vw-vx-members.vx-member-directory-list',
+      id: 'vx-members-ext.vx-member-directory-list',
     } as ManagedFunctionExecutionRecord;
 
     await prepareDataApiRuntime(req, res, definition, listRecord);
@@ -493,7 +493,7 @@ describe('prepareDataApiRuntime / finalizeDataApiRuntime parity (SEA-4.8)', () =
     const res = createRuntimeResponse();
     const getOneRecord = {
       ...record,
-      id: 'vw-vx-members.vx-member-directory-getone',
+      id: 'vx-members-ext.vx-member-directory-getone',
     } as ManagedFunctionExecutionRecord;
 
     await prepareDataApiRuntime(req, res, definition, getOneRecord);

@@ -1,0 +1,1 @@
+import{r as o,j as n}from"./react-vendor-DelaA65R.js";const r=o.createContext(null),u=({value:t,children:e})=>n.jsx(r.Provider,{value:t,children:e});function a(){return o.useContext(r)}function x(){const t=o.useContext(r);if(!t)throw new Error("usePortal must be used within PortalHost.");return t}export{u as PortalContextProvider,a as useOptionalPortal,x as usePortal};

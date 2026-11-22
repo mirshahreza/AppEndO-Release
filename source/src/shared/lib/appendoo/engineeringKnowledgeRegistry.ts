@@ -46,7 +46,7 @@ const matchesQuery = (record: EngineeringKnowledgeRecord, query: string): boolea
   if (!needle) return true;
 
   return record.sourceId.toLowerCase().includes(needle)
-    || record.title.toLowerCase().includes(needle)
+    || (record.title?.toLowerCase().includes(needle) ?? false)
     || record.statement.toLowerCase().includes(needle)
     || record.appliesTo.some((scope) => scope.toLowerCase().includes(needle));
 };

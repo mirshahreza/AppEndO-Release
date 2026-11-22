@@ -1,4 +1,4 @@
-# AppEndO — Public release 0.0.12
+# AppEndO — Public release 0.0.14
 
 [![Release](https://img.shields.io/github/v/tag/mirshahreza/AppEndO-Release?label=release)](https://github.com/mirshahreza/AppEndO-Release/releases)
 
@@ -188,6 +188,6 @@ This **AppEndO-Release** repository is the designated **public OSS distribution*
 sha256sum cms-*.zip
 ```
 
-Platform version: **0.0.12** · Manifest created: see **`MANIFEST.json`**.
+Platform version: **0.0.14** · Manifest created: see **`MANIFEST.json`**.
 
 **Issues & contributions:** [GitHub Issues](https://github.com/mirshahreza/AppEndO-Release/issues) and pull requests on **this repo** (tags `vX.Y.Z`). Security: [`SECURITY.md`](SECURITY.md). License FAQ: [`source/docs/LICENSE-FAQ.md`](source/docs/LICENSE-FAQ.md).

@@ -29,7 +29,7 @@ SELECT
   CASE WHEN COL_LENGTH(N'dbo.vx_members', N'gender_id') IS NOT NULL THEN 1 ELSE 0 END AS has_gender_id,
   CASE WHEN COL_LENGTH(N'dbo.vx_members', N'masooliat_level_id') IS NOT NULL THEN 1 ELSE 0 END AS has_masooliat_level_id,
   CASE WHEN OBJECT_ID(N'dbo.vx_payment_documents', N'U') IS NOT NULL THEN 1 ELSE 0 END AS has_payment_docs,
-  CASE WHEN OBJECT_ID(N'dbo.vw_vx_platform_user_roles', N'V') IS NOT NULL THEN 1 ELSE 0 END AS has_plat_roles_view
+  CASE WHEN OBJECT_ID(N'dbo.vx_platform_user_roles', N'V') IS NOT NULL THEN 1 ELSE 0 END AS has_plat_roles_view
 `,
     { type: QueryTypes.SELECT },
   );

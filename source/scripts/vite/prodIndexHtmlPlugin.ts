@@ -1,6 +1,9 @@
 import type { Plugin } from 'vite';
 
-const PROD_ENTRY_TAG = '<script type="module" src="/src/main.tsx"></script>';
+const PROD_ENTRY_TAG = [
+  '<script type="module" src="/src/boot/appBootSplashOrbit.tsx"></script>',
+  '<script type="module" src="/src/main.tsx"></script>',
+].join('\n    ');
 const DEV_BOOT_SCRIPT_RE = /<script type="module" src="\/dev-boot\.js[^"]*"><\/script>/;
 
 /** Production build must bundle the SPA; dev keeps public/dev-boot.js for Vite gate + HMR. */

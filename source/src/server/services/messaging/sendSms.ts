@@ -8,7 +8,7 @@ export type SendSmsInput = {
   messageToSend: string;
   /** Text stored in logs / outbox (defaults to messageToSend). */
   messageToLog?: string;
-  /** Legacy VX_BaseInformation subject id (e.g. 111225 self-registration). */
+  /** Legacy EXTX_BaseInformation subject id (e.g. 111225 self-registration). */
   subjectId?: number;
   actor?: string | null;
 };
@@ -31,7 +31,7 @@ export const buildSmsGatewayRequestUrl = (
 ): string => `${gatewayUrl}&port=${port}&destination=${destination}&content=${encodeGatewayContent(message)}`;
 
 /**
- * Platform SMS primitive — legacy Vertical `MessagingUtils.SendSMS` parity.
+ * Platform SMS primitive — legacy Portalx `MessagingUtils.SendSMS` parity.
  * When the gateway is disabled or unset, logs in development/test and returns `{ delivered: false, mode: 'log' }`.
  */
 export async function sendSms(input: SendSmsInput): Promise<SendSmsResult> {

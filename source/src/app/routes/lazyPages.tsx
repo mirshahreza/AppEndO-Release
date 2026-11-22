@@ -207,34 +207,34 @@ export const LoginPage = lazyNamed(
   'Login',
 );
 
-export const VxSelfRegistrationPage = lazyNamed(
-  () => import('../../pages/VxSelfRegistration'),
-  'VxSelfRegistration',
+export const ExtxSelfRegistrationPage = lazyNamed(
+  () => import('../../oss/excludedModuleStub'),
+  'ExtxSelfRegistration',
 );
 
-export const VxTrackRegistrationPage = lazyNamed(
-  () => import('../../pages/VxTrackRegistration'),
-  'VxTrackRegistration',
+export const ExtxTrackRegistrationPage = lazyNamed(
+  () => import('../../oss/excludedModuleStub'),
+  'ExtxTrackRegistration',
 );
 
-export const VxPublicLoginPage = lazyNamed(
-  () => import('../../pages/VxPublicLogin'),
-  'VxPublicLogin',
+export const ExtxPublicLoginPage = lazyNamed(
+  () => import('../../oss/excludedModuleStub'),
+  'ExtxPublicLogin',
 );
 
-export const VxPublicMyProfilePage = lazyNamed(
-  () => import('../../pages/VxPublicMyProfile'),
-  'VxPublicMyProfile',
+export const ExtxPublicMyProfilePage = lazyNamed(
+  () => import('../../oss/excludedModuleStub'),
+  'ExtxPublicMyProfile',
 );
 
-export const VxPublicInquiryPage = lazyNamed(
-  () => import('../../pages/VxPublicInquiry'),
-  'VxPublicInquiry',
+export const ExtxPublicInquiryPage = lazyNamed(
+  () => import('../../oss/excludedModuleStub'),
+  'ExtxPublicInquiry',
 );
 
-export const VxRegistrationDevPortalPage = lazyNamed(
-  () => import('../../pages/VxRegistrationDevPortal'),
-  'VxRegistrationDevPortal',
+export const ExtxRegistrationDevPortalPage = lazyNamed(
+  () => import('../../oss/excludedModuleStub'),
+  'ExtxRegistrationDevPortal',
 );
 
 export const RegisterPage = lazyNamed(

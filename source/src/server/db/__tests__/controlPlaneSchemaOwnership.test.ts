@@ -7,9 +7,9 @@ import {
 import { resolveControlPlaneSchemaProtectedTables } from '../controlPlaneSchemaProtectedTables';
 
 describe('controlPlaneSchemaOwnership', () => {
-  it('treats vx/cms/zz prefixes as non-Prisma protected', () => {
-    expect(isNonPrismaProtectedTableName('vx_members')).toBe(true);
-    expect(isNonPrismaProtectedTableName('vx_members_ext')).toBe(true);
+  it('treats extx/cms/zz prefixes as non-Prisma protected', () => {
+    expect(isNonPrismaProtectedTableName('extx_members')).toBe(true);
+    expect(isNonPrismaProtectedTableName('extx_members_ext')).toBe(true);
     expect(isNonPrismaProtectedTableName('cms_contents')).toBe(true);
     expect(isNonPrismaProtectedTableName('base_users')).toBe(false);
   });

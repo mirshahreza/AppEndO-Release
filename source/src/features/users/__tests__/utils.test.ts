@@ -32,7 +32,7 @@ describe('users utils', () => {
     })).toBe('871261');
   });
 
-  it('prefers VX membership username from list API', () => {
+  it('prefers EXTX membership username from list API', () => {
     expect(resolveUserGridAvatarUsername({
       id: 99,
       username: '99',

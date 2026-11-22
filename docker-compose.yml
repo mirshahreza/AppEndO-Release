@@ -1,0 +1,73 @@
+# Demo / evaluation quick start. Not the production default
+# (production documentation still recommends SQL Server).
+#
+#   docker compose up --build
+#   open http://localhost:3000
+#
+# First boot runs the PostgreSQL greenfield setup and can take several
+# minutes. Later boots skip setup when the volume already has install.completedAt.
+# Redis is intentionally absent. Cache stays on the in-process memory driver.
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: appendo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-appendo}
+      POSTGRES_DB: appendo
+    volumes:
+      - appendo-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appendo -d appendo"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    ports:
+      # Loopback only. The app reaches this service on the Compose network.
+      - "127.0.0.1:5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # setup reads PGPASSWORD when settings still have the placeholder
+      PGPASSWORD: ${POSTGRES_PASSWORD:-appendo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-appendo}
+      APP_URL: http://localhost:3000
+      APPENDO_PG_HOST: db
+      APPENDO_PG_PORT: "5432"
+      APPENDO_PG_DATABASE: appendo
+      APPENDO_PG_USER: appendo
+      APPENDO_CREDENTIAL_MASTER_KEY: ${APPENDO_CREDENTIAL_MASTER_KEY:-}
+      GUACD_HOST: guacd
+      GUACD_PORT: "4822"
+    ports:
+      # Loopback only. The first boot still has the development seed password.
+      # Publish 3000 on other interfaces only after that password is changed.
+      - "127.0.0.1:3000:3000"
+    volumes:
+      # settings.json, credential key, workspace, and packages-storage
+      - appendo-data:/var/lib/appendo
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 40
+      start_period: 900s
+
+  # Optional — only for RDP Hub after Remote Hubs is installed in the studio.
+  #   docker compose --profile rdp up --build
+  guacd:
+    image: guacamole/guacd
+    profiles: ["rdp"]
+    ports:
+      - "127.0.0.1:4822:4822"
+    restart: unless-stopped
+
+volumes:
+  appendo-pg:
+  appendo-data:

@@ -65,12 +65,12 @@ import {
   type PersonalInboxCorrespondenceFilter,
   type PersonalInboxFeedbackScopeFilter,
 } from '../../../shared/lib/personalInboxKindFieldFilters';
-import { VxMemberDirectoryLegacyFilterBarPanel } from '../../../domain/vx/VxMemberDirectoryLegacyFilterBarPanel';
-import { resolveHwyLegacyFieldFilterToolbarChrome } from '../../../domain/vx/vxMemberListToolbarLegacyFilterChrome';
-import { VxMemberListToolbarActionsEnd } from '../../../domain/vx/VxMemberListToolbarActionsEnd';
-import { VxMemberListToolbarRefreshControl } from '../../../domain/vx/vxMemberListToolbarRefreshControl';
-import { VxLegacyFieldFilterBarToggle } from '../../../shared/ui/vx/VxLegacyFieldFilterBarToggle';
-import { useHwyLegacyFieldFilterBarMode } from '../../../shared/ui/vx/useHwyLegacyFieldFilterBarMode';
+import { ExtxMemberDirectoryLegacyFilterBarPanel } from '../../../oss/excludedModuleStub';
+import { resolveExtxLegacyFieldFilterToolbarChrome } from '../../../oss/excludedModuleStub';
+import { ExtxMemberListToolbarActionsEnd } from '../../../oss/excludedModuleStub';
+import { ExtxMemberListToolbarRefreshControl } from '../../../oss/excludedModuleStub';
+import { ExtxLegacyFieldFilterBarToggle } from '../../../oss/excludedModuleStub';
+import { useExtxLegacyFieldFilterBarMode } from '../../../oss/excludedModuleStub';
 import {
   messagesLedgerChannelOptions,
   messagesLedgerStatusOptions,
@@ -341,7 +341,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
   const {
     legacyFieldFiltersVisible,
     toggleLegacyFieldFilters,
-  } = useHwyLegacyFieldFilterBarMode(PERSONAL_INBOX_PAGE_KEY, resetLegacyFieldFilters);
+  } = useExtxLegacyFieldFilterBarMode(PERSONAL_INBOX_PAGE_KEY, resetLegacyFieldFilters);
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [items, setItems] = useState<PersonalInboxItem[]>([]);
@@ -1184,7 +1184,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
           : filteredItems.length
       )
     : undefined;
-  const legacyFilterToolbarChrome = resolveHwyLegacyFieldFilterToolbarChrome({
+  const legacyFilterToolbarChrome = resolveExtxLegacyFieldFilterToolbarChrome({
     hasLegacyFilterModeSwitch: true,
     legacyFieldFilterModeActive: legacyFieldFiltersVisible,
     refreshEnabled: true,
@@ -1314,7 +1314,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
         />
       ) : null}
       {legacyFilterToolbarChrome.refreshInFiltersCluster ? (
-        <VxMemberListToolbarRefreshControl
+        <ExtxMemberListToolbarRefreshControl
           listTotalCount={listToolbarCountValue}
           onRefresh={() => void load(true)}
           isRefreshing={isRefreshing}
@@ -1354,7 +1354,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
 
   const toolbarActionsRow = (
     <div className={PAGE_TOOLBAR_ACTIONS_CLUSTER_CLASS}>
-      <VxMemberListToolbarActionsEnd
+      <ExtxMemberListToolbarActionsEnd
         helpPageKey={PERSONAL_INBOX_PAGE_KEY}
         actionsLeading={(
           <>
@@ -1364,7 +1364,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
           </>
         )}
         legacyFieldFilterToggle={(
-          <VxLegacyFieldFilterBarToggle
+          <ExtxLegacyFieldFilterBarToggle
             active={legacyFieldFiltersVisible}
             onToggle={toggleLegacyFieldFilters}
           />
@@ -1554,7 +1554,7 @@ export const PersonalInboxWorkspace: React.FC<PersonalInboxWorkspaceProps> = ({
         {toolbarFiltersRow}
         {toolbarActionsRow}
       </div>
-      <VxMemberDirectoryLegacyFilterBarPanel fieldFilterRow={legacyKindFiltersRow} />
+      <ExtxMemberDirectoryLegacyFilterBarPanel fieldFilterRow={legacyKindFiltersRow} />
     </ListPageToolbarScrollRoot>
   ) : (
     <ListPageToolbarFrame>

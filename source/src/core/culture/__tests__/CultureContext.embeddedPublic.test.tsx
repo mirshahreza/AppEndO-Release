@@ -8,7 +8,7 @@ import * as embeddedTranslationBundles from '../embeddedTranslationBundles';
 
 const Probe: React.FC = () => {
   const t = useCultureT();
-  return <span data-testid="label">{t('vx.selfReg.track.section')}</span>;
+  return <span data-testid="label">{t('extx.selfReg.track.section')}</span>;
 };
 
 describe('CultureProvider embedded public bundles', () => {
@@ -18,12 +18,12 @@ describe('CultureProvider embedded public bundles', () => {
 
   it('shows Iraqi Arabic from sync overlay before /api/boot', () => {
     const syncRuntime = embeddedTranslationBundles.createEmbeddedPublicCultureTranslationRuntime('iq');
-    expect(syncRuntime.t('vx.selfReg.track.section')).toBe('البحث عن طلبك');
+    expect(syncRuntime.t('extx.selfReg.track.section')).toBe('البحث عن طلبك');
   });
 
   it('keeps Iraqi Arabic when culture adapters are not bootstrapped yet', async () => {
     vi.spyOn(embeddedTranslationBundles, 'loadEmbeddedCultureBundle').mockResolvedValue({
-      'vx.selfReg.track.section': 'البحث عن طلبك',
+      'extx.selfReg.track.section': 'البحث عن طلبك',
     });
 
     render(

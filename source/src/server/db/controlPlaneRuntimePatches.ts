@@ -2,7 +2,7 @@ import { resolveActiveSettingsPath } from '../config/settingsFile';
 import type { ControlPlaneDatabaseSettings } from './controlPlaneDatabase';
 import { readControlPlaneDatabaseSettings } from './controlPlaneDatabase';
 import { parseSqlServerConnectionUrl } from './sqlServerControlPlaneUrl';
-import { isVerticalRuntimeEnabled } from '../services/vertical/verticalRuntime';
+import { isPortalxRuntimeEnabled } from '../../oss/excludedModuleStub';
 import { readInstallSettings } from './installSettingsStore';
 import { ensureDbEnrichmentRunProgressLogColumn } from './controlPlaneEnrichmentSchemaPatches';
 import {
@@ -15,15 +15,15 @@ import { ensureUserProfileLegalEntityColumns, ensureNationalCodeCheckDropped } f
 import { ensureSqlServerPerformanceIndexes } from './controlPlaneSqlServerIndexes';
 import { ensureSqlServerUnicodeTextColumns } from './controlPlaneSqlServerUnicode';
 import { ensureSampleMockSchema } from './ensureSampleMockSchema';
-import { ensureHwyCoursesActivitiesSchema } from '../domain/vx/ensureHwyCoursesActivitiesSchema';
-import { ensureHwyGeoResponsibilitySchema } from '../domain/vx/ensureHwyGeoResponsibilitySchema';
-import { ensureHwyMemberDossierSatellitesSchema } from '../domain/vx/ensureHwyMemberDossierSatellitesSchema';
-import { ensureHwyMemberImageFixEditorSchema } from '../domain/vx/ensureHwyMemberImageFixEditorSchema';
-import { ensureHwyMembersSelfRegistrationSchema } from '../domain/vx/ensureHwyMembersSelfRegistrationSchema';
-import { ensureHwyNakhebinPhoneSchema } from '../domain/vx/ensureHwyNakhebinPhoneSchema';
+import { ensureExtxCoursesActivitiesSchema } from '../../oss/excludedModuleStub';
+import { ensureExtxGeoResponsibilitySchema } from '../../oss/excludedModuleStub';
+import { ensureExtxMemberDossierSatellitesSchema } from '../../oss/excludedModuleStub';
+import { ensureExtxMemberImageFixEditorSchema } from '../../oss/excludedModuleStub';
+import { ensureExtxMembersSelfRegistrationSchema } from '../../oss/excludedModuleStub';
+import { ensureExtxNakhebinPhoneSchema } from '../../oss/excludedModuleStub';
 
-const shouldRunVerticalRuntimePatches = (): boolean => {
-  if (!isVerticalRuntimeEnabled()) {
+const shouldRunPortalxRuntimePatches = (): boolean => {
+  if (!isPortalxRuntimeEnabled()) {
     return false;
   }
   const settingsPath = resolveActiveSettingsPath();
@@ -36,7 +36,7 @@ const shouldRunVerticalRuntimePatches = (): boolean => {
     return true;
   }
   const database = parseSqlServerConnectionUrl(active.url).database.trim().toLowerCase();
-  return database.includes('vertical');
+  return database.includes('portalx');
 };
 
 /**
@@ -66,13 +66,13 @@ export const ensureControlPlaneRuntimePatches = async (
   await ensureUserProfileLegalEntityColumns(provider);
   await ensureDbEnrichmentRunProgressLogColumn(provider);
   await ensureNationalCodeCheckDropped(provider);
-  if (shouldRunVerticalRuntimePatches()) {
-    await ensureHwyNakhebinPhoneSchema(provider);
-    await ensureHwyMembersSelfRegistrationSchema();
-    await ensureHwyMemberImageFixEditorSchema();
-    await ensureHwyMemberDossierSatellitesSchema();
-    await ensureHwyCoursesActivitiesSchema();
-    await ensureHwyGeoResponsibilitySchema();
+  if (shouldRunPortalxRuntimePatches()) {
+    await ensureExtxNakhebinPhoneSchema(provider);
+    await ensureExtxMembersSelfRegistrationSchema();
+    await ensureExtxMemberImageFixEditorSchema();
+    await ensureExtxMemberDossierSatellitesSchema();
+    await ensureExtxCoursesActivitiesSchema();
+    await ensureExtxGeoResponsibilitySchema();
   }
 
   await markControlPlaneBootApplied(

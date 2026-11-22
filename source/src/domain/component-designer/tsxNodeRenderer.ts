@@ -53,7 +53,7 @@ import {
   renderMaskInputCustomJsx,
   renderCodeEditorCustomJsx,
   renderColorEditorCustomJsx,
-  renderHwyInstituteLogoUploadCustomJsx,
+  renderExtxInstituteLogoUploadCustomJsx,
   renderDataGridCustomJsx,
   renderAppTableGridCustomJsx,
   renderCrudSetCustomJsx,
@@ -1287,8 +1287,8 @@ const renderCustomLibraryJsx = (
       return renderCmsContentAssetsCustomJsx(node, bindingContext);
     case 'heroui.color-control':
       return renderColorEditorCustomJsx(node, bindingContext);
-    case 'vx.institute-logo-upload':
-      return renderHwyInstituteLogoUploadCustomJsx(node, bindingContext);
+    case 'extx.institute-logo-upload':
+      return renderExtxInstituteLogoUploadCustomJsx(node, bindingContext);
     default:
       break;
   }

@@ -5,7 +5,7 @@ import { scheduleAppBootSplashDismiss } from './scheduleAppBootSplashDismiss';
 const BOOT_SPLASH_ID = 'app-boot-splash';
 const ALLOWED_LOGO_PREFIXES = [
   '/assets/workspace/portals/',
-  '/assets/vertical/',
+  '/assets/portalx/',
   '/assets/appendo/brand/',
 ];
 

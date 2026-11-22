@@ -97,7 +97,7 @@ export const DESIGNER_FORM_PALETTE_LEAF_IDS: ReadonlySet<string> = new Set<strin
   'form.cms-content-assets',
   'form.base-info-record',
   'heroui.color-control',
-  'vx.institute-logo-upload',
+  'extx.institute-logo-upload',
 ]);
 
 export const HEROUI_STRUCTURAL_IDS: ReadonlySet<string> = new Set<string>([

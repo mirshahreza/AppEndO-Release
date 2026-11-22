@@ -16,9 +16,9 @@ import { defaultHomePortal, defaultStudioPortal, defaultComponentAlonePortal, va
 describe('portal brand contract', () => {
   it('accepts a workspace portal logo path and the built-in AppEnd logo', () => {
     expect(isAllowedPortalBrandLogoUrl('/assets/workspace/portals/shop/logo.png')).toBe(true);
-    expect(isAllowedPortalBrandLogoUrl('/assets/vertical/mark-blue.png')).toBe(true);
-    expect(isAllowedPortalBrandLogoUrl('/assets/vertical/institutes/gov.png')).toBe(true);
-    expect(isAllowedPortalBrandLogoUrl('/api/vx/institutes/100/logo')).toBe(true);
+    expect(isAllowedPortalBrandLogoUrl('/assets/portalx/mark-blue.png')).toBe(true);
+    expect(isAllowedPortalBrandLogoUrl('/assets/portalx/institutes/gov.png')).toBe(true);
+    expect(isAllowedPortalBrandLogoUrl('/api/extx/institutes/100/logo')).toBe(true);
     expect(isAllowedPortalBrandLogoUrl(DEFAULT_PORTAL_LOGO_URL)).toBe(true);
     expect(isAllowedPortalBrandLogoUrl('https://evil.example/logo.png')).toBe(false);
     expect(isAllowedPortalBrandLogoUrl('/assets/workspace/../secret.png')).toBe(false);

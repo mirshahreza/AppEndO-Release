@@ -6,20 +6,20 @@ describe('stripPackageCultureOverrides', () => {
     const stripped = stripPackageCultureOverrides(
       {
         us: {
-          'vx.members.column.nakhebin': 'Voter record',
+          'extx.members.column.nakhebin': 'Voter record',
           'actions.save': 'Save',
         },
         iq: {
-          'vx.members.column.nakhebin': 'سجل الناخب المخصص',
+          'extx.members.column.nakhebin': 'سجل الناخب المخصص',
         },
       },
       {
-        'vx.members.column.nakhebin': 'Voter record',
+        'extx.members.column.nakhebin': 'Voter record',
       },
     );
 
-    expect(stripped.us?.['vx.members.column.nakhebin']).toBeUndefined();
+    expect(stripped.us?.['extx.members.column.nakhebin']).toBeUndefined();
     expect(stripped.us?.['actions.save']).toBe('Save');
-    expect(stripped.iq?.['vx.members.column.nakhebin']).toBe('سجل الناخب المخصص');
+    expect(stripped.iq?.['extx.members.column.nakhebin']).toBe('سجل الناخب المخصص');
   });
 });

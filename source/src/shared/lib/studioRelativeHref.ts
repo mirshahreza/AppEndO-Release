@@ -1,5 +1,5 @@
 import { resolveCultureFromPathname } from '../../core/culture/CultureUrlResolver';
-import { VERTICAL_PORTAL_SEGMENT, isVerticalRoutePattern } from '../../core/packages/verticalPackage';
+import { PORTALX_PORTAL_SEGMENT, isPortalxRoutePattern } from '../../oss/excludedModuleStub';
 import { resolvePublishedDesignerNavigateTarget } from '../../domain/component-designer/resolvePublishedDesignerNavigateTarget';
 import { resolvePortalShellFromPathname } from '../../app/platform/PortalUrlResolver';
 import { getShellByKey } from '../../app/platform/platformConfigHelpers';
@@ -24,7 +24,7 @@ function parsePortalSegmentFromRemainder(remainderPath: string): string {
   return first;
 }
 
-/** Preserve nested package portals (`/studio/vertical/...`) when building personal inbox links. */
+/** Preserve nested package portals (`/studio/portalx/...`) when building personal inbox links. */
 export function resolveActiveExperiencePortalSegment(
   pathname: string,
   config: PlatformRuntimeConfig,
@@ -46,8 +46,8 @@ export function resolveActiveExperiencePortalSegment(
     return firstSegment;
   }
 
-  if (isVerticalRoutePattern(remainder)) {
-    return VERTICAL_PORTAL_SEGMENT;
+  if (isPortalxRoutePattern(remainder)) {
+    return PORTALX_PORTAL_SEGMENT;
   }
 
   return resolved.portalSegment;

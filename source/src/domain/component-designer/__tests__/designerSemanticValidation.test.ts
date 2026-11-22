@@ -29,11 +29,11 @@ describe('designerSemanticValidation', () => {
   it('builds culture key policy', () => {
     const node = textareaNode({
       semanticRubricKind: 'cultureKey',
-      semanticRubricCultureKey: 'vx.targhin.note.rubric',
+      semanticRubricCultureKey: 'extx.targhin.note.rubric',
     });
     expect(resolveDesignerSemanticValidationPolicy(node)?.rubric).toEqual({
       kind: 'cultureKey',
-      key: 'vx.targhin.note.rubric',
+      key: 'extx.targhin.note.rubric',
     });
   });
 

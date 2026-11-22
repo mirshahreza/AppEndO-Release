@@ -56,7 +56,7 @@ describe('CultureTranslationOverrides', () => {
       {
         revision: 4,
         bundles: {
-          iq: { 'vx.members.column.nakhebin': 'سجل الناخب' },
+          iq: { 'extx.members.column.nakhebin': 'سجل الناخب' },
         },
         cultureOverrides: {
           ir: { 'actions.save': 'Custom save' },
@@ -64,7 +64,7 @@ describe('CultureTranslationOverrides', () => {
       },
       {
         iq: {
-          'vx.members.column.nakhebin': 'سجل الناخب المخصص',
+          'extx.members.column.nakhebin': 'سجل الناخب المخصص',
           'actions.cancel': 'Cancel',
         },
       },
@@ -72,7 +72,7 @@ describe('CultureTranslationOverrides', () => {
     );
 
     expect(payload.cultureOverrides.ir?.['actions.save']).toBe('Custom save');
-    expect(payload.cultureOverrides.iq?.['vx.members.column.nakhebin']).toBe('سجل الناخب المخصص');
+    expect(payload.cultureOverrides.iq?.['extx.members.column.nakhebin']).toBe('سجل الناخب المخصص');
   });
 
   it('normalizes legacy overrides-only payloads', () => {

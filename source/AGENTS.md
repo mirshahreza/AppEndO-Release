@@ -82,11 +82,11 @@ Domain rules (deep links, record policy, workflow-engine testing, package UI) ar
 | Full-app functional QA (Appearance + Settings + Base Components + routes; screenshot/fix loop, non-stop) | [`.claude/skills/appendo-qa-functional-pass/SKILL.md`](.claude/skills/appendo-qa-functional-pass/SKILL.md) |
 | Startup / boot performance (READY, `/api/boot`, first shell paint) | [`.claude/skills/appendo-perf-startup/SKILL.md`](.claude/skills/appendo-perf-startup/SKILL.md) |
 | Soft / playful UI polish (گوگولی · خوشگل) on Studio chrome | [`.claude/skills/appendo-build-ui-playful-polish/SKILL.md`](.claude/skills/appendo-build-ui-playful-polish/SKILL.md) |
-| Vertical TS → SQL Server objects + verify gate | [`.claude/skills/appendo-build-vx-db-objects/SKILL.md`](.claude/skills/appendo-build-vx-db-objects/SKILL.md) · shard [`package-vertical-db.md`](docs/standards/package-vertical-db.md) |
-| Vertical UI words (region / maktab, not eghtera / tamvin) | [`package-vertical-ui-vocab.md`](docs/standards/package-vertical-ui-vocab.md) |
-| Vertical member list avatar caption (username blue / tracking red; queue lists) | [`package-vertical-member-face-caption.md`](docs/standards/package-vertical-member-face-caption.md) |
-| Vertical member-list field-by-field filter rows (toolbar mode 2) | [`package-vertical-member-list-legacy-filters.md`](docs/standards/package-vertical-member-list-legacy-filters.md) |
-| Vertical domain invariants (electoral geo: process vs direct) | [`package-vertical-domain-invariants.md`](docs/standards/package-vertical-domain-invariants.md) |
+| Portalx TS → SQL Server objects + verify gate | [`.claude/skills/appendo-build-extx-db-objects/SKILL.md`](.claude/skills/appendo-build-extx-db-objects/SKILL.md) · shard [`package-portalx-db.md`](docs/standards/package-portalx-db.md) |
+| Portalx UI words (region / maktab, not eghtera / tamvin) | [`package-portalx-ui-vocab.md`](docs/standards/package-portalx-ui-vocab.md) |
+| Portalx member list avatar caption (username blue / tracking red; queue lists) | [`package-portalx-member-face-caption.md`](docs/standards/package-portalx-member-face-caption.md) |
+| Portalx member-list field-by-field filter rows (toolbar mode 2) | [`package-portalx-member-list-legacy-filters.md`](docs/standards/package-portalx-member-list-legacy-filters.md) |
+| Portalx domain invariants (electoral geo: process vs direct) | [`package-portalx-domain-invariants.md`](docs/standards/package-portalx-domain-invariants.md) |
 | Custom skill index (`appendo-build-*` · `appendo-qa-*` · `appendo-perf-*`) | [`.claude/skills/SKILLS-CATALOG.md`](.claude/skills/SKILLS-CATALOG.md) |
 
 ## Change management

@@ -1,4 +1,4 @@
-import { formatPortalBrowserDocumentTitle } from '../../domain/vx/selfRegistration/vxPublicPortalDocumentTitle';
+import { formatPortalBrowserDocumentTitle } from '../../oss/excludedModuleStub';
 import {
   formatShellBootDocumentTitle,
   SHELL_BOOT_DOCUMENT_TITLE_SUFFIX,

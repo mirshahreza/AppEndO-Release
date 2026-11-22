@@ -3,7 +3,7 @@ import type {
   EdgeColumnHistory,
   EdgeModelHistory,
 } from '../../../shared/api/contracts/record-events';
-import { VX_MEMBER_HISTORY_COLUMN_MARKS } from './vxMemberHistoryFields';
+import { EXTX_MEMBER_HISTORY_COLUMN_MARKS } from '../../../oss/excludedModuleStub';
 
 const track = (): EdgeColumnHistory => ({ track: true });
 const trackRedact = (): EdgeColumnHistory => ({ track: true, redact: true });
@@ -61,10 +61,10 @@ export const PLATFORM_HISTORY_MARKS: Record<string, PlatformHistoryMark> = {
       scope: assocTrack(),
     },
   },
-  vx_members: {
-    objectName: 'vx_members',
+  extx_members: {
+    objectName: 'extx_members',
     history: { enabled: true, lifecycleField: 'membership_status_code' },
-    columns: VX_MEMBER_HISTORY_COLUMN_MARKS,
+    columns: EXTX_MEMBER_HISTORY_COLUMN_MARKS,
     associations: {},
   },
   base_sample_mock_records: {

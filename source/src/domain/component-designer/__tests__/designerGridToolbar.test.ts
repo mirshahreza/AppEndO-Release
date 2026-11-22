@@ -14,7 +14,7 @@ import {
   DEFAULT_GRID_TOOLBAR_PRESET,
   normalizeDesignerGridToolbarConfig,
   parseDesignerGridToolbarConfig,
-  resolveDesignerGridToolbarConfigForHwyMemberDirectoryList,
+  resolveDesignerGridToolbarConfigForExtxMemberDirectoryList,
   resolveEffectiveFieldFilters,
   serializeDesignerGridToolbarConfig,
   serializeRoleFilterSelection,
@@ -223,9 +223,9 @@ describe('designerGridToolbarConfig', () => {
 
   it('sends includeCount=true on page 1 and false on later pages (static:page1Only)', () => {
     const target: PreviewDataSourceHydrationTarget = {
-      dataSourceId: 'vx',
+      dataSourceId: 'extx',
       dataVar: 'gridData_test',
-      endpoint: '/api/vx/member-directory',
+      endpoint: '/api/extx/member-directory',
       queryParams: {
         page: 'gridQuery.page',
         includeCount: 'static:page1Only',
@@ -238,12 +238,12 @@ describe('designerGridToolbarConfig', () => {
 
   it('merges member-directory legacy field filters into hydration URLs', () => {
     const target: PreviewDataSourceHydrationTarget = {
-      dataSourceId: 'vx',
+      dataSourceId: 'extx',
       dataVar: 'gridData_members',
-      endpoint: '/api/vx/member-directory',
+      endpoint: '/api/extx/member-directory',
       queryParams: {
         search: 'gridToolbar.search',
-        listScope: 'static:VX_Members_List_All',
+        listScope: 'static:EXTX_Members_List_All',
       },
     };
 
@@ -346,15 +346,15 @@ describe('set-grid-toolbar-config reducer', () => {
     expect(state.isDirty).toBe(true);
   });
 
-  it('enables quick search on Vertical member-directory toolbars when missing from config', () => {
+  it('enables quick search on Portalx member-directory toolbars when missing from config', () => {
     const base = parseDesignerGridToolbarConfig(JSON.stringify({
       enabled: true,
       refresh: { enabled: true },
       serverQuery: { enabled: true },
     }));
-    const resolved = resolveDesignerGridToolbarConfigForHwyMemberDirectoryList(base, true);
+    const resolved = resolveDesignerGridToolbarConfigForExtxMemberDirectoryList(base, true);
     expect(resolved?.search?.enabled).toBe(true);
     expect(resolved?.search?.apiParam).toBe('search');
-    expect(resolveDesignerGridToolbarConfigForHwyMemberDirectoryList(base, false)).toBe(base);
+    expect(resolveDesignerGridToolbarConfigForExtxMemberDirectoryList(base, false)).toBe(base);
   });
 });

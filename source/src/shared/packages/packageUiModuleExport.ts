@@ -18,7 +18,7 @@ export function resolvePackageUiModuleExport(
   return null;
 }
 
-/** `export { default } from '@/…'` when the target only has a named export (common Vertical stubs). */
+/** `export { default } from '@/…'` when the target only has a named export (common Portalx stubs). */
 export function rewriteDefaultReExportFromNamedOnlyModule(
   source: string,
   resolveTargetSource: (importPath: string) => string | null,

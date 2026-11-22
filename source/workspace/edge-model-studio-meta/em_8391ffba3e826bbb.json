@@ -1,7 +1,7 @@
 {
   "edgeModelId": "em_8391ffba3e826bbb",
   "tags": [
-    "vx",
+    "extx",
     "file",
     "attachment"
   ],
@@ -143,7 +143,7 @@
     }
   ],
   "extensions": {
-    "story": "## Purpose\n\nMember document blobs in SQL (`content` / `thumbnail_content`). Each row requires `file_kind_code`.\n\n## Scenarios\n\n- **S1** — minimum upload set on self-registration submit.\n- **S4** — approval `is_approved` except `other_attachment`.\n\n## Rules\n\n- Exclude `content` from default list API projections (large binary).\n- Kind vocabulary: Vertical / Member File Kind.",
+    "story": "## Purpose\n\nMember document blobs in SQL (`content` / `thumbnail_content`). Each row requires `file_kind_code`.\n\n## Scenarios\n\n- **S1** — minimum upload set on self-registration submit.\n- **S4** — approval `is_approved` except `other_attachment`.\n\n## Rules\n\n- Exclude `content` from default list API projections (large binary).\n- Kind vocabulary: Portalx / Member File Kind.",
     "scenarioIds": [
       "S1",
       "S4"

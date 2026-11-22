@@ -59,8 +59,8 @@ export function withPortalBrandDefaults(brand: PortalBrand | null | undefined): 
 }
 
 const PORTAL_BRAND_LOGO_PATH_RE = /^\/assets\/workspace\/portals\/[a-z0-9._-]+\/logo\.[a-z0-9]+$/i;
-const VX_PUBLIC_BRAND_LOGO_PATH_RE = /^\/assets\/vertical\/(?:[a-z0-9._-]+\/)*[a-z0-9._-]+\.(png|webp|svg|jpe?g|gif)$/i;
-const VX_INSTITUTE_LOGO_API_PATH_RE = /^\/api\/vx\/institutes\/\d+\/logo$/i;
+const EXTX_PUBLIC_BRAND_LOGO_PATH_RE = /^\/assets\/portalx\/(?:[a-z0-9._-]+\/)*[a-z0-9._-]+\.(png|webp|svg|jpe?g|gif)$/i;
+const EXTX_INSTITUTE_LOGO_API_PATH_RE = /^\/api\/extx\/institutes\/\d+\/logo$/i;
 
 export function isAllowedPortalBrandLogoUrl(value: string): boolean {
   const trimmed = value.trim();
@@ -77,11 +77,11 @@ export function isAllowedPortalBrandLogoUrl(value: string): boolean {
     return true;
   }
 
-  if (VX_PUBLIC_BRAND_LOGO_PATH_RE.test(pathOnly)) {
+  if (EXTX_PUBLIC_BRAND_LOGO_PATH_RE.test(pathOnly)) {
     return true;
   }
 
-  if (VX_INSTITUTE_LOGO_API_PATH_RE.test(pathOnly)) {
+  if (EXTX_INSTITUTE_LOGO_API_PATH_RE.test(pathOnly)) {
     return true;
   }
 

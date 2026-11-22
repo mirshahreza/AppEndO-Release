@@ -1,7 +1,7 @@
 import type { CultureCalendarId, CultureTypography } from '../systemExtensions/types';
 
-/** Vertical legacy UI font (Tajawal Regular) — platform Web Font id under Settings → Web Fonts. */
-export const IQ_VERTICAL_WEB_FONT_ID = 'web-tajawal-regular';
+/** Portalx legacy UI font (Tajawal Regular) — platform Web Font id under Settings → Web Fonts. */
+export const IQ_PORTALX_WEB_FONT_ID = 'web-tajawal-regular';
 
 export type PlatformCulturePack = {
   id: string;
@@ -66,7 +66,7 @@ export const DEFAULT_BUILTIN_CULTURE_PACKS: PlatformCulturePack[] = [
     translationBundleId: 'iq',
     defaultTimezone: 'Asia/Baghdad',
     typography: {
-      defaultFontId: IQ_VERTICAL_WEB_FONT_ID,
+      defaultFontId: IQ_PORTALX_WEB_FONT_ID,
       fonts: [],
     },
   },

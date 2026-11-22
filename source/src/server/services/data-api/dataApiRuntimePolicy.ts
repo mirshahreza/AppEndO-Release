@@ -24,10 +24,10 @@ import {
   readDataApiNoCacheFromRequest,
 } from '../../../shared/lib/dataApiNoCache';
 import {
-  VX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS,
-  isHwyMemberDirectoryListFunctionId,
-  isHwyMemberDirectoryManagedFunctionId,
-} from '../../domain/vx/ensureHwyMemberDirectoryListRuntime';
+  EXTX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS,
+  isExtxMemberDirectoryListFunctionId,
+  isExtxMemberDirectoryManagedFunctionId,
+} from '../../../oss/excludedModuleStub';
 
 type CachedDataApiResponse = {
   statusCode: number;
@@ -118,8 +118,8 @@ export const prepareDataApiRuntime = async (
     runtimeConfigInputFromManagedRecord(record as unknown as Record<string, unknown>),
   );
   const functionId = String(record.id ?? '');
-  const runtime = isHwyMemberDirectoryManagedFunctionId(functionId)
-    ? { ...runtimeBase, timeoutMs: VX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS }
+  const runtime = isExtxMemberDirectoryManagedFunctionId(functionId)
+    ? { ...runtimeBase, timeoutMs: EXTX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS }
     : runtimeBase;
   const isGet = String(req.method || '').toUpperCase() === 'GET';
   const listCacheDefault = isGet && readDataApiListCacheDefaultEnabled();
@@ -131,7 +131,7 @@ export const prepareDataApiRuntime = async (
       byParam: true,
       byUser: runtime.cache.byUser,
     };
-  if (isHwyMemberDirectoryListFunctionId(String(record.id ?? ''))) {
+  if (isExtxMemberDirectoryListFunctionId(String(record.id ?? ''))) {
     effectiveCache = { ...effectiveCache, byUser: true };
   }
 

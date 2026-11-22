@@ -831,10 +831,10 @@ describe('buildAdminShellNav', () => {
       {
         id: 95,
         mountId: 'studio',
-        routePattern: 'vertical/base-info',
+        routePattern: 'portalx/base-info',
         pageKey: 'base-info',
         enabled: true,
-        nav: { label: 'Vertical Base Info', group: 'System management', order: 1 },
+        nav: { label: 'Portalx Base Info', group: 'System management', order: 1 },
       },
     ];
     const config = buildStudioConfig(bindings);
@@ -848,9 +848,9 @@ describe('buildAdminShellNav', () => {
       authProfile: {},
     });
     config.navigations = [{
-      id: 'vertical',
+      id: 'portalx',
       version: '1',
-      portalSegment: 'vertical',
+      portalSegment: 'portalx',
       groups: [{
         heading: 'System management',
         order: 1,
@@ -868,20 +868,20 @@ describe('buildAdminShellNav', () => {
       mountId: 'iq',
       mountPathPrefix: '/iq',
       currentUser: { roles: ['ADMIN'] },
-      navigationRef: 'vertical',
+      navigationRef: 'portalx',
       currentCultureId: 'iq',
-      currentPortalSegment: 'vertical',
+      currentPortalSegment: 'portalx',
     });
 
     const item = flattenAdminShellNavItems(groups).find((navItem) => navItem.pageKey === 'base-info');
     expect(item).toMatchObject({
-      path: '/iq/vertical/base-info',
+      path: '/iq/portalx/base-info',
       label: 'Base Info',
     });
 
     const header = resolveAdminShellHeaderContext({
       groups,
-      pathname: '/iq/vertical/base-info',
+      pathname: '/iq/portalx/base-info',
       config,
       mountId: 'iq',
     });

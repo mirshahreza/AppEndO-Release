@@ -285,6 +285,9 @@ function toIndexEntry(record: ManagedFunctionRecord): ManagedFunctionIndexEntry 
 }
 
 function readManagedFunctionRecordFromMetadata(metadata: ManagedFunctionMetadataFile): ManagedFunctionRecord | null {
+  if (!metadata.sourceFile || typeof metadata.sourceFile !== 'string') {
+    return null;
+  }
   const code = readSourceCode(metadata.sourceFile);
   if (!code && !fs.existsSync(sourceFilePath(metadata.sourceFile))) {
     return null;

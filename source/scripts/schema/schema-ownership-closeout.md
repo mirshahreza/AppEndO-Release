@@ -5,19 +5,19 @@
 
 ## Last verified (dev)
 
-- `schema:verify-vx-gates` — finance + legacy parity + area-limits (cross-level **0** after purge)
-- `vx:verify-db-objects:tests` · `test:vertical-package` · `qa:vertical-list-routes`
-- B11: docs + ETL skip + `vx:etl:purge-cross-level-area-limits` on dev
+- `schema:verify-extx-gates` — finance + legacy parity + area-limits (cross-level **0** after purge)
+- `extx:verify-db-objects:tests` · `test:portalx-package` · `qa:portalx-list-routes`
+- B11: docs + ETL skip + `extx:etl:purge-cross-level-area-limits` on dev
 
-## Regression checklist (if you change VX SQL or ETL)
+## Regression checklist (if you change EXTX SQL or ETL)
 
 ```bash
-npm run schema:install-extensions:vx -- --force
-npm run schema:verify-vx-gates
+npm run schema:install-extensions:extx -- --force
+npm run schema:verify-extx-gates
 npm run schema:ownership-report
-npm run vx:verify-db-objects:tests
-npm run test:vertical-package
-npm run qa:vertical-list-routes
+npm run extx:verify-db-objects:tests
+npm run test:portalx-package
+npm run qa:portalx-list-routes
 ```
 
 **QA login (this dev DB):** `identifier=admin` + `P#ssC0de`. Clear stale `APPENDO_DEV_PASSWORD=admin123` in the shell if login fails.
@@ -27,7 +27,7 @@ npm run qa:vertical-list-routes
 ## B11 (electoral geo — closed)
 
 - Same-level multi-node: **expected** (direct / employees path).
-- Cross-level approved rows: **drift** — not imported by `vx:etl:legacy-edge-parity` or geo-responsibility ETL; purge with `vx:etl:purge-cross-level-area-limits` if needed.
+- Cross-level approved rows: **drift** — not imported by `extx:etl:legacy-edge-parity` or geo-responsibility ETL; purge with `extx:etl:purge-cross-level-area-limits` if needed.
 - Probe: `npm run schema:area-limits-invariant` (exit 1 only on cross-level).
 
 ## Out of scope

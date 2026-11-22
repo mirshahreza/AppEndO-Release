@@ -910,7 +910,7 @@ export const renderMarkdownEditorCustomJsx = (
   return `<DesignerMarkdownEditorField${attrs} label=${toJsxString(label)} placeholder=${toJsxString(placeholder)} editorHeight={${readNumber(node.props.editorHeight, 160)}} fontSize={${readNumber(node.props.fontSize, 14)}} ${toolbarProps} readOnly={${readBoolean(node.props.readOnly)}} />`;
 };
 
-export const renderHwyInstituteLogoUploadCustomJsx = (
+export const renderExtxInstituteLogoUploadCustomJsx = (
   node: DesignerNode,
   bindingContext?: TsxBindingRenderContext,
 ): string => {
@@ -937,7 +937,7 @@ export const renderHwyInstituteLogoUploadCustomJsx = (
   const formFieldAttr = formFieldName ? ` formFieldName=${JSON.stringify(formFieldName)}` : '';
   const disabledAttr = isDisabled ? ' disabled' : '';
 
-  return `<div className=${JSON.stringify(`${className} pb-1`)}><VxInstituteLogoUploadField instituteId={${instituteIdExpr}}${valueAttr}${formFieldAttr} ariaLabel=${JSON.stringify(ariaLabel)}${disabledAttr} /></div>`;
+  return `<div className=${JSON.stringify(`${className} pb-1`)}><ExtxInstituteLogoUploadField instituteId={${instituteIdExpr}}${valueAttr}${formFieldAttr} ariaLabel=${JSON.stringify(ariaLabel)}${disabledAttr} /></div>`;
 };
 
 export const renderColorEditorCustomJsx = (

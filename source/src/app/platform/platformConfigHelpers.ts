@@ -27,9 +27,9 @@ import { normalizePortalPagePath } from '../../shared/api/contracts/platform/exp
 import { parseDesignerComponentPath } from '../../shared/lib/designerComponentPath';
 import { getEnabledCulturePackIds } from '../../core/culture/CultureRegistry';
 import {
-  VERTICAL_PORTAL_SEGMENT,
-  isVerticalRoutePattern,
-} from '../../core/packages/verticalPackage';
+  PORTALX_PORTAL_SEGMENT,
+  isPortalxRoutePattern,
+} from '../../oss/excludedModuleStub';
 import { resolveMountCulture } from '../../core/culture/MountCultureResolver';
 
 function bindingMergePriority(binding: PlatformRouteBinding): number {
@@ -191,7 +191,7 @@ export type PortalShellLookup = {
 
 /**
  * Platform shell record for nav, brand, and 404 — not the designer layout draft key
- * stored in `PortalContext.shellKey` (e.g. `studio-shell` vs registry `vertical`).
+ * stored in `PortalContext.shellKey` (e.g. `studio-shell` vs registry `portalx`).
  */
 export function resolveRegistryShellForPortal(
   config: PlatformRuntimeConfig,
@@ -414,8 +414,8 @@ function isNavLandingRoot(normalized: string, pageKey: string): boolean {
 /** Point catalog-style splat pages at their default section, not the empty splat root. */
 export function withNavLandingPath(navRelativePath: string): string {
   const normalized = navRelativePath.replace(/^\/+/, '').replace(/\/+$/, '');
-  if (normalized === 'vertical/business-rules') {
-    return 'vertical/business-rules/membership-number';
+  if (normalized === 'portalx/business-rules') {
+    return 'portalx/business-rules/membership-number';
   }
   for (const landing of NAV_PAGE_LANDINGS) {
     if (isNavLandingRoot(normalized, landing.pageKey)) {
@@ -512,8 +512,8 @@ export function matchesRouteBindingPattern(routePattern: string, relativePath: s
   return normalizedPattern === normalizedPath;
 }
 
-export function isVerticalPortalPublishedInConfig(config: PlatformRuntimeConfig): boolean {
-  return Boolean(getShellByKey(config, VERTICAL_PORTAL_SEGMENT)?.enabled);
+export function isPortalxPortalPublishedInConfig(config: PlatformRuntimeConfig): boolean {
+  return Boolean(getShellByKey(config, PORTALX_PORTAL_SEGMENT)?.enabled);
 }
 
 export function resolveRouteBindingForRelativePath(
@@ -522,10 +522,10 @@ export function resolveRouteBindingForRelativePath(
   relativePath: string,
 ): PlatformRouteBinding | undefined {
   const normalizedRelativePath = normalizeRelativeRoutePath(relativePath);
-  const verticalPublished = isVerticalPortalPublishedInConfig(config);
+  const portalxPublished = isPortalxPortalPublishedInConfig(config);
 
   const matchingBindings = getBindingsForMount(config, mountId).filter((binding) => {
-    if (!verticalPublished && isVerticalRoutePattern(binding.routePattern)) {
+    if (!portalxPublished && isPortalxRoutePattern(binding.routePattern)) {
       return false;
     }
     return matchesRouteBindingPattern(binding.routePattern, normalizedRelativePath);
@@ -850,7 +850,7 @@ export function remainderMatchesStudioRoute(
     return false;
   }
 
-  if (!isVerticalPortalPublishedInConfig(config) && isVerticalRoutePattern(normalized)) {
+  if (!isPortalxPortalPublishedInConfig(config) && isPortalxRoutePattern(normalized)) {
     return false;
   }
 

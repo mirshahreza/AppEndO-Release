@@ -1,5 +1,6 @@
 import esbuild from 'esbuild';
 import path from 'node:path';
+import { createBundledImportMetaPlugin } from './server-bundle-import-meta';
 
 const root = process.cwd();
 const shims = path.join(root, 'scripts', 'server-bundle-shims');
@@ -63,6 +64,7 @@ const run = async (): Promise<void> => {
       'import.meta.env.DEV': 'false',
     },
     plugins: [
+      createBundledImportMetaPlugin(),
       {
         name: 'client-package-stubs',
         setup(build) {

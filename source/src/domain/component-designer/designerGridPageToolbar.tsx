@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { VxMemberDirectoryLegacyFilterBarPanel } from '../vx/VxMemberDirectoryLegacyFilterBarPanel';
-import { resolveHwyLegacyFieldFilterToolbarChrome } from '../vx/vxMemberListToolbarLegacyFilterChrome';
-import { VxMemberListToolbarActionsEnd } from '../vx/VxMemberListToolbarActionsEnd';
-import { VxMemberListToolbarRefreshControl } from '../vx/vxMemberListToolbarRefreshControl';
+import { ExtxMemberDirectoryLegacyFilterBarPanel } from '../../oss/excludedModuleStub';
+import { resolveExtxLegacyFieldFilterToolbarChrome } from '../../oss/excludedModuleStub';
+import { ExtxMemberListToolbarActionsEnd } from '../../oss/excludedModuleStub';
+import { ExtxMemberListToolbarRefreshControl } from '../../oss/excludedModuleStub';
 import {
   AppButton,
   PAGE_TOOLBAR_ACTIONS_CLUSTER_CLASS,
@@ -86,7 +86,7 @@ type DesignerGridPageToolbarProps = {
   onQueryPresetChange?: (nextIds: string[]) => void;
   /** When false, toolbar field filters (status, institute, …) stay hidden. Default true. */
   showFieldFilters?: boolean;
-  /** Toggle for legacy-style field filter bar (Vertical lists). */
+  /** Toggle for legacy-style field filter bar (Portalx lists). */
   legacyFieldFilterToggle?: React.ReactNode;
   /** True when field-by-field legacy mode is active (toggle on). */
   legacyFieldFilterModeActive?: boolean;
@@ -262,7 +262,7 @@ export const DesignerGridPageToolbar: React.FC<DesignerGridPageToolbarProps> = (
     && refresh?.enabled,
   );
   const hasLegacyFilterModeSwitch = legacyFieldFilterToggle != null;
-  const legacyFilterToolbarChrome = resolveHwyLegacyFieldFilterToolbarChrome({
+  const legacyFilterToolbarChrome = resolveExtxLegacyFieldFilterToolbarChrome({
     hasLegacyFilterModeSwitch,
     legacyFieldFilterModeActive,
     refreshEnabled: Boolean(refresh?.enabled && onRefresh && !swapRefreshWithListFilter),
@@ -340,7 +340,7 @@ export const DesignerGridPageToolbar: React.FC<DesignerGridPageToolbarProps> = (
           />
         ) : null}
         {refreshInFiltersCluster ? (
-          <VxMemberListToolbarRefreshControl
+          <ExtxMemberListToolbarRefreshControl
             listTotalCount={listTotalCountValue}
             onRefresh={() => onRefresh?.()}
             isRefreshing={isRefreshing}
@@ -506,7 +506,7 @@ export const DesignerGridPageToolbar: React.FC<DesignerGridPageToolbarProps> = (
         {actionsEndSeparatorBefore ? (
           <span className={PAGE_TOOLBAR_ACTION_SEPARATOR_CLASS} aria-hidden="true" />
         ) : null}
-        <VxMemberListToolbarActionsEnd
+        <ExtxMemberListToolbarActionsEnd
           listTotalCount={
             swapRefreshWithListFilter || !passRefreshToActionsEnd
               ? undefined
@@ -538,7 +538,7 @@ export const DesignerGridPageToolbar: React.FC<DesignerGridPageToolbarProps> = (
           {filtersCluster}
           {actionsCluster}
         </div>
-        <VxMemberDirectoryLegacyFilterBarPanel
+        <ExtxMemberDirectoryLegacyFilterBarPanel
           membershipRow={memberDirectoryLegacyMembershipRow}
           fieldFilterRow={memberDirectoryLegacyFilterBar}
         />

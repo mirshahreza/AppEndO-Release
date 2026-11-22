@@ -12,11 +12,11 @@ const patchMocks = vi.hoisted(() => ({
   ensureUserProfileLegalEntityColumns: vi.fn(),
   ensureDbEnrichmentRunProgressLogColumn: vi.fn(),
   ensureNationalCodeCheckDropped: vi.fn(),
-  ensureHwyNakhebinPhoneSchema: vi.fn(),
-  ensureHwyMembersSelfRegistrationSchema: vi.fn(),
-  ensureHwyMemberDossierSatellitesSchema: vi.fn(),
-  ensureHwyCoursesActivitiesSchema: vi.fn(),
-  ensureHwyGeoResponsibilitySchema: vi.fn(),
+  ensureExtxNakhebinPhoneSchema: vi.fn(),
+  ensureExtxMembersSelfRegistrationSchema: vi.fn(),
+  ensureExtxMemberDossierSatellitesSchema: vi.fn(),
+  ensureExtxCoursesActivitiesSchema: vi.fn(),
+  ensureExtxGeoResponsibilitySchema: vi.fn(),
 }));
 
 vi.mock('../controlPlaneBootMarkers', () => ({
@@ -47,24 +47,24 @@ vi.mock('../controlPlaneEnrichmentSchemaPatches', () => ({
   ensureDbEnrichmentRunProgressLogColumn: patchMocks.ensureDbEnrichmentRunProgressLogColumn,
 }));
 
-vi.mock('../../domain/vx/ensureHwyNakhebinPhoneSchema', () => ({
-  ensureHwyNakhebinPhoneSchema: patchMocks.ensureHwyNakhebinPhoneSchema,
+vi.mock('../../domain/extx/ensureExtxNakhebinPhoneSchema', () => ({
+  ensureExtxNakhebinPhoneSchema: patchMocks.ensureExtxNakhebinPhoneSchema,
 }));
 
-vi.mock('../../domain/vx/ensureHwyMembersSelfRegistrationSchema', () => ({
-  ensureHwyMembersSelfRegistrationSchema: patchMocks.ensureHwyMembersSelfRegistrationSchema,
+vi.mock('../../domain/extx/ensureExtxMembersSelfRegistrationSchema', () => ({
+  ensureExtxMembersSelfRegistrationSchema: patchMocks.ensureExtxMembersSelfRegistrationSchema,
 }));
 
-vi.mock('../../domain/vx/ensureHwyMemberDossierSatellitesSchema', () => ({
-  ensureHwyMemberDossierSatellitesSchema: patchMocks.ensureHwyMemberDossierSatellitesSchema,
+vi.mock('../../domain/extx/ensureExtxMemberDossierSatellitesSchema', () => ({
+  ensureExtxMemberDossierSatellitesSchema: patchMocks.ensureExtxMemberDossierSatellitesSchema,
 }));
 
-vi.mock('../../domain/vx/ensureHwyCoursesActivitiesSchema', () => ({
-  ensureHwyCoursesActivitiesSchema: patchMocks.ensureHwyCoursesActivitiesSchema,
+vi.mock('../../domain/extx/ensureExtxCoursesActivitiesSchema', () => ({
+  ensureExtxCoursesActivitiesSchema: patchMocks.ensureExtxCoursesActivitiesSchema,
 }));
 
-vi.mock('../../domain/vx/ensureHwyGeoResponsibilitySchema', () => ({
-  ensureHwyGeoResponsibilitySchema: patchMocks.ensureHwyGeoResponsibilitySchema,
+vi.mock('../../domain/extx/ensureExtxGeoResponsibilitySchema', () => ({
+  ensureExtxGeoResponsibilitySchema: patchMocks.ensureExtxGeoResponsibilitySchema,
 }));
 
 import { ensureControlPlaneRuntimePatches } from '../controlPlaneRuntimePatches';
@@ -85,18 +85,18 @@ describe('ensureControlPlaneRuntimePatches', () => {
     patchMocks.ensureUserProfileLegalEntityColumns.mockReset();
     patchMocks.ensureDbEnrichmentRunProgressLogColumn.mockReset();
     patchMocks.ensureNationalCodeCheckDropped.mockReset();
-    patchMocks.ensureHwyNakhebinPhoneSchema.mockReset();
-    patchMocks.ensureHwyMembersSelfRegistrationSchema.mockReset();
-    patchMocks.ensureHwyMemberDossierSatellitesSchema.mockReset();
-    patchMocks.ensureHwyCoursesActivitiesSchema.mockReset();
-    patchMocks.ensureHwyGeoResponsibilitySchema.mockReset();
+    patchMocks.ensureExtxNakhebinPhoneSchema.mockReset();
+    patchMocks.ensureExtxMembersSelfRegistrationSchema.mockReset();
+    patchMocks.ensureExtxMemberDossierSatellitesSchema.mockReset();
+    patchMocks.ensureExtxCoursesActivitiesSchema.mockReset();
+    patchMocks.ensureExtxGeoResponsibilitySchema.mockReset();
 
     patchMocks.ensureSampleMockSchema.mockResolvedValue(undefined);
-    patchMocks.ensureHwyNakhebinPhoneSchema.mockResolvedValue(undefined);
-    patchMocks.ensureHwyMembersSelfRegistrationSchema.mockResolvedValue(undefined);
-    patchMocks.ensureHwyMemberDossierSatellitesSchema.mockResolvedValue(undefined);
-    patchMocks.ensureHwyCoursesActivitiesSchema.mockResolvedValue(undefined);
-    patchMocks.ensureHwyGeoResponsibilitySchema.mockResolvedValue(undefined);
+    patchMocks.ensureExtxNakhebinPhoneSchema.mockResolvedValue(undefined);
+    patchMocks.ensureExtxMembersSelfRegistrationSchema.mockResolvedValue(undefined);
+    patchMocks.ensureExtxMemberDossierSatellitesSchema.mockResolvedValue(undefined);
+    patchMocks.ensureExtxCoursesActivitiesSchema.mockResolvedValue(undefined);
+    patchMocks.ensureExtxGeoResponsibilitySchema.mockResolvedValue(undefined);
     markerMocks.markControlPlaneBootApplied.mockResolvedValue(undefined);
   });
 

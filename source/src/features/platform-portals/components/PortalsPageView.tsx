@@ -62,9 +62,9 @@ import { PortalAccessModal } from './PortalAccessModal';
 import { PortalBrandFields, mergePortalBrand, normalizePortalBrandForSave } from './PortalBrandFields';
 import { withPortalBrandDefaults, type PortalBrand } from '../../../shared/api/contracts/platform/portalBrand';
 import {
-  VX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE,
-  VX_PLATFORM_PORTAL_SHELL_KEY,
-} from '../../../domain/vx/vxPlatformPortalBrandDefaults';
+  EXTX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE,
+  EXTX_PLATFORM_PORTAL_SHELL_KEY,
+} from '../../../oss/excludedModuleStub';
 import { PortalDeleteConfirmModal } from './PortalDeleteConfirmModal';
 import { PortalNavigationsModal } from './PortalNavigationsModal';
 import { uploadPortalLogo, usePlatformCulturesQuery } from '../../../shared/api/queries/platform';
@@ -150,9 +150,9 @@ export const PortalsPageView: React.FC<PortalsPageViewProps> = ({ page }) => {
 
   const resolvePortalBrandForForm = useCallback((row: ExperienceManifestPortal): PortalBrand => {
     const base = withPortalBrandDefaults(row.brand);
-    const isVerticalPortal = row.segment === 'vertical' || row.shellKey === VX_PLATFORM_PORTAL_SHELL_KEY;
-    if (isVerticalPortal && !row.brand?.windowTitle?.trim() && !base.windowTitle?.trim()) {
-      return { ...base, windowTitle: VX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE };
+    const isPortalxPortal = row.segment === 'portalx' || row.shellKey === EXTX_PLATFORM_PORTAL_SHELL_KEY;
+    if (isPortalxPortal && !row.brand?.windowTitle?.trim() && !base.windowTitle?.trim()) {
+      return { ...base, windowTitle: EXTX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE };
     }
     return base;
   }, []);

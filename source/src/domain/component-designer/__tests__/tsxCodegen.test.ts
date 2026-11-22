@@ -101,21 +101,21 @@ describe('tsxComponentRegistry', () => {
     expect(spec.importFrom).toBe('@/shared/ui/ai-field-assist/SemanticAssistTextarea');
   });
 
-  it('resolves vx institute logo upload to VxInstituteLogoUploadField', () => {
+  it('resolves extx institute logo upload to ExtxInstituteLogoUploadField', () => {
     const node: DesignerNode = {
       id: 'logo-node',
       type: 'container',
       parentId: 'root',
       order: 0,
-      props: { _designerPaletteItemId: 'vx.institute-logo-upload' },
+      props: { _designerPaletteItemId: 'extx.institute-logo-upload' },
       layout: {},
       binding: {},
       children: [],
     };
     const spec = resolveTsxComponentSpec(node);
     expect(spec.kind).toBe('library-custom');
-    expect(spec.reactTag).toBe('VxInstituteLogoUploadField');
-    expect(spec.importFrom).toBe('@/domain/vx/VxInstituteLogoUploadField');
+    expect(spec.reactTag).toBe('ExtxInstituteLogoUploadField');
+    expect(spec.importFrom).toBe('@/domain/extx/ExtxInstituteLogoUploadField');
   });
 });
 

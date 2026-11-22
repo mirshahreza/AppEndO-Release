@@ -51,7 +51,7 @@ export const WORKSPACE_SPLIT_PANEL_KEYS = {
   recordFormSidePanel: 'record-form.side-panel',
   ideaFoundryInspector: 'idea-foundry.inspector',
   packageDetailInspector: 'package-detail.inspector',
-  vxGeoResponsibilityPatchHistory: 'vx-geo-responsibility.patch-history',
+  extxGeoResponsibilityPatchHistory: 'extx-geo-responsibility.patch-history',
 } as const;
 
 export type WorkspaceSplitPanelKey = typeof WORKSPACE_SPLIT_PANEL_KEYS[keyof typeof WORKSPACE_SPLIT_PANEL_KEYS];

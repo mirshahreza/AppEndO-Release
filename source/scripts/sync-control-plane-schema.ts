@@ -14,7 +14,7 @@ Safe default (recommended on customer / project instances):
 
 This uses prisma migrate diff and applies only additive / Prisma-owned changes.
 Tables that exist in the database but are NOT in prisma/schema.prisma are left
-untouched — including domain/package tables (vx_*, ETL maps, and any other
+untouched — including domain/package tables (extx_*, ETL maps, and any other
 non-Prisma objects). Extra columns on those tables are also left alone.
 
 Do NOT run raw \`prisma db push --accept-data-loss\` (or the old npm run prisma:push
@@ -29,9 +29,9 @@ Optional extra table lists:
   CONTROL_PLANE_SCHEMA_PROTECTED_TABLES=foo,bar   never drop these names
   CONTROL_PLANE_SCHEMA_ALLOW_DROP_TABLES=old_tmp  allow standalone DROP of these names only
 
-Non-Prisma layers (Sequelize features, vx_*, cms_*) — canonical upgrade:
+Non-Prisma layers (Sequelize features, extx_*, cms_*) — canonical upgrade:
   npm run schema:install-extensions
-  npm run schema:install-extensions -- --vx   (SQL Server + Vertical)
+  npm run schema:install-extensions -- --extx   (SQL Server + Portalx)
 
 Greenfield / empty databases still receive the full control-plane schema.
 `.trim();

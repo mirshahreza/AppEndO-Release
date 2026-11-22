@@ -44,17 +44,17 @@ export async function runDeferredServerRuntimeWarmup(settingsPath: string): Prom
   syncMissingPlatformRegistryDefaults();
   restoreCorePlatformRegistryArtifacts();
   ensureCoreStudioDevelopmentRegistryArtifacts();
-  const { ensureVerticalPortalShellBrand } = await import('./domain/vx/ensureVerticalPortalShellBrand');
-  await ensureVerticalPortalShellBrand();
-  const { isVerticalRuntimeEnabled } = await import('./services/vertical/verticalRuntime');
-  if (isVerticalRuntimeEnabled()) {
-    const { VERTICAL_PACKAGE_ID } = await import('../core/packages/verticalPackage');
+  const { ensurePortalxPortalShellBrand } = await import('../oss/excludedModuleStub');
+  await ensurePortalxPortalShellBrand();
+  const { isPortalxRuntimeEnabled } = await import('../oss/excludedModuleStub');
+  if (isPortalxRuntimeEnabled()) {
+    const { PORTALX_PACKAGE_ID } = await import('../oss/excludedModuleStub');
     const { repairInstalledVerticalAppUiRoutes } = await import(
       './services/package-runtime/repairVerticalAppUiRoutes.service'
     );
-    const routeCount = repairInstalledVerticalAppUiRoutes(VERTICAL_PACKAGE_ID);
+    const routeCount = repairInstalledVerticalAppUiRoutes(PORTALX_PACKAGE_ID);
     if (routeCount > 0) {
-      console.log(`[vertical] Package UI routes ready (${routeCount}).`);
+      console.log(`[portalx] Package UI routes ready (${routeCount}).`);
     }
   }
   invalidatePlatformRuntimeConfig();

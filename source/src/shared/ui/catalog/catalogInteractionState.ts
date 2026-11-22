@@ -7,26 +7,26 @@ export const CATALOG_INTERACTION_STATES: readonly CatalogInteractionState[] = [
 ] as const;
 
 /** Clickable member-face chrome (directory grid, dossier link, admin face). */
-export const CATALOG_INTERACTION_MARKER_FACE = 'vx-catalog-interactive-face';
+export const CATALOG_INTERACTION_MARKER_FACE = 'extx-catalog-interactive-face';
 
 /** Sky inline text links (electoral path, targhin view-full). */
-export const CATALOG_INTERACTION_MARKER_TEXT_LINK = 'vx-catalog-interactive-text-link';
+export const CATALOG_INTERACTION_MARKER_TEXT_LINK = 'extx-catalog-interactive-text-link';
 
 /** Primary-toned inline links (targhin nego thread). */
-export const CATALOG_INTERACTION_MARKER_TEXT_LINK_PRIMARY = 'vx-catalog-interactive-text-link-primary';
+export const CATALOG_INTERACTION_MARKER_TEXT_LINK_PRIMARY = 'extx-catalog-interactive-text-link-primary';
 
 /** Legacy filter row clear (×) controls. */
-export const CATALOG_INTERACTION_MARKER_FILTER_CLEAR = 'vx-catalog-interactive-filter-clear';
+export const CATALOG_INTERACTION_MARKER_FILTER_CLEAR = 'extx-catalog-interactive-filter-clear';
 
 /** Soft AppButton chips (toolbar toggles). */
-export const CATALOG_INTERACTION_MARKER_APP_BUTTON = 'vx-catalog-interactive-app-button';
+export const CATALOG_INTERACTION_MARKER_APP_BUTTON = 'extx-catalog-interactive-app-button';
 
 export type CatalogInteractionProfile =
   | 'none'
   | 'face-subtle'
   | 'text-link-sky'
   | 'text-link-primary'
-  | 'vx-mixed-links'
+  | 'extx-mixed-links'
   | 'app-button-soft-cyan'
   | 'app-button-soft-indigo'
   | 'filter-clear-icon'

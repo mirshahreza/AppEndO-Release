@@ -1,15 +1,15 @@
 {
   "id": "ea_a035b7fe6268e20a",
   "edgeModelId": "em_6a3f598a6f19267d",
-  "key": "vx-member-notes",
-  "label": "VX member notes",
-  "basePath": "/api/vx/member-notes",
+  "key": "extx-member-notes",
+  "label": "EXTX member notes",
+  "basePath": "/api/extx/member-notes",
   "operations": [
     {
       "id": "op_list_19t15f",
       "method": "GET",
       "kind": "list",
-      "pathPattern": "/api/vx/member-notes",
+      "pathPattern": "/api/extx/member-notes",
       "enabled": true,
       "fields": {
         "read": [
@@ -32,7 +32,7 @@
       "id": "op_get_19t15f",
       "method": "GET",
       "kind": "getOne",
-      "pathPattern": "/api/vx/member-notes/:pk",
+      "pathPattern": "/api/extx/member-notes/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -55,7 +55,7 @@
       "id": "op_create_19t15f",
       "method": "POST",
       "kind": "create",
-      "pathPattern": "/api/vx/member-notes",
+      "pathPattern": "/api/extx/member-notes",
       "enabled": true,
       "fields": {
         "read": [
@@ -84,7 +84,7 @@
       "id": "op_update_19t15f",
       "method": "PUT",
       "kind": "update",
-      "pathPattern": "/api/vx/member-notes/:pk",
+      "pathPattern": "/api/extx/member-notes/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -113,7 +113,7 @@
       "id": "op_delete_19t15f",
       "method": "DELETE",
       "kind": "delete",
-      "pathPattern": "/api/vx/member-notes/:pk",
+      "pathPattern": "/api/extx/member-notes/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -144,5 +144,5 @@
   "runtime": {
     "useGlobalConfig": true
   },
-  "managedFunctionId": "vx-member-notes.vx-member-notes-list"
+  "managedFunctionId": "extx-member-notes.extx-member-notes-list"
 }

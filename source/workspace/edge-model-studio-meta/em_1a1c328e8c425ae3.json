@@ -1,7 +1,7 @@
 {
   "edgeModelId": "em_1a1c328e8c425ae3",
   "tags": [
-    "vx",
+    "extx",
     "institute",
     "catalog"
   ],
@@ -181,7 +181,7 @@
     }
   ],
   "extensions": {
-    "story": "## Purpose\n\nCatalog of Vertical institutes (legacy OrganizationId). Drives dedicated member lists, invite policy, and optional phone masking policy.\n\n## Scenarios\n\n- **S5** — `allows_self_registration`, `allows_invite`, `invite_expires_after_days`, `hide_member_phones`.\n- **S6** — `has_dedicated_list` pairs with `vx_member_list_defs` (institute logic).\n\n## Rules\n\n- PK is legacy id (not identity).\n- General Assembly employment fields live on `vx_member_institutes`, not here.",
+    "story": "## Purpose\n\nCatalog of Portalx institutes (legacy OrganizationId). Drives dedicated member lists, invite policy, and optional phone masking policy.\n\n## Scenarios\n\n- **S5** — `allows_self_registration`, `allows_invite`, `invite_expires_after_days`, `hide_member_phones`.\n- **S6** — `has_dedicated_list` pairs with `extx_member_list_defs` (institute logic).\n\n## Rules\n\n- PK is legacy id (not identity).\n- General Assembly employment fields live on `extx_member_institutes`, not here.",
     "scenarioIds": [
       "S5",
       "S6"

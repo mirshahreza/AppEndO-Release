@@ -130,7 +130,7 @@ const catalogByObjectName: Record<string, QueryPresetDefinition[]> = {
       sortOrder: 20,
     }),
   ],
-  vx_members: [
+  extx_members: [
     preset({
       id: 'active-members',
       label: 'Active members',
@@ -140,7 +140,7 @@ const catalogByObjectName: Record<string, QueryPresetDefinition[]> = {
       icon: 'lucide:users',
     }),
   ],
-  vx_families: [
+  extx_families: [
     preset({
       id: 'active-families',
       label: 'Active',

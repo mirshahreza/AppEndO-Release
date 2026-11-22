@@ -8,11 +8,11 @@ import { getEnabledCulturePackIds } from '../../core/culture/CultureRegistry';
 import { resolveCultureFromPathname } from '../../core/culture/CultureUrlResolver';
 import {
   getShellByKey,
-  isVerticalPortalPublishedInConfig,
+  isPortalxPortalPublishedInConfig,
   remainderMatchesStudioRoute,
   resolveShellRuleForPath,
 } from './platformConfigHelpers';
-import { VERTICAL_PORTAL_SEGMENT } from '../../core/packages/verticalPackage';
+import { PORTALX_PORTAL_SEGMENT } from '../../oss/excludedModuleStub';
 
 export type ResolvedPortalPath = {
   portalSegment: string;
@@ -62,7 +62,7 @@ export function resolvePortalFromRemainderPath(
     };
   }
 
-  if (firstSegment === VERTICAL_PORTAL_SEGMENT && !isVerticalPortalPublishedInConfig(config)) {
+  if (firstSegment === PORTALX_PORTAL_SEGMENT && !isPortalxPortalPublishedInConfig(config)) {
     return {
       portalSegment: firstSegment,
       shellKey: firstSegment,

@@ -13,7 +13,7 @@ export function classifyLoadingLogoShape(logoSrc: string | undefined): LoadingLo
   if (path.includes('/mark-blue') || path.includes('/mark-white')) {
     return 'square';
   }
-  if (path.includes('/assets/vertical/') && path.includes('/mark-')) {
+  if (path.includes('/assets/portalx/') && path.includes('/mark-')) {
     return 'square';
   }
   if (path.includes('/assets/appendo/brand/') && path.includes('mark')) {

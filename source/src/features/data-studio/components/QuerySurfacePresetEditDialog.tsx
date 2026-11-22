@@ -180,7 +180,7 @@ export const QuerySurfacePresetEditDialog: React.FC<QuerySurfacePresetEditDialog
               <UiInput
                 value={labelKey}
                 onChange={(event) => setLabelKey(event.target.value)}
-                placeholder="vx.members.preset.active"
+                placeholder="extx.members.preset.active"
               />
             </FormField>
             <FormField label="Description">

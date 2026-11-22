@@ -11,8 +11,8 @@ import {
 describe('dashboardHomeShortcuts', () => {
   it('accepts studio paths and rejects javascript URLs', () => {
     expect(normalizeDashboardHomeShortcutPath('/us/studio/data-studio')).toBe('/us/studio/data-studio');
-    expect(normalizeDashboardHomeShortcutPath('iq/vertical/registration-portal-dev')).toBe(
-      '/iq/vertical/registration-portal-dev',
+    expect(normalizeDashboardHomeShortcutPath('iq/portalx/registration-portal-dev')).toBe(
+      '/iq/portalx/registration-portal-dev',
     );
     expect(normalizeDashboardHomeShortcutPath('javascript:alert(1)')).toBeNull();
     expect(normalizeDashboardHomeShortcutPath('//evil.example')).toBeNull();

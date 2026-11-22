@@ -1,0 +1,1 @@
+const n=["cms/cms-settings","cms/cms-vocab-content-tags","cms/cms-vocab-content-types","cms/cms-vocab-statuses","cms/cms-vocab-languages"],c=s=>/(?:^|\/)studio\/cms\/settings(?:\/|$)/.test(s.trim()),a=s=>{const t=s.trim();return n.includes(t)},o=(s,t)=>c(s)&&c(t);export{n as C,o as a,c as b,a as i};

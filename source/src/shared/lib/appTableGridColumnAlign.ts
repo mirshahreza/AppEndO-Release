@@ -35,7 +35,7 @@ export function resolveAppTableGridCellClipAlign(cellClassName?: string): string
   if (cellClassName.includes('nakhebin-voted-grid-cell')) {
     return 'flex w-full min-w-0 items-center justify-center text-center';
   }
-  if (cellClassName.includes('vx-electoral-division-grid-cell')) {
+  if (cellClassName.includes('extx-electoral-division-grid-cell')) {
     return 'flex w-full min-w-0 min-h-full flex-col justify-center text-start';
   }
   if (cellClassName.includes('text-center')) {

@@ -39,7 +39,7 @@ export const queryPresetDefinitionSchema = z.object({
   id: z.string().regex(/^[a-z0-9._-]+$/),
   /** Builder default / fallback when no culture entry exists for `labelKey`. */
   label: z.string().min(1),
-  /** Package culture key for runtime label (e.g. `vx.members.preset.active`). */
+  /** Package culture key for runtime label (e.g. `extx.members.preset.active`). */
   labelKey: z.string().min(1).optional(),
   description: z.string().optional(),
   /** Culture key for description copy when present. */

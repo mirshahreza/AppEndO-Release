@@ -62,13 +62,13 @@ describe('applyAdditiveControlPlaneSchema preserves unknown tables', () => {
     const db = new Database(dbPath);
     try {
       db.exec(`
-        CREATE TABLE vx_members (
+        CREATE TABLE extx_members (
           id INTEGER PRIMARY KEY,
           name TEXT NOT NULL
         );
       `);
-      db.prepare('INSERT INTO vx_members (id, name) VALUES (?, ?)').run(1, 'keep-me');
-      db.prepare('INSERT INTO vx_members (id, name) VALUES (?, ?)').run(2, 'also-keep');
+      db.prepare('INSERT INTO extx_members (id, name) VALUES (?, ?)').run(1, 'keep-me');
+      db.prepare('INSERT INTO extx_members (id, name) VALUES (?, ?)').run(2, 'also-keep');
     } finally {
       db.close();
     }
@@ -80,7 +80,7 @@ describe('applyAdditiveControlPlaneSchema preserves unknown tables', () => {
 
     const verify = new Database(dbPath);
     try {
-      const rows = verify.prepare('SELECT id, name FROM vx_members ORDER BY id').all() as Array<{
+      const rows = verify.prepare('SELECT id, name FROM extx_members ORDER BY id').all() as Array<{
         id: number;
         name: string;
       }>;

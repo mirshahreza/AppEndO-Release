@@ -29,9 +29,9 @@ import {
   buildDataApiManagedFunctionName,
 } from '../../../shared/lib/dataApiManagedFunctions';
 import {
-  ensureHwyMemberDirectoryListRuntime,
-  isHwyMemberDirectoryManagedFunctionId,
-} from '../../domain/vx/ensureHwyMemberDirectoryListRuntime';
+  ensureExtxMemberDirectoryListRuntime,
+  isExtxMemberDirectoryManagedFunctionId,
+} from '../../../oss/excludedModuleStub';
 import {
   buildDataApiManagedFunctionMetadata,
   buildDataApiManagedFunctionTestPayload,
@@ -244,8 +244,8 @@ export const publishEdgeApiDefinition = (definitionId: string): EdgeApiDefinitio
     }
   }
 
-  if (managedFunctionIds.some(isHwyMemberDirectoryManagedFunctionId)) {
-    ensureHwyMemberDirectoryListRuntime();
+  if (managedFunctionIds.some(isExtxMemberDirectoryManagedFunctionId)) {
+    ensureExtxMemberDirectoryListRuntime();
   }
 
   if (previousManagedFunctionId && !managedFunctionIds.includes(previousManagedFunctionId)) {

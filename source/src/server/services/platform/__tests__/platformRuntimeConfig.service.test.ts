@@ -76,10 +76,10 @@ vi.mock('../../remote-hubs/remoteHubsRuntime', () => ({
   applyRemoteHubsChromeToBindings: (rows: unknown[]) => rows,
 }));
 
-vi.mock('../../vertical/verticalRuntime', () => ({
-  isVerticalRuntimeEnabled: () => false,
-  filterVerticalHostRowsUnlessInstalled: (rows: unknown[]) => rows,
-  filterVerticalNavigationsUnlessInstalled: (navigations: unknown[]) => navigations,
+vi.mock('../../portalx/portalxRuntime', () => ({
+  isPortalxRuntimeEnabled: () => false,
+  filterPortalxHostRowsUnlessInstalled: (rows: unknown[]) => rows,
+  filterPortalxNavigationsUnlessInstalled: (navigations: unknown[]) => navigations,
 }));
 
 vi.mock('../../../../core/packages/PackageFileStore', () => ({
@@ -138,7 +138,7 @@ describe('platformRuntimeConfig.service', () => {
     expect(config.mounts).toHaveLength(1);
     expect(config.bindings).toHaveLength(1);
     expect(config.navigations).toEqual(sampleConfig.navigations);
-    expect(config.version).toBe(computePlatformRuntimeVersion(sampleConfig, ['remote-hubs:off', 'vertical:off']));
+    expect(config.version).toBe(computePlatformRuntimeVersion(sampleConfig, ['remote-hubs:off', 'portalx:off']));
   });
 
   it('caches runtime config until invalidation', async () => {

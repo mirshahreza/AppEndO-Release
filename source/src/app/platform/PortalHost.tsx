@@ -12,7 +12,7 @@ import { getShellByKey, shouldRedirectPortalEntry, resolveShellEntryRedirectPath
 import { parseDesignerShellEntry } from '../../shared/lib/designerShellEntry';
 import { resolveShellComponent } from './resolvers';
 import { resolvePortalShellFromPathname } from './PortalUrlResolver';
-import { VERTICAL_PORTAL_SEGMENT } from '../../core/packages/verticalPackage';
+import { PORTALX_PORTAL_SEGMENT } from '../../oss/excludedModuleStub';
 const DeveloperToolbar = React.lazy(() =>
   import('./DeveloperToolbar').then((module) => ({ default: module.DeveloperToolbar })),
 );
@@ -71,12 +71,12 @@ export const PortalShell: React.FC = () => {
     }
   }, [brand, resolved.portalSegment]);
 
-  // After Vertical install (CLI or another tab), boot cache can omit the portal shell until refetch.
+  // After Portalx install (CLI or another tab), boot cache can omit the portal shell until refetch.
   useEffect(() => {
-    if (resolved.shellKey !== VERTICAL_PORTAL_SEGMENT) {
+    if (resolved.shellKey !== PORTALX_PORTAL_SEGMENT) {
       return;
     }
-    if (getShellByKey(config, VERTICAL_PORTAL_SEGMENT)) {
+    if (getShellByKey(config, PORTALX_PORTAL_SEGMENT)) {
       return;
     }
     void refetchPlatformConfig();

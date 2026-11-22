@@ -15,7 +15,7 @@ import {
   setCachedHydrationResult,
 } from './designerPreviewHydrationCache';
 import { appendDataApiNoCacheQueryParam } from '../../shared/lib/dataApiNoCache';
-import { mergeHwyMemberDirectoryLegacyFilterQueryParams } from '../vx/vxMemberDirectoryLegacyFilterModel';
+import { mergeExtxMemberDirectoryLegacyFilterQueryParams } from '../../oss/excludedModuleStub';
 
 const isEmptyHydrationBindingValue = (
   designerStore: Record<string, unknown>,
@@ -68,7 +68,7 @@ export const resolveHydrationTargetUrl = (
     ? target.endpoint
     : resolveOperationUrl(target.endpoint, designerStore, urlParams);
 
-  const queryParams = mergeHwyMemberDirectoryLegacyFilterQueryParams(
+  const queryParams = mergeExtxMemberDirectoryLegacyFilterQueryParams(
     target.queryParams ?? {},
     target.endpoint,
   );

@@ -63,8 +63,8 @@ import {
 import { renderUniversalPaletteNode } from './designerUniversalRuntime';
 import { UNIVERSAL_PALETTE_STRUCTURAL_IDS } from './runtimeShared';
 import { DesignerRuntimeDashboardCanvas } from './DesignerRuntimeDashboardCanvas';
-import { VxFamilyHouseholdDialogHost } from '../vx/VxFamilyHouseholdDialogHost';
-import { VxImageFixPageDialogHost } from '../vx/VxImageFixPageDialogHost';
+import { ExtxFamilyHouseholdDialogHost } from '../../oss/excludedModuleStub';
+import { ExtxImageFixPageDialogHost } from '../../oss/excludedModuleStub';
 import { promoteHeroUiChromeOverrideImportant } from './tailwindClasses';
 import { resolveImageObjectFitStyle, readNodePropForReactDomAttribute, resolveMediaFallbackSrc } from './runtimeNodeProps';
 import { resolveCanvasMockEventProps, resolveCanvasTextContent } from './bindingCanvasResolver';
@@ -2263,8 +2263,8 @@ const DesignerDocumentPreviewInner: React.FC<DesignerDocumentPreviewProps & {
 
   return (
     <>
-      <VxFamilyHouseholdDialogHost document={document} />
-      <VxImageFixPageDialogHost document={document} />
+      <ExtxFamilyHouseholdDialogHost document={document} />
+      <ExtxImageFixPageDialogHost document={document} />
       {authUser && publishedFieldMap.length > 0 ? (
         <div className="px-3 pt-2">
           <AiPublishedFormAssistToolbar

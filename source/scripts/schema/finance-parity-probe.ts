@@ -9,13 +9,13 @@ import { ensureControlPlaneInitialized } from '../../src/server/db/controlPlaneI
 import { getControlPlaneSequelize } from '../../src/server/db/controlPlaneSequelize';
 import { closePrismaControlPlane } from '../../src/server/db/prismaControlPlane';
 import {
-  vxFinanceEdgeCompatReady,
-  vxFinancePaymentTablesReady,
-} from '../../src/server/domain/vx/vxFinanceParityState.service';
+  extxFinanceEdgeCompatReady,
+  extxFinancePaymentTablesReady,
+} from '../../src/oss/excludedModuleStub';
 import {
-  vxLegacyImportParityReady,
-  vxLegacyImportParityTablesReady,
-} from '../../src/server/domain/vx/vxLegacyImportParityState.service';
+  extxLegacyImportParityReady,
+  extxLegacyImportParityTablesReady,
+} from '../../src/oss/excludedModuleStub';
 
 const main = async (): Promise<void> => {
   await ensureControlPlaneInitialized(SETTINGS_PATH, { pushSchema: false });
@@ -24,12 +24,12 @@ const main = async (): Promise<void> => {
   const checks = await s.query<Record<string, number>>(
     `
 SELECT
-  CASE WHEN OBJECT_ID(N'dbo.VX_Members', N'U') IS NOT NULL THEN 1 ELSE 0 END AS has_vx_members_legacy,
-  CASE WHEN COL_LENGTH(N'dbo.vx_members', N'gender_code') IS NOT NULL THEN 1 ELSE 0 END AS has_gender_code,
-  CASE WHEN COL_LENGTH(N'dbo.vx_members', N'gender_id') IS NOT NULL THEN 1 ELSE 0 END AS has_gender_id,
-  CASE WHEN COL_LENGTH(N'dbo.vx_members', N'masooliat_level_id') IS NOT NULL THEN 1 ELSE 0 END AS has_masooliat_level_id,
-  CASE WHEN OBJECT_ID(N'dbo.vx_payment_documents', N'U') IS NOT NULL THEN 1 ELSE 0 END AS has_payment_docs,
-  CASE WHEN OBJECT_ID(N'dbo.vx_platform_user_roles', N'V') IS NOT NULL THEN 1 ELSE 0 END AS has_plat_roles_view
+  CASE WHEN OBJECT_ID(N'dbo.EXTX_Members', N'U') IS NOT NULL THEN 1 ELSE 0 END AS has_extx_members_legacy,
+  CASE WHEN COL_LENGTH(N'dbo.extx_members', N'gender_code') IS NOT NULL THEN 1 ELSE 0 END AS has_gender_code,
+  CASE WHEN COL_LENGTH(N'dbo.extx_members', N'gender_id') IS NOT NULL THEN 1 ELSE 0 END AS has_gender_id,
+  CASE WHEN COL_LENGTH(N'dbo.extx_members', N'masooliat_level_id') IS NOT NULL THEN 1 ELSE 0 END AS has_masooliat_level_id,
+  CASE WHEN OBJECT_ID(N'dbo.extx_payment_documents', N'U') IS NOT NULL THEN 1 ELSE 0 END AS has_payment_docs,
+  CASE WHEN OBJECT_ID(N'dbo.extx_platform_user_roles', N'V') IS NOT NULL THEN 1 ELSE 0 END AS has_plat_roles_view
 `,
     { type: QueryTypes.SELECT },
   );
@@ -52,7 +52,7 @@ SELECT
   SELECT c.name
   FROM sys.columns c
   JOIN sys.tables t ON c.object_id = t.object_id
-  WHERE t.name = N'vx_members'
+  WHERE t.name = N'extx_members'
     AND (
       c.name LIKE N'%area%'
       OR c.name LIKE N'%gender%'
@@ -65,16 +65,16 @@ SELECT
   );
 
   const paymentProcs = await s.query<{ name: string }>(
-    `SELECT name FROM sys.procedures WHERE name LIKE N'vx_payment%' ORDER BY name`,
+    `SELECT name FROM sys.procedures WHERE name LIKE N'extx_payment%' ORDER BY name`,
     { type: QueryTypes.SELECT },
   );
   const financeInstall = await s.query<Record<string, number>>(
     `
     SELECT
-      CASE WHEN COL_LENGTH(N'dbo.vx_ref_base_information', N'ViewOrder') IS NOT NULL THEN 1 ELSE 0 END AS ref_view_order_alias,
-      CASE WHEN OBJECT_ID(N'dbo.vx_payment_documents_read_states', N'P') IS NOT NULL THEN 1 ELSE 0 END AS payment_read_states,
-      CASE WHEN OBJECT_ID(N'dbo.vx_masoolin_stars_recalc_member', N'P') IS NOT NULL THEN 1 ELSE 0 END AS masoolin_stars_recalc,
-      CASE WHEN OBJECT_ID(N'dbo.vx_masoolin_below_officials', N'P') IS NOT NULL THEN 1 ELSE 0 END AS masoolin_deferred_below
+      CASE WHEN COL_LENGTH(N'dbo.extx_ref_base_information', N'ViewOrder') IS NOT NULL THEN 1 ELSE 0 END AS ref_view_order_alias,
+      CASE WHEN OBJECT_ID(N'dbo.extx_payment_documents_read_states', N'P') IS NOT NULL THEN 1 ELSE 0 END AS payment_read_states,
+      CASE WHEN OBJECT_ID(N'dbo.extx_masoolin_stars_recalc_member', N'P') IS NOT NULL THEN 1 ELSE 0 END AS masoolin_stars_recalc,
+      CASE WHEN OBJECT_ID(N'dbo.extx_masoolin_below_officials', N'P') IS NOT NULL THEN 1 ELSE 0 END AS masoolin_deferred_below
     `,
     { type: QueryTypes.SELECT },
   );
@@ -83,16 +83,16 @@ SELECT
     JSON.stringify(
       {
         columns: checks[0],
-        vxMemberFinanceColumns: memberCols.map((r) => r.name),
+        extxMemberFinanceColumns: memberCols.map((r) => r.name),
         base_users_locked_not_bool: cp2[0]?.cnt,
         work_item_attachment_blob_mb: wiBlob[0]?.total_mb,
         financeInstall: financeInstall[0],
         paymentProcCount: paymentProcs.length,
         gates: {
-          legacyImportParityTables: await vxLegacyImportParityTablesReady(),
-          legacyImportParityViews: await vxLegacyImportParityReady(),
-          financePaymentTables: await vxFinancePaymentTablesReady(),
-          financeEdgeCompat: await vxFinanceEdgeCompatReady(),
+          legacyImportParityTables: await extxLegacyImportParityTablesReady(),
+          legacyImportParityViews: await extxLegacyImportParityReady(),
+          financePaymentTables: await extxFinancePaymentTablesReady(),
+          financeEdgeCompat: await extxFinanceEdgeCompatReady(),
         },
       },
       null,

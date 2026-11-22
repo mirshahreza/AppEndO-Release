@@ -154,7 +154,7 @@ async function loginForHttp(baseUrl: string): Promise<string | null> {
     process.env.SMOKE_EMAIL,
     process.env.SMOKE_IDENTIFIER,
     'admin',
-    'user@example.com',
+    'https://github.com/mirshahreza/AppEndO-Release/issues',
     'admin@append.os',
   ].filter((v): v is string => Boolean(v && String(v).trim())).map((v) => String(v).trim());
 

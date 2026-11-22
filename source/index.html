@@ -54,7 +54,7 @@
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
         transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
       }
-      html[data-loading-identity='vertical'] #app-boot-splash {
+      html[data-loading-identity='portalx'] #app-boot-splash {
         background:
           radial-gradient(ellipse 68% 48% at 50% 38%, rgb(2 63 136 / 0.05) 0%, transparent 58%),
           var(--gradient-shell-atmosphere);
@@ -74,7 +74,7 @@
         gap: 1.25rem;
         min-height: 8.75rem;
       }
-      html[data-loading-identity='vertical'] #app-boot-splash {
+      html[data-loading-identity='portalx'] #app-boot-splash {
         --app-route-loading-accent: #023f88;
         /* Darker gold for contrast on the light boot field (brand #ffcb05 stays on bar sweep). */
         --app-route-loading-accent-secondary: #b8890a;
@@ -126,13 +126,13 @@
         min-inline-size: calc(var(--loading-logo-h) + 1.25rem);
         min-block-size: calc(var(--loading-logo-h) + 0.875rem);
       }
-      html[data-loading-identity='vertical'][data-boot-splash-logo-locked='1']
+      html[data-loading-identity='portalx'][data-boot-splash-logo-locked='1']
         #app-boot-splash
         .app-boot-logo-stage--square {
         min-inline-size: calc(var(--loading-logo-h) + 1rem);
         min-block-size: calc(var(--loading-logo-h) + 0.75rem);
       }
-      html[data-loading-identity='vertical'] #app-boot-splash .app-boot-logo-stage--square {
+      html[data-loading-identity='portalx'] #app-boot-splash .app-boot-logo-stage--square {
         padding: 0.375rem 0.5rem;
       }
       #app-boot-splash .app-boot-logo,
@@ -161,7 +161,7 @@
         -webkit-mask-image: none;
         mask-image: none;
       }
-      html[data-loading-identity='vertical'] #app-boot-splash .app-boot-logo-stage--square .app-boot-logo--custom {
+      html[data-loading-identity='portalx'] #app-boot-splash .app-boot-logo-stage--square .app-boot-logo--custom {
         filter: drop-shadow(0 4px 14px rgb(2 63 136 / 0.1));
       }
       /* Portal routes: never flash AppEnd before Settings → Portals logo is applied. */
@@ -303,18 +303,18 @@
             document.documentElement.setAttribute('lang', 'fa');
             document.documentElement.setAttribute('dir', 'rtl');
           }
-          var verticalIdx = parts.indexOf('vertical');
-          var segment = verticalIdx !== -1 ? 'vertical' : (parts.length >= 2 ? parts[1] : '');
+          var portalxIdx = parts.indexOf('portalx');
+          var segment = portalxIdx !== -1 ? 'portalx' : (parts.length >= 2 ? parts[1] : '');
           if (!segment || segment === 'home') return;
           document.documentElement.setAttribute('data-portal-route', segment);
-          if (segment === 'vertical') {
-            document.documentElement.setAttribute('data-loading-identity', 'vertical');
-            var culture = verticalIdx > 0 ? parts[verticalIdx - 1] : 'iq';
+          if (segment === 'portalx') {
+            document.documentElement.setAttribute('data-loading-identity', 'portalx');
+            var culture = portalxIdx > 0 ? parts[portalxIdx - 1] : 'iq';
             if (culture === 'iq') {
               document.documentElement.setAttribute('lang', 'ar');
               document.documentElement.setAttribute('dir', 'rtl');
-              function isVerticalPublicBootPathEarly(p) {
-                var rest = p.replace(/^\/[^/]+\/vertical/, '') || '/';
+              function isPortalxPublicBootPathEarly(p) {
+                var rest = p.replace(/^\/[^/]+\/portalx/, '') || '/';
                 if (rest === '/' || !rest) return false;
                 var exact = ['/login', '/track-registration', '/registration-portal-dev', '/other-registration'];
                 for (var ei = 0; ei < exact.length; ei += 1) {
@@ -324,7 +324,7 @@
                 if (rest.indexOf('/join') === 0) return true;
                 return false;
               }
-              if (isVerticalPublicBootPathEarly(path)) {
+              if (isPortalxPublicBootPathEarly(path)) {
                 var portalAr = 'نظام هويتي الإلكتروني';
                 var pageAr = 'انضم الينا';
                 if (path.indexOf('/track-registration') !== -1) pageAr = 'متابعة التسجيل';
@@ -343,7 +343,7 @@
                 document.title = 'هويتي ...';
               }
             }
-            var defaultFavicon = '/assets/vertical/mark-blue.png';
+            var defaultFavicon = '/assets/portalx/mark-blue.png';
             document.head.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach(function (node) {
               node.remove();
             });
@@ -507,17 +507,17 @@
           var path = location.pathname;
           if (path === '/login' || path === '/install') return;
           var parts = path.split('/').filter(Boolean);
-          var verticalIdx = parts.indexOf('vertical');
-          var segment = verticalIdx !== -1 ? 'vertical' : (parts.length >= 2 ? parts[1] : '');
+          var portalxIdx = parts.indexOf('portalx');
+          var segment = portalxIdx !== -1 ? 'portalx' : (parts.length >= 2 ? parts[1] : '');
           if (!segment || segment === 'home') return;
           document.documentElement.setAttribute('data-portal-route', segment);
-          if (segment === 'vertical') {
-            document.documentElement.setAttribute('data-loading-identity', 'vertical');
+          if (segment === 'portalx') {
+            document.documentElement.setAttribute('data-loading-identity', 'portalx');
             var stage = document.querySelector('#app-boot-splash .app-boot-logo-stage');
             var frame = document.querySelector('#app-boot-splash .app-boot-logo-frame');
             var logo = frame && frame.querySelector('.app-boot-logo');
             if (!stage || !frame || !logo) return;
-            var mark = '/assets/vertical/mark-blue.png';
+            var mark = '/assets/portalx/mark-blue.png';
             stage.className = 'app-boot-logo-stage app-boot-logo-stage--square';
             var img = document.createElement('img');
             img.className = 'app-boot-logo app-boot-logo--custom';
@@ -545,17 +545,17 @@
 
           function guessSegment() {
             var parts = path.split('/').filter(Boolean);
-            var verticalIdx = parts.indexOf('vertical');
-            if (verticalIdx !== -1) return 'vertical';
+            var portalxIdx = parts.indexOf('portalx');
+            if (portalxIdx !== -1) return 'portalx';
             return parts.length >= 2 ? parts[1] : '';
           }
 
           function isAllowedLogo(pathOnly) {
             if (!pathOnly || pathOnly.indexOf('..') !== -1 || pathOnly.indexOf('<') !== -1) return false;
             if (pathOnly.indexOf('/assets/workspace/portals/') === 0) return true;
-            if (pathOnly.indexOf('/assets/vertical/') === 0) return true;
-            if (pathOnly.indexOf('/assets/vertical/institutes/') === 0) return true;
-            if (/^\/api\/vx\/institutes\/\d+\/logo$/i.test(pathOnly)) return true;
+            if (pathOnly.indexOf('/assets/portalx/') === 0) return true;
+            if (pathOnly.indexOf('/assets/portalx/institutes/') === 0) return true;
+            if (/^\/api\/extx\/institutes\/\d+\/logo$/i.test(pathOnly)) return true;
             return false;
           }
 
@@ -563,22 +563,22 @@
             document.documentElement.setAttribute('data-portal-logo-ready', '1');
           }
 
-          function resolveVerticalPortalTitle(registryTitle) {
+          function resolvePortalxPortalTitle(registryTitle) {
             var ar = 'نظام هويتي الإلكتروني';
             var trimmed = registryTitle ? String(registryTitle).trim() : '';
             if (
               !trimmed
               || trimmed === 'AppEnd'
               || trimmed === 'AppEndO'
-              || trimmed === 'Vertical electronic identity system'
-              || trimmed === 'Vertical'
+              || trimmed === 'Portalx electronic identity system'
+              || trimmed === 'Portalx'
             ) {
               return ar;
             }
             return trimmed;
           }
 
-          function resolveVerticalPageTitle(path) {
+          function resolvePortalxPageTitle(path) {
             if (path.indexOf('/track-registration') !== -1) return 'متابعة التسجيل';
             if (path.indexOf('/registration-portal-dev') !== -1) return 'بوابة تجريب — مسارات التسجيل';
             if (path.indexOf('/login') !== -1) return 'تسجيل الدخول';
@@ -593,8 +593,8 @@
             return 'انضم الينا';
           }
 
-          function isVerticalPublicBootPath(p) {
-            var rest = p.replace(/^\/[^/]+\/vertical/, '') || '/';
+          function isPortalxPublicBootPath(p) {
+            var rest = p.replace(/^\/[^/]+\/portalx/, '') || '/';
             if (rest === '/' || !rest) return false;
             var exact = ['/login', '/track-registration', '/registration-portal-dev', '/other-registration'];
             for (var ei = 0; ei < exact.length; ei += 1) {
@@ -605,17 +605,17 @@
             return false;
           }
 
-          function resolveVerticalAdminBootTitle(registryWindowTitle) {
+          function resolvePortalxAdminBootTitle(registryWindowTitle) {
             var w = registryWindowTitle ? String(registryWindowTitle).trim() : 'هويتي';
             return w + ' ...';
           }
 
-          function resolveVerticalDocumentTitle(registryTitle, registryWindowTitle) {
-            if (segment === 'vertical' && !isVerticalPublicBootPath(path)) {
-              return resolveVerticalAdminBootTitle(registryWindowTitle);
+          function resolvePortalxDocumentTitle(registryTitle, registryWindowTitle) {
+            if (segment === 'portalx' && !isPortalxPublicBootPath(path)) {
+              return resolvePortalxAdminBootTitle(registryWindowTitle);
             }
-            var portal = resolveVerticalPortalTitle(registryTitle);
-            var page = resolveVerticalPageTitle(path);
+            var portal = resolvePortalxPortalTitle(registryTitle);
+            var page = resolvePortalxPageTitle(path);
             return page + ' / ' + portal;
           }
 
@@ -635,11 +635,11 @@
             document.head.appendChild(touchLink);
           }
 
-          var VX_DEFAULT_MARK = '/assets/vertical/mark-blue.png';
+          var EXTX_DEFAULT_MARK = '/assets/portalx/mark-blue.png';
 
-          function applyDefaultVerticalSplashLogo() {
-            if (segment !== 'vertical') return false;
-            return applySplashLogo(VX_DEFAULT_MARK, '');
+          function applyDefaultPortalxSplashLogo() {
+            if (segment !== 'portalx') return false;
+            return applySplashLogo(EXTX_DEFAULT_MARK, '');
           }
 
           function classifyLogoShape(pathOnly) {
@@ -647,7 +647,7 @@
             if (p.indexOf('/mark-blue') !== -1 || p.indexOf('/mark-white') !== -1) {
               return 'square';
             }
-            if (p.indexOf('/assets/vertical/') !== -1 && p.indexOf('/mark-') !== -1) {
+            if (p.indexOf('/assets/portalx/') !== -1 && p.indexOf('/mark-') !== -1) {
               return 'square';
             }
             if (p.indexOf('/assets/appendo/brand/') !== -1 && p.indexOf('mark') !== -1) {
@@ -698,8 +698,8 @@
               frame.appendChild(img);
             }
             applyPortalFavicon(pathOnly);
-            var resolvedTitle = segment === 'vertical'
-              ? resolveVerticalDocumentTitle(title, windowTitle)
+            var resolvedTitle = segment === 'portalx'
+              ? resolvePortalxDocumentTitle(title, windowTitle)
               : title;
             if (resolvedTitle && resolvedTitle !== 'AppEnd' && resolvedTitle !== 'AppEndO' && resolvedTitle.indexOf('<') === -1) {
               document.title = resolvedTitle;
@@ -749,7 +749,7 @@
           }
 
           function resolveSelfRegistrationChannelFromPath(p) {
-            var rest = p.replace(/^\/[^/]+\/vertical/, '') || p;
+            var rest = p.replace(/^\/[^/]+\/portalx/, '') || p;
             var suffixToChannel = {
               '/self-registration-gov': 'gov',
               '/self-registration-hemam': 'hemam',
@@ -771,14 +771,14 @@
           }
 
           function tryApplyInstituteBrandSplashFromDb() {
-            if (segment !== 'vertical' || !isVerticalPublicBootPath(path)) return false;
+            if (segment !== 'portalx' || !isPortalxPublicBootPath(path)) return false;
             var channel = resolveSelfRegistrationChannelFromPath(path);
             if (!channel) return false;
             try {
               var brandXhr = new XMLHttpRequest();
               brandXhr.open(
                 'GET',
-                '/api/vx/public/self-registration/institute-brand?channel=' + encodeURIComponent(channel),
+                '/api/extx/public/self-registration/institute-brand?channel=' + encodeURIComponent(channel),
                 false,
               );
               brandXhr.withCredentials = true;
@@ -787,10 +787,10 @@
               var brandJson = JSON.parse(brandXhr.responseText);
               var brand = brandJson && brandJson.data;
               var logoPath = brand && typeof brand.logoUrl === 'string' ? brand.logoUrl.trim().split('?')[0] : '';
-              if (!logoPath || !/^\/api\/vx\/institutes\/\d+\/logo$/i.test(logoPath)) return false;
+              if (!logoPath || !/^\/api\/extx\/institutes\/\d+\/logo$/i.test(logoPath)) return false;
               var title = brand.titleAr && String(brand.titleAr).trim()
                 ? String(brand.titleAr).trim()
-                : resolveVerticalPageTitle(path);
+                : resolvePortalxPageTitle(path);
               return applySplashLogo(logoPath, title, '');
             } catch (brandErr) {
               return false;
@@ -799,7 +799,7 @@
 
           if (tryApplyInstituteBrandSplashFromDb()) return;
 
-          if (applyDefaultVerticalSplashLogo()) return;
+          if (applyDefaultPortalxSplashLogo()) return;
 
           try {
             var xhr = new XMLHttpRequest();
@@ -807,35 +807,35 @@
             xhr.withCredentials = true;
             xhr.send(null);
             if (xhr.status < 200 || xhr.status >= 300) {
-              if (!applyDefaultVerticalSplashLogo()) markReady();
+              if (!applyDefaultPortalxSplashLogo()) markReady();
               return;
             }
             var data = JSON.parse(xhr.responseText);
             if (!data || !data.runtimeConfig || !Array.isArray(data.runtimeConfig.shells)) {
-              if (!applyDefaultVerticalSplashLogo()) markReady();
+              if (!applyDefaultPortalxSplashLogo()) markReady();
               return;
             }
             var shell = data.runtimeConfig.shells.find(function (s) {
               return s && s.shellKey === segment;
             });
             if (!shell || !shell.brand) {
-              if (!applyDefaultVerticalSplashLogo()) markReady();
+              if (!applyDefaultPortalxSplashLogo()) markReady();
               return;
             }
             var logoUrl = typeof shell.brand.logoUrl === 'string' ? shell.brand.logoUrl.trim().split('?')[0] : '';
             var shellTitle = typeof shell.brand.title === 'string' ? shell.brand.title.trim() : '';
             var shellWindowTitle = typeof shell.brand.windowTitle === 'string' ? shell.brand.windowTitle.trim() : '';
             if (!logoUrl) {
-              if (!applyDefaultVerticalSplashLogo()) markReady();
+              if (!applyDefaultPortalxSplashLogo()) markReady();
               return;
             }
-            var bootTitle = segment === 'vertical'
-              ? resolveVerticalDocumentTitle(shellTitle, shellWindowTitle)
+            var bootTitle = segment === 'portalx'
+              ? resolvePortalxDocumentTitle(shellTitle, shellWindowTitle)
               : shellTitle;
             writeCache(segment, logoUrl, bootTitle, shellWindowTitle);
             applySplashLogo(logoUrl, shellTitle, shellWindowTitle);
           } catch (e) {
-            if (!applyDefaultVerticalSplashLogo()) markReady();
+            if (!applyDefaultPortalxSplashLogo()) markReady();
           }
         } catch (e) {}
       })();

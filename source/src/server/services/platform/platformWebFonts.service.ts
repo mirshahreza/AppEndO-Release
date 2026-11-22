@@ -608,7 +608,7 @@ const BUNDLED_WORKSPACE_WEB_FONT_SPECS: readonly BundledWorkspaceWebFontSpec[] =
 
 /**
  * Registers workspace font files into `platformWebFonts` settings when missing.
- * Keeps Vertical / Iraq culture typography aligned with legacy Tajawal without page-level @font-face.
+ * Keeps Portalx / Iraq culture typography aligned with legacy Tajawal without page-level @font-face.
  */
 export function ensureBundledWorkspaceWebFontsInSettings(
   settingsPath: string = SETTINGS_PATH,

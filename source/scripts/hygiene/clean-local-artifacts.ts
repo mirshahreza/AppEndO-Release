@@ -20,7 +20,7 @@ const REL_PATHS = [
   'workspace/functional-pass',
   'workspace/optimization-pass/reports',
   '.appendo-release-staging',
-  '.appendo-vertical-staging',
+  '.appendo-portalx-staging',
 ];
 
 function rmPath(abs: string): { ok: boolean; reason?: string } {

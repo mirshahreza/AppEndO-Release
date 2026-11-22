@@ -29,8 +29,8 @@ import { sanitizeDesignerHtml } from './sanitizeDesignerHtml';
 import { documentUsesDateRangeParsedValue } from './tsxPhase2Palette';
 import { CHART_TOOLBAR_IMPORT_SOURCE, documentUsesChartToolbar } from './tsxVizPalette';
 import { documentUsesAppTableGrid } from './designerDataGridColumns';
-import { documentUsesHwyFamilyHouseholdCellClick } from '../vx/vxFamilyHousehold';
-import { collectHwyMemberListScopedEditChromeFromGridFetches } from '../vx/vxMemberListScopedEditPageChrome.ts';
+import { documentUsesExtxFamilyHouseholdCellClick } from '../../oss/excludedModuleStub';
+import { collectExtxMemberListScopedEditChromeFromGridFetches } from '../../oss/excludedModuleStub';
 import { documentUsesGridAggregation } from './designerGridAggregation';
 import { getNodePaletteItemId } from './runtimeShared';
 import {
@@ -440,12 +440,12 @@ export const generateDesignerTsx = (
     || documentUsesExportDataAction(exportDocument)
     || documentUsesTriggerWorkflowAction(exportDocument)
     || hasMutatingEventBinding;
-  const usesHwyFamilyHousehold = documentUsesHwyFamilyHouseholdCellClick(exportDocument);
-  const vxMemberListScopedEditChromes = collectHwyMemberListScopedEditChromeFromGridFetches(
+  const usesExtxFamilyHousehold = documentUsesExtxFamilyHouseholdCellClick(exportDocument);
+  const extxMemberListScopedEditChromes = collectExtxMemberListScopedEditChromeFromGridFetches(
     bindingContext.plan.gridPlan.gridListFetches,
   );
-  const usesHwyMemberListScopedEdit = vxMemberListScopedEditChromes.length > 0;
-  const usesFragmentWrapper = usesShowToast || usesHwyFamilyHousehold || usesHwyMemberListScopedEdit;
+  const usesExtxMemberListScopedEdit = extxMemberListScopedEditChromes.length > 0;
+  const usesFragmentWrapper = usesShowToast || usesExtxFamilyHousehold || usesExtxMemberListScopedEdit;
   const usesNavigate = documentUsesNavigateAction(exportDocument)
     || documentUsesGridCellNavigateBehavior(exportDocument);
   const usesExportData = documentUsesExportDataAction(exportDocument) || documentUsesGridToolbarExport(exportDocument);
@@ -509,11 +509,11 @@ export const generateDesignerTsx = (
       || documentUsesFormFieldCultureKeys(exportDocument)
       ? ["import { useCulture } from '@/core/culture/CultureContext';"]
       : []),
-    ...(usesHwyFamilyHousehold
-      ? ["import { useHwyFamilyHouseholdDialog } from '@/domain/vx/useHwyFamilyHouseholdDialog';"]
+    ...(usesExtxFamilyHousehold
+      ? ["import { useExtxFamilyHouseholdDialog } from '@/domain/extx/useExtxFamilyHouseholdDialog';"]
       : []),
-    ...(usesHwyMemberListScopedEdit
-      ? ["import { VxMemberListScopedEditPageChrome } from '@/domain/vx/VxMemberListScopedEditPageChrome';"]
+    ...(usesExtxMemberListScopedEdit
+      ? ["import { ExtxMemberListScopedEditPageChrome } from '@/domain/extx/ExtxMemberListScopedEditPageChrome';"]
       : []),
     ...(documentUsesDateRangeParsedValue(exportDocument, bindingContext)
       ? ["import { parseDate } from '@internationalized/date';"]
@@ -560,10 +560,10 @@ export const generateDesignerTsx = (
         '  return (',
         '    <>',
         ...(usesShowToast ? ['      <Toast.Provider />'] : []),
-        ...(vxMemberListScopedEditChromes.map(
-          (entry) => `      <VxMemberListScopedEditPageChrome listScopeLegacy=${JSON.stringify(entry.listScopeLegacy)} onSaved={() => { void ${entry.refreshVar}(); }} />`,
+        ...(extxMemberListScopedEditChromes.map(
+          (entry) => `      <ExtxMemberListScopedEditPageChrome listScopeLegacy=${JSON.stringify(entry.listScopeLegacy)} onSaved={() => { void ${entry.refreshVar}(); }} />`,
         )),
-        ...(usesHwyFamilyHousehold ? ['      {vxFamilyHouseholdDialog}'] : []),
+        ...(usesExtxFamilyHousehold ? ['      {extxFamilyHouseholdDialog}'] : []),
         `      ${rootOpen}`,
         ...renderedBody.split('\n').map((line) => (line.length > 0 ? `  ${line}` : line)),
         '      </div>',

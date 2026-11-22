@@ -1,7 +1,7 @@
 {
   "edgeModelId": "em_d13ee973a8993e0b",
   "tags": [
-    "vx",
+    "extx",
     "list",
     "segmentation"
   ],
@@ -48,7 +48,7 @@
       "columnName": "predicate_ref",
       "formWidget": "text",
       "searchRole": "advanced",
-      "interfaceNotes": "Legacy VX_Members_List_* code for predicate lists.",
+      "interfaceNotes": "Legacy EXTX_Members_List_* code for predicate lists.",
       "group": "Binding",
       "sortOrder": 60
     },
@@ -141,7 +141,7 @@
     }
   ],
   "extensions": {
-    "story": "## Purpose\n\nDefines each legacy `VX_Members_List_*` screen separately — institute-scoped or predicate-scoped.\n\n## Scenarios\n\n- **S6** — never merge institute lists with predicate lists in one grid.\n\n## Rules\n\n- `list_logic_code` = institute | predicate.\n- Predicate lists reference `predicate_ref` (legacy list code) until replaced by Server Functions.",
+    "story": "## Purpose\n\nDefines each legacy `EXTX_Members_List_*` screen separately — institute-scoped or predicate-scoped.\n\n## Scenarios\n\n- **S6** — never merge institute lists with predicate lists in one grid.\n\n## Rules\n\n- `list_logic_code` = institute | predicate.\n- Predicate lists reference `predicate_ref` (legacy list code) until replaced by Server Functions.",
     "scenarioIds": [
       "S6"
     ],

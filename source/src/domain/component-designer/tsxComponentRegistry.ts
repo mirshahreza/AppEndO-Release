@@ -104,7 +104,7 @@ const LIBRARY_CUSTOM_PALETTE_IDS = new Set<string>([
   'form.cms-content-assets',
   'form.base-info-record',
   'heroui.color-control',
-  'vx.institute-logo-upload',
+  'extx.institute-logo-upload',
   'heroui.card',
   'heroui.tabs',
   'heroui.accordion-item',
@@ -207,10 +207,10 @@ const LIBRARY_TAG_OVERRIDES: Record<string, { reactTag: string; importSymbols: s
     importSymbols: ['DesignerBaseInfoRecordFormField'],
     importFrom: '@/domain/component-designer/DesignerBaseInfoRecordFormField',
   },
-  'vx.institute-logo-upload': {
-    reactTag: 'VxInstituteLogoUploadField',
-    importSymbols: ['VxInstituteLogoUploadField'],
-    importFrom: '@/domain/vx/VxInstituteLogoUploadField',
+  'extx.institute-logo-upload': {
+    reactTag: 'ExtxInstituteLogoUploadField',
+    importSymbols: ['ExtxInstituteLogoUploadField'],
+    importFrom: '@/domain/extx/ExtxInstituteLogoUploadField',
   },
   'heroui.color-control': { reactTag: 'DesignerColorEditorField', importSymbols: ['DesignerColorEditorField'], importFrom: '@/shared/ui/DesignerFormFields' },
   'heroui.progress': { reactTag: 'ProgressBar', importSymbols: ['ProgressBar'] },
@@ -463,7 +463,7 @@ export const resolveTsxComponentSpec = (node: DesignerNode): TsxComponentSpec =>
     paletteItemId === 'form.date-range'
     || paletteItemId?.startsWith('form.')
     || paletteItemId?.startsWith('heroui.')
-    || paletteItemId?.startsWith('vx.')
+    || paletteItemId?.startsWith('extx.')
     || isVizPaletteItemId(paletteItemId)
     || isUniversalPaletteItemId(paletteItemId)
     || isPlatformPaletteItemId(paletteItemId)

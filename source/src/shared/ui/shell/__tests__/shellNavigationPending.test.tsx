@@ -53,8 +53,8 @@ describe('shellNavigationPending', () => {
 
   it('ignores member dossier section soft-nav', () => {
     beginShellNavigationPending(
-      '/iq/vertical/members-all/view/42/files',
-      '/iq/vertical/members-all/view/42/kasb',
+      '/iq/portalx/members-all/view/42/files',
+      '/iq/portalx/members-all/view/42/kasb',
     );
     render(<PendingProbe />);
     expect(screen.getByTestId('pending').textContent).toBe('');

@@ -3,7 +3,7 @@ import { resolveGeoPlaceholderDisplayTitle } from '../baseInfoGeoPlaceholderTitl
 
 describe('resolveGeoPlaceholderDisplayTitle', () => {
   it('formats region placeholders for iq', () => {
-    expect(resolveGeoPlaceholderDisplayTitle('iq', 'vx-region-100650')).toBe('منطقة 100650');
+    expect(resolveGeoPlaceholderDisplayTitle('iq', 'extx-region-100650')).toBe('منطقة 100650');
   });
 
   it('returns null for normal titles', () => {

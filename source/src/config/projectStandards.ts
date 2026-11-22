@@ -1090,11 +1090,11 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'data.control-plane.schema-ownership',
       title: 'Control-Plane Schema Ownership Layers',
       value:
-        'Non-Prisma schema has canonical upgrade commands per layer (controlPlaneSchemaOwnership.ts): db:sync-schema for prisma/schema.prisma; schema:install-extensions for Sequelize feature base_* tables; schema:install-extensions --vx for Vertical DDL + satellites + vx:db-objects; schema:ownership-report for live classification; default protected-table merge includes vx_/cms_/zz_ prefixes; Vertical schema-ownership dev closeout CLOSED 2026-11-09 — scripts/schema/schema-ownership-closeout.md',
+        'Non-Prisma schema has canonical upgrade commands per layer (controlPlaneSchemaOwnership.ts): db:sync-schema for prisma/schema.prisma; schema:install-extensions for Sequelize feature base_* tables; schema:install-extensions --extx for Portalx DDL + satellites + extx:db-objects; schema:ownership-report for live classification; default protected-table merge includes extx_/cms_/zz_ prefixes; Portalx schema-ownership dev closeout CLOSED 2026-11-09 — scripts/schema/schema-ownership-closeout.md',
       appliesTo: [
         'control plane',
         'schema sync',
-        'vertical package',
+        'portalx package',
         'platform upgrade',
       ],
     },
@@ -1502,102 +1502,102 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       ],
     },
     {
-      id: 'package.vertical.db-objects',
-      title: 'Vertical — atomic writes as SQL Server procedures',
+      id: 'package.portalx.db-objects',
+      title: 'Portalx — atomic writes as SQL Server procedures',
       value:
-        'Vertical multi-step or guarded DML and complex reads (not simple single-row SELECTs) MUST ship as dbo.vx_* procedures/functions/views under scripts/vx-phase1/db/install/vx_db_*.sqlserver.sql; repackage in vertical-app vertical (npm run vertical:pack / vertical:install, ETL-not-seed); ensureHwyDbObjects when package enabled; npm run vx:db-objects; verify vx:verify-db-objects (+ --install on sqlserver) and vx:verify-db-objects:tests; skill appendo-build-vx-db-objects; nomination SQL via vx:gen-nomination-procs; TypeScript auth/roles then EXEC; never write legacy MembersV2 — legacy SQL connections are ApplicationIntent ReadOnly only; shard package-vertical-db',
+        'Portalx multi-step or guarded DML and complex reads (not simple single-row SELECTs) MUST ship as dbo.extx_* procedures/functions/views under scripts/extx-phase1/db/install/extx_db_*.sqlserver.sql; repackage in vertical-app portalx (npm run portalx:pack / portalx:install, ETL-not-seed); ensureExtxDbObjects when package enabled; npm run extx:db-objects; verify extx:verify-db-objects (+ --install on sqlserver) and extx:verify-db-objects:tests; skill appendo-build-extx-db-objects; nomination SQL via extx:gen-nomination-procs; TypeScript auth/roles then EXEC; never write legacy MembersV2 — legacy SQL connections are ApplicationIntent ReadOnly only; shard package-portalx-db',
       appliesTo: [
-        'Vertical package',
-        'vx_* tables',
-        'src/server/domain/vx',
-        'scripts/vx-phase1/db/install',
-        'scripts/vx-phase3/install-vx',
+        'Portalx package',
+        'extx_* tables',
+        'src/server/domain/extx',
+        'scripts/extx-phase1/db/install',
+        'scripts/extx-phase3/install-extx',
       ],
     },
     {
-      id: 'package.vertical.locale-policy',
-      title: 'Vertical — Arabic UI, English repo copy, no Persian',
+      id: 'package.portalx.locale-policy',
+      title: 'Portalx — Arabic UI, English repo copy, no Persian',
       value:
-        'Vertical end-user and iq overlay copy Arabic (e.g. هويتي not Persian هویتی); AppEndO-Vertical README/templates and non-UI Vertical metadata English only; no Persian in vertical shell seeds or vertical.* culture keys; shard package-vertical-locale-policy',
+        'Portalx end-user and iq overlay copy Arabic (e.g. هويتي not Persian پورتال); AppEndO-Portalx README/templates and non-UI Portalx metadata English only; no Persian in portalx shell seeds or portalx.* culture keys; shard package-portalx-locale-policy',
       appliesTo: [
-        'src/core/packages/verticalPackage.ts',
-        'src/domain/vx/vxPlatformPortalBrandDefaults.ts',
-        'scripts/release-cut/templates/AppEndO-Vertical-README.md',
-        'src/core/system-extensions/culture-packs/overlays/vertical.iq.json',
-        'workspace/platform-registry/shells/vertical.json',
+        'src/core/packages/portalxPackage.ts',
+        'src/domain/extx/extxPlatformPortalBrandDefaults.ts',
+        'scripts/release-cut/templates/AppEndO-Portalx-README.md',
+        'src/core/system-extensions/culture-packs/overlays/portalx.iq.json',
+        'workspace/platform-registry/shells/portalx.json',
       ],
     },
     {
-      id: 'package.vertical.ui-vocab',
+      id: 'package.portalx.ui-vocab',
       value:
-        'Vertical Studio UI copy: say region (منطقة) not eghtera/اقتراع; maktab (مكتب) not tamvin/تموين; electoral breadcrumb order province → ghavateh? → circle → maktab → region; grid column 3 rows (province|ghavateh / circle|maktab / region) via vxElectoralBreadcrumbStandard.ts — legacy SQL/route names stay; shard package-vertical-ui-vocab',
+        'Portalx Studio UI copy: say region (منطقة) not eghtera/اقتراع; maktab (مكتب) not tamvin/تموين; electoral breadcrumb order province → ghavateh? → circle → maktab → region; grid column 3 rows (province|ghavateh / circle|maktab / region) via extxElectoralBreadcrumbStandard.ts — legacy SQL/route names stay; shard package-portalx-ui-vocab',
       appliesTo: [
-        'Vertical package UI',
-        'culture-packs/overlays/vertical.*.json',
-        'src/domain/vx',
-        'src/features/vx-*',
+        'Portalx package UI',
+        'culture-packs/overlays/portalx.*.json',
+        'src/domain/extx',
+        'src/features/extx-*',
       ],
     },
     {
-      id: 'package.vertical.member-face-caption',
-      title: 'Vertical member-directory avatar caption (username vs tracking)',
+      id: 'package.portalx.member-face-caption',
+      title: 'Portalx member-directory avatar caption (username vs tracking)',
       value:
-        'member-directory list avatar code line MUST use VxMemberAvatarWithMembershipCode / VxMemberDirectoryListFaceCard / VxMemberDirectoryGridFaceCell (Vertical /vertical/identity-components, section member-directory-face) and resolveHwyMemberDirectoryListFaceCaptionForScope(row, listScopeLegacy) — never resolveHwyMemberFaceCaptionFromIdentity on list rows; six-digit allocated username blue else tracking red; Waited/Marfoozeh/pending-institute scopes tracking-only (never blue); server lists MUST finish with applyHwyMemberDirectoryListFaceCaptionUsernames(rows, { listScopeLegacy }); npm run test:vx-member-face-caption; shard package-vertical-member-face-caption; barrel vxMemberDirectoryFaceCaptionContract.ts',
+        'member-directory list avatar code line MUST use ExtxMemberAvatarWithMembershipCode / ExtxMemberDirectoryListFaceCard / ExtxMemberDirectoryGridFaceCell (Portalx /portalx/identity-components, section member-directory-face) and resolveExtxMemberDirectoryListFaceCaptionForScope(row, listScopeLegacy) — never resolveExtxMemberFaceCaptionFromIdentity on list rows; six-digit allocated username blue else tracking red; Waited/Marfoozeh/pending-institute scopes tracking-only (never blue); server lists MUST finish with applyExtxMemberDirectoryListFaceCaptionUsernames(rows, { listScopeLegacy }); npm run test:extx-member-face-caption; shard package-portalx-member-face-caption; barrel extxMemberDirectoryFaceCaptionContract.ts',
       appliesTo: [
-        'Vertical member-directory lists',
-        'GET /api/vx/member-directory',
-        'src/domain/vx/vxMemberDirectoryFaceCaptionContract.ts',
-        'src/shared/ui/vx/VxMemberAvatarWithMembershipCode.tsx',
-        'src/server/domain/vx/vxMemberDirectoryListFaceCaption.ts',
+        'Portalx member-directory lists',
+        'GET /api/extx/member-directory',
+        'src/domain/extx/extxMemberDirectoryFaceCaptionContract.ts',
+        'src/shared/ui/extx/ExtxMemberAvatarWithMembershipCode.tsx',
+        'src/server/domain/extx/extxMemberDirectoryListFaceCaption.ts',
       ],
     },
     {
-      id: 'package.vertical.member-list-legacy-filters',
-      title: 'Vertical member-list field-by-field filter rows (toolbar mode 2)',
+      id: 'package.portalx.member-list-legacy-filters',
+      title: 'Portalx member-list field-by-field filter rows (toolbar mode 2)',
       value:
-        'People lists with VxLegacyFieldFilterBarToggle MUST compose mode-2 panel via VxMemberListLegacyFieldByFieldStack: identity → personal details → education/work (VxMemberListLegacyFieldFilterEducationWorkRow) → electoral → extra; vx-members-all uses VxMemberDirectoryAllPeopleLegacyFieldByFieldPanel; shard package-vertical-member-list-legacy-filters',
+        'People lists with ExtxLegacyFieldFilterBarToggle MUST compose mode-2 panel via ExtxMemberListLegacyFieldByFieldStack: identity → personal details → education/work (ExtxMemberListLegacyFieldFilterEducationWorkRow) → electoral → extra; extx-members-all uses ExtxMemberDirectoryAllPeopleLegacyFieldByFieldPanel; shard package-portalx-member-list-legacy-filters',
       appliesTo: [
-        'Vertical member-directory lists',
-        'src/domain/vx/VxMemberListLegacyFieldByFieldStack.tsx',
-        'src/domain/vx/VxMemberListLegacyFieldFilterIdentityRow.tsx',
-        'src/domain/vx/VxMemberListLegacyFieldFilterPersonalDetailsRow.tsx',
-        'src/domain/vx/VxMemberListLegacyFieldFilterEducationWorkRow.tsx',
-        'src/domain/vx/VxMemberListLegacyFieldFilterElectoralRow.tsx',
-        'src/domain/vx/VxMemberDirectoryAllPeopleLegacyFieldByFieldPanel.tsx',
+        'Portalx member-directory lists',
+        'src/domain/extx/ExtxMemberListLegacyFieldByFieldStack.tsx',
+        'src/domain/extx/ExtxMemberListLegacyFieldFilterIdentityRow.tsx',
+        'src/domain/extx/ExtxMemberListLegacyFieldFilterPersonalDetailsRow.tsx',
+        'src/domain/extx/ExtxMemberListLegacyFieldFilterEducationWorkRow.tsx',
+        'src/domain/extx/ExtxMemberListLegacyFieldFilterElectoralRow.tsx',
+        'src/domain/extx/ExtxMemberDirectoryAllPeopleLegacyFieldByFieldPanel.tsx',
       ],
     },
     {
-      id: 'package.vertical.legacy-filter-panel-layout',
-      title: 'Vertical legacy filter panel layout (mode 2 spacing)',
+      id: 'package.portalx.legacy-filter-panel-layout',
+      title: 'Portalx legacy filter panel layout (mode 2 spacing)',
       value:
-        'Mode-2 VxMemberDirectoryLegacyFilterBarPanel: exactly one horizontal px layer on outer fields host (VX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELDS_HOST_CLASS); custom stacks + VxMemberListLegacyFieldByFieldStack use VX_LEGACY_FILTER_FIELDS_STACK_* inset and VX_LEGACY_FILTER_FIELDS_STACK_SECTION_NESTED_HOST_CLASS on section hosts; keep outer py + stack -my inset + section !py-1.25; default panel bleed via vxMemberDirectoryLegacyFilterBar.css; no panelClassName px or fieldFilterFieldsHostClassName !py-0 without full stack pattern; shard package-vertical-legacy-filter-panel-layout',
+        'Mode-2 ExtxMemberDirectoryLegacyFilterBarPanel: exactly one horizontal px layer on outer fields host (EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELDS_HOST_CLASS); custom stacks + ExtxMemberListLegacyFieldByFieldStack use EXTX_LEGACY_FILTER_FIELDS_STACK_* inset and EXTX_LEGACY_FILTER_FIELDS_STACK_SECTION_NESTED_HOST_CLASS on section hosts; keep outer py + stack -my inset + section !py-1.25; default panel bleed via extxMemberDirectoryLegacyFilterBar.css; no panelClassName px or fieldFilterFieldsHostClassName !py-0 without full stack pattern; shard package-portalx-legacy-filter-panel-layout',
       appliesTo: [
-        'Vertical list pages',
-        'src/domain/vx/VxMemberDirectoryLegacyFilterBarPanel.tsx',
-        'src/domain/vx/vxMemberDirectoryLegacyFilterBarLayout.ts',
-        'src/domain/vx/vxMemberDirectoryLegacyFilterBar.css',
-        'src/domain/vx/VxLegacyFilterFieldsStackSection.tsx',
-        'src/domain/vx/VxMemberListLegacyFieldByFieldStack.tsx',
-        'src/domain/vx/VxImageFixListToolbar.tsx',
-        'vx-masoolin-performance',
-        'vx-payment-documents',
-        'vx-payment-documents-members',
-        'vx-meetings-management',
-        'vx-members-image-fix',
+        'Portalx list pages',
+        'src/domain/extx/ExtxMemberDirectoryLegacyFilterBarPanel.tsx',
+        'src/domain/extx/extxMemberDirectoryLegacyFilterBarLayout.ts',
+        'src/domain/extx/extxMemberDirectoryLegacyFilterBar.css',
+        'src/domain/extx/ExtxLegacyFilterFieldsStackSection.tsx',
+        'src/domain/extx/ExtxMemberListLegacyFieldByFieldStack.tsx',
+        'src/domain/extx/ExtxImageFixListToolbar.tsx',
+        'extx-masoolin-performance',
+        'extx-payment-documents',
+        'extx-payment-documents-members',
+        'extx-meetings-management',
+        'extx-members-image-fix',
       ],
     },
     {
-      id: 'package.vertical.domain-invariants',
-      title: 'Vertical — electoral tree geo assignment (process vs direct)',
+      id: 'package.portalx.domain-invariants',
+      title: 'Portalx — electoral tree geo assignment (process vs direct)',
       value:
-        'One member MAY hold multiple roles; one geo_level at a time — process path (geo responsibility) = exactly one node; direct path (employees list role+region) MAY assign multiple approved nodes on the same level; cross-level approved anchors are drift — skipped in vx:etl:legacy-edge-parity and geo-responsibility ETL (vxMemberAreaLimitsCrossLevelEtl), purge via vx:etl:purge-cross-level-area-limits; same-level multi-row expected; nakhebin join and plain membership out of scope; operator mirror electoral-tree-role-anchor + vx:business-rules:seed; shard package-vertical-domain-invariants; probe schema:area-limits-invariant fails on cross-level only',
+        'One member MAY hold multiple roles; one geo_level at a time — process path (geo responsibility) = exactly one node; direct path (employees list role+region) MAY assign multiple approved nodes on the same level; cross-level approved anchors are drift — skipped in extx:etl:legacy-edge-parity and geo-responsibility ETL (extxMemberAreaLimitsCrossLevelEtl), purge via extx:etl:purge-cross-level-area-limits; same-level multi-row expected; nakhebin join and plain membership out of scope; operator mirror electoral-tree-role-anchor + extx:business-rules:seed; shard package-portalx-domain-invariants; probe schema:area-limits-invariant fails on cross-level only',
       appliesTo: [
-        'Vertical package',
-        'vx-geo-responsibility',
-        'vx_member_area_limits',
-        'vx-business-rules-reference',
-        'src/server/domain/vx/vxGeoResponsibility.service.ts',
-        'scripts/vx-phase1/db/install/vx_db_procedures_writes.sqlserver.sql',
+        'Portalx package',
+        'extx-geo-responsibility',
+        'extx_member_area_limits',
+        'extx-business-rules-reference',
+        'src/server/domain/extx/extxGeoResponsibility.service.ts',
+        'scripts/extx-phase1/db/install/extx_db_procedures_writes.sqlserver.sql',
       ],
     },
     {
@@ -1776,8 +1776,8 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'platform.release-cut',
       title: 'Local Release Cut (no cloud CI)',
       value:
-        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default vertical) in P4 only when versions change; public AppEndO-Release (cms + remote-hubs) and private AppEndO-Vertical (full source + dist + promoted vertical zip, no pack on vertical export); P9 (full cut, not --fast): clone:provision per deploy-line DB — structure only, no ETL — via cloneProfilesForSchemaSync; clone exports sanitize operator settings.json and ship settings.recommended.json + CLONE_PROFILE per releaseCutCloneProfiles (oss AppEndORelease / vertical AppEndOVertical); clone dev: APPENDO_SETTINGS_PATH + APPENDO_CLONE_SQL_PASSWORD + npm run dev; npm run clone:bootstrap / clone:install-wizard / clone:provision (vertical greenfield: vertical:install --skip-legacy-parity); extend releaseCutPackageDeployLines for new package git lines; see docs/standards/release-cut.md',
-      appliesTo: ['release', 'packages', 'CI', 'vertical pack', 'open source bundle'],
+        'platform and package publishes run only via npm run release:cut or @appendo-release-cut on the operator machine — never GitHub Actions on push/tag for release; orchestrator bumps versions from scripts/release-cut/releaseCutVersions.json, tags release/vX.Y.Z on private main, packs publish packages (default portalx) in P4 only when versions change; public AppEndO-Release (cms + remote-hubs) and private AppEndO-Portalx (full source + dist + promoted portalx zip, no pack on portalx export); P9 (full cut, not --fast): clone:provision per deploy-line DB — structure only, no ETL — via cloneProfilesForSchemaSync; clone exports sanitize operator settings.json and ship settings.recommended.json + CLONE_PROFILE per releaseCutCloneProfiles (oss AppEndORelease / portalx AppEndOPortalx); clone dev: APPENDO_SETTINGS_PATH + APPENDO_CLONE_SQL_PASSWORD + npm run dev; npm run clone:bootstrap / clone:install-wizard / clone:provision (portalx greenfield: portalx:install --skip-legacy-parity); extend releaseCutPackageDeployLines for new package git lines; see docs/standards/release-cut.md',
+      appliesTo: ['release', 'packages', 'CI', 'portalx pack', 'open source bundle'],
     },
     {
       id: 'platform.identity-provider.zip-not-plugin',
@@ -1993,7 +1993,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
         'audit',
         'history',
         'Data API',
-        'Vertical',
+        'Portalx',
         'database',
         'Sequelize',
       ],
@@ -2027,11 +2027,11 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       appliesTo: ['record events', 'Users', 'profile', 'impersonation'],
     },
     {
-      id: 'record-event-log.vx-members',
-      title: 'Vertical Members Emit Field History On Dossier Patch',
+      id: 'record-event-log.extx-members',
+      title: 'Portalx Members Emit Field History On Dossier Patch',
       value:
-        'PLATFORM_HISTORY_MARKS.vx_members tracks dossier PATCH fields (redact phone1, phone2, email); dossier satellites emit with payload.vxDossierKind (idempotency vx-dossier:*); change log reads those events plus member summary procs; legacy change history ETL vx-etl:ch:*; backfill vx:etl:backfill-dossier-record-events and gap pass vx:etl:backfill-dossier-record-gaps; see docs/standards/record-event-log.md § Vertical dossier satellites',
-      appliesTo: ['record events', 'Vertical', 'vx_members', 'member dossier'],
+        'PLATFORM_HISTORY_MARKS.extx_members tracks dossier PATCH fields (redact phone1, phone2, email); dossier satellites emit with payload.extxDossierKind (idempotency extx-dossier:*); change log reads those events plus member summary procs; legacy change history ETL extx-etl:ch:*; backfill extx:etl:backfill-dossier-record-events and gap pass extx:etl:backfill-dossier-record-gaps; see docs/standards/record-event-log.md § Portalx dossier satellites',
+      appliesTo: ['record events', 'Portalx', 'extx_members', 'member dossier'],
     },
     {
       id: 'record-event-log.sample-mock',
@@ -2133,13 +2133,13 @@ export const shardForStandardId = (id: string): string => {
   if (id.startsWith('component-designer')) return 'component-designer';
   if (id.startsWith('package.records') || id.startsWith('package.home') || id.startsWith('package.studio') || id.startsWith('package.install')) return 'package-ui';
   if (id.startsWith('package.base-info')) return 'package-base-info-vocab';
-  if (id === 'package.vertical.locale-policy') return 'package-vertical-locale-policy';
-  if (id === 'package.vertical.ui-vocab') return 'package-vertical-ui-vocab';
-  if (id === 'package.vertical.member-face-caption') return 'package-vertical-member-face-caption';
-  if (id === 'package.vertical.member-list-legacy-filters') return 'package-vertical-member-list-legacy-filters';
-  if (id === 'package.vertical.legacy-filter-panel-layout') return 'package-vertical-legacy-filter-panel-layout';
-  if (id === 'package.vertical.domain-invariants') return 'package-vertical-domain-invariants';
-  if (id.startsWith('package.vertical')) return 'package-vertical-db';
+  if (id === 'package.portalx.locale-policy') return 'package-portalx-locale-policy';
+  if (id === 'package.portalx.ui-vocab') return 'package-portalx-ui-vocab';
+  if (id === 'package.portalx.member-face-caption') return 'package-portalx-member-face-caption';
+  if (id === 'package.portalx.member-list-legacy-filters') return 'package-portalx-member-list-legacy-filters';
+  if (id === 'package.portalx.legacy-filter-panel-layout') return 'package-portalx-legacy-filter-panel-layout';
+  if (id === 'package.portalx.domain-invariants') return 'package-portalx-domain-invariants';
+  if (id.startsWith('package.portalx')) return 'package-portalx-db';
   if (id.startsWith('package.ui')) return 'package-ui';
   if (id.startsWith('ai.vibe')) return 'vibe-coding-workflows';
   if (id.startsWith('ai.')) return 'mcp-servers';

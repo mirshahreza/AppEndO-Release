@@ -59,7 +59,7 @@ export const formatSmtpVerifyError = (
   ) {
     return [
       'Gmail rejected the login.',
-      'Use your full @gmail.com address as Username and a Google App Password (not your regular Google password).',
+      'Use your full Gmail address as Username and a Google App Password (not your regular Google password).',
       'Enable 2-Step Verification, then create an App Password at https://myaccount.google.com/apppasswords',
       'and paste the 16-character code (spaces are optional).',
     ].join(' ');
@@ -146,7 +146,7 @@ export const verifySmtpSettings = async (
     if (fromEmail !== auth.user) {
       return {
         success: false,
-        message: 'Gmail requires the From email to match the SMTP username (same @gmail.com address).',
+        message: 'Gmail requires the From email to match the SMTP username (same Gmail address).',
       };
     }
   }

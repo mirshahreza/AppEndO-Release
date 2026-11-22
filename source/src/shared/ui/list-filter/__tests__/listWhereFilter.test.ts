@@ -133,4 +133,53 @@ describe('listWhereQuery', () => {
     const sequelize = listWhereIrToSequelize(ir, columns, Op);
     expect(sequelize?.[Op.or]).toHaveLength(2);
   });
+
+  it('searches embedded fragments for both Equal and Not equal', () => {
+    const columns = {
+      requestId: {
+        path: 'metaJson',
+        type: 'string' as const,
+        preferContains: true,
+        transformValue: (value: string) => `"requestId":"${value}"`,
+      },
+      folder: {
+        path: 'message',
+        type: 'string' as const,
+        preferContains: true,
+        transformValue: (value: string) => `/${value}/`,
+      },
+    };
+    const eq = listWhereTreeToIr(
+      createWhereGroup('and', [createWhereCondition('folder', 'eq', 'users')]),
+      DEFAULT_WHERE_OPERATORS,
+    );
+    const neq = listWhereTreeToIr(
+      createWhereGroup('and', [createWhereCondition('requestId', 'neq', 'req-abc-1')]),
+      DEFAULT_WHERE_OPERATORS,
+    );
+    expect(listWhereIrToPrisma(eq, columns, (value) => ({ contains: value }))).toEqual({
+      message: { contains: '/users/' },
+    });
+    expect(listWhereIrToPrisma(neq, columns, (value) => ({ contains: value }))).toEqual({
+      NOT: { metaJson: { contains: '"requestId":"req-abc-1"' } },
+    });
+    const Op = {
+      and: Symbol('and'),
+      or: Symbol('or'),
+      ne: Symbol('ne'),
+      in: Symbol('in'),
+      notIn: Symbol('notIn'),
+      gt: Symbol('gt'),
+      gte: Symbol('gte'),
+      lt: Symbol('lt'),
+      lte: Symbol('lte'),
+      like: Symbol('like'),
+      notLike: Symbol('notLike'),
+      is: Symbol('is'),
+    };
+    const sequelize = listWhereIrToSequelize(neq, columns, Op);
+    expect(sequelize).toEqual({
+      metaJson: { [Op.notLike]: '%"requestId":"req-abc-1"%' },
+    });
+  });
 });

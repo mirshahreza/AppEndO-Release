@@ -1839,7 +1839,7 @@ const bundle: Record<string, string> = {
   'install.email.fromName': "از نام",
   'install.email.fromNameAria': "از نام",
   'install.email.gmailAppPasswordLink': "رمز برنامه",
-  'install.email.gmailHintAfter': "و از آن کد 16 کاراکتری به عنوان رمز عبور SMTP استفاده کنید. نام کاربری و ایمیل از هر دو باید آدرس کامل @gmail.com شما باشد.",
+  'install.email.gmailHintAfter': "و از آن کد 16 کاراکتری به عنوان رمز عبور SMTP استفاده کنید. نام کاربری و ایمیل از هر دو باید آدرس کامل Gmail شما باشد.",
   'install.email.gmailHintBefore': "جیمیل رمز عبور عادی گوگل شما را در اینجا نمی پذیرد. تأیید صحت 2 مرحله ای را فعال کنید، یک ایجاد کنید",
   'install.email.host': "میزبان",
   'install.email.hostAria': "میزبان SMTP",

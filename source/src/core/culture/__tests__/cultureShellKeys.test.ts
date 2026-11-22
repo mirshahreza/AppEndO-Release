@@ -21,8 +21,8 @@ describe('resolveNavLabel', () => {
 
   it('tryResolveNavLabel returns null when the key is missing', () => {
     const { t } = createTranslationRuntime({}, {});
-    expect(tryResolveNavLabel(undefined, 'vx-employees-list')).toBeNull();
-    expect(tryResolveNavLabel(t, 'vx-employees-list')).toBeNull();
+    expect(tryResolveNavLabel(undefined, 'extx-employees-list')).toBeNull();
+    expect(tryResolveNavLabel(t, 'extx-employees-list')).toBeNull();
   });
 });
 

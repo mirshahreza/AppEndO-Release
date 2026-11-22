@@ -37,11 +37,11 @@ async function main() {
       'email/save',
       '/api/install/email/save',
       {
-        smtpHost: 'smtp.son.ir',
+        smtpHost: 'smtp.example.com',
         smtpPort: 587,
         smtpUser: 'm.mirshahreza',
         smtpPass: 'P#ssC0de',
-        smtpFromEmail: 'user@example.com',
+        smtpFromEmail: 'https://github.com/mirshahreza/AppEndO-Release/issues',
         smtpFromName: 'AppEndO',
         smtpSecure: false,
         skipVerification: true,
@@ -52,7 +52,7 @@ async function main() {
       '/api/install/admin',
       {
         username: 'Admin',
-        email: 'user@example.com',
+        email: 'https://github.com/mirshahreza/AppEndO-Release/issues',
         password: 'MyP#ssC0de',
         confirmPassword: 'MyP#ssC0de',
         firstName: 'Sys',

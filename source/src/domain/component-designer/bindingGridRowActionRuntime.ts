@@ -24,12 +24,12 @@ import {
   resolveDataSourceOperationEndpoint,
 } from './bindingResourceModel';
 import { designerFetch, parseApiErrorMessage } from './bindingMutationRuntime';
-import { rowShowsHwyFamilyHouseholdCellClick } from '../vx/vxFamilyHousehold';
-import { openHwyFamilyHouseholdFromDesignerGrid } from '../vx/vxFamilyHouseholdRuntime';
+import { rowShowsExtxFamilyHouseholdCellClick } from '../../oss/excludedModuleStub';
+import { openExtxFamilyHouseholdFromDesignerGrid } from '../../oss/excludedModuleStub';
 import {
-  openHwyImageFixEditorFromDesignerGrid,
-  rowShowsHwyImageFixEditorCellClick,
-} from '../vx/vxImageFixEditorRuntime';
+  openExtxImageFixEditorFromDesignerGrid,
+  rowShowsExtxImageFixEditorCellClick,
+} from '../../oss/excludedModuleStub';
 import type { DesignerBindingDefinitions, DesignerDocument, DesignerNode } from './types';
 
 export type GridRowActionRuntimeContext = {
@@ -327,16 +327,16 @@ export const executeDesignerGridCellClick = (
   column: DesignerDataGridColumn,
   context: GridRowActionRuntimeContext,
 ): boolean => {
-  if (column.cellClickBehavior?.kind === 'vx-family-household') {
-    if (!rowShowsHwyFamilyHouseholdCellClick(row, column)) {
+  if (column.cellClickBehavior?.kind === 'extx-family-household') {
+    if (!rowShowsExtxFamilyHouseholdCellClick(row, column)) {
       return false;
     }
-    openHwyFamilyHouseholdFromDesignerGrid(row, column.key, column);
+    openExtxFamilyHouseholdFromDesignerGrid(row, column.key, column);
     return true;
   }
 
-  if (column.cellClickBehavior?.kind === 'vx-image-fix-editor' || rowShowsHwyImageFixEditorCellClick(row, column)) {
-    openHwyImageFixEditorFromDesignerGrid(row);
+  if (column.cellClickBehavior?.kind === 'extx-image-fix-editor' || rowShowsExtxImageFixEditorCellClick(row, column)) {
+    openExtxImageFixEditorFromDesignerGrid(row);
     return true;
   }
 

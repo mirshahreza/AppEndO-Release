@@ -6,8 +6,8 @@ import {
 
 describe('dataApiNoCache', () => {
   it('appends noCache=1 to relative list URLs', () => {
-    expect(appendDataApiNoCacheQueryParam('/api/vx/member-directory?page=1'))
-      .toBe('/api/vx/member-directory?page=1&noCache=1');
+    expect(appendDataApiNoCacheQueryParam('/api/extx/member-directory?page=1'))
+      .toBe('/api/extx/member-directory?page=1&noCache=1');
   });
 
   it('reads noCache from query', () => {

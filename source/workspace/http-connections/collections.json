@@ -63,13 +63,13 @@
       "id": "00713292-f5dd-430e-9781-a677cb5441d2",
       "collectionId": "b447db5d-96db-433a-bb3f-d4176d566247",
       "folderId": null,
-      "name": "VX-Test",
+      "name": "EXTX-Test",
       "method": "POST",
-      "url": "https://vertical.com/talk-to-me/",
+      "url": "https://portalx.com/talk-to-me/",
       "queryParams": [],
       "headers": [],
       "bodyMode": "json",
-      "bodyRaw": "[{\n    \"Controller\": \"VX_Members\",\n    \"Method\": \"Read_Inquiry\",\n    \"Inputs\": {\n        \"Master\": {\n            \"AND\": {\n                \"iid\": {\n                    \"InputParam\": \"iid\",\n                    \"CompareMethod\": \"Ignore\",\n                    \"Value\": \"00000000-0000-0000-0000-000000000000\"\n                },\n                \"UserName\": {\n                    \"InputParam\": \"UserName\",\n                    \"CompareMethod\": \"Ignore\",\n                    \"Value\": \"101001\"\n                }\n            }\n        }\n    }\n}]",
+      "bodyRaw": "[{\n    \"Controller\": \"EXTX_Members\",\n    \"Method\": \"Read_Inquiry\",\n    \"Inputs\": {\n        \"Master\": {\n            \"AND\": {\n                \"iid\": {\n                    \"InputParam\": \"iid\",\n                    \"CompareMethod\": \"Ignore\",\n                    \"Value\": \"00000000-0000-0000-0000-000000000000\"\n                },\n                \"UserName\": {\n                    \"InputParam\": \"UserName\",\n                    \"CompareMethod\": \"Ignore\",\n                    \"Value\": \"101001\"\n                }\n            }\n        }\n    }\n}]",
       "auth": {
         "kind": "none",
         "hasSecret": false

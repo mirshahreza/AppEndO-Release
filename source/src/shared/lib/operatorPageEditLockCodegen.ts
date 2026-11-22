@@ -1,19 +1,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { VERTICAL_CORE_UI_PAGE_EXPORTS } from '../../core/packages/verticalPackagePackRecipe';
-import { VX_CANDIDATE_PIPELINE_STAGES } from '../../domain/vx/vxCandidatePipelineCatalog';
+import { PORTALX_CORE_UI_PAGE_EXPORTS } from '../../oss/excludedModuleStub';
+import { EXTX_CANDIDATE_PIPELINE_STAGES } from '../../oss/excludedModuleStub';
 import { OPERATOR_PAGE_EDIT_LOCK_POLICY } from '../../config/operatorPageEditLocks';
 import type { FeatureGraph } from './aiIndexCodegen';
 import type { PageEditLockManifest, PageEditLockManifestEntry } from './operatorPageEditLock';
 import { buildManifestEntryFromGraphNode } from './operatorPageEditLock';
 
-const VERTICAL_SHARED_ROOTS = [
-  'src/server/domain/vx',
-  'src/domain/vx',
-  'src/server/routes/vx.routes.ts',
-  'scripts/vx-phase1',
-  'scripts/vx-etl',
-  'scripts/vx-phase3',
+const PORTALX_SHARED_ROOTS = [
+  'src/server/domain/extx',
+  'src/domain/extx',
+  'src/server/routes/extx.routes.ts',
+  'scripts/extx-phase1',
+  'scripts/extx-etl',
+  'scripts/extx-phase3',
 ];
 
 function modulePathToFeatureRoot(modulePath: string): string | null {
@@ -64,7 +64,7 @@ export function buildPageEditLockManifest(rootDir: string, graph: FeatureGraph):
     mergeEntry(byKey, buildManifestEntryFromGraphNode(node));
   }
 
-  for (const page of VERTICAL_CORE_UI_PAGE_EXPORTS) {
+  for (const page of PORTALX_CORE_UI_PAGE_EXPORTS) {
     const roots: string[] = [];
     const featureRoot = modulePathToFeatureRoot(page.modulePath);
     if (featureRoot) roots.push(featureRoot);
@@ -77,23 +77,23 @@ export function buildPageEditLockManifest(rootDir: string, graph: FeatureGraph):
     });
   }
 
-  for (const stage of VX_CANDIDATE_PIPELINE_STAGES) {
+  for (const stage of EXTX_CANDIDATE_PIPELINE_STAGES) {
     mergeEntry(byKey, {
       pageKey: stage.pageKey,
       label: stage.legacyTitleAr,
       routePattern: stage.segment,
-      searchRoots: ['src/features/vx-geo-responsibility'],
+      searchRoots: ['src/features/extx-geo-responsibility'],
       source: 'package-ui',
     });
   }
 
   for (const binding of readRouteBindingPageKeys(rootDir)) {
     const existing = byKey.get(binding.pageKey);
-    const isHwy = binding.pageKey.startsWith('vx-');
+    const isExtx = binding.pageKey.startsWith('extx-');
     const searchRoots = existing?.searchRoots.length
       ? existing.searchRoots
-      : isHwy
-        ? [...VERTICAL_SHARED_ROOTS]
+      : isExtx
+        ? [...PORTALX_SHARED_ROOTS]
         : [];
 
     mergeEntry(byKey, {
@@ -129,11 +129,11 @@ export function loadPageEditLockManifest(rootDir = process.cwd()): PageEditLockM
   return JSON.parse(fs.readFileSync(filePath, 'utf8')) as PageEditLockManifest;
 }
 
-/** Vertical package pages that share server/domain code — used in cursor feature rules. */
-export function verticalPageLockRuleGlobs(pageKey: string, featureRoot: string | null): string[] {
+/** Portalx package pages that share server/domain code — used in cursor feature rules. */
+export function portalxPageLockRuleGlobs(pageKey: string, featureRoot: string | null): string[] {
   const globs = featureRoot ? [`${featureRoot}/**`] : [];
-  if (pageKey.startsWith('vx-')) {
-    for (const root of VERTICAL_SHARED_ROOTS) {
+  if (pageKey.startsWith('extx-')) {
+    for (const root of PORTALX_SHARED_ROOTS) {
       if (root.endsWith('.ts')) {
         globs.push(root);
       } else {
@@ -145,37 +145,37 @@ export function verticalPageLockRuleGlobs(pageKey: string, featureRoot: string |
 }
 
 export function resolvePackagePageFeatureRoot(pageKey: string): string | null {
-  const fromExport = VERTICAL_CORE_UI_PAGE_EXPORTS.find((p) => p.pageKey === pageKey);
+  const fromExport = PORTALX_CORE_UI_PAGE_EXPORTS.find((p) => p.pageKey === pageKey);
   if (fromExport) return modulePathToFeatureRoot(fromExport.modulePath);
-  if (pageKey.startsWith('vx-geo-responsibility-candidate-')) {
-    return 'src/features/vx-geo-responsibility';
+  if (pageKey.startsWith('extx-geo-responsibility-candidate-')) {
+    return 'src/features/extx-geo-responsibility';
   }
-  if (pageKey.startsWith('vx-members') || pageKey.startsWith('vx-nakhebin')) {
-    return 'src/features/vx-members';
+  if (pageKey.startsWith('extx-members') || pageKey.startsWith('extx-nakhebin')) {
+    return 'src/features/extx-members';
   }
-  if (pageKey.startsWith('vx-institutes')) {
-    return 'src/features/vx-institutes';
+  if (pageKey.startsWith('extx-institutes')) {
+    return 'src/features/extx-institutes';
   }
   return null;
 }
 
-export function buildVerticalCursorPageLockRules(
+export function buildPortalxCursorPageLockRules(
   rootDir: string,
   graph: FeatureGraph,
 ): Array<{ pageKey: string; mdc: string }> {
   const manifest = buildPageEditLockManifest(rootDir, graph);
-  const vxPages = manifest.pages.filter((p) => p.pageKey.startsWith('vx-'));
+  const extxPages = manifest.pages.filter((p) => p.pageKey.startsWith('extx-'));
   const written: Array<{ pageKey: string; mdc: string }> = [];
 
-  for (const page of vxPages) {
+  for (const page of extxPages) {
     const featureRoot = resolvePackagePageFeatureRoot(page.pageKey);
-    const globs = verticalPageLockRuleGlobs(page.pageKey, featureRoot);
+    const globs = portalxPageLockRuleGlobs(page.pageKey, featureRoot);
     if (globs.length === 0) continue;
 
     const fileName = `feature-${page.pageKey}.mdc`;
     const lines = [
       '---',
-      `description: ${page.label} (Vertical) — page edit lock`,
+      `description: ${page.label} (Portalx) — page edit lock`,
       'globs:',
       ...globs.map((g) => `  - ${g}`),
       'alwaysApply: false',
@@ -194,10 +194,10 @@ export function buildVerticalCursorPageLockRules(
   return written;
 }
 
-export function writeVerticalCursorPageLockRules(rootDir: string, graph: FeatureGraph): string[] {
+export function writePortalxCursorPageLockRules(rootDir: string, graph: FeatureGraph): string[] {
   const rulesDir = path.join(rootDir, '.cursor/rules');
   fs.mkdirSync(rulesDir, { recursive: true });
-  const rules = buildVerticalCursorPageLockRules(rootDir, graph);
+  const rules = buildPortalxCursorPageLockRules(rootDir, graph);
   const written: string[] = [];
   for (const rule of rules) {
     const fileName = `feature-${rule.pageKey}.mdc`;

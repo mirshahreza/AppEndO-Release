@@ -1,8 +1,8 @@
 /**
- * Canonical upgrade for non-Prisma control-plane schema (Sequelize features + optional Vertical).
+ * Canonical upgrade for non-Prisma control-plane schema (Sequelize features + optional Portalx).
  *
  *   npm run schema:install-extensions
- *   npm run schema:install-extensions -- --vx
+ *   npm run schema:install-extensions -- --extx
  *   npm run schema:install-extensions -- --force
  *   npm run schema:install-extensions -- --push-prisma
  */
@@ -11,12 +11,12 @@ import { closePrismaControlPlane } from '../../src/server/db/prismaControlPlane'
 
 const args = new Set(process.argv.slice(2).filter((a) => a !== '--'));
 
-const vx = args.has('--vx');
+const extx = args.has('--extx');
 const force = args.has('--force');
 const pushPrisma = args.has('--push-prisma');
 
 const main = async (): Promise<void> => {
-  const { steps } = await installControlPlaneExtensionSchema({ vx, force, pushPrisma });
+  const { steps } = await installControlPlaneExtensionSchema({ extx, force, pushPrisma });
   console.log('[schema:install-extensions] Done.');
   for (const step of steps) {
     console.log(`  ${step.layerId}: ${step.detail}`);

@@ -5,7 +5,7 @@ import {
   listMountFiles,
   listRouteBindingFiles,
 } from '../../../core/platform-registry/PlatformRegistryFileStore';
-import { buildHwyNavPageShellHeaderOverride } from '../../../domain/vx/vxNavPageShellHeader';
+import { buildExtxNavPageShellHeaderOverride } from '../../../oss/excludedModuleStub';
 import type { PlatformRuntimeConfig } from '../../../shared/api/contracts/platform/types';
 import {
   buildAdminShellNav,
@@ -16,9 +16,9 @@ import {
 } from '../buildAdminShellNav';
 import { mergeShellHeaderModule } from '../mergeShellHeaderModule';
 import { buildAppearanceShellHeaderOverride } from '../../../features/appearance/hooks/useAppearanceShellHeader';
-import verticalIqOverlay from '../../../core/system-extensions/culture-packs/overlays/vertical.iq.json';
+import portalxIqOverlay from '../../../oss/excludedData';
 
-const TOP_LEVEL_PAGE_KEYS = new Set(['dashboard', 'home', 'vx-home']);
+const TOP_LEVEL_PAGE_KEYS = new Set(['dashboard', 'home', 'extx-home']);
 
 function collectNavLeaves(groups: AdminShellNavGroup[]): Array<{
   item: AdminShellNavItem;
@@ -146,7 +146,7 @@ function assertHeadedNavLeavesResolveWithGroup(input: {
       mountId: input.mount.id,
     });
 
-    const merged = mergeShellHeaderModule(context, buildHwyNavPageShellHeaderOverride({
+    const merged = mergeShellHeaderModule(context, buildExtxNavPageShellHeaderOverride({
       pageKey,
       cultureId: input.cultureId,
       t: undefined,
@@ -187,17 +187,17 @@ function collectManifestPageKeys(manifest: NonNullable<ReturnType<typeof readNav
 }
 
 describe('shell header group / page parity (full nav registry)', () => {
-  it('vertical iq overlay ships nav.* for every headed sidebar pageKey', () => {
-    const manifest = readNavigationFile('vertical');
+  it('portalx iq overlay ships nav.* for every headed sidebar pageKey', () => {
+    const manifest = readNavigationFile('portalx');
     expect(manifest).toBeTruthy();
-    const overlay = verticalIqOverlay as Record<string, string>;
+    const overlay = portalxIqOverlay as Record<string, string>;
     const missing = collectManifestPageKeys(manifest!).filter(
       (pageKey) => !overlay[`nav.${pageKey}`]?.trim(),
     );
     expect(missing, missing.join(', ')).toEqual([]);
   });
 
-  it('studio manifest — every headed sidebar leaf resolves with nav group after Vertical-style override merge', () => {
+  it('studio manifest — every headed sidebar leaf resolves with nav group after Portalx-style override merge', () => {
     assertHeadedNavLeavesResolveWithGroup({
       portalLabel: 'studio',
       manifestId: 'studio',
@@ -207,12 +207,12 @@ describe('shell header group / page parity (full nav registry)', () => {
     });
   });
 
-  it('vertical manifest — every headed sidebar leaf resolves with nav group after Vertical-style override merge', () => {
+  it('portalx manifest — every headed sidebar leaf resolves with nav group after Portalx-style override merge', () => {
     assertHeadedNavLeavesResolveWithGroup({
-      portalLabel: 'vertical',
-      manifestId: 'vertical',
+      portalLabel: 'portalx',
+      manifestId: 'portalx',
       mount: { id: 'iq', pathPrefix: '/iq' },
-      portalSegment: 'vertical',
+      portalSegment: 'portalx',
       cultureId: 'iq',
     });
   });

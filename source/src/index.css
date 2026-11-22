@@ -276,7 +276,7 @@ td[data-pinned] {
 	background: rgb(241 245 249 / 0.8) !important;
 }
 
-/* Vertical courses/activities grid: workflow label visible; button chrome on row hover. */
+/* Portalx courses/activities grid: workflow label visible; button chrome on row hover. */
 .app-table-grid-workflow-action {
 	display: inline-flex;
 	align-items: center;
@@ -326,7 +326,7 @@ td[data-pinned] {
 	box-shadow: 0 1px 3px 0 rgb(15 23 42 / 0.08);
 }
 
-/* Vertical courses/activities: ⋯ workflow menu beside status badge. */
+/* Portalx courses/activities: ⋯ workflow menu beside status badge. */
 .app-table-grid-workflow-menu-trigger {
 	opacity: 0.72;
 }
@@ -1262,8 +1262,8 @@ html:has(#app-boot-splash:not([hidden])) .app-route-loading--fullscreen.app-rout
 	pointer-events: none;
 }
 
-.app-route-loading--vertical,
-html[data-loading-identity='vertical'] #app-boot-splash {
+.app-route-loading--portalx,
+html[data-loading-identity='portalx'] #app-boot-splash {
 	--app-route-loading-accent: #023f88;
 	--app-route-loading-accent-secondary: #b8890a;
 	--app-route-loading-accent-gold: #ffcb05;
@@ -1281,7 +1281,7 @@ html[data-loading-identity='vertical'] #app-boot-splash {
 	gap: 1.25rem;
 }
 
-html[data-loading-identity='vertical'] .app-route-loading--fullscreen:not(.app-route-loading--splash-delegated) {
+html[data-loading-identity='portalx'] .app-route-loading--fullscreen:not(.app-route-loading--splash-delegated) {
 	background:
 		radial-gradient(ellipse 68% 48% at 50% 38%, rgb(2 63 136 / 0.05) 0%, transparent 58%),
 		var(--gradient-shell-atmosphere);
@@ -1317,7 +1317,7 @@ html[data-boot-splash-logo-locked='1'] #app-boot-splash .app-boot-logo-stage {
 	min-block-size: calc(var(--loading-logo-h) + 0.875rem);
 }
 
-html[data-loading-identity='vertical'][data-boot-splash-logo-locked='1']
+html[data-loading-identity='portalx'][data-boot-splash-logo-locked='1']
 	#app-boot-splash
 	.app-boot-logo-stage--square {
 	min-inline-size: calc(var(--loading-logo-h) + 1rem);
@@ -1430,13 +1430,13 @@ html[data-loading-identity='vertical'][data-boot-splash-logo-locked='1']
 	box-shadow: none;
 }
 
-.app-route-loading--vertical .app-route-loading__logo-stage--square,
-html[data-loading-identity='vertical'] .app-boot-logo-stage--square {
+.app-route-loading--portalx .app-route-loading__logo-stage--square,
+html[data-loading-identity='portalx'] .app-boot-logo-stage--square {
 	padding: 0.375rem 0.5rem;
 }
 
-.app-route-loading--vertical .app-route-loading__logo-stage--square::before,
-html[data-loading-identity='vertical'] .app-boot-logo-stage--square::before {
+.app-route-loading--portalx .app-route-loading__logo-stage--square::before,
+html[data-loading-identity='portalx'] .app-boot-logo-stage--square::before {
 	opacity: 0.72;
 	border: none;
 	background:
@@ -1445,16 +1445,16 @@ html[data-loading-identity='vertical'] .app-boot-logo-stage--square::before {
 	box-shadow: 0 10px 28px -14px rgb(2 63 136 / 0.14);
 }
 
-.app-route-loading--vertical .app-route-loading__logo-stage--square::after,
-html[data-loading-identity='vertical'] .app-boot-logo-stage--square::after {
+.app-route-loading--portalx .app-route-loading__logo-stage--square::after,
+html[data-loading-identity='portalx'] .app-boot-logo-stage--square::after {
 	opacity: 0.28;
 	inset: 0.45rem;
 	border-radius: 0.375rem;
 	background: linear-gradient(145deg, rgb(255 255 255 / 0.4) 0%, transparent 52%);
 }
 
-html:not([data-loading-identity='vertical']) .app-boot-logo-stage--square::before,
-.app-route-loading:not(.app-route-loading--vertical) .app-route-loading__logo-stage--square::before {
+html:not([data-loading-identity='portalx']) .app-boot-logo-stage--square::before,
+.app-route-loading:not(.app-route-loading--portalx) .app-route-loading__logo-stage--square::before {
 	opacity: 0.55;
 	border: none;
 	border-radius: 0.5rem;
@@ -1468,8 +1468,8 @@ html:not([data-loading-identity='vertical']) .app-boot-logo-stage--square::befor
 		0 12px 34px -14px rgb(var(--app-accent-rgb, 0 162 138) / 0.18);
 }
 
-.app-route-loading--vertical .app-route-loading__logo-stage--square .app-route-loading__logo,
-html[data-loading-identity='vertical'] .app-boot-logo-stage--square .app-boot-logo--custom {
+.app-route-loading--portalx .app-route-loading__logo-stage--square .app-route-loading__logo,
+html[data-loading-identity='portalx'] .app-boot-logo-stage--square .app-boot-logo--custom {
 	filter: drop-shadow(0 4px 14px rgb(2 63 136 / 0.1));
 }
 
@@ -1559,7 +1559,7 @@ html[data-loading-identity='vertical'] .app-boot-logo-stage--square .app-boot-lo
 
 	.app-route-loading__logo-stage--appendo::before,
 	.app-boot-logo-stage--appendo::before,
-	html[data-loading-identity='vertical'] .app-boot-logo-stage--square::before {
+	html[data-loading-identity='portalx'] .app-boot-logo-stage--square::before {
 		opacity: 0.85;
 		transform: none;
 		filter: none;
@@ -3715,24 +3715,24 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 	pointer-events: none;
 }
 
-/* Vertical public wizard / track — full-width auth atmosphere (matches login decor stack) */
-.vx-public-portal-decor {
+/* Portalx public wizard / track — full-width auth atmosphere (matches login decor stack) */
+.extx-public-portal-decor {
 	opacity: 0.5;
 }
 
-.vx-public-portal-decor .circuit-trace-field,
-.vx-public-portal-decor .install-wizard-backdrop,
-.vx-public-portal-decor .tech-constellation {
+.extx-public-portal-decor .circuit-trace-field,
+.extx-public-portal-decor .install-wizard-backdrop,
+.extx-public-portal-decor .tech-constellation {
 	inset: -8% -12%;
 }
 
-/* Vertical ImageFix editor — approve rows: tick right, label left (RTL read order). */
-.vx-imagefix-approve-slot {
+/* Portalx ImageFix editor — approve rows: tick right, label left (RTL read order). */
+.extx-imagefix-approve-slot {
 	direction: rtl;
 	flex-direction: row;
 }
 
-/* Vx member dossier — RTL field chrome (view + edit) */
+/* Extx member dossier — RTL field chrome (view + edit) */
 .dossier-social-side-field {
 	flex-direction: row-reverse;
 	direction: ltr;
@@ -3756,19 +3756,19 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 	text-align: right;
 }
 
-/* Vertical self-reg — side-label layout trial (dev flag; see vxSelfRegistrationSideFieldLayout.ts) */
-.vx-self-reg-wizard.vx-self-reg-wizard--side-labels .flex.items-center.gap-2 > .shrink-0.flex.min-h-8 {
+/* Portalx self-reg — side-label layout trial (dev flag; see extxSelfRegistrationSideFieldLayout.ts) */
+.extx-self-reg-wizard.extx-self-reg-wizard--side-labels .flex.items-center.gap-2 > .shrink-0.flex.min-h-8 {
 	width: 8.75rem;
 	align-items: center;
 }
 
-.vx-self-reg-wizard.vx-self-reg-wizard--side-labels label.text-xs.font-bold {
+.extx-self-reg-wizard.extx-self-reg-wizard--side-labels label.text-xs.font-bold {
 	font-size: 0.6875rem;
 	line-height: 1.25;
 }
 
-/* Vertical self-reg — per-step tab hues (numbers + labels; active cell wash) */
-.vx-self-reg-wizard [data-step-tab-color="custom"] {
+/* Portalx self-reg — per-step tab hues (numbers + labels; active cell wash) */
+.extx-self-reg-wizard [data-step-tab-color="custom"] {
 	background: linear-gradient(
 		180deg,
 		color-mix(in srgb, #023f88 7%, #fff) 0%,
@@ -3777,20 +3777,20 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 	border-bottom: 1px solid color-mix(in srgb, #023f88 14%, #e2e8f0);
 }
 
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > * {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > * {
 	transition:
 		background-color 0.2s ease,
 		color 0.2s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.vx-self-reg-wizard .vx-self-reg-wizard-steps > * {
+	.extx-self-reg-wizard .extx-self-reg-wizard-steps > * {
 		transition: none;
 	}
 }
 
 /* Step tab numbers — +3 Tailwind steps vs default marker on phone; +3 with labels on tablet+. */
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > * > .rounded-full.border {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > * > .rounded-full.border {
 	width: 2.75rem;
 	height: 2.75rem;
 	font-size: 1.125rem;
@@ -3799,156 +3799,156 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 }
 
 @media (max-width: 399px) {
-	.vx-self-reg-wizard .vx-self-reg-wizard-steps > * > .rounded-full.border {
+	.extx-self-reg-wizard .extx-self-reg-wizard-steps > * > .rounded-full.border {
 		width: 2.5rem;
 		height: 2.5rem;
 	}
 }
 
 @media (min-width: 400px) {
-	.vx-self-reg-wizard .vx-self-reg-wizard-steps > * > .rounded-full.border {
+	.extx-self-reg-wizard .extx-self-reg-wizard-steps > * > .rounded-full.border {
 		width: 1.75rem;
 		height: 1.75rem;
 		font-size: 0.875rem;
 	}
 }
 
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(1)[aria-current="step"] {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(1)[aria-current="step"] {
 	background: color-mix(in srgb, #023f88 16%, #fff);
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(1)[aria-current="step"] .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(1)[aria-current="step"] .font-semibold {
 	color: #012f6a;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(1)[aria-current="step"] .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(1)[aria-current="step"] .rounded-full {
 	background: #023f88;
 	border-color: #023f88;
 	color: #fff;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(1):not([aria-current="step"]) .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(1):not([aria-current="step"]) .rounded-full {
 	border-color: color-mix(in srgb, #023f88 40%, #fff);
 	background: color-mix(in srgb, #023f88 10%, #fff);
 	color: #023f88;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(1):not([aria-current="step"]) .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(1):not([aria-current="step"]) .font-semibold {
 	color: color-mix(in srgb, #023f88 72%, #334155);
 }
 
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(2)[aria-current="step"] {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(2)[aria-current="step"] {
 	background: color-mix(in srgb, #6d28d9 14%, #fff);
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(2)[aria-current="step"] .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(2)[aria-current="step"] .font-semibold {
 	color: #5b21b6;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(2)[aria-current="step"] .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(2)[aria-current="step"] .rounded-full {
 	background: #6d28d9;
 	border-color: #6d28d9;
 	color: #fff;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(2):not([aria-current="step"]) .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(2):not([aria-current="step"]) .rounded-full {
 	border-color: color-mix(in srgb, #6d28d9 38%, #fff);
 	background: color-mix(in srgb, #6d28d9 10%, #fff);
 	color: #6d28d9;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(2):not([aria-current="step"]) .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(2):not([aria-current="step"]) .font-semibold {
 	color: color-mix(in srgb, #6d28d9 68%, #334155);
 }
 
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(3)[aria-current="step"] {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(3)[aria-current="step"] {
 	background: color-mix(in srgb, #0891b2 14%, #fff);
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(3)[aria-current="step"] .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(3)[aria-current="step"] .font-semibold {
 	color: #0e7490;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(3)[aria-current="step"] .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(3)[aria-current="step"] .rounded-full {
 	background: #0891b2;
 	border-color: #0891b2;
 	color: #fff;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(3):not([aria-current="step"]) .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(3):not([aria-current="step"]) .rounded-full {
 	border-color: color-mix(in srgb, #0891b2 38%, #fff);
 	background: color-mix(in srgb, #0891b2 10%, #fff);
 	color: #0891b2;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(3):not([aria-current="step"]) .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(3):not([aria-current="step"]) .font-semibold {
 	color: color-mix(in srgb, #0891b2 68%, #334155);
 }
 
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(4)[aria-current="step"] {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(4)[aria-current="step"] {
 	background: color-mix(in srgb, #059669 14%, #fff);
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(4)[aria-current="step"] .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(4)[aria-current="step"] .font-semibold {
 	color: #047857;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(4)[aria-current="step"] .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(4)[aria-current="step"] .rounded-full {
 	background: #059669;
 	border-color: #059669;
 	color: #fff;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(4):not([aria-current="step"]) .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(4):not([aria-current="step"]) .rounded-full {
 	border-color: color-mix(in srgb, #059669 38%, #fff);
 	background: color-mix(in srgb, #059669 10%, #fff);
 	color: #059669;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(4):not([aria-current="step"]) .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(4):not([aria-current="step"]) .font-semibold {
 	color: color-mix(in srgb, #059669 68%, #334155);
 }
 
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(5)[aria-current="step"] {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(5)[aria-current="step"] {
 	background: color-mix(in srgb, #d97706 14%, #fff);
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(5)[aria-current="step"] .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(5)[aria-current="step"] .font-semibold {
 	color: #b45309;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(5)[aria-current="step"] .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(5)[aria-current="step"] .rounded-full {
 	background: #d97706;
 	border-color: #d97706;
 	color: #fff;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(5):not([aria-current="step"]) .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(5):not([aria-current="step"]) .rounded-full {
 	border-color: color-mix(in srgb, #d97706 38%, #fff);
 	background: color-mix(in srgb, #d97706 10%, #fff);
 	color: #d97706;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(5):not([aria-current="step"]) .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(5):not([aria-current="step"]) .font-semibold {
 	color: color-mix(in srgb, #d97706 68%, #334155);
 }
 
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(6)[aria-current="step"] {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(6)[aria-current="step"] {
 	background: color-mix(in srgb, #e11d48 12%, #fff);
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(6)[aria-current="step"] .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(6)[aria-current="step"] .font-semibold {
 	color: #be123c;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(6)[aria-current="step"] .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(6)[aria-current="step"] .rounded-full {
 	background: #e11d48;
 	border-color: #e11d48;
 	color: #fff;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(6):not([aria-current="step"]) .rounded-full {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(6):not([aria-current="step"]) .rounded-full {
 	border-color: color-mix(in srgb, #e11d48 36%, #fff);
 	background: color-mix(in srgb, #e11d48 10%, #fff);
 	color: #e11d48;
 }
-.vx-self-reg-wizard .vx-self-reg-wizard-steps > *:nth-child(6):not([aria-current="step"]) .font-semibold {
+.extx-self-reg-wizard .extx-self-reg-wizard-steps > *:nth-child(6):not([aria-current="step"]) .font-semibold {
 	color: color-mix(in srgb, #e11d48 66%, #334155);
 }
 
-.vx-self-reg-wizard .step-wizard-advance-orbit {
+.extx-self-reg-wizard .step-wizard-advance-orbit {
 	--orbit-color-track: rgb(253 186 116 / 0.48);
 	--orbit-color-glow: rgb(251 191 36);
 }
 
-.vx-self-reg-wizard .step-wizard-advance-orbit .orbit-border-layer-track {
+.extx-self-reg-wizard .step-wizard-advance-orbit .orbit-border-layer-track {
 	opacity: 0.52;
 }
 
-.vx-self-reg-wizard .step-wizard-advance-orbit .orbit-border-layer-glow {
+.extx-self-reg-wizard .step-wizard-advance-orbit .orbit-border-layer-glow {
 	stroke-width: calc(var(--orbit-border-width, 1.1px) * 2.2);
 	opacity: 0.58;
 	filter: blur(5px);
 }
 
-.vx-self-reg-wizard .step-wizard-advance-orbit .orbit-border-comets {
+.extx-self-reg-wizard .step-wizard-advance-orbit .orbit-border-comets {
 	filter: brightness(1.12);
 }
 
@@ -4044,12 +4044,12 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 	box-shadow: 0 10px 22px rgb(45 106 100 / 0.28);
 }
 
-.vx-public-login .login-submit__surface {
+.extx-public-login .login-submit__surface {
 	background-color: #023f88;
 	box-shadow: 0 8px 18px rgb(2 63 136 / 0.28);
 }
 
-.vx-public-login .login-submit:hover:not(:disabled) .login-submit__surface {
+.extx-public-login .login-submit:hover:not(:disabled) .login-submit__surface {
 	background-color: #012d63;
 	box-shadow: 0 10px 22px rgb(2 63 136 / 0.34);
 }
@@ -4481,7 +4481,7 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 }
 
 /* Member dossier — referrer rail (المعرّفون); face + badges, no card frame. */
-.vx-referrer-rail-card {
+.extx-referrer-rail-card {
 	display: flex;
 	width: 100%;
 	min-width: 0;
@@ -4493,26 +4493,26 @@ html[data-atmosphere-geometry='off'] .admin-shell-surface .install-wizard-backdr
 	color: inherit;
 }
 
-a.vx-referrer-rail-card {
+a.extx-referrer-rail-card {
 	cursor: pointer;
 }
 
-a.vx-referrer-rail-card:hover {
+a.extx-referrer-rail-card:hover {
 	opacity: 0.92;
 }
 
-a.vx-referrer-rail-card:active {
+a.extx-referrer-rail-card:active {
 	opacity: 0.85;
 }
 
 /* Referrer face — dossier sidebar المعرفون; hover name hint below avatar (not clipped by rail box). */
-.vx-referrer-rail-face-hint[data-hint] {
+.extx-referrer-rail-face-hint[data-hint] {
 	position: relative;
 	overflow: visible;
 }
 
-.vx-referrer-rail-face-hint[data-hint]:hover::after,
-.vx-referrer-rail-face-hint[data-hint]:focus-visible::after {
+.extx-referrer-rail-face-hint[data-hint]:hover::after,
+.extx-referrer-rail-face-hint[data-hint]:focus-visible::after {
 	content: attr(data-hint);
 	position: absolute;
 	top: calc(100% + 6px);
@@ -4537,7 +4537,7 @@ a.vx-referrer-rail-card:active {
 	pointer-events: none;
 }
 
-.vx-referrer-rail-card__badges {
+.extx-referrer-rail-card__badges {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -4547,11 +4547,11 @@ a.vx-referrer-rail-card:active {
 	overflow: hidden;
 }
 
-.vx-referrer-rail-card__badges > .vx-referrer-rail-card__badge {
+.extx-referrer-rail-card__badges > .extx-referrer-rail-card__badge {
 	flex: 0 1 auto;
 }
 
-.vx-referrer-rail-card__badge {
+.extx-referrer-rail-card__badge {
 	display: inline-flex;
 	height: 1.25rem;
 	max-width: 100%;
@@ -4569,7 +4569,7 @@ a.vx-referrer-rail-card:active {
 	background-color: #f1f5f9;
 }
 
-.vx-referrer-rail-card__badge--code {
+.extx-referrer-rail-card__badge--code {
 	flex-shrink: 0;
 	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 	font-variant-numeric: tabular-nums;
@@ -4578,97 +4578,97 @@ a.vx-referrer-rail-card:active {
 /* Member dossier — similar members tables (single table; fixed col widths from TS).
    Member column has no fixed width and absorbs leftover space so phone/area/date
    stay at authored px widths (center/start align stays visually obvious). */
-.vx-similar-members-grid .vx-similar-members-table {
+.extx-similar-members-grid .extx-similar-members-table {
 	table-layout: fixed;
 	width: 100%;
 }
 
-.vx-similar-members-grid .vx-similar-members-table col[data-column-id='phone'],
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='phone'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='phone'] {
+.extx-similar-members-grid .extx-similar-members-table col[data-column-id='phone'],
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='phone'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='phone'] {
 	width: 220px !important;
 	min-width: 220px !important;
 	max-width: 220px !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table col[data-column-id='voterRecord'],
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='voterRecord'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='voterRecord'] {
+.extx-similar-members-grid .extx-similar-members-table col[data-column-id='voterRecord'],
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='voterRecord'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='voterRecord'] {
 	width: 78px !important;
 	min-width: 78px !important;
 	max-width: 78px !important;
 	text-align: center !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='voterRecord'] > div {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='voterRecord'] > div {
 	width: 100%;
 	justify-content: center !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='voterRecord'] > div {
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='voterRecord'] > div {
 	display: flex !important;
 	width: 100%;
 	justify-content: center !important;
 	overflow: visible !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table col[data-column-id='area'],
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='area'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='area'] {
+.extx-similar-members-grid .extx-similar-members-table col[data-column-id='area'],
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='area'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='area'] {
 	width: 140px !important;
 	min-width: 140px !important;
 	max-width: 140px !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table col[data-column-id='registered'],
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='registered'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='registered'] {
+.extx-similar-members-grid .extx-similar-members-table col[data-column-id='registered'],
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='registered'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='registered'] {
 	width: 120px !important;
 	min-width: 120px !important;
 	max-width: 120px !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='phone'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='phone'],
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='registered'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='registered'] {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='phone'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='phone'],
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='registered'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='registered'] {
 	text-align: center !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='phone'] > div,
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='registered'] > div {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='phone'] > div,
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='registered'] > div {
 	width: 100%;
 	justify-content: center !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='phone'] > div > span,
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='registered'] > div > span {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='phone'] > div > span,
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='registered'] > div > span {
 	width: 100%;
 	text-align: center !important;
 	flex: none !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='member'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='member'],
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='area'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='area'] {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='member'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='member'],
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='area'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='area'] {
 	text-align: start !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='member'] > div,
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='area'] > div {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='member'] > div,
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='area'] > div {
 	width: 100%;
 	justify-content: flex-start !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='area'] > div > span {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='area'] > div > span {
 	width: 100%;
 	text-align: start !important;
 	flex: none !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='phone'] > div,
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='registered'] > div {
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='phone'] > div,
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='registered'] > div {
 	display: flex !important;
 	width: 100%;
 	justify-content: center !important;
@@ -4677,25 +4677,25 @@ a.vx-referrer-rail-card:active {
 	text-overflow: clip !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='member'] > div,
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='area'] > div {
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='member'] > div,
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='area'] > div {
 	display: block !important;
 	width: 100%;
 	text-align: start !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='member'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='member'],
-.vx-similar-members-grid .vx-similar-members-table th[data-column-id='area'],
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='area'] {
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='member'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='member'],
+.extx-similar-members-grid .extx-similar-members-table th[data-column-id='area'],
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='area'] {
 	unicode-bidi: isolate;
 }
 
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='phone'] {
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='phone'] {
 	overflow: visible !important;
 }
 
-.vx-similar-members-grid .vx-similar-members-table td[data-column-id='phone'] [dir='ltr'] {
+.extx-similar-members-grid .extx-similar-members-table td[data-column-id='phone'] [dir='ltr'] {
 	display: inline-flex !important;
 	flex-wrap: nowrap !important;
 	max-width: none !important;
@@ -4704,37 +4704,37 @@ a.vx-referrer-rail-card:active {
 }
 
 /* Call-center / dossier — eghtera region picker (اختر المنطقة): full RTL table chrome. */
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table {
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table {
 	table-layout: fixed;
 	width: 100%;
 	direction: rtl;
 }
 
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table th[data-column-id='province'],
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table td[data-column-id='province'],
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table th[data-column-id='circle'],
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table td[data-column-id='circle'],
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table th[data-column-id='maktab'],
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table td[data-column-id='maktab'],
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table th[data-column-id='region'],
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table td[data-column-id='region'] {
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table th[data-column-id='province'],
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table td[data-column-id='province'],
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table th[data-column-id='circle'],
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table td[data-column-id='circle'],
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table th[data-column-id='maktab'],
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table td[data-column-id='maktab'],
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table th[data-column-id='region'],
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table td[data-column-id='region'] {
 	text-align: start !important;
 	unicode-bidi: isolate;
 }
 
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table th[data-column-id] > div,
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table td[data-column-id] > div {
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table th[data-column-id] > div,
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table td[data-column-id] > div {
 	width: 100%;
 	justify-content: flex-start !important;
 }
 
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table th[data-column-id] > div > span {
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table th[data-column-id] > div > span {
 	width: 100%;
 	text-align: start !important;
 	flex: none !important;
 }
 
-.vx-eghtera-region-picker-grid .vx-eghtera-region-picker-table td[data-column-id] > div {
+.extx-eghtera-region-picker-grid .extx-eghtera-region-picker-table td[data-column-id] > div {
 	display: block !important;
 	width: 100%;
 	text-align: start !important;
@@ -5059,10 +5059,10 @@ table th[data-column-id='nominationRole'] {
 	justify-content: flex-start !important;
 }
 
-table td[data-column-id='patch'] .vx-candidate-pipeline-patch-cell,
-table td[data-column-id='patch'] .vx-candidate-pipeline-patch-cell span.block,
-table td[data-column-id='patch'] .vx-candidate-pipeline-patch-cell .flex.flex-col,
-table td[data-column-id='patch'] .vx-candidate-pipeline-patch-cell span.min-w-0 {
+table td[data-column-id='patch'] .extx-candidate-pipeline-patch-cell,
+table td[data-column-id='patch'] .extx-candidate-pipeline-patch-cell span.block,
+table td[data-column-id='patch'] .extx-candidate-pipeline-patch-cell .flex.flex-col,
+table td[data-column-id='patch'] .extx-candidate-pipeline-patch-cell span.min-w-0 {
 	text-align: start !important;
 	align-items: flex-start !important;
 }
@@ -5072,33 +5072,33 @@ table th[data-column-id='patch'] {
 }
 
 /* Candidate pipeline grid — reinforce culture inline-start (iq/ir: right edge). */
-.vx-candidate-pipeline-grid th[data-column-id='displayFullName'],
-.vx-candidate-pipeline-grid td[data-column-id='displayFullName'],
-.vx-candidate-pipeline-grid th[data-column-id='electoralDivisionPath'],
-.vx-candidate-pipeline-grid td[data-column-id='electoralDivisionPath'],
-.vx-candidate-pipeline-grid th[data-column-id='patch'],
-.vx-candidate-pipeline-grid td[data-column-id='patch'] {
+.extx-candidate-pipeline-grid th[data-column-id='displayFullName'],
+.extx-candidate-pipeline-grid td[data-column-id='displayFullName'],
+.extx-candidate-pipeline-grid th[data-column-id='electoralDivisionPath'],
+.extx-candidate-pipeline-grid td[data-column-id='electoralDivisionPath'],
+.extx-candidate-pipeline-grid th[data-column-id='patch'],
+.extx-candidate-pipeline-grid td[data-column-id='patch'] {
 	text-align: start !important;
 }
 
-.vx-candidate-pipeline-grid th[data-column-id='displayFullName'] > div,
-.vx-candidate-pipeline-grid th[data-column-id='electoralDivisionPath'] > div,
-.vx-candidate-pipeline-grid th[data-column-id='patch'] > div {
+.extx-candidate-pipeline-grid th[data-column-id='displayFullName'] > div,
+.extx-candidate-pipeline-grid th[data-column-id='electoralDivisionPath'] > div,
+.extx-candidate-pipeline-grid th[data-column-id='patch'] > div {
 	justify-content: flex-start !important;
 }
 
-.vx-candidate-pipeline-grid td[data-column-id='displayFullName'] > div,
-.vx-candidate-pipeline-grid td[data-column-id='electoralDivisionPath'] > div,
-.vx-candidate-pipeline-grid td[data-column-id='patch'] > div {
+.extx-candidate-pipeline-grid td[data-column-id='displayFullName'] > div,
+.extx-candidate-pipeline-grid td[data-column-id='electoralDivisionPath'] > div,
+.extx-candidate-pipeline-grid td[data-column-id='patch'] > div {
 	text-align: start !important;
 	align-items: flex-start !important;
 }
 
-.vx-candidate-pipeline-grid th[data-column-id='tarshih'] > div {
+.extx-candidate-pipeline-grid th[data-column-id='tarshih'] > div {
 	justify-content: center !important;
 }
 
-.vx-candidate-pipeline-grid td[data-column-id='tarshih'] > div {
+.extx-candidate-pipeline-grid td[data-column-id='tarshih'] > div {
 	text-align: center !important;
 	align-items: center !important;
 }

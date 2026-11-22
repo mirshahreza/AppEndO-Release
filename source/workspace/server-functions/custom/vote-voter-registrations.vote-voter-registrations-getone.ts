@@ -36,7 +36,7 @@ const EDGE_MODEL_ID = "em_a3f3ec89a1f7d05b";
 const EDGE_API_DEFINITION_ID = "ea_0e19b72a2e09ef11";
 const EDGE_API_OPERATION_ID = "op_get_feyvti";
 const MODEL_ALIAS = "VoteVoterRegistrations";
-const READ_FIELDS = ["id","votingId","vxMemberId","vxNakhebId","invitedByMemberId","statusCode","trackingCode","createdAt","updatedAt"] as const;
+const READ_FIELDS = ["id","votingId","extxMemberId","extxNakhebId","invitedByMemberId","statusCode","trackingCode","createdAt","updatedAt"] as const;
 const DEFAULT_WHERE = {};
 const MAX_PAGE_SIZE = 1;
 const DEFAULT_PAGE_SIZE = 1;
@@ -52,8 +52,8 @@ const OPERATION = {
     "read": [
       "id",
       "votingId",
-      "vxMemberId",
-      "vxNakhebId",
+      "extxMemberId",
+      "extxNakhebId",
       "invitedByMemberId",
       "statusCode",
       "trackingCode",

@@ -1,4 +1,4 @@
-import { isHwyPublicPortalPathname } from '../../domain/vx/selfRegistration/vxSelfRegistrationRoutes';
+import { isExtxPublicPortalPathname } from '../../oss/excludedModuleStub';
 
 const PUBLIC_APP_PATHS = new Set([
   '/install',
@@ -11,5 +11,5 @@ const PUBLIC_APP_PATHS = new Set([
 
 /** Routes that should render immediately without waiting for /api/boot. */
 export const isPublicAppPath = (pathname: string): boolean => (
-  PUBLIC_APP_PATHS.has(pathname) || isHwyPublicPortalPathname(pathname)
+  PUBLIC_APP_PATHS.has(pathname) || isExtxPublicPortalPathname(pathname)
 );

@@ -1008,13 +1008,13 @@ describe('platformConfigHelpers', () => {
       ...sampleConfig,
       shells: [
         {
-          shellKey: 'vertical',
-          name: 'Vertical',
+          shellKey: 'portalx',
+          name: 'Portalx',
           entry: 'designer:portal-layouts/studio-shell',
           surface: 'studio',
           enabled: true,
           entryMode: 'shell',
-          navigationRef: 'vertical',
+          navigationRef: 'portalx',
         },
         {
           shellKey: 'studio-shell',
@@ -1029,41 +1029,41 @@ describe('platformConfigHelpers', () => {
     };
 
     const shell = resolveRegistryShellForPortal(config, {
-      portalSegment: 'vertical',
+      portalSegment: 'portalx',
       shellKey: 'studio-shell',
     });
 
-    expect(shell?.shellKey).toBe('vertical');
-    expect(shell?.navigationRef).toBe('vertical');
+    expect(shell?.shellKey).toBe('portalx');
+    expect(shell?.navigationRef).toBe('portalx');
   });
 
   it('resolveExperiencePortalNavigationRef overrides studio layout nav on experience portals', () => {
-    const verticalShell = {
-      shellKey: 'vertical',
-      name: 'Vertical',
+    const portalxShell = {
+      shellKey: 'portalx',
+      name: 'Portalx',
       entry: 'designer:portal-layouts/studio-shell',
       surface: 'studio' as const,
       enabled: true,
       entryMode: 'shell' as const,
-      navigationRef: 'vertical',
+      navigationRef: 'portalx',
     };
 
     expect(resolveExperiencePortalNavigationRef(
-      { portalSegment: 'vertical', shellKey: 'studio-shell' },
-      verticalShell,
+      { portalSegment: 'portalx', shellKey: 'studio-shell' },
+      portalxShell,
       'studio',
-    )).toBe('vertical');
+    )).toBe('portalx');
 
     expect(resolveExperiencePortalNavigationRef(
       { portalSegment: 'studio', shellKey: 'studio-shell' },
-      { ...verticalShell, shellKey: 'studio', navigationRef: 'studio' },
+      { ...portalxShell, shellKey: 'studio', navigationRef: 'studio' },
       'studio',
     )).toBe('studio');
 
     expect(resolveExperiencePortalNavigationRef(
-      { portalSegment: 'vertical', shellKey: 'studio-shell' },
-      verticalShell,
+      { portalSegment: 'portalx', shellKey: 'studio-shell' },
+      portalxShell,
       '',
-    )).toBe('vertical');
+    )).toBe('portalx');
   });
 });

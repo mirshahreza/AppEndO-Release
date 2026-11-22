@@ -254,7 +254,7 @@ const BASE_COMPONENTS_SECTION_GUIDE_HINTS: Record<SectionId, string> = {
   skeleton: 'Loading placeholders that keep page geometry while data arrives.',
   progress: 'Determinate and indeterminate progress indicators.',
   'loading-error-empty': 'Loading, error, and empty states for lists and panels.',
-  'record-subject-timeline': 'Spine timeline for one record subject — match Vertical dossier change log and RecordEventHistoryDialog.',
+  'record-subject-timeline': 'Spine timeline for one record subject — match Portalx dossier change log and RecordEventHistoryDialog.',
   avatar: 'User and company avatars with fallback initials.',
   chip: 'Compact status and tag chips.',
   'phone-number': 'Callable phone readout with dial + WhatsApp badge.',

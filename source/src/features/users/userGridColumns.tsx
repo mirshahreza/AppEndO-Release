@@ -30,7 +30,7 @@ import {
 import type { UserTableActionHandlers } from './types';
 import { MountGridDateText } from '../../app/platform/MountGridDateText';
 import { UserGridRoleChips } from './components/UserGridRoleChips';
-import { vxMemberFaceCaptionTextClass } from '../../domain/vx/vxMemberFaceCaptionDisplay';
+import { extxMemberFaceCaptionTextClass } from '../../oss/excludedModuleStub';
 import {
   canDeleteUserRecord,
   formatProfileDisplayName,
@@ -377,7 +377,7 @@ export function createUserGridColumns(
                   'block w-full max-w-[4.5rem] truncate text-center text-[10px] leading-none',
                   avatarCaption.kind === 'none'
                     ? 'text-slate-500'
-                    : vxMemberFaceCaptionTextClass(avatarCaption.kind),
+                    : extxMemberFaceCaptionTextClass(avatarCaption.kind),
                 )}
               >
                 {avatarUsername}

@@ -13,7 +13,7 @@ export type PushGatewaySettings = {
   enabled: boolean;
   /** Service account JSON file path (Firebase Admin). */
   credentialsPath: string;
-  /** FCM topic namespace prefix (legacy uses `vertical`). */
+  /** FCM topic namespace prefix (legacy uses `portalx`). */
   topicNamespace: string;
 };
 
@@ -34,8 +34,8 @@ const defaultFirebaseCredentialsPath = (): string => {
     'C:',
     'Workspace',
     'Projects',
-    'VerticalSite',
-    'VerticalSite',
+    'PortalxSite',
+    'PortalxSite',
     'members-echosystem-firebase.json',
   );
   return fs.existsSync(legacyDefault) ? legacyDefault : '';
@@ -52,7 +52,7 @@ export const readPushGatewaySettings = (): PushGatewaySettings => {
     (process.env.MESSAGING_FIREBASE_CREDENTIALS_PATH ?? '').trim()
     || defaultFirebaseCredentialsPath()
   );
-  const topicNamespace = (process.env.MESSAGING_PUSH_TOPIC_NAMESPACE ?? '').trim() || 'vertical';
+  const topicNamespace = (process.env.MESSAGING_PUSH_TOPIC_NAMESPACE ?? '').trim() || 'portalx';
   const enabled = parseBool(process.env.PUSH_ENABLED, Boolean(credentialsPath));
   return {
     enabled: enabled && Boolean(credentialsPath),

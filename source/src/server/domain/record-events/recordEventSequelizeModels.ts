@@ -148,7 +148,7 @@ export const resetRecordEventModelCacheForTests = (): void => {
 export const ensureRecordEventTables = async (
   sequelize?: Sequelize,
 ): Promise<void> => {
-  if (process.env.VX_ETL_RECORD_EVENTS_INDEXES_DROPPED === '1') {
+  if (process.env.EXTX_ETL_RECORD_EVENTS_INDEXES_DROPPED === '1') {
     return;
   }
   const db = resolveSequelize(sequelize);

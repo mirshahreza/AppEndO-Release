@@ -20,7 +20,7 @@
 |---------|------|-----------|
 | **Core** (`database.ts`, org-geo `seedOrgGeoBaseInfo`) | Platform `100.*` tree | Seeds write canonical `title`; run migration script on existing DBs |
 | **CMS** (`scripts/cms-phase*`, package ZIP `culture_keys`) | Vocab under CMS root | Repack: seed base_info + `culture_keys` JSON for `ir`/`iq`; CMS SQL aggregations should use resolved `title` via API enrichment or `title_path` join |
-| **Vertical (VX)** (`scripts/vx-phase*`, `vx_*` SQL) | Member/geo vocab | Update `vx_base_info_title_path_by_short_name` to read `base_info_title_path`; phase install hooks call migration + path recompute |
+| **Portalx (EXTX)** (`scripts/extx-phase*`, `extx_*` SQL) | Member/geo vocab | Update `extx_base_info_title_path_by_short_name` to read `base_info_title_path`; phase install hooks call migration + path recompute |
 
 Org-geo (organization / geographic divisions) is **core**, not a ZIP package, but shares the same Base Info contract.
 

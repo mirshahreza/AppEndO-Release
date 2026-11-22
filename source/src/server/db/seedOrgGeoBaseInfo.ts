@@ -129,7 +129,7 @@ const ORG_SEED_ROWS: OrgGeoSeedRow[] = [
   },
 ];
 
-/** Retired demo subtree (`100.5.1` …) — Vertical uses `vx-iraq` from ETL instead. */
+/** Retired demo subtree (`100.5.1` …) — Portalx uses `extx-iraq` from ETL instead. */
 const RETIRED_SAMPLE_IRAN_GEO_ROOT_ID = childId(GEO_BASE_INFO_ROOT_ID, 1);
 
 const GEO_SEED_ROWS: OrgGeoSeedRow[] = [

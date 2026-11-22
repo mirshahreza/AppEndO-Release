@@ -19,5 +19,5 @@ One personal UI (`my-inbox`) and one list API (`GET /api/personal-inbox`) for ac
 
 ## UI
 
-- Vertical filter bar: item type includes **Send log**; channel/status filters when send log selected.
+- Portalx filter bar: item type includes **Send log**; channel/status filters when send log selected.
 - Row click opens dispatch detail dialog (`GET /api/personal-inbox/items/detail?itemKey=message_dispatch:{id}`).

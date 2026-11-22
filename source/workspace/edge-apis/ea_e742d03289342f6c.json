@@ -1,15 +1,15 @@
 {
   "id": "ea_e742d03289342f6c",
   "edgeModelId": "em_1a1c328e8c425ae3",
-  "key": "vx-institutes",
-  "label": "VX institutes",
-  "basePath": "/api/vx/institutes",
+  "key": "extx-institutes",
+  "label": "EXTX institutes",
+  "basePath": "/api/extx/institutes",
   "operations": [
     {
       "id": "op_list_pw1r4h",
       "method": "GET",
       "kind": "list",
-      "pathPattern": "/api/vx/institutes",
+      "pathPattern": "/api/extx/institutes",
       "enabled": true,
       "fields": {
         "read": [
@@ -43,7 +43,7 @@
       "id": "op_get_pw1r4h",
       "method": "GET",
       "kind": "getOne",
-      "pathPattern": "/api/vx/institutes/:pk",
+      "pathPattern": "/api/extx/institutes/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -77,7 +77,7 @@
       "id": "op_create_pw1r4h",
       "method": "POST",
       "kind": "create",
-      "pathPattern": "/api/vx/institutes",
+      "pathPattern": "/api/extx/institutes",
       "enabled": true,
       "fields": {
         "read": [
@@ -135,7 +135,7 @@
       "id": "op_update_pw1r4h",
       "method": "PUT",
       "kind": "update",
-      "pathPattern": "/api/vx/institutes/:pk",
+      "pathPattern": "/api/extx/institutes/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -193,7 +193,7 @@
       "id": "op_delete_pw1r4h",
       "method": "DELETE",
       "kind": "delete",
-      "pathPattern": "/api/vx/institutes/:pk",
+      "pathPattern": "/api/extx/institutes/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -235,5 +235,5 @@
   "runtime": {
     "useGlobalConfig": true
   },
-  "managedFunctionId": "vx-institutes.vx-institutes-list"
+  "managedFunctionId": "extx-institutes.extx-institutes-list"
 }

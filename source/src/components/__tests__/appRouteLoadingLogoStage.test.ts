@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { classifyLoadingLogoShape } from '../appRouteLoadingLogoStage';
 
 describe('classifyLoadingLogoShape', () => {
-  it('treats Vertical marks as square', () => {
-    expect(classifyLoadingLogoShape('/assets/vertical/mark-blue.png')).toBe('square');
+  it('treats Portalx marks as square', () => {
+    expect(classifyLoadingLogoShape('/assets/portalx/mark-blue.png')).toBe('square');
   });
 
   it('treats workspace portal logos as wide', () => {

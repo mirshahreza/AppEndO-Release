@@ -85,7 +85,7 @@ import { visibilityStorePathForNode } from './bindingDynamicActionsEngine';
 import { isRegionDetailReadOnlyForm } from './bindingRegionEngine';
 import { nodeHasRegionColumnBinding, resolveRegionFormFieldNameProps, resolveModalOverlayPartProps, resolveRuntimeComponentProps, resolveInputUxProps, resolveInputValidationProps, resolveSelectMenuProps } from './runtimeNodeProps';
 import { validateDesignerFieldNode } from './previewFieldValidation';
-import { VxInstituteLogoUploadField } from '../vx/VxInstituteLogoUploadField';
+import { ExtxInstituteLogoUploadField } from '../../oss/excludedModuleStub';
 import type { DesignerNode } from './types';
 import {
   DESIGNER_MODAL_BODY_CLASS,
@@ -684,7 +684,7 @@ export const renderHeroUiRealNode = (node: DesignerNode, options: RuntimeRenderO
     return null;
   }
 
-  if (paletteItemId === 'vx.institute-logo-upload') {
+  if (paletteItemId === 'extx.institute-logo-upload') {
     const fieldEventProps = sharedFieldEventProps(node, options);
     const displayValue = resolveRuntimeInputValue(node, options);
     const selection = options.designerStore?.selection;
@@ -695,7 +695,7 @@ export const renderHeroUiRealNode = (node: DesignerNode, options: RuntimeRenderO
     const formFieldName = regionFormFieldProps(node).name;
     return (
       <div className={mergeClassNames('flex w-full flex-col items-center pb-1', readString(node.props.className))}>
-        <VxInstituteLogoUploadField
+        <ExtxInstituteLogoUploadField
           key={resolveRegionBoundFieldKey(node, options)}
           instituteId={instituteId as number | string | null}
           value={displayValue || null}

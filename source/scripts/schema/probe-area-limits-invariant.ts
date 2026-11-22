@@ -19,13 +19,13 @@ const main = async (): Promise<void> => {
   const summary = await s.query<Record<string, number>>(
     `
     SELECT
-      (SELECT COUNT(*) FROM dbo.vx_member_area_limits) AS total_rows,
-      (SELECT COUNT(DISTINCT member_id) FROM dbo.vx_member_area_limits) AS distinct_members,
+      (SELECT COUNT(*) FROM dbo.extx_member_area_limits) AS total_rows,
+      (SELECT COUNT(DISTINCT member_id) FROM dbo.extx_member_area_limits) AS distinct_members,
       (
         SELECT COUNT(*)
         FROM (
           SELECT member_id
-          FROM dbo.vx_member_area_limits
+          FROM dbo.extx_member_area_limits
           WHERE ISNULL(approved, 0) = 1
           GROUP BY member_id
           HAVING COUNT(*) > 1
@@ -35,8 +35,8 @@ const main = async (): Promise<void> => {
         SELECT COUNT(*)
         FROM (
           SELECT al.member_id
-          FROM dbo.vx_member_area_limits al WITH (NOLOCK)
-          INNER JOIN dbo.vx_etl_geo_map g WITH (NOLOCK)
+          FROM dbo.extx_member_area_limits al WITH (NOLOCK)
+          INNER JOIN dbo.extx_etl_geo_map g WITH (NOLOCK)
             ON g.legacy_id = al.item_id
           WHERE ISNULL(al.approved, 0) = 1
             AND g.legacy_kind IN (${TREE_KINDS})
@@ -51,8 +51,8 @@ const main = async (): Promise<void> => {
   const sampleCrossLevel = await s.query<{ member_id: number; level_count: number }>(
     `
     SELECT TOP 15 member_id, COUNT(DISTINCT g.legacy_kind) AS level_count
-    FROM dbo.vx_member_area_limits al WITH (NOLOCK)
-    INNER JOIN dbo.vx_etl_geo_map g WITH (NOLOCK)
+    FROM dbo.extx_member_area_limits al WITH (NOLOCK)
+    INNER JOIN dbo.extx_etl_geo_map g WITH (NOLOCK)
       ON g.legacy_id = al.item_id
     WHERE ISNULL(al.approved, 0) = 1
       AND g.legacy_kind IN (${TREE_KINDS})

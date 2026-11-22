@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { mapGridRowToRegionSeedRecord } from '../regionSeedFromGridRow';
 
 describe('mapGridRowToRegionSeedRecord', () => {
-  it('passes Vertical institute list rows through without base-info remapping', () => {
+  it('passes Portalx institute list rows through without base-info remapping', () => {
     const row = {
       id: 100,
       code: 'alforat',

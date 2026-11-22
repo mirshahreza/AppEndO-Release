@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { cacheManager } from '../../core/cache/CacheManager';
 import { buildEdgeResponseCacheKey } from '../../shared/lib/cacheKeyFormat';
-import { VX_MEMBER_DIRECTORY_LIST_BUILTIN_CACHE_GENERATION } from '../domain/vx/ensureHwyMemberDirectoryListRuntime';
+import { EXTX_MEMBER_DIRECTORY_LIST_BUILTIN_CACHE_GENERATION } from '../../oss/excludedModuleStub';
 import type { MergedBuiltinFunctionRecord } from '../services/builtinFunctionRegistry.service';
 import {
   resolveServerFunctionRuntimeConfig,
@@ -108,8 +108,8 @@ export const applyBuiltInRuntimePolicy = async (
     return true;
   }
 
-  const listFaceCaptionCacheSuffix = record.path === '/api/vx/member-directory'
-    ? `:${VX_MEMBER_DIRECTORY_LIST_BUILTIN_CACHE_GENERATION}`
+  const listFaceCaptionCacheSuffix = record.path === '/api/extx/member-directory'
+    ? `:${EXTX_MEMBER_DIRECTORY_LIST_BUILTIN_CACHE_GENERATION}`
     : '';
   const cacheKey = buildEdgeResponseCacheKey({
     keyNamespace: `${record.method}:${record.path}${listFaceCaptionCacheSuffix}`,

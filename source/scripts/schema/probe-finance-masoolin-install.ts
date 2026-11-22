@@ -8,15 +8,15 @@ const main = async (): Promise<void> => {
   await ensureControlPlaneInitialized(SETTINGS_PATH, { pushSchema: false });
   const s = getControlPlaneSequelize();
   const procs = await s.query<{ name: string }>(
-    `SELECT name FROM sys.procedures WHERE name LIKE N'vx_masoolin%' ORDER BY name`,
+    `SELECT name FROM sys.procedures WHERE name LIKE N'extx_masoolin%' ORDER BY name`,
     { type: QueryTypes.SELECT },
   );
   const legacy = await s.query<Record<string, number>>(
     `
     SELECT
-      CASE WHEN OBJECT_ID(N'dbo.VX_Nashatat', N'U') IS NOT NULL THEN 1 ELSE 0 END AS has_vx_nashatat,
-      CASE WHEN OBJECT_ID(N'dbo.vx_masoolin_set_payable_auto', N'P') IS NOT NULL THEN 1 ELSE 0 END AS has_payable_auto,
-      CASE WHEN OBJECT_ID(N'dbo.vx_masoolin_top_officials', N'P') IS NOT NULL THEN 1 ELSE 0 END AS has_top_officials
+      CASE WHEN OBJECT_ID(N'dbo.EXTX_Nashatat', N'U') IS NOT NULL THEN 1 ELSE 0 END AS has_extx_nashatat,
+      CASE WHEN OBJECT_ID(N'dbo.extx_masoolin_set_payable_auto', N'P') IS NOT NULL THEN 1 ELSE 0 END AS has_payable_auto,
+      CASE WHEN OBJECT_ID(N'dbo.extx_masoolin_top_officials', N'P') IS NOT NULL THEN 1 ELSE 0 END AS has_top_officials
     `,
     { type: QueryTypes.SELECT },
   );

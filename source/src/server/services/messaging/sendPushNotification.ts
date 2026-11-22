@@ -39,7 +39,7 @@ const parseBadgeBody = (body: string): number | null => {
 };
 
 /**
- * Platform push primitive — legacy Vertical `MessagingUtils.SendNotification` / `SendNotificationShorter` parity.
+ * Platform push primitive — legacy Portalx `MessagingUtils.SendNotification` / `SendNotificationShorter` parity.
  */
 export async function sendPushNotification(
   input: SendPushNotificationInput,

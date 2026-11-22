@@ -15,8 +15,8 @@ import {
   type ResolvedPortalBrand,
 } from '../../shared/api/contracts/platform/portalBrand';
 import { guessPortalSegmentFromPathname } from '../../shared/lib/portalBrandCache';
-import { VX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../domain/vx/vxPlatformPortalBrandDefaults';
-import { VX_PUBLIC_PORTAL_SEGMENT } from '../../domain/vx/selfRegistration/vxSelfRegistrationRoutes';
+import { EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../oss/excludedModuleStub';
+import { EXTX_PUBLIC_PORTAL_SEGMENT } from '../../oss/excludedModuleStub';
 
 export type AuthLoginPortalBrand = ResolvedPortalBrand & {
   usesPortalLogo: boolean;
@@ -105,9 +105,9 @@ export function resolveAuthLoginPortalBrand(
   let resolvedBrand = brand;
   let usesPortalLogo = portalLogoIsCustom(brand.logoUrl);
 
-  if (segment === VX_PUBLIC_PORTAL_SEGMENT && !usesPortalLogo) {
+  if (segment === EXTX_PUBLIC_PORTAL_SEGMENT && !usesPortalLogo) {
     resolvedBrand = resolvePortalBrand({
-      logoUrl: VX_PLATFORM_PORTAL_BRAND_LOGO_URL,
+      logoUrl: EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL,
       title: brand.title,
       windowTitle: brand.windowTitle,
       aboutTitle: brand.aboutTitle,

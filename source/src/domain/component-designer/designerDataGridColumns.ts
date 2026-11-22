@@ -65,11 +65,11 @@ export type DesignerDataGridColumnCellKind =
   | 'audit'
   | 'lock-status'
   | 'file-tile'
-  | 'vx-registered-icon'
-  | 'vx-member-face'
-  | 'vx-imagefix-thumbs'
-  | 'vx-imagefix-member-actions'
-  | 'vx-member-personal-documents-link';
+  | 'extx-registered-icon'
+  | 'extx-member-face'
+  | 'extx-imagefix-thumbs'
+  | 'extx-imagefix-member-actions'
+  | 'extx-member-personal-documents-link';
 
 export type DesignerDataGridColumn = {
   key: string;
@@ -514,11 +514,11 @@ export const parseDesignerDataGridColumns = (value: unknown): DesignerDataGridCo
             || cellKind === 'audit'
             || cellKind === 'lock-status'
             || cellKind === 'file-tile'
-            || cellKind === 'vx-registered-icon'
-            || cellKind === 'vx-member-face'
-            || cellKind === 'vx-imagefix-thumbs'
-            || cellKind === 'vx-imagefix-member-actions'
-            || cellKind === 'vx-member-personal-documents-link'
+            || cellKind === 'extx-registered-icon'
+            || cellKind === 'extx-member-face'
+            || cellKind === 'extx-imagefix-thumbs'
+            || cellKind === 'extx-imagefix-member-actions'
+            || cellKind === 'extx-member-personal-documents-link'
             ? { cellKind }
             : {}),
           ...(cellFields ? { cellFields } : {}),

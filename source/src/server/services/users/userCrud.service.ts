@@ -39,7 +39,7 @@ import { parseUsersListQuery } from '../../../shared/api/contracts/users/listQue
 import { resolveUserAvatarXsSrc } from '../../../shared/api/contracts/users/avatar';
 import { invalidateUsersListEdgeCache } from '../edgeResponseCache';
 import { getUserProfileAvatarListMeta } from '../../domain/users/userProfileRepository';
-import { resolveAvatarUsernamesForUserIds } from '../../domain/users/vxMemberUsernameLookup';
+import { resolveAvatarUsernamesForUserIds } from '../../../oss/excludedModuleStub';
 import { invalidateUserRolesCache } from '../../domain/users/userRolesCache';
 import {
   emitUserCreatedHistory,
@@ -65,7 +65,7 @@ export async function listUsers(rawQuery: Record<string, unknown> = {}) {
   const items = rows.map((row) => ({
     ...row,
     avatar_username: avatarUsernameByUserId.get(row.id) ?? null,
-    legacy_vx_username: avatarUsernameByUserId.get(row.id) ?? null,
+    legacy_extx_username: avatarUsernameByUserId.get(row.id) ?? null,
     membership_username: avatarUsernameByUserId.get(row.id) ?? null,
     avatar_url: resolveUserAvatarXsSrc({
       id: row.id,

@@ -1839,7 +1839,7 @@ const bundle: Record<string, string> = {
   'install.email.fromName': "From name",
   'install.email.fromNameAria': "From name",
   'install.email.gmailAppPasswordLink': "App Password",
-  'install.email.gmailHintAfter': ", and use that 16-character code as SMTP password. Username and From email must both be your full @gmail.com address.",
+  'install.email.gmailHintAfter': ", and use that 16-character code as SMTP password. Username and From email must both be your full Gmail address.",
   'install.email.gmailHintBefore': "Gmail does not accept your normal Google password here. Enable 2-Step Verification, create an",
   'install.email.host': "Host",
   'install.email.hostAria': "SMTP host",

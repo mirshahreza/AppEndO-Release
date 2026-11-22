@@ -1,16 +1,16 @@
 import type { CatalogInteractionState } from './catalogInteractionState';
 import {
-  VX_MEMBER_FACE_SUBTLE_ACTIVE_APPLIED_CLASS,
-  VX_MEMBER_FACE_SUBTLE_HOVER_APPLIED_CLASS,
-} from '../vx/vxMemberFaceInteraction';
+  EXTX_MEMBER_FACE_SUBTLE_ACTIVE_APPLIED_CLASS,
+  EXTX_MEMBER_FACE_SUBTLE_HOVER_APPLIED_CLASS,
+} from '../../../oss/excludedModuleStub';
 
 /** Forced member-face chrome — must match production hover/active pseudo. */
 export function catalogFaceAppliedStateClass(state: CatalogInteractionState | undefined): string {
   if (state === 'hover') {
-    return VX_MEMBER_FACE_SUBTLE_HOVER_APPLIED_CLASS;
+    return EXTX_MEMBER_FACE_SUBTLE_HOVER_APPLIED_CLASS;
   }
   if (state === 'active') {
-    return VX_MEMBER_FACE_SUBTLE_ACTIVE_APPLIED_CLASS;
+    return EXTX_MEMBER_FACE_SUBTLE_ACTIVE_APPLIED_CLASS;
   }
   return '';
 }

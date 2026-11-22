@@ -7,10 +7,10 @@ export function isClientComponentEditSlug(slug: string): boolean {
   return /^[\w-]+$/.test(trimmed);
 }
 
-const PACKAGE_PAGE_KEY_PREFIX = 'vx-';
+const PACKAGE_PAGE_KEY_PREFIX = 'extx-';
 
 /**
- * Package page keys often split view/edit routes (`vx-member-dossier-view`).
+ * Package page keys often split view/edit routes (`extx-member-dossier-view`).
  * Client Components use the product slug without the package prefix (`member-dossier`).
  */
 export function resolvePackagePageKeyToEditSlug(pageKey: string): string {

@@ -1,7 +1,7 @@
 {
   "edgeModelId": "em_5f3a30c99bb3420e",
   "tags": [
-    "vx",
+    "extx",
     "member",
     "directory",
     "read-model"
@@ -632,7 +632,7 @@
   ],
   "associationMeta": [],
   "extensions": {
-    "story": "## Purpose\n\nMember **directory read model** — one row per `vx_members.id` with COALESCE from `base_user_profiles` and joined nakhebin geo titles. Lists, queues, and Data API list/getOne use this view — not the raw table alone.\n\n## Rules\n\n- Column order in Studio follows **Keys → platform account → Arabic identity → contact → profile media → lineage → address → nakhebin → membership → referrer → education → employment → operator → audit**.\n- Same group names as `vx_members` where the field maps 1:1; extra groups **Platform account** and **Profile media** for login/profile surfaces.\n- `tracking_code` is always the member id string for public search — not the التياري username.",
+    "story": "## Purpose\n\nMember **directory read model** — one row per `extx_members.id` with COALESCE from `base_user_profiles` and joined nakhebin geo titles. Lists, queues, and Data API list/getOne use this view — not the raw table alone.\n\n## Rules\n\n- Column order in Studio follows **Keys → platform account → Arabic identity → contact → profile media → lineage → address → nakhebin → membership → referrer → education → employment → operator → audit**.\n- Same group names as `extx_members` where the field maps 1:1; extra groups **Platform account** and **Profile media** for login/profile surfaces.\n- `tracking_code` is always the member id string for public search — not the التياري username.",
     "scenarioIds": [
       "S1",
       "S2",

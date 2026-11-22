@@ -1,13 +1,13 @@
-<div dir="rtl" lang="fa" class="vx-parity-doc">
+<div dir="rtl" lang="fa" class="extx-parity-doc">
 <style>
-  .vx-parity-doc { text-align: right; unicode-bidi: plaintext; }
-  .vx-parity-doc h1, .vx-parity-doc h2, .vx-parity-doc h3, .vx-parity-doc h4, .vx-parity-doc p, .vx-parity-doc li { text-align: right; }
-  .vx-parity-doc table { direction: rtl; text-align: right; width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
-  .vx-parity-doc th, .vx-parity-doc td { border: 1px solid #c4c4c4; padding: 0.35rem 0.5rem; vertical-align: top; text-align: right; }
-  .vx-parity-doc th { background: #f6f6f6; font-weight: 600; }
-  .vx-parity-doc blockquote { text-align: right; border-right: 3px solid #ccc; border-left: none; padding-right: 1rem; margin-right: 0; }
-  .vx-parity-doc ul, .vx-parity-doc ol { padding-right: 1.25rem; padding-left: 0; }
-  .vx-parity-doc pre, .vx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }
+  .extx-parity-doc { text-align: right; unicode-bidi: plaintext; }
+  .extx-parity-doc h1, .extx-parity-doc h2, .extx-parity-doc h3, .extx-parity-doc h4, .extx-parity-doc p, .extx-parity-doc li { text-align: right; }
+  .extx-parity-doc table { direction: rtl; text-align: right; width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
+  .extx-parity-doc th, .extx-parity-doc td { border: 1px solid #c4c4c4; padding: 0.35rem 0.5rem; vertical-align: top; text-align: right; }
+  .extx-parity-doc th { background: #f6f6f6; font-weight: 600; }
+  .extx-parity-doc blockquote { text-align: right; border-right: 3px solid #ccc; border-left: none; padding-right: 1rem; margin-right: 0; }
+  .extx-parity-doc ul, .extx-parity-doc ol { padding-right: 1.25rem; padding-left: 0; }
+  .extx-parity-doc pre, .extx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }
 </style>
 
 <p><strong>خلاصه برای operatore:</strong> این سند جزو <strong>plans</strong> است (p-packages-api-connectors). ستون وضعیت در <a href="./p-00-packages-index.md">index مربوطه</a> مرجع «شروع شده / design / تمام» است.</p>
@@ -299,7 +299,7 @@ CREATE TABLE ac_user_connections (
   -- pending | active | expired | revoked | error
   granted_scopes  TEXT[] NOT NULL DEFAULT '{}',
   external_account_id TEXT,                      -- provider user id / email hint
-  external_account_label TEXT,                   -- "user@example.com" — نمایش UI
+  external_account_label TEXT,                   -- "admin@append.os" — نمایش UI
   token_expires_at TIMESTAMPTZ,
   last_refresh_at TIMESTAMPTZ,
   last_error      TEXT,
@@ -446,7 +446,7 @@ Base: `/api/packages/api-connectors`
       "familyId": "google-workspace",
       "label": "Google Workspace",
       "status": "active",
-      "externalAccountLabel": "user@gmail.com",
+      "externalAccountLabel": "admin@append.os",
       "grantedScopes": ["calendar.read", "calendar.write"],
       "tokenExpiresAt": "2026-06-18T10:00:00Z",
       "connectedAt": "2026-06-01T08:00:00Z"

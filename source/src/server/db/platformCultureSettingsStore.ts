@@ -8,7 +8,7 @@ import {
   type PlatformCulturesConfig,
 } from '../../shared/api/contracts/platform/cultures';
 import type { CultureCalendarId } from '../../shared/api/contracts/systemExtensions/types';
-import { IQ_VERTICAL_WEB_FONT_ID } from '../../shared/api/contracts/platform/cultures';
+import { IQ_PORTALX_WEB_FONT_ID } from '../../shared/api/contracts/platform/cultures';
 import { normalizeCultureTypography } from '../../core/culture/cultureTypographyMerge';
 
 const PLATFORM_CULTURES_SETTINGS_KEY = 'platformCultures';
@@ -101,7 +101,7 @@ function applyBuiltinCulturePackDefaults(packs: PlatformCulturePack[]): Platform
     return {
       ...pack,
       typography: {
-        defaultFontId: IQ_VERTICAL_WEB_FONT_ID,
+        defaultFontId: IQ_PORTALX_WEB_FONT_ID,
         fonts: [],
       },
     };

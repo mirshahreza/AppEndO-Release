@@ -17,7 +17,7 @@ describe('portal brand cache', () => {
 
   it('guesses the portal segment from a culture URL', () => {
     expect(guessPortalSegmentFromPathname('/us/studio/users')).toBe('studio');
-    expect(guessPortalSegmentFromPathname('/iq/vertical/self-registration')).toBe('vertical');
+    expect(guessPortalSegmentFromPathname('/iq/portalx/self-registration')).toBe('portalx');
     expect(guessPortalSegmentFromPathname('/us')).toBe('home');
     expect(guessPortalSegmentFromPathname('/login')).toBe('');
   });
@@ -38,46 +38,46 @@ describe('portal brand cache', () => {
     expect(localStorage.getItem(PORTAL_BRAND_CACHE_KEY)).toContain('shop');
   });
 
-  it('falls back to the bundled Vertical mark when cache and shells are empty', () => {
-    expect(resolvePortalLoadingBrandForPathname('/iq/vertical/self-registration')).toEqual({
-      logoUrl: '/assets/vertical/mark-blue.png',
+  it('falls back to the bundled Portalx mark when cache and shells are empty', () => {
+    expect(resolvePortalLoadingBrandForPathname('/iq/portalx/self-registration')).toEqual({
+      logoUrl: '/assets/portalx/mark-blue.png',
     });
   });
 
   it('resolves loading brand from boot shells for culture portal URLs', () => {
-    const brand = resolvePortalLoadingBrandForPathname('/iq/vertical/self-registration', [
+    const brand = resolvePortalLoadingBrandForPathname('/iq/portalx/self-registration', [
       {
-        shellKey: 'vertical',
-        name: 'Vertical',
+        shellKey: 'portalx',
+        name: 'Portalx',
         brand: {
-          logoUrl: '/assets/workspace/portals/vertical/logo.png',
-          title: 'Vertical portal',
+          logoUrl: '/assets/workspace/portals/portalx/logo.png',
+          title: 'Portalx portal',
         },
       } as never,
     ]);
     expect(brand).toEqual({
-      logoUrl: '/assets/workspace/portals/vertical/logo.png',
+      logoUrl: '/assets/workspace/portals/portalx/logo.png',
       title: 'انضم الينا / نظام هويتي الإلكتروني',
     });
   });
 
   it('seeds cache from portal shell brand (Settings → Portals)', () => {
-    window.history.replaceState({}, '', '/iq/vertical/self-registration');
+    window.history.replaceState({}, '', '/iq/portalx/self-registration');
     primePortalBrandCacheFromShells([
       {
-        shellKey: 'vertical',
-        name: 'Vertical',
+        shellKey: 'portalx',
+        name: 'Portalx',
         entry: 'core:AdminLayout',
         surface: 'studio',
         enabled: true,
         brand: {
-          logoUrl: '/assets/workspace/portals/vertical/logo.png',
-          title: 'Vertical portal',
+          logoUrl: '/assets/workspace/portals/portalx/logo.png',
+          title: 'Portalx portal',
         },
       } as never,
     ]);
-    expect(readCachedPortalBrand('vertical')).toEqual({
-      logoUrl: '/assets/workspace/portals/vertical/logo.png',
+    expect(readCachedPortalBrand('portalx')).toEqual({
+      logoUrl: '/assets/workspace/portals/portalx/logo.png',
       title: 'انضم الينا / نظام هويتي الإلكتروني',
     });
   });

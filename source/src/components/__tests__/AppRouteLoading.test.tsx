@@ -65,16 +65,16 @@ describe('AppRouteLoading portal brand', () => {
     );
   });
 
-  it('uses the bundled Vertical mark on first paint when cache is empty', () => {
-    window.history.replaceState({}, '', '/iq/vertical/self-registration-shabab');
+  it('uses the bundled Portalx mark on first paint when cache is empty', () => {
+    window.history.replaceState({}, '', '/iq/portalx/self-registration-shabab');
 
     renderLoading(<AppRouteLoading />);
 
     expect(screen.getByAltText('Loading')).toHaveAttribute(
       'src',
-      '/assets/vertical/mark-blue.png',
+      '/assets/portalx/mark-blue.png',
     );
-    expect(document.documentElement.getAttribute('data-loading-identity')).toBe('vertical');
+    expect(document.documentElement.getAttribute('data-loading-identity')).toBe('portalx');
   });
 
   it('shows a custom logo on the embedded variant', () => {

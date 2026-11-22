@@ -1844,7 +1844,7 @@ const bundle: Record<string, string> = {
   'install.email.fromName': "من الاسم",
   'install.email.fromNameAria': "من الاسم",
   'install.email.gmailAppPasswordLink': "كلمة مرور التطبيق",
-  'install.email.gmailHintAfter': "واستخدم هذا الرمز المكون من 16 حرفًا ككلمة مرور SMTP. يجب أن يكون كل من اسم المستخدم ومن البريد الإلكتروني عنوان @gmail.com الكامل الخاص بك.",
+  'install.email.gmailHintAfter': "واستخدم هذا الرمز المكون من 16 حرفًا ككلمة مرور SMTP. يجب أن يكون كل من اسم المستخدم ومن البريد الإلكتروني عنوان Gmail الكامل الخاص بك.",
   'install.email.gmailHintBefore': "لا يقبل Gmail كلمة مرور Google العادية هنا. تمكين التحقق بخطوتين، وإنشاء",
   'install.email.host': "يستضيف",
   'install.email.hostAria': "مضيف SMTP",

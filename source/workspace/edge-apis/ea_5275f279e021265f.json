@@ -1,15 +1,15 @@
 {
   "id": "ea_5275f279e021265f",
   "edgeModelId": "em_70527d6dd3421100",
-  "key": "vx-username-repo",
-  "label": "VX username repo",
-  "basePath": "/api/vx/username-repo",
+  "key": "extx-username-repo",
+  "label": "EXTX username repo",
+  "basePath": "/api/extx/username-repo",
   "operations": [
     {
       "id": "op_list_jbpn7t",
       "method": "GET",
       "kind": "list",
-      "pathPattern": "/api/vx/username-repo",
+      "pathPattern": "/api/extx/username-repo",
       "enabled": true,
       "fields": {
         "read": [
@@ -31,7 +31,7 @@
       "id": "op_get_jbpn7t",
       "method": "GET",
       "kind": "getOne",
-      "pathPattern": "/api/vx/username-repo/:pk",
+      "pathPattern": "/api/extx/username-repo/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -53,7 +53,7 @@
       "id": "op_create_jbpn7t",
       "method": "POST",
       "kind": "create",
-      "pathPattern": "/api/vx/username-repo",
+      "pathPattern": "/api/extx/username-repo",
       "enabled": true,
       "fields": {
         "read": [
@@ -79,7 +79,7 @@
       "id": "op_update_jbpn7t",
       "method": "PUT",
       "kind": "update",
-      "pathPattern": "/api/vx/username-repo/:pk",
+      "pathPattern": "/api/extx/username-repo/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -105,7 +105,7 @@
       "id": "op_delete_jbpn7t",
       "method": "DELETE",
       "kind": "delete",
-      "pathPattern": "/api/vx/username-repo/:pk",
+      "pathPattern": "/api/extx/username-repo/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -135,5 +135,5 @@
   "runtime": {
     "useGlobalConfig": true
   },
-  "managedFunctionId": "vx-username-repo.vx-username-repo-list"
+  "managedFunctionId": "extx-username-repo.extx-username-repo-list"
 }

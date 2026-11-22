@@ -13,33 +13,33 @@ import {
   ResetPasswordPage,
   SharedWorkbookPage,
   VerifyEmailPage,
-  VxSelfRegistrationPage,
-  VxTrackRegistrationPage,
-  VxPublicLoginPage,
-  VxPublicMyProfilePage,
-  VxPublicInquiryPage,
-  VxRegistrationDevPortalPage,
+  ExtxSelfRegistrationPage,
+  ExtxTrackRegistrationPage,
+  ExtxPublicLoginPage,
+  ExtxPublicMyProfilePage,
+  ExtxPublicInquiryPage,
+  ExtxRegistrationDevPortalPage,
 } from '../routes/lazyPages';
 import {
-  buildHwyPublicCulturePath,
-  VX_DEFAULT_PUBLIC_CULTURE,
-  VX_PUBLIC_PORTAL_SEGMENT,
-  VX_LOGIN_PUBLIC_PATH,
-  VX_MY_PROFILE_PUBLIC_PATH,
-  VX_MEMBER_INQUIRY_PUBLIC_PATH,
-  VX_SELF_REGISTRATION_PUBLIC_PATHS,
-  VX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH,
-  VX_TRACK_REGISTRATION_PUBLIC_PATH,
-  vxSelfRegistrationDevPortalPublicUrl,
-  vxTrackRegistrationPublicUrl,
-} from '../../domain/vx/selfRegistration/vxSelfRegistrationRoutes';
+  buildExtxPublicCulturePath,
+  EXTX_DEFAULT_PUBLIC_CULTURE,
+  EXTX_PUBLIC_PORTAL_SEGMENT,
+  EXTX_LOGIN_PUBLIC_PATH,
+  EXTX_MY_PROFILE_PUBLIC_PATH,
+  EXTX_MEMBER_INQUIRY_PUBLIC_PATH,
+  EXTX_SELF_REGISTRATION_PUBLIC_PATHS,
+  EXTX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH,
+  EXTX_TRACK_REGISTRATION_PUBLIC_PATH,
+  extxSelfRegistrationDevPortalPublicUrl,
+  extxTrackRegistrationPublicUrl,
+} from '../../oss/excludedModuleStub';
 import { ComponentDesignerOutlinePreviewRoute } from './ComponentDesignerOutlinePreviewRoute';
 import { useOptionalPlatformConfig } from './PlatformConfigProvider';
 import { getNonCultureEnabledMounts } from './platformConfigHelpers';
 import { RootZonePage } from './RootZonePage';
 import { PublicCultureScope } from './PublicCultureScope';
 import { resolveInvalidCulturePrefixRedirect } from './LegacyAdminUrlResolver';
-import { VerticalPackagePublicGate } from '../../shared/packages/VerticalPackagePublicGate';
+import { PortalxPackagePublicGate } from '../../oss/excludedModuleStub';
 
 const ExperienceHost = React.lazy(() => {
   void import('./LazyExperienceMountRuntimeProviders').then((module) => {
@@ -116,55 +116,55 @@ export const PlatformAppRoutes: React.FC = () => (
         <Route path="/install" element={withPublicCulture(<InstallPage />)} />
         <Route path="/login" element={withPublicCulture(<LoginPage />)} />
         {getEnabledCulturePackIds().map((cultureId) => (
-          <React.Fragment key={`vx-public-${cultureId}`}>
-            {VX_SELF_REGISTRATION_PUBLIC_PATHS.map((suffixPath) => (
+          <React.Fragment key={`extx-public-${cultureId}`}>
+            {EXTX_SELF_REGISTRATION_PUBLIC_PATHS.map((suffixPath) => (
               <Route
                 key={`${cultureId}${suffixPath}`}
-                path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${suffixPath}`}
-                element={withPublicCulture(<VerticalPackagePublicGate><VxSelfRegistrationPage /></VerticalPackagePublicGate>)}
+                path={`${cultureId}/${EXTX_PUBLIC_PORTAL_SEGMENT}${suffixPath}`}
+                element={withPublicCulture(<PortalxPackagePublicGate><ExtxSelfRegistrationPage /></PortalxPackagePublicGate>)}
               />
             ))}
             <Route
-              key={`${cultureId}${VX_TRACK_REGISTRATION_PUBLIC_PATH}`}
-              path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_TRACK_REGISTRATION_PUBLIC_PATH}`}
-              element={withPublicCulture(<VerticalPackagePublicGate><VxTrackRegistrationPage /></VerticalPackagePublicGate>)}
+              key={`${cultureId}${EXTX_TRACK_REGISTRATION_PUBLIC_PATH}`}
+              path={`${cultureId}/${EXTX_PUBLIC_PORTAL_SEGMENT}${EXTX_TRACK_REGISTRATION_PUBLIC_PATH}`}
+              element={withPublicCulture(<PortalxPackagePublicGate><ExtxTrackRegistrationPage /></PortalxPackagePublicGate>)}
             />
             <Route
-              key={`${cultureId}${VX_LOGIN_PUBLIC_PATH}`}
-              path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_LOGIN_PUBLIC_PATH}`}
-              element={withPublicCulture(<VerticalPackagePublicGate><VxPublicLoginPage /></VerticalPackagePublicGate>)}
+              key={`${cultureId}${EXTX_LOGIN_PUBLIC_PATH}`}
+              path={`${cultureId}/${EXTX_PUBLIC_PORTAL_SEGMENT}${EXTX_LOGIN_PUBLIC_PATH}`}
+              element={withPublicCulture(<PortalxPackagePublicGate><ExtxPublicLoginPage /></PortalxPackagePublicGate>)}
             />
             <Route
-              key={`${cultureId}${VX_MY_PROFILE_PUBLIC_PATH}`}
-              path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_MY_PROFILE_PUBLIC_PATH}`}
-              element={withPublicCulture(<VerticalPackagePublicGate><VxPublicMyProfilePage /></VerticalPackagePublicGate>)}
+              key={`${cultureId}${EXTX_MY_PROFILE_PUBLIC_PATH}`}
+              path={`${cultureId}/${EXTX_PUBLIC_PORTAL_SEGMENT}${EXTX_MY_PROFILE_PUBLIC_PATH}`}
+              element={withPublicCulture(<PortalxPackagePublicGate><ExtxPublicMyProfilePage /></PortalxPackagePublicGate>)}
             />
             <Route
-              key={`${cultureId}${VX_MEMBER_INQUIRY_PUBLIC_PATH}`}
-              path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_MEMBER_INQUIRY_PUBLIC_PATH}`}
-              element={withPublicCulture(<VerticalPackagePublicGate><VxPublicInquiryPage /></VerticalPackagePublicGate>)}
+              key={`${cultureId}${EXTX_MEMBER_INQUIRY_PUBLIC_PATH}`}
+              path={`${cultureId}/${EXTX_PUBLIC_PORTAL_SEGMENT}${EXTX_MEMBER_INQUIRY_PUBLIC_PATH}`}
+              element={withPublicCulture(<PortalxPackagePublicGate><ExtxPublicInquiryPage /></PortalxPackagePublicGate>)}
             />
             <Route
-              key={`${cultureId}${VX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH}`}
-              path={`${cultureId}/${VX_PUBLIC_PORTAL_SEGMENT}${VX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH}`}
-              element={withPublicCulture(<VerticalPackagePublicGate><VxRegistrationDevPortalPage /></VerticalPackagePublicGate>)}
+              key={`${cultureId}${EXTX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH}`}
+              path={`${cultureId}/${EXTX_PUBLIC_PORTAL_SEGMENT}${EXTX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH}`}
+              element={withPublicCulture(<PortalxPackagePublicGate><ExtxRegistrationDevPortalPage /></PortalxPackagePublicGate>)}
             />
           </React.Fragment>
         ))}
-        {VX_SELF_REGISTRATION_PUBLIC_PATHS.map((suffixPath) => (
+        {EXTX_SELF_REGISTRATION_PUBLIC_PATHS.map((suffixPath) => (
           <Route
             key={`legacy-redirect${suffixPath}`}
             path={suffixPath.replace(/^\//, '')}
-            element={<Navigate to={buildHwyPublicCulturePath(suffixPath, VX_DEFAULT_PUBLIC_CULTURE)} replace />}
+            element={<Navigate to={buildExtxPublicCulturePath(suffixPath, EXTX_DEFAULT_PUBLIC_CULTURE)} replace />}
           />
         ))}
         <Route
-          path={VX_TRACK_REGISTRATION_PUBLIC_PATH.replace(/^\//, '')}
-          element={<Navigate to={vxTrackRegistrationPublicUrl(VX_DEFAULT_PUBLIC_CULTURE)} replace />}
+          path={EXTX_TRACK_REGISTRATION_PUBLIC_PATH.replace(/^\//, '')}
+          element={<Navigate to={extxTrackRegistrationPublicUrl(EXTX_DEFAULT_PUBLIC_CULTURE)} replace />}
         />
         <Route
-          path={VX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH.replace(/^\//, '')}
-          element={<Navigate to={vxSelfRegistrationDevPortalPublicUrl(VX_DEFAULT_PUBLIC_CULTURE)} replace />}
+          path={EXTX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH.replace(/^\//, '')}
+          element={<Navigate to={extxSelfRegistrationDevPortalPublicUrl(EXTX_DEFAULT_PUBLIC_CULTURE)} replace />}
         />
         <Route path="/register" element={withPublicCulture(<RegisterPage />)} />
         <Route path="/forgot-password" element={withPublicCulture(<ForgotPasswordPage />)} />

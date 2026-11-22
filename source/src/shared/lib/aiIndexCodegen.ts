@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { writeCursorFeatureRules } from './cursorRuleCodegen';
-import { writeVerticalCursorPageLockRules, writePageEditLockManifest } from './operatorPageEditLockCodegen';
+import { writePortalxCursorPageLockRules, writePageEditLockManifest } from './operatorPageEditLockCodegen';
 
 type StudioNavItem = {
   pageKey: string;
@@ -60,7 +60,7 @@ export const PAGE_KEY_TO_FEATURE: Record<string, string> = {
   'package-manager': 'packages',
   libraries: 'libraries',
   'base-components': 'base-components',
-  'vx-identity-components': 'vx-identity-components',
+  'extx-identity-components': 'extx-identity-components',
   'dev-reference': 'dev-reference',
   settings: 'settings',
   'platform-transfer': 'platform-transfer',
@@ -129,14 +129,14 @@ const LOADER_REF_TO_FEATURE_PAGE: Record<string, string> = {
   'core:MyWorkbooks': 'src/features/workbooks/MyWorkbooksPage.tsx',
   'core:IdeaFoundry': 'src/features/idea-foundry/IdeaFoundryPage.tsx',
   'core:ApiTalk': 'src/features/api-talk/ApiTalkPage.tsx',
-  'vertical:vx-member-dossier': 'src/features/vx-member-dossier/VxMemberDossierPage.tsx',
-  'vertical:vx-member-dossier-view': 'src/features/vx-member-dossier/VxMemberDossierViewPage.tsx',
-  'vertical:vx-member-dossier-edit': 'src/features/vx-member-dossier/VxMemberDossierEditPage.tsx',
-  'vertical:vx-org-membership-transfer': 'src/features/vx-org-membership-transfer/VxOrgMembershipTransferPage.tsx',
-  'vertical:vx-geo-responsibility': 'src/features/vx-geo-responsibility/VxGeoResponsibilityPage.tsx',
-  'vertical:vx-etl-console': 'src/features/vx-etl-console/VxEtlConsolePage.tsx',
-  'vertical:vx-business-rules-reference': 'src/features/vx-business-rules-reference/VxBusinessRulesReferencePage.tsx',
-  'vertical:vx-identity-components': 'src/features/vx-identity-components/VxIdentityComponentsPage.tsx',
+  'portalx:extx-member-dossier': 'src/features/extx-member-dossier/ExtxMemberDossierPage.tsx',
+  'portalx:extx-member-dossier-view': 'src/features/extx-member-dossier/ExtxMemberDossierViewPage.tsx',
+  'portalx:extx-member-dossier-edit': 'src/features/extx-member-dossier/ExtxMemberDossierEditPage.tsx',
+  'portalx:extx-org-membership-transfer': 'src/features/extx-org-membership-transfer/ExtxOrgMembershipTransferPage.tsx',
+  'portalx:extx-geo-responsibility': 'src/features/extx-geo-responsibility/ExtxGeoResponsibilityPage.tsx',
+  'portalx:extx-etl-console': 'src/features/extx-etl-console/ExtxEtlConsolePage.tsx',
+  'portalx:extx-business-rules-reference': 'src/features/extx-business-rules-reference/ExtxBusinessRulesReferencePage.tsx',
+  'portalx:extx-identity-components': 'src/features/extx-identity-components/ExtxIdentityComponentsPage.tsx',
 };
 
 type PageApiEntry = {
@@ -645,6 +645,6 @@ export function writeAiIndexArtifacts(rootDir: string): FeatureGraph {
   );
   writeCursorFeatureRules(rootDir, graph);
   writePageEditLockManifest(rootDir, graph);
-  writeVerticalCursorPageLockRules(rootDir, graph);
+  writePortalxCursorPageLockRules(rootDir, graph);
   return graph;
 }

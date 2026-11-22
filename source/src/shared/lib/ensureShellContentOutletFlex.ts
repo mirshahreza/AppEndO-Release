@@ -45,7 +45,7 @@ const normalizeScrollHostClassName = (className: string): string => {
 };
 
 /**
- * Published designer shells (studio-shell, vertical portal layout, …) used a block
+ * Published designer shells (studio-shell, portalx portal layout, …) used a block
  * `overflow-auto` host around the route outlet. Fill-height grids then collapsed to
  * header+footer height with an empty virtualized tbody.
  */

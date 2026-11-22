@@ -2,8 +2,8 @@ import {
   DEFAULT_PORTAL_LOGO_URL,
   isAllowedPortalBrandLogoUrl,
 } from '../api/contracts/platform/portalBrand';
-import { VX_PUBLIC_PORTAL_SEGMENT } from '../../domain/vx/selfRegistration/vxSelfRegistrationRoutes';
-import { VX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../domain/vx/vxPlatformPortalBrandDefaults';
+import { EXTX_PUBLIC_PORTAL_SEGMENT } from '../../oss/excludedModuleStub';
+import { EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../oss/excludedModuleStub';
 
 import { guessPortalSegmentFromPathname } from './portalBrandCache';
 
@@ -33,11 +33,11 @@ export function resolvePortalDocumentFaviconUrl(logoUrl: string | null | undefin
   return trimmed;
 }
 
-export function resolveVerticalPublicPortalFaviconUrl(logoUrl: string | null | undefined): string {
-  return resolvePortalDocumentFaviconUrl(logoUrl) ?? VX_PLATFORM_PORTAL_BRAND_LOGO_URL;
+export function resolvePortalxPublicPortalFaviconUrl(logoUrl: string | null | undefined): string {
+  return resolvePortalDocumentFaviconUrl(logoUrl) ?? EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL;
 }
 
-/** Browser tab / PWA shortcut icons for portal-owned routes (Settings → Portals logo or Vertical bundled mark). */
+/** Browser tab / PWA shortcut icons for portal-owned routes (Settings → Portals logo or Portalx bundled mark). */
 export function applyPortalDocumentFavicon(logoUrl: string): void {
   if (typeof document === 'undefined') {
     return;
@@ -69,5 +69,5 @@ export function applyPortalDocumentFavicon(logoUrl: string): void {
 }
 
 export function isPortalOwnedDocumentChrome(pathname: string): boolean {
-  return guessPortalSegmentFromPathname(pathname) === VX_PUBLIC_PORTAL_SEGMENT;
+  return guessPortalSegmentFromPathname(pathname) === EXTX_PUBLIC_PORTAL_SEGMENT;
 }

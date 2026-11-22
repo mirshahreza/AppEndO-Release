@@ -11,29 +11,29 @@ describe('resolveAccessAssistantEligibility — edit component', () => {
   it('enables edit for designer pages with a pinned component path', () => {
     listPageModuleFiles.mockReturnValue([
       {
-        pageKey: 'vx-members-all',
+        pageKey: 'extx-members-all',
         loaderKind: 'designer',
-        loaderRef: 'general/vx-members-all@v39',
+        loaderRef: 'general/extx-members-all@v39',
       },
     ]);
 
-    const result = resolveAccessAssistantEligibility('vx-members-all');
+    const result = resolveAccessAssistantEligibility('extx-members-all');
     expect(result.editComponent).toEqual({
       enabled: true,
-      componentSlug: 'vx-members-all',
+      componentSlug: 'extx-members-all',
     });
   });
 
   it('enables edit for package pages using the shared Client Components slug', () => {
     listPageModuleFiles.mockReturnValue([
       {
-        pageKey: 'vx-member-dossier-view',
+        pageKey: 'extx-member-dossier-view',
         loaderKind: 'package',
-        loaderRef: 'vertical:vx-member-dossier-view',
+        loaderRef: 'portalx:extx-member-dossier-view',
       },
     ]);
 
-    const result = resolveAccessAssistantEligibility('vx-member-dossier-view');
+    const result = resolveAccessAssistantEligibility('extx-member-dossier-view');
     expect(result.editComponent).toEqual({
       enabled: true,
       componentSlug: 'member-dossier',

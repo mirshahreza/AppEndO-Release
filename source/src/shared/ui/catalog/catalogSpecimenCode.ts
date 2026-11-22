@@ -4,7 +4,7 @@ export const BC_SPECIMEN_PREFIX = 'bc';
 export const STUDIO_BC_SPECIMEN_PREFIX = BC_SPECIMEN_PREFIX;
 
 export const HI_SPECIMEN_PREFIX = 'hi';
-export const VX_IC_SPECIMEN_PREFIX = HI_SPECIMEN_PREFIX;
+export const EXTX_IC_SPECIMEN_PREFIX = HI_SPECIMEN_PREFIX;
 
 const HI_SECTION_SLUG: Record<string, string> = {
   'member-directory-face': 'mdf',
@@ -136,10 +136,10 @@ export function formatStudioBcSpecimenCode(sectionId: string, specimenId?: strin
   return `${base}.${bcSpecimenSlug(specimenId)}`;
 }
 
-export function formatHwyIcSectionCode(sectionId: string): string {
+export function formatExtxIcSectionCode(sectionId: string): string {
   return `${HI_SPECIMEN_PREFIX}.${hiSectionSlug(sectionId)}`;
 }
 
-export function formatHwyIcSpecimenCode(sectionId: string, variantId: string): string {
-  return `${formatHwyIcSectionCode(sectionId)}.${hiVariantSlug(variantId)}`;
+export function formatExtxIcSpecimenCode(sectionId: string, variantId: string): string {
+  return `${formatExtxIcSectionCode(sectionId)}.${hiVariantSlug(variantId)}`;
 }

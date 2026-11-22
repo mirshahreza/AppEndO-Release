@@ -81,11 +81,11 @@ describe('buildEdgeSchemaFlowGraph', () => {
 
   it('drill-down ribbons parallel edges between two tables', () => {
     const dualLogicalSnapshot: SchemaRelationsSnapshot = {
-      focusObject: 'vx_members',
+      focusObject: 'extx_members',
       objectType: 'TABLE',
       tables: [
         {
-          name: 'vx_members',
+          name: 'extx_members',
           columns: [{ name: 'id', dataType: 'bigint', isPrimaryKey: true }],
         },
         {
@@ -95,21 +95,21 @@ describe('buildEdgeSchemaFlowGraph', () => {
       ],
       relations: [
         {
-          fromTable: 'vx_members',
+          fromTable: 'extx_members',
           fromColumn: 'gender_code',
           toTable: 'base_info',
           toColumn: 'id',
           constraintName: 'FK_gender',
         },
         {
-          fromTable: 'vx_members',
+          fromTable: 'extx_members',
           fromColumn: 'job_type',
           toTable: 'base_info',
           toColumn: 'id',
           constraintName: 'FK_job',
         },
         {
-          fromTable: 'vx_members',
+          fromTable: 'extx_members',
           fromColumn: 'edu',
           toTable: 'base_info',
           toColumn: 'id',
@@ -124,7 +124,7 @@ describe('buildEdgeSchemaFlowGraph', () => {
       .map((edge) => edge.data?.labelAlongFraction)
       .sort((a, b) => (a ?? 0) - (b ?? 0));
     expect(along?.map((value) => Math.round((value ?? 0) * 100) / 100)).toEqual([0.16, 0.5, 0.84]);
-    const peer = drilled?.nodes.find((node) => node.id === 'vx_members');
+    const peer = drilled?.nodes.find((node) => node.id === 'extx_members');
     const focus = drilled?.nodes.find((node) => node.id === 'base_info');
     expect(peer?.position.x).toBeLessThan(focus?.position.x ?? 0);
     expect((focus?.position.x ?? 0) - (peer?.position.x ?? 0)).toBeGreaterThan(400);
@@ -143,11 +143,11 @@ describe('buildEdgeSchemaFlowGraph', () => {
 
   it('assigns parallel label layout when multiple edges share source and target', () => {
     const dualFkSnapshot: SchemaRelationsSnapshot = {
-      focusObject: 'vx_members',
+      focusObject: 'extx_members',
       objectType: 'TABLE',
       tables: [
         {
-          name: 'vx_members',
+          name: 'extx_members',
           columns: [
             { name: 'id', dataType: 'bigint', isPrimaryKey: true },
             { name: 'user_id', dataType: 'bigint', isPrimaryKey: false },
@@ -161,18 +161,18 @@ describe('buildEdgeSchemaFlowGraph', () => {
       ],
       relations: [
         {
-          fromTable: 'vx_members',
+          fromTable: 'extx_members',
           fromColumn: 'user_id',
           toTable: 'base_users',
           toColumn: 'id',
-          constraintName: 'FK_vx_members_user',
+          constraintName: 'FK_extx_members_user',
         },
         {
-          fromTable: 'vx_members',
+          fromTable: 'extx_members',
           fromColumn: 'updated_by',
           toTable: 'base_users',
           toColumn: 'id',
-          constraintName: 'FK_vx_members_updated_by',
+          constraintName: 'FK_extx_members_updated_by',
         },
       ],
     };

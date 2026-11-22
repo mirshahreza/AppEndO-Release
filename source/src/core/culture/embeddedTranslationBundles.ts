@@ -2,31 +2,31 @@ import { BUILTIN_CULTURE_PACK_IDS } from '../../shared/api/contracts/platform/cu
 import { MASTER_TRANSLATION_BUNDLE_ID } from '../../shared/api/contracts/platform/cultureTranslations';
 import { createTranslationRuntime } from './TranslationRuntime';
 import { BUILTIN_TRANSLATION_MASTER_EN } from './translations/masterEn';
-import verticalIqOverlay from '../system-extensions/culture-packs/overlays/vertical.iq.json';
-import verticalIrOverlay from '../system-extensions/culture-packs/overlays/vertical.ir.json';
-import verticalUsOverlay from '../system-extensions/culture-packs/overlays/vertical.us.json';
+import portalxIqOverlay from '../../oss/excludedData';
+import portalxIrOverlay from '../../oss/excludedData';
+import portalxUsOverlay from '../../oss/excludedData';
 import {
   MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_IQ,
   MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_IR,
   MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_US,
-} from '../../../scripts/vx-phase3/culture/memberDossierChangeLogTranslations';
-import { buildHwyMemberDirectoryLegacyFilterCultureKeysEn, buildHwyMemberDirectoryLegacyFilterCultureKeysIq } from '../../domain/vx/vxMemberDirectoryLegacyFilterLabels';
-import { buildHwyMemberListScopedEditCultureKeysEn, buildHwyMemberListScopedEditCultureKeysIq } from '../../domain/vx/vxMemberListScopedEditLabels';
-import { buildHwyIdentityComponentsCultureKeysEn, buildHwyIdentityComponentsCultureKeysIq } from '../../../scripts/vx-phase3/culture/vxIdentityComponentsTranslations';
+} from '../../oss/excludedModuleStub';
+import { buildExtxMemberDirectoryLegacyFilterCultureKeysEn, buildExtxMemberDirectoryLegacyFilterCultureKeysIq } from '../../oss/excludedModuleStub';
+import { buildExtxMemberListScopedEditCultureKeysEn, buildExtxMemberListScopedEditCultureKeysIq } from '../../oss/excludedModuleStub';
+import { buildExtxIdentityComponentsCultureKeysEn, buildExtxIdentityComponentsCultureKeysIq } from '../../oss/excludedModuleStub';
 
 /**
  * Built-in English catalog shipped with the client bundle.
  * Used before API/DB translations load and whenever remote bundles are unavailable.
- * Vertical package copy is merged from shipped `vertical.*.json` overlays (synced by `vxCultureKeysInstall`).
+ * Portalx package copy is merged from shipped `portalx.*.json` overlays (synced by `extxCultureKeysInstall`).
  */
 export const EMBEDDED_ENGLISH_BUNDLE: Readonly<Record<string, string>> = {
   ...BUILTIN_TRANSLATION_MASTER_EN,
 };
 
 const PACKAGE_CULTURE_OVERLAYS: Partial<Record<string, Record<string, string>>> = {
-  iq: verticalIqOverlay as Record<string, string>,
-  ir: verticalIrOverlay as Record<string, string>,
-  us: verticalUsOverlay as Record<string, string>,
+  iq: portalxIqOverlay as Record<string, string>,
+  ir: portalxIrOverlay as Record<string, string>,
+  us: portalxUsOverlay as Record<string, string>,
 };
 
 const MEMBER_DOSSIER_CHANGE_LOG_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
@@ -35,37 +35,37 @@ const MEMBER_DOSSIER_CHANGE_LOG_BY_BUNDLE: Partial<Record<string, Record<string,
   us: MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_US,
 };
 
-const VX_MEMBER_DIRECTORY_LEGACY_FILTER_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
-  iq: buildHwyMemberDirectoryLegacyFilterCultureKeysIq(),
-  us: buildHwyMemberDirectoryLegacyFilterCultureKeysEn(),
+const EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
+  iq: buildExtxMemberDirectoryLegacyFilterCultureKeysIq(),
+  us: buildExtxMemberDirectoryLegacyFilterCultureKeysEn(),
 };
 
-const VX_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
-  iq: buildHwyMemberListScopedEditCultureKeysIq(),
-  us: buildHwyMemberListScopedEditCultureKeysEn(),
+const EXTX_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
+  iq: buildExtxMemberListScopedEditCultureKeysIq(),
+  us: buildExtxMemberListScopedEditCultureKeysEn(),
 };
 
-const VX_IDENTITY_COMPONENTS_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
-  iq: buildHwyIdentityComponentsCultureKeysIq(),
-  us: buildHwyIdentityComponentsCultureKeysEn(),
+const EXTX_IDENTITY_COMPONENTS_BY_BUNDLE: Partial<Record<string, Record<string, string>>> = {
+  iq: buildExtxIdentityComponentsCultureKeysIq(),
+  us: buildExtxIdentityComponentsCultureKeysEn(),
 };
 
-/** Merges shipped package overlays (e.g. Vertical) onto API or builtin culture bundles. */
+/** Merges shipped package overlays (e.g. Portalx) onto API or builtin culture bundles. */
 export function mergePackageCultureOverlay(
   bundleId: string,
   base: Record<string, string>,
 ): Record<string, string> {
   const changeLog = MEMBER_DOSSIER_CHANGE_LOG_BY_BUNDLE[bundleId];
   let merged = changeLog ? { ...base, ...changeLog } : base;
-  const legacyFilters = VX_MEMBER_DIRECTORY_LEGACY_FILTER_BY_BUNDLE[bundleId];
+  const legacyFilters = EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_BY_BUNDLE[bundleId];
   if (legacyFilters) {
     merged = { ...merged, ...legacyFilters };
   }
-  const listScopedEdit = VX_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE[bundleId];
+  const listScopedEdit = EXTX_MEMBER_LIST_SCOPED_EDIT_BY_BUNDLE[bundleId];
   if (listScopedEdit) {
     merged = { ...merged, ...listScopedEdit };
   }
-  const identityComponents = VX_IDENTITY_COMPONENTS_BY_BUNDLE[bundleId];
+  const identityComponents = EXTX_IDENTITY_COMPONENTS_BY_BUNDLE[bundleId];
   if (identityComponents) {
     merged = { ...merged, ...identityComponents };
   }

@@ -35,7 +35,7 @@ describe('AboutAppModal portal brand', () => {
     expect(screen.getByText(DEFAULT_PORTAL_ABOUT_TITLE)).toBeInTheDocument();
     expect(screen.getByText(DEFAULT_PORTAL_ABOUT_BODY)).toBeInTheDocument();
     expect(screen.getByText(/Standards/)).toBeInTheDocument();
-    expect(screen.queryByText(/Vertical package/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Portalx package/)).not.toBeInTheDocument();
     expect(screen.queryByText(/github\.com/i)).not.toBeInTheDocument();
   });
 
@@ -62,14 +62,14 @@ describe('AboutAppModal portal brand', () => {
     expect(screen.queryByText('https://github.com/append-os/appendo')).not.toBeInTheDocument();
   });
 
-  it('shows Vertical package version when requested', () => {
+  it('shows Portalx package version when requested', () => {
     renderAbout(
       <CultureProvider cultureId="us">
         <AboutAppModal
           open
           onClose={() => undefined}
-          brand={{ title: 'Vertical', hasCustomBrand: false }}
-          showVerticalPackageVersion
+          brand={{ title: 'Portalx', hasCustomBrand: false }}
+          showPortalxPackageVersion
         />
       </CultureProvider>,
     );
@@ -77,19 +77,19 @@ describe('AboutAppModal portal brand', () => {
     expect(screen.getByText(/v0\.3\.6/)).toBeInTheDocument();
   });
 
-  it('uses culture About copy and RTL for Vertical public', () => {
+  it('uses culture About copy and RTL for Portalx public', () => {
     renderAbout(
       <CultureProvider cultureId="iq" translationBundleSource="embedded">
         <AboutAppModal
           open
           onClose={() => undefined}
           brand={{
-            title: 'Vertical electronic identity system',
-            aboutTitle: 'Vertical electronic identity system',
-            aboutBody: 'Official Vertical membership registration and public identity flows for the National Wisdom Movement.',
+            title: 'Portalx electronic identity system',
+            aboutTitle: 'Portalx electronic identity system',
+            aboutBody: 'Official Portalx membership registration and public identity flows for the National Wisdom Movement.',
             hasCustomBrand: true,
           }}
-          showVerticalPackageVersion
+          showPortalxPackageVersion
         />
       </CultureProvider>,
     );

@@ -1,7 +1,7 @@
 /**
- * Legacy geo ETL sometimes leaves canonical title as `vx-region-{id}` when VX_H_Eghteraat.EghteraName is null.
+ * Legacy geo ETL sometimes leaves canonical title as `extx-region-{id}` when EXTX_H_Eghteraat.EghteraName is null.
  */
-const GEO_PLACEHOLDER_TITLE_RE = /^vx-(region|maktab)-(\d+)$/i;
+const GEO_PLACEHOLDER_TITLE_RE = /^extx-(region|maktab)-(\d+)$/i;
 
 export function resolveGeoPlaceholderDisplayTitle(
   cultureId: string,

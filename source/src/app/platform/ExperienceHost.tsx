@@ -21,7 +21,7 @@ import { PlatformMountProvider } from './PlatformMountContext';
 
 import { CultureProvider } from './CultureContext';
 import { useAppBootQuery } from '../../shared/api/queries/boot';
-import { isVerticalPackageEnabledOnBoot } from '../../shared/packages/verticalRuntimeClient';
+import { isPortalxPackageEnabledOnBoot } from '../../oss/excludedModuleStub';
 import {
   LazyExperienceMountRuntimeProviders,
   preloadExperienceMountRuntimeProviders,
@@ -125,7 +125,7 @@ export const ExperienceHost: React.FC<ExperienceHostProps> = ({ mountId }) => {
   const { data: boot } = useAppBootQuery();
   const mount = getMountById(config, mountId);
   const { cultureId } = resolveCultureFromPathname(pathname);
-  const includeVerticalGeoDialogHost = isVerticalPackageEnabledOnBoot(boot);
+  const includePortalxGeoDialogHost = isPortalxPackageEnabledOnBoot(boot);
   const legacyRedirectPath = resolveLegacyRoutingRedirect(pathname, config);
 
   useEffect(() => {
@@ -147,7 +147,7 @@ export const ExperienceHost: React.FC<ExperienceHostProps> = ({ mountId }) => {
     <MountAuthGate mount={mount}>
       <PlatformMountProvider mount={mount}>
         <CultureProvider cultureId={cultureId} timezoneOverride={mount.timezoneOverride}>
-          <LazyExperienceMountRuntimeProviders includeVerticalGeoDialogHost={includeVerticalGeoDialogHost}>
+          <LazyExperienceMountRuntimeProviders includePortalxGeoDialogHost={includePortalxGeoDialogHost}>
             <ExperienceRoutes mount={mount} />
           </LazyExperienceMountRuntimeProviders>
         </CultureProvider>

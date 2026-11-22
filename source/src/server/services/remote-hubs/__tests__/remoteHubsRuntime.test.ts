@@ -179,9 +179,9 @@ describe('Remote Hubs runtime gate', () => {
   it('does not inject Remote Hubs into non-Studio portal navigations', () => {
     vi.mocked(isPluginRuntimeEnabled).mockReturnValue(true);
     const manifest = {
-      id: 'vertical',
+      id: 'portalx',
       groups: [
-        { heading: 'System management', order: 2, items: [{ pageKey: 'vx-institutes' }] },
+        { heading: 'System management', order: 2, items: [{ pageKey: 'extx-institutes' }] },
       ],
     };
     expect(ensureRemoteHubsNavigationIfInstalled(manifest)).toEqual(manifest);

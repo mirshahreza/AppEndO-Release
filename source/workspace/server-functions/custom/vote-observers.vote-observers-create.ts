@@ -36,8 +36,8 @@ const EDGE_MODEL_ID = "em_b840775bdeab8a7f";
 const EDGE_API_DEFINITION_ID = "ea_a2a2a6be30307946";
 const EDGE_API_OPERATION_ID = "op_create_c76oea";
 const MODEL_ALIAS = "VoteObservers";
-const READ_FIELDS = ["id","votingId","stationId","vxMemberId","roleCode","createdAt"] as const;
-const WRITE_FIELDS = ["votingId","stationId","vxMemberId","roleCode","createdAt"] as const;
+const READ_FIELDS = ["id","votingId","stationId","extxMemberId","roleCode","createdAt"] as const;
+const WRITE_FIELDS = ["votingId","stationId","extxMemberId","roleCode","createdAt"] as const;
 const REQUIRED_FIELDS = ["votingId","createdAt"] as const;
 const DEFAULT_WHERE = {};
 const MAX_PAGE_SIZE = 100;
@@ -55,14 +55,14 @@ const OPERATION = {
       "id",
       "votingId",
       "stationId",
-      "vxMemberId",
+      "extxMemberId",
       "roleCode",
       "createdAt"
     ],
     "write": [
       "votingId",
       "stationId",
-      "vxMemberId",
+      "extxMemberId",
       "roleCode",
       "createdAt"
     ],

@@ -5,7 +5,7 @@ import { DEFAULT_PORTAL_LOGO_URL } from '../../api/contracts/platform/portalBran
 import {
   applyPortalDocumentFavicon,
   isPortalOwnedDocumentChrome,
-  resolveVerticalPublicPortalFaviconUrl,
+  resolvePortalxPublicPortalFaviconUrl,
 } from '../portalDocumentChrome';
 
 describe('portalDocumentChrome', () => {
@@ -13,26 +13,26 @@ describe('portalDocumentChrome', () => {
     document.head.innerHTML = '';
   });
 
-  it('detects Vertical public portal paths', () => {
-    expect(isPortalOwnedDocumentChrome('/iq/vertical/login')).toBe(true);
+  it('detects Portalx public portal paths', () => {
+    expect(isPortalOwnedDocumentChrome('/iq/portalx/login')).toBe(true);
     expect(isPortalOwnedDocumentChrome('/us/studio/users')).toBe(false);
   });
 
-  it('falls back to bundled Vertical mark for favicon', () => {
-    expect(resolveVerticalPublicPortalFaviconUrl(DEFAULT_PORTAL_LOGO_URL)).toBe(
-      '/assets/vertical/mark-blue.png',
+  it('falls back to bundled Portalx mark for favicon', () => {
+    expect(resolvePortalxPublicPortalFaviconUrl(DEFAULT_PORTAL_LOGO_URL)).toBe(
+      '/assets/portalx/mark-blue.png',
     );
-    expect(resolveVerticalPublicPortalFaviconUrl('/assets/workspace/portals/vertical/logo.png')).toBe(
-      '/assets/workspace/portals/vertical/logo.png',
+    expect(resolvePortalxPublicPortalFaviconUrl('/assets/workspace/portals/portalx/logo.png')).toBe(
+      '/assets/workspace/portals/portalx/logo.png',
     );
   });
 
   it('replaces document icon links with the portal logo', () => {
     document.head.innerHTML = '<link rel="icon" href="/favicon.ico" />';
-    applyPortalDocumentFavicon('/assets/vertical/mark-blue.png');
+    applyPortalDocumentFavicon('/assets/portalx/mark-blue.png');
 
     expect(document.querySelector('link[href="/favicon.ico"]')).toBeNull();
-    expect(document.querySelector('link[rel="icon"][href="/assets/vertical/mark-blue.png"]')).toBeTruthy();
-    expect(document.querySelector('link[rel="apple-touch-icon"][href="/assets/vertical/mark-blue.png"]')).toBeTruthy();
+    expect(document.querySelector('link[rel="icon"][href="/assets/portalx/mark-blue.png"]')).toBeTruthy();
+    expect(document.querySelector('link[rel="apple-touch-icon"][href="/assets/portalx/mark-blue.png"]')).toBeTruthy();
   });
 });

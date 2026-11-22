@@ -4,6 +4,7 @@ import type * as ReactDOM from 'react-dom';
 import type * as ReactRouterDOM from 'react-router-dom';
 import type * as HeroUIReact from '@heroui/react';
 import type * as ReactQuery from '@tanstack/react-query';
+import type * as LucideReact from 'lucide-react';
 
 export const PACKAGE_UI_INTERNAL_MODULE_SPECIFIERS = [
   '@/shared/ui',
@@ -21,7 +22,7 @@ export const PACKAGE_UI_INTERNAL_MODULE_SPECIFIERS = [
   '@/shared/lib/useViewportTier',
   '@/core/culture/CultureContext',
   '@/layouts/adminShell/ShellHeaderOverrideContext',
-  '@/shared/ui/vx/vxGeoResponsibilityInlineListDialogApi',
+  '@/shared/ui/extx/extxGeoResponsibilityInlineListDialogApi',
 ] as const;
 
 export type PackageUiInternalModuleSpecifier = (typeof PACKAGE_UI_INTERNAL_MODULE_SPECIFIERS)[number];
@@ -46,6 +47,8 @@ export type PackageUiRuntimeGlobals = {
    * set" even though the component renders inside the real provider tree.
    */
   ReactQuery?: typeof ReactQuery;
+  /** Host `lucide-react` — prebuilt Portalx bundles must not embed the full icon catalog. */
+  LucideReact?: typeof LucideReact;
   /**
    * Keyed by import specifier (e.g. `@/shared/ui`) — internal app modules a package UI page can
    * import without paying to re-bundle them (some transitively pull in mermaid/tiptap/prosemirror
@@ -70,6 +73,7 @@ export function installPackageUiRuntimeGlobals(globals: PackageUiRuntimeGlobals)
     ReactDOM: globals.ReactDOM ?? current?.ReactDOM,
     HeroUIReact: globals.HeroUIReact ?? current?.HeroUIReact,
     ReactQuery: globals.ReactQuery ?? current?.ReactQuery,
+    LucideReact: globals.LucideReact ?? current?.LucideReact,
     AppInternalModules: {
       ...current?.AppInternalModules,
       ...globals.AppInternalModules,

@@ -20,10 +20,10 @@ const sampleManifest: PageEditLockManifest = {
       source: 'feature-graph',
     },
     {
-      pageKey: 'vx-geo-responsibility-candidate-interview',
+      pageKey: 'extx-geo-responsibility-candidate-interview',
       label: 'Interview pipeline',
       routePattern: 'candidate-pipeline/interview',
-      searchRoots: ['src/features/vx-geo-responsibility'],
+      searchRoots: ['src/features/extx-geo-responsibility'],
       source: 'package-ui',
     },
   ],
@@ -41,7 +41,7 @@ describe('operatorPageEditLock', () => {
   it('locks page-scoped files until prompt names the page', () => {
     const locked = evaluatePageEditLockForFile({
       filePath: 'src/features/users/UsersPage.tsx',
-      promptText: 'fix vx interview pipeline',
+      promptText: 'fix extx interview pipeline',
       manifest: sampleManifest,
     });
     expect(locked.locked).toBe(true);

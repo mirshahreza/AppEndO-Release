@@ -2,7 +2,9 @@
 
 Self-hosted enterprise application platform: studio, Data Studio, Workflow Engine, Server Functions, and installable ecosystem packages (CMS and Remote Hubs ship with [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release)).
 
-This tree is the **scrubbed platform source** from an official release snapshot. See the **repository root `README.md`** on AppEndO-Release for pre-built `dist/`, bundled ZIPs, and `MANIFEST.json`.
+**AppEndO** is the product. **AppEndO-Release** is the official public snapshot of that platform. **AppEnd** is not a separate product — it is a legacy/internal label that still appears in a few places, such as the default SQL Server database name `AppEnd` and the development seed login domain `append.os`.
+
+This tree is the **scrubbed platform source** from an official release snapshot. See the **repository root `README.md`** on AppEndO-Release for pre-built `dist/`, bundled ZIPs, the landing page under `docs/`, the evaluation Docker files, and `MANIFEST.json`.
 
 ## Installation
 

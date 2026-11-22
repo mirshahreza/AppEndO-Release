@@ -23,26 +23,63 @@ export type AsyncHandlerOptions = {
 
 const INNER_HANDLER_KEY = '__innerHandler';
 
+const reportRequestError = (
+  error: unknown,
+  req: Request,
+  res: Response,
+  next: NextFunction | undefined,
+  fallbackMessage: string,
+  options: AsyncHandlerOptions | undefined,
+): void => {
+  try {
+    if (options?.onError?.(error, req, res)) {
+      return;
+    }
+
+    if (error && typeof error === 'object') {
+      Object.defineProperty(error, FALLBACK_MESSAGE_KEY, {
+        value: fallbackMessage,
+        enumerable: false,
+        configurable: true,
+      });
+    }
+
+    if (typeof next === 'function') {
+      next(error);
+      return;
+    }
+
+    // Some mounts call the wrapper as (req, res) only. Throwing "next is not a function"
+    // from this async callback is an unhandled rejection and kills the process.
+    if (!res.headersSent) {
+      const message = error instanceof Error && error.message ? error.message : fallbackMessage;
+      res.status(500).json({ success: false, error: message || fallbackMessage });
+    }
+  } catch (forwardError) {
+    console.error('[asyncHandler] Failed to report request error:', forwardError);
+    try {
+      if (!res.headersSent) {
+        res.status(500).json({ success: false, error: fallbackMessage });
+      }
+    } catch {
+      // The socket is already unusable. Keep the process alive.
+    }
+  }
+};
+
 export const asyncHandler = (
   handler: AsyncRequestHandler,
   fallbackMessage: string,
   options?: AsyncHandlerOptions,
 ): RequestHandler => {
   const wrapped: RequestHandler = (req, res, next) => {
-    Promise.resolve(handler(req, res, next)).catch((error: unknown) => {
-      if (options?.onError?.(error, req, res)) {
-        return;
-      }
-
-      if (error && typeof error === 'object') {
-        Object.defineProperty(error, FALLBACK_MESSAGE_KEY, {
-          value: fallbackMessage,
-          enumerable: false,
-          configurable: true,
-        });
-      }
-      next(error);
-    });
+    try {
+      Promise.resolve(handler(req, res, next)).catch((error: unknown) => {
+        reportRequestError(error, req, res, next, fallbackMessage, options);
+      });
+    } catch (error) {
+      reportRequestError(error, req, res, next, fallbackMessage, options);
+    }
   };
 
   Object.defineProperty(wrapped, INNER_HANDLER_KEY, {

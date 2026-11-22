@@ -52,18 +52,18 @@ describe('designerGridRichCellColumns', () => {
     const registered = parseDesignerDataGridColumns(JSON.stringify([{
       key: 'nakhebinJoinTasjilStateCodeTitle',
       label: 'Registered',
-      cellKind: 'vx-registered-icon',
+      cellKind: 'extx-registered-icon',
       cellFields: {
         primaryField: 'nakhebinJoinTasjilStateCodeTitle',
         secondaryField: 'nakhebinJoinTasjilStateCode',
       },
     }]));
-    expect(registered[0]?.cellKind).toBe('vx-registered-icon');
+    expect(registered[0]?.cellKind).toBe('extx-registered-icon');
 
     const memberFace = parseDesignerDataGridColumns(JSON.stringify([{
       key: 'displayFullName',
       label: 'Member',
-      cellKind: 'vx-member-face',
+      cellKind: 'extx-member-face',
       cellFields: {
         imageUrlField: 'avatarUrl',
         captionField: 'username',
@@ -72,7 +72,7 @@ describe('designerGridRichCellColumns', () => {
         genderCodeField: 'genderCode',
       },
     }]));
-    expect(memberFace[0]?.cellKind).toBe('vx-member-face');
+    expect(memberFace[0]?.cellKind).toBe('extx-member-face');
 
     expect(columns[0]?.cellFields?.primaryField).toBe('email');
     expect(columns[0]?.cellClickBehavior?.kind).toBe('none');
@@ -95,12 +95,12 @@ describe('designerGridRichCellColumns', () => {
       key: 'nakhebinId',
       label: 'Voter record',
       cellKind: 'account' as const,
-      cellClickBehavior: { kind: 'vx-family-household' as const },
+      cellClickBehavior: { kind: 'extx-family-household' as const },
     };
     const plainColumn = {
       key: 'familyCode',
       label: 'Family code',
-      cellClickBehavior: { kind: 'vx-family-household' as const },
+      cellClickBehavior: { kind: 'extx-family-household' as const },
     };
 
     expect(designerGridColumnAllowsCellClickInvoke(accountColumn, 'account')).toBe(true);

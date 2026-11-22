@@ -8,6 +8,7 @@ import {
   rewriteDefaultReExportFromNamedOnlyModule,
 } from '../../../shared/packages/packageUiModuleExport';
 import { unwrapPackageUiPrebuiltModule } from '../../../shared/packages/packageUiPrebuilt';
+import { importInstalledPackageNamespace } from './importInstalledPackageNamespace';
 
 export { ensurePackageUiModuleDefaultExport, resolvePackageUiModuleExport } from '../../../shared/packages/packageUiModuleExport';
 
@@ -85,8 +86,20 @@ export const Fragment = __runtime.ReactJSXRuntime.Fragment;
  * renderer throws invalid-hook errors on every page that calls createPortal. The named-export
  * list is computed once from the real package here (not hand-maintained) so it can't silently drift.
  */
+const NON_BINDING_EXPORT_NAMES = new Set([
+  'break', 'case', 'catch', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do',
+  'else', 'enum', 'export', 'extends', 'false', 'finally', 'for', 'function', 'if', 'implements',
+  'import', 'in', 'instanceof', 'interface', 'let', 'new', 'null', 'package', 'private', 'protected',
+  'public', 'return', 'static', 'super', 'switch', 'this', 'throw', 'true', 'try', 'typeof', 'var',
+  'void', 'while', 'with', 'yield', 'await',
+]);
+
+function isLexicalExportName(name: string): boolean {
+  return /^[A-Za-z_$][\w$]*$/.test(name) && !NON_BINDING_EXPORT_NAMES.has(name);
+}
+
 function buildGlobalReexportModule(runtimeKey: string, sourceModule: Record<string, unknown>): string {
-  const namedExports = Object.keys(sourceModule).filter((key) => key !== 'default');
+  const namedExports = Object.keys(sourceModule).filter(isLexicalExportName).sort();
   const lines = [
     'const __runtime = globalThis.__APPENDO_PACKAGE_RUNTIME__;',
     `if (!__runtime?.${runtimeKey}) {`,
@@ -95,10 +108,10 @@ function buildGlobalReexportModule(runtimeKey: string, sourceModule: Record<stri
     `const __mod = __runtime.${runtimeKey};`,
   ];
   if ('default' in sourceModule) {
-    lines.push('export default __mod.default;');
+    lines.push('export default __mod["default"];');
   }
-  if (namedExports.length > 0) {
-    lines.push(`export const {\n  ${namedExports.join(',\n  ')},\n} = __mod;`);
+  for (const name of namedExports) {
+    lines.push(`export const ${name} = __mod[${JSON.stringify(name)}];`);
   }
   return lines.join('\n');
 }
@@ -109,35 +122,43 @@ const GLOBAL_MODULE_BY_SPECIFIER = new Map<string, string>([
   ['react/jsx-dev-runtime', GLOBAL_JSX_DEV_RUNTIME_MODULE],
 ]);
 
-// react-router-dom/@heroui/react are ESM-only (no CJS `require` entry), so their shim source has
-// to be computed via a real dynamic import — done lazily+once, awaited before every compile, never
-// as top-level await (the esbuild-bundled CJS production server output can't execute that).
+// react-router-dom/@heroui/react/lucide-react are ESM-only. Their shim source is computed once
+// from the real installed package (file URL, not a literal import — the CJS server bundle stubs
+// those specifiers). Never top-level await: the esbuild CJS production bundle cannot execute that.
 let libraryGlobalModulesReady: Promise<void> | null = null;
 
 function ensureLibraryGlobalModulesReady(): Promise<void> {
   if (!libraryGlobalModulesReady) {
     libraryGlobalModulesReady = Promise.all([
-      import('react-dom'),
-      import('react-router-dom'),
-      import('@heroui/react'),
-      import('@tanstack/react-query'),
-    ]).then(([reactDom, reactRouterDom, heroUiReact, reactQuery]) => {
+      importInstalledPackageNamespace('react-dom'),
+      importInstalledPackageNamespace('react-router-dom'),
+      importInstalledPackageNamespace('@heroui/react'),
+      importInstalledPackageNamespace('@tanstack/react-query'),
+      importInstalledPackageNamespace('lucide-react'),
+    ]).then(([reactDom, reactRouterDom, heroUiReact, reactQuery, lucideReact]) => {
       GLOBAL_MODULE_BY_SPECIFIER.set(
         'react-dom',
-        buildGlobalReexportModule('ReactDOM', reactDom as Record<string, unknown>),
+        buildGlobalReexportModule('ReactDOM', reactDom),
       );
       GLOBAL_MODULE_BY_SPECIFIER.set(
         'react-router-dom',
-        buildGlobalReexportModule('ReactRouterDOM', reactRouterDom as Record<string, unknown>),
+        buildGlobalReexportModule('ReactRouterDOM', reactRouterDom),
       );
       GLOBAL_MODULE_BY_SPECIFIER.set(
         '@heroui/react',
-        buildGlobalReexportModule('HeroUIReact', heroUiReact as Record<string, unknown>),
+        buildGlobalReexportModule('HeroUIReact', heroUiReact),
       );
       GLOBAL_MODULE_BY_SPECIFIER.set(
         '@tanstack/react-query',
-        buildGlobalReexportModule('ReactQuery', reactQuery as Record<string, unknown>),
+        buildGlobalReexportModule('ReactQuery', reactQuery),
       );
+      GLOBAL_MODULE_BY_SPECIFIER.set(
+        'lucide-react',
+        buildGlobalReexportModule('LucideReact', lucideReact),
+      );
+    }).catch((error: unknown) => {
+      libraryGlobalModulesReady = null;
+      throw error;
     });
   }
   return libraryGlobalModulesReady;
@@ -291,11 +312,11 @@ const PACKAGE_UI_INTERNAL_SHIMS: Record<PackageUiInternalModuleSpecifier, { sour
     sourceFile: 'src/layouts/adminShell/ShellHeaderOverrideContext.tsx',
     fallback: ['ShellHeaderOverrideProvider', 'useShellHeaderOverrideState', 'useShellHeaderOverride'],
   },
-  '@/shared/ui/vx/vxGeoResponsibilityInlineListDialogApi': {
-    sourceFile: 'src/shared/ui/vx/vxGeoResponsibilityInlineListDialogApi.tsx',
+  '@/shared/ui/extx/extxGeoResponsibilityInlineListDialogApi': {
+    sourceFile: 'src/shared/ui/extx/extxGeoResponsibilityInlineListDialogApi.tsx',
     fallback: [
-      'VxGeoResponsibilityInlineListDialogProvider',
-      'useOpenHwyGeoResponsibilityInlineListDialog',
+      'ExtxGeoResponsibilityInlineListDialogProvider',
+      'useOpenExtxGeoResponsibilityInlineListDialog',
     ],
   },
 };
@@ -331,7 +352,7 @@ for (const [specifier, namedExports] of Object.entries(KNOWN_HEAVY_INTERNAL_MODU
 
 /**
  * Populate compile-time virtual module shims from source barrels only (no dynamic import).
- * Used by local Vertical bundle refresh scripts where loading full `@/shared/ui` in Node fails on `.css`.
+ * Used by local Portalx bundle refresh scripts where loading full `@/shared/ui` in Node fails on `.css`.
  */
 export function bootstrapPackageUiCompileShimsFromSourceBarrels(): void {
   const AppInternalModules: Record<string, Record<string, unknown>> = {};
@@ -372,8 +393,8 @@ export function syncPackageUiInternalShimsFromRuntime(): void {
   }
 }
 
-function buildHeavyInternalShimPathIndex(): Map<string, string> {
-  const index = new Map<string, string>();
+function buildHeavyInternalShimPathIndex(): Map<string, PackageUiInternalModuleSpecifier> {
+  const index = new Map<string, PackageUiInternalModuleSpecifier>();
   const projectRoot = process.cwd();
   for (const [specifier, spec] of Object.entries(PACKAGE_UI_INTERNAL_SHIMS)) {
     const absPath = path.resolve(projectRoot, spec.sourceFile);
@@ -388,11 +409,7 @@ function buildHeavyInternalShimPathIndex(): Map<string, string> {
 const HEAVY_INTERNAL_SHIM_PATHS = buildHeavyInternalShimPathIndex();
 
 function resolveAppImportFromAlias(specifier: string): string | null {
-  if (!specifier.startsWith('@/')) {
-    return null;
-  }
-  const srcRoot = path.join(process.cwd(), 'src');
-  return resolveExistingModulePath(path.join(srcRoot, specifier.slice(2)));
+  return resolveSrcAliasImportToFile(specifier);
 }
 
 function resolveExistingModulePath(basePath: string): string | null {
@@ -415,11 +432,20 @@ function resolveExistingModulePath(basePath: string): string | null {
   return null;
 }
 
-function shimSpecifierForResolvedPath(resolvedPath: string): string | undefined {
+function shimSpecifierForResolvedPath(resolvedPath: string): PackageUiInternalModuleSpecifier | undefined {
   return HEAVY_INTERNAL_SHIM_PATHS.get(path.normalize(resolvedPath));
 }
 
-const COMPILE_CACHE_EPOCH = 9;
+function resolveSrcAliasImportToFile(aliasPath: string): string | null {
+  if (!aliasPath.startsWith('@/')) {
+    return null;
+  }
+  const srcRoot = path.join(process.cwd(), 'src');
+  const basePath = path.join(srcRoot, aliasPath.slice(2));
+  return resolveExistingModulePath(basePath);
+}
+
+const COMPILE_CACHE_EPOCH = 13;
 const compileCache = new Map<string, { epoch: number; inputs: Record<string, number>; code: string }>();
 
 export function clearPackageUiCompileCache(): void {
@@ -485,12 +511,11 @@ function createPackageUiCssInjectPlugin(): esbuild.Plugin {
 
 function createPackageUiAliasPlugin(): esbuild.Plugin {
   const srcRoot = path.join(process.cwd(), 'src');
-  const extensions = ['.tsx', '.ts', '.jsx', '.js'];
 
   return {
     name: 'appendo-package-ui-alias',
     setup(build) {
-      build.onResolve({ filter: /^\./ }, (args) => {
+      build.onResolve({ filter: /^\.{1,2}\// }, (args) => {
         const resolved = resolveExistingModulePath(path.resolve(args.resolveDir, args.path));
         if (!resolved) {
           return undefined;
@@ -507,24 +532,16 @@ function createPackageUiAliasPlugin(): esbuild.Plugin {
           return { path: args.path, namespace: PACKAGE_UI_GLOBAL_NS };
         }
 
-        const basePath = path.join(srcRoot, args.path.slice(2));
-        for (const ext of extensions) {
-          const candidate = `${basePath}${ext}`;
-          if (fs.existsSync(candidate)) {
-            return { path: candidate };
+        const resolved = resolveSrcAliasImportToFile(args.path);
+        if (resolved) {
+          const shimSpecifier = shimSpecifierForResolvedPath(resolved);
+          if (shimSpecifier) {
+            return { path: shimSpecifier, namespace: PACKAGE_UI_GLOBAL_NS };
           }
+          return { path: resolved };
         }
 
-        if (fs.existsSync(basePath) && fs.statSync(basePath).isDirectory()) {
-          for (const ext of extensions) {
-            const indexCandidate = path.join(basePath, `index${ext}`);
-            if (fs.existsSync(indexCandidate)) {
-              return { path: indexCandidate };
-            }
-          }
-        }
-
-        return { path: basePath };
+        return { path: path.join(srcRoot, args.path.slice(2)) };
       });
     },
   };
@@ -534,8 +551,8 @@ function createPackageUiGlobalReactPlugin(): esbuild.Plugin {
   return {
     name: 'appendo-package-ui-globals',
     setup(build) {
-      build.onResolve({ filter: /^(react(?:\/jsx(?:-dev)?-runtime)?|react-dom|react-router-dom|@heroui\/react|@tanstack\/react-query)$/ }, (args) => ({
-        path: args.path,
+      build.onResolve({ filter: /^(react(?:\/jsx(?:-dev)?-runtime)?|react-dom|react-router-dom|@heroui\/react|@tanstack\/react-query|lucide-react(?:\/.*)?)$/ }, (args) => ({
+        path: args.path.startsWith('lucide-react') ? 'lucide-react' : args.path,
         namespace: PACKAGE_UI_GLOBAL_NS,
       }));
 

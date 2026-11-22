@@ -880,8 +880,8 @@ export const DEFAULT_GRID_TOOLBAR_SEARCH: DesignerGridToolbarSearchConfig = {
   debounceMs: 300,
 };
 
-/** Vertical member-directory lists always expose toolbar quick search (`?search=`). */
-export const resolveDesignerGridToolbarConfigForHwyMemberDirectoryList = (
+/** Portalx member-directory lists always expose toolbar quick search (`?search=`). */
+export const resolveDesignerGridToolbarConfigForExtxMemberDirectoryList = (
   config: DesignerGridToolbarConfig | undefined,
   isMemberDirectoryList: boolean,
 ): DesignerGridToolbarConfig | undefined => {

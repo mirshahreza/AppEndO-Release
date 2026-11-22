@@ -37,10 +37,10 @@ describe('packageUiModuleCompile.service', () => {
     delete (globalThis as { __APPENDO_PACKAGE_RUNTIME__?: unknown }).__APPENDO_PACKAGE_RUNTIME__;
   });
 
-  it('compiles Vertical targhin stub with a default export (named host page re-export)', async () => {
+  it('compiles Portalx targhin stub with a default export (named host page re-export)', async () => {
     const entryPath = path.join(
       process.cwd(),
-      'packages-storage/runtimes/vertical/0.2.0/ui/pages/vx_targhin_requests.tsx',
+      'packages-storage/runtimes/portalx/0.2.0/ui/pages/extx_targhin_requests.tsx',
     );
     if (!fs.existsSync(entryPath)) {
       return;
@@ -66,7 +66,7 @@ describe('packageUiModuleCompile.service', () => {
     clearPackageUiCompileCache();
     const compiled = await compilePackageUiModuleFile(entryPath, fs.statSync(entryPath).mtimeMs);
 
-    expect(compiled).toContain('VxMemberTarghinAdminPage');
+    expect(compiled).toContain('ExtxMemberTarghinAdminPage');
     expect(compiled).toMatch(/export\s*\{[^}]*\bdefault\b[^}]*\}/);
   });
 
@@ -243,6 +243,47 @@ export default function Vocab() {
     expect(compiled).toContain('document.createElement("style")');
   });
 
+  it('shims parent-relative imports of the shared UI barrel from a host feature path', async () => {
+    const React = await import('react');
+    const ReactJSXRuntime = await import('react/jsx-runtime');
+    const ReactRouterDOM = await import('react-router-dom');
+    const HeroUIReact = await import('@heroui/react');
+    const LucideReact = await import('lucide-react');
+    const {
+      bootstrapPackageUiCompileShimsFromSourceBarrels,
+      clearPackageUiCompileCache,
+      compilePackageUiModuleSource,
+    } = await import('../packageUiModuleCompile.service');
+
+    clearPackageUiCompileCache();
+    globalThis.__APPENDO_PACKAGE_RUNTIME__ = {
+      React,
+      ReactJSXRuntime,
+      ReactRouterDOM,
+      HeroUIReact,
+      LucideReact,
+      AppInternalModules: {},
+    };
+    bootstrapPackageUiCompileShimsFromSourceBarrels();
+
+    const entryPath = path.join(
+      process.cwd(),
+      'src/features/extx-courses-activities/ExtxCoursesActivitiesGridWorkflowCell.tsx',
+    );
+    if (!fs.existsSync(entryPath)) {
+      return;
+    }
+
+    const source = `export { default } from './ExtxCoursesActivitiesGridWorkflowCell';\n`;
+    const compiled = await compilePackageUiModuleSource(source, {
+      entryPath: path.join(path.dirname(entryPath), '__pkg_compile_entry.tsx'),
+      resolveDir: path.dirname(entryPath),
+    });
+    const barrelShim = (compiled.match(/AppInternalModules\?\.\["@\/shared\/ui"\]/g) ?? []).length;
+    expect(barrelShim).toBeGreaterThan(0);
+    expect(compiled.length).toBeLessThan(500_000);
+  });
+
   it('shims relative imports of the shared UI barrel to the host runtime', async () => {
     const React = await import('react');
     const ReactJSXRuntime = await import('react/jsx-runtime');
@@ -253,9 +294,10 @@ export default function Vocab() {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pkg-ui-rel-'));
     const entryPath = path.join(tmpDir, 'widget.tsx');
     const relativeBarrel = path.relative(tmpDir, path.join(process.cwd(), 'src/shared/ui')).replace(/\\/g, '/');
+    const parentRelativeBarrel = relativeBarrel.startsWith('../') ? relativeBarrel : `../${relativeBarrel}`;
     fs.writeFileSync(
       entryPath,
-      `import { AppButton } from '${relativeBarrel}';\nexport default function Widget() { return <AppButton />; }\n`,
+      `import { AppButton } from '${parentRelativeBarrel}';\nexport default function Widget() { return <AppButton />; }\n`,
     );
 
     const { compilePackageUiModuleFile } = await import('../packageUiModuleCompile.service');
@@ -295,6 +337,7 @@ import { useGridColumnLayouts } from '@/contexts/GridColumnLayoutsContext';
 import { useViewportTier } from '@/shared/lib/useViewportTier';
 import { useCultureT } from '@/core/culture/CultureContext';
 import { useShellHeaderOverrideState } from '@/layouts/adminShell/ShellHeaderOverrideContext';
+import { useOpenExtxGeoResponsibilityInlineListDialog } from '@/shared/ui/extx/extxGeoResponsibilityInlineListDialogApi';
 export default function Widget() {
   void UiInput;
   void DesignerCodeEditorField;
@@ -310,6 +353,7 @@ export default function Widget() {
   void useViewportTier;
   void useCultureT;
   void useShellHeaderOverrideState;
+  void useOpenExtxGeoResponsibilityInlineListDialog;
   return <AppButton />;
 }
 `,

@@ -1,7 +1,7 @@
 {
   "edgeModelId": "em_70527d6dd3421100",
   "tags": [
-    "vx",
+    "extx",
     "username"
   ],
   "columnMeta": [
@@ -48,12 +48,12 @@
       "formWidget": "lookup"
     },
     {
-      "relationKey": "physical:vx_username_repo.member_id->vx_members.id:FK_vx_username_repo_member_id",
+      "relationKey": "physical:extx_username_repo.member_id->extx_members.id:FK_extx_username_repo_member_id",
       "displayLabel": "Username reservations"
     }
   ],
   "extensions": {
-    "story": "## Purpose\n\nPool of membership numbers (الرقم التياري). Public applicant tracking uses `vx_members.id` only.\n\n## Scenarios\n\n- **S1** — numbers with `member_id IS NULL` are picked at random when local verification approves to active (`vx_membership_apply_local_decision`).",
+    "story": "## Purpose\n\nPool of membership numbers (الرقم التياري). Public applicant tracking uses `extx_members.id` only.\n\n## Scenarios\n\n- **S1** — numbers with `member_id IS NULL` are picked at random when local verification approves to active (`extx_membership_apply_local_decision`).",
     "scenarioIds": [
       "S1"
     ],

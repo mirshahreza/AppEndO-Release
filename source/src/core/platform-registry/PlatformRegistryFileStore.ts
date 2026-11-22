@@ -31,11 +31,11 @@ import {
   markRegistryEntityDeleted,
 } from './platformRegistryDeletions';
 import {
-  VERTICAL_PACKAGE_ID,
-  VERTICAL_PORTAL_SEGMENT,
-  isVerticalHostPageKey,
-  isVerticalRoutePattern,
-} from '../packages/verticalPackage';
+  PORTALX_PACKAGE_ID,
+  PORTALX_PORTAL_SEGMENT,
+  isPortalxHostPageKey,
+  isPortalxRoutePattern,
+} from '../../oss/excludedModuleStub';
 
 const LOCK_NAME = 'platform-registry';
 
@@ -322,14 +322,14 @@ export function deleteRouteBindingsForMount(mountId: string): void {
 }
 
 export function deleteRowsByOwnerPluginId(packageId: string): void {
-  if (packageId === VERTICAL_PACKAGE_ID && readNavigationFile(VERTICAL_PORTAL_SEGMENT)) {
-    deleteNavigationFile(VERTICAL_PORTAL_SEGMENT);
+  if (packageId === PORTALX_PACKAGE_ID && readNavigationFile(PORTALX_PORTAL_SEGMENT)) {
+    deleteNavigationFile(PORTALX_PORTAL_SEGMENT);
   }
 
   for (const binding of listRouteBindingFiles()) {
     if (
       binding.ownerPackageId === packageId
-      || (packageId === VERTICAL_PACKAGE_ID && isVerticalRoutePattern(binding.routePattern))
+      || (packageId === PORTALX_PACKAGE_ID && isPortalxRoutePattern(binding.routePattern))
     ) {
       deleteRouteBindingFile(binding.id);
     }
@@ -347,13 +347,13 @@ export function deleteRowsByOwnerPluginId(packageId: string): void {
   for (const pageModule of listPageModuleFiles()) {
     if (
       pageModule.ownerPackageId === packageId
-      || (packageId === VERTICAL_PACKAGE_ID && isVerticalHostPageKey(pageModule.pageKey))
+      || (packageId === PORTALX_PACKAGE_ID && isPortalxHostPageKey(pageModule.pageKey))
     ) {
       deletePageModuleFile(pageModule.pageKey);
     }
   }
   for (const shell of listShellFiles()) {
-    if (shell.ownerPackageId === packageId || (packageId === VERTICAL_PACKAGE_ID && shell.shellKey === VERTICAL_PORTAL_SEGMENT)) {
+    if (shell.ownerPackageId === packageId || (packageId === PORTALX_PACKAGE_ID && shell.shellKey === PORTALX_PORTAL_SEGMENT)) {
       deleteShellFile(shell.shellKey);
     }
   }

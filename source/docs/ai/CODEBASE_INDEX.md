@@ -84,7 +84,7 @@ See [`docs/architecture/experience-routing.md`](../architecture/experience-routi
 | `dev-reference` | dev-reference | `src/features/dev-reference/` | — |
 | `feedback-inbox` | feedback-inbox | `—` | — |
 | `geographic-divisions` | geographic-divisions | `src/features/org-geo/` | Scoped Geographic Divisions tree UI over base_info root 100.5 (under Base) |
-| `vx-identity-components` | vx-identity-components | `src/features/vx-identity-components/` | — |
+| `extx-identity-components` | extx-identity-components | `src/features/extx-identity-components/` | — |
 | `my-apis` | my-apis | `src/features/my-apis/` | Hidden from studio menu — opened from Profile drawer |
 | `my-feedback` | my-feedback | `—` | — |
 | `my-inbox` | my-inbox | `—` | — |

@@ -5,7 +5,7 @@
 export const OPERATOR_DEV_API_PORTS = {
   monorepo: 3000,
   releaseOss: 3100,
-  vertical: 3200,
+  portalx: 3200,
 } as const;
 
 export type OperatorDevLineId = keyof typeof OPERATOR_DEV_API_PORTS;
@@ -13,7 +13,7 @@ export type OperatorDevLineId = keyof typeof OPERATOR_DEV_API_PORTS;
 export const OPERATOR_DEV_LINE_LABELS: Record<OperatorDevLineId, string> = {
   monorepo: 'Dev (monorepo AppEndO)',
   releaseOss: 'Release OSS (AppEndO-Release)',
-  vertical: 'Vertical (AppEndO-Vertical)',
+  portalx: 'Portalx (AppEndO-Portalx)',
 };
 
 export const VITE_CHILD_PORT_OFFSET = 200;

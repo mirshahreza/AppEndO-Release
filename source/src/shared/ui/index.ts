@@ -242,11 +242,11 @@ export {
 } from './FormSection';
 export {
   BC_SPECIMEN_PREFIX,
-  formatHwyIcSectionCode,
-  formatHwyIcSpecimenCode,
+  formatExtxIcSectionCode,
+  formatExtxIcSpecimenCode,
   formatStudioBcSpecimenCode,
   HI_SPECIMEN_PREFIX,
-  VX_IC_SPECIMEN_PREFIX,
+  EXTX_IC_SPECIMEN_PREFIX,
   STUDIO_BC_SPECIMEN_PREFIX,
 } from './catalog/catalogSpecimenCode';
 export { CatalogSpecimenCard } from './catalog/CatalogSpecimenCard';

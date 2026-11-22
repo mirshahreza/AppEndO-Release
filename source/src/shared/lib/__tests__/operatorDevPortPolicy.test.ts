@@ -14,7 +14,7 @@ describe('operatorDevPortPolicy', () => {
   it('defines fixed slots per deploy line', () => {
     expect(OPERATOR_DEV_API_PORTS.monorepo).toBe(3000);
     expect(OPERATOR_DEV_API_PORTS.releaseOss).toBe(3100);
-    expect(OPERATOR_DEV_API_PORTS.vertical).toBe(3200);
+    expect(OPERATOR_DEV_API_PORTS.portalx).toBe(3200);
   });
 
   it('maps api port to hmr and vite child offsets', () => {

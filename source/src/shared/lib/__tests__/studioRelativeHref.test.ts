@@ -23,13 +23,13 @@ describe('resolveStudioRelativeHref', () => {
   });
 
   it('does not switch portal when the current URL is a non-studio portal', () => {
-    expect(resolveStudioRelativeHref('/iq/vertical/members-all', 'my-inbox')).toBe('/iq/vertical/my-inbox');
-    expect(resolveStudioRelativeHref('/iq/vertical/members-all', '/us/studio/feedback?ticket=9')).toBe(
-      '/iq/vertical/feedback?ticket=9',
+    expect(resolveStudioRelativeHref('/iq/portalx/members-all', 'my-inbox')).toBe('/iq/portalx/my-inbox');
+    expect(resolveStudioRelativeHref('/iq/portalx/members-all', '/us/studio/feedback?ticket=9')).toBe(
+      '/iq/portalx/feedback?ticket=9',
     );
   });
 
-  it('preserves nested vertical portal under studio mount when config is provided', () => {
+  it('preserves nested portalx portal under studio mount when config is provided', () => {
     bootstrapCultureRegistry(['iq']);
     const config = {
       version: 'application-v1',
@@ -43,8 +43,8 @@ describe('resolveStudioRelativeHref', () => {
           enabled: true,
         },
         {
-          shellKey: 'vertical',
-          name: 'Vertical',
+          shellKey: 'portalx',
+          name: 'Portalx',
           entry: 'core:AdminLayout',
           surface: 'studio',
           enabled: true,
@@ -56,10 +56,10 @@ describe('resolveStudioRelativeHref', () => {
       navigations: [],
     } as unknown as PlatformRuntimeConfig;
 
-    expect(resolveActiveExperiencePortalSegment('/iq/studio/vertical/members-all', config, 'studio')).toBe('vertical');
+    expect(resolveActiveExperiencePortalSegment('/iq/studio/portalx/members-all', config, 'studio')).toBe('portalx');
     expect(
-      resolveStudioRelativeHref('/iq/studio/vertical/members-all', 'my-inbox', { config, mountId: 'studio' }),
-    ).toBe('/iq/vertical/my-inbox');
+      resolveStudioRelativeHref('/iq/studio/portalx/members-all', 'my-inbox', { config, mountId: 'studio' }),
+    ).toBe('/iq/portalx/my-inbox');
   });
 });
 

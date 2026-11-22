@@ -18,9 +18,9 @@ describe('DevelopmentCatalogCards', () => {
 
   it('sets identifier titles in mono and label titles in the section role', () => {
     const { rerender } = render(
-      <DevelopmentCatalogCardHeader title="vx_members" titleTone="identifier" />,
+      <DevelopmentCatalogCardHeader title="extx_members" titleTone="identifier" />,
     );
-    expect(screen.getByText('vx_members').className).toContain(TYPE_IDENTIFIER_CLASS);
+    expect(screen.getByText('extx_members').className).toContain(TYPE_IDENTIFIER_CLASS);
 
     rerender(<DevelopmentCatalogCardHeader title="Orders workflow" />);
     expect(screen.getByText('Orders workflow').className).toContain(TYPE_SECTION_TITLE_CLASS);

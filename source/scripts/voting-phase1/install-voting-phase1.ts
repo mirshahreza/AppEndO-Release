@@ -95,7 +95,7 @@ const verifyVoteTables = async (): Promise<string[]> => {
 const install = async (): Promise<void> => {
   const cp = readControlPlaneDatabaseSettings(SETTINGS_PATH);
   if (cp.provider !== 'sqlserver') {
-    throw new Error('Voting Phase 1 v1 targets SQL Server control plane (same as Vertical).');
+    throw new Error('Voting Phase 1 v1 targets SQL Server control plane (same as Portalx).');
   }
 
   console.log('[Voting Phase 1] Applying legacy rename (vote_elections → vote_votings)…');

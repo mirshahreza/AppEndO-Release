@@ -74,10 +74,10 @@ describe('ManagedFunctionRouteRegistry', () => {
     expect(registry.isReservedApiPath('/api/workbooks')).toBe(true);
     expect(registry.isReservedApiPath('/api/workbooks/wb-1/access')).toBe(true);
     expect(registry.isReservedApiPath('/api/db-enrichment/questions/1/draft')).toBe(true);
-    expect(registry.isReservedApiPath('/api/vx/targhin-requests')).toBe(true);
-    expect(registry.isReservedApiPath('/api/vx/etl-console/status')).toBe(true);
-    expect(registry.isReservedApiPath('/api/vx/business-rules/docs')).toBe(true);
-    expect(registry.isReservedApiPath('/api/vx/targhin-requests/members/42/nego-notes')).toBe(true);
+    expect(registry.isReservedApiPath('/api/extx/targhin-requests')).toBe(true);
+    expect(registry.isReservedApiPath('/api/extx/etl-console/status')).toBe(true);
+    expect(registry.isReservedApiPath('/api/extx/business-rules/docs')).toBe(true);
+    expect(registry.isReservedApiPath('/api/extx/targhin-requests/members/42/nego-notes')).toBe(true);
     expect(registry.isReservedApiPath('/api/general/products')).toBe(false);
   });
 

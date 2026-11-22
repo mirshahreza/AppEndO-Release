@@ -28,23 +28,23 @@ import {
 } from './dataApiQuery';
 import { applyFieldEnrichments, resolveDataApiLang } from './dataApiFieldEnrichment';
 import { resolveDataApiListIncludeCount } from './dataApiListCount';
-import { isHwyMemberDirectoryDataApiOperation, isHwyNakhebinListDataApiOperation,
-  resolveHwyPortalDataApiQueryLang,
-} from '../../domain/vx/vxMemberDirectoryQueryLang';
+import { isExtxMemberDirectoryDataApiOperation, isExtxNakhebinListDataApiOperation,
+  resolveExtxPortalDataApiQueryLang,
+} from '../../../oss/excludedModuleStub';
 import {
-  enrichHwyMemberDirectoryListRows,
-  enrichHwyMemberDirectoryRows,
-} from '../../domain/vx/vxMemberDirectoryDetailDisplay';
-import { enrichHwyNakhebinListRows } from '../../domain/vx/vxNakhebinRegionDisplay';
-import { executeHwyMemberDirectoryList } from '../../domain/vx/executeHwyMemberDirectoryList';
-import { executeHwyMemberDirectoryGetOne } from '../../domain/vx/executeHwyMemberDirectoryGetOne';
-import { shouldEnrichMemberInstitutesSummaryForListScope } from '../../../domain/vx/vxMemberInstitutesGridColumn';
-import { parseHwyMemberDirectoryListScopeQuery } from '../../domain/vx/vxMemberDirectoryListScope.service';
-import { resolveListMembershipOnRegistrationFallback } from '../../../domain/vx/vxMemberSegmentListCatalog';
+  enrichExtxMemberDirectoryListRows,
+  enrichExtxMemberDirectoryRows,
+} from '../../../oss/excludedModuleStub';
+import { enrichExtxNakhebinListRows } from '../../../oss/excludedModuleStub';
+import { executeExtxMemberDirectoryList } from '../../../oss/excludedModuleStub';
+import { executeExtxMemberDirectoryGetOne } from '../../../oss/excludedModuleStub';
+import { shouldEnrichMemberInstitutesSummaryForListScope } from '../../../oss/excludedModuleStub';
+import { parseExtxMemberDirectoryListScopeQuery } from '../../../oss/excludedModuleStub';
+import { resolveListMembershipOnRegistrationFallback } from '../../../oss/excludedModuleStub';
 import {
   shouldEnrichImageFixRegistrationThumbsForListScope,
   shouldEnrichListFaceAvatarsFromRegistrationForListScope,
-} from '../../../domain/vx/vxMemberImageFixCatalog';
+} from '../../../oss/excludedModuleStub';
 import { applyDataApiAuditFields } from './dataApiAuditFields';
 import { invalidateDataApiDefinitionCache } from './dataApiRuntimePolicy';
 import { loadAssociationContext } from './sequelize/associationRegistry';
@@ -97,12 +97,12 @@ import {
   type CubeDerivedMeasure,
 } from '../../domain/data-api/rolapStarSchemaCompiler';
 import {
-  applyHwyInstitutesLogoFromDataApiBody,
-  attachHwyInstituteLogoUrlToRow,
-  attachHwyInstituteLogoUrlsToRows,
-  isHwyInstitutesEdgeModel,
-  stripHwyInstituteLogoFieldsFromSequelizePayload,
-} from '../../domain/vx/vxInstitutesDataApiLogo';
+  applyExtxInstitutesLogoFromDataApiBody,
+  attachExtxInstituteLogoUrlToRow,
+  attachExtxInstituteLogoUrlsToRows,
+  isExtxInstitutesEdgeModel,
+  stripExtxInstituteLogoFieldsFromSequelizePayload,
+} from '../../../oss/excludedModuleStub';
 import { unwrapDataApiWriteRequestBody } from './dataApiRequestBody';
 
 const DATA_API_WRITE_KINDS = new Set(['create', 'update', 'patch', 'delete', 'routine']);
@@ -523,7 +523,7 @@ export class DataApiExecutor {
     }
     const queryLang = operation.query?.allowLangParam === false
       ? 'en'
-      : resolveHwyPortalDataApiQueryLang(operation, query, context.req)
+      : resolveExtxPortalDataApiQueryLang(operation, query, context.req)
         ?? resolveDataApiLang(query);
 
     const enrichRows = async (rows: Record<string, unknown>[]) => {
@@ -543,13 +543,13 @@ export class DataApiExecutor {
           return extendedGraph.get(modelId);
         },
       });
-      if (isHwyNakhebinListDataApiOperation(operation)) {
-        await enrichHwyNakhebinListRows(enriched, queryLang);
+      if (isExtxNakhebinListDataApiOperation(operation)) {
+        await enrichExtxNakhebinListRows(enriched, queryLang);
       }
-      if (isHwyMemberDirectoryDataApiOperation(operation)) {
+      if (isExtxMemberDirectoryDataApiOperation(operation)) {
         if (operation.kind === 'list') {
-          const listScopeLegacy = parseHwyMemberDirectoryListScopeQuery(query);
-          await enrichHwyMemberDirectoryListRows(enriched, queryLang, {
+          const listScopeLegacy = parseExtxMemberDirectoryListScopeQuery(query);
+          await enrichExtxMemberDirectoryListRows(enriched, queryLang, {
             includeElectoralDivisionPath: true,
             includeMemberInstitutesSummary: shouldEnrichMemberInstitutesSummaryForListScope(listScopeLegacy),
             includeListMembershipOnRegistrationFallback: resolveListMembershipOnRegistrationFallback(listScopeLegacy),
@@ -559,7 +559,7 @@ export class DataApiExecutor {
             listScopeLegacy,
           });
         } else {
-          await enrichHwyMemberDirectoryRows(enriched, queryLang);
+          await enrichExtxMemberDirectoryRows(enriched, queryLang);
         }
       }
       return enriched;
@@ -608,8 +608,8 @@ export class DataApiExecutor {
 
     switch (operation.kind) {
       case 'list': {
-        if (isHwyMemberDirectoryDataApiOperation(operation)) {
-          return executeHwyMemberDirectoryList({
+        if (isExtxMemberDirectoryDataApiOperation(operation)) {
+          return executeExtxMemberDirectoryList({
             operation,
             model,
             source,
@@ -645,8 +645,8 @@ export class DataApiExecutor {
         const previewRows = operation.binaryPreview
           ? await applyBinaryPreviewToRows(enrichedRows, operation.binaryPreview)
           : enrichedRows;
-        const data = isHwyInstitutesEdgeModel(model)
-          ? await attachHwyInstituteLogoUrlsToRows(previewRows)
+        const data = isExtxInstitutesEdgeModel(model)
+          ? await attachExtxInstituteLogoUrlsToRows(previewRows)
           : previewRows;
         return {
           success: true,
@@ -663,10 +663,10 @@ export class DataApiExecutor {
       }
       case 'getOne': {
         if (
-          isHwyMemberDirectoryDataApiOperation(operation)
+          isExtxMemberDirectoryDataApiOperation(operation)
           && operation.kind === 'getOne'
         ) {
-          return executeHwyMemberDirectoryGetOne({
+          return executeExtxMemberDirectoryGetOne({
             operation,
             model,
             source,
@@ -692,8 +692,8 @@ export class DataApiExecutor {
           assertLoadedRecordInScope(model, plainRow, session, 'read', recordPolicyOverride);
         }
         const enrichedRow = plainRow ? (await enrichRows([plainRow]))[0] : null;
-        const data = isHwyInstitutesEdgeModel(model)
-          ? await attachHwyInstituteLogoUrlToRow(enrichedRow)
+        const data = isExtxInstitutesEdgeModel(model)
+          ? await attachExtxInstituteLogoUrlToRow(enrichedRow)
           : enrichedRow;
         return {
           success: true,
@@ -725,8 +725,8 @@ export class DataApiExecutor {
       }
       case 'create': {
         const normalizedPayload = normalizeDataApiWritePayload(model, context.body);
-        if (isHwyInstitutesEdgeModel(model)) {
-          stripHwyInstituteLogoFieldsFromSequelizePayload(normalizedPayload);
+        if (isExtxInstitutesEdgeModel(model)) {
+          stripExtxInstituteLogoFieldsFromSequelizePayload(normalizedPayload);
         }
         const payload = applyDataApiAuditFields(
           normalizedPayload,
@@ -747,11 +747,11 @@ export class DataApiExecutor {
           const plain = created.get({ plain: true }) as Record<string, unknown>;
           await emitHistory('create', null, plain, transaction);
           const createdId = Number(plain.id);
-          if (isHwyInstitutesEdgeModel(model)) {
-            await applyHwyInstitutesLogoFromDataApiBody(createdId, rawWriteBody);
+          if (isExtxInstitutesEdgeModel(model)) {
+            await applyExtxInstitutesLogoFromDataApiBody(createdId, rawWriteBody);
           }
-          const responseData = isHwyInstitutesEdgeModel(model)
-            ? await attachHwyInstituteLogoUrlToRow(plain)
+          const responseData = isExtxInstitutesEdgeModel(model)
+            ? await attachExtxInstituteLogoUrlToRow(plain)
             : plain;
           return finishWrite({
             success: true,
@@ -768,8 +768,8 @@ export class DataApiExecutor {
       case 'patch': {
         const pkWhere = resolvePrimaryKeyWhere(model.columns, model.primaryKey, context.params);
         const normalizedPayload = normalizeDataApiWritePayload(model, context.body);
-        if (isHwyInstitutesEdgeModel(model)) {
-          stripHwyInstituteLogoFieldsFromSequelizePayload(normalizedPayload);
+        if (isExtxInstitutesEdgeModel(model)) {
+          stripExtxInstituteLogoFieldsFromSequelizePayload(normalizedPayload);
         }
         const payload = applyDataApiAuditFields(
           normalizedPayload,
@@ -804,8 +804,8 @@ export class DataApiExecutor {
           const plain = row.get({ plain: true }) as Record<string, unknown>;
           await emitHistory(operation.kind, before, plain, transaction);
           const instituteId = Number(plain.id ?? (pkWhere as Record<string, unknown>).id);
-          if (isHwyInstitutesEdgeModel(model)) {
-            await applyHwyInstitutesLogoFromDataApiBody(instituteId, rawWriteBody);
+          if (isExtxInstitutesEdgeModel(model)) {
+            await applyExtxInstitutesLogoFromDataApiBody(instituteId, rawWriteBody);
           }
           const readableAttributes = resolveReadableAttributes(operation, model);
           const responseData = readableAttributes
@@ -815,8 +815,8 @@ export class DataApiExecutor {
                 .map((field) => [field, plain[field]]),
             )
             : plain;
-          const data = isHwyInstitutesEdgeModel(model)
-            ? await attachHwyInstituteLogoUrlToRow(responseData)
+          const data = isExtxInstitutesEdgeModel(model)
+            ? await attachExtxInstituteLogoUrlToRow(responseData)
             : responseData;
           return finishWrite({
             success: true,

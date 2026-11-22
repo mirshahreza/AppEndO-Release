@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/tabler-icons-C7jGWYqv.js","assets/react-vendor-DelaA65R.js"])))=>i.map(i=>d[i]);
+import{E as c}from"./index-DumB5nkP.js";import"./react-vendor-DelaA65R.js";import"./tanstack-query-CQz7GcnD.js";let e=null;async function m(){if(e)return e;const o=await c(()=>import("./tabler-icons-C7jGWYqv.js"),__vite__mapDeps([0,1])),r=Object.keys(o).filter(t=>t.startsWith("Icon")).sort((t,a)=>t.localeCompare(a)).map(t=>[t,o[t]]);return e={entries:r,map:Object.fromEntries(r)},e}export{m as default};

@@ -78,7 +78,7 @@ describe('studio Records nav excludes scope admin pages', () => {
     expect(missing).toEqual([]);
   });
 
-  it('resolves every Vertical sidebar item to a page module', async () => {
+  it('resolves every Portalx sidebar item to a page module', async () => {
     invalidatePlatformRuntimeConfig();
     const config = await getPlatformRuntimeConfig();
     const groups = buildAdminShellNav({
@@ -86,9 +86,9 @@ describe('studio Records nav excludes scope admin pages', () => {
       mountId: 'studio',
       mountPathPrefix: '/iq',
       currentUser: { role: 'ADMIN', roles: ['ADMIN'] },
-      navigationRef: 'vertical',
+      navigationRef: 'portalx',
       currentCultureId: 'iq',
-      currentPortalSegment: 'vertical',
+      currentPortalSegment: 'portalx',
     });
 
     const missing: string[] = [];

@@ -52,7 +52,7 @@ export const ORBIT_BORDER_PRESETS: Record<OrbitBorderPreset, OrbitBorderPalette>
     '#f97316',
     'rgb(234 88 12 / 0.42)',
   ),
-  /** Light orange / amber comet — Vertical public Next CTA and similar warm accents. */
+  /** Light orange / amber comet — Portalx public Next CTA and similar warm accents. */
   ember: paletteOf(
     ['#fff7ed', '#ffedd5', '#fed7aa', '#fdba74', '#fb923c', '#f97316'],
     '#fb923c',

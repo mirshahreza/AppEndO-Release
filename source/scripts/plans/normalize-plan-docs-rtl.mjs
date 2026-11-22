@@ -15,19 +15,19 @@ const plansRoot = path.join(repoRoot, 'plans');
 const addIntros = process.argv.includes('--intros');
 
 const STYLE_BLOCK = `<style>
-  .vx-parity-doc { text-align: right; unicode-bidi: plaintext; }
-  .vx-parity-doc h1, .vx-parity-doc h2, .vx-parity-doc h3, .vx-parity-doc h4, .vx-parity-doc p, .vx-parity-doc li { text-align: right; }
-  .vx-parity-doc table { direction: rtl; text-align: right; width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
-  .vx-parity-doc th, .vx-parity-doc td { border: 1px solid #c4c4c4; padding: 0.35rem 0.5rem; vertical-align: top; text-align: right; }
-  .vx-parity-doc th { background: #f6f6f6; font-weight: 600; }
-  .vx-parity-doc blockquote { text-align: right; border-right: 3px solid #ccc; border-left: none; padding-right: 1rem; margin-right: 0; }
-  .vx-parity-doc ul, .vx-parity-doc ol { padding-right: 1.25rem; padding-left: 0; }
-  .vx-parity-doc pre, .vx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }
+  .extx-parity-doc { text-align: right; unicode-bidi: plaintext; }
+  .extx-parity-doc h1, .extx-parity-doc h2, .extx-parity-doc h3, .extx-parity-doc h4, .extx-parity-doc p, .extx-parity-doc li { text-align: right; }
+  .extx-parity-doc table { direction: rtl; text-align: right; width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
+  .extx-parity-doc th, .extx-parity-doc td { border: 1px solid #c4c4c4; padding: 0.35rem 0.5rem; vertical-align: top; text-align: right; }
+  .extx-parity-doc th { background: #f6f6f6; font-weight: 600; }
+  .extx-parity-doc blockquote { text-align: right; border-right: 3px solid #ccc; border-left: none; padding-right: 1rem; margin-right: 0; }
+  .extx-parity-doc ul, .extx-parity-doc ol { padding-right: 1.25rem; padding-left: 0; }
+  .extx-parity-doc pre, .extx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }
 </style>`;
 
 /** @param {string} relPosix path under plans/ using / */
 function operatorIntro(relPosix) {
-  if (relPosix.includes('vertical-package/')) return null;
+  if (relPosix.includes('portalx-package/')) return null;
   if (relPosix === 'README.md') {
     return `<p><strong>خلاصه برای operatore:</strong> پوشهٔ <code dir="ltr">plans/</code> فقط کار <strong>باز و ناتمام</strong> را نگه می‌دارد. برای ریلیز فعلی از <a href="core/todo/p-00-todo-index.md">core/todo index</a>، برای پکیج‌های Studio از <a href="packages/todo/p-00-packages-index.md">packages index</a>، و برای backlog موکول از <a href="core/next/p-00-next-index.md">core/next index</a> شروع کنید.</p>
 <p><strong>راهنمای خواندن:</strong> جداول RTL هستند؛ متن انگلیسی داخل بعضی پلن‌ها برای agent است. قالب: <a href="plans-operator-doc-standard.md">plans-operator-doc-standard.md</a>.</p>`;
@@ -50,7 +50,7 @@ function operatorIntro(relPosix) {
     return `<p><strong>خلاصه برای operatore:</strong> فهرست کارهای <strong>آینده</strong> (AI، mobile، marketplace، …) — اولویت با شماست وقتی به todo graduate شوند.</p>`;
   }
   if (relPosix === 'packages/todo/p-00-packages-index.md') {
-    return `<p><strong>خلاصه برای operatore:</strong> همهٔ <strong>پکیج‌های Studio</strong> (Task، CRM، Vertical، …) — کدام design-only است و کدام فعال. هویتی: parity از <a href="vertical-package/vx-legacy-vs-appendo-feature-parity.md">§۰ parity</a>.</p>`;
+    return `<p><strong>خلاصه برای operatore:</strong> همهٔ <strong>پکیج‌های Studio</strong> (Task، CRM، Portalx، …) — کدام design-only است و کدام فعال. پورتال: parity از <a href="portalx-package/extx-legacy-vs-appendo-feature-parity.md">§۰ parity</a>.</p>`;
   }
   if (relPosix === 'packages/todo/p-packages-backlog.md') {
     return `<p><strong>خلاصه برای operatore:</strong> ایده‌های پکیج که هنوز سند اجرایی جدا ندارند — برای اولویت‌بندی جلسه.</p>`;
@@ -65,7 +65,7 @@ function operatorIntro(relPosix) {
   if (relPosix.includes('plan-review-and-benchmark')) {
     return `<p><strong>خلاصه برای operatore:</strong> مقایسه با بازار/OSS — برای تصمیم scope، نه وضعیت پیاده‌سازی روزانه.</p>`;
   }
-  if (relPosix.startsWith('packages/todo/vertical-package/')) return null;
+  if (relPosix.startsWith('packages/todo/portalx-package/')) return null;
 
   const base = path.basename(relPosix, '.md');
   const indexHref = indexHrefFor(relPosix);
@@ -153,29 +153,29 @@ function convertMarkdownTables(text) {
 }
 
 function ensureWrapper(text) {
-  if (text.includes('class="vx-parity-doc"')) {
-    if (!text.includes('.vx-parity-doc table')) {
+  if (text.includes('class="extx-parity-doc"')) {
+    if (!text.includes('.extx-parity-doc table')) {
       return text.replace(
-        /(<div dir="rtl" lang="fa" class="vx-parity-doc">)/,
+        /(<div dir="rtl" lang="fa" class="extx-parity-doc">)/,
         `$1\n${STYLE_BLOCK}`,
       );
     }
-    if (!text.includes('.vx-parity-doc pre')) {
+    if (!text.includes('.extx-parity-doc pre')) {
       return text.replace(
         /(<\/style>)/,
-        `  .vx-parity-doc pre, .vx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }\n$1`,
+        `  .extx-parity-doc pre, .extx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }\n$1`,
       );
     }
     return text;
   }
-  if (text.startsWith('<div dir="rtl"') && !text.includes('vx-parity-doc')) {
+  if (text.startsWith('<div dir="rtl"') && !text.includes('extx-parity-doc')) {
     return text.replace(
       '<div dir="rtl" lang="fa">',
-      `<div dir="rtl" lang="fa" class="vx-parity-doc">\n${STYLE_BLOCK}`,
+      `<div dir="rtl" lang="fa" class="extx-parity-doc">\n${STYLE_BLOCK}`,
     );
   }
   const trimmed = text.replace(/^\uFEFF/, '').trimStart();
-  return `<div dir="rtl" lang="fa" class="vx-parity-doc">\n${STYLE_BLOCK}\n\n${trimmed}\n\n</div>\n`;
+  return `<div dir="rtl" lang="fa" class="extx-parity-doc">\n${STYLE_BLOCK}\n\n${trimmed}\n\n</div>\n`;
 }
 
 function injectIntro(text, intro) {
@@ -185,7 +185,7 @@ function injectIntro(text, intro) {
     const insertAt = styleEnd + '</style>'.length;
     return `${text.slice(0, insertAt)}\n\n${intro}\n${text.slice(insertAt)}`;
   }
-  const wrapperEnd = text.indexOf('class="vx-parity-doc">');
+  const wrapperEnd = text.indexOf('class="extx-parity-doc">');
   if (wrapperEnd !== -1) {
     const insertAt = text.indexOf('\n', wrapperEnd) + 1;
     return `${text.slice(0, insertAt)}\n${intro}\n${text.slice(insertAt)}`;

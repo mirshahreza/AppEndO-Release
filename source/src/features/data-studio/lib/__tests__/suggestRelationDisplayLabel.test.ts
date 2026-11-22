@@ -3,7 +3,7 @@ import { suggestRelationDisplayLabel } from '../suggestRelationDisplayLabel';
 
 const peers = [
   { id: 'em_users', objectName: 'base_users', labels: { title: 'Users' } },
-  { id: 'em_members', objectName: 'vx_members', labels: { title: 'VX Members' } },
+  { id: 'em_members', objectName: 'extx_members', labels: { title: 'EXTX Members' } },
   {
     id: 'em_sessions',
     objectName: 'base_ai_chat_sessions',
@@ -38,7 +38,7 @@ describe('suggestRelationDisplayLabel', () => {
 
   it('labels outbound created_by on a member table', () => {
     const label = suggestRelationDisplayLabel({
-      focusObjectName: 'vx_members',
+      focusObjectName: 'extx_members',
       peerModels: peers,
       row: {
         key: 'logical',
@@ -46,7 +46,7 @@ describe('suggestRelationDisplayLabel', () => {
         name: 'createdByUser',
         kindLabel: 'Belongs to',
         cascadeLabel: null,
-        fromLabel: 'vx_members',
+        fromLabel: 'extx_members',
         toLabel: 'Users · created_by',
         association: {
           id: 'ea_test',

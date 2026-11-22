@@ -1,5 +1,5 @@
-import type { VxMemberFaceCaptionKind } from '../../domain/vx/vxMemberFaceCaptionDisplay';
-import { resolveHwyAllocatedMembershipUsername } from '../../domain/vx/vxMembershipUsername';
+import type { ExtxMemberFaceCaptionKind } from '../../oss/excludedModuleStub';
+import { resolveExtxAllocatedMembershipUsername } from '../../oss/excludedModuleStub';
 import { resolveUserAvatarXsSrc } from '../../shared/api/contracts/users/avatar';
 import { formatProfileDisplayName as formatSharedProfileDisplayName } from '../../shared/profile/profileDisplayName';
 import { formatDisplayDateYmd } from '../../shared/lib/gridDateFormat';
@@ -73,24 +73,24 @@ export const formatProfileDisplayName = (user: {
 
 export type UserGridAvatarCaption = {
   text: string;
-  kind: VxMemberFaceCaptionKind;
+  kind: ExtxMemberFaceCaptionKind;
 };
 
-/** Under-avatar label on Users grid: VX membership UserName when linked, else platform login. */
+/** Under-avatar label on Users grid: EXTX membership UserName when linked, else platform login. */
 export const resolveUserGridAvatarCaption = (user: {
   id: number;
   username: string;
   avatar_username?: string | null;
-  legacy_vx_username?: string | null;
+  legacy_extx_username?: string | null;
   membership_username?: string | null;
 }): UserGridAvatarCaption => {
   const membership = user.avatar_username?.trim()
-    || user.legacy_vx_username?.trim()
+    || user.legacy_extx_username?.trim()
     || user.membership_username?.trim();
   if (membership) {
     return { text: membership, kind: 'username' };
   }
-  const platform = resolveHwyAllocatedMembershipUsername(user.username, user.id);
+  const platform = resolveExtxAllocatedMembershipUsername(user.username, user.id);
   if (platform) {
     return { text: platform, kind: 'username' };
   }
@@ -106,7 +106,7 @@ export const resolveUserGridAvatarUsername = (user: {
   id: number;
   username: string;
   avatar_username?: string | null;
-  legacy_vx_username?: string | null;
+  legacy_extx_username?: string | null;
   membership_username?: string | null;
 }): string => resolveUserGridAvatarCaption(user).text;
 

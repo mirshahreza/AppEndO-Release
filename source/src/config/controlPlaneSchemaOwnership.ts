@@ -6,9 +6,9 @@
 export const CONTROL_PLANE_SCHEMA_LAYER_IDS = {
   prismaControlPlane: 'prisma-control-plane',
   sequelizeFeatureExtensions: 'sequelize-feature-extensions',
-  vxPackageCoreDdl: 'vx-package-core-ddl',
-  vxPackageSatelliteDdl: 'vx-package-satellite-ddl',
-  vxPackageDbObjects: 'vx-package-db-objects',
+  extxPackageCoreDdl: 'extx-package-core-ddl',
+  extxPackageSatelliteDdl: 'extx-package-satellite-ddl',
+  extxPackageDbObjects: 'extx-package-db-objects',
   edgePackageModels: 'edge-package-models',
 } as const;
 
@@ -43,24 +43,24 @@ export const CONTROL_PLANE_SCHEMA_OWNERSHIP_LAYERS: readonly ControlPlaneSchemaL
     notes: 'Version marker: CONTROL_PLANE_SEQUELIZE_FEATURE_SCHEMA_VERSION in controlPlaneBootMarkers.ts.',
   },
   {
-    id: CONTROL_PLANE_SCHEMA_LAYER_IDS.vxPackageCoreDdl,
-    title: 'Vertical core tables (vx_schema.sqlserver.sql)',
-    source: 'scripts/vx-phase1/db/install/vx_schema.sqlserver.sql',
-    upgradeCommand: 'npm run schema:install-extensions:vx',
-    notes: 'Also: npm run vx:phase1 for full phase-1 (seed + edge models).',
+    id: CONTROL_PLANE_SCHEMA_LAYER_IDS.extxPackageCoreDdl,
+    title: 'Portalx core tables (extx_schema.sqlserver.sql)',
+    source: 'scripts/extx-phase1/db/install/extx_schema.sqlserver.sql',
+    upgradeCommand: 'npm run schema:install-extensions:extx',
+    notes: 'Also: npm run extx:phase1 for full phase-1 (seed + edge models).',
   },
   {
-    id: CONTROL_PLANE_SCHEMA_LAYER_IDS.vxPackageSatelliteDdl,
-    title: 'Vertical satellite DDL patches',
-    source: 'scripts/vx-phase1/db/install/*.sql + inline ensureHwy*Schema.ts',
-    upgradeCommand: 'npm run schema:install-extensions:vx',
+    id: CONTROL_PLANE_SCHEMA_LAYER_IDS.extxPackageSatelliteDdl,
+    title: 'Portalx satellite DDL patches',
+    source: 'scripts/extx-phase1/db/install/*.sql + inline ensureExtx*Schema.ts',
+    upgradeCommand: 'npm run schema:install-extensions:extx',
   },
   {
-    id: CONTROL_PLANE_SCHEMA_LAYER_IDS.vxPackageDbObjects,
-    title: 'Vertical procedures / views / functions',
-    source: 'scripts/vx-phase1/db/install/vx_db_*.sqlserver.sql',
-    upgradeCommand: 'npm run vx:db-objects',
-    notes: 'Ordered list: ensureHwyDbObjects SQL_INSTALL_ORDER.',
+    id: CONTROL_PLANE_SCHEMA_LAYER_IDS.extxPackageDbObjects,
+    title: 'Portalx procedures / views / functions',
+    source: 'scripts/extx-phase1/db/install/extx_db_*.sqlserver.sql',
+    upgradeCommand: 'npm run extx:db-objects',
+    notes: 'Ordered list: ensureExtxDbObjects SQL_INSTALL_ORDER.',
   },
   {
     id: CONTROL_PLANE_SCHEMA_LAYER_IDS.edgePackageModels,
@@ -73,7 +73,7 @@ export const CONTROL_PLANE_SCHEMA_OWNERSHIP_LAYERS: readonly ControlPlaneSchemaL
 
 /** Table name prefixes that are never owned by prisma/schema.prisma. */
 export const CONTROL_PLANE_NON_PRISMA_TABLE_PREFIXES = [
-  'vx_',
+  'extx_',
   'cms_',
   'zz_',
 ] as const;

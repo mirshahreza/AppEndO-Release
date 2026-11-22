@@ -40,18 +40,18 @@ describe('controlPlaneSchemaDiff', () => {
     const schema = fs.readFileSync(path.join(process.cwd(), 'prisma', 'schema.prisma'), 'utf8');
     const tables = listPrismaMappedTableNames(schema);
     expect(tables.has('base_users')).toBe(true);
-    expect(tables.has('vx_members')).toBe(false);
+    expect(tables.has('extx_members')).toBe(false);
   });
 
   it('normalizes quoted identifiers across dialects', () => {
-    expect(normalizeSqlTableName('[dbo].[vx_members]')).toBe('vx_members');
-    expect(normalizeSqlTableName('"public"."vx_members"')).toBe('vx_members');
-    expect(normalizeSqlTableName('`vx_members`')).toBe('vx_members');
+    expect(normalizeSqlTableName('[dbo].[extx_members]')).toBe('extx_members');
+    expect(normalizeSqlTableName('"public"."extx_members"')).toBe('extx_members');
+    expect(normalizeSqlTableName('`extx_members`')).toBe('extx_members');
   });
 
   it('parses optional comma-separated table lists', () => {
-    expect(parseCommaSeparatedTableNames('vx_members, etl_map')).toEqual(new Set([
-      'vx_members',
+    expect(parseCommaSeparatedTableNames('extx_members, etl_map')).toEqual(new Set([
+      'extx_members',
       'etl_map',
     ]));
   });
@@ -59,7 +59,7 @@ describe('controlPlaneSchemaDiff', () => {
   it('splits Prisma migrate-diff comment blocks', () => {
     const blocks = splitPrismaMigrateDiffScript(`
 -- DropTable
-DROP TABLE "vx_members";
+DROP TABLE "extx_members";
 
 -- CreateTable
 CREATE TABLE "base_widgets" (
@@ -70,21 +70,21 @@ CREATE TABLE "base_widgets" (
   });
 
   it('extracts TABLE / ON / INTO targets', () => {
-    expect(extractSqlTargetTables('DROP TABLE [dbo].[vx_members];')).toEqual(['vx_members']);
+    expect(extractSqlTargetTables('DROP TABLE [dbo].[extx_members];')).toEqual(['extx_members']);
     expect(extractSqlTargetTables('CREATE UNIQUE INDEX "x" ON "base_users"("email");')).toEqual(['base_users']);
   });
 
   it('preserves unknown tables and still applies Prisma CREATE / SQLite redefine', () => {
     const script = `-- DropTable
 PRAGMA foreign_keys=off;
-DROP TABLE "vx_members";
+DROP TABLE "extx_members";
 PRAGMA foreign_keys=on;
 
 -- DropTable
 DROP TABLE [dbo].[etl_map];
 
 -- DropForeignKey
-ALTER TABLE "vx_members" DROP CONSTRAINT "vx_members_org_fkey";
+ALTER TABLE "extx_members" DROP CONSTRAINT "extx_members_org_fkey";
 
 -- AlterTable
 ALTER TABLE "base_users" ADD COLUMN "note" TEXT;
@@ -118,11 +118,11 @@ CREATE TABLE "base_users" (
     expect(filtered.appliedSql).toContain('ALTER TABLE "base_users" ADD COLUMN "note" TEXT');
     expect(filtered.appliedSql).toContain('CREATE TABLE "new_base_widgets"');
     expect(filtered.appliedSql).toContain('CREATE TABLE "base_users"');
-    expect(filtered.appliedSql).not.toMatch(/DROP TABLE\s+"vx_members"/i);
+    expect(filtered.appliedSql).not.toMatch(/DROP TABLE\s+"extx_members"/i);
     expect(filtered.appliedSql).not.toMatch(/DROP TABLE\s+\[dbo\]\.\[etl_map\]/i);
     expect(filtered.appliedSql).not.toContain('DROP COLUMN "vertical_extra"');
-    expect(filtered.appliedSql).not.toContain('vx_members_org_fkey');
-    expect(filtered.skipped.some((item) => item.tables.includes('vx_members'))).toBe(true);
+    expect(filtered.appliedSql).not.toContain('extx_members_org_fkey');
+    expect(filtered.skipped.some((item) => item.tables.includes('extx_members'))).toBe(true);
     expect(filtered.skipped.some((item) => item.tables.includes('etl_map'))).toBe(true);
   });
 
@@ -137,13 +137,13 @@ CREATE TABLE "base_users" (
 
   it('applies an explicit allow-drop list only for those names', () => {
     const filtered = filterControlPlaneSchemaDiffSql(
-      `-- DropTable\nDROP TABLE "old_tmp";\n\n-- DropTable\nDROP TABLE "vx_members";\n`,
+      `-- DropTable\nDROP TABLE "old_tmp";\n\n-- DropTable\nDROP TABLE "extx_members";\n`,
       {
         prismaTables: listPrismaMappedTableNames(MINI_SCHEMA),
         allowDropTables: ['old_tmp'],
       },
     );
     expect(filtered.appliedSql).toContain('DROP TABLE "old_tmp"');
-    expect(filtered.appliedSql).not.toContain('vx_members');
+    expect(filtered.appliedSql).not.toContain('extx_members');
   });
 });

@@ -1,4 +1,4 @@
-/** Precompiled Vertical (and other) package page modules ship this banner — server serves them without re-bundling. */
+/** Precompiled Portalx (and other) package page modules ship this banner — server serves them without re-bundling. */
 export const PACKAGE_UI_PREBUILT_BANNER = '/* appendo-package-ui-prebuilt:v1 */';
 
 export function wrapPackageUiPrebuiltModule(code: string): string {

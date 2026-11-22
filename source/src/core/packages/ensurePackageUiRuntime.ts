@@ -28,20 +28,21 @@ const PACKAGE_UI_INTERNAL_MODULE_LOADERS: Record<
   '@/shared/lib/useViewportTier': () => import('../../shared/lib/useViewportTier'),
   '@/core/culture/CultureContext': () => import('../../core/culture/CultureContext'),
   '@/layouts/adminShell/ShellHeaderOverrideContext': () => import('../../layouts/adminShell/ShellHeaderOverrideContext'),
-  '@/shared/ui/vx/vxGeoResponsibilityInlineListDialogApi': () =>
-    import('../../shared/ui/vx/vxGeoResponsibilityInlineListDialogApi'),
+  '@/shared/ui/extx/extxGeoResponsibilityInlineListDialogApi': () =>
+    import('../../oss/excludedModuleStub'),
 };
 
 let loadPromise: Promise<void> | null = null;
 
 async function loadPackageUiRuntime(): Promise<void> {
-  const [React, ReactJSXRuntime, ReactDOM, ReactRouterDOM, HeroUIReact, ReactQuery, ...internalModules] = await Promise.all([
+  const [React, ReactJSXRuntime, ReactDOM, ReactRouterDOM, HeroUIReact, ReactQuery, LucideReact, ...internalModules] = await Promise.all([
     import('react'),
     import('react/jsx-runtime'),
     import('react-dom'),
     import('react-router-dom'),
     import('@heroui/react'),
     import('@tanstack/react-query'),
+    import('lucide-react'),
     ...PACKAGE_UI_INTERNAL_MODULE_SPECIFIERS.map((specifier) => PACKAGE_UI_INTERNAL_MODULE_LOADERS[specifier]()),
   ]);
 
@@ -57,6 +58,7 @@ async function loadPackageUiRuntime(): Promise<void> {
     ReactRouterDOM,
     HeroUIReact,
     ReactQuery,
+    LucideReact,
     AppInternalModules,
   });
 }

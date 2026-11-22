@@ -1,15 +1,15 @@
 {
   "id": "ea_03c7d01436955c5c",
   "edgeModelId": "em_e7882fa0d4e9bc02",
-  "key": "vx-member-security-profile",
-  "label": "VX member security profile",
-  "basePath": "/api/vx/member-security-profile",
+  "key": "extx-member-security-profile",
+  "label": "EXTX member security profile",
+  "basePath": "/api/extx/member-security-profile",
   "operations": [
     {
       "id": "op_list_k4vx4g",
       "method": "GET",
       "kind": "list",
-      "pathPattern": "/api/vx/member-security-profile",
+      "pathPattern": "/api/extx/member-security-profile",
       "enabled": true,
       "fields": {
         "read": [
@@ -38,7 +38,7 @@
       "id": "op_get_k4vx4g",
       "method": "GET",
       "kind": "getOne",
-      "pathPattern": "/api/vx/member-security-profile/:pk",
+      "pathPattern": "/api/extx/member-security-profile/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -67,7 +67,7 @@
       "id": "op_create_k4vx4g",
       "method": "POST",
       "kind": "create",
-      "pathPattern": "/api/vx/member-security-profile",
+      "pathPattern": "/api/extx/member-security-profile",
       "enabled": true,
       "fields": {
         "read": [
@@ -107,7 +107,7 @@
       "id": "op_update_k4vx4g",
       "method": "PUT",
       "kind": "update",
-      "pathPattern": "/api/vx/member-security-profile/:pk",
+      "pathPattern": "/api/extx/member-security-profile/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -147,7 +147,7 @@
       "id": "op_delete_k4vx4g",
       "method": "DELETE",
       "kind": "delete",
-      "pathPattern": "/api/vx/member-security-profile/:pk",
+      "pathPattern": "/api/extx/member-security-profile/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -184,5 +184,5 @@
   "runtime": {
     "useGlobalConfig": true
   },
-  "managedFunctionId": "vx-member-security-profile.vx-member-security-profile-list"
+  "managedFunctionId": "extx-member-security-profile.extx-member-security-profile-list"
 }

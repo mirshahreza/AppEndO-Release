@@ -50,7 +50,11 @@ export async function promoteInstallPendingServer(settingsPath: string): Promise
     return;
   }
   if (!promotionPromise) {
-    promotionPromise = runInstallPromotion();
+    promotionPromise = runInstallPromotion().catch((error: unknown) => {
+      promotionPromise = null;
+      console.error('[AppEndO] Install promotion failed:', error);
+      throw error;
+    });
   }
   await promotionPromise;
 }

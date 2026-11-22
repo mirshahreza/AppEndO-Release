@@ -18,5 +18,5 @@ export const VOTING_HOST_PAGE_KEYS = [
 
 export type VotingHostPageKey = (typeof VOTING_HOST_PAGE_KEYS)[number];
 
-/** Optional mount under Vertical portal when both packages are installed. */
-export const VOTING_VERTICAL_NAV_PREFIX = '/elections';
+/** Optional mount under Portalx portal when both packages are installed. */
+export const VOTING_PORTALX_NAV_PREFIX = '/elections';

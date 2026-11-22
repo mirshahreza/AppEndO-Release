@@ -15,6 +15,14 @@ export type ListWhereColumn = {
 
 export type ListWhereColumnMap = Record<string, ListWhereColumn>;
 
+/** Equal/Not equal on an embedded fragment (request id, route token) search that fragment, not the whole stored string. */
+function embeddedContainsOperator(column: ListWhereColumn, operator: string): string {
+  if (!column.preferContains) return operator;
+  if (operator === 'eq') return 'contains';
+  if (operator === 'neq') return 'notContains';
+  return operator;
+}
+
 const csvValues = (value: string): string[] => (
   value.split(',').map((item) => item.trim()).filter(Boolean)
 );
@@ -57,9 +65,7 @@ const conditionToSequelize = (
   const likeValue = column.transformValue
     ? column.transformValue(condition.value)
     : condition.value.trim();
-  const operator = column.preferContains && condition.operator === 'eq'
-    ? 'contains'
-    : condition.operator;
+  const operator = embeddedContainsOperator(column, condition.operator);
   if (operator === 'isNull') {
     return { [column.path]: { [Op.is]: null } };
   }
@@ -68,6 +74,9 @@ const conditionToSequelize = (
   }
   if (operator === 'contains') {
     return { [column.path]: { [Op.like]: `%${likeValue}%` } };
+  }
+  if (operator === 'notContains') {
+    return { [column.path]: { [Op.notLike]: `%${likeValue}%` } };
   }
   if (operator === 'startsWith') {
     return { [column.path]: { [Op.like]: `${likeValue}%` } };
@@ -130,9 +139,7 @@ const conditionToPrisma = (
   const raw = column.transformValue
     ? column.transformValue(condition.value)
     : condition.value.trim();
-  const operator = column.preferContains && condition.operator === 'eq'
-    ? 'contains'
-    : condition.operator;
+  const operator = embeddedContainsOperator(column, condition.operator);
   if (operator === 'isNull') {
     return { [column.path]: null };
   }
@@ -141,6 +148,9 @@ const conditionToPrisma = (
   }
   if (operator === 'contains') {
     return { [column.path]: contains(raw) };
+  }
+  if (operator === 'notContains') {
+    return { NOT: { [column.path]: contains(raw) } };
   }
   if (operator === 'startsWith') {
     return { [column.path]: { startsWith: raw } };

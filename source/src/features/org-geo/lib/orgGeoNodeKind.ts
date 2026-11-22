@@ -3,11 +3,11 @@ import type { BaseInfoRow } from '../../base-info/types';
 export type GeoNodeKind = 'province' | 'ghavateh' | 'circle' | 'maktab' | 'region';
 
 const KIND_PREFIX: Record<GeoNodeKind, string> = {
-  province: 'vx-province-',
-  ghavateh: 'vx-ghavateh-',
-  circle: 'vx-circle-',
-  maktab: 'vx-maktab-',
-  region: 'vx-region-',
+  province: 'extx-province-',
+  ghavateh: 'extx-ghavateh-',
+  circle: 'extx-circle-',
+  maktab: 'extx-maktab-',
+  region: 'extx-region-',
 };
 
 const KIND_LABEL: Record<GeoNodeKind, string> = {
@@ -30,8 +30,8 @@ const parseMetadataKind = (metadata: string | null | undefined): GeoNodeKind | n
   const raw = String(metadata || '').trim();
   if (!raw) return null;
   try {
-    const parsed = JSON.parse(raw) as { vxGeoKind?: string };
-    const kind = String(parsed.vxGeoKind || '').trim() as GeoNodeKind;
+    const parsed = JSON.parse(raw) as { extxGeoKind?: string };
+    const kind = String(parsed.extxGeoKind || '').trim() as GeoNodeKind;
     if (kind in KIND_LABEL) return kind;
   } catch {
     // ignore invalid JSON

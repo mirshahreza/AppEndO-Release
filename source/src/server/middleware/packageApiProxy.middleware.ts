@@ -23,8 +23,8 @@ export const createPackageApiProxyMiddleware = (options: PackageApiProxyOptions 
     }
 
     const pathname = (req.originalUrl || req.url || '').split('?')[0] || '';
-    // Vertical public portal routes are mounted on core Express — never package API handlers.
-    if (pathname.startsWith('/api/vx/public/')) {
+    // Portalx public portal routes are mounted on core Express — never package API handlers.
+    if (pathname.startsWith('/api/extx/public/')) {
       next();
       return;
     }

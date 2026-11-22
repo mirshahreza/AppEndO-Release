@@ -3,7 +3,7 @@ import {
   resolveFieldFilterStaticOptions,
   type DesignerGridToolbarFieldFilterConfig,
 } from './designerGridToolbarConfig';
-import { isDeprecatedHwyMembershipStatusShortName } from '../vx/vxMembershipStatusFilterOptions';
+import { isDeprecatedExtxMembershipStatusShortName } from '../../oss/excludedModuleStub';
 import { loadDesignerLovOptions, resolveDesignerLovEndpoint } from './useDesignerLovOptions';
 import { readDesignerLovOptionsCache } from './designerLovOptionsCache';
 import type { DesignerBindingDefinitions } from './types';
@@ -20,8 +20,8 @@ const mapToolbarLovOptions = (
 ): Array<{ value: string; label: string }> => (
   options
     .filter((option) => (
-      lovRef !== 'vxMembershipStatus'
-      || !isDeprecatedHwyMembershipStatusShortName(option.shortName)
+      lovRef !== 'extxMembershipStatus'
+      || !isDeprecatedExtxMembershipStatusShortName(option.shortName)
     ))
     .map((option) => ({ value: option.value, label: option.label }))
 );

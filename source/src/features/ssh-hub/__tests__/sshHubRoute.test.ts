@@ -47,12 +47,12 @@ describe('sshHubRoute', () => {
 
   it('does not leave the editor while the catalog is still loading', () => {
     expect(shouldLeaveSshHubEditor({
-      editSlug: 'vx',
+      editSlug: 'extx',
       isCatalogPending: true,
       connections: [],
     })).toBe(false);
     expect(shouldLeaveSshHubEditor({
-      editSlug: 'vx',
+      editSlug: 'extx',
       isCatalogPending: false,
       connections: [],
     })).toBe(true);

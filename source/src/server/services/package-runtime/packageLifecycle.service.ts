@@ -80,11 +80,11 @@ import {
 import { readPackageRegistryProposalPreview } from './extensionUiRoutes.service';
 import { isExtensionUiRoutesPreview } from '../../../shared/api/contracts/package-manifest/deploymentPreview';
 import { rollbackPluginDeployment } from './packageDeployment.service';
-import { VERTICAL_PACKAGE_ID } from '../../../core/packages/verticalPackage';
+import { PORTALX_PACKAGE_ID } from '../../../oss/excludedModuleStub';
 import {
-  publishVerticalPlatformRegistryFromSnapshot,
-  unpublishVerticalPlatformRegistry,
-} from '../vertical/verticalPlatformRegistry.service';
+  publishPortalxPlatformRegistryFromSnapshot,
+  unpublishPortalxPlatformRegistry,
+} from '../../../oss/excludedModuleStub';
 import { runPackageInstallDbScripts, runPluginUninstallDbScripts } from './packageDbScripts.service';
 import { rollbackFailedExtensionInstall, emptyExtensionInstallProgress } from './packageInstallRollback.service';
 import { parseInstallOptionalRecordsFlag } from '../../../core/packages/packageDbObjectInstallMode';
@@ -396,8 +396,8 @@ export class DefaultPackageLifecycleCoordinator implements PackageLifecycleCoord
         }
 
         deploymentStatus = finalized.deploymentStatus;
-        if (packageId === VERTICAL_PACKAGE_ID && finalized.deploymentStatus === 'applied') {
-          publishVerticalPlatformRegistryFromSnapshot();
+        if (packageId === PORTALX_PACKAGE_ID && finalized.deploymentStatus === 'applied') {
+          publishPortalxPlatformRegistryFromSnapshot();
         }
         smokeTestPayload = {
           smokeTestWarnings: finalized.smokeWarnings,
@@ -785,8 +785,8 @@ export class DefaultPackageLifecycleCoordinator implements PackageLifecycleCoord
 
       if (removeScope.files) {
         await rollbackPluginDeployment(packageId);
-        if (packageId === VERTICAL_PACKAGE_ID) {
-          unpublishVerticalPlatformRegistry();
+        if (packageId === PORTALX_PACKAGE_ID) {
+          unpublishPortalxPlatformRegistry();
         }
       }
 
@@ -985,8 +985,8 @@ export class DefaultPackageLifecycleCoordinator implements PackageLifecycleCoord
       }
 
       this.deps.installState.updateDeploymentStatus(packageId, 'applied');
-      if (packageId === VERTICAL_PACKAGE_ID) {
-        publishVerticalPlatformRegistryFromSnapshot();
+      if (packageId === PORTALX_PACKAGE_ID) {
+        publishPortalxPlatformRegistryFromSnapshot();
       }
       this.deps.installState.emitInstallSucceeded(ctx, {
         deploymentApplied: true,

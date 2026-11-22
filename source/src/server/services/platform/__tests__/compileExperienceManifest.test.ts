@@ -404,21 +404,21 @@ describe('compileExperienceManifest', () => {
 
   it('decompiles custom portal pages with portal-relative paths and dedupes duplicate bindings', async () => {
     shellRows.push({
-      shellKey: 'vertical',
-      name: 'Vertical',
+      shellKey: 'portalx',
+      name: 'Portalx',
       entry: 'core:AdminLayout',
       surface: 'studio',
       enabled: true,
       entryMode: 'shell',
-      navigationRef: 'vertical',
+      navigationRef: 'portalx',
       source: EXPERIENCE_MANIFEST_SOURCE,
     });
     bindingRows.push(
       {
         id: 94,
         mountId: STUDIO_MOUNT_ID,
-        routePattern: 'vertical/members-all/view/*',
-        pageKey: 'vx-member-dossier-view',
+        routePattern: 'portalx/members-all/view/*',
+        pageKey: 'extx-member-dossier-view',
         enabled: true,
         auth: null,
         nav: null,
@@ -427,8 +427,8 @@ describe('compileExperienceManifest', () => {
       {
         id: 98,
         mountId: STUDIO_MOUNT_ID,
-        routePattern: 'vertical/members-all/edit/*',
-        pageKey: 'vx-member-dossier-edit',
+        routePattern: 'portalx/members-all/edit/*',
+        pageKey: 'extx-member-dossier-edit',
         enabled: true,
         auth: null,
         nav: null,
@@ -437,18 +437,18 @@ describe('compileExperienceManifest', () => {
     );
 
     const manifest = await decompileExperienceManifest({ cultureId: 'us' });
-    const portal = manifest?.portals.find((item) => item.segment === 'vertical');
+    const portal = manifest?.portals.find((item) => item.segment === 'portalx');
 
     expect(portal?.pages).toEqual([
       {
         path: 'members-all/view/*',
-        pageKey: 'vx-member-dossier-view',
+        pageKey: 'extx-member-dossier-view',
         auth: null,
         nav: null,
       },
       {
         path: 'members-all/edit/*',
-        pageKey: 'vx-member-dossier-edit',
+        pageKey: 'extx-member-dossier-edit',
         auth: null,
         nav: null,
       },

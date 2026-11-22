@@ -39,7 +39,7 @@ export const mountPackagesRoutes = (app: Express, deps: PackagesServiceDeps): vo
       next('router');
       return;
     }
-    void controller.serveUiModule(req, res);
+    controller.serveUiModule(req, res, next);
   });
   app.use('/api/packages', publicRouter);
 

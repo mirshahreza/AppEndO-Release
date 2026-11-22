@@ -17,7 +17,7 @@ export type ToolbarRefreshWithListCountProps = {
   separatorBefore?: boolean;
 };
 
-/** Single toolbar control: refresh + bold list total (Vertical member lists). */
+/** Single toolbar control: refresh + bold list total (Portalx member lists). */
 export const ToolbarRefreshWithListCount: React.FC<ToolbarRefreshWithListCountProps> = ({
   count,
   onClick,

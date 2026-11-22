@@ -21,12 +21,12 @@ import {
   filterRemoteHubsNavigationUnlessInstalled,
   isRemoteHubsRuntimeEnabled,
 } from '../remote-hubs/remoteHubsRuntime';
-import { coerceVerticalPackagePageModule, VERTICAL_PACKAGE_ID } from '../../../core/packages/verticalPackage';
+import { coercePortalxPackagePageModule, PORTALX_PACKAGE_ID } from '../../../oss/excludedModuleStub';
 import {
-  filterVerticalHostRowsUnlessInstalled,
-  filterVerticalNavigationsUnlessInstalled,
-  isVerticalRuntimeEnabled,
-} from '../vertical/verticalRuntime';
+  filterPortalxHostRowsUnlessInstalled,
+  filterPortalxNavigationsUnlessInstalled,
+  isPortalxRuntimeEnabled,
+} from '../../../oss/excludedModuleStub';
 
 let cachedConfig: PlatformRuntimeConfig | null = null;
 let cachedConfigIndexUpdatedAt: string | null = null;
@@ -44,13 +44,13 @@ function isCachedConfigStale(): boolean {
   return currentIndexUpdatedAt !== cachedConfigIndexUpdatedAt;
 }
 
-/** Package-owned registry rows stay out of core until that package runtime is enabled (Vertical registry publish). */
+/** Package-owned registry rows stay out of core until that package runtime is enabled (Portalx registry publish). */
 function filterCoreRows<T extends { ownerPackageId?: string | null }>(rows: T[]): T[] {
   return rows.filter((item) => {
     if (!item.ownerPackageId) {
       return true;
     }
-    if (item.ownerPackageId === VERTICAL_PACKAGE_ID && isVerticalRuntimeEnabled()) {
+    if (item.ownerPackageId === PORTALX_PACKAGE_ID && isPortalxRuntimeEnabled()) {
       return true;
     }
     return false;
@@ -127,25 +127,25 @@ export async function loadPlatformRuntimeConfig(): Promise<PlatformRuntimeConfig
 
   const { overlay, fingerprints } = loadDeploymentOverlay();
   const merged = mergeDeploymentPlatformRows(core, overlay);
-  const verticalAwarePageModules = isVerticalRuntimeEnabled()
-    ? merged.pageModules.map((module) => coerceVerticalPackagePageModule(module))
+  const portalxAwarePageModules = isPortalxRuntimeEnabled()
+    ? merged.pageModules.map((module) => coercePortalxPackagePageModule(module))
     : merged.pageModules;
   const filteredPageModules = applyRemoteHubsChromeToPageModules(
     filterRemoteHubsHostRowsUnlessInstalled(
-      filterVerticalHostRowsUnlessInstalled(verticalAwarePageModules),
+      filterPortalxHostRowsUnlessInstalled(portalxAwarePageModules),
     ),
   );
   const filteredBindings = applyRemoteHubsChromeToBindings(
     filterRemoteHubsHostRowsUnlessInstalled(
-      filterVerticalHostRowsUnlessInstalled(merged.bindings),
+      filterPortalxHostRowsUnlessInstalled(merged.bindings),
     ),
   );
   const withNavigations = {
     ...merged,
-    mounts: filterVerticalHostRowsUnlessInstalled(merged.mounts),
-    shells: filterVerticalHostRowsUnlessInstalled(merged.shells),
-    shellRules: filterVerticalHostRowsUnlessInstalled(merged.shellRules),
-    navigations: filterVerticalNavigationsUnlessInstalled(
+    mounts: filterPortalxHostRowsUnlessInstalled(merged.mounts),
+    shells: filterPortalxHostRowsUnlessInstalled(merged.shells),
+    shellRules: filterPortalxHostRowsUnlessInstalled(merged.shellRules),
+    navigations: filterPortalxNavigationsUnlessInstalled(
       core.navigations
         .map(ensureRemoteHubsNavigationIfInstalled)
         .map(filterRemoteHubsNavigationUnlessInstalled),
@@ -156,7 +156,7 @@ export async function loadPlatformRuntimeConfig(): Promise<PlatformRuntimeConfig
   const gatedFingerprints = [
     ...fingerprints,
     `remote-hubs:${isRemoteHubsRuntimeEnabled() ? 'on' : 'off'}`,
-    `vertical:${isVerticalRuntimeEnabled() ? 'on' : 'off'}`,
+    `portalx:${isPortalxRuntimeEnabled() ? 'on' : 'off'}`,
   ];
 
   return {

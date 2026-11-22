@@ -179,7 +179,7 @@ model BaseWidget {
       if (String(command).includes('migrate diff')) {
         return `-- DropTable
 PRAGMA foreign_keys=off;
-DROP TABLE "vx_members";
+DROP TABLE "extx_members";
 PRAGMA foreign_keys=on;
 
 -- CreateTable
@@ -197,7 +197,7 @@ CREATE TABLE "base_widgets" (
       });
       expect(result.skippedCount).toBeGreaterThan(0);
       expect(result.appliedSql).toContain('CREATE TABLE "base_widgets"');
-      expect(result.appliedSql).not.toMatch(/DROP TABLE\s+"vx_members"/i);
+      expect(result.appliedSql).not.toMatch(/DROP TABLE\s+"extx_members"/i);
 
       const executeCall = execSyncMock.mock.calls.find(([command]) => String(command).includes('db execute'));
       expect(executeCall).toBeDefined();

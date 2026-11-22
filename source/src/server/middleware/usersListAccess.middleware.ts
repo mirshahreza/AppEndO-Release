@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { vxGeoResponsibilityCanAccessSection } from '../../domain/vx/vxGeoResponsibilityCatalog';
+import { extxGeoResponsibilityCanAccessSection } from '../../oss/excludedModuleStub';
 import { canAccessManagedFunction } from '../../shared/api/contracts/server-functions/accessControl';
 import {
   hasAdminRole,
@@ -7,13 +7,13 @@ import {
   requireRole,
   tryAttachAuth,
 } from './auth.middleware';
-import { resolveHwyCoursesActivitiesApiAllowRoles } from './vxCoursesActivitiesAccess.middleware';
+import { resolveExtxCoursesActivitiesApiAllowRoles } from '../../oss/excludedModuleStub';
 import { builtinFunctionRegistry } from '../services/builtinFunctionRegistry.service';
 
 const USERS_LIST_METHOD = 'GET';
 const USERS_LIST_PATH = '/api/users';
-const VX_MEMBER_DIRECTORY_LIST_METHOD = 'GET';
-const VX_MEMBER_DIRECTORY_LIST_PATH = '/api/vx/member-directory';
+const EXTX_MEMBER_DIRECTORY_LIST_METHOD = 'GET';
+const EXTX_MEMBER_DIRECTORY_LIST_PATH = '/api/extx/member-directory';
 
 /**
  * Sub-routes (e.g. avatar-xs) inherit the same accessControl as GET /api/users
@@ -50,7 +50,7 @@ export const requireUsersListAccess = async (
     }
 
     const roles = normalizeAuthRoles(req);
-    if (vxGeoResponsibilityCanAccessSection(roles)) {
+    if (extxGeoResponsibilityCanAccessSection(roles)) {
       next();
       return;
     }
@@ -58,8 +58,8 @@ export const requireUsersListAccess = async (
     await builtinFunctionRegistry.ensureLoaded();
 
     const memberDirectoryMatch = builtinFunctionRegistry.resolve(
-      VX_MEMBER_DIRECTORY_LIST_METHOD,
-      VX_MEMBER_DIRECTORY_LIST_PATH,
+      EXTX_MEMBER_DIRECTORY_LIST_METHOD,
+      EXTX_MEMBER_DIRECTORY_LIST_PATH,
     );
     if (
       memberDirectoryMatch
@@ -94,10 +94,10 @@ export const requireUsersListAccess = async (
 };
 
 /**
- * Registration list thumbnails and member-directory face avatars (`/api/vx/member-files/:id/content`).
+ * Registration list thumbnails and member-directory face avatars (`/api/extx/member-files/:id/content`).
  * Same read audience as list faces — not ADMIN-only dossier edits.
  */
-export const requireHwyMemberListFaceAssetAccess = async (
+export const requireExtxMemberListFaceAssetAccess = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -126,7 +126,7 @@ export const requireHwyMemberListFaceAssetAccess = async (
     }
 
     const roles = normalizeAuthRoles(req);
-    if (vxGeoResponsibilityCanAccessSection(roles)) {
+    if (extxGeoResponsibilityCanAccessSection(roles)) {
       next();
       return;
     }
@@ -134,8 +134,8 @@ export const requireHwyMemberListFaceAssetAccess = async (
     await builtinFunctionRegistry.ensureLoaded();
 
     const memberDirectoryMatch = builtinFunctionRegistry.resolve(
-      VX_MEMBER_DIRECTORY_LIST_METHOD,
-      VX_MEMBER_DIRECTORY_LIST_PATH,
+      EXTX_MEMBER_DIRECTORY_LIST_METHOD,
+      EXTX_MEMBER_DIRECTORY_LIST_PATH,
     );
     if (
       memberDirectoryMatch
@@ -151,7 +151,7 @@ export const requireHwyMemberListFaceAssetAccess = async (
       return;
     }
 
-    const coursesRoles = await resolveHwyCoursesActivitiesApiAllowRoles();
+    const coursesRoles = await resolveExtxCoursesActivitiesApiAllowRoles();
     if (coursesRoles.some((role) => roles.includes(role))) {
       next();
       return;

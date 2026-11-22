@@ -1,13 +1,13 @@
-<div dir="rtl" lang="fa" class="vx-parity-doc">
+<div dir="rtl" lang="fa" class="extx-parity-doc">
 <style>
-  .vx-parity-doc { text-align: right; unicode-bidi: plaintext; }
-  .vx-parity-doc h1, .vx-parity-doc h2, .vx-parity-doc h3, .vx-parity-doc h4, .vx-parity-doc p, .vx-parity-doc li { text-align: right; }
-  .vx-parity-doc table { direction: rtl; text-align: right; width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
-  .vx-parity-doc th, .vx-parity-doc td { border: 1px solid #c4c4c4; padding: 0.35rem 0.5rem; vertical-align: top; text-align: right; }
-  .vx-parity-doc th { background: #f6f6f6; font-weight: 600; }
-  .vx-parity-doc blockquote { text-align: right; border-right: 3px solid #ccc; border-left: none; padding-right: 1rem; margin-right: 0; }
-  .vx-parity-doc ul, .vx-parity-doc ol { padding-right: 1.25rem; padding-left: 0; }
-  .vx-parity-doc pre, .vx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }
+  .extx-parity-doc { text-align: right; unicode-bidi: plaintext; }
+  .extx-parity-doc h1, .extx-parity-doc h2, .extx-parity-doc h3, .extx-parity-doc h4, .extx-parity-doc p, .extx-parity-doc li { text-align: right; }
+  .extx-parity-doc table { direction: rtl; text-align: right; width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
+  .extx-parity-doc th, .extx-parity-doc td { border: 1px solid #c4c4c4; padding: 0.35rem 0.5rem; vertical-align: top; text-align: right; }
+  .extx-parity-doc th { background: #f6f6f6; font-weight: 600; }
+  .extx-parity-doc blockquote { text-align: right; border-right: 3px solid #ccc; border-left: none; padding-right: 1rem; margin-right: 0; }
+  .extx-parity-doc ul, .extx-parity-doc ol { padding-right: 1.25rem; padding-left: 0; }
+  .extx-parity-doc pre, .extx-parity-doc code { direction: ltr; text-align: left; unicode-bidi: embed; }
 </style>
 
 <p><strong>خلاصه برای operatore:</strong> این سند جزو <strong>plans</strong> است (p-127-data-model-query-surfaces). ستون وضعیت در <a href="./p-00-todo-index.md">index مربوطه</a> مرجع «شروع شده / design / تمام» است.</p>
@@ -28,7 +28,7 @@
 
 ## خلاصهٔ یک‌صفحه‌ای (برای اپراتور)
 
-**مشکل:** هر لیست / صفحهٔ دامنه برای «جستجوی ساده»، «فیلتر پیشرفته»، و «وضعیت‌های کسب‌وکاری» (مثلاً فقط منتشرشده · فقط پیش‌نویس · صف کار تأیید) امروز **دستی** در کد یا spec صفحه تعریف می‌شود. همان منطق در CMS، VX، CRM و Bases دوباره نوشته می‌شود.
+**مشکل:** هر لیست / صفحهٔ دامنه برای «جستجوی ساده»، «فیلتر پیشرفته»، و «وضعیت‌های کسب‌وکاری» (مثلاً فقط منتشرشده · فقط پیش‌نویس · صف کار تأیید) امروز **دستی** در کد یا spec صفحه تعریف می‌شود. همان منطق در CMS، EXTX، CRM و Bases دوباره نوشته می‌شود.
 
 **راه‌حل:** **یک لایهٔ متادیتا روی Edge model (studio-meta)** که چهار **سطح پرس** را توصیف کند؛ runtime (Data API + لیست‌های متصل) همان قرارداد را بخواند — **greenfield**، بدون dual parser.
 
@@ -176,7 +176,7 @@
 
 <table dir="rtl">
 <thead><tr><th>لایه</th><th>امروز</th><th>شکاف</th></tr></thead>
-<tbody><tr><td><code dir="ltr" style="unicode-bidi: embed;">columnMeta.searchRole</code></td><td>Zod · مدلر Column Properties · seedهای CMS/VX/CRM</td><td>Data API هنوز <code dir="ltr" style="unicode-bidi: embed;">resolveSearchableFields</code> از <strong>نوع text</strong> می‌خواند، نه studio-meta</td></tr>
+<tbody><tr><td><code dir="ltr" style="unicode-bidi: embed;">columnMeta.searchRole</code></td><td>Zod · مدلر Column Properties · seedهای CMS/EXTX/CRM</td><td>Data API هنوز <code dir="ltr" style="unicode-bidi: embed;">resolveSearchableFields</code> از <strong>نوع text</strong> می‌خواند، نه studio-meta</td></tr>
 <tr><td>List Where fields</td><td><code dir="ltr" style="unicode-bidi: embed;">edgeModelListWhereColumns</code> = <strong>همهٔ ستون‌ها</strong></td><td>بدون allowlist / <code dir="ltr" style="unicode-bidi: embed;">filterRole</code></td></tr>
 <tr><td>Predefined queries</td><td>—</td><td>فقط <code dir="ltr" style="unicode-bidi: embed;">associationMeta.targetFilter</code> برای lookup</td></tr>
 <tr><td>Record Policy</td><td><code dir="ltr" style="unicode-bidi: embed;">policyWhere</code> در executor</td><td>مکمل؛ جایگزین preset نیست</td></tr>
@@ -218,7 +218,7 @@
 ## تعریف موفقیت
 
 1. دولوپر در مدلر `searchRole` و `filterRole` را تنظیم می‌کند؛ لیست‌های متصل بدون کد صفحه همان را می‌گیرند.
-2. دولوپر preset می‌سازد (mandatory/optional) برای وضعیت‌های کسب‌وکاری؛ seed پکیج (CMS، VX، …) از preset id استفاده می‌کند نه where دستی در scaffold.
+2. دولوپر preset می‌سازد (mandatory/optional) برای وضعیت‌های کسب‌وکاری؛ seed پکیج (CMS، EXTX، …) از preset id استفاده می‌کند نه where دستی در scaffold.
 3. تخصیص نقش برای preset/ستون restricted از binding + ویزارد استاندارد.
 4. `policyWhere AND presets AND user where AND search` در Data API تست‌شده؛ out-of-scope sanitize برای فیلدهای غیرمجاز.
 5. `npm run test:critical` بدون رگرسیون.

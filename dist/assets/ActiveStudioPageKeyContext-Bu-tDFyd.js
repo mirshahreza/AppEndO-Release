@@ -1,0 +1,1 @@
+import{r as t,j as i}from"./react-vendor-DelaA65R.js";const e=t.createContext(null);function u({pageKey:o,children:r}){return i.jsx(e.Provider,{value:o,children:r})}function a(){return t.useContext(e)}export{u as A,a as u};

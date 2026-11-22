@@ -1,7 +1,7 @@
 {
   "edgeModelId": "em_b9b34df33282b49c",
   "tags": [
-    "vx",
+    "extx",
     "member",
     "core"
   ],
@@ -11,7 +11,7 @@
       "icon": "lucide:hash",
       "formWidget": "number",
       "required": true,
-      "developerNotes": "Legacy VX_Members.Id",
+      "developerNotes": "Legacy EXTX_Members.Id",
       "group": "Keys",
       "sortOrder": 10
     },
@@ -358,7 +358,7 @@
       "formWidget": "lookup",
       "searchRole": "basic",
       "developerNotes": "Set on public submit; immutable after create except admin correction. Picker filter: parent_id=220.016 (Registration Channel).",
-      "interfaceNotes": "Self-registration gateway (replaces legacy VX_Members.DeviceOsTypeId).",
+      "interfaceNotes": "Self-registration gateway (replaces legacy EXTX_Members.DeviceOsTypeId).",
       "group": "Membership",
       "sortOrder": 455
     },
@@ -741,15 +741,15 @@
       "formWidget": "lookup"
     },
     {
-      "relationKey": "physical:vx_members.nakhebin_id->vx_nakhebin.id:FK_vx_members_nakhebin_id",
+      "relationKey": "physical:extx_members.nakhebin_id->extx_nakhebin.id:FK_extx_members_nakhebin_id",
       "displayLabel": "Members (nakhebin link)"
     },
     {
-      "relationKey": "physical:vx_nakhebin.member_id->vx_members.id:FK_vx_nakhebin_member_id",
+      "relationKey": "physical:extx_nakhebin.member_id->extx_members.id:FK_extx_nakhebin_member_id",
       "displayLabel": "Nakhebin rows"
     },
     {
-      "relationKey": "physical:vx_username_repo.member_id->vx_members.id:FK_vx_username_repo_member_id",
+      "relationKey": "physical:extx_username_repo.member_id->extx_members.id:FK_extx_username_repo_member_id",
       "displayLabel": "Username reservations"
     }
   ],
@@ -761,25 +761,25 @@
     "schemaRelationsDiagramLayout": {
       "algorithmVersion": 3,
       "nodes": {
-        "vx_institutes": {
+        "extx_institutes": {
           "x": 40,
           "y": 0,
           "width": 228,
           "height": 108
         },
-        "vx_member_list_defs": {
+        "extx_member_list_defs": {
           "x": 40,
           "y": 128,
           "width": 228,
           "height": 108
         },
-        "vx_nakhebin": {
+        "extx_nakhebin": {
           "x": 40,
           "y": 280,
           "width": 228,
           "height": 108
         },
-        "vx_username_repo": {
+        "extx_username_repo": {
           "x": 40,
           "y": 408,
           "width": 228,
@@ -797,37 +797,37 @@
           "width": 228,
           "height": 108
         },
-        "vx_members": {
+        "extx_members": {
           "x": 600,
           "y": 160,
           "width": 248,
           "height": 120
         },
-        "vx_members_ext": {
+        "extx_members_ext": {
           "x": 600,
           "y": 320,
           "width": 248,
           "height": 108
         },
-        "vx_member_institutes": {
+        "extx_member_institutes": {
           "x": 920,
           "y": 40,
           "width": 228,
           "height": 108
         },
-        "vx_member_files": {
+        "extx_member_files": {
           "x": 920,
           "y": 160,
           "width": 228,
           "height": 108
         },
-        "vx_member_notes": {
+        "extx_member_notes": {
           "x": 920,
           "y": 280,
           "width": 228,
           "height": 108
         },
-        "vx_member_security_profile": {
+        "extx_member_security_profile": {
           "x": 920,
           "y": 400,
           "width": 228,
@@ -835,7 +835,7 @@
         }
       }
     },
-    "story": "## Purpose\n\n`vx_members` is the organizational membership record (Arabic identity, nakhebin link, membership summary, address, education, job). Platform login lives on `base_users` via `user_id`.\n\n## Scenarios\n\n- **S1 Self-registration** — draft member + `registration_channel_code` (legacy `DeviceOsTypeId` portal) + public tracking code = `vx_members.id` + minimum files (`personal_photo`, `national_card_front`, `national_card_back`).\n- **S2 Call-center wizard** — duplicates check (workflow metadata), nakhebin link (`nakhebin_*`), referrer decision, then `membership_status` → pending local.\n- **S3 Local verification** — updates `membership_status`, `membership_on`, audit fields.\n- **S4 Live dossier** — notes, files, security profile rows, institute links (child tables).\n\n## Rules\n\n- List/search truth for Arabic labels is this row, not only the platform profile.\n- Approval history is Workflow + record events; status columns are operational summary only.\n- Do not store passwords, blobs, or legacy Limits columns here.",
+    "story": "## Purpose\n\n`extx_members` is the organizational membership record (Arabic identity, nakhebin link, membership summary, address, education, job). Platform login lives on `base_users` via `user_id`.\n\n## Scenarios\n\n- **S1 Self-registration** — draft member + `registration_channel_code` (legacy `DeviceOsTypeId` portal) + public tracking code = `extx_members.id` + minimum files (`personal_photo`, `national_card_front`, `national_card_back`).\n- **S2 Call-center wizard** — duplicates check (workflow metadata), nakhebin link (`nakhebin_*`), referrer decision, then `membership_status` → pending local.\n- **S3 Local verification** — updates `membership_status`, `membership_on`, audit fields.\n- **S4 Live dossier** — notes, files, security profile rows, institute links (child tables).\n\n## Rules\n\n- List/search truth for Arabic labels is this row, not only the platform profile.\n- Approval history is Workflow + record events; status columns are operational summary only.\n- Do not store passwords, blobs, or legacy Limits columns here.",
     "scenarioIds": [
       "S1",
       "S2",

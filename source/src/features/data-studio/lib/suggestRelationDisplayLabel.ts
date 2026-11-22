@@ -24,13 +24,13 @@ const FOREIGN_KEY_LABELS: Record<string, string> = {
 };
 
 const CONSTRAINT_LABEL_OVERRIDES: Record<string, string> = {
-  FK_vx_nakhebin_member_id: 'Nakhebin rows',
-  FK_vx_username_repo_member_id: 'Username reservations',
-  FK_vx_members_nakhebin_id: 'Members (nakhebin link)',
+  FK_extx_nakhebin_member_id: 'Nakhebin rows',
+  FK_extx_username_repo_member_id: 'Username reservations',
+  FK_extx_members_nakhebin_id: 'Members (nakhebin link)',
 };
 
 const stripTablePrefix = (objectName: string): string => (
-  objectName.replace(/^(base_|vx_|cms_)/, '')
+  objectName.replace(/^(base_|extx_|cms_)/, '')
 );
 
 export const modelTitleForObjectName = (

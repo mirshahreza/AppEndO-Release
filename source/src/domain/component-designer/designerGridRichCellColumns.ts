@@ -1,9 +1,9 @@
-import { resolveHwyMemberFaceCaption } from '../vx/vxMemberFaceCaptionDisplay';
+import { resolveExtxMemberFaceCaption } from '../../oss/excludedModuleStub';
 import { getHashChipClass } from '../../shared/lib/hashChipPalette';
 import {
-  readHwyNakhebinVoterNameLine1,
-  readHwyNakhebinVoterNameLine2,
-} from '../../shared/lib/vxNakhebinVoterDisplay';
+  readExtxNakhebinVoterNameLine1,
+  readExtxNakhebinVoterNameLine2,
+} from '../../oss/excludedModuleStub';
 import { APP_TABLE_GRID_AUDIT_COLUMN_WIDTH } from '../../shared/ui/surfaceClasses';
 import type { DesignerDataGridColumn, DesignerDataGridColumnCellKind } from './designerDataGridColumns';
 import type { DesignerGridRowActionBehavior } from './designerGridActionColumns';
@@ -19,11 +19,11 @@ export const DESIGNER_GRID_RICH_CELL_KINDS = [
   'audit',
   'lock-status',
   'file-tile',
-  'vx-registered-icon',
-  'vx-member-face',
-  'vx-imagefix-thumbs',
-  'vx-imagefix-member-actions',
-  'vx-member-personal-documents-link',
+  'extx-registered-icon',
+  'extx-member-face',
+  'extx-imagefix-thumbs',
+  'extx-imagefix-member-actions',
+  'extx-member-personal-documents-link',
 ] as const;
 
 export type DesignerGridRichCellKind = typeof DESIGNER_GRID_RICH_CELL_KINDS[number];
@@ -53,7 +53,7 @@ export type DesignerGridRichCellFields = {
   avatarSizePx?: number;
   primaryField?: string;
   secondaryField?: string;
-  /** Third stacked line (e.g. membership date under member name on VX segment lists). */
+  /** Third stacked line (e.g. membership date under member name on EXTX segment lists). */
   tertiaryField?: string;
   tertiaryKind?: 'membership-date';
   badgeField?: string;
@@ -388,8 +388,8 @@ export const designerGridColumnAllowsCellClickInvoke = (
     return false;
   }
   return cellKind === 'avatar'
-    || cellKind === 'vx-member-face'
-    || cellKind === 'vx-imagefix-thumbs'
+    || cellKind === 'extx-member-face'
+    || cellKind === 'extx-imagefix-thumbs'
     || cellKind === 'account'
     || cellKind === undefined;
 };
@@ -593,7 +593,7 @@ export const resolveRichCellSortValue = (
   switch (column.cellKind) {
     case 'account':
       if (fields?.primaryField === 'voterNameLine1') {
-        return readHwyNakhebinVoterNameLine1(row).toLowerCase();
+        return readExtxNakhebinVoterNameLine1(row).toLowerCase();
       }
       return readDesignerGridRowString(row, fields?.primaryField || column.key).toLowerCase();
     case 'link':
@@ -616,8 +616,8 @@ export const resolveRichCellSortValue = (
         || readDesignerGridRowString(row, fields?.captionFallbackField)
         || readDesignerGridRowString(row, fields?.fallbackTextField)
       ).toLowerCase();
-    case 'vx-member-face':
-      return resolveHwyMemberFaceCaption(row, fields).text.toLowerCase();
+    case 'extx-member-face':
+      return resolveExtxMemberFaceCaption(row, fields).text.toLowerCase();
     case 'file-tile':
       return readDesignerGridRowString(row, fields?.fileNameField || column.key).toLowerCase();
     default:
@@ -633,8 +633,8 @@ export const resolveRichCellFilterValue = (
   switch (column.cellKind) {
     case 'account': {
       if (fields?.primaryField === 'voterNameLine1') {
-        const primary = readHwyNakhebinVoterNameLine1(row);
-        const secondary = readHwyNakhebinVoterNameLine2(row);
+        const primary = readExtxNakhebinVoterNameLine1(row);
+        const secondary = readExtxNakhebinVoterNameLine2(row);
         return `${primary} ${secondary}`.trim();
       }
       const primary = readDesignerGridRowString(row, fields?.primaryField || column.key);
@@ -659,8 +659,8 @@ export const resolveRichCellFilterValue = (
       return readDesignerGridRowString(row, fields?.captionField)
         || readDesignerGridRowString(row, fields?.captionFallbackField)
         || readDesignerGridRowString(row, fields?.fallbackTextField);
-    case 'vx-member-face':
-      return resolveHwyMemberFaceCaption(row, fields).text;
+    case 'extx-member-face':
+      return resolveExtxMemberFaceCaption(row, fields).text;
     case 'file-tile':
       return readDesignerGridRowString(row, fields?.fileNameField || column.key);
     default:

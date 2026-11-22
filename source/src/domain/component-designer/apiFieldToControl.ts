@@ -23,7 +23,7 @@ export const AUTO_FORM_CONTROL_PALETTE_ITEM_IDS = [
   'form.date-range',
   'heroui.tags-input',
   'html.file-upload',
-  'vx.institute-logo-upload',
+  'extx.institute-logo-upload',
   'form.code-editor',
   'form.html-editor',
   'form.markdown-editor',
@@ -49,7 +49,7 @@ export const AUTO_FORM_CONTROL_LABELS: Record<AutoFormControlPaletteItemId, stri
   'form.date-range': 'Date range',
   'heroui.tags-input': 'Tags input',
   'html.file-upload': 'File upload',
-  'vx.institute-logo-upload': 'Institute logo upload',
+  'extx.institute-logo-upload': 'Institute logo upload',
   'form.code-editor': 'Code editor',
   'form.html-editor': 'Rich text editor',
   'form.markdown-editor': 'Markdown editor',
@@ -363,7 +363,7 @@ export const buildControlProps = (
     case 'form.date-range':
       // Manual override only in this phase (no auto pair of start_/end_ fields).
       break;
-    case 'vx.institute-logo-upload':
+    case 'extx.institute-logo-upload':
       props.ariaLabel = label;
       break;
     case 'html.file-upload': {

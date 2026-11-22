@@ -36,8 +36,8 @@ const EDGE_MODEL_ID = "em_efa8e9859bf37d3c";
 const EDGE_API_DEFINITION_ID = "ea_b11f2e57e56440bb";
 const EDGE_API_OPERATION_ID = "op_create_z06aev";
 const MODEL_ALIAS = "VoteCandidates";
-const READ_FIELDS = ["id","votingId","ballotId","displayName","vxMemberId","vxNakhebId","geoScopeId","statusCode","listScopeLegacy","operatorNote","createdAt","updatedAt","sortOrder"] as const;
-const WRITE_FIELDS = ["votingId","ballotId","displayName","vxMemberId","vxNakhebId","geoScopeId","statusCode","listScopeLegacy","operatorNote","createdAt","updatedAt","sortOrder"] as const;
+const READ_FIELDS = ["id","votingId","ballotId","displayName","extxMemberId","extxNakhebId","geoScopeId","statusCode","listScopeLegacy","operatorNote","createdAt","updatedAt","sortOrder"] as const;
+const WRITE_FIELDS = ["votingId","ballotId","displayName","extxMemberId","extxNakhebId","geoScopeId","statusCode","listScopeLegacy","operatorNote","createdAt","updatedAt","sortOrder"] as const;
 const REQUIRED_FIELDS = ["votingId","displayName","createdAt","updatedAt","sortOrder"] as const;
 const DEFAULT_WHERE = {};
 const MAX_PAGE_SIZE = 100;
@@ -56,8 +56,8 @@ const OPERATION = {
       "votingId",
       "ballotId",
       "displayName",
-      "vxMemberId",
-      "vxNakhebId",
+      "extxMemberId",
+      "extxNakhebId",
       "geoScopeId",
       "statusCode",
       "listScopeLegacy",
@@ -70,8 +70,8 @@ const OPERATION = {
       "votingId",
       "ballotId",
       "displayName",
-      "vxMemberId",
-      "vxNakhebId",
+      "extxMemberId",
+      "extxNakhebId",
       "geoScopeId",
       "statusCode",
       "listScopeLegacy",

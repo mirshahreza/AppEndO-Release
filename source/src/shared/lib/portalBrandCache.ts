@@ -5,10 +5,10 @@ import {
   resolvePortalBrand,
   type ResolvedPortalBrand,
 } from '../api/contracts/platform/portalBrand';
-import { VX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../domain/vx/vxPlatformPortalBrandDefaults';
-import { VX_PUBLIC_PORTAL_SEGMENT } from '../../domain/vx/selfRegistration/vxSelfRegistrationRoutes';
-import { shouldReplaceVerticalRegistryDocumentTitle } from '../../domain/vx/selfRegistration/vxPublicPortalCultureChrome';
-import { resolvePortalSegmentBootDocumentTitle } from '../../domain/vx/vxPortalBootDocumentTitle';
+import { EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../oss/excludedModuleStub';
+import { EXTX_PUBLIC_PORTAL_SEGMENT } from '../../oss/excludedModuleStub';
+import { shouldReplacePortalxRegistryDocumentTitle } from '../../oss/excludedModuleStub';
+import { resolvePortalSegmentBootDocumentTitle } from '../../oss/excludedModuleStub';
 
 export const PORTAL_BRAND_CACHE_KEY = 'appendo-portal-brand-v1';
 
@@ -84,9 +84,9 @@ export function guessPortalSegmentFromPathname(pathname: string): string {
       : 'home';
   }
 
-  const verticalIdx = parts.indexOf('vertical');
-  if (verticalIdx !== -1) {
-    return 'vertical';
+  const portalxIdx = parts.indexOf('portalx');
+  if (portalxIdx !== -1) {
+    return 'portalx';
   }
 
   return parts[1] ?? 'home';
@@ -172,8 +172,8 @@ export function resolvePortalLoadingBrandForPathname(
     return cached;
   }
 
-  if (segment === VX_PUBLIC_PORTAL_SEGMENT) {
-    return { logoUrl: VX_PLATFORM_PORTAL_BRAND_LOGO_URL };
+  if (segment === EXTX_PUBLIC_PORTAL_SEGMENT) {
+    return { logoUrl: EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL };
   }
 
   return null;
@@ -204,7 +204,7 @@ export function cachePortalBrand(segment: string, brand: ResolvedPortalBrand | C
     );
     if (bootTitle?.trim()) {
       title = bootTitle;
-    } else if (trimmed === VX_PUBLIC_PORTAL_SEGMENT && title && shouldReplaceVerticalRegistryDocumentTitle(title)) {
+    } else if (trimmed === EXTX_PUBLIC_PORTAL_SEGMENT && title && shouldReplacePortalxRegistryDocumentTitle(title)) {
       title = '';
     }
   }

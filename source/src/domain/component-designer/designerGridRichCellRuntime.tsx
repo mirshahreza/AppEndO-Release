@@ -19,24 +19,24 @@ import {
 import { MountGridDateText } from '../../app/platform/MountGridDateText';
 import { cn } from '../../lib/utils';
 import {
-  formatHwyPersonListNameSecondLine,
-  readHwyNakhebinVoterNameLine1,
-  readHwyNakhebinVoterNameLine2,
-} from '../../shared/lib/vxNakhebinVoterDisplay';
-import { splitHwyHouseholdMemberNameLines } from '../vx/vxFamilyHouseholdDisplayName';
-import { VxImageFixMemberActionsCell } from '../vx/VxImageFixMemberActionsCell';
-import { VxMemberPersonalDocumentsLinkCell } from '../vx/VxMemberPersonalDocumentsLinkCell';
-import { VxImageFixRegistrationThumbsCell } from '../vx/VxImageFixRegistrationThumbsCell';
-import { VxMemberDirectoryGridFaceCell } from '../vx/VxMemberDirectoryGridFaceCell';
-import { resolveHwyMemberFaceCaption } from '../vx/vxMemberFaceCaptionDisplay';
-import { VxMemberAvatarWithMembershipCode } from '../../shared/ui/vx/VxMemberAvatarWithMembershipCode';
-import { shouldAllowRegistrationPersonalPhotoInListFaceColumn } from '../vx/vxMemberImageFixCatalog';
+  formatExtxPersonListNameSecondLine,
+  readExtxNakhebinVoterNameLine1,
+  readExtxNakhebinVoterNameLine2,
+} from '../../oss/excludedModuleStub';
+import { splitExtxHouseholdMemberNameLines } from '../../oss/excludedModuleStub';
+import { ExtxImageFixMemberActionsCell } from '../../oss/excludedModuleStub';
+import { ExtxMemberPersonalDocumentsLinkCell } from '../../oss/excludedModuleStub';
+import { ExtxImageFixRegistrationThumbsCell } from '../../oss/excludedModuleStub';
+import { ExtxMemberDirectoryGridFaceCell } from '../../oss/excludedModuleStub';
+import { resolveExtxMemberFaceCaption } from '../../oss/excludedModuleStub';
+import { ExtxMemberAvatarWithMembershipCode } from '../../oss/excludedModuleStub';
+import { shouldAllowRegistrationPersonalPhotoInListFaceColumn } from '../../oss/excludedModuleStub';
 import {
-  VX_MEMBER_LIST_AVATAR_IMAGE_CLASS,
-  VX_MEMBER_LIST_AVATAR_PLACEHOLDER_CLASS,
-} from '../../shared/ui/vx/vxMemberFaceInteraction';
-import { formatHwyMemberListMembershipOnCaption } from '../vx/vxMemberListMembershipOnDisplay';
-import { resolveHwyMemberJobTypePlaceLines } from '../vx/vxMemberJobTypePlaceDisplay';
+  EXTX_MEMBER_LIST_AVATAR_IMAGE_CLASS,
+  EXTX_MEMBER_LIST_AVATAR_PLACEHOLDER_CLASS,
+} from '../../oss/excludedModuleStub';
+import { formatExtxMemberListMembershipOnCaption } from '../../oss/excludedModuleStub';
+import { resolveExtxMemberJobTypePlaceLines } from '../../oss/excludedModuleStub';
 import { BaseInfoUiIcon } from '../../shared/lib/baseInfoUiIcon';
 import {
   getFileExtension,
@@ -44,23 +44,23 @@ import {
   type FileIconKind,
 } from '../../shared/lib/fileFieldUtils';
 import {
-  VxNewlineStackedLinesCell,
-  resolveHwyStackedLinesTextAlignFromGridColumn,
-  VxElectoralProvinceFallbackCell,
-} from '../../shared/lib/vxMemberDirectoryPathDisplay';
-import { VxMemberDirectoryElectoralDivisionGridCell } from '../../shared/ui/vx/VxMemberDirectoryElectoralDivisionGridCell';
+  ExtxNewlineStackedLinesCell,
+  resolveExtxStackedLinesTextAlignFromGridColumn,
+  ExtxElectoralProvinceFallbackCell,
+} from '../../oss/excludedModuleStub';
+import { ExtxMemberDirectoryElectoralDivisionGridCell } from '../../oss/excludedModuleStub';
 import {
-  isHwyLegacyProvinceFamilyComposite,
-  resolveHwyMemberDirectoryFamilyCode,
-} from '../../shared/lib/vxMemberDirectoryFamilyCode';
+  isExtxLegacyProvinceFamilyComposite,
+  resolveExtxMemberDirectoryFamilyCode,
+} from '../../oss/excludedModuleStub';
 import {
-  gridColumnHasHwyFamilyHouseholdCellClick,
-  vxMemberDirectoryRowShowsFamilyHouseholdLink,
-  rowShowsHwyFamilyHouseholdCellClick,
-} from '../vx/vxFamilyHousehold';
-import { rowShowsHwyMemberListScopedEditCellClick } from '../vx/vxMemberListScopedEditRuntime';
-import { VxFamilyHouseholdLinkTrigger } from '../vx/VxFamilyHouseholdLinkTrigger';
-import { VxHouseholdRegisteredIconCell } from '../vx/VxHouseholdRegisteredIconCell';
+  gridColumnHasExtxFamilyHouseholdCellClick,
+  extxMemberDirectoryRowShowsFamilyHouseholdLink,
+  rowShowsExtxFamilyHouseholdCellClick,
+} from '../../oss/excludedModuleStub';
+import { rowShowsExtxMemberListScopedEditCellClick } from '../../oss/excludedModuleStub';
+import { ExtxFamilyHouseholdLinkTrigger } from '../../oss/excludedModuleStub';
+import { ExtxHouseholdRegisteredIconCell } from '../../oss/excludedModuleStub';
 import { normalizeHexColor, readRowUiColor } from '../../shared/lib/uiColorUtils';
 import { designerFetch } from './bindingMutationRuntime';
 import { BuiltInBadge } from '../../shared/ui';
@@ -68,10 +68,10 @@ import { ActionTooltip } from '../../shared/ui/ActionTooltip';
 import { NativeButton } from '../../shared/ui/NativeButton';
 import { PhoneNumberDisplay } from '../../shared/ui/PhoneNumberDisplay';
 import {
-  VX_PHONE_TEXT_GRID_PRIMARY_CLASS,
-  VX_PHONE_TEXT_GRID_SECONDARY_CLASS,
-  VX_PHONE_TEXT_SM_CLASS,
-} from '../../shared/ui/vx/vxPhoneTypography';
+  EXTX_PHONE_TEXT_GRID_PRIMARY_CLASS,
+  EXTX_PHONE_TEXT_GRID_SECONDARY_CLASS,
+  EXTX_PHONE_TEXT_SM_CLASS,
+} from '../../oss/excludedModuleStub';
 import {
   isDesignerGridRowDisabled,
 } from './designerGridRowDisableRules';
@@ -200,7 +200,7 @@ const DesignerGridAvatarCell: React.FC<{
 
   const content = (
     <div className="flex min-w-0 flex-col items-center gap-0.5 text-center">
-      <VxMemberAvatarWithMembershipCode
+      <ExtxMemberAvatarWithMembershipCode
         row={row}
         fields={fields}
         imageUrl={imageUrl}
@@ -427,7 +427,7 @@ const DesignerGridFileTileCell: React.FC<{
   );
 };
 
-const readHwyMemberDirectoryNakhebinLinkTypeLabel = (row: Record<string, unknown>): string => {
+const readExtxMemberDirectoryNakhebinLinkTypeLabel = (row: Record<string, unknown>): string => {
   const title = readDesignerGridRowString(row, 'nakhebinLinkTypeCodeTitle');
   if (title) {
     return title;
@@ -442,7 +442,7 @@ const readHwyMemberDirectoryNakhebinLinkTypeLabel = (row: Record<string, unknown
   return '';
 };
 
-const renderHwyMemberDirectoryNakhebinLinkTypeFooter = (
+const renderExtxMemberDirectoryNakhebinLinkTypeFooter = (
   columnKey: string,
   centered: boolean,
   row: Record<string, unknown>,
@@ -450,7 +450,7 @@ const renderHwyMemberDirectoryNakhebinLinkTypeFooter = (
   if (columnKey !== 'nakhebinId') {
     return undefined;
   }
-  const linkType = readHwyMemberDirectoryNakhebinLinkTypeLabel(row);
+  const linkType = readExtxMemberDirectoryNakhebinLinkTypeLabel(row);
   if (!linkType) {
     return undefined;
   }
@@ -477,31 +477,31 @@ const DesignerGridAccountCell: React.FC<{
   const useMemberDirectoryNameLines = fields?.primaryField === 'displayFullName'
     && fields?.secondaryField === 'birthYear';
   let primary = useNakhebinVoterLines
-    ? readHwyNakhebinVoterNameLine1(row)
+    ? readExtxNakhebinVoterNameLine1(row)
     : readDesignerGridRowString(row, fields?.primaryField || column.key);
   let secondary = useNakhebinVoterLines
-    ? readHwyNakhebinVoterNameLine2(row)
+    ? readExtxNakhebinVoterNameLine2(row)
     : readDesignerGridRowString(row, fields?.secondaryField);
   if (useMemberDirectoryNameLines) {
     const displayFullName = readDesignerGridRowString(row, 'displayFullName');
-    const { line1, line2: familyName } = splitHwyHouseholdMemberNameLines(displayFullName);
+    const { line1, line2: familyName } = splitExtxHouseholdMemberNameLines(displayFullName);
     primary = line1;
-    secondary = formatHwyPersonListNameSecondLine(
+    secondary = formatExtxPersonListNameSecondLine(
       familyName,
       readDesignerGridRowString(row, 'birthYear'),
     );
   }
   if (column.key === 'nakhebinId') {
-    const familyCode = resolveHwyMemberDirectoryFamilyCode(row);
+    const familyCode = resolveExtxMemberDirectoryFamilyCode(row);
     secondary = familyCode
-      || (secondary && !isHwyLegacyProvinceFamilyComposite(secondary) ? secondary : '');
+      || (secondary && !isExtxLegacyProvinceFamilyComposite(secondary) ? secondary : '');
   }
   if (
     column.key === 'jobTypeAndPlace'
     && fields?.primaryField === 'jobTypeCodeTitle'
     && fields?.secondaryField === 'jobPlace'
   ) {
-    const jobLines = resolveHwyMemberJobTypePlaceLines(
+    const jobLines = resolveExtxMemberJobTypePlaceLines(
       row.jobTypeCodeTitle,
       row.jobPlace,
     );
@@ -515,7 +515,7 @@ const DesignerGridAccountCell: React.FC<{
     || stackedCenter;
   if (column.key === 'electoralDivisionPath' && stackedPlain) {
     return (
-      <VxMemberDirectoryElectoralDivisionGridCell
+      <ExtxMemberDirectoryElectoralDivisionGridCell
         row={row}
         electoralFallbackField={fields?.electoralFallbackField}
       />
@@ -523,16 +523,16 @@ const DesignerGridAccountCell: React.FC<{
   }
   if (column.key === 'residenceSummary' && stackedPlain) {
     return (
-      <VxElectoralProvinceFallbackCell
+      <ExtxElectoralProvinceFallbackCell
         value={readDesignerGridRowString(row, 'addrProvinceTitle')}
       />
     );
   }
   if (column.key === 'memberInstitutesSummary') {
     return (
-      <VxNewlineStackedLinesCell
+      <ExtxNewlineStackedLinesCell
         value={row.memberInstitutesSummary}
-        textAlign={resolveHwyStackedLinesTextAlignFromGridColumn(column)}
+        textAlign={resolveExtxStackedLinesTextAlignFromGridColumn(column)}
       />
     );
   }
@@ -566,8 +566,8 @@ const DesignerGridAccountCell: React.FC<{
 
   if (
     column.key === 'nakhebinId'
-    && gridColumnHasHwyFamilyHouseholdCellClick(column)
-    && !vxMemberDirectoryRowShowsFamilyHouseholdLink(row)
+    && gridColumnHasExtxFamilyHouseholdCellClick(column)
+    && !extxMemberDirectoryRowShowsFamilyHouseholdLink(row)
   ) {
     return null;
   }
@@ -585,7 +585,7 @@ const DesignerGridAccountCell: React.FC<{
       {showStackedPrimaryLine ? (
         phoneStackedColumn ? (
           primary
-            ? renderDesignerGridPhoneLine(primary, VX_PHONE_TEXT_GRID_PRIMARY_CLASS, stackedCenter)
+            ? renderDesignerGridPhoneLine(primary, EXTX_PHONE_TEXT_GRID_PRIMARY_CLASS, stackedCenter)
             : <span className={cn('text-slate-300', stackedLineAlignClass, primaryClass)}>—</span>
         ) : (
           <span
@@ -606,7 +606,7 @@ const DesignerGridAccountCell: React.FC<{
         phoneStackedColumn
           ? (
             <span className={cn('mt-0.5', stackedLineAlignClass)}>
-              {renderDesignerGridPhoneLine(secondary, VX_PHONE_TEXT_GRID_SECONDARY_CLASS, stackedCenter)}
+              {renderDesignerGridPhoneLine(secondary, EXTX_PHONE_TEXT_GRID_SECONDARY_CLASS, stackedCenter)}
             </span>
           )
           : (
@@ -624,7 +624,7 @@ const DesignerGridAccountCell: React.FC<{
       {fields?.tertiaryField ? (() => {
         const tertiaryRaw = readDesignerGridRowString(row, fields.tertiaryField);
         const tertiaryText = fields.tertiaryKind === 'membership-date'
-          ? formatHwyMemberListMembershipOnCaption(tertiaryRaw)
+          ? formatExtxMemberListMembershipOnCaption(tertiaryRaw)
           : tertiaryRaw;
         if (!tertiaryText) {
           return null;
@@ -646,7 +646,7 @@ const DesignerGridAccountCell: React.FC<{
     </div>
   ) : null;
 
-  const nakhebinLinkTypeFooter = renderHwyMemberDirectoryNakhebinLinkTypeFooter(
+  const nakhebinLinkTypeFooter = renderExtxMemberDirectoryNakhebinLinkTypeFooter(
     column.key,
     stackedCenter,
     row,
@@ -664,9 +664,9 @@ const DesignerGridAccountCell: React.FC<{
       }
       return stackedContent;
     }
-    if (rowShowsHwyFamilyHouseholdCellClick(row, column)) {
+    if (rowShowsExtxFamilyHouseholdCellClick(row, column)) {
       return (
-        <VxFamilyHouseholdLinkTrigger
+        <ExtxFamilyHouseholdLinkTrigger
           align={stackedCenter ? 'center' : 'start'}
           primary={primary || '—'}
           secondary={secondary || undefined}
@@ -1124,7 +1124,7 @@ export const DesignerGridRichCell: React.FC<{
   designerStore?: Record<string, unknown>;
   navigate?: (to: string, options?: { replace?: boolean }) => void;
   onBeforeNavigate?: (row: Record<string, unknown>) => void;
-  vxMemberDirectoryListScopeLegacy?: string | null;
+  extxMemberDirectoryListScopeLegacy?: string | null;
 }> = ({
   row,
   column,
@@ -1134,17 +1134,17 @@ export const DesignerGridRichCell: React.FC<{
   designerStore,
   navigate,
   onBeforeNavigate,
-  vxMemberDirectoryListScopeLegacy,
+  extxMemberDirectoryListScopeLegacy,
 }) => {
   const allowRegistrationPersonalPhotoFallback = shouldAllowRegistrationPersonalPhotoInListFaceColumn(
-    vxMemberDirectoryListScopeLegacy,
+    extxMemberDirectoryListScopeLegacy,
   );
   const cellKind = column.cellKind as DesignerGridRichCellKind | undefined;
   const isRowDisabled = isDesignerGridRowDisabled(row, column.cellDisabledWhen, designerStore);
   const behaviorAllowsCellClick = designerGridColumnAllowsCellClickInvoke(column, cellKind);
-  const scopedEditCellClick = rowShowsHwyMemberListScopedEditCellClick(
+  const scopedEditCellClick = rowShowsExtxMemberListScopedEditCellClick(
     column,
-    vxMemberDirectoryListScopeLegacy,
+    extxMemberDirectoryListScopeLegacy,
   );
   const clickContext: GridCellClickContext = {
     mode,
@@ -1158,12 +1158,12 @@ export const DesignerGridRichCell: React.FC<{
   switch (cellKind) {
     case 'avatar':
       return <DesignerGridAvatarCell row={row} column={column} context={clickContext} />;
-    case 'vx-member-face':
+    case 'extx-member-face':
       return (
-        <VxMemberDirectoryGridFaceCell
+        <ExtxMemberDirectoryGridFaceCell
           row={row}
           fields={column.cellFields}
-          listScopeLegacy={vxMemberDirectoryListScopeLegacy}
+          listScopeLegacy={extxMemberDirectoryListScopeLegacy}
           allowRegistrationPersonalPhotoFallback={allowRegistrationPersonalPhotoFallback}
           canClick={Boolean(clickContext.canInvoke)
             && clickContext.mode !== 'design'
@@ -1171,17 +1171,17 @@ export const DesignerGridRichCell: React.FC<{
           onInvoke={() => clickContext.onInvoke?.()}
         />
       );
-    case 'vx-imagefix-thumbs':
+    case 'extx-imagefix-thumbs':
       return (
-        <VxImageFixRegistrationThumbsCell
+        <ExtxImageFixRegistrationThumbsCell
           row={row}
           fields={column.cellFields}
         />
       );
-    case 'vx-imagefix-member-actions':
-      return <VxImageFixMemberActionsCell row={row} />;
-    case 'vx-member-personal-documents-link':
-      return <VxMemberPersonalDocumentsLinkCell row={row} />;
+    case 'extx-imagefix-member-actions':
+      return <ExtxImageFixMemberActionsCell row={row} />;
+    case 'extx-member-personal-documents-link':
+      return <ExtxMemberPersonalDocumentsLinkCell row={row} />;
     case 'file-tile':
       return <DesignerGridFileTileCell row={row} column={column} />;
     case 'account':
@@ -1192,10 +1192,10 @@ export const DesignerGridRichCell: React.FC<{
       return <DesignerGridLookupCell row={row} column={column} />;
     case 'status-badge':
       return <DesignerGridStatusBadgeCell row={row} column={column} context={clickContext} />;
-    case 'vx-registered-icon': {
+    case 'extx-registered-icon': {
       const registeredFields = column.cellFields;
       return (
-        <VxHouseholdRegisteredIconCell
+        <ExtxHouseholdRegisteredIconCell
           title={readDesignerGridRowString(row, registeredFields?.primaryField || 'nakhebinJoinTasjilStateCodeTitle')}
           code={readDesignerGridRowString(row, registeredFields?.secondaryField || 'nakhebinJoinTasjilStateCode')}
         />
@@ -1223,7 +1223,7 @@ export const DesignerGridRichCell: React.FC<{
             phone={String(raw)}
             badgeSize="compact"
             className="max-w-full"
-            textClassName={cn(VX_PHONE_TEXT_GRID_PRIMARY_CLASS)}
+            textClassName={cn(EXTX_PHONE_TEXT_GRID_PRIMARY_CLASS)}
           />
         );
       }

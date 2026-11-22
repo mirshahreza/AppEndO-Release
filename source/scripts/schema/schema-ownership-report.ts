@@ -86,14 +86,14 @@ const main = async (): Promise<void> => {
 
   const prefixCounts = countByPrefixes(tableNames);
   const viewPrefixCounts = countByPrefixes(viewNames);
-  const vxProcedureCount = procedureNames.filter((n) => n.toLowerCase().startsWith('vx_')).length;
+  const extxProcedureCount = procedureNames.filter((n) => n.toLowerCase().startsWith('extx_')).length;
 
   const report = {
     provider,
     tableCount: tableNames.length,
     viewCount: viewNames.length,
     procedureCount: procedureNames.length,
-    vxProcedureCount,
+    extxProcedureCount,
     layers: CONTROL_PLANE_SCHEMA_OWNERSHIP_LAYERS.map((layer) => ({
       id: layer.id,
       title: layer.title,
@@ -120,7 +120,7 @@ const main = async (): Promise<void> => {
   console.log(`  Prisma-mapped tables: ${report.classification.prismaMappedTableCount}`);
   console.log(`  Non-Prisma prefix tables: ${report.classification.nonPrismaPrefixTableCount}`);
   console.log(`  Other tables (Sequelize features, CMS, misc): ${report.classification.otherTableCount}`);
-  console.log(`  dbo.vx_* procedures: ${report.vxProcedureCount}`);
+  console.log(`  dbo.extx_* procedures: ${report.extxProcedureCount}`);
   console.log('  Table prefix counts:', prefixCounts);
   console.log('  View prefix counts:', viewPrefixCounts);
   console.log('\nUpgrade paths:');

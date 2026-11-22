@@ -2,8 +2,8 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { PROJECT_STANDARDS } from '../config/projectStandards';
 import { useOptionalCultureT } from '../core/culture/CultureContext';
-import { VERTICAL_PACKAGE_VERSION } from '../core/packages/verticalPackage';
-import { isVerticalPublicPathname } from '../shared/packages/verticalRuntimeClient';
+import { PORTALX_PACKAGE_VERSION } from '../oss/excludedModuleStub';
+import { isPortalxPublicPathname } from '../oss/excludedModuleStub';
 import { AppEndLogo } from './AppEndLogo';
 import {
   AppDialogShell,
@@ -21,42 +21,42 @@ interface AboutAppModalProps {
   open: boolean;
   onClose: () => void;
   brand?: ResolvedPortalBrand | null;
-  /** When true, show Vertical package version (auto-detected from `/vertical/` URL when omitted). */
-  showVerticalPackageVersion?: boolean;
+  /** When true, show Portalx package version (auto-detected from `/portalx/` URL when omitted). */
+  showPortalxPackageVersion?: boolean;
 }
 
 export const AboutAppModal = ({
   open,
   onClose,
   brand = null,
-  showVerticalPackageVersion,
+  showPortalxPackageVersion,
 }: AboutAppModalProps) => {
   const t = useOptionalCultureT();
   const { pathname } = useLocation();
-  const showVerticalPackage =
-    showVerticalPackageVersion ?? isVerticalPublicPathname(pathname);
+  const showPortalxPackage =
+    showPortalxPackageVersion ?? isPortalxPublicPathname(pathname);
 
-  const verticalAboutTitleKey = 'vx.selfReg.portal.aboutTitle';
-  const verticalAboutBodyKey = 'vx.selfReg.portal.aboutBody';
-  const cultureAboutTitle = t(verticalAboutTitleKey);
-  const cultureAboutBody = t(verticalAboutBodyKey);
-  const headline = showVerticalPackage && cultureAboutTitle !== verticalAboutTitleKey
+  const portalxAboutTitleKey = 'extx.selfReg.portal.aboutTitle';
+  const portalxAboutBodyKey = 'extx.selfReg.portal.aboutBody';
+  const cultureAboutTitle = t(portalxAboutTitleKey);
+  const cultureAboutBody = t(portalxAboutBodyKey);
+  const headline = showPortalxPackage && cultureAboutTitle !== portalxAboutTitleKey
     ? cultureAboutTitle
     : brand?.aboutTitle?.trim() || DEFAULT_PORTAL_ABOUT_TITLE;
-  const body = showVerticalPackage && cultureAboutBody !== verticalAboutBodyKey
+  const body = showPortalxPackage && cultureAboutBody !== portalxAboutBodyKey
     ? cultureAboutBody
     : brand?.aboutBody?.trim() || DEFAULT_PORTAL_ABOUT_BODY;
 
-  const verticalPackageVersionKey = 'vx.selfReg.portal.aboutVerticalPackageVersionLabel';
-  const standardsLabelKey = 'vx.selfReg.portal.aboutStandardsLabel';
-  const verticalPackageVersionLabelRaw = t(verticalPackageVersionKey);
-  const verticalPackageVersionLabel =
-    verticalPackageVersionLabelRaw === verticalPackageVersionKey
-      ? 'Vertical package'
-      : verticalPackageVersionLabelRaw;
-  const standardsLabelRaw = showVerticalPackage ? t(standardsLabelKey) : 'Standards';
+  const portalxPackageVersionKey = 'extx.selfReg.portal.aboutPortalxPackageVersionLabel';
+  const standardsLabelKey = 'extx.selfReg.portal.aboutStandardsLabel';
+  const portalxPackageVersionLabelRaw = t(portalxPackageVersionKey);
+  const portalxPackageVersionLabel =
+    portalxPackageVersionLabelRaw === portalxPackageVersionKey
+      ? 'Portalx package'
+      : portalxPackageVersionLabelRaw;
+  const standardsLabelRaw = showPortalxPackage ? t(standardsLabelKey) : 'Standards';
   const standardsLabel =
-    showVerticalPackage && standardsLabelRaw !== standardsLabelKey
+    showPortalxPackage && standardsLabelRaw !== standardsLabelKey
       ? standardsLabelRaw
       : 'Standards';
   return (
@@ -88,9 +88,9 @@ export const AboutAppModal = ({
         </div>
 
         <div
-          className={cn('space-y-4 bg-surface-elevated p-8', showVerticalPackage && 'text-start')}
-          dir={showVerticalPackage ? 'rtl' : undefined}
-          lang={showVerticalPackage ? 'ar' : undefined}
+          className={cn('space-y-4 bg-surface-elevated p-8', showPortalxPackage && 'text-start')}
+          dir={showPortalxPackage ? 'rtl' : undefined}
+          lang={showPortalxPackage ? 'ar' : undefined}
         >
           <div className="space-y-2">
             <h3 className="text-lg font-black tracking-tight text-slate-900">{headline}</h3>
@@ -98,22 +98,22 @@ export const AboutAppModal = ({
           </div>
 
           <div className="space-y-3 pt-2 text-xs text-slate-500">
-            {showVerticalPackage ? (
+            {showPortalxPackage ? (
               <p>
                 <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.accent)}>
-                  {verticalPackageVersionLabel}
+                  {portalxPackageVersionLabel}
                 </span>
                 {' '}
                 <bdi dir="ltr" className="tabular-nums">
                   v
-                  {VERTICAL_PACKAGE_VERSION}
+                  {PORTALX_PACKAGE_VERSION}
                 </bdi>
               </p>
             ) : null}
             <p>
               <span className={cn('font-semibold', FORM_THEME_INK_LABEL_CLASS.complement)}>{standardsLabel}</span>
               {' '}
-              {showVerticalPackage ? (
+              {showPortalxPackage ? (
                 <bdi dir="ltr" className="tabular-nums">
                   v
                   {PROJECT_STANDARDS.version}

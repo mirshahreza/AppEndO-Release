@@ -189,7 +189,7 @@ function bindingsMatchingManifestItem(
   return matches;
 }
 
-/** When multiple bindings share a pageKey, pick the one scoped to the active portal (e.g. vertical/base-info vs base-info). */
+/** When multiple bindings share a pageKey, pick the one scoped to the active portal (e.g. portalx/base-info vs base-info). */
 export function pickBindingForPortal(
   candidates: PlatformRouteBinding[],
   portalSegment: string,
@@ -736,7 +736,7 @@ export type AdminShellHeaderContext = {
   breadcrumbTrail: AdminShellBreadcrumbSegment[];
 };
 
-/** Manifest nav leaf under a `/*` route binding (e.g. `vx-geo-responsibility-candidate-interview`). */
+/** Manifest nav leaf under a `/*` route binding (e.g. `extx-geo-responsibility-candidate-interview`). */
 function isNavLeafPageKeyForSplatBinding(
   bindingPageKey: string | undefined,
   navPageKey: string | undefined,

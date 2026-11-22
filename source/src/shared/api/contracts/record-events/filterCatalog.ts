@@ -10,7 +10,7 @@ export const RECORD_EVENT_KNOWN_ENTITIES: ReadonlyArray<{ value: string; label: 
   { value: 'base_users', label: 'Users' },
   { value: 'base_roles', label: 'Roles' },
   { value: 'base_sample_mock_records', label: 'Sample mock' },
-  { value: 'vx_members', label: 'Vertical members' },
+  { value: 'extx_members', label: 'Portalx members' },
 ];
 
 export type RecordEventFilterOption = {

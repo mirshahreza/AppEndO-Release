@@ -25,12 +25,12 @@ import {
 export interface UserRecord {
   id: number;
   username: string;
-  /** Legacy VX UserName / membership number from vx_members when linked. */
+  /** Legacy EXTX UserName / membership number from extx_members when linked. */
   /** Resolved for Users grid under-avatar (legacy UserName; not member Id / tracking code). */
   avatar_username?: string | null;
-  /** Legacy VX `UserName` from MembersV2 (not member Id / TrackingCode). */
-  legacy_vx_username?: string | null;
-  /** @deprecated Use legacy_vx_username */
+  /** Legacy EXTX `UserName` from MembersV2 (not member Id / TrackingCode). */
+  legacy_extx_username?: string | null;
+  /** @deprecated Use legacy_extx_username */
   membership_username?: string | null;
   email: string | null;
   role: string;

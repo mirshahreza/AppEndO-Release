@@ -23,7 +23,7 @@ describe('unwrapDataApiWriteRequestBody', () => {
 
 describe('normalizeDataApiWritePayload envelope', () => {
   const model = {
-    objectName: 'vx_institutes',
+    objectName: 'extx_institutes',
     primaryKey: 'id',
     columns: [
       { field: 'titleAr', name: 'title_ar', sequelizeType: 'STRING', dataType: 'NVARCHAR', allowNull: true, isPrimaryKey: false, isForeignKey: false },

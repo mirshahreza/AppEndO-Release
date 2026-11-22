@@ -9,8 +9,8 @@ import {
   readCachedPortalBrandForPathname,
   resolvePortalLoadingBrandForPathname,
 } from '../shared/lib/portalBrandCache';
-import { VX_PUBLIC_PORTAL_SEGMENT } from '../domain/vx/selfRegistration/vxSelfRegistrationRoutes';
-import { isVerticalPackageEnabledOnBoot } from '../shared/packages/verticalRuntimeClient';
+import { EXTX_PUBLIC_PORTAL_SEGMENT } from '../oss/excludedModuleStub';
+import { isPortalxPackageEnabledOnBoot } from '../oss/excludedModuleStub';
 
 import {
   dismissAppBootSplashIfNoFullscreenLoading,
@@ -53,8 +53,8 @@ export type AppRouteLoadingProps = {
   preview?: boolean;
 };
 
-function isVerticalLoadingIdentity(pathname: string): boolean {
-  return guessPortalSegmentFromPathname(pathname) === VX_PUBLIC_PORTAL_SEGMENT;
+function isPortalxLoadingIdentity(pathname: string): boolean {
+  return guessPortalSegmentFromPathname(pathname) === EXTX_PUBLIC_PORTAL_SEGMENT;
 }
 
 function resolveLoadingLogoFromBrand(
@@ -177,17 +177,17 @@ export const AppRouteLoading: React.FC<AppRouteLoadingProps> = ({
     && document.documentElement.hasAttribute('data-portal-route');
   const showAppEndMark = !logo.custom && !logo.src && !portalRouteBoot;
   const hasLogoStage = showAppEndMark || Boolean(logo.src?.trim());
-  const verticalIdentity =
-    isVerticalLoadingIdentity(pathname) && isVerticalPackageEnabledOnBoot(bootPayload);
+  const portalxIdentity =
+    isPortalxLoadingIdentity(pathname) && isPortalxPackageEnabledOnBoot(bootPayload);
   const participatesInBootSplash = !preview && variant === 'fullscreen';
   const splashDelegated = participatesInBootSplash && isAppBootSplashDelegated();
 
   useLayoutEffect(() => {
-    if (preview || !verticalIdentity) {
+    if (preview || !portalxIdentity) {
       return;
     }
-    document.documentElement.setAttribute('data-loading-identity', 'vertical');
-  }, [verticalIdentity, preview]);
+    document.documentElement.setAttribute('data-loading-identity', 'portalx');
+  }, [portalxIdentity, preview]);
 
   useLayoutEffect(() => {
     if (!participatesInBootSplash) {
@@ -206,7 +206,7 @@ export const AppRouteLoading: React.FC<AppRouteLoadingProps> = ({
     variant === 'embedded'
       ? 'app-route-loading app-route-loading--embedded flex h-full min-h-[240px] w-full flex-col items-center justify-center gap-3 bg-[var(--color-surface-base,#ffffff)]'
       : 'app-route-loading app-route-loading--fullscreen relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-6 py-10',
-    verticalIdentity && 'app-route-loading--vertical',
+    portalxIdentity && 'app-route-loading--portalx',
     splashDelegated && 'app-route-loading--splash-delegated',
     routeLoadingExperienceClassName(experience),
     className,

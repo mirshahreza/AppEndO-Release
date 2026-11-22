@@ -13,7 +13,7 @@ import { ensurePersonalInboxSeenTable } from '../domain/personal-inbox/personalI
 import { ensurePersonalInboxCorrespondenceTable } from '../domain/personal-inbox/personalInboxCorrespondenceSequelizeModels';
 import { ensurePersonalInboxProjectionTables } from '../domain/personal-inbox/personalInboxProjectionSequelizeModels';
 import { ensureWorkbookTable } from '../domain/workbooks/workbookSequelizeModel';
-import { ensureHwyBusinessRuleDocTable } from '../domain/vx/vxBusinessRuleDocsSequelizeModel';
+import { ensureExtxBusinessRuleDocTable } from '../../oss/excludedModuleStub';
 import { ensureDirectMessageTables } from '../domain/direct-messages/directMessageSequelizeModels';
 import {
   CONTROL_PLANE_BOOT_MARKER_KEYS,
@@ -39,7 +39,7 @@ const FEATURE_TABLE_ENSURES: Array<() => Promise<void>> = [
   ensurePersonalInboxSeenTable,
   ensurePersonalInboxCorrespondenceTable,
   ensureComponentUsageTables,
-  ensureHwyBusinessRuleDocTable,
+  ensureExtxBusinessRuleDocTable,
   ensureDirectMessageTables,
 ];
 

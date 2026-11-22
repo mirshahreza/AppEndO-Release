@@ -19,7 +19,7 @@ const MEDIUM_JSON_BODY_PATH_PREFIXES = [
   '/api/profile',
   '/api/settings',
   '/api/ai',
-  '/api/vx',
+  '/api/extx',
   '/api/core/server-functions',
 ];
 

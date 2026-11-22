@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
 import type { PlatformRuntimeConfig } from '../../../shared/api/contracts/platform/types';
-import { VX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../../domain/vx/vxPlatformPortalBrandDefaults';
+import { EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL } from '../../../oss/excludedModuleStub';
 import { DEFAULT_PORTAL_LOGO_URL } from '../../../shared/api/contracts/platform/portalBrand';
 import {
   resolveAuthLoginBrandContextPath,
   resolveAuthLoginPortalBrand,
 } from '../authLoginPortalBrand';
 
-const verticalHomeConfig = {
+const portalxHomeConfig = {
   shells: [
     {
       shellKey: 'home-shell',
@@ -16,15 +16,15 @@ const verticalHomeConfig = {
       enabled: true,
       entryMode: 'redirect',
       redirectToCulture: 'iq',
-      redirectToSegment: 'vertical',
+      redirectToSegment: 'portalx',
     },
     {
-      shellKey: 'vertical',
-      name: 'Vertical',
+      shellKey: 'portalx',
+      name: 'Portalx',
       enabled: true,
       brand: {
-        logoUrl: '/assets/workspace/portals/vertical/logo.png',
-        title: 'Vertical identity',
+        logoUrl: '/assets/workspace/portals/portalx/logo.png',
+        title: 'Portalx identity',
         windowTitle: 'هويتي',
       },
     },
@@ -33,29 +33,29 @@ const verticalHomeConfig = {
 
 describe('authLoginPortalBrand', () => {
   it('maps root return URL to the home-shell redirect target', () => {
-    expect(resolveAuthLoginBrandContextPath('/', verticalHomeConfig)).toBe('/iq/vertical');
+    expect(resolveAuthLoginBrandContextPath('/', portalxHomeConfig)).toBe('/iq/portalx');
   });
 
-  it('uses the Vertical portal logo when signing in after visiting /', () => {
-    const brand = resolveAuthLoginPortalBrand('/', verticalHomeConfig);
-    expect(brand.portalSegment).toBe('vertical');
+  it('uses the Portalx portal logo when signing in after visiting /', () => {
+    const brand = resolveAuthLoginPortalBrand('/', portalxHomeConfig);
+    expect(brand.portalSegment).toBe('portalx');
     expect(brand.usesPortalLogo).toBe(true);
-    expect(brand.logoUrl).toBe('/assets/workspace/portals/vertical/logo.png');
+    expect(brand.logoUrl).toBe('/assets/workspace/portals/portalx/logo.png');
     expect(brand.windowTitle).toBe('هويتي');
   });
 
-  it('uses the Vertical portal logo when return URL targets vertical', () => {
-    const brand = resolveAuthLoginPortalBrand('/iq/vertical/members', verticalHomeConfig);
+  it('uses the Portalx portal logo when return URL targets portalx', () => {
+    const brand = resolveAuthLoginPortalBrand('/iq/portalx/members', portalxHomeConfig);
     expect(brand.usesPortalLogo).toBe(true);
-    expect(brand.logoUrl).toBe('/assets/workspace/portals/vertical/logo.png');
+    expect(brand.logoUrl).toBe('/assets/workspace/portals/portalx/logo.png');
   });
 
-  it('falls back to bundled Vertical mark when shell brand is still AppEnd placeholder', () => {
+  it('falls back to bundled Portalx mark when shell brand is still AppEnd placeholder', () => {
     const config = {
       shells: [
         {
-          shellKey: 'vertical',
-          name: 'Vertical',
+          shellKey: 'portalx',
+          name: 'Portalx',
           enabled: true,
           brand: {
             logoUrl: DEFAULT_PORTAL_LOGO_URL,
@@ -65,9 +65,9 @@ describe('authLoginPortalBrand', () => {
       ],
     } as unknown as PlatformRuntimeConfig;
 
-    const brand = resolveAuthLoginPortalBrand('/iq/vertical/login', config);
+    const brand = resolveAuthLoginPortalBrand('/iq/portalx/login', config);
     expect(brand.usesPortalLogo).toBe(true);
-    expect(brand.logoUrl).toBe(VX_PLATFORM_PORTAL_BRAND_LOGO_URL);
+    expect(brand.logoUrl).toBe(EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL);
   });
 
   it('keeps AppEnd branding for studio return URLs without a custom portal logo', () => {

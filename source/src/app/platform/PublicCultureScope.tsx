@@ -3,9 +3,9 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { CultureProvider } from '../../core/culture/CultureContext';
 import { resolveCultureFromPathname } from '../../core/culture/CultureUrlResolver';
 import {
-  isHwyPublicPortalPathname,
-  resolveHwyPublicCultureFromPathname,
-} from '../../domain/vx/selfRegistration/vxSelfRegistrationRoutes';
+  isExtxPublicPortalPathname,
+  resolveExtxPublicCultureFromPathname,
+} from '../../oss/excludedModuleStub';
 import { useAppBootQuery } from '../../shared/api/queries/boot';
 
 function resolvePublicCultureId(defaultCultureId: string, returnPath: string | null): string {
@@ -25,8 +25,8 @@ export const PublicCultureScope: React.FC<{ children: React.ReactNode }> = ({ ch
   const [searchParams] = useSearchParams();
   const returnPath = searchParams.get('return');
   const cultureId = useMemo(() => {
-    if (isHwyPublicPortalPathname(pathname)) {
-      return resolveHwyPublicCultureFromPathname(pathname);
+    if (isExtxPublicPortalPathname(pathname)) {
+      return resolveExtxPublicCultureFromPathname(pathname);
     }
     const fromPath = resolveCultureFromPathname(pathname).cultureId?.trim();
     if (fromPath) {

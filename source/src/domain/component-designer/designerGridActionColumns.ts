@@ -33,8 +33,8 @@ export type DesignerGridRowActionBehaviorKind =
   | 'navigate'
   | 'callMutation'
   | 'pick-file-create'
-  | 'vx-family-household'
-  | 'vx-image-fix-editor';
+  | 'extx-family-household'
+  | 'extx-image-fix-editor';
 
 export type DesignerGridRowActionBehavior = {
   kind: DesignerGridRowActionBehaviorKind;
@@ -149,8 +149,8 @@ export const parseDesignerGridRowActionBehavior = (value: unknown): DesignerGrid
     && kind !== 'navigate'
     && kind !== 'callMutation'
     && kind !== 'pick-file-create'
-    && kind !== 'vx-family-household'
-    && kind !== 'vx-image-fix-editor'
+    && kind !== 'extx-family-household'
+    && kind !== 'extx-image-fix-editor'
   ) {
     return undefined;
   }

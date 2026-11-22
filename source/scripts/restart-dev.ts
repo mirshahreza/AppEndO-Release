@@ -177,18 +177,18 @@ const parseMode = (argv: string[]): RestartMode => {
   return 'dev';
 };
 
-const startVerticalDossierBundleWatcher = (): void => {
-  if (process.env.APPENDO_SKIP_VERTICAL_UI_WATCH?.trim() === '1') {
-    console.log('[AppEndO] Vertical package UI bundle watcher skipped (APPENDO_SKIP_VERTICAL_UI_WATCH=1).');
+const startPortalxDossierBundleWatcher = (): void => {
+  if (process.env.APPENDO_SKIP_PORTALX_UI_WATCH?.trim() === '1') {
+    console.log('[AppEndO] Portalx package UI bundle watcher skipped (APPENDO_SKIP_PORTALX_UI_WATCH=1).');
     return;
   }
-  const runtimeRoot = path.join(process.cwd(), 'packages-storage', 'runtimes', 'vertical');
+  const runtimeRoot = path.join(process.cwd(), 'packages-storage', 'runtimes', 'portalx');
   if (!fs.existsSync(runtimeRoot)) {
     return;
   }
 
   const spawnWatcher = () => {
-    const watcher = spawn('npm run vertical:watch-dossier-view-bundle', {
+    const watcher = spawn('npm run portalx:watch-dossier-view-bundle', {
       cwd: process.cwd(),
       stdio: 'inherit',
       env: process.env,
@@ -197,24 +197,24 @@ const startVerticalDossierBundleWatcher = (): void => {
 
     watcher.on('exit', (code) => {
       if (code !== 0 && code !== null) {
-        console.warn(`[AppEndO] Vertical dossier bundle watcher exited (${code}).`);
+        console.warn(`[AppEndO] Portalx dossier bundle watcher exited (${code}).`);
       }
     });
 
-    console.log('[AppEndO] Vertical package UI bundle watcher started (package pages sync from src on save).');
+    console.log('[AppEndO] Portalx package UI bundle watcher started (package pages sync from src on save).');
   };
 
   // Defer watcher startup so Windows fs.watch storms + esbuild refresh do not wedge the Vite child during studio boot.
   const watcherDelayMs = 120_000;
   console.log(
-    `[AppEndO] Vertical package UI bundle watcher scheduled in ${Math.round(watcherDelayMs / 1000)}s (SPA boot first).`,
+    `[AppEndO] Portalx package UI bundle watcher scheduled in ${Math.round(watcherDelayMs / 1000)}s (SPA boot first).`,
   );
   setTimeout(spawnWatcher, watcherDelayMs);
 };
 
 const startServer = (mode: RestartMode): void => {
   if (mode === 'dev') {
-    startVerticalDossierBundleWatcher();
+    startPortalxDossierBundleWatcher();
   }
 
   // `dev` itself routes through this script — start the server entry only (no recursion / no PWA regen).

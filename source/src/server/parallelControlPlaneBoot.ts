@@ -2,9 +2,9 @@ import { ensureControlPlaneFeatureTables } from './db/ensureControlPlaneFeatureT
 import { ensureControlPlaneInitialized } from './db/controlPlaneInit';
 import { readControlPlaneDatabaseSettings } from './db/controlPlaneDatabase';
 import {
-  ensureHwyDbObjects,
-  resetHwyDbObjectsInstallState,
-} from './domain/vx/ensureHwyDbObjects';
+  ensureExtxDbObjects,
+  resetExtxDbObjectsInstallState,
+} from '../oss/excludedModuleStub';
 import { ensureDevSimpleAuthSettings } from './setup/greenfieldInstall';
 import {
   initComponentUsagePersistence,
@@ -26,15 +26,15 @@ export async function ensureControlPlaneBootDataAndCaches(settingsPath: string):
 
   const { provider } = readControlPlaneDatabaseSettings(settingsPath);
   if (provider === 'sqlserver') {
-    console.log('[AppEndO] Ensuring Vertical DB procedures (vx_* )…');
-    resetHwyDbObjectsInstallState();
+    console.log('[AppEndO] Ensuring Portalx DB procedures (extx_* )…');
+    resetExtxDbObjectsInstallState();
     try {
-      await ensureHwyDbObjects();
-      console.log('[AppEndO] Vertical DB procedures ready.');
+      await ensureExtxDbObjects();
+      console.log('[AppEndO] Portalx DB procedures ready.');
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : String(error);
       console.error(
-        `[AppEndO] Vertical DB procedure install failed — fix SQL or run: npm run vx:db-objects\n  ${message}`,
+        `[AppEndO] Portalx DB procedure install failed — fix SQL or run: npm run extx:db-objects\n  ${message}`,
       );
     }
   }

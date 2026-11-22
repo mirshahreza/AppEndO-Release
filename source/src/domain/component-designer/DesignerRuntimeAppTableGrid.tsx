@@ -25,124 +25,124 @@ import { resolveAppTableGridSizeFromDensity } from '../../shared/lib/appTableGri
 import { readDocumentReadingDirection, resolveCultureShellIsRtl } from '../../core/culture/cultureShellDirection';
 import { renderBooleanIcon } from '../../shared/lib/gridCellRenderers';
 import {
-  VxNewlineStackedLinesCell,
-  resolveHwyStackedLinesTextAlignFromGridColumn,
-  VxElectoralProvinceFallbackCell,
-} from '../../shared/lib/vxMemberDirectoryPathDisplay';
-import { VxMemberDirectoryElectoralDivisionGridCell } from '../../shared/ui/vx/VxMemberDirectoryElectoralDivisionGridCell';
+  ExtxNewlineStackedLinesCell,
+  resolveExtxStackedLinesTextAlignFromGridColumn,
+  ExtxElectoralProvinceFallbackCell,
+} from '../../oss/excludedModuleStub';
+import { ExtxMemberDirectoryElectoralDivisionGridCell } from '../../oss/excludedModuleStub';
 import {
-  applyHwyMemberDirectoryElectoralColumnCellAlign,
-  applyHwyMemberDirectoryListFaceColumnWidth,
-  reorderHwyMemberDirectoryElectoralColumnThird,
-  applyHwyMemberNakhebinListNameColumnWidth,
-  applyHwyMembersAllListMembershipOnColumnWidth,
-  applyHwyMembersAllListPhoneColumnWidth,
-  applyHwyMembersAllListResidenceColumnWidth,
-  applyHwyNakhebinListVotedColumnCenter,
-  enforceHwyMemberDirectoryListFaceColumnGridDef,
-  enforceHwyMemberDirectoryElectoralColumnGridDef,
-  enforceHwyMemberDirectorySegmentListRtlColumnGridDef,
-  enforceHwyMemberDirectoryJobTypePlaceColumnGridDef,
-  enforceHwyMemberNakhebinListNameColumnGridDef,
-  enforceHwyMembersAllListMembershipOnColumnGridDef,
-  enforceHwyMembersAllListNakhebinColumnGridDef,
-  enforceHwyMembersAllListPhoneColumnGridDef,
-  enforceHwyNakhebinListVotedColumnGridDef,
-  enforceHwyNakhebinListWrapTextColumnGridDef,
-  enforceHwyMembersAllListResidenceColumnGridDef,
-  isHwyMemberDirectorySegmentListGrid,
-  isHwyMembersAllListGrid,
-  isHwyNakhebinListGrid,
-} from '../vx/vxMemberNakhebinListColumnWidths';
+  applyExtxMemberDirectoryElectoralColumnCellAlign,
+  applyExtxMemberDirectoryListFaceColumnWidth,
+  reorderExtxMemberDirectoryElectoralColumnThird,
+  applyExtxMemberNakhebinListNameColumnWidth,
+  applyExtxMembersAllListMembershipOnColumnWidth,
+  applyExtxMembersAllListPhoneColumnWidth,
+  applyExtxMembersAllListResidenceColumnWidth,
+  applyExtxNakhebinListVotedColumnCenter,
+  enforceExtxMemberDirectoryListFaceColumnGridDef,
+  enforceExtxMemberDirectoryElectoralColumnGridDef,
+  enforceExtxMemberDirectorySegmentListRtlColumnGridDef,
+  enforceExtxMemberDirectoryJobTypePlaceColumnGridDef,
+  enforceExtxMemberNakhebinListNameColumnGridDef,
+  enforceExtxMembersAllListMembershipOnColumnGridDef,
+  enforceExtxMembersAllListNakhebinColumnGridDef,
+  enforceExtxMembersAllListPhoneColumnGridDef,
+  enforceExtxNakhebinListVotedColumnGridDef,
+  enforceExtxNakhebinListWrapTextColumnGridDef,
+  enforceExtxMembersAllListResidenceColumnGridDef,
+  isExtxMemberDirectorySegmentListGrid,
+  isExtxMembersAllListGrid,
+  isExtxNakhebinListGrid,
+} from '../../oss/excludedModuleStub';
 import {
-  enforceHwyInstitutesIdColumnGridDef,
-  isHwyInstitutesListGrid,
-} from '../vx/vxInstitutesListColumnAlign';
-import { resolveHwyInstituteDisplayLogoUrl } from '../vx/vxInstituteLogoUrl';
-import { rowShowsHwyFamilyHouseholdCellClick } from '../vx/vxFamilyHousehold';
-import { openHwyFamilyHouseholdFromDesignerGrid } from '../vx/vxFamilyHouseholdRuntime';
+  enforceExtxInstitutesIdColumnGridDef,
+  isExtxInstitutesListGrid,
+} from '../../oss/excludedModuleStub';
+import { resolveExtxInstituteDisplayLogoUrl } from '../../oss/excludedModuleStub';
+import { rowShowsExtxFamilyHouseholdCellClick } from '../../oss/excludedModuleStub';
+import { openExtxFamilyHouseholdFromDesignerGrid } from '../../oss/excludedModuleStub';
 import {
-  openHwyImageFixEditorFromDesignerGrid,
+  openExtxImageFixEditorFromDesignerGrid,
   registerImageFixEditorPageMembers,
-  registerHwyImageFixListRefreshHandler,
-  rowShowsHwyImageFixEditorCellClick,
-} from '../vx/vxImageFixEditorRuntime';
-import { VxImageFixListToolbar } from '../vx/VxImageFixListToolbar';
-import { VxImageFixRuntimeDialogs } from '../vx/VxImageFixRuntimeDialogs';
+  registerExtxImageFixListRefreshHandler,
+  rowShowsExtxImageFixEditorCellClick,
+} from '../../oss/excludedModuleStub';
+import { ExtxImageFixListToolbar } from '../../oss/excludedModuleStub';
+import { ExtxImageFixRuntimeDialogs } from '../../oss/excludedModuleStub';
 import {
-  openHwyMemberListScopedEditFromDesignerGrid,
-  registerHwyMemberListScopedEditListScope,
-  rowShowsHwyMemberListScopedEditCellClick,
-} from '../vx/vxMemberListScopedEditRuntime';
-import { VxMemberListScopedEditRuntimeDialogs } from '../vx/VxMemberListScopedEditRuntimeDialogs';
-import { resolveHwyMemberListScopedEditProfile } from '../vx/vxMemberListScopedEditCatalog';
+  openExtxMemberListScopedEditFromDesignerGrid,
+  registerExtxMemberListScopedEditListScope,
+  rowShowsExtxMemberListScopedEditCellClick,
+} from '../../oss/excludedModuleStub';
+import { ExtxMemberListScopedEditRuntimeDialogs } from '../../oss/excludedModuleStub';
+import { resolveExtxMemberListScopedEditProfile } from '../../oss/excludedModuleStub';
 import {
-  applyHwyMemberListScopedEditCharacterColumnChrome,
-  mergeHwyMemberListScopedEditDesignerColumns,
-} from '../vx/vxMemberListScopedEditGridColumns';
+  applyExtxMemberListScopedEditCharacterColumnChrome,
+  mergeExtxMemberListScopedEditDesignerColumns,
+} from '../../oss/excludedModuleStub';
 import {
-  buildHwyMemberImageFixListFilterStorePatches,
-  createDefaultHwyMemberImageFixListFilters,
-  createHwyMemberImageFixListFiltersForSimpleSearch,
-  readHwyMemberImageFixListFiltersFromStore,
-  type VxMemberImageFixListFilterState,
-} from '../vx/vxMemberImageFixListFilters';
-import { VxLegacyFieldFilterBarToggle } from '../../shared/ui/vx/VxLegacyFieldFilterBarToggle';
-import { useHwyLegacyFieldFilterBarMode } from '../../shared/ui/vx/useHwyLegacyFieldFilterBarMode';
-import { VxMemberDirectoryLegacyFieldByFieldPanel } from '../vx/VxMemberDirectoryLegacyFieldByFieldPanel';
-import { isHwyMemberListStructuredFieldByFieldLegacyScope } from '../vx/vxMemberListStructuredFieldByFieldScopes';
-import { VX_MEMBER_DIRECTORY_MEMBERSHIP_FILTER_STORE_PATH } from '../vx/VxMemberDirectoryLegacyMembershipCheckboxes';
+  buildExtxMemberImageFixListFilterStorePatches,
+  createDefaultExtxMemberImageFixListFilters,
+  createExtxMemberImageFixListFiltersForSimpleSearch,
+  readExtxMemberImageFixListFiltersFromStore,
+  type ExtxMemberImageFixListFilterState,
+} from '../../oss/excludedModuleStub';
+import { ExtxLegacyFieldFilterBarToggle } from '../../oss/excludedModuleStub';
+import { useExtxLegacyFieldFilterBarMode } from '../../oss/excludedModuleStub';
+import { ExtxMemberDirectoryLegacyFieldByFieldPanel } from '../../oss/excludedModuleStub';
+import { isExtxMemberListStructuredFieldByFieldLegacyScope } from '../../oss/excludedModuleStub';
+import { EXTX_MEMBER_DIRECTORY_MEMBERSHIP_FILTER_STORE_PATH } from '../../oss/excludedModuleStub';
 import {
-  VX_MONTADHEMIN_INSTITUTE_FILTER_STORE_PATH,
-  VX_MONTADHEMIN_INSTITUTE_MATCH_STORE_PATH,
-} from '../vx/vxMontadheminInstituteFilterOptions';
-import { localizeHwyMemberDirectoryListWhereFields } from '../vx/vxMemberDirectoryListWhereFieldLabels';
-import { buildClearHwyMemberDirectoryLegacyFilterStorePatches } from '../vx/vxMemberDirectoryLegacyFilterModel';
-import { isHwyMemberImageFixListScope } from '../vx/vxMemberImageFixCatalog';
+  EXTX_MONTADHEMIN_INSTITUTE_FILTER_STORE_PATH,
+  EXTX_MONTADHEMIN_INSTITUTE_MATCH_STORE_PATH,
+} from '../../oss/excludedModuleStub';
+import { localizeExtxMemberDirectoryListWhereFields } from '../../oss/excludedModuleStub';
+import { buildClearExtxMemberDirectoryLegacyFilterStorePatches } from '../../oss/excludedModuleStub';
+import { isExtxMemberImageFixListScope } from '../../oss/excludedModuleStub';
 import {
-  VX_MEMBER_IMAGE_FIX_PAGE_NAME,
-  resolveHwyMemberDirectoryFooterSortOptions,
-} from '../vx/vxMemberDirectoryListSort';
+  EXTX_MEMBER_IMAGE_FIX_PAGE_NAME,
+  resolveExtxMemberDirectoryFooterSortOptions,
+} from '../../oss/excludedModuleStub';
 import {
-  enforceHwyImageFixListActionsColumnGridDef,
-  enforceHwyImageFixListDocumentsColumnGridDef,
-  enforceHwyImageFixListMemberColumnGridDef,
-  enforceHwyImageFixListRegisteredColumnGridDef,
-  isHwyMemberImageFixListFromScope,
-} from '../vx/vxMemberImageFixListColumnWidths';
-import { VxFamilyHouseholdLinkTrigger } from '../vx/VxFamilyHouseholdLinkTrigger';
+  enforceExtxImageFixListActionsColumnGridDef,
+  enforceExtxImageFixListDocumentsColumnGridDef,
+  enforceExtxImageFixListMemberColumnGridDef,
+  enforceExtxImageFixListRegisteredColumnGridDef,
+  isExtxMemberImageFixListFromScope,
+} from '../../oss/excludedModuleStub';
+import { ExtxFamilyHouseholdLinkTrigger } from '../../oss/excludedModuleStub';
 import {
-  appendHwyWaitedListMembershipActionsColumn,
-  resolveHwyMemberMembershipListActionsFromPathname,
-} from '../vx/vxMemberWaitedListMembershipQueue';
-import { VxRejectionListRuntimeProvider } from '../vx/vxRejectedLocalManageListRuntime';
+  appendExtxWaitedListMembershipActionsColumn,
+  resolveExtxMemberMembershipListActionsFromPathname,
+} from '../../oss/excludedModuleStub';
+import { ExtxRejectionListRuntimeProvider } from '../../oss/excludedModuleStub';
 import {
-  enforceHwyMemberRejectionListParityColumnGridDef,
-  omitHwyMemberRejectedLocalManageCreatedAtColumn,
-  omitHwyMemberRejectedLocalManageMembershipStatusUpdatedOnColumn,
-  omitHwyMemberRejectedLocalManagePhoneColumn,
-  omitHwyMemberRejectionListGovernorateColumn,
-} from '../vx/vxMemberRejectionListParity';
+  enforceExtxMemberRejectionListParityColumnGridDef,
+  omitExtxMemberRejectedLocalManageCreatedAtColumn,
+  omitExtxMemberRejectedLocalManageMembershipStatusUpdatedOnColumn,
+  omitExtxMemberRejectedLocalManagePhoneColumn,
+  omitExtxMemberRejectionListGovernorateColumn,
+} from '../../oss/excludedModuleStub';
 import {
-  enforceHwyMemberRejectionListElectoralAsGovernorateColumnGridDef,
-  insertHwyMemberRejectionListParityColumns,
-} from '../vx/vxMemberRejectionListParityColumns';
-import { resolveHwyMemberMembershipListActionsKind } from '../vx/vxMemberMembershipListActionsPath';
+  enforceExtxMemberRejectionListElectoralAsGovernorateColumnGridDef,
+  insertExtxMemberRejectionListParityColumns,
+} from '../../oss/excludedModuleStub';
+import { resolveExtxMemberMembershipListActionsKind } from '../../oss/excludedModuleStub';
 import {
   shouldHideMemberDirectoryTrackingCodeColumn,
   shouldHideMemberRegisteredIconColumnOnMemberDirectoryGrid,
-  shouldHideHwyMemberDirectoryGridColumn,
+  shouldHideExtxMemberDirectoryGridColumn,
   shouldHideMembershipOnColumnOnMemberDirectoryGrid,
-} from '../vx/vxMemberSegmentListCatalog';
+} from '../../oss/excludedModuleStub';
 import {
-  VX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE,
-  isHwyMemberQuickSearchListScope,
-  shouldHideHwyMemberQuickSearchGridColumn,
-} from '../vx/vxMemberQuickSearchCatalog';
+  EXTX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE,
+  isExtxMemberQuickSearchListScope,
+  shouldHideExtxMemberQuickSearchGridColumn,
+} from '../../oss/excludedModuleStub';
 import {
-  isHwyMemberDirectoryListApiEndpoint,
-  resolveHwyMemberDirectoryListScopeLegacy,
-} from '../vx/vxMemberDirectoryListScopeResolve';
+  isExtxMemberDirectoryListApiEndpoint,
+  resolveExtxMemberDirectoryListScopeLegacy,
+} from '../../oss/excludedModuleStub';
 import { designerGridColumnAllowsCellClickInvoke } from './designerGridRichCellColumns';
 import { NativeButton } from '../../shared/ui/NativeButton';
 import { normalizeHexColor, readGridColumnRawValue } from '../../shared/lib/uiColorUtils';
@@ -246,7 +246,7 @@ import {
   filterChangedStorePatches,
   isDesignerGridToolbarEnabled,
   parseDesignerGridToolbarConfig,
-  resolveDesignerGridToolbarConfigForHwyMemberDirectoryList,
+  resolveDesignerGridToolbarConfigForExtxMemberDirectoryList,
   resolveEffectiveFieldFilters,
   resolveFieldFilterStaticOptions,
   serializeRoleFilterSelection,
@@ -547,7 +547,7 @@ const parseSortOptions = (value: unknown, columns: DesignerDataGridColumn[], tra
 const mapMemberDirectoryFooterSortOptionsForGrid = (
   pageName: string,
   translate?: (key: string) => string,
-): DesignerGridSortOption[] => resolveHwyMemberDirectoryFooterSortOptions(pageName).map((option) => ({
+): DesignerGridSortOption[] => resolveExtxMemberDirectoryFooterSortOptions(pageName).map((option) => ({
   value: option.value,
   label: option.labelTranslationKey && translate
     ? translate(option.labelTranslationKey)
@@ -556,7 +556,7 @@ const mapMemberDirectoryFooterSortOptionsForGrid = (
 
 const resolveImageFixMemberDirectoryListFromOptions = (
   listScopeLegacy: string | null | undefined,
-): boolean => isHwyMemberImageFixListScope(String(listScopeLegacy ?? '').trim() || null);
+): boolean => isExtxMemberImageFixListScope(String(listScopeLegacy ?? '').trim() || null);
 
 const resolveDesignerColumnLabel = (
   column: DesignerDataGridColumn,
@@ -574,23 +574,23 @@ const resolveListScopedEditCharacterEmptyLabel = (
   translate: ((key: string) => string) | undefined,
   listScopeLegacy: string | null | undefined,
 ): string => {
-  const profile = resolveHwyMemberListScopedEditProfile(listScopeLegacy);
+  const profile = resolveExtxMemberListScopedEditProfile(listScopeLegacy);
   if (profile?.kind === 'mehani_professional') {
     return resolveCultureLabel(
       translate as TranslationFn | undefined,
-      'vx.listScopedEdit.professional.empty',
+      'extx.listScopedEdit.professional.empty',
       'Edit professional data',
     );
   }
   if (profile?.kind === 'gov_employment') {
     return resolveCultureLabel(
       translate as TranslationFn | undefined,
-      'vx.listScopedEdit.employment.empty',
+      'extx.listScopedEdit.employment.empty',
       'Edit job data',
     );
   }
   const vocab = profile?.instituteCharacterVocab;
-  const key = vocab?.emptyCellTranslationKey ?? 'vx.listScopedEdit.character.empty';
+  const key = vocab?.emptyCellTranslationKey ?? 'extx.listScopedEdit.character.empty';
   return resolveCultureLabel(translate as TranslationFn | undefined, key, 'Choose character');
 };
 
@@ -716,7 +716,7 @@ type BuildAppTableGridColumnsOptions = {
   previewEvents?: RuntimeRenderOptions['previewEvents'];
   translate?: (key: string) => string;
   /** When set, hides `membershipOn` on applicant queue member-directory lists (published layouts included). */
-  vxMemberDirectoryListScopeLegacy?: string | null;
+  extxMemberDirectoryListScopeLegacy?: string | null;
   /** RTL shell — defaults from `<html dir>` when omitted (published TSX grids). */
   shellIsRtl?: boolean;
   onMembershipQueueDecisionSaved?: () => void;
@@ -860,41 +860,41 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
   gridQueryMode: DataGridQueryMode,
   options: BuildAppTableGridColumnsOptions,
 ): AppTableGridColumnDef<TRow>[] => {
-  const isMembersAllList = isHwyMembersAllListGrid(columns);
-  const isNakhebinList = isHwyNakhebinListGrid(columns);
-  const isInstitutesList = isHwyInstitutesListGrid(columns);
-  const isImageFixList = isHwyMemberImageFixListFromScope(options.vxMemberDirectoryListScopeLegacy);
-  const scopedEditColumns = mergeHwyMemberListScopedEditDesignerColumns(
+  const isMembersAllList = isExtxMembersAllListGrid(columns);
+  const isNakhebinList = isExtxNakhebinListGrid(columns);
+  const isInstitutesList = isExtxInstitutesListGrid(columns);
+  const isImageFixList = isExtxMemberImageFixListFromScope(options.extxMemberDirectoryListScopeLegacy);
+  const scopedEditColumns = mergeExtxMemberListScopedEditDesignerColumns(
     columns,
-    options.vxMemberDirectoryListScopeLegacy,
+    options.extxMemberDirectoryListScopeLegacy,
   );
   const hideMembershipOnOnApplicantQueue = shouldHideMembershipOnColumnOnMemberDirectoryGrid({
     columnKeys: scopedEditColumns.map((column) => column.key),
-    listScopeLegacy: options.vxMemberDirectoryListScopeLegacy,
+    listScopeLegacy: options.extxMemberDirectoryListScopeLegacy,
   });
   const hideQueueFamilyUiColumns = shouldHideMemberRegisteredIconColumnOnMemberDirectoryGrid({
-    listScopeLegacy: options.vxMemberDirectoryListScopeLegacy,
+    listScopeLegacy: options.extxMemberDirectoryListScopeLegacy,
   });
   const hideTrackingCodeColumn = shouldHideMemberDirectoryTrackingCodeColumn({
-    listScopeLegacy: options.vxMemberDirectoryListScopeLegacy,
+    listScopeLegacy: options.extxMemberDirectoryListScopeLegacy,
   });
   const scopedEditAwareColumns = scopedEditColumns.map((column) => (
-    applyHwyMemberListScopedEditCharacterColumnChrome(column, options.vxMemberDirectoryListScopeLegacy)
+    applyExtxMemberListScopedEditCharacterColumnChrome(column, options.extxMemberDirectoryListScopeLegacy)
   ));
-  const isMemberDirectorySegmentList = isHwyMemberDirectorySegmentListGrid(scopedEditAwareColumns);
+  const isMemberDirectorySegmentList = isExtxMemberDirectorySegmentListGrid(scopedEditAwareColumns);
   const isMemberDirectoryFaceGrid = isMemberDirectorySegmentList || isMembersAllList;
-  const listScopeLegacy = String(options.vxMemberDirectoryListScopeLegacy ?? '').trim();
+  const listScopeLegacy = String(options.extxMemberDirectoryListScopeLegacy ?? '').trim();
   const isMemberDirectoryListGrid = isMembersAllList
     || isMemberDirectorySegmentList
     || isImageFixList
     || Boolean(listScopeLegacy);
-  const isQuickSearchListGrid = isHwyMemberQuickSearchListScope(listScopeLegacy);
+  const isQuickSearchListGrid = isExtxMemberQuickSearchListScope(listScopeLegacy);
   const shellIsRtl = resolveBuildAppTableGridShellIsRtl(options);
   const visibleColumns = scopedEditAwareColumns.filter((column) => {
-    if (isQuickSearchListGrid && shouldHideHwyMemberQuickSearchGridColumn(column)) {
+    if (isQuickSearchListGrid && shouldHideExtxMemberQuickSearchGridColumn(column)) {
       return false;
     }
-    if (isMemberDirectoryListGrid && shouldHideHwyMemberDirectoryGridColumn(column.key)) {
+    if (isMemberDirectoryListGrid && shouldHideExtxMemberDirectoryGridColumn(column.key)) {
       return false;
     }
     if (isNakhebinList && column.key === 'genderCodeTitle') {
@@ -915,19 +915,19 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
     return true;
   });
   const orderedVisibleColumns = isMemberDirectoryListGrid
-    ? reorderHwyMemberDirectoryElectoralColumnThird(visibleColumns)
+    ? reorderExtxMemberDirectoryElectoralColumnThird(visibleColumns)
     : visibleColumns;
   const normalizedColumns = orderedVisibleColumns.map((column) => {
-    const withFaceWidth = applyHwyMemberDirectoryListFaceColumnWidth(
+    const withFaceWidth = applyExtxMemberDirectoryListFaceColumnWidth(
       column,
-      options.vxMemberDirectoryListScopeLegacy,
+      options.extxMemberDirectoryListScopeLegacy,
     );
-    const withNameWidth = applyHwyMemberNakhebinListNameColumnWidth(withFaceWidth);
-    const withPhoneWidth = applyHwyMembersAllListPhoneColumnWidth(withNameWidth, orderedVisibleColumns);
-    const withMembershipWidth = applyHwyMembersAllListMembershipOnColumnWidth(withPhoneWidth, orderedVisibleColumns);
-    const withResidenceWidth = applyHwyMembersAllListResidenceColumnWidth(withMembershipWidth, orderedVisibleColumns);
-    const withElectoralAlign = applyHwyMemberDirectoryElectoralColumnCellAlign(
-      applyHwyNakhebinListVotedColumnCenter(withResidenceWidth, orderedVisibleColumns),
+    const withNameWidth = applyExtxMemberNakhebinListNameColumnWidth(withFaceWidth);
+    const withPhoneWidth = applyExtxMembersAllListPhoneColumnWidth(withNameWidth, orderedVisibleColumns);
+    const withMembershipWidth = applyExtxMembersAllListMembershipOnColumnWidth(withPhoneWidth, orderedVisibleColumns);
+    const withResidenceWidth = applyExtxMembersAllListResidenceColumnWidth(withMembershipWidth, orderedVisibleColumns);
+    const withElectoralAlign = applyExtxMemberDirectoryElectoralColumnCellAlign(
+      applyExtxNakhebinListVotedColumnCenter(withResidenceWidth, orderedVisibleColumns),
     );
     return withElectoralAlign;
   });
@@ -1070,7 +1070,7 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
       }
       if (column.key === 'electoralDivisionPath') {
         return (
-          <VxMemberDirectoryElectoralDivisionGridCell
+          <ExtxMemberDirectoryElectoralDivisionGridCell
             row={row as Record<string, unknown>}
             electoralFallbackField={column.cellFields?.electoralFallbackField}
           />
@@ -1079,16 +1079,16 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
       if (column.key === 'residenceSummary') {
         const rowRecord = row as Record<string, unknown>;
         return (
-          <VxElectoralProvinceFallbackCell
+          <ExtxElectoralProvinceFallbackCell
             value={rowRecord.addrProvinceTitle ?? rowRecord.addr_province_title}
           />
         );
       }
       if (column.key === 'memberInstitutesSummary') {
         return (
-          <VxNewlineStackedLinesCell
+          <ExtxNewlineStackedLinesCell
             value={readGridColumnRawValue(row as Record<string, unknown>, column.key)}
-            textAlign={resolveHwyStackedLinesTextAlignFromGridColumn(column)}
+            textAlign={resolveExtxStackedLinesTextAlignFromGridColumn(column)}
           />
         );
       }
@@ -1129,7 +1129,7 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
           const gridRow = column.key === 'logoUrl'
             ? {
               ...rowRecord,
-              logoUrl: resolveHwyInstituteDisplayLogoUrl(
+              logoUrl: resolveExtxInstituteDisplayLogoUrl(
                 rowRecord.logoUrl,
                 rowRecord.code,
                 rowRecord.id,
@@ -1143,12 +1143,12 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
               row={gridRow}
               column={column}
               mode={options.mode}
-              vxMemberDirectoryListScopeLegacy={options.vxMemberDirectoryListScopeLegacy}
+              extxMemberDirectoryListScopeLegacy={options.extxMemberDirectoryListScopeLegacy}
               canInvokeCellClick={
                 resolveRuntimeGridCellClickInvokable(options, column)
-                || rowShowsHwyFamilyHouseholdCellClick(row as Record<string, unknown>, column)
-                || rowShowsHwyImageFixEditorCellClick(row as Record<string, unknown>, column)
-                || rowShowsHwyMemberListScopedEditCellClick(column, options.vxMemberDirectoryListScopeLegacy)
+                || rowShowsExtxFamilyHouseholdCellClick(row as Record<string, unknown>, column)
+                || rowShowsExtxImageFixEditorCellClick(row as Record<string, unknown>, column)
+                || rowShowsExtxMemberListScopedEditCellClick(column, options.extxMemberDirectoryListScopeLegacy)
               }
               designerStore={designerStore}
               navigate={options.previewEvents?.navigate}
@@ -1161,22 +1161,22 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
               onCellClick={() => {
                 const rowRecord = row as Record<string, unknown>;
                 const invokeCellClick = resolveRuntimeGridCellClickInvokable(options, column)
-                  || rowShowsHwyFamilyHouseholdCellClick(rowRecord, column)
-                  || rowShowsHwyImageFixEditorCellClick(rowRecord, column)
-                  || rowShowsHwyMemberListScopedEditCellClick(column, options.vxMemberDirectoryListScopeLegacy);
+                  || rowShowsExtxFamilyHouseholdCellClick(rowRecord, column)
+                  || rowShowsExtxImageFixEditorCellClick(rowRecord, column)
+                  || rowShowsExtxMemberListScopedEditCellClick(column, options.extxMemberDirectoryListScopeLegacy);
                 if (!invokeCellClick || options.mode === 'design') {
                   return;
                 }
-                if (rowShowsHwyFamilyHouseholdCellClick(rowRecord, column)) {
-                  openHwyFamilyHouseholdFromDesignerGrid(row, column.key, column);
+                if (rowShowsExtxFamilyHouseholdCellClick(rowRecord, column)) {
+                  openExtxFamilyHouseholdFromDesignerGrid(row, column.key, column);
                   return;
                 }
-                if (rowShowsHwyImageFixEditorCellClick(rowRecord, column)) {
-                  openHwyImageFixEditorFromDesignerGrid(rowRecord);
+                if (rowShowsExtxImageFixEditorCellClick(rowRecord, column)) {
+                  openExtxImageFixEditorFromDesignerGrid(rowRecord);
                   return;
                 }
-                if (rowShowsHwyMemberListScopedEditCellClick(column, options.vxMemberDirectoryListScopeLegacy)) {
-                  openHwyMemberListScopedEditFromDesignerGrid(rowRecord);
+                if (rowShowsExtxMemberListScopedEditCellClick(column, options.extxMemberDirectoryListScopeLegacy)) {
+                  openExtxMemberListScopedEditFromDesignerGrid(rowRecord);
                   return;
                 }
                 invokeRuntimeGridColumnCellClick(
@@ -1219,39 +1219,39 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
       renderCell: (row) => {
         const content = renderEditableOrDefault(row);
         const cellKind = column.cellKind as import('./designerGridRichCellColumns').DesignerGridRichCellKind | undefined;
-        const scopedEditClick = rowShowsHwyMemberListScopedEditCellClick(
+        const scopedEditClick = rowShowsExtxMemberListScopedEditCellClick(
           column,
-          options.vxMemberDirectoryListScopeLegacy,
+          options.extxMemberDirectoryListScopeLegacy,
         );
         const columnAllowsClick = designerGridColumnAllowsCellClickInvoke(column, cellKind) || scopedEditClick;
         const rowRecord = row as Record<string, unknown>;
         const invokeCellClick = resolveRuntimeGridCellClickInvokable(options, column)
-          || rowShowsHwyFamilyHouseholdCellClick(rowRecord, column)
-          || rowShowsHwyImageFixEditorCellClick(rowRecord, column)
+          || rowShowsExtxFamilyHouseholdCellClick(rowRecord, column)
+          || rowShowsExtxImageFixEditorCellClick(rowRecord, column)
           || scopedEditClick;
         if (options.mode === 'design' || !invokeCellClick || !columnAllowsClick) {
           return content;
         }
-        if (rowShowsHwyFamilyHouseholdCellClick(rowRecord, column)) {
+        if (rowShowsExtxFamilyHouseholdCellClick(rowRecord, column)) {
           return (
-            <VxFamilyHouseholdLinkTrigger
+            <ExtxFamilyHouseholdLinkTrigger
               align="start"
               primary={content}
-              onClick={() => openHwyFamilyHouseholdFromDesignerGrid(row, column.key, column)}
+              onClick={() => openExtxFamilyHouseholdFromDesignerGrid(row, column.key, column)}
             />
           );
         }
-        if (rowShowsHwyMemberListScopedEditCellClick(column, options.vxMemberDirectoryListScopeLegacy)) {
+        if (rowShowsExtxMemberListScopedEditCellClick(column, options.extxMemberDirectoryListScopeLegacy)) {
           const scopedEditRaw = readGridColumnRawValue(rowRecord, column.key);
           const scopedEditHasValue = scopedEditRaw != null && String(scopedEditRaw).trim().length > 0;
           const scopedEditEmptyLabel = resolveListScopedEditCharacterEmptyLabel(
             options.translate,
-            options.vxMemberDirectoryListScopeLegacy,
+            options.extxMemberDirectoryListScopeLegacy,
           );
           return (
             <NativeButton
               type="button"
-              onClick={() => openHwyMemberListScopedEditFromDesignerGrid(rowRecord)}
+              onClick={() => openExtxMemberListScopedEditFromDesignerGrid(rowRecord)}
               className="block w-full min-w-0 text-center text-sky-800 hover:text-sky-950 hover:underline"
             >
               {scopedEditHasValue ? content : (
@@ -1260,11 +1260,11 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
             </NativeButton>
           );
         }
-        if (rowShowsHwyImageFixEditorCellClick(rowRecord, column)) {
+        if (rowShowsExtxImageFixEditorCellClick(rowRecord, column)) {
           return (
             <NativeButton
               type="button"
-              onClick={() => openHwyImageFixEditorFromDesignerGrid(rowRecord)}
+              onClick={() => openExtxImageFixEditorFromDesignerGrid(rowRecord)}
               className="block w-full min-w-0 text-start"
             >
               {content}
@@ -1287,24 +1287,24 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
         );
       },
     };
-  }).map((column) => enforceHwyMemberDirectoryJobTypePlaceColumnGridDef(
-    enforceHwyInstitutesIdColumnGridDef(
-    enforceHwyImageFixListMemberColumnGridDef(
-    enforceHwyImageFixListRegisteredColumnGridDef(
-      enforceHwyImageFixListDocumentsColumnGridDef(
-        enforceHwyImageFixListActionsColumnGridDef(
-        enforceHwyNakhebinListVotedColumnGridDef(
-          enforceHwyNakhebinListWrapTextColumnGridDef(
-            enforceHwyMemberDirectoryElectoralColumnGridDef(
-              enforceHwyMembersAllListResidenceColumnGridDef(
-                enforceHwyMembersAllListMembershipOnColumnGridDef(
-                  enforceHwyMembersAllListPhoneColumnGridDef(
-                    enforceHwyMembersAllListNakhebinColumnGridDef(
-                      enforceHwyMemberDirectoryListFaceColumnGridDef(
-                        enforceHwyMemberNakhebinListNameColumnGridDef(column),
+  }).map((column) => enforceExtxMemberDirectoryJobTypePlaceColumnGridDef(
+    enforceExtxInstitutesIdColumnGridDef(
+    enforceExtxImageFixListMemberColumnGridDef(
+    enforceExtxImageFixListRegisteredColumnGridDef(
+      enforceExtxImageFixListDocumentsColumnGridDef(
+        enforceExtxImageFixListActionsColumnGridDef(
+        enforceExtxNakhebinListVotedColumnGridDef(
+          enforceExtxNakhebinListWrapTextColumnGridDef(
+            enforceExtxMemberDirectoryElectoralColumnGridDef(
+              enforceExtxMembersAllListResidenceColumnGridDef(
+                enforceExtxMembersAllListMembershipOnColumnGridDef(
+                  enforceExtxMembersAllListPhoneColumnGridDef(
+                    enforceExtxMembersAllListNakhebinColumnGridDef(
+                      enforceExtxMemberDirectoryListFaceColumnGridDef(
+                        enforceExtxMemberNakhebinListNameColumnGridDef(column),
                         {
                           isMemberDirectoryFaceGrid,
-                          listScopeLegacy: options.vxMemberDirectoryListScopeLegacy,
+                          listScopeLegacy: options.extxMemberDirectoryListScopeLegacy,
                         },
                       ),
                       isMembersAllList,
@@ -1332,7 +1332,7 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
     ),
     isInstitutesList,
     ),
-  )).map((column) => enforceHwyMemberDirectorySegmentListRtlColumnGridDef(
+  )).map((column) => enforceExtxMemberDirectorySegmentListRtlColumnGridDef(
     column,
     isMemberDirectorySegmentList,
     shellIsRtl,
@@ -1341,7 +1341,7 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
     columns: AppTableGridColumnDef<TRow>[],
   ): AppTableGridColumnDef<TRow>[] => (
     isMemberDirectoryListGrid
-      ? reorderHwyMemberDirectoryElectoralColumnThird(columns)
+      ? reorderExtxMemberDirectoryElectoralColumnThird(columns)
       : columns
   );
 
@@ -1349,41 +1349,41 @@ export const buildAppTableGridColumns = <TRow extends Record<string, unknown>>(
     return finalizeMemberDirectoryColumnOrder(builtColumns);
   }
 
-  const listActionsKind = resolveHwyMemberMembershipListActionsKind({
-    listScopeLegacy: options.vxMemberDirectoryListScopeLegacy,
+  const listActionsKind = resolveExtxMemberMembershipListActionsKind({
+    listScopeLegacy: options.extxMemberDirectoryListScopeLegacy,
     pathname: typeof window !== 'undefined' ? window.location.pathname : '',
   });
   if (!listActionsKind) {
     return finalizeMemberDirectoryColumnOrder(builtColumns);
   }
 
-  const withRejectionParity = insertHwyMemberRejectionListParityColumns(
+  const withRejectionParity = insertExtxMemberRejectionListParityColumns(
     builtColumns,
-    options.vxMemberDirectoryListScopeLegacy,
+    options.extxMemberDirectoryListScopeLegacy,
     options.translate,
   );
-  const withLocalManageColumnAdjustments = omitHwyMemberRejectedLocalManageCreatedAtColumn(
-    omitHwyMemberRejectedLocalManagePhoneColumn(
-      omitHwyMemberRejectedLocalManageMembershipStatusUpdatedOnColumn(
-        omitHwyMemberRejectionListGovernorateColumn(
+  const withLocalManageColumnAdjustments = omitExtxMemberRejectedLocalManageCreatedAtColumn(
+    omitExtxMemberRejectedLocalManagePhoneColumn(
+      omitExtxMemberRejectedLocalManageMembershipStatusUpdatedOnColumn(
+        omitExtxMemberRejectionListGovernorateColumn(
           withRejectionParity,
-          options.vxMemberDirectoryListScopeLegacy,
+          options.extxMemberDirectoryListScopeLegacy,
         ),
-        options.vxMemberDirectoryListScopeLegacy,
+        options.extxMemberDirectoryListScopeLegacy,
       ),
-      options.vxMemberDirectoryListScopeLegacy,
+      options.extxMemberDirectoryListScopeLegacy,
     ),
-    options.vxMemberDirectoryListScopeLegacy,
-  ).map((column) => enforceHwyMemberRejectionListElectoralAsGovernorateColumnGridDef(
-    enforceHwyMemberRejectionListParityColumnGridDef(
+    options.extxMemberDirectoryListScopeLegacy,
+  ).map((column) => enforceExtxMemberRejectionListElectoralAsGovernorateColumnGridDef(
+    enforceExtxMemberRejectionListParityColumnGridDef(
       column,
-      options.vxMemberDirectoryListScopeLegacy,
+      options.extxMemberDirectoryListScopeLegacy,
     ),
-    options.vxMemberDirectoryListScopeLegacy,
+    options.extxMemberDirectoryListScopeLegacy,
     options.translate,
   ));
   return finalizeMemberDirectoryColumnOrder(
-    appendHwyWaitedListMembershipActionsColumn(
+    appendExtxWaitedListMembershipActionsColumn(
       withLocalManageColumnAdjustments,
       listActionsKind,
       options.translate,
@@ -1460,12 +1460,12 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
   const rowKeyField = readString(node.props.rowKeyField, 'id');
   const listMode = readString(node.props.listMode, 'paging') === 'infinite' ? 'infinite' as const : 'paging' as const;
   const isImageFixListGridForSort = resolveImageFixMemberDirectoryListFromOptions(
-    options.vxMemberDirectoryListScopeLegacy,
+    options.extxMemberDirectoryListScopeLegacy,
   );
   const sortOptions = React.useMemo(
     () => {
       if (isImageFixListGridForSort) {
-        return mapMemberDirectoryFooterSortOptionsForGrid(VX_MEMBER_IMAGE_FIX_PAGE_NAME, translate);
+        return mapMemberDirectoryFooterSortOptionsForGrid(EXTX_MEMBER_IMAGE_FIX_PAGE_NAME, translate);
       }
       return parseSortOptions(node.props.sortOptions, columns, translate);
     },
@@ -1549,7 +1549,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     const memberDirectoryListApi = listEndpointForResolve.includes('member-directory')
       || Boolean(listDataSource?.endpoint?.includes('member-directory'));
     if (memberDirectoryListApi && translate) {
-      fields = localizeHwyMemberDirectoryListWhereFields(fields, translate);
+      fields = localizeExtxMemberDirectoryListWhereFields(fields, translate);
     }
     return fields;
   }, [
@@ -1720,8 +1720,8 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     }
     return previewBindingDefinitions.dataSources[dataSourceRef]?.endpoint?.trim() ?? '';
   }, [gridBinding?.dataSourceRef, gridBinding?.sourcePath, previewBindingDefinitions?.dataSources]);
-  const vxMemberDirectoryListScopeLegacy = React.useMemo(
-    () => resolveHwyMemberDirectoryListScopeLegacy({
+  const extxMemberDirectoryListScopeLegacy = React.useMemo(
+    () => resolveExtxMemberDirectoryListScopeLegacy({
       queryListScope: gridBinding?.queryParams?.listScope ?? gridBinding?.queryParams?.listDefLegacy,
       pageName: previewDocument?.name,
     }),
@@ -1731,26 +1731,26 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
       previewDocument?.name,
     ],
   );
-  const isQuickSearchMemberDirectoryList = isHwyMemberQuickSearchListScope(vxMemberDirectoryListScopeLegacy);
+  const isQuickSearchMemberDirectoryList = isExtxMemberQuickSearchListScope(extxMemberDirectoryListScopeLegacy);
   const memberDirectoryListWhereFilterEnabled = listWhereFilterEnabled && !isQuickSearchMemberDirectoryList;
   const memberDirectoryShowPagingFooter = showPagingFooter && !isQuickSearchMemberDirectoryList;
-  const isHwyMemberDirectoryListGrid = isHwyMemberDirectoryListApiEndpoint(memberDirectoryGridListEndpoint)
-    || Boolean(vxMemberDirectoryListScopeLegacy)
+  const isExtxMemberDirectoryListGrid = isExtxMemberDirectoryListApiEndpoint(memberDirectoryGridListEndpoint)
+    || Boolean(extxMemberDirectoryListScopeLegacy)
     || Boolean(
-      gridBinding?.dataSourceRef?.toLowerCase().includes('hwymemberdirectory')
-      || gridBinding?.sourcePath?.toLowerCase().includes('hwymemberdirectory'),
+      gridBinding?.dataSourceRef?.toLowerCase().includes('extxmemberdirectory')
+      || gridBinding?.sourcePath?.toLowerCase().includes('extxmemberdirectory'),
     );
-  const isImageFixMemberDirectoryList = isHwyMemberImageFixListScope(vxMemberDirectoryListScopeLegacy);
+  const isImageFixMemberDirectoryList = isExtxMemberImageFixListScope(extxMemberDirectoryListScopeLegacy);
   const isListScopedEditMemberDirectoryList = Boolean(
-    resolveHwyMemberListScopedEditProfile(vxMemberDirectoryListScopeLegacy),
+    resolveExtxMemberListScopedEditProfile(extxMemberDirectoryListScopeLegacy),
   );
 
   const resolvedToolbarConfig = React.useMemo(
-    () => resolveDesignerGridToolbarConfigForHwyMemberDirectoryList(
+    () => resolveDesignerGridToolbarConfigForExtxMemberDirectoryList(
       toolbarConfig,
-      isHwyMemberDirectoryListGrid,
+      isExtxMemberDirectoryListGrid,
     ),
-    [isHwyMemberDirectoryListGrid, toolbarConfig],
+    [isExtxMemberDirectoryListGrid, toolbarConfig],
   );
   const toolbarSearchDebounceMs = resolvedToolbarConfig?.search?.debounceMs ?? searchDebounceMs;
 
@@ -1766,11 +1766,11 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     return () => window.clearTimeout(timer);
   }, [options.mode, resolvedToolbarConfig?.search?.enabled, searchInput, toolbarSearchDebounceMs]);
 
-  const vxListLegacyFieldFilterBarStorageKey = vxMemberDirectoryListScopeLegacy
+  const extxListLegacyFieldFilterBarStorageKey = extxMemberDirectoryListScopeLegacy
     ?? previewDocument?.name?.trim()
     ?? node.id;
-  const vxListUsesLegacyFieldFilterBar = Boolean(
-    isHwyMemberDirectoryListGrid
+  const extxListUsesLegacyFieldFilterBar = Boolean(
+    isExtxMemberDirectoryListGrid
     && options.mode !== 'design'
     && !isQuickSearchMemberDirectoryList,
   );
@@ -1780,7 +1780,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
       return;
     }
     const patches = {
-      ...buildClearHwyMemberDirectoryLegacyFilterStorePatches(),
+      ...buildClearExtxMemberDirectoryLegacyFilterStorePatches(),
       [memberDirectoryPageStorePath]: 1,
     };
     applyDesignerStorePatches(
@@ -1792,37 +1792,37 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
   const {
     legacyFieldFiltersVisible,
     toggleLegacyFieldFilters,
-  } = useHwyLegacyFieldFilterBarMode(
-    vxListLegacyFieldFilterBarStorageKey,
-    vxListUsesLegacyFieldFilterBar ? clearLegacyMemberDirectoryFilterStore : undefined,
+  } = useExtxLegacyFieldFilterBarMode(
+    extxListLegacyFieldFilterBarStorageKey,
+    extxListUsesLegacyFieldFilterBar ? clearLegacyMemberDirectoryFilterStore : undefined,
   );
-  const legacyFieldFilterToggleNode = vxListUsesLegacyFieldFilterBar ? (
-    <VxLegacyFieldFilterBarToggle
+  const legacyFieldFilterToggleNode = extxListUsesLegacyFieldFilterBar ? (
+    <ExtxLegacyFieldFilterBarToggle
       active={legacyFieldFiltersVisible}
       onToggle={toggleLegacyFieldFilters}
     />
   ) : null;
   const imageFixLegacyFieldFilterLabeledToggleNode = isImageFixMemberDirectoryList ? (
-    <VxLegacyFieldFilterBarToggle
+    <ExtxLegacyFieldFilterBarToggle
       active={legacyFieldFiltersVisible}
       onToggle={toggleLegacyFieldFilters}
       presentation="labeled"
     />
   ) : null;
-  const legacyMemberDirectorySearchActive = vxListUsesLegacyFieldFilterBar
+  const legacyMemberDirectorySearchActive = extxListUsesLegacyFieldFilterBar
     && legacyFieldFiltersVisible;
   const prevLegacyFieldFiltersVisibleRef = React.useRef(legacyFieldFiltersVisible);
 
   React.useEffect(() => {
     if (options.mode === 'design') {
-      registerHwyMemberListScopedEditListScope(null);
+      registerExtxMemberListScopedEditListScope(null);
       return undefined;
     }
-    registerHwyMemberListScopedEditListScope(vxMemberDirectoryListScopeLegacy);
-    return () => registerHwyMemberListScopedEditListScope(null);
-  }, [vxMemberDirectoryListScopeLegacy, options.mode]);
+    registerExtxMemberListScopedEditListScope(extxMemberDirectoryListScopeLegacy);
+    return () => registerExtxMemberListScopedEditListScope(null);
+  }, [extxMemberDirectoryListScopeLegacy, options.mode]);
   const imageFixFilters = React.useMemo(
-    () => readHwyMemberImageFixListFiltersFromStore(options.designerStore),
+    () => readExtxMemberImageFixListFiltersFromStore(options.designerStore),
     [options.designerStore],
   );
   const pageStorePath = memberDirectoryPageStorePath;
@@ -1834,15 +1834,15 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     if (options.mode !== 'runtime' || !isQuickSearchMemberDirectoryList) {
       return;
     }
-    setLocalPageSize(VX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE);
+    setLocalPageSize(EXTX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE);
     const pageSizeStorePath = resolvedToolbarConfig?.serverQuery?.pageSizeStorePath ?? 'gridQuery.pageSize';
     const previewEvents = options.previewEvents;
     if (!previewEvents?.patchStore) {
       return;
     }
     const current = readNestedContextValue(options.designerStore ?? {}, pageSizeStorePath);
-    if (Number(current) !== VX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE) {
-      previewEvents.patchStore(pageSizeStorePath, VX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE);
+    if (Number(current) !== EXTX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE) {
+      previewEvents.patchStore(pageSizeStorePath, EXTX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE);
     }
   }, [
     isQuickSearchMemberDirectoryList,
@@ -1901,13 +1901,13 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
 
   React.useEffect(() => {
     if (!isImageFixMemberDirectoryList || options.mode === 'design') {
-      registerHwyImageFixListRefreshHandler(null);
+      registerExtxImageFixListRefreshHandler(null);
       return undefined;
     }
-    registerHwyImageFixListRefreshHandler(() => {
+    registerExtxImageFixListRefreshHandler(() => {
       options.onGridRefresh?.();
     });
-    return () => registerHwyImageFixListRefreshHandler(null);
+    return () => registerExtxImageFixListRefreshHandler(null);
   }, [isImageFixMemberDirectoryList, options.mode, options.onGridRefresh]);
 
   const hasVisibleHydratedRows = Array.isArray(hydratedRows) && hydratedRows.length > 0;
@@ -1945,7 +1945,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
       dynamicActionRuntime,
       previewEvents: options.previewEvents,
       translate,
-      vxMemberDirectoryListScopeLegacy,
+      extxMemberDirectoryListScopeLegacy,
       shellIsRtl: culture ? resolveCultureShellIsRtl(culture) : undefined,
       onMembershipQueueDecisionSaved: options.onGridRefresh,
     }),
@@ -1954,7 +1954,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
       culture,
       dynamicActionRuntime,
       effectiveGridQueryMode,
-      vxMemberDirectoryListScopeLegacy,
+      extxMemberDirectoryListScopeLegacy,
       options.mode,
       options.onGridRefresh,
       options.previewEvents,
@@ -2275,7 +2275,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
   ]);
 
   const totalCount = isQuickSearchMemberDirectoryList
-    ? Math.min(visibleAggregatedRows.length, VX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE)
+    ? Math.min(visibleAggregatedRows.length, EXTX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE)
     : resolveDataGridTotalCount(
       {
         ...pagingConfig,
@@ -2306,23 +2306,23 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     && !isFetchingNextInfinitePage;
   const shellStyle = resolveDesignerDataGridShellStyle(options.style);
 
-  const vxMembershipListActionsKind = React.useMemo(
+  const extxMembershipListActionsKind = React.useMemo(
     () => (options.mode === 'runtime'
-      ? resolveHwyMemberMembershipListActionsKind({
+      ? resolveExtxMemberMembershipListActionsKind({
         pathname: location.pathname,
-        listScopeLegacy: vxMemberDirectoryListScopeLegacy,
+        listScopeLegacy: extxMemberDirectoryListScopeLegacy,
       })
       : null),
-    [vxMemberDirectoryListScopeLegacy, location.pathname, options.mode],
+    [extxMemberDirectoryListScopeLegacy, location.pathname, options.mode],
   );
   const rejectionListPageMemberIds = React.useMemo(() => {
-    if (!vxMembershipListActionsKind?.startsWith('rejected_')) {
+    if (!extxMembershipListActionsKind?.startsWith('rejected_')) {
       return [];
     }
     return displayRows
       .map((row) => String((row as Record<string, unknown>).id ?? '').trim())
       .filter((id) => id.length > 0);
-  }, [displayRows, vxMembershipListActionsKind]);
+  }, [displayRows, extxMembershipListActionsKind]);
 
   const keyedRows = React.useMemo(
     () => displayRows.map((row, index) => ({
@@ -2650,9 +2650,9 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
   const gridScrollExtra = isInfiniteListMode && options.mode !== 'design' ? handleInfiniteScroll : undefined;
   const hasChildren = React.Children.count(options.children) > 0;
 
-  const applyImageFixFilters = React.useCallback((filters: VxMemberImageFixListFilterState) => {
+  const applyImageFixFilters = React.useCallback((filters: ExtxMemberImageFixListFilterState) => {
     const patches = {
-      ...buildHwyMemberImageFixListFilterStorePatches(filters),
+      ...buildExtxMemberImageFixListFilterStorePatches(filters),
       [pageStorePath]: 1,
     };
     const changed = applyDesignerStorePatches(
@@ -2669,19 +2669,19 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     storePath: string,
     value: string,
   ) => {
-    if (storePath === VX_MEMBER_DIRECTORY_MEMBERSHIP_FILTER_STORE_PATH) {
+    if (storePath === EXTX_MEMBER_DIRECTORY_MEMBERSHIP_FILTER_STORE_PATH) {
       setRadioSelections((current) => ({
         ...current,
         membershipStatusCode: value,
       }));
     }
-    if (storePath === VX_MONTADHEMIN_INSTITUTE_FILTER_STORE_PATH) {
+    if (storePath === EXTX_MONTADHEMIN_INSTITUTE_FILTER_STORE_PATH) {
       setRadioSelections((current) => ({
         ...current,
         montadheminInstituteId: value,
       }));
     }
-    if (storePath === VX_MONTADHEMIN_INSTITUTE_MATCH_STORE_PATH) {
+    if (storePath === EXTX_MONTADHEMIN_INSTITUTE_MATCH_STORE_PATH) {
       const matchLogic: FilterMatchLogic = value === 'and' ? 'and' : DEFAULT_FILTER_MATCH_LOGIC;
       setMatchLogicByFilterId((current) => ({
         ...current,
@@ -2709,15 +2709,15 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     setRadioSelections,
   ]);
 
-  const usesStructuredLegacyFieldByFieldPanel = isHwyMemberListStructuredFieldByFieldLegacyScope(
-    vxMemberDirectoryListScopeLegacy,
+  const usesStructuredLegacyFieldByFieldPanel = isExtxMemberListStructuredFieldByFieldLegacyScope(
+    extxMemberDirectoryListScopeLegacy,
   );
 
   const memberDirectoryLegacyFilterBarNode = legacyMemberDirectorySearchActive
     && usesStructuredLegacyFieldByFieldPanel
-    && vxMemberDirectoryListScopeLegacy ? (
-      <VxMemberDirectoryLegacyFieldByFieldPanel
-        listScopeLegacy={vxMemberDirectoryListScopeLegacy}
+    && extxMemberDirectoryListScopeLegacy ? (
+      <ExtxMemberDirectoryLegacyFieldByFieldPanel
+        listScopeLegacy={extxMemberDirectoryListScopeLegacy}
         designerStore={options.designerStore}
         bindingDefinitions={previewBindingDefinitions}
         onFieldChange={handleLegacyMemberDirectoryFilterFieldChange}
@@ -2727,7 +2727,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     ) : null;
 
   React.useEffect(() => {
-    if (!vxListUsesLegacyFieldFilterBar || !legacyFieldFiltersVisible || options.mode === 'design') {
+    if (!extxListUsesLegacyFieldFilterBar || !legacyFieldFiltersVisible || options.mode === 'design') {
       return;
     }
     for (const filter of resolvedToolbarFieldFilters) {
@@ -2736,7 +2736,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
       }
     }
   }, [
-    vxListUsesLegacyFieldFilterBar,
+    extxListUsesLegacyFieldFilterBar,
     legacyFieldFiltersVisible,
     options.mode,
     revalidateLovFilter,
@@ -2744,7 +2744,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
   ]);
 
   React.useEffect(() => {
-    if (!vxListUsesLegacyFieldFilterBar) {
+    if (!extxListUsesLegacyFieldFilterBar) {
       return;
     }
     if (prevLegacyFieldFiltersVisibleRef.current === legacyFieldFiltersVisible) {
@@ -2753,7 +2753,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     prevLegacyFieldFiltersVisibleRef.current = legacyFieldFiltersVisible;
     if (legacyFieldFiltersVisible) {
       if (isImageFixMemberDirectoryList) {
-        applyImageFixFilters(createDefaultHwyMemberImageFixListFilters());
+        applyImageFixFilters(createDefaultExtxMemberImageFixListFilters());
       }
       return;
     }
@@ -2761,11 +2761,11 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     setRadioSelections(buildInitialRadioSelections(resolvedToolbarFieldFiltersRef.current));
     setMatchLogicByFilterId(buildInitialMatchLogicByFilterId(resolvedToolbarFieldFiltersRef.current));
     if (isImageFixMemberDirectoryList) {
-      applyImageFixFilters(createHwyMemberImageFixListFiltersForSimpleSearch());
+      applyImageFixFilters(createExtxMemberImageFixListFiltersForSimpleSearch());
     }
   }, [
     applyImageFixFilters,
-    vxListUsesLegacyFieldFilterBar,
+    extxListUsesLegacyFieldFilterBar,
     isImageFixMemberDirectoryList,
     legacyFieldFiltersVisible,
   ]);
@@ -2778,7 +2778,7 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
   );
 
   const imageFixToolbarNode = isImageFixMemberDirectoryList && toolbarEnabled ? (
-    <VxImageFixListToolbar
+    <ExtxImageFixListToolbar
       value={imageFixFilters}
       onChange={applyImageFixFilters}
       totalCount={totalCount}
@@ -2787,9 +2787,9 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
       searchInput={searchInput}
       onSearchInputChange={setSearchInput}
       searchPlaceholder={imageFixSearchPlaceholder}
-      legacyFieldFiltersVisible={!vxListUsesLegacyFieldFilterBar || legacyFieldFiltersVisible}
+      legacyFieldFiltersVisible={!extxListUsesLegacyFieldFilterBar || legacyFieldFiltersVisible}
       legacyFieldFilterModeActive={
-        vxListUsesLegacyFieldFilterBar ? legacyFieldFiltersVisible : false
+        extxListUsesLegacyFieldFilterBar ? legacyFieldFiltersVisible : false
       }
       legacyFieldFilterToggle={legacyFieldFilterToggleNode}
       legacyFieldFilterLabeledToggle={imageFixLegacyFieldFilterLabeledToggleNode}
@@ -2856,12 +2856,12 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
         }}
         listWhereFilterEnabled={memberDirectoryListWhereFilterEnabled}
         listFilterButtonProps={listFilter.filterButtonProps}
-        showFieldFilters={!vxListUsesLegacyFieldFilterBar}
+        showFieldFilters={!extxListUsesLegacyFieldFilterBar}
         legacyFieldFilterToggle={legacyFieldFilterToggleNode}
         legacyFieldFilterModeActive={
-          vxListUsesLegacyFieldFilterBar ? legacyFieldFiltersVisible : false
+          extxListUsesLegacyFieldFilterBar ? legacyFieldFiltersVisible : false
         }
-        globalSearchVisible={!vxListUsesLegacyFieldFilterBar || !legacyFieldFiltersVisible}
+        globalSearchVisible={!extxListUsesLegacyFieldFilterBar || !legacyFieldFiltersVisible}
         memberDirectoryLegacyFilterBar={memberDirectoryLegacyFilterBarNode}
         queryPresets={serverQueryEnabled && queryPresetChipsEnabled && edgeModelId ? queryPresetChips : undefined}
         queryPresetSelectedIds={queryPresetSelectedIds}
@@ -3005,10 +3005,10 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
   );
 
   const imageFixRuntimeDialogs = isImageFixMemberDirectoryList && options.mode !== 'design'
-    ? <VxImageFixRuntimeDialogs onSaved={options.onGridRefresh} />
+    ? <ExtxImageFixRuntimeDialogs onSaved={options.onGridRefresh} />
     : null;
   const listScopedEditRuntimeDialogs = isListScopedEditMemberDirectoryList && options.mode !== 'design'
-    ? <VxMemberListScopedEditRuntimeDialogs onSaved={options.onGridRefresh} />
+    ? <ExtxMemberListScopedEditRuntimeDialogs onSaved={options.onGridRefresh} />
     : null;
 
   const listChrome = (
@@ -3020,15 +3020,15 @@ export const DesignerRuntimeAppTableGrid: React.FC<DesignerRuntimeAppTableGridPr
     </>
   );
 
-  if (vxMembershipListActionsKind?.startsWith('rejected_') && options.mode !== 'design') {
+  if (extxMembershipListActionsKind?.startsWith('rejected_') && options.mode !== 'design') {
     return (
-      <VxRejectionListRuntimeProvider
+      <ExtxRejectionListRuntimeProvider
         pageMemberIds={rejectionListPageMemberIds}
-        listActionsKind={vxMembershipListActionsKind}
+        listActionsKind={extxMembershipListActionsKind}
         onRefresh={options.onGridRefresh}
       >
         {listChrome}
-      </VxRejectionListRuntimeProvider>
+      </ExtxRejectionListRuntimeProvider>
     );
   }
 

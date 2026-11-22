@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AppEndO — Self-hosted studio and portals, on one stack</title>
+  <meta name="description" content="AppEndO is a self-hosted enterprise platform: a back-office studio for builders and operators, and front-office portals for everyday users. Data Studio, workflows, RBAC, packages, and an in-app AI/MCP agent." />
+  <meta name="theme-color" content="#141414" />
+  <link rel="canonical" href="https://mirshahreza.github.io/AppEndO-Release/" />
+  <meta property="og:title" content="AppEndO — Self-hosted studio and portals, on one stack" />
+  <meta property="og:description" content="A back-office studio and front-office portals on one self-hosted stack. Not a blogging CMS, and not an out-of-the-box ERP." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mirshahreza.github.io/AppEndO-Release/" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#141414",
+            paper: "#f6f3ee",
+            mist: "#ece7df",
+            line: "#d7d1c7",
+            accent: "#0f5f5b"
+          },
+          fontFamily: {
+            sans: ['"Source Sans 3"', "ui-sans-serif", "system-ui", "sans-serif"],
+            display: ['"Fraunces"', "Georgia", "serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    .frame {
+      background:
+        linear-gradient(180deg, rgba(20,20,20,0.04), rgba(20,20,20,0.04)),
+        repeating-linear-gradient(135deg, transparent, transparent 8px, rgba(20,20,20,0.03) 8px, rgba(20,20,20,0.03) 9px);
+    }
+  </style>
+</head>
+<body class="bg-paper text-ink antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-3 focus:py-2 focus:text-paper">Skip to content</a>
+
+  <header class="border-b border-line bg-paper/90 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+      <a href="#main" class="flex items-center gap-3" aria-label="AppEndO home">
+        <img
+          src="images/appendo-wordmark-black.svg"
+          alt="AppEndO"
+          class="h-8 w-auto"
+          onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'font-display text-2xl',textContent:'AppEndO'}))"
+        />
+      </a>
+      <nav aria-label="Primary" class="hidden items-center gap-6 text-sm font-medium sm:flex">
+        <a href="#features" class="hover:text-accent">Features</a>
+        <a href="#screenshots" class="hover:text-accent">Product</a>
+        <a href="#quickstart" class="hover:text-accent">Quick start</a>
+        <a href="#compare" class="hover:text-accent">Compare</a>
+        <a href="https://github.com/mirshahreza/AppEndO-Release" class="rounded-full bg-ink px-4 py-2 text-paper hover:bg-accent">GitHub</a>
+      </nav>
+      <a href="https://github.com/mirshahreza/AppEndO-Release" class="rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper sm:hidden">GitHub</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.18em] text-accent">Self-hosted enterprise platform</p>
+        <h1 class="mt-4 font-display text-4xl leading-tight sm:text-5xl">Self-hosted back-office studio and front-office portals, on one stack.</h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink/80">
+          AppEndO is for organizations that run custom business applications. Operators and builders work in the studio — Data Studio, workflows, RBAC, packages, and an in-app AI/MCP agent. Everyday users get portals, forms, and self-service pages. It is platform-first: not a blogging CMS, and not an out-of-the-box ERP.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://github.com/mirshahreza/AppEndO-Release" class="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-paper hover:bg-accent">View the public release</a>
+          <a href="#quickstart" class="rounded-full border border-ink px-5 py-3 text-sm font-semibold hover:border-accent hover:text-accent">Five-minute quick start</a>
+        </div>
+        <p class="mt-6 text-sm text-ink/60">Node.js 22 · React · Express · SQL Server default (PostgreSQL, MySQL, and SQLite on the wizard)</p>
+      </div>
+    </section>
+
+    <section id="features" class="border-y border-line bg-mist/60">
+      <div class="mx-auto max-w-6xl px-6 py-16">
+        <h2 class="font-display text-3xl">Why AppEndO</h2>
+        <p class="mt-3 max-w-2xl text-ink/75">These are capabilities that already ship in the core install or the public release bundles — not a roadmap dressed up as a product.</p>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="rounded-2xl border border-line bg-paper p-6">
+            <h3 class="font-semibold">One platform, two audiences</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/75">Builders and operators use the back-office studio. Staff, customers, and public visitors use front-office portals — no studio access required.</p>
+          </article>
+          <article class="rounded-2xl border border-line bg-paper p-6">
+            <h3 class="font-semibold">The toolchain is in core</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/75">Data Studio and Data APIs, Client Components and CRUD Set, Server Functions, a workflow engine, a Git workspace, and ZIP packages are part of the platform.</p>
+          </article>
+          <article class="rounded-2xl border border-line bg-paper p-6">
+            <h3 class="font-semibold">Self-hosted, no per-seat platform fee</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/75">Run it on your infrastructure. SQL Server is the default and recommended control plane; the wizard also offers PostgreSQL, MySQL, and SQLite.</p>
+          </article>
+          <article class="rounded-2xl border border-line bg-paper p-6">
+            <h3 class="font-semibold">Packages when you want install-over-code</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/75">The public release bundles CMS and Remote Hubs (File, SSH, and RDP). Domain modules such as CRM or HR are ecosystem packages, not pretends-to-be-an-ERP on day one.</p>
+          </article>
+          <article class="rounded-2xl border border-line bg-paper p-6">
+            <h3 class="font-semibold">Culture-aware routing</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/75">Experiences route by culture, portal, and page. Culture packs for the United States, Iran, and Iraq ship as system extensions (locale, calendar, direction, and fonts).</p>
+          </article>
+          <article class="rounded-2xl border border-line bg-paper p-6">
+            <h3 class="font-semibold">An in-app agent that knows the studio</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/75">AppEndO Agent (Ask, Plan, or Agent) ships with 16 built-in MCP packs, designer-local AI, and an inbound MCP host.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenshots" class="mx-auto max-w-6xl px-6 py-16">
+      <h2 class="font-display text-3xl">A look at the product</h2>
+      <p class="mt-3 max-w-2xl text-ink/75">Captures from a running studio and a public CMS page. Home is a narrow crop, so it sits beside Data Studio at its own width.</p>
+      <div class="mt-10 grid items-start gap-6 lg:grid-cols-12">
+        <figure class="overflow-hidden rounded-2xl border border-line bg-paper lg:col-span-4">
+          <img src="images/screenshot-dashboard.png" alt="Studio Home: sidebar, System Health, and the feedback inbox" class="mx-auto h-auto w-full max-w-sm object-contain" />
+          <figcaption class="border-t border-line bg-paper px-4 py-3 text-sm">Studio Home: sidebar, System Health, and the feedback inbox.</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-line bg-paper lg:col-span-8">
+          <img src="images/screenshot-data-studio.png" alt="Data Studio sample model with columns and built-in Data API routes" class="h-auto w-full object-contain" />
+          <figcaption class="border-t border-line bg-paper px-4 py-3 text-sm">Data Studio on a sample model, with columns and the built-in Data API routes.</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-line bg-paper lg:col-span-6">
+          <img src="images/screenshot-designer.png" alt="Client Components kanban canvas with the component toolbox" class="h-auto w-full object-contain" />
+          <figcaption class="border-t border-line bg-paper px-4 py-3 text-sm">Client Components: a kanban canvas and the component toolbox.</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-line bg-paper lg:col-span-6">
+          <img src="images/screenshot-workflow.png" alt="Published workflow with one human work item leading to End" class="h-auto w-full object-contain" />
+          <figcaption class="border-t border-line bg-paper px-4 py-3 text-sm">A published workflow: one human work item, then End.</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-line bg-paper lg:col-span-6">
+          <img src="images/screenshot-packages.png" alt="Package Manager with CMS and Remote Hubs installed" class="h-auto w-full object-contain" />
+          <figcaption class="border-t border-line bg-paper px-4 py-3 text-sm">Package Manager with CMS and Remote Hubs installed.</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-line bg-paper lg:col-span-6">
+          <img src="images/screenshot-portal.png" alt="Public CMS home page on the /us route" class="h-auto w-full object-contain" />
+          <figcaption class="border-t border-line bg-paper px-4 py-3 text-sm">Public CMS home page on the <code>/us</code> route.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="quickstart" class="border-y border-line bg-ink text-paper">
+      <div class="mx-auto max-w-6xl px-6 py-16">
+        <h2 class="font-display text-3xl">Five-minute quick start</h2>
+        <p class="mt-3 max-w-2xl text-paper/75">You need Node.js 22 and a control-plane database. The browser install wizard is the recommended first-run path. SQL Server and PostgreSQL are the human-tested engines; MySQL coverage is still thin, and SQLite is machine-tested.</p>
+        <pre class="mt-8 overflow-x-auto rounded-2xl bg-black/40 p-6 text-sm leading-relaxed"><code>git clone https://github.com/mirshahreza/AppEndO-Release.git
+cd AppEndO-Release/source
+cp .env.example .env
+npm install
+npm run dev</code></pre>
+        <p class="mt-6 max-w-2xl text-paper/80">Open <a class="underline decoration-paper/40 hover:decoration-paper" href="http://localhost:3000/install">http://localhost:3000/install</a>. The wizard walks through node capabilities, cache, database, admin account, and optional email, then applies schema and opens the studio. The release also includes a pre-built <code>dist/server.cjs</code> if you prefer not to rebuild.</p>
+      </div>
+    </section>
+
+    <section id="compare" class="mx-auto max-w-6xl px-6 py-16">
+      <h2 class="font-display text-3xl">How it compares</h2>
+      <p class="mt-3 max-w-3xl text-ink/75">AppEndO is not a substitute for WordPress (content marketing), Odoo (a full ERP), or Supabase (managed BaaS). Closest relatives are low-code platforms such as Oracle APEX. Unlike typical internal-tools builders, it also targets public portals and vertical apps. This table is qualitative; vendor prices in the project README were last verified on 29 June 2026 and should be re-checked before any public pricing claim.</p>
+      <div class="mt-8 overflow-x-auto rounded-2xl border border-line">
+        <table class="min-w-full text-left text-sm">
+          <thead class="bg-mist text-ink">
+            <tr>
+              <th class="px-4 py-3 font-semibold"> </th>
+              <th class="px-4 py-3 font-semibold">AppEndO</th>
+              <th class="px-4 py-3 font-semibold">Retool</th>
+              <th class="px-4 py-3 font-semibold">Odoo</th>
+              <th class="px-4 py-3 font-semibold">Oracle APEX</th>
+              <th class="px-4 py-3 font-semibold">Supabase</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line bg-paper">
+            <tr>
+              <th class="px-4 py-3 font-medium">What it is</th>
+              <td class="px-4 py-3">Self-hosted studio + portals</td>
+              <td class="px-4 py-3">Internal-tools builder (mostly SaaS)</td>
+              <td class="px-4 py-3">ERP / business suite</td>
+              <td class="px-4 py-3">Low-code on Oracle Database</td>
+              <td class="px-4 py-3">Backend-as-a-service</td>
+            </tr>
+            <tr>
+              <th class="px-4 py-3 font-medium">Visual UI builder</th>
+              <td class="px-4 py-3">Yes, in core</td>
+              <td class="px-4 py-3">Yes — the product is the builder</td>
+              <td class="px-4 py-3">Odoo Studio</td>
+              <td class="px-4 py-3">Page Designer in core</td>
+              <td class="px-4 py-3">No — frontend is built elsewhere</td>
+            </tr>
+            <tr>
+              <th class="px-4 py-3 font-medium">Workflows</th>
+              <td class="px-4 py-3">Designer + durable runtime in core</td>
+              <td class="px-4 py-3">Plan-dependent</td>
+              <td class="px-4 py-3">Automated actions + Studio</td>
+              <td class="px-4 py-3">Approvals / processes in APEX</td>
+              <td class="px-4 py-3">External / Edge Functions</td>
+            </tr>
+            <tr>
+              <th class="px-4 py-3 font-medium">Public portals</th>
+              <td class="px-4 py-3">First-class front-office</td>
+              <td class="px-4 py-3">Mostly internal users</td>
+              <td class="px-4 py-3">Yes, with ERP modules</td>
+              <td class="px-4 py-3">Yes, APEX apps</td>
+              <td class="px-4 py-3">You assemble it yourself</td>
+            </tr>
+            <tr>
+              <th class="px-4 py-3 font-medium">LOB modules on day one</th>
+              <td class="px-4 py-3">No — ecosystem packages (CMS ships here)</td>
+              <td class="px-4 py-3">No</td>
+              <td class="px-4 py-3">Yes</td>
+              <td class="px-4 py-3">No</td>
+              <td class="px-4 py-3">No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="border-t border-line bg-mist/60">
+      <div class="mx-auto max-w-6xl px-6 py-16 text-center">
+        <h2 class="font-display text-3xl">Try the official public release</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-ink/75">Source, a production build, and the bundled CMS and Remote Hubs packages live on GitHub. The license is custom (Apache 2.0 text plus Section A): you may self-host and operate official portals for your organization, but public Internet hosting of a platform fork is not allowed. Questions and contributions go through GitHub Issues — there is no project email.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href="https://github.com/mirshahreza/AppEndO-Release" class="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-paper hover:bg-accent">github.com/mirshahreza/AppEndO-Release</a>
+          <a href="https://github.com/mirshahreza/AppEndO-Release/issues" class="rounded-full border border-ink px-5 py-3 text-sm font-semibold hover:border-accent hover:text-accent">Open an issue</a>
+          <a href="https://github.com/mirshahreza/AppEndO-Release/blob/main/source/docs/LICENSE-FAQ.md" class="rounded-full border border-ink px-5 py-3 text-sm font-semibold hover:border-accent hover:text-accent">License FAQ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-ink/60 sm:flex-row sm:items-center sm:justify-between">
+      <p>AppEndO. Custom license — read the FAQ before you adopt or redistribute it.</p>
+      <p><a class="hover:text-accent" href="https://github.com/mirshahreza/AppEndO-Release/issues">Contact via GitHub Issues</a></p>
+    </div>
+  </footer>
+</body>
+</html>

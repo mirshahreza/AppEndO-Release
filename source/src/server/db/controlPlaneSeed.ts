@@ -673,7 +673,7 @@ async function ensureContactMessagesView(provider: ControlPlaneDbProvider): Prom
     SELECT
       m.id,
       m.topic_code,
-      COALESCE(bi.title_fa, bi.title_en, bi.title, m.topic_code) AS topic_label,
+      COALESCE(bi.title, m.topic_code) AS topic_label,
       m.title,
       m.note,
       m.created_at,

@@ -145,7 +145,7 @@ export const INSTALL_EN: Record<string, string> = {
   'install.email.testOptional': 'Test connection (optional)',
   'install.email.testing': 'Testing…',
   'install.email.gmailHintBefore': 'Gmail does not accept your normal Google password here. Enable 2-Step Verification, create an',
-  'install.email.gmailHintAfter': ', and use that 16-character code as SMTP password. Username and From email must both be your full @gmail.com address.',
+  'install.email.gmailHintAfter': ', and use that 16-character code as SMTP password. Username and From email must both be your full Gmail address.',
   'install.email.gmailAppPasswordLink': 'App Password',
   'install.email.host': 'Host',
   'install.email.hostAria': 'SMTP host',

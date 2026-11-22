@@ -65,9 +65,9 @@ import {
   type ResolvedGridDetailFlow,
 } from './bindingGridDetailEngine';
 import { collectGridRowActionsFromColumns } from './designerGridActionColumns';
-import { documentUsesHwyFamilyHouseholdCellClick } from '../vx/vxFamilyHousehold';
-import { parseHwyMemberDirectoryGridListScopeLegacy } from '../vx/vxMemberListScopedEditPageChrome.ts';
-import { resolveHwyMemberListScopedEditProfile } from '../vx/vxMemberListScopedEditCatalog';
+import { documentUsesExtxFamilyHouseholdCellClick } from '../../oss/excludedModuleStub';
+import { parseExtxMemberDirectoryGridListScopeLegacy } from '../../oss/excludedModuleStub';
+import { resolveExtxMemberListScopedEditProfile } from '../../oss/excludedModuleStub';
 import {
   APP_TABLE_GRID_PALETTE_ITEM_ID,
   parseDesignerAppTableGridColumns,
@@ -2211,9 +2211,9 @@ const renderAppTableGridCellClickHandlerLines = (
         lines.push(`        ${DESIGNER_STORE_PATCH_VAR}(${JSON.stringify(visibilityStorePathForNode(flow.config.detailModalNodeId))}, true);`);
         lines.push(`        await ${flow.detailRefreshVar}();`);
         lines.push('        return;');
-      } else if (column.cellClickBehavior?.kind === 'vx-family-household') {
-        deps.add('openHwyFamilyHouseholdFromGridRow');
-        lines.push('        openHwyFamilyHouseholdFromGridRow(row, columnKey, column);');
+      } else if (column.cellClickBehavior?.kind === 'extx-family-household') {
+        deps.add('openExtxFamilyHouseholdFromGridRow');
+        lines.push('        openExtxFamilyHouseholdFromGridRow(row, columnKey, column);');
         lines.push('        return;');
       } else if (column.cellClickBehavior?.kind === 'navigate' && column.cellClickBehavior.navigateTarget?.trim()) {
         const primaryKeyField = column.cellClickBehavior.primaryKeyField?.trim() || 'id';
@@ -2312,10 +2312,10 @@ const renderAppTableGridStateHookLines = (
       lines.push('    translate: (key) => culture.t(key),');
     }
     const gridListScopeLegacy = gridFetch
-      ? parseHwyMemberDirectoryGridListScopeLegacy(gridFetch.queryParams as Record<string, string>)
+      ? parseExtxMemberDirectoryGridListScopeLegacy(gridFetch.queryParams as Record<string, string>)
       : null;
     if (gridListScopeLegacy) {
-      lines.push(`    vxMemberDirectoryListScopeLegacy: ${JSON.stringify(gridListScopeLegacy)},`);
+      lines.push(`    extxMemberDirectoryListScopeLegacy: ${JSON.stringify(gridListScopeLegacy)},`);
     }
     lines.push(`  }), [${columnsMemoDeps.join(', ')}]);`);
 
@@ -2643,8 +2643,8 @@ export const renderBindingComponentPreamble = (
     lines.push(`  const ${DESIGNER_STORE_VAR}: Record<string, unknown> = {};`);
   }
 
-  if (documentUsesHwyFamilyHouseholdCellClick(document)) {
-    lines.push('  const { dialog: vxFamilyHouseholdDialog, openFromGridRow: openHwyFamilyHouseholdFromGridRow } = useHwyFamilyHouseholdDialog();');
+  if (documentUsesExtxFamilyHouseholdCellClick(document)) {
+    lines.push('  const { dialog: extxFamilyHouseholdDialog, openFromGridRow: openExtxFamilyHouseholdFromGridRow } = useExtxFamilyHouseholdDialog();');
   }
 
   if (context.plan.fetchConfigs.length > 0) {

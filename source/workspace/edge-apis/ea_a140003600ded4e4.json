@@ -1,15 +1,15 @@
 {
   "id": "ea_a140003600ded4e4",
   "edgeModelId": "em_5f3a30c99bb3420e",
-  "key": "vx-member-directory",
-  "label": "VX Member directory",
-  "basePath": "/api/vx/member-directory",
+  "key": "extx-member-directory",
+  "label": "EXTX Member directory",
+  "basePath": "/api/extx/member-directory",
   "operations": [
     {
       "id": "op_list_pur3ks",
       "method": "GET",
       "kind": "list",
-      "pathPattern": "/api/vx/member-directory",
+      "pathPattern": "/api/extx/member-directory",
       "enabled": true,
       "fields": {
         "read": [
@@ -163,7 +163,7 @@
       },
       "enrichments": [
         {
-          "id": "vx_enrich_membership_status",
+          "id": "extx_enrich_membership_status",
           "sourceField": "membershipStatusCode",
           "kind": "base_info_title",
           "joinTableSource": "base_info",
@@ -180,7 +180,7 @@
           "langSource": "fixed:ar"
         },
         {
-          "id": "vx_enrich_tasjil_state",
+          "id": "extx_enrich_tasjil_state",
           "sourceField": "nakhebinJoinTasjilStateCode",
           "kind": "base_info_title",
           "joinTableSource": "base_info",
@@ -197,7 +197,7 @@
           "langSource": "fixed:ar"
         },
         {
-          "id": "vx_enrich_registration_channel",
+          "id": "extx_enrich_registration_channel",
           "sourceField": "registrationChannelCode",
           "kind": "base_info_title",
           "joinTableSource": "base_info",
@@ -214,7 +214,7 @@
           "langSource": "fixed:ar"
         },
         {
-          "id": "vx_enrich_nakhebin_link_type",
+          "id": "extx_enrich_nakhebin_link_type",
           "sourceField": "nakhebinLinkTypeCode",
           "kind": "base_info_title",
           "joinTableSource": "base_info",
@@ -232,7 +232,7 @@
       "id": "op_get_pur3ks",
       "method": "GET",
       "kind": "getOne",
-      "pathPattern": "/api/vx/member-directory/:pk",
+      "pathPattern": "/api/extx/member-directory/:pk",
       "enabled": true,
       "fields": {
         "read": [
@@ -329,7 +329,7 @@
       },
       "enrichments": [
         {
-          "id": "vx_enrich_membership_status",
+          "id": "extx_enrich_membership_status",
           "sourceField": "membershipStatusCode",
           "kind": "base_info_title",
           "joinTableSource": "base_info",
@@ -346,7 +346,7 @@
           "langSource": "fixed:ar"
         },
         {
-          "id": "vx_enrich_tasjil_state",
+          "id": "extx_enrich_tasjil_state",
           "sourceField": "nakhebinJoinTasjilStateCode",
           "kind": "base_info_title",
           "joinTableSource": "base_info",
@@ -363,7 +363,7 @@
           "langSource": "fixed:ar"
         },
         {
-          "id": "vx_enrich_registration_channel",
+          "id": "extx_enrich_registration_channel",
           "sourceField": "registrationChannelCode",
           "kind": "base_info_title",
           "joinTableSource": "base_info",
@@ -385,7 +385,7 @@
       "id": "op_create_pur3ks",
       "method": "POST",
       "kind": "create",
-      "pathPattern": "/api/vx/member-directory",
+      "pathPattern": "/api/extx/member-directory",
       "enabled": false,
       "fields": {
         "read": [
@@ -570,7 +570,7 @@
       "id": "op_update_pur3ks",
       "method": "PUT",
       "kind": "update",
-      "pathPattern": "/api/vx/member-directory/:pk",
+      "pathPattern": "/api/extx/member-directory/:pk",
       "enabled": false,
       "fields": {
         "read": [
@@ -755,7 +755,7 @@
       "id": "op_delete_pur3ks",
       "method": "DELETE",
       "kind": "delete",
-      "pathPattern": "/api/vx/member-directory/:pk",
+      "pathPattern": "/api/extx/member-directory/:pk",
       "enabled": false,
       "fields": {
         "read": [
@@ -864,5 +864,5 @@
     "useGlobalConfig": false,
     "timeoutMs": 15000
   },
-  "managedFunctionId": "vx-members-ext.vx-member-directory-list"
+  "managedFunctionId": "extx-members-ext.extx-member-directory-list"
 }

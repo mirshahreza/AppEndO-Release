@@ -6,7 +6,7 @@ import { resolveAppShellLayoutDocument } from '../../shared/lib/appShellLayoutWi
 import { ShellLayoutWidthProvider } from '../../shared/ui/shell-foundation/ShellLayoutWidthContext';
 
 export type PortalShellLayoutWidthProviderProps = {
-  /** Published layout draft key (e.g. `studio-shell`, `vertical`). */
+  /** Published layout draft key (e.g. `studio-shell`, `portalx`). */
   shellKey?: string | null;
   /** Live Designer uses the in-memory document instead of the published draft. */
   documentOverride?: DesignerDocument | null;

@@ -248,10 +248,10 @@ export async function initializeFullServerRuntime(settingsPath: string): Promise
   scheduleBuiltinPwaPublicAssets();
   ensurePackageStorageDirs();
   ensurePlatformRegistryDirs();
-  const { isVerticalRuntimeEnabled } = await import('./services/vertical/verticalRuntime');
-  if (isVerticalRuntimeEnabled()) {
-    const { ensureVerticalPortalShellBrand } = await import('./domain/vx/ensureVerticalPortalShellBrand');
-    await ensureVerticalPortalShellBrand();
+  const { isPortalxRuntimeEnabled } = await import('../oss/excludedModuleStub');
+  if (isPortalxRuntimeEnabled()) {
+    const { ensurePortalxPortalShellBrand } = await import('../oss/excludedModuleStub');
+    await ensurePortalxPortalShellBrand();
   }
   invalidatePlatformRuntimeConfig();
 
@@ -456,9 +456,9 @@ export async function mountFullServerRoutes(
       || apiRelativePath === '/mcp'
       || (req.method === 'GET' && apiRelativePath.startsWith('/cms-site/'))
       || (req.method === 'GET' && isAnonymousCmsPublicSiteUiApiPath(apiRelativePath))
-      // Vertical public portal (self-registration, login) — no studio session.
-      || apiRelativePath.startsWith('/vx/public/')
-      || (req.method === 'GET' && /^\/vx\/institutes\/\d+\/logo$/.test(apiRelativePath))
+      // Portalx public portal (self-registration, login) — no studio session.
+      || apiRelativePath.startsWith('/extx/public/')
+      || (req.method === 'GET' && /^\/extx\/institutes\/\d+\/logo$/.test(apiRelativePath))
     ) {
       next();
       return;
@@ -550,9 +550,9 @@ export async function mountFullServerRoutes(
   mountFileHubRoutes(routeHost);
   mountLogsRoutes(routeHost, { settingsPath });
   {
-    // Always mount; requireVerticalPackage returns 404 until install enables runtime (no server restart).
-    const { mountHwyRoutes } = await import('./routes/vx.routes');
-    mountHwyRoutes(routeHost);
+    // Always mount; requirePortalxPackage returns 404 until install enables runtime (no server restart).
+    const { mountExtxRoutes } = await import('../oss/excludedModuleStub');
+    mountExtxRoutes(routeHost);
   }
   mountRecordEventsRoutes(routeHost);
   mountRetentionRoutes(routeHost);

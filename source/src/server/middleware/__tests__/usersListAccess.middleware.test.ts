@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const { resolveMock, ensureLoadedMock, coursesRolesMock } = vi.hoisted(() => ({
   resolveMock: vi.fn(),
   ensureLoadedMock: vi.fn(async () => undefined),
-  coursesRolesMock: vi.fn(async () => ['VX_COURSES']),
+  coursesRolesMock: vi.fn(async () => ['EXTX_COURSES']),
 }));
 
 vi.mock('../../services/builtinFunctionRegistry.service', () => ({
@@ -14,17 +14,17 @@ vi.mock('../../services/builtinFunctionRegistry.service', () => ({
   },
 }));
 
-vi.mock('../vxCoursesActivitiesAccess.middleware', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../vxCoursesActivitiesAccess.middleware')>();
+vi.mock('../extxCoursesActivitiesAccess.middleware', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../oss/excludedModuleStub')>();
   return {
     ...actual,
-    resolveHwyCoursesActivitiesApiAllowRoles: coursesRolesMock,
+    resolveExtxCoursesActivitiesApiAllowRoles: coursesRolesMock,
   };
 });
 
-import { legacyHwyRoleIdToPlatformRoleName } from '../../../domain/vx/vxMemberListLegacyAccess';
+import { legacyExtxRoleIdToPlatformRoleName } from '../../../oss/excludedModuleStub';
 import {
-  requireHwyMemberListFaceAssetAccess,
+  requireExtxMemberListFaceAssetAccess,
   requireUsersListAccess,
 } from '../usersListAccess.middleware';
 
@@ -53,7 +53,7 @@ describe('requireUsersListAccess', () => {
 
   it('allows avatar access when GET /api/users accessControl permits the caller', async () => {
     resolveMock.mockImplementation((method: string, path: string) => {
-      if (path === '/api/vx/member-directory') {
+      if (path === '/api/extx/member-directory') {
         return null;
       }
       if (path === '/api/users') {
@@ -83,7 +83,7 @@ describe('requireUsersListAccess', () => {
 
     await requireUsersListAccess(req, res, next);
 
-    expect(resolveMock).toHaveBeenCalledWith('GET', '/api/vx/member-directory');
+    expect(resolveMock).toHaveBeenCalledWith('GET', '/api/extx/member-directory');
     expect(resolveMock).toHaveBeenCalledWith('GET', '/api/users');
     expect(next).toHaveBeenCalledOnce();
     expect(res.statusCode).toBe(200);
@@ -91,7 +91,7 @@ describe('requireUsersListAccess', () => {
 
   it('denies avatar access when list-users ACL blocks the caller', async () => {
     resolveMock.mockImplementation((method: string, path: string) => {
-      if (path === '/api/vx/member-directory' || path === '/api/users') {
+      if (path === '/api/extx/member-directory' || path === '/api/users') {
         return {
           record: {
             accessControl: {
@@ -123,7 +123,7 @@ describe('requireUsersListAccess', () => {
   });
 
   it('allows avatar access for geo-responsibility gate roles without Users-list capability', async () => {
-    const geoRole = legacyHwyRoleIdToPlatformRoleName(1000003);
+    const geoRole = legacyExtxRoleIdToPlatformRoleName(1000003);
     const req = {
       method: 'GET',
       originalUrl: '/api/users/7/avatar-xs',
@@ -170,7 +170,7 @@ describe('requireUsersListAccess', () => {
   });
 });
 
-describe('requireHwyMemberListFaceAssetAccess', () => {
+describe('requireExtxMemberListFaceAssetAccess', () => {
   beforeEach(() => {
     resolveMock.mockReset();
     ensureLoadedMock.mockClear();
@@ -179,18 +179,18 @@ describe('requireHwyMemberListFaceAssetAccess', () => {
 
   it('allows courses/activities roles to load registration thumbnails', async () => {
     resolveMock.mockReturnValue(null);
-    coursesRolesMock.mockResolvedValue(['VX_COURSES']);
+    coursesRolesMock.mockResolvedValue(['EXTX_COURSES']);
 
     const req = {
       method: 'GET',
-      originalUrl: '/api/vx/member-files/42/content',
+      originalUrl: '/api/extx/member-files/42/content',
       params: { fileId: '42' },
-      auth: { userId: 3, email: 'courses@append.os', role: 'VX_COURSES', roles: ['VX_COURSES'] },
+      auth: { userId: 3, email: 'courses@append.os', role: 'EXTX_COURSES', roles: ['EXTX_COURSES'] },
     } as unknown as Request;
     const res = createResponse();
     const next = vi.fn() as NextFunction;
 
-    await requireHwyMemberListFaceAssetAccess(req, res, next);
+    await requireExtxMemberListFaceAssetAccess(req, res, next);
 
     expect(next).toHaveBeenCalledOnce();
     expect(res.statusCode).toBe(200);

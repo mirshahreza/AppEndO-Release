@@ -301,7 +301,7 @@ describe('navigation contract', () => {
 
   it('preserves leading unheaded sidebar chrome when compile rebuilds from bindings', () => {
     const previous = {
-      id: 'vertical',
+      id: 'portalx',
       groups: [
         {
           heading: null,
@@ -320,16 +320,16 @@ describe('navigation contract', () => {
         {
           heading: 'Persons management',
           order: 1,
-          items: [{ pageKey: 'vx-members-all', label: 'All People', routePattern: 'vertical/members-all' }],
+          items: [{ pageKey: 'extx-members-all', label: 'All People', routePattern: 'portalx/members-all' }],
         },
       ],
     };
     const next = {
-      id: 'vertical',
+      id: 'portalx',
       groups: [{
         heading: 'Persons management',
         order: 1,
-        items: [{ pageKey: 'vx-members-all', label: 'All People', routePattern: 'vertical/members-all' }],
+        items: [{ pageKey: 'extx-members-all', label: 'All People', routePattern: 'portalx/members-all' }],
       }],
     };
 

@@ -430,7 +430,7 @@ describe('prepareDataApiRuntime / finalizeDataApiRuntime parity (SEA-4.8)', () =
     );
   });
 
-  it('forces per-user GET cache for VX member directory list (viewer-specific identity masks)', async () => {
+  it('forces per-user GET cache for EXTX member directory list (viewer-specific identity masks)', async () => {
     const cacheKeySpy = vi.spyOn(cacheKeyFormat, 'buildEdgeResponseCacheKey');
     vi.mocked(resolveServerFunctionRuntimeConfig).mockReturnValue({
       timeoutMs: 30_000,
@@ -457,7 +457,7 @@ describe('prepareDataApiRuntime / finalizeDataApiRuntime parity (SEA-4.8)', () =
     const res = createRuntimeResponse();
     const listRecord = {
       ...record,
-      id: 'vx-members-ext.vx-member-directory-list',
+      id: 'extx-members-ext.extx-member-directory-list',
     } as ManagedFunctionExecutionRecord;
 
     await prepareDataApiRuntime(req, res, definition, listRecord);
@@ -493,7 +493,7 @@ describe('prepareDataApiRuntime / finalizeDataApiRuntime parity (SEA-4.8)', () =
     const res = createRuntimeResponse();
     const getOneRecord = {
       ...record,
-      id: 'vx-members-ext.vx-member-directory-getone',
+      id: 'extx-members-ext.extx-member-directory-getone',
     } as ManagedFunctionExecutionRecord;
 
     await prepareDataApiRuntime(req, res, definition, getOneRecord);

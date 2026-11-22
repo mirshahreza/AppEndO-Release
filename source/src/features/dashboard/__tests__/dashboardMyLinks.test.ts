@@ -17,11 +17,11 @@ const emptyConfig: PlatformRuntimeConfig = {
       authProfile: { requireAuth: true },
     },
     {
-      id: 'vertical',
-      pathPrefix: '/vertical',
-      name: 'Vertical',
+      id: 'portalx',
+      pathPrefix: '/portalx',
+      name: 'Portalx',
       enabled: true,
-      defaultRoute: '/vertical',
+      defaultRoute: '/portalx',
       designerRoutePropagation: 'none',
       authProfile: { requireAuth: true },
     },
@@ -72,13 +72,13 @@ describe('dashboardMyLinks', () => {
     expect(links.find((link) => link.id === 'my-inbox')?.path).toBe('/us/studio/my-inbox');
   });
 
-  it('keeps vertical portal when opening inbox from the personal menu', () => {
+  it('keeps portalx portal when opening inbox from the personal menu', () => {
     const config: PlatformRuntimeConfig = {
       ...emptyConfig,
       shells: [
         {
-          shellKey: 'vertical',
-          name: 'Vertical',
+          shellKey: 'portalx',
+          name: 'Portalx',
           entry: 'core:AdminLayout',
           surface: 'studio',
           enabled: true,
@@ -88,12 +88,12 @@ describe('dashboardMyLinks', () => {
 
     const links = buildDashboardMyLinks({
       config,
-      pathname: '/iq/vertical/members-all',
-      mountId: 'vertical',
+      pathname: '/iq/portalx/members-all',
+      mountId: 'portalx',
       currentUser: { role: 'USER', roles: ['USER'] },
       canDeleteAccount: false,
     });
 
-    expect(links.find((link) => link.id === 'my-inbox')?.path).toBe('/iq/vertical/my-inbox');
+    expect(links.find((link) => link.id === 'my-inbox')?.path).toBe('/iq/portalx/my-inbox');
   });
 });

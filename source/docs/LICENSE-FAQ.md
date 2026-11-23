@@ -4,7 +4,7 @@ This FAQ **does not replace** the legal text in [`LICENSE`](../LICENSE). If anyt
 
 ## What is AppEndO’s license?
 
-AppEndO uses a **custom license**: Apache License 2.0 text (Section B) **plus** **Section A** additional terms. It is **not** standard Apache 2.0 software.
+AppEndO is **source-available** under a **custom license**: Apache License 2.0 text (Section B) **plus** **Section A** additional terms. It is **not** standard Apache 2.0 software, and it is **not** an OSI-approved open-source license. Section A limits some uses that a typical OSI license would allow, including public Internet hosting of a platform source fork.
 
 ## What can I do?
 

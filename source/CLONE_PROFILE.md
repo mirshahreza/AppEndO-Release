@@ -1,4 +1,4 @@
-# Clone profile — public OSS (`oss`)
+# Clone profile — source-available public snapshot (`oss`)
 
 Use this **AppEndO-Release** snapshot with a **dedicated control-plane database**, not a shared development database.
 
@@ -28,4 +28,4 @@ npm run dev
 - **Never commit** `settings.json`, `.env`, or `settings.json.*.tmp` to this git repo.
 - Prefer `settings.recommended.json` for this isolated line.
 
-See the release repository **README.md** for the full public distribution guide.
+See the release repository **README.md** for the full public snapshot guide.

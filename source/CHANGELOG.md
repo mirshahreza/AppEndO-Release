@@ -2,6 +2,44 @@
 
 Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release/releases). Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.0.17] - Unreleased
+
+### Security
+
+- The public export omits machine-local runtime directories (package event logs, workspace audit and overnight output, agent tool artifacts) and ships an empty package-storage template.
+- Operator settings snapshots are left out of the public tree. Settings templates that do ship keep placeholder secrets only.
+- The export fails if a personal email, a private vertical name, a non-placeholder settings secret, or a file under an excluded runtime path is still present.
+
+### Changed
+
+- Commits and annotated tags created in the public repository use a configurable GitHub noreply identity.
+- License text states that the tree is source-available under a custom license and is not OSI-approved.
+- `LICENSE` is also copied to the repository root so the host can detect it.
+- `.env.example` no longer comments a machine-local credentials path.
+- The Docker section describes a local evaluation compose file and stays honest that a clean-volume health check is not a signed-off release gate.
+
+## [0.0.16] - 2026-11-22
+
+### Added
+
+- Studio screenshots on the public landing page.
+- Local evaluation compose file binds published ports to loopback.
+
+### Changed
+
+- Public export rewrites or rejects known personal contact details before publish.
+
+## [0.0.14] - 2026-11-22
+
+### Added
+
+- Public landing page, product screenshots, and a local PostgreSQL evaluation compose file.
+- Community issue templates and governance docs on the public repository.
+
+### Fixed
+
+- Production boot path for the published server build.
+
 ## [0.0.12] - 2026-11-22
 
 ### Added
@@ -12,7 +50,7 @@ Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/
 ### Changed
 
 - Public release gate scans the full artifact tree for cookie jars, `.env`, and session token material.
-- OSS source snapshots exclude cookie files at any path depth.
+- Public source snapshots exclude cookie files at any path depth.
 
 ## [0.0.11] - 2026-11-21
 
@@ -23,7 +61,7 @@ Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/
 
 ### Changed
 
-- Release-cut clone dev port documentation for the OSS profile.
+- Release-cut clone dev port documentation for the public snapshot profile.
 
 ## [0.0.10] - 2026-11-15
 
@@ -55,7 +93,7 @@ Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/
 
 ### Changed
 
-- Clone edge model datasource identifiers for the OSS clone line.
+- Clone edge model datasource identifiers for the public snapshot clone line.
 
 ## [0.0.6] - 2026-11-11
 
@@ -99,8 +137,11 @@ Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/
 
 ### Added
 
-- Local release-cut orchestrator and first public OSS release pipeline.
+- Local release-cut orchestrator and first public release pipeline.
 
+[0.0.17]: https://github.com/mirshahreza/AppEndO-Release/compare/v0.0.16...v0.0.17
+[0.0.16]: https://github.com/mirshahreza/AppEndO-Release/compare/v0.0.14...v0.0.16
+[0.0.14]: https://github.com/mirshahreza/AppEndO-Release/compare/v0.0.12...v0.0.14
 [0.0.12]: https://github.com/mirshahreza/AppEndO-Release/compare/v0.0.10...v0.0.12
 [0.0.10]: https://github.com/mirshahreza/AppEndO-Release/compare/v0.0.9...v0.0.10
 [0.0.9]: https://github.com/mirshahreza/AppEndO-Release/compare/v0.0.5...v0.0.9

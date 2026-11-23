@@ -47,7 +47,7 @@ npm run dev
 
 Open [http://localhost:3000/install](http://localhost:3000/install). The wizard walks through node capabilities, cache (memory or Redis), database, admin account, and optional email, then applies schema and opens the studio.
 
-The public release also includes a pre-built `dist/server.cjs` if you prefer not to rebuild. That bundle still loads npm packages from `node_modules`. A PostgreSQL evaluation container is described in [Quick start with Docker](#quick-start-with-docker-evaluation-draft). SQL Server remains the recommended production control plane.
+The public release also includes a pre-built `dist/server.cjs` if you prefer not to rebuild. That bundle still loads npm packages from `node_modules`. A local PostgreSQL evaluation compose file is described in [Quick start with Docker](#quick-start-with-docker-local-evaluation). SQL Server remains the recommended production control plane.
 
 After a development seed (PostgreSQL CLI `npm run setup` only — or an admin you create in the wizard), change the default credentials before any shared or production use.
 
@@ -73,17 +73,17 @@ A longer table (including WordPress and ABP Framework) and a pricing snapshot ex
 
 ## License and contributing
 
-AppEndO uses a **custom license** (Apache 2.0 text plus Section A terms). It is not standard Apache 2.0: you may self-host, operate official public-facing portals for your own organization, and contribute, but **public Internet hosting of a platform fork is not allowed**. Read the plain-language [License FAQ](source/docs/LICENSE-FAQ.md) and the full `LICENSE` before you adopt or redistribute it.
+AppEndO is **source-available** under a **custom license** (Apache 2.0 text plus Section A terms). It is **not** an OSI-approved open-source license, and it is not standard Apache 2.0: you may self-host, operate official public-facing portals for your own organization, and contribute, but **public Internet hosting of a platform fork is not allowed**. Read the plain-language [License FAQ](source/docs/LICENSE-FAQ.md) and the full `LICENSE` before you adopt or redistribute it.
 
 Bug reports, feature requests, security reports (without exploit or secret details in the issue body), and Code of Conduct reports all go through [GitHub Issues](https://github.com/mirshahreza/AppEndO-Release/issues) on AppEndO-Release. See `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md`.
 
 ---
 
-# AppEndO — Public release 0.0.16
+# AppEndO — Public release 0.0.17
 
 [![Release](https://img.shields.io/github/v/tag/mirshahreza/AppEndO-Release?label=release)](https://github.com/mirshahreza/AppEndO-Release/releases)
 
-This repository is the **official public OSS snapshot** of **AppEndO**: platform source (scrubbed), a **production build**, and **ecosystem ZIPs** you can install from the studio. It is published from the private development monorepo via the **AppEndO-Release** pipeline—not a casual fork of the full product tree.
+This repository is the **official source-available public snapshot** of **AppEndO**: platform source (scrubbed), a **production build**, and **ecosystem ZIPs** you can install from the studio. It is published from the private development monorepo via the **AppEndO-Release** pipeline—not a casual fork of the full product tree.
 
 | Path | Contents |
 | --- | --- |
@@ -97,7 +97,7 @@ This repository is the **official public OSS snapshot** of **AppEndO**: platform
 
 **Bundled in this release:** `cms`, `remote-hubs`. **Not included:** private commercial vertical packages from the upstream monorepo.
 
-Upstream platform development is maintained privately; **this repository** is the public distribution channel for the OSS platform + CMS + Remote Hubs. Report issues and open pull requests here — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Upstream platform development is maintained privately; **this repository** is the public distribution channel for the source-available platform snapshot, plus CMS and Remote Hubs. Report issues and open pull requests here — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ---
 
@@ -148,7 +148,7 @@ LOB modules (CRM, HR, commerce, …) are **ecosystem packages**. **CMS** is a sh
 - **AI & MCP** — In-app agent, built-in tool packs, inbound MCP host  
 - **Settings** — Central config: auth, email, cultures, AI, PWA, attributes  
 
-Full product narrative: see **`source/README.md`** in this release (scrubbed OSS source readme).
+Full product narrative: see **`source/README.md`** in this release (scrubbed source readme).
 
 ---
 
@@ -215,9 +215,9 @@ Health: `GET /api/health` · `GET /api/ready`.
 
 ---
 
-## Quick start with Docker (evaluation draft)
+## Quick start with Docker (local evaluation)
 
-This path is a **demo / evaluation** compose file for PostgreSQL. It is **not** the production default. Production documentation still recommends **SQL Server**.
+This path is a **local evaluation** compose file for PostgreSQL. It is **not** the production default and **not** a signed-off production image. Production documentation still recommends **SQL Server**.
 
 `dist/server.cjs` is an esbuild bundle with npm packages left external, so the image runs `npm ci` from `source/`. `settings.json` is read from the process working directory. `npm run setup` only bootstraps PostgreSQL, and it returns without creating a database when `settings.example.json` is still SQL Server. The entrypoint writes a PostgreSQL settings file first (the password stays in `PGPASSWORD`, not in the file). Setup runs with `runtime.nodeEnv` set to `development` so the CLI can seed the development admin. The entrypoint then switches that node to `production` and replaces the development JWT secrets, so the process serves the prebuilt `dist/` instead of starting Vite. It starts `node dist/server.cjs` from `source/` so `prisma/schema.prisma` and `dist/` resolve together. A later boot is written to skip setup when `install.completedAt` is already set. That second boot was not exercised here.
 
@@ -235,7 +235,7 @@ docker compose --profile rdp up --build
 
 Redis is not part of this compose file. Cache stays on the in-process memory driver.
 
-**Status: untested draft.** Do not treat these files as a working quick start until a clean volume has reached `GET /api/health` and `GET /api/ready`. The process runs as root. There is no published image registry. ARM was not part of this draft. Change the development seed password before any shared use.
+**Status:** local evaluation compose, not a release-gated image. A clean volume has not been signed off here as having reached `GET /api/health` and `GET /api/ready` — run that check before you rely on it. The process runs as root. There is no published image registry. ARM is not covered. Change the development seed password before any shared use.
 
 ---
 
@@ -291,9 +291,9 @@ openssl rand -hex 32
 
 ## License
 
-AppEndO uses a **custom license** (Apache 2.0 base + **Section A** terms). Read **`source/LICENSE`** in full before redistribution.
+AppEndO is **source-available** under a **custom license** (Apache 2.0 base + **Section A** terms). It is **not** an OSI-approved open-source license. Read **`LICENSE`** (repository root and `source/LICENSE`) in full before redistribution.
 
-This **AppEndO-Release** repository is the designated **public OSS distribution** of the platform snapshot and bundled CMS / Remote Hubs artifacts. **Do not** republish private commercial packages that are not part of this release manifest.
+This **AppEndO-Release** repository is the designated **source-available public snapshot** of the platform and the bundled CMS / Remote Hubs artifacts. **Do not** republish private commercial packages that are not part of this release manifest.
 
 ---
 
@@ -304,6 +304,6 @@ This **AppEndO-Release** repository is the designated **public OSS distribution*
 sha256sum cms-*.zip
 ```
 
-Platform version: **0.0.16** · Manifest created: see **`MANIFEST.json`**.
+Platform version: **0.0.17** · Manifest created: see **`MANIFEST.json`**.
 
 **Issues & contributions:** [GitHub Issues](https://github.com/mirshahreza/AppEndO-Release/issues) and pull requests on **this repo** (tags `vX.Y.Z`). Security: [`SECURITY.md`](SECURITY.md). License FAQ: [`source/docs/LICENSE-FAQ.md`](source/docs/LICENSE-FAQ.md).

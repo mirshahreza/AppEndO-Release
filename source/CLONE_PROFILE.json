@@ -1,13 +1,14 @@
 {
   "profileId": "oss",
-  "title": "AppEndO public OSS (AppEndO-Release)",
+  "title": "AppEndO source-available public snapshot (AppEndO-Release)",
   "recommendedControlPlaneDatabase": "AppEndORelease",
   "recommendedDevPort": 3100,
   "forbiddenInGit": [
     "settings.json",
     ".env",
     "settings.json.install-backup",
-    "settings.json.*.tmp"
+    "settings.json.*.tmp",
+    "settings.json.*"
   ],
   "bootstrap": {
     "npmScript": "clone:bootstrap",

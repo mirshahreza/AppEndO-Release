@@ -1,4 +1,4 @@
-# AppEndO (public OSS source)
+# AppEndO (source-available public source)
 
 Self-hosted enterprise application platform: studio, Data Studio, Workflow Engine, Server Functions, and installable ecosystem packages (CMS and Remote Hubs ship with [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release)).
 
@@ -37,4 +37,4 @@ Health: `GET /api/health` · `GET /api/ready`.
 
 ## License
 
-Custom license — **Section A** in `LICENSE` controls. See `docs/LICENSE-FAQ.md`.
+Source-available under a **custom license** (not an OSI-approved license). **Section A** in `LICENSE` controls. See `docs/LICENSE-FAQ.md`.

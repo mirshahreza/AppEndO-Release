@@ -30,6 +30,33 @@ describe('sqlServerAddress', () => {
     expect(buildSqlServerHostToken('localhost', 1433)).toBe('localhost:1433');
   });
 
+  it('splits host:port and raw IPv4 instead of keeping the port inside the server name', () => {
+    expect(parseSqlServerAddress('10.1.2.3:1433', 1433)).toEqual({
+      host: '10.1.2.3',
+      port: 1433,
+    });
+    expect(parseSqlServerHost('10.1.2.3:1433')).toEqual({
+      server: '10.1.2.3',
+      instanceName: '',
+      port: 1433,
+    });
+    expect(parseSqlServerHost('10.1.2.3')).toEqual({
+      server: '10.1.2.3',
+      instanceName: '',
+      port: null,
+    });
+    expect(parseSqlServerHost('db.internal:1433')).toEqual({
+      server: 'db.internal',
+      instanceName: '',
+      port: 1433,
+    });
+    expect(buildSqlServerHostToken('10.1.2.3:1433', 1433)).toBe('10.1.2.3:1433');
+    expect(parseSqlServerAddress('localhost,1433', 1433)).toEqual({
+      host: 'localhost',
+      port: 1433,
+    });
+  });
+
   it('parses dot-instance host for local SQL Server', () => {
     expect(parseSqlServerHost('.\\SQL2025')).toEqual({
       server: 'localhost',

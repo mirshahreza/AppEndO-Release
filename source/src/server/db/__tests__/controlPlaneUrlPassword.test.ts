@@ -21,6 +21,14 @@ describe('controlPlaneUrlPassword', () => {
     expect(restored).toContain('user=sa');
   });
 
+  it('keeps an IPv4 colon port when the password is restored', () => {
+    const live = 'sqlserver://10.1.2.3:1433;database=AppEndO;user=sa;password=secret;encrypt=true;trustServerCertificate=true';
+    const stored = stripControlPlaneUrlPassword('sqlserver', live);
+    const restored = withControlPlaneUrlPassword('sqlserver', stored, 'secret');
+    expect(restored).toContain('sqlserver://10.1.2.3:1433;');
+    expect(restored).toContain('password=secret');
+  });
+
   it('leaves sqlite urls unchanged', () => {
     const url = 'file:data/appendo-control.db';
     expect(stripControlPlaneUrlPassword('sqlite', url)).toBe(url);

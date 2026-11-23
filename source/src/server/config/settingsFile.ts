@@ -306,6 +306,9 @@ export const validateRuntimeSettings = (runtime: RuntimeSettings): void => {
   }
 
   if (runtime.nodeEnv === 'production') {
+    // Local prod-publish smoke still opts in with APPENDO_LOCAL_PROD_PUBLISH.
+    // Unattended production install is `npm run deploy:bootstrap`, which writes
+    // real JWT secrets and does not open the HTTP wizard.
     const localProdPublish = process.env.APPENDO_LOCAL_PROD_PUBLISH === '1';
     if (
       !localProdPublish

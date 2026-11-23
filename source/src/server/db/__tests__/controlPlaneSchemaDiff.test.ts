@@ -3,12 +3,15 @@ import path from 'path';
 import { describe, expect, it } from 'vitest';
 
 import {
+  countEmptySqlStatements,
   extractSqlTargetTables,
   filterControlPlaneSchemaDiffSql,
   listPrismaMappedTableNames,
   normalizeSqlTableName,
   parseCommaSeparatedTableNames,
+  peelSqlServerMigrationEnvelope,
   splitPrismaMigrateDiffScript,
+  sqlBatchBalanceIssues,
 } from '../controlPlaneSchemaDiff';
 
 const MINI_SCHEMA = `
@@ -145,5 +148,141 @@ CREATE TABLE "base_users" (
     );
     expect(filtered.appliedSql).toContain('DROP TABLE "old_tmp"');
     expect(filtered.appliedSql).not.toContain('extx_members');
+  });
+
+  const SQLSERVER_ENVELOPE_CLOSE = `
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
+`;
+
+  const SQLSERVER_TRY_OPEN = `/*
+  Warnings:
+
+  - You are about to drop the \`base_record_events\` table. If the table is not empty, all the data it contains will be lost.
+
+*/
+BEGIN TRY
+
+BEGIN TRAN;
+`;
+
+  it('peels the Prisma sqlserver TRY/TRAN envelope off the step body', () => {
+    const script = `${SQLSERVER_TRY_OPEN}
+-- DropTable
+DROP TABLE [dbo].[base_record_events];
+${SQLSERVER_ENVELOPE_CLOSE}`;
+    const peeled = peelSqlServerMigrationEnvelope(script);
+    expect(peeled.opening).toMatch(/BEGIN TRY/);
+    expect(peeled.opening).toMatch(/BEGIN TRAN;/);
+    expect(peeled.body).toContain('DROP TABLE [dbo].[base_record_events]');
+    expect(peeled.body).not.toMatch(/COMMIT TRAN/);
+    expect(peeled.closing).toMatch(/END TRY/);
+    expect(peeled.closing).toMatch(/BEGIN CATCH/);
+    expect(peeled.closing).toMatch(/END CATCH/);
+  });
+
+  it('keeps a balanced sqlserver batch when DropTable steps are removed, including a trailing drop', () => {
+    const script = `${SQLSERVER_TRY_OPEN}
+-- DropForeignKey
+ALTER TABLE [dbo].[base_record_events] DROP CONSTRAINT [base_record_events_actor_fkey];
+
+-- DropTable
+DROP TABLE [dbo].[base_control_plane_boot_markers];
+
+-- DropTable
+DROP TABLE [dbo].[base_credential_vault_secrets];
+
+-- AlterTable
+ALTER TABLE [dbo].[base_users] ADD [note] NVARCHAR(max);
+
+-- CreateTable
+CREATE TABLE [dbo].[base_widgets] (
+    [id] INT NOT NULL IDENTITY(1,1),
+    [name] NVARCHAR(1000) NOT NULL,
+    CONSTRAINT [base_widgets_pkey] PRIMARY KEY CLUSTERED ([id])
+);
+
+-- DropTable
+DROP TABLE [dbo].[base_record_event_holds];
+
+-- DropTable
+DROP TABLE [dbo].[base_record_events];
+
+;
+
+-- DropTable
+DROP TABLE [dbo].[base_user_message_dispatches];
+${SQLSERVER_ENVELOPE_CLOSE}`;
+
+    const filtered = filterControlPlaneSchemaDiffSql(script, {
+      prismaTables: listPrismaMappedTableNames(MINI_SCHEMA),
+    });
+
+    expect(filtered.appliedSql).toContain('ALTER TABLE [dbo].[base_users] ADD [note] NVARCHAR(max)');
+    expect(filtered.appliedSql).toContain('CREATE TABLE [dbo].[base_widgets]');
+    expect(filtered.appliedSql).not.toMatch(/DROP TABLE/i);
+    expect(filtered.appliedSql).not.toContain('base_record_events_actor_fkey');
+    expect(filtered.appliedSql).toMatch(/BEGIN TRY/);
+    expect(filtered.appliedSql).toMatch(/BEGIN TRAN;/);
+    expect(filtered.appliedSql).toMatch(/COMMIT TRAN;/);
+    expect(filtered.appliedSql).toMatch(/END TRY/);
+    expect(filtered.appliedSql).toMatch(/BEGIN CATCH/);
+    expect(filtered.appliedSql).toMatch(/END CATCH/);
+    expect(sqlBatchBalanceIssues(filtered.appliedSql)).toEqual([]);
+    expect(countEmptySqlStatements(filtered.appliedSql)).toBe(0);
+    expect(filtered.skipped.map((item) => item.tables[0])).toEqual(expect.arrayContaining([
+      'base_control_plane_boot_markers',
+      'base_credential_vault_secrets',
+      'base_record_event_holds',
+      'base_record_events',
+      'base_user_message_dispatches',
+    ]));
+    expect(filtered.skipped.every((item) => item.reason.startsWith('managed outside Prisma'))).toBe(true);
+  });
+
+  it('does not emit an empty BEGIN TRY/TRAN batch when every step is a managed DropTable', () => {
+    const script = `${SQLSERVER_TRY_OPEN}
+-- DropTable
+DROP TABLE [dbo].[base_control_plane_boot_markers];
+
+-- DropTable
+DROP TABLE [dbo].[base_credential_vault_secrets];
+
+-- DropTable
+DROP TABLE [dbo].[base_record_event_holds];
+
+-- DropTable
+DROP TABLE [dbo].[base_record_events];
+
+-- DropTable
+DROP TABLE [dbo].[base_user_message_dispatches];
+${SQLSERVER_ENVELOPE_CLOSE}`;
+
+    const filtered = filterControlPlaneSchemaDiffSql(script, {
+      prismaTables: listPrismaMappedTableNames(MINI_SCHEMA),
+    });
+
+    expect(filtered.appliedSql).toBe('');
+    expect(sqlBatchBalanceIssues(filtered.appliedSql)).toEqual([]);
+    expect(countEmptySqlStatements(filtered.appliedSql)).toBe(0);
+    expect(filtered.skipped).toHaveLength(5);
+  });
+
+  it('flags the unclosed TRY/TRAN batch the old splitter left behind', () => {
+    const broken = 'BEGIN TRY\n\nBEGIN TRAN;\n';
+    expect(sqlBatchBalanceIssues(broken)).toEqual(expect.arrayContaining([
+      'unclosed BEGIN TRY',
+      'unclosed BEGIN TRAN',
+    ]));
   });
 });

@@ -8,5 +8,7 @@ Screenshots from a running AppEndO studio and a public CMS page. The Home shot i
 - `screenshot-workflow.png` — A published workflow with one human work item leading to End.
 - `screenshot-packages.png` — Package Manager with CMS and Remote Hubs installed.
 - `screenshot-portal.png` — Public CMS home page on the `/us` route.
+- `screenshot-wizard.png` — First-run install wizard on the database step (SQL Server, PostgreSQL, MySQL, SQLite).
+- `screenshot-agent.png` — Studio Home with the in-app AppEndoo agent panel open and its Ask, Agent, and Plan modes.
 
-The install wizard, the in-app agent, and a hero GIF are not in this set.
+A hero GIF is not in this set.

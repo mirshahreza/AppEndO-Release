@@ -1,1 +1,0 @@
-import{j as s}from"./react-vendor-DelaA65R.js";import{U as n,R as t}from"./lucide-react-ARL8mRru.js";const r=n,c=t,i=({className:o="h-3.5 w-3.5"})=>s.jsx(n,{className:o,"aria-hidden":"true"}),d=({className:o="h-3.5 w-3.5"})=>s.jsx(t,{className:o,"aria-hidden":"true"});export{i as C,d as R,r as a,c as b};

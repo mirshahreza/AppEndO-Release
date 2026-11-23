@@ -8,9 +8,13 @@ const GENERATED_CLASS_PATH = path.join(process.cwd(), 'src', 'generated', 'prism
 const execSyncMock = vi.hoisted(() => vi.fn());
 const compileGeneratedPrismaClientForNodeMock = vi.hoisted(() => vi.fn(() => 'client.runtime.mjs'));
 
-vi.mock('node:child_process', () => ({
-  execSync: execSyncMock,
-}));
+vi.mock('node:child_process', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('node:child_process')>();
+  return {
+    ...actual,
+    execSync: execSyncMock,
+  };
+});
 
 vi.mock('../generatedPrismaClientRuntime', () => ({
   compileGeneratedPrismaClientForNode: compileGeneratedPrismaClientForNodeMock,
@@ -19,6 +23,7 @@ vi.mock('../generatedPrismaClientRuntime', () => ({
 import {
   CONTROL_PLANE_SCHEMA_PUSH_CONSENT,
   applyAdditiveControlPlaneSchema,
+  buildControlPlanePrismaConfigSource,
   generatePrismaClientForRuntimeProvider,
   pushControlPlaneSchema,
   readGeneratedPrismaActiveProvider,
@@ -204,6 +209,99 @@ CREATE TABLE "base_widgets" (
       const fileArg = String(executeCall?.[0]).match(/--file\s+"([^"]+)"/)?.[1]
         ?? String(executeCall?.[0]).match(/--file\s+(\S+)/)?.[1];
       expect(fileArg).toBeTruthy();
+    } finally {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
+  });
+
+  it('declares Sequelize tables as Prisma external tables on the sqlserver diff config', () => {
+    const source = buildControlPlanePrismaConfigSource(
+      '/tmp/schema.prisma',
+      'sqlserver://localhost;database=AppEnd;user=sa;password=secret;encrypt=true;trustServerCertificate=true',
+      'sqlserver',
+    );
+    expect(source).toContain('externalTables: true');
+    expect(source).toContain('"dbo.base_record_events"');
+    expect(source).toContain('"dbo.base_credential_vault_secrets"');
+    expect(source).toContain('"dbo.base_control_plane_boot_markers"');
+    expect(source).toContain('"dbo.base_user_message_dispatches"');
+    expect(source).toContain('"dbo.base_record_event_holds"');
+    expect(source).not.toContain('dbo.base_users');
+    expect(source).not.toContain('dbo.base_logs_app');
+  });
+
+  it('keeps the filtered SQL file when execute fails', () => {
+    const tmpDir = fs.mkdtempSync(path.join(process.cwd(), 'tmp-schema-push-'));
+    const schemaPath = path.join(tmpDir, 'schema.prisma');
+    fs.writeFileSync(schemaPath, `
+datasource db { provider = "sqlserver" }
+model BaseWidget {
+  id Int @id @default(autoincrement())
+  @@map("base_widgets")
+}
+`, 'utf8');
+
+    execSyncMock.mockImplementation((command: string) => {
+      const text = String(command);
+      if (text.includes('migrate diff')) {
+        return `BEGIN TRY
+
+BEGIN TRAN;
+
+-- DropTable
+DROP TABLE [dbo].[base_record_events];
+
+-- CreateTable
+CREATE TABLE [dbo].[base_widgets] (
+    [id] INT NOT NULL IDENTITY(1,1),
+    CONSTRAINT [base_widgets_pkey] PRIMARY KEY CLUSTERED ([id])
+);
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
+`;
+      }
+      if (text.includes('db execute')) {
+        const error = new Error('Incorrect syntax near \';\'.') as Error & { stdout?: string; stderr?: string };
+        error.stdout = '';
+        error.stderr = 'Incorrect syntax near \';\'.';
+        throw error;
+      }
+      return '';
+    });
+
+    let thrown: unknown;
+    try {
+      applyAdditiveControlPlaneSchema(
+        'sqlserver://localhost;database=AppEnd;user=sa;password=secret;encrypt=true;trustServerCertificate=true',
+        schemaPath,
+        { provider: 'sqlserver' },
+      );
+    } catch (error) {
+      thrown = error;
+    }
+
+    try {
+      const message = thrown instanceof Error ? thrown.message : String(thrown ?? '');
+      expect(message).toMatch(/Incorrect syntax near ';'/);
+      const sqlPath = message.match(/kept for debugging: (\S+)/)?.[1];
+      expect(sqlPath).toBeTruthy();
+      const sql = fs.readFileSync(sqlPath ?? '', 'utf8');
+      expect(sql).toContain('CREATE TABLE [dbo].[base_widgets]');
+      expect(sql).not.toMatch(/DROP TABLE/i);
+      expect(sql).toMatch(/END TRY/);
+      expect(sql).toMatch(/END CATCH/);
+      fs.unlinkSync(sqlPath ?? '');
     } finally {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }

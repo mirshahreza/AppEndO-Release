@@ -1,4 +1,5 @@
 import {
+  CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES,
   CONTROL_PLANE_SCHEMA_PROTECTED_TABLE_NAMES,
   isNonPrismaProtectedTableName,
 } from '../../config/controlPlaneSchemaOwnership';
@@ -17,6 +18,7 @@ export const resolveControlPlaneSchemaProtectedTables = (
   const fromEnv = readSchemaDiffTableNameListsFromEnv(env).protectedTables;
   const merged = new Set<string>([
     ...CONTROL_PLANE_SCHEMA_PROTECTED_TABLE_NAMES.map((n) => n.toLowerCase()),
+    ...CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES.map((n) => n.toLowerCase()),
     ...fromEnv,
   ]);
   return merged;

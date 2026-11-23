@@ -8,7 +8,10 @@
     ".env",
     "settings.json.install-backup",
     "settings.json.*.tmp",
-    "settings.json.*"
+    "settings.json.*",
+    "deploy.bootstrap.local.json",
+    "deploy.secrets.env",
+    "deploy.secrets.json"
   ],
   "bootstrap": {
     "npmScript": "clone:bootstrap",

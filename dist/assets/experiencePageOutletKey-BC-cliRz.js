@@ -1,1 +1,0 @@
-import{x as o}from"./index-Bmw__fUO.js";function m(r,e){const s=o(e);return s?`${r}:member-dossier:${s.mode}:${s.memberId}`:`${r}:${e}`}function i(r){const e=o(r);return e?`member-dossier:${e.mode}:${e.memberId}`:r}export{m as a,i as r};

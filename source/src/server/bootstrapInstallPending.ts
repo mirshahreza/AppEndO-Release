@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { PROJECT_STANDARDS } from '../config/projectStandards';
 import { readRuntimeSettings, resolveListenPort } from './config/settingsFile';
+import { adoptSettingsFileJwtSecrets } from './setup/deployServerBoot';
 import {
   applyBaseMiddleware,
   applyErrorMiddleware,
@@ -26,6 +27,7 @@ import { logger } from '../core/logging/Logger';
 import type { Pool } from 'pg';
 
 export async function startInstallPendingServer(settingsPath: string): Promise<void> {
+  adoptSettingsFileJwtSecrets(settingsPath);
   console.log('[AppEndO] Install wizard pending — starting minimal server (no database required).');
 
   const runtime = readRuntimeSettings(settingsPath);

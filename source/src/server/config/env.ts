@@ -17,6 +17,7 @@ import {
   resolveActiveNodeName,
   type NodeCapability,
 } from '../../shared/nodeCapabilities';
+import { applyDeployBootstrapSettingsBeforeBoot } from '../setup/deployServerBoot';
 
 type AppEnv = {
   nodeEnv: 'development' | 'production' | 'test';
@@ -106,6 +107,8 @@ const buildAppEnv = (runtime: RuntimeSettings): AppEnv => ({
   capabilities: resolveActiveNodeCapabilities({ capabilities: runtime.capabilities }),
   nodeName: resolveActiveNodeName(runtime.nodeName),
 });
+
+applyDeployBootstrapSettingsBeforeBoot();
 
 if (isInstallComplete(SETTINGS_PATH)) {
   ensureDataSourcesSettings(SETTINGS_PATH);

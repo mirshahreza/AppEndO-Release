@@ -11,15 +11,23 @@ import {
 } from './controlPlaneDatabase';
 import {
   filterControlPlaneSchemaDiffSql,
+  formatSkippedSchemaDiffLog,
   listPrismaMappedTableNames,
   readSchemaDiffTableNameListsFromEnv,
+  sqlBatchBalanceIssues,
+  type SkippedSchemaDiffStatement,
 } from './controlPlaneSchemaDiff';
+import { listPrismaExternalTableNames } from '../../config/controlPlaneSchemaOwnership';
 import { resolveControlPlaneSchemaProtectedTables } from './controlPlaneSchemaProtectedTables';
+import {
+  generatedPrismaClassPath,
+  generatedPrismaOutputDir,
+  prismaSchemaPath,
+  resolveNodeModulesRoot,
+  sqlServerUnicodeUpgradeScriptPath,
+} from './appRuntimeRoot';
 import { compileGeneratedPrismaClientForNode } from './generatedPrismaClientRuntime';
 import { toPrismaCliDatabaseUrl } from './prismaCliSqlServerUrl';
-
-const SCHEMA_PATH = path.join(process.cwd(), 'prisma', 'schema.prisma');
-const GENERATED_CLASS_PATH = path.join(process.cwd(), 'src', 'generated', 'prisma', 'internal', 'class.ts');
 
 type ProviderSchemaSession = {
   schemaPath: string;
@@ -28,7 +36,7 @@ type ProviderSchemaSession = {
 
 export const readGeneratedPrismaActiveProvider = (): ControlPlaneDbProvider | undefined => {
   try {
-    const content = fs.readFileSync(GENERATED_CLASS_PATH, 'utf8');
+    const content = fs.readFileSync(generatedPrismaClassPath(), 'utf8');
     const match = content.match(/"activeProvider":\s*"(postgresql|mysql|sqlite|sqlserver)"/);
     return match?.[1] as ControlPlaneDbProvider | undefined;
   } catch {
@@ -132,12 +140,12 @@ export const patchPrismaSchemaForProvider = (
 
 const buildProviderPatchedSchemaContent = (
   provider: ControlPlaneDbProvider,
-  original = fs.readFileSync(SCHEMA_PATH, 'utf8'),
+  original = fs.readFileSync(prismaSchemaPath(), 'utf8'),
   options: PatchPrismaSchemaOptions = {},
 ): string => {
   let patched = patchPrismaSchemaForProvider(provider, original, options);
   if (readActiveSchemaProvider(original) !== provider) {
-    const absoluteOutput = path.join(process.cwd(), 'src', 'generated', 'prisma').replace(/\\/g, '/');
+    const absoluteOutput = generatedPrismaOutputDir().replace(/\\/g, '/');
     patched = patched.replace(
       /output\s*=\s*"\.\.\/src\/generated\/prisma"/,
       `output   = "${absoluteOutput}"`,
@@ -151,9 +159,9 @@ const createProviderSchemaSession = (
   provider: ControlPlaneDbProvider,
   options: PatchPrismaSchemaOptions = {},
 ): ProviderSchemaSession => {
-  const original = fs.readFileSync(SCHEMA_PATH, 'utf8');
+  const original = fs.readFileSync(prismaSchemaPath(), 'utf8');
   if (readActiveSchemaProvider(original) === provider && !options.sqliteIntegerIds) {
-    return { schemaPath: SCHEMA_PATH, cleanup: () => {} };
+    return { schemaPath: prismaSchemaPath(), cleanup: () => {} };
   }
 
   const tempPath = path.join(
@@ -238,16 +246,34 @@ const dropLegacyPostgresBaseViews = (
   }
 };
 
-const writeTempPrismaConfig = (schemaPath: string, url: string): ProviderSchemaSession => {
-  const configPath = path.join(os.tmpdir(), `appendo-control-plane-config-${process.pid}.ts`);
-  const content = `export default {
+export const buildControlPlanePrismaConfigSource = (
+  schemaPath: string,
+  url: string,
+  provider: ControlPlaneDbProvider,
+): string => {
+  const externalTables = listPrismaExternalTableNames(provider);
+  return `export default {
   schema: ${JSON.stringify(schemaPath)},
   datasource: {
     url: ${JSON.stringify(url)},
   },
+  experimental: {
+    externalTables: true,
+  },
+  tables: {
+    external: ${JSON.stringify(externalTables)},
+  },
 };
 `;
-  fs.writeFileSync(configPath, content, 'utf8');
+};
+
+const writeTempPrismaConfig = (
+  schemaPath: string,
+  url: string,
+  provider: ControlPlaneDbProvider,
+): ProviderSchemaSession => {
+  const configPath = path.join(os.tmpdir(), `appendo-control-plane-config-${process.pid}.ts`);
+  fs.writeFileSync(configPath, buildControlPlanePrismaConfigSource(schemaPath, url, provider), 'utf8');
   return {
     schemaPath: configPath,
     cleanup: () => {
@@ -273,6 +299,15 @@ const ensureSqliteFileExists = (url: string): void => {
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, '');
   }
+};
+
+const providerFromControlPlaneUrl = (url: string): ControlPlaneDbProvider => {
+  const trimmed = url.trim().toLowerCase();
+  if (trimmed.startsWith('file:') || trimmed.endsWith('.db')) return 'sqlite';
+  if (trimmed.startsWith('sqlserver:')) return 'sqlserver';
+  if (trimmed.startsWith('mysql:')) return 'mysql';
+  if (trimmed.startsWith('postgresql:') || trimmed.startsWith('postgres:')) return 'postgresql';
+  return 'postgresql';
 };
 
 const migrateDiffToSchema = (
@@ -306,6 +341,54 @@ export const isDestructiveControlPlaneSchemaPushRequested = (
 export type ApplyAdditiveControlPlaneSchemaResult = {
   appliedSql: string;
   skippedCount: number;
+  skipped: SkippedSchemaDiffStatement[];
+};
+
+const filteredSchemaDiffForDatabase = (
+  url: string,
+  schemaPath: string,
+  configPath: string,
+): ApplyAdditiveControlPlaneSchemaResult => {
+  let script: string;
+  try {
+    script = migrateDiffToSchema(url, schemaPath, configPath, 'datasource');
+  } catch (error) {
+    if (!isMissingDatabaseError(error)) throw error;
+    script = migrateDiffToSchema(url, schemaPath, configPath, 'empty');
+  }
+
+  const prismaTables = listPrismaMappedTableNames(fs.readFileSync(schemaPath, 'utf8'));
+  const extraNames = readSchemaDiffTableNameListsFromEnv();
+  const protectedTables = resolveControlPlaneSchemaProtectedTables();
+  for (const name of extraNames.protectedTables) {
+    protectedTables.add(name);
+  }
+  const filtered = filterControlPlaneSchemaDiffSql(script, {
+    prismaTables,
+    protectedTables,
+    allowDropTables: extraNames.allowDropTables,
+  });
+  return {
+    appliedSql: filtered.appliedSql,
+    skippedCount: filtered.skipped.length,
+    skipped: filtered.skipped,
+  };
+};
+
+const controlPlaneSchemaSqlLogPath = (): string => (
+  path.join(os.tmpdir(), `appendo-control-plane-apply-${process.pid}-${Date.now()}.sql`)
+);
+
+const writeSchemaSqlForDebug = (sqlPath: string, sql: string): void => {
+  fs.writeFileSync(sqlPath, sql, 'utf8');
+};
+
+const deleteSchemaSqlLog = (sqlPath: string): void => {
+  try {
+    if (fs.existsSync(sqlPath)) fs.unlinkSync(sqlPath);
+  } catch {
+    // Best-effort temp cleanup.
+  }
 };
 
 /** Compare live DB to the Prisma schema and apply only additive / Prisma-owned changes. */
@@ -314,50 +397,32 @@ export const applyAdditiveControlPlaneSchema = (
   schemaPath: string,
   options?: { provider?: ControlPlaneDbProvider },
 ): ApplyAdditiveControlPlaneSchemaResult => {
-  if (options?.provider === 'sqlite' || url.startsWith('file:')) {
+  const provider = options?.provider ?? providerFromControlPlaneUrl(url);
+  if (provider === 'sqlite' || url.startsWith('file:')) {
     ensureSqliteFileExists(url);
   }
 
-  const configSession = writeTempPrismaConfig(schemaPath, url);
+  const configSession = writeTempPrismaConfig(schemaPath, url, provider);
   try {
-    let script: string;
-    try {
-      script = migrateDiffToSchema(url, schemaPath, configSession.schemaPath, 'datasource');
-    } catch (error) {
-      if (!isMissingDatabaseError(error)) throw error;
-      script = migrateDiffToSchema(url, schemaPath, configSession.schemaPath, 'empty');
-    }
-
-    const prismaTables = listPrismaMappedTableNames(fs.readFileSync(schemaPath, 'utf8'));
-    const extraNames = readSchemaDiffTableNameListsFromEnv();
-    const protectedTables = resolveControlPlaneSchemaProtectedTables();
-    for (const name of extraNames.protectedTables) {
-      protectedTables.add(name);
-    }
-    const filtered = filterControlPlaneSchemaDiffSql(script, {
-      prismaTables,
-      protectedTables,
-      allowDropTables: extraNames.allowDropTables,
-    });
-
-    if (filtered.skipped.length > 0) {
-      const preview = filtered.skipped
-        .slice(0, 12)
-        .map((item) => `  - ${item.header}${item.tables[0] ? ` ${item.tables[0]}` : ''} (${item.reason})`)
-        .join('\n');
-      process.stdout.write(
-        `Control-plane schema sync skipped ${filtered.skipped.length} destructive statement(s) `
-        + `that would drop or alter objects outside the Prisma schema:\n${preview}\n`,
-      );
-    }
+    const filtered = filteredSchemaDiffForDatabase(url, schemaPath, configSession.schemaPath);
+    const skipLog = formatSkippedSchemaDiffLog(filtered.skipped);
+    if (skipLog) process.stdout.write(skipLog);
 
     if (!filtered.appliedSql.trim()) {
       process.stdout.write('Control-plane schema already matches Prisma models (no additive changes).\n');
-      return { appliedSql: '', skippedCount: filtered.skipped.length };
+      return filtered;
     }
 
-    const sqlPath = path.join(os.tmpdir(), `appendo-control-plane-apply-${process.pid}.sql`);
-    fs.writeFileSync(sqlPath, filtered.appliedSql, 'utf8');
+    const balance = sqlBatchBalanceIssues(filtered.appliedSql);
+    const sqlPath = controlPlaneSchemaSqlLogPath();
+    writeSchemaSqlForDebug(sqlPath, filtered.appliedSql);
+    if (balance.length > 0) {
+      throw new Error(
+        `Filtered control-plane sync SQL is not valid and was not executed (${balance.join('; ')}). `
+        + `Kept for debugging: ${sqlPath}`,
+      );
+    }
+
     try {
       runPrismaCli([
         'db',
@@ -367,17 +432,40 @@ export const applyAdditiveControlPlaneSchema = (
         '--file',
         quoteCliArg(sqlPath),
       ], url);
-    } finally {
-      try {
-        if (fs.existsSync(sqlPath)) fs.unlinkSync(sqlPath);
-      } catch {
-        // Best-effort temp cleanup.
-      }
+      deleteSchemaSqlLog(sqlPath);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(
+        `${message}\nFiltered control-plane sync SQL was kept for debugging: ${sqlPath}`,
+      );
     }
 
-    return { appliedSql: filtered.appliedSql, skippedCount: filtered.skipped.length };
+    return filtered;
   } finally {
     configSession.cleanup();
+  }
+};
+
+/**
+ * Read-only additive plan: prisma migrate diff plus the same filter boot applies.
+ * Does not execute the SQL and does not generate a client.
+ */
+export const planControlPlaneSchemaSync = (
+  settings: Pick<ControlPlaneDatabaseSettings, 'provider' | 'url'>,
+): ApplyAdditiveControlPlaneSchemaResult => {
+  const session = createProviderSchemaSession(settings.provider);
+  try {
+    if (settings.provider === 'sqlite' || settings.url.startsWith('file:')) {
+      ensureSqliteFileExists(settings.url);
+    }
+    const configSession = writeTempPrismaConfig(session.schemaPath, settings.url, settings.provider);
+    try {
+      return filteredSchemaDiffForDatabase(settings.url, session.schemaPath, configSession.schemaPath);
+    } finally {
+      configSession.cleanup();
+    }
+  } finally {
+    session.cleanup();
   }
 };
 
@@ -417,6 +505,7 @@ const runPrismaCliCapture = (
     return execSync(command, {
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
+      cwd: resolveNodeModulesRoot(),
       env: buildPrismaCliEnv({ DATABASE_URL: prismaUrl, ...extraEnv }),
       shell: true,
       input: options?.input,
@@ -437,17 +526,16 @@ const runPrismaCli = (
   }
 };
 
-const generatePrismaClient = (url: string, schemaPath = SCHEMA_PATH): void => {
+const generatePrismaClient = (url: string, schemaPath = prismaSchemaPath()): void => {
   runPrismaCli(['generate', '--schema', quoteCliArg(schemaPath)], url);
   compileGeneratedPrismaClientForNode({ force: true });
 };
 
-const UNICODE_UPGRADE_SCRIPT = path.join(process.cwd(), 'scripts', 'sqlserver-unicode-upgrade.ts');
-
 const prepareSqlServerDatabaseForSchemaPush = (url: string): void => {
   const settingsPath = process.env.APPENDO_SETTINGS_PATH?.trim();
-  execSync(`npx tsx ${quoteCliArg(UNICODE_UPGRADE_SCRIPT)}`, {
+  execSync(`npx tsx ${quoteCliArg(sqlServerUnicodeUpgradeScriptPath())}`, {
     stdio: 'inherit',
+    cwd: resolveNodeModulesRoot(),
     env: buildPrismaCliEnv(
       settingsPath
         ? { APPENDO_SETTINGS_PATH: settingsPath }

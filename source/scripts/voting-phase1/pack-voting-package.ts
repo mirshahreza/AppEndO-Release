@@ -78,18 +78,26 @@ async function main(): Promise<void> {
   const schemaInstall = schemaInstallPath ? readCapturableSqlFile(schemaInstallPath) : null;
   const schemaUninstall = schemaUninstallPath ? readCapturableSqlFile(schemaUninstallPath) : null;
 
-  const vocab = await captureSeedInserts(
-    { edgeDbQuery, settingsPath: SETTINGS_PATH },
-    {
-      dataSourceId: source.id,
-      tableName: VOTING_PACKAGE_VOCAB_CAPTURE.tableName,
-      where: VOTING_PACKAGE_VOCAB_CAPTURE.where,
-      parentColumn: VOTING_PACKAGE_VOCAB_CAPTURE.parentColumn,
-      includeDescendants: VOTING_PACKAGE_VOCAB_CAPTURE.includeDescendants,
-      includeBinary: VOTING_PACKAGE_VOCAB_CAPTURE.includeBinary,
-      limit: 0,
-    },
-  );
+  // `--no-db-capture` or APPENDO_PACK_NO_DB_CAPTURE=1: schema + pages + edge APIs only, no rows from the local DB.
+  const noDbCapture =
+    process.argv.includes('--no-db-capture') || process.env.APPENDO_PACK_NO_DB_CAPTURE === '1';
+  if (noDbCapture) {
+    console.log('Packing Voting structure only (no DB capture: no vocab rows from the local database)…');
+  }
+  const vocab = noDbCapture
+    ? { installSql: '', uninstallSql: '', hidRows: [], rowCount: 0, warnings: [] as string[] }
+    : await captureSeedInserts(
+      { edgeDbQuery, settingsPath: SETTINGS_PATH },
+      {
+        dataSourceId: source.id,
+        tableName: VOTING_PACKAGE_VOCAB_CAPTURE.tableName,
+        where: VOTING_PACKAGE_VOCAB_CAPTURE.where,
+        parentColumn: VOTING_PACKAGE_VOCAB_CAPTURE.parentColumn,
+        includeDescendants: VOTING_PACKAGE_VOCAB_CAPTURE.includeDescendants,
+        includeBinary: VOTING_PACKAGE_VOCAB_CAPTURE.includeBinary,
+        limit: 0,
+      },
+    );
 
   const installSql = joinCapturedSqlParts(
     schemaInstall?.ok ? schemaInstall.content : '',

@@ -148,6 +148,8 @@ export type CaptureSeedInsertsResult = {
 export type CaptureCmsModuleInput = {
   dataSourceId: string;
   includeOptionalRecords?: boolean;
+  /** When false, read only bundled files (schema SQL); skip every DB row capture (vocab + content). */
+  captureDbRows?: boolean;
 };
 
 export type CaptureCmsModuleResult = {
@@ -531,6 +533,23 @@ export async function captureCmsModule(
   const schemaUninstall = schemaUninstallPath ? readCapturableSqlFile(schemaUninstallPath) : null;
   if (schemaInstall && !schemaInstall.ok) warnings.push(schemaInstall.error);
   if (schemaUninstall && !schemaUninstall.ok) warnings.push(schemaUninstall.error);
+
+  if (input.captureDbRows === false) {
+    return {
+      schemaInstallSql: schemaInstall?.ok ? schemaInstall.content : '',
+      schemaUninstallSql: schemaUninstall?.ok ? schemaUninstall.content : '',
+      vocabInstallSql: '',
+      vocabUninstallSql: '',
+      vocabHidRows: [],
+      contentInstallSql: '',
+      contentUninstallSql: '',
+      contentBlobs: [],
+      vocabRowCount: 0,
+      contentRowCount: 0,
+      tables: [],
+      warnings,
+    };
+  }
 
   const vocab = await captureSeedInserts(deps, {
     dataSourceId: input.dataSourceId,

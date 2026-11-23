@@ -1077,7 +1077,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'data.control-plane.schema-sync.preserve-unknown-tables',
       title: 'Control-Plane Schema Sync Preserves Unknown Tables',
       value:
-        'npm run db:sync-schema (and npm run prisma:push) must apply the Prisma control-plane schema additively and must never drop tables or extra columns that are not in prisma/schema.prisma; domain/package tables stay intact; prisma db push --accept-data-loss is destructive opt-in only (--destructive or CONTROL_PLANE_SCHEMA_PUSH_DESTRUCTIVE=1), not the upgrade default; empty databases still receive the full control-plane schema',
+        'npm run db:sync-schema (and npm run prisma:push) must apply the Prisma control-plane schema additively and must never drop tables or extra columns that are not in prisma/schema.prisma; domain/package tables stay intact; Sequelize feature tables in CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES are Prisma tables.external so migrate diff does not emit DropTable for them; the SQL Server TRY/TRAN filter must leave a balanced batch with no empty statements and must keep the filtered SQL file when execute fails; npm run deploy:schema-dry-run prints that SQL without executing it; prisma db push --accept-data-loss is destructive opt-in only (--destructive or CONTROL_PLANE_SCHEMA_PUSH_DESTRUCTIVE=1), not the upgrade default; empty databases still receive the full control-plane schema',
       appliesTo: [
         'control plane',
         'schema sync',
@@ -1090,7 +1090,7 @@ export const PROJECT_STANDARDS: ProjectStandardsResource = {
       id: 'data.control-plane.schema-ownership',
       title: 'Control-Plane Schema Ownership Layers',
       value:
-        'Non-Prisma schema has canonical upgrade commands per layer (controlPlaneSchemaOwnership.ts): db:sync-schema for prisma/schema.prisma; schema:install-extensions for Sequelize feature base_* tables; schema:install-extensions --extx for Portalx DDL + satellites + extx:db-objects; schema:ownership-report for live classification; default protected-table merge includes extx_/cms_/zz_ prefixes; Portalx schema-ownership dev closeout CLOSED 2026-11-09 — scripts/schema/schema-ownership-closeout.md',
+        'Non-Prisma schema has canonical upgrade commands per layer (controlPlaneSchemaOwnership.ts): db:sync-schema for prisma/schema.prisma; schema:install-extensions for Sequelize feature base_* tables; schema:install-extensions --extx for Portalx DDL + satellites + extx:db-objects; schema:ownership-report for live classification; default protected-table merge includes extx_/cms_/zz_ prefixes and CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES; Portalx schema-ownership dev closeout CLOSED 2026-11-09 — scripts/schema/schema-ownership-closeout.md',
       appliesTo: [
         'control plane',
         'schema sync',

@@ -21,8 +21,12 @@ AppEndO is a self-hosted enterprise platform for organizations that run custom b
   <img src="docs/images/screenshot-packages.png" alt="Package Manager with CMS and Remote Hubs installed" width="460" />
   <img src="docs/images/screenshot-portal.png" alt="Public CMS home page on the /us route" width="460" />
 </p>
+<p align="center">
+  <img src="docs/images/screenshot-wizard.png" alt="Install wizard on the database step with SQL Server, PostgreSQL, MySQL, and SQLite" width="460" />
+  <img src="docs/images/screenshot-agent.png" alt="Studio Home with the in-app AppEndoo agent panel and its Ask, Agent, and Plan modes" width="460" />
+</p>
 
-Studio Home is a narrow crop of the sidebar, System Health, and the feedback inbox, shown at its own width. Data Studio is open on a sample model, with its columns and the built-in Data API routes. Client Components shows a kanban canvas and the toolbox. The workflow shot is a published flow with one human task. Package Manager lists CMS and Remote Hubs. The last shot is a public CMS home page on `/us`.
+Studio Home is a narrow crop of the sidebar, System Health, and the feedback inbox, shown at its own width. Data Studio is open on a sample model, with its columns and the built-in Data API routes. Client Components shows a kanban canvas and the toolbox. The workflow shot is a published flow with one human task. Package Manager lists CMS and Remote Hubs. The public CMS home page is on `/us`. The install wizard is shown on its database step. The last pair ends with the in-app AppEndoo agent panel open beside Studio Home, with its Ask, Agent, and Plan modes.
 
 ## Why AppEndO
 
@@ -79,7 +83,7 @@ Bug reports, feature requests, security reports (without exploit or secret detai
 
 ---
 
-# AppEndO — Public release 0.0.18
+# AppEndO — Public release 0.0.23
 
 [![Release](https://img.shields.io/github/v/tag/mirshahreza/AppEndO-Release?label=release)](https://github.com/mirshahreza/AppEndO-Release/releases)
 
@@ -304,6 +308,6 @@ This **AppEndO-Release** repository is the designated **source-available public 
 sha256sum cms-*.zip
 ```
 
-Platform version: **0.0.18** · Manifest created: see **`MANIFEST.json`**.
+Platform version: **0.0.23** · Manifest created: see **`MANIFEST.json`**.
 
 **Issues & contributions:** [GitHub Issues](https://github.com/mirshahreza/AppEndO-Release/issues) and pull requests on **this repo** (tags `vX.Y.Z`). Security: [`SECURITY.md`](SECURITY.md). License FAQ: [`source/docs/LICENSE-FAQ.md`](source/docs/LICENSE-FAQ.md).

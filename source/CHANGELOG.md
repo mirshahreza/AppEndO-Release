@@ -2,6 +2,19 @@
 
 Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release/releases). Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.0.18] - 2026-11-23
+
+### Security
+
+- The public export leaves out build output folders (`obj/`, `bin/`), scratch and debug files, and unfinished designer drafts.
+- Documentation in the public tree uses placeholders instead of sample credentials.
+- The export fails if a machine-local Windows or home-directory path is still present in the snapshot.
+- Source maps are no longer shipped in the published `dist/` folder, which makes the download smaller.
+
+### Fixed
+
+- The path check no longer flags harmless lookalike strings inside minified JavaScript bundles.
+
 ## [0.0.17] - 2026-11-23
 
 ### Security

@@ -4,7 +4,64 @@ export const isSqlServerNamedInstanceHost = (address: string): boolean => {
   return rawAddress.includes('\\') && !rawAddress.includes(',');
 };
 
-/** Parse SQL Server host field (`host`, `host,port`, or `host\instance`). */
+const parsePositivePort = (value: string): number | null => {
+  const trimmed = value.trim();
+  if (!/^\d+$/.test(trimmed)) return null;
+  const parsed = Number(trimmed);
+  if (!Number.isFinite(parsed) || parsed <= 0 || parsed > 65535) return null;
+  return parsed;
+};
+
+/** `[ipv6]` or `[ipv6]:port`. Returns null when the value is not bracketed. */
+const splitBracketedHost = (value: string): { base: string; port: number | null } | null => {
+  const match = value.trim().match(/^\[([^\]]+)\](?::(\d+))?$/);
+  if (!match) return null;
+  if (!match[2]) {
+    return { base: match[1].trim(), port: null };
+  }
+  const port = parsePositivePort(match[2]);
+  if (port === null) return null;
+  return { base: match[1].trim(), port };
+};
+
+/**
+ * `host:port` for a hostname or IPv4 (exactly one colon).
+ * Bare IPv6 (`::1`) has more than one colon and is left intact.
+ */
+const splitColonPort = (value: string): { base: string; port: number } | null => {
+  const trimmed = value.trim();
+  const bracketed = splitBracketedHost(trimmed);
+  if (bracketed?.port) {
+    return { base: bracketed.base, port: bracketed.port };
+  }
+  const colon = trimmed.lastIndexOf(':');
+  if (colon <= 0 || trimmed.indexOf(':') !== colon) return null;
+  const port = parsePositivePort(trimmed.slice(colon + 1));
+  if (port === null) return null;
+  const base = trimmed.slice(0, colon).trim();
+  if (!base) return null;
+  return { base, port };
+};
+
+const extractTcpEndpoint = (value: string): { base: string; port: number | null } => {
+  const bracketed = splitBracketedHost(value);
+  if (bracketed) return bracketed;
+
+  const commaIndex = value.lastIndexOf(',');
+  if (commaIndex >= 0) {
+    const base = value.slice(0, commaIndex).trim();
+    const parsedPort = parsePositivePort(value.slice(commaIndex + 1));
+    if (parsedPort !== null) {
+      return { base, port: parsedPort };
+    }
+  }
+
+  const colon = splitColonPort(value);
+  if (colon) return colon;
+  return { base: value.trim(), port: null };
+};
+
+/** Parse SQL Server host field (`host`, `host,port`, `host:port`, IPv4, or `host\instance`). */
 export const parseSqlServerAddress = (address: string, fallbackPort: number) => {
   const rawAddress = address.trim();
   if (isSqlServerNamedInstanceHost(rawAddress)) {
@@ -14,19 +71,24 @@ export const parseSqlServerAddress = (address: string, fallbackPort: number) => 
     };
   }
 
-  if (!rawAddress.includes(',')) {
+  if (!rawAddress) {
     return {
-      host: rawAddress || 'localhost',
+      host: 'localhost',
       port: fallbackPort,
     };
   }
 
-  const [hostPart, portPart] = rawAddress.split(',', 2);
-  const parsedPort = Number((portPart || '').trim());
+  const { base, port } = extractTcpEndpoint(rawAddress);
+  if (port !== null) {
+    return {
+      host: base || 'localhost',
+      port,
+    };
+  }
 
   return {
-    host: (hostPart || '').trim() || 'localhost',
-    port: Number.isFinite(parsedPort) && parsedPort > 0 ? parsedPort : fallbackPort,
+    host: base || 'localhost',
+    port: fallbackPort,
   };
 };
 
@@ -35,7 +97,7 @@ export const buildSqlServerHostToken = (host: string, port: number): string => {
   if (!trimmed) {
     return 'localhost';
   }
-  if (trimmed.includes(',') || isSqlServerNamedInstanceHost(trimmed)) {
+  if (trimmed.includes(',') || isSqlServerNamedInstanceHost(trimmed) || splitColonPort(trimmed)) {
     return trimmed;
   }
   if (Number.isFinite(port) && port > 0) {
@@ -57,27 +119,7 @@ export const parseSqlServerHost = (rawHost: string): ParsedSqlServerHost => {
     return { server: '', instanceName: '', port: null };
   }
 
-  const parsePositivePort = (value: string): number | null => {
-    const n = Number(value.trim());
-    if (!Number.isFinite(n) || n <= 0) return null;
-    return n;
-  };
-
-  const extractPort = (value: string): { base: string; port: number | null } => {
-    const commaIndex = value.lastIndexOf(',');
-    if (commaIndex < 0) {
-      return { base: value.trim(), port: null };
-    }
-
-    const base = value.slice(0, commaIndex).trim();
-    const portRaw = value.slice(commaIndex + 1).trim();
-    const parsedPort = parsePositivePort(portRaw);
-    if (parsedPort === null) {
-      return { base: value.trim(), port: null };
-    }
-
-    return { base, port: parsedPort };
-  };
+  const extractPort = (value: string): { base: string; port: number | null } => extractTcpEndpoint(value);
 
   const slashIndex = host.indexOf('\\');
   if (slashIndex >= 0) {

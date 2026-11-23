@@ -1,3 +1,4 @@
+import { buildSqlServerHostToken } from '../../shared/lib/sqlServerAddress';
 import type { ControlPlaneDbProvider } from './controlPlaneDatabase';
 import { parseSqlServerConnectionUrl } from './sqlServerControlPlaneUrl';
 
@@ -39,8 +40,9 @@ const withSqlServerUrlPassword = (url: string, password: string): string => {
   const parsed = parseSqlServerConnectionUrl(stripped);
   const encrypt = parsed.encrypt ? 'true' : 'false';
   const trust = parsed.trustServerCertificate ? 'true' : 'false';
+  const hostToken = buildSqlServerHostToken(parsed.host, parsed.port);
   return [
-    `sqlserver://${parsed.host}`,
+    `sqlserver://${hostToken}`,
     `database=${escapeSqlServerValue(parsed.database)}`,
     `user=${escapeSqlServerValue(parsed.username)}`,
     `password=${escapeSqlServerValue(password)}`,

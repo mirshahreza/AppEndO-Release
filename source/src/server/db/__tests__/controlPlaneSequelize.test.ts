@@ -71,6 +71,15 @@ describe('controlPlaneSequelize', () => {
     void sequelize.close();
   });
 
+  it('keeps an IPv4 host and colon port as separate connection fields', () => {
+    const options = buildMssqlControlPlaneSequelizeOptions(
+      'sqlserver://10.1.2.3:1433;database=AppEndO;user=sa;password=secret;encrypt=true;trustServerCertificate=true',
+    );
+    expect(options.host).toBe('10.1.2.3');
+    expect(options.port).toBe(1433);
+    expect(String(options.host)).not.toContain(':');
+  });
+
   it('keeps an explicit TCP port for host,port URLs', () => {
     const options = buildMssqlControlPlaneSequelizeOptions(
       'sqlserver://localhost,1433;database=AppEnd;user=sa;password=secret;encrypt=true;trustServerCertificate=true',

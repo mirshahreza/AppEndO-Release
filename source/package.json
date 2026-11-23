@@ -1,7 +1,7 @@
 {
   "name": "appendo",
   "private": true,
-  "version": "0.0.18",
+  "version": "0.0.23",
   "description": "Self-hosted enterprise application platform with studio, workflows, Data Studio, and package extensibility.",
   "keywords": [
     "low-code",
@@ -266,7 +266,8 @@
     "voting:seed-sample:rollback": "tsx scripts/voting-phase3/seed-voting-sample-data.ts --rollback",
     "voting:pack": "tsx scripts/voting-phase1/pack-voting-package.ts",
     "test:voting-package": "vitest run src/server/domain/voting-package-seed/__tests__/votingBaseInfoCatalog.test.ts",
-    "test:release-deploy": "vitest run scripts/release-cut/__tests__/releaseDeployIncremental.test.ts",
+    "deploy:bootstrap": "tsx scripts/deploy/bootstrap.ts",
+    "deploy:schema-dry-run": "tsx scripts/deploy/schemaDryRun.ts",
     "test:release-cut": "vitest run scripts/release-cut/__tests__",
     "test:release-cut-packaging": "vitest run src/core/packages/__tests__/pEcosystemZipMatrix.exit.test.ts src/server/services/package/__tests__/p32PackagingSurface.exit.test.ts",
     "pwa:assets": "pwa-assets-generator --preset minimal-2023 public/pwa-source.svg",

@@ -25,6 +25,16 @@ Dangerous opt-in (drops unknown tables — install wipe / explicit operator cons
   npm run db:sync-schema -- --destructive
   ${CONTROL_PLANE_SCHEMA_PUSH_DESTRUCTIVE_ENV}=1 npm run db:sync-schema
 
+Sequelize feature tables (record events, credential vault, message dispatches, boot
+markers, and the rest of CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES) are not
+in prisma/schema.prisma. The diff config marks them tables.external so Prisma
+does not emit DropTable for them. Other unknown tables are still preserved by
+the SQL filter.
+
+Preview the filtered SQL without executing it:
+  npm run deploy:schema-dry-run -- --settings ./settings.json
+  npm run deploy:schema-dry-run -- --secrets ./deploy.bootstrap.local.json
+
 Optional extra table lists:
   CONTROL_PLANE_SCHEMA_PROTECTED_TABLES=foo,bar   never drop these names
   CONTROL_PLANE_SCHEMA_ALLOW_DROP_TABLES=old_tmp  allow standalone DROP of these names only

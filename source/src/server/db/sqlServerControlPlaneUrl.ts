@@ -12,7 +12,7 @@ export const parseSqlServerConnectionUrl = (url: string) => {
   }
   const parsed = parseSqlServerAddress(hostPart, 1433);
   return {
-    host: hostPart,
+    host: parsed.host,
     port: parsed.port,
     database: params.get('database') ?? params.get('initial catalog') ?? 'AppEnd',
     username: params.get('user') ?? params.get('username') ?? '',

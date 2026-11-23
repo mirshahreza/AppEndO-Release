@@ -1,5 +1,10 @@
 import { Router, type Express } from 'express';
 import { InstallController } from '../controllers/install.controller';
+import { readRuntimeSettings } from '../config/settingsFile';
+import {
+  PRODUCTION_HTTP_INSTALL_BLOCKED_MESSAGE,
+  productionHttpInstallBlocked,
+} from '../setup/productionInstallHttpGate';
 
 export type InstallRoutesDeps = {
   settingsPath: string;
@@ -8,6 +13,18 @@ export type InstallRoutesDeps = {
 export const mountInstallRoutes = (app: Express, deps: InstallRoutesDeps): void => {
   const controller = new InstallController().withSettingsPath(deps.settingsPath);
   const router = Router();
+
+  router.use((_req, res, next) => {
+    const nodeEnv = readRuntimeSettings(deps.settingsPath).nodeEnv;
+    if (!productionHttpInstallBlocked(nodeEnv)) {
+      next();
+      return;
+    }
+    res.status(403).json({
+      success: false,
+      error: PRODUCTION_HTTP_INSTALL_BLOCKED_MESSAGE,
+    });
+  });
 
   router.get('/status', controller.getStatus);
   router.post('/database/test', controller.testDatabase);

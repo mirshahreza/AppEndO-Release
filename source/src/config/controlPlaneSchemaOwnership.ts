@@ -40,7 +40,7 @@ export const CONTROL_PLANE_SCHEMA_OWNERSHIP_LAYERS: readonly ControlPlaneSchemaL
     title: 'Sequelize feature extensions (base_* not in Prisma)',
     source: 'src/server/db/ensureControlPlaneFeatureTables.ts',
     upgradeCommand: 'npm run schema:install-extensions',
-    notes: 'Version marker: CONTROL_PLANE_SEQUELIZE_FEATURE_SCHEMA_VERSION in controlPlaneBootMarkers.ts.',
+    notes: 'Version marker: CONTROL_PLANE_SEQUELIZE_FEATURE_SCHEMA_VERSION in controlPlaneBootMarkers.ts. Names in CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES are passed to Prisma as tables.external so migrate diff does not emit DropTable for them.',
   },
   {
     id: CONTROL_PLANE_SCHEMA_LAYER_IDS.extxPackageCoreDdl,
@@ -84,10 +84,77 @@ export const CONTROL_PLANE_SCHEMA_PROTECTED_TABLE_NAMES = [
   '_prisma_migrations',
 ] as const;
 
+/**
+ * Control-plane tables owned by Sequelize (or raw SQL), not by prisma/schema.prisma.
+ * Prisma is locked, so these models are not added there. Additive sync declares them
+ * as externally managed tables; migrate diff must not treat them as drift to drop.
+ * Do not list tables that also have a Prisma model (for example base_logs_app).
+ */
+export const CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES = [
+  'base_component_usage_summary',
+  'base_control_plane_boot_markers',
+  'base_credential_vault_secrets',
+  'base_dashboard_page_access',
+  'base_dashboard_snapshots',
+  'base_dashboard_widget_comments',
+  'base_data_sources',
+  'base_direct_message_attachments',
+  'base_direct_message_messages',
+  'base_direct_message_participant_state',
+  'base_direct_message_threads',
+  'base_extx_business_rule_docs',
+  'base_info_culture_text',
+  'base_info_title_path',
+  'base_personal_inbox_archived_items',
+  'base_personal_inbox_correspondence',
+  'base_personal_inbox_item_folder_tags',
+  'base_personal_inbox_item_seen',
+  'base_personal_inbox_projection_items',
+  'base_personal_inbox_projection_meta',
+  'base_personal_inbox_user_folders',
+  'base_product_ideas',
+  'base_record_event_holds',
+  'base_record_events',
+  'base_user_message_dispatches',
+  'base_workbooks',
+] as const;
+
+export type ControlPlaneExternalTableProvider = 'postgresql' | 'mysql' | 'sqlite' | 'sqlserver';
+
+/** Prisma `tables.external` names. SQL Server and PostgreSQL require a schema qualifier. */
+export const qualifyExternallyManagedTableName = (
+  provider: ControlPlaneExternalTableProvider,
+  tableName: string,
+): string => {
+  const name = tableName.trim().toLowerCase();
+  if (provider === 'sqlserver') return `dbo.${name}`;
+  if (provider === 'postgresql') return `public.${name}`;
+  return name;
+};
+
+export const listPrismaExternalTableNames = (
+  provider: ControlPlaneExternalTableProvider,
+): string[] => (
+  CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES.map((name) => (
+    qualifyExternallyManagedTableName(provider, name)
+  ))
+);
+
+const EXTERNALLY_MANAGED_TABLE_NAME_SET = new Set<string>(
+  CONTROL_PLANE_EXTERNALLY_MANAGED_TABLE_NAMES,
+);
+
+export const isExternallyManagedControlPlaneTableName = (rawName: string): boolean => (
+  EXTERNALLY_MANAGED_TABLE_NAME_SET.has(rawName.trim().toLowerCase())
+);
+
 export const isNonPrismaProtectedTableName = (rawName: string): boolean => {
   const name = rawName.trim().toLowerCase();
   if (!name) return false;
   if (CONTROL_PLANE_SCHEMA_PROTECTED_TABLE_NAMES.some((fixed) => fixed === name)) {
+    return true;
+  }
+  if (isExternallyManagedControlPlaneTableName(name)) {
     return true;
   }
   return CONTROL_PLANE_NON_PRISMA_TABLE_PREFIXES.some((prefix) => name.startsWith(prefix));

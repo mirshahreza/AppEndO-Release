@@ -70,7 +70,7 @@ import {
   DEFAULT_CONTROL_PLANE_PROVIDER,
   isControlPlaneProviderId,
 } from '../../../shared/api/contracts/install/controlPlaneProviders';
-import { isSqlServerNamedInstanceHost } from '../../../shared/lib/sqlServerAddress';
+import { isSqlServerNamedInstanceHost, parseSqlServerHost } from '../../../shared/lib/sqlServerAddress';
 import {
   buildControlPlaneDatabaseSettingsFromInstallPayload,
   controlPlaneHasSchema,
@@ -112,11 +112,20 @@ const parseDatabasePayload = (payload: InstallDatabasePayload): ParsedInstallDat
     throw new HttpError(400, 'provider must be postgresql, mysql, sqlite, or sqlserver.');
   }
 
-  const host = String(payload.host ?? '').trim();
+  let host = String(payload.host ?? '').trim();
   const database = String(payload.database ?? '').trim();
   const username = String(payload.username ?? '').trim();
   const password = String(payload.password ?? '');
-  const port = Number(payload.port);
+  let port = Number(payload.port);
+  if (providerRaw === 'sqlserver' && host && !isSqlServerNamedInstanceHost(host)) {
+    const parsedHost = parseSqlServerHost(host);
+    if (parsedHost.server) {
+      host = parsedHost.server;
+      if ((!Number.isFinite(port) || port <= 0) && parsedHost.port) {
+        port = parsedHost.port;
+      }
+    }
+  }
   const encrypt = payload.encrypt !== false;
   const trustServerCertificate = payload.trustServerCertificate !== false;
   const overrideExistingObjects = payload.overrideExistingObjects === true;

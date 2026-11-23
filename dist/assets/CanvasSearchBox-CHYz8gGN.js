@@ -1,0 +1,1 @@
+import{j as a}from"./react-vendor-DelaA65R.js";import{c as o,aT as S,aU as r,aV as p}from"./index-DPl-MJKv.js";import{A as C}from"./AiFieldAssistSectionContext-Cc1_ih3v.js";const n=({className:s,...A})=>a.jsx("div",{className:o(p,r["top-left"]),"data-position":"top-left",onPointerDown:t=>t.stopPropagation(),children:a.jsx(C,{...A,className:o(S,s)})});export{n as C};

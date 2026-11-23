@@ -1,14 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import * as esbuild from 'esbuild';
+import {
+  generatedPrismaClientEntryPath,
+  generatedPrismaClientRuntimePath,
+  resolveAppRuntimeRoot,
+} from './appRuntimeRoot';
 
-export const GENERATED_PRISMA_CLIENT_ENTRY = (): string => (
-  path.join(process.cwd(), 'src', 'generated', 'prisma', 'client.ts')
-);
+export const GENERATED_PRISMA_CLIENT_ENTRY = (): string => generatedPrismaClientEntryPath();
 
-export const GENERATED_PRISMA_CLIENT_RUNTIME = (): string => (
-  path.join(process.cwd(), 'src', 'generated', 'prisma', 'client.runtime.mjs')
-);
+export const GENERATED_PRISMA_CLIENT_RUNTIME = (): string => generatedPrismaClientRuntimePath();
 
 type CompileOptions = {
   /** After `prisma generate`, always rewrite the Node runtime module. */
@@ -36,7 +37,7 @@ export const compileGeneratedPrismaClientForNode = (options: CompileOptions = {}
   if (stale) {
     fs.mkdirSync(path.dirname(outfile), { recursive: true });
     esbuild.buildSync({
-      absWorkingDir: process.cwd(),
+      absWorkingDir: resolveAppRuntimeRoot(),
       entryPoints: [entry],
       outfile,
       bundle: true,

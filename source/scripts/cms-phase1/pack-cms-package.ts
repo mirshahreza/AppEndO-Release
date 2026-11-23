@@ -78,6 +78,10 @@ const isCmsObjectName = (objectName: string): boolean => objectName.trim().toLow
 
 const CLONE_DEV_SQL_LOGIN = 'appendo_clone_dev';
 
+/** `--no-db-capture` or APPENDO_PACK_NO_DB_CAPTURE=1: ship the module without rows from the local DB. */
+const packNoDbCaptureRequested = (): boolean =>
+  process.argv.includes('--no-db-capture') || process.env.APPENDO_PACK_NO_DB_CAPTURE === '1';
+
 const packDataSourcesForCmsCapture = (settingsPath: string): StoredDataSource[] => {
   const hydrated = getDataSourcesFromSettings(settingsPath).map((item) =>
     hydrateDataSourcePassword(item),
@@ -109,7 +113,8 @@ async function main(): Promise<void> {
   const reinstallFlag = process.argv.includes('--reinstall');
   const upload = process.argv.includes('--upload') || reinstallFlag;
   const settingsPath = resolveActiveSettingsPath();
-  const sources = packDataSourcesForCmsCapture(settingsPath);
+  const noDbCapture = packNoDbCaptureRequested();
+  const sources = noDbCapture ? getDataSourcesFromSettings(settingsPath) : packDataSourcesForCmsCapture(settingsPath);
   const source = sources.find((item) => item.isDefault) ?? sources[0];
   if (!source) {
     throw new Error('No data source is configured in settings.json.');
@@ -121,10 +126,14 @@ async function main(): Promise<void> {
     getDataSources: () => packDataSourcesForCmsCapture(settingsPath),
   });
 
-  console.log('Capturing CMS schema, vocab, content, and files…');
+  console.log(
+    noDbCapture
+      ? 'Packing CMS structure only (no DB capture: no vocab, content, or files from the local database)…'
+      : 'Capturing CMS schema, vocab, content, and files…',
+  );
   const captured = await captureCmsModule(
     { edgeDbQuery, settingsPath },
-    { dataSourceId: source.id, includeOptionalRecords: true },
+    { dataSourceId: source.id, includeOptionalRecords: !noDbCapture, captureDbRows: !noDbCapture },
   );
 
   for (const warning of captured.warnings) {
@@ -264,7 +273,9 @@ async function main(): Promise<void> {
     id: PACKAGE_ID,
     name: PACKAGE_NAME,
     version: PACKAGE_VERSION,
-    description: 'CMS Studio module packed from the live node (schema, vocab, content, files, Designer pages). Home review-queue widget ships via core registry + culture keys.',
+    description: noDbCapture
+      ? 'CMS Studio module (schema, Designer pages, edge APIs; no captured vocab or content). Home review-queue widget ships via core registry + culture keys.'
+      : 'CMS Studio module packed from the live node (schema, vocab, content, files, Designer pages). Home review-queue widget ships via core registry + culture keys.',
     requiredAppVersion: '>=1.0.0',
     dependencies: [],
     capabilities: {

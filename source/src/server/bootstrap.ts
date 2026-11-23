@@ -45,9 +45,14 @@ export async function startServer() {
   const settingsPath = resolveActiveSettingsPath();
   const { isInstallComplete } = await import('./db/installSettingsStore');
   if (!isInstallComplete(settingsPath)) {
-    const { startInstallPendingServer } = await import('./bootstrapInstallPending');
-    await startInstallPendingServer(settingsPath);
-    return;
+    const { adoptSettingsFileJwtSecrets, runServerFirstBootBootstrap } = await import('./setup/deployServerBoot');
+    const firstBoot = await runServerFirstBootBootstrap(settingsPath);
+    if (firstBoot !== 'ready' || !isInstallComplete(settingsPath)) {
+      adoptSettingsFileJwtSecrets(settingsPath);
+      const { startInstallPendingServer } = await import('./bootstrapInstallPending');
+      await startInstallPendingServer(settingsPath);
+      return;
+    }
   }
 
   // Vite is a separate process — start it in parallel with DB/settings/route init so

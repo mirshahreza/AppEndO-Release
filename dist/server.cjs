@@ -2973,7 +2973,7 @@ var init_controlPlaneSchemaDiff = __esm({
     SCHEMA_MODEL_BLOCK_RE = /model\s+(\w+)\s*\{([\s\S]*?)\n\}/g;
     SCHEMA_MAP_RE = /@@map\(\s*"([^"]+)"\s*\)/;
     DIFF_HEADER_RE = /^-- ([A-Z][A-Za-z]+)\s*$/;
-    SQL_TABLE_REF_RE = /(?:\bTABLE\b|\bVIEW\b|\bON\b|\bINTO\b|\bFROM\b)\s+(?:IF\s+EXISTS\s+)?((?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*)(?:\s*\.\s*(?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*))?)/gi;
+    SQL_TABLE_REF_RE = /(?:\bTABLE\b|\bVIEW\b|\bON\b(?!\s+(?:DELETE|UPDATE)\b)|\bINTO\b|\bFROM\b)\s+(?:IF\s+EXISTS\s+)?((?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*)(?:\s*\.\s*(?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*))?)/gi;
     STANDALONE_DROP_HEADERS = /* @__PURE__ */ new Set(["DropTable", "DropView"]);
     MANAGED_OUTSIDE_PRISMA_REASON_PREFIX = "managed outside Prisma";
     BEGIN_TRAN_LINE_RE = /^\s*BEGIN\s+(?:TRAN|TRANSACTION)\s*;?\s*$/i;
@@ -3333,6 +3333,9 @@ ${preview}`
       const nonPrismaTarget = tables.find((table) => !isPrismaOwnedTableName(table, prismaTables));
       if (nonPrismaTarget) {
         return `statement targets ${nonPrismaTarget}, which is not a Prisma control-plane table`;
+      }
+      if (block.header === "AddForeignKey") {
+        return "AddForeignKey is not applied on the additive sync path (existing rows may not satisfy it)";
       }
       if (block.header === "AlterTable" && /\bDROP\s+COLUMN\b/i.test(block.sql)) {
         return "DROP COLUMN is not applied on the additive sync path (preserves extra columns)";
@@ -30212,7 +30215,7 @@ var init_modelRequestParams = __esm({
 });
 
 // src/shared/api/contracts/ai/validators.ts
-var SLUG_PATTERN2, PROVIDER_KINDS, WEB_SEARCH_PROVIDERS, isRecord2, parseOptionalString2, parseOptionalNumber2, parseRequestParams, normalizeCapabilities, normalizeProvider, normalizeAiProviderConfig, normalizeAiModelEntry, syncDefaultFlags, defaultProviderForKind, mergeProvidersForModels, normalizeAiWebSearchSettings, HOSTNAME_PATTERN, normalizeAiHttpSettings, INBOUND_MCP_SERVICE_ROLE_NAMES, normalizeInboundMcpServiceRoleName, normalizeAiMcpInboundHostSettings, normalizeAiMcpSettings, normalizeAiSettings, normalizeAiGlobalSettings, redactAiProviderConfig, redactAiModelEntry, redactAiMcpServerConfig, redactAiWebSearchSettings, redactAiMcpInboundHostSettings, redactAiMcpSettings, redactAiSettings, mergeProviderApiKey, validateAiModelPayload, validateAiProviderPayload, validateAiMcpServerPayload, mergeMcpServerEnv, mergeInboundHostApiKey, mergeWebSearchApiKey, validateAiInboundHostPayload, validateAiWebSearchPayload, validateAiHttpPayload, validateDefaultCapabilityPacksPayload, resolveAiProviderConfig, isUsableAiProviderApiKey, isAiChatModelKeyedAndEnabled, resolveModelRuntimeBaseUrl;
+var SLUG_PATTERN2, PROVIDER_KINDS, WEB_SEARCH_PROVIDERS, isRecord2, parseOptionalString2, parseOptionalNumber2, parseRequestParams, normalizeCapabilities, normalizeProvider, normalizeAiProviderConfig, normalizeAiModelEntry, syncDefaultFlags, defaultProviderForKind, mergeProvidersForModels, normalizeAiWebSearchSettings, HOSTNAME_PATTERN, normalizeAiHttpSettings, INBOUND_MCP_SERVICE_ROLE_NAMES, normalizeInboundMcpServiceRoleName, normalizeAiMcpInboundHostSettings, normalizeAiMcpSettings, normalizeAiSettings, normalizeAiGlobalSettings, redactAiProviderConfig, redactAiModelEntry, redactAiMcpServerConfig, redactAiWebSearchSettings, redactAiMcpInboundHostSettings, redactAiMcpSettings, redactAiSettings, mergeProviderApiKey, validateAiModelPayload, validateAiProviderPayload, validateAiMcpServerPayload, mergeMcpServerEnv, mergeInboundHostApiKey, mergeWebSearchApiKey, validateAiInboundHostPayload, validateAiWebSearchPayload, validateAiHttpPayload, validateDefaultCapabilityPacksPayload, resolveAiProviderConfig, isUsableAiProviderApiKey, aiProviderRequiresApiKey, isAiChatModelKeyedAndEnabled, resolveModelRuntimeBaseUrl;
 var init_validators2 = __esm({
   "src/shared/api/contracts/ai/validators.ts"() {
     init_constants2();
@@ -30669,9 +30672,12 @@ var init_validators2 = __esm({
       const trimmed = apiKey?.trim() ?? "";
       return trimmed.length > 0 && trimmed !== REDACTED_API_KEY;
     };
+    aiProviderRequiresApiKey = (provider) => provider !== "ollama";
     isAiChatModelKeyedAndEnabled = (model, settings) => {
       const provider = resolveAiProviderConfig(settings, model.provider);
-      return Boolean(model.enabled) && isAiModelChatCapable(model) && isUsableAiProviderApiKey(provider?.apiKey, provider?.hasApiKey);
+      if (!model.enabled || !isAiModelChatCapable(model)) return false;
+      if (!aiProviderRequiresApiKey(model.provider)) return Boolean(provider);
+      return isUsableAiProviderApiKey(provider?.apiKey, provider?.hasApiKey);
     };
     resolveModelRuntimeBaseUrl = (model, providerConfig) => resolveEffectiveModelBaseUrl(model.provider, model.baseUrl, providerConfig?.baseUrl);
   }

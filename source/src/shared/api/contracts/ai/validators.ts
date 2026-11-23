@@ -640,14 +640,17 @@ export const isUsableAiProviderApiKey = (apiKey?: string | null, hasApiKey?: boo
   return trimmed.length > 0 && trimmed !== REDACTED_API_KEY;
 };
 
+/** Local runtimes that never take an API key (the settings UI shows "No key required"). */
+export const aiProviderRequiresApiKey = (provider: AiProviderKind): boolean => provider !== 'ollama';
+
 export const isAiChatModelKeyedAndEnabled = (
   model: Pick<AiModelEntry, 'enabled' | 'capabilities' | 'provider'>,
   settings: AiSettings,
 ): boolean => {
   const provider = resolveAiProviderConfig(settings, model.provider);
-  return Boolean(model.enabled)
-    && isAiModelChatCapable(model)
-    && isUsableAiProviderApiKey(provider?.apiKey, provider?.hasApiKey);
+  if (!model.enabled || !isAiModelChatCapable(model)) return false;
+  if (!aiProviderRequiresApiKey(model.provider)) return Boolean(provider);
+  return isUsableAiProviderApiKey(provider?.apiKey, provider?.hasApiKey);
 };
 
 export const resolveModelRuntimeBaseUrl = (

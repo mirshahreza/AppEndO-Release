@@ -10,6 +10,7 @@ import { PageGuideHeaderButton } from '../../shared/ui/shell/pageGuide/PageGuide
 import { ShellHeaderPageActions } from './ShellHeaderPageActions';
 import { ShellHeaderAccountEndCluster } from './ShellHeaderAccountEndCluster';
 import { ShellPageWidthHeaderControl } from '../../shared/ui/shell-foundation/ShellPageWidthHeaderControl';
+import { ShellAppEndooControl } from '../../shared/ui/shell/ShellAppEndooControl';
 import { pageGuideProps } from '../../shared/ui/shell/pageGuide/pageGuide.attrs';
 import { pageGuideChromeProps } from '../../shared/ui/shell/pageGuide/pageGuideChrome';
 import {
@@ -46,6 +47,9 @@ export type AdminShellHeaderProps = {
   desktopNavigationMenu?: boolean;
   isFullscreen: boolean;
   onToggleFullscreen: () => void;
+  /** In-app AppEndoo agent panel. The toggle renders only when both are set and AI is enabled. */
+  isAiPanelOpen?: boolean;
+  onAiPanelOpenChange?: (open: boolean) => void;
 };
 
 export const AdminShellHeader: React.FC<AdminShellHeaderProps> = ({
@@ -64,6 +68,8 @@ export const AdminShellHeader: React.FC<AdminShellHeaderProps> = ({
   desktopNavigationMenu = false,
   isFullscreen,
   onToggleFullscreen,
+  isAiPanelOpen,
+  onAiPanelOpenChange,
 }) => {
   const pageTitle = currentModule.label ?? 'Page';
 
@@ -129,6 +135,16 @@ export const AdminShellHeader: React.FC<AdminShellHeaderProps> = ({
         aria-orientation="vertical"
         className={ADMIN_SHELL_HEADER_VERTICAL_SEPARATOR_CLASS}
       />
+
+      {onAiPanelOpenChange ? (
+        <ShellAppEndooControl
+          isOpen={Boolean(isAiPanelOpen)}
+          onOpenChange={onAiPanelOpenChange}
+          openAriaLabel="Open AppEndoo"
+          closeAriaLabel="Close AppEndoo"
+          showTrailingDivider={false}
+        />
+      ) : null}
 
       <FeedbackEntryButton pageKey={pageKey} variant="header" />
 

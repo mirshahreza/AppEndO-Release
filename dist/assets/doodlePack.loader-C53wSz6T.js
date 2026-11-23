@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/dist-C4JlGAYh.js","assets/react-vendor-DelaA65R.js"])))=>i.map(i=>d[i]);
-import{E as c}from"./index-DPl-MJKv.js";import{c as i}from"./lazyNavigationIconMap-DcdW57gY.js";import"./react-vendor-DelaA65R.js";import"./tanstack-query-CQz7GcnD.js";let t=null;async function p(){if(t)return t;const e=await c(()=>import("./dist-C4JlGAYh.js"),__vite__mapDeps([0,1])),a=Object.keys(e).filter(o=>o.endsWith("Icon")).sort((o,r)=>o.localeCompare(r));return t={iconNames:a,entries:[],map:i(a,o=>e[o])},t}export{p as default};

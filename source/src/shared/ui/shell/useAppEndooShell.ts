@@ -8,7 +8,7 @@ import { hasConfiguredAiProvider, isAiGloballyEnabled } from '../../lib/aiAccess
 import type { AppToastType } from '../AppToast';
 
 export const APPENDOO_SETUP_TOAST =
-  'Set up at least one AI provider API key in Settings → AI Models before using AppEndoo.';
+  'Set up at least one AI provider (an API key, or a local runtime such as Ollama) in Settings → AI Models before using AppEndoo.';
 
 const buildAiModelsSettingsRelativePath = (mountId: string) => {
   const sectionPath = 'settings/ai-models';

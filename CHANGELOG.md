@@ -2,6 +2,30 @@
 
 Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release/releases). Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.0.24] - 2026-11-23
+
+### Added
+
+- The Studio header has an AppEndoo button that opens and closes the in-app agent panel. When no AI provider is set up yet, it opens Settings → AI Models instead.
+
+### Fixed
+
+- A fresh install on SQLite no longer fails with `no such table: main.base_otp_challenges`. Foreign key actions (`ON DELETE` / `ON UPDATE`) in the schema sync are no longer mistaken for table names, so tables with inline foreign keys are created.
+- AI providers that need no API key, such as a local Ollama runtime, now show their models in chat.
+
+## [0.0.23] - 2026-11-23
+
+### Added
+
+- Install wizard and in-app agent screenshots in the README and on the public landing page.
+
+### Fixed
+
+- Packaged deploy snapshots can complete their first boot unattended.
+- First boot creates the control-plane tables before installing bundled packages.
+- First boot no longer depends on release tooling that is not part of the public tree.
+- The additive schema sync produces valid statements on SQL Server.
+
 ## [0.0.18] - 2026-11-23
 
 ### Security

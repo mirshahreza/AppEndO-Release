@@ -87,10 +87,24 @@ const withProviderKey = (settings: AiSettings, provider: AiSettings['providers']
 });
 
 describe('isAiChatModelKeyedAndEnabled', () => {
-  it('drops enabled Ollama chat models that have no API key', () => {
+  it('keeps enabled Ollama chat models without an API key (Ollama takes no key)', () => {
     const ollama = BASE_SETTINGS.models.find((model) => model.id === 'ollama-llama-3-2');
     expect(ollama?.enabled).toBe(true);
-    expect(isAiChatModelKeyedAndEnabled(ollama!, BASE_SETTINGS)).toBe(false);
+    expect(isAiChatModelKeyedAndEnabled(ollama!, BASE_SETTINGS)).toBe(true);
+  });
+
+  it('drops Ollama chat models when no Ollama provider is configured', () => {
+    const noProvider: AiSettings = {
+      ...BASE_SETTINGS,
+      providers: BASE_SETTINGS.providers.filter((item) => item.provider !== 'ollama'),
+    };
+    const ollama = noProvider.models.find((model) => model.id === 'ollama-llama-3-2')!;
+    expect(isAiChatModelKeyedAndEnabled(ollama, noProvider)).toBe(false);
+  });
+
+  it('drops disabled Ollama chat models', () => {
+    const ollama = { ...BASE_SETTINGS.models.find((model) => model.id === 'ollama-llama-3-2')!, enabled: false };
+    expect(isAiChatModelKeyedAndEnabled(ollama, BASE_SETTINGS)).toBe(false);
   });
 
   it('drops enabled Gemini chat models when the provider key is empty', () => {
@@ -104,7 +118,7 @@ describe('isAiChatModelKeyedAndEnabled', () => {
     const gemini = keyed.models.find((model) => model.id === 'gemini-2-5-flash')!;
     const ollama = keyed.models.find((model) => model.id === 'ollama-llama-3-2')!;
     expect(isAiChatModelKeyedAndEnabled(gemini, keyed)).toBe(true);
-    expect(isAiChatModelKeyedAndEnabled(ollama, keyed)).toBe(false);
+    expect(isAiChatModelKeyedAndEnabled(ollama, keyed)).toBe(true);
   });
 
   it('treats the redacted placeholder as no key', () => {
@@ -131,7 +145,7 @@ describe('isAiChatModelKeyedAndEnabled', () => {
     expect(isAiChatModelKeyedAndEnabled(gemini, keyed)).toBe(true);
   });
 
-  it('keeps Ollama only when a key is actually stored', () => {
+  it('still keeps Ollama when a key is stored', () => {
     const keyed = withProviderKey(BASE_SETTINGS, 'ollama', 'local-token');
     const ollama = keyed.models.find((model) => model.id === 'ollama-llama-3-2')!;
     expect(isAiChatModelKeyedAndEnabled(ollama, keyed)).toBe(true);

@@ -382,6 +382,8 @@ export const AdminLayoutFrame = () => {
                 pageKey={headerContext.item.pageKey}
                 isFullscreen={isFullscreen}
                 onToggleFullscreen={toggleFullscreen}
+                isAiPanelOpen={isAiPanelOpen}
+                onAiPanelOpenChange={setIsAiPanelOpen}
                 utilityNav={headerItems.length > 0 ? (
                   <ShellChromeUtilityNav
                     items={headerItems}

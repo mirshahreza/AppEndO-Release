@@ -35,7 +35,7 @@ const SCHEMA_MODEL_BLOCK_RE = /model\s+(\w+)\s*\{([\s\S]*?)\n\}/g;
 const SCHEMA_MAP_RE = /@@map\(\s*"([^"]+)"\s*\)/;
 const DIFF_HEADER_RE = /^-- ([A-Z][A-Za-z]+)\s*$/;
 const SQL_TABLE_REF_RE =
-  /(?:\bTABLE\b|\bVIEW\b|\bON\b|\bINTO\b|\bFROM\b)\s+(?:IF\s+EXISTS\s+)?((?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*)(?:\s*\.\s*(?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*))?)/gi;
+  /(?:\bTABLE\b|\bVIEW\b|\bON\b(?!\s+(?:DELETE|UPDATE)\b)|\bINTO\b|\bFROM\b)\s+(?:IF\s+EXISTS\s+)?((?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*)(?:\s*\.\s*(?:"[^"]+"|`[^`]+`|\[[^\]]+\]|[A-Za-z_][\w]*))?)/gi;
 
 const STANDALONE_DROP_HEADERS = new Set(['DropTable', 'DropView']);
 
@@ -493,6 +493,13 @@ const describeSkipReason = (
   const nonPrismaTarget = tables.find((table) => !isPrismaOwnedTableName(table, prismaTables));
   if (nonPrismaTarget) {
     return `statement targets ${nonPrismaTarget}, which is not a Prisma control-plane table`;
+  }
+
+  if (block.header === 'AddForeignKey') {
+    // Before ON DELETE / ON UPDATE stopped matching as a table name, every AddForeignKey
+    // step was skipped here. Keep that behaviour on the additive path so upgrading an
+    // existing database never fails on rows that would violate a new constraint.
+    return 'AddForeignKey is not applied on the additive sync path (existing rows may not satisfy it)';
   }
 
   if (block.header === 'AlterTable' && /\bDROP\s+COLUMN\b/i.test(block.sql)) {

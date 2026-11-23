@@ -77,6 +77,34 @@ CREATE TABLE "base_widgets" (
     expect(extractSqlTargetTables('CREATE UNIQUE INDEX "x" ON "base_users"("email");')).toEqual(['base_users']);
   });
 
+  it('does not treat ON DELETE / ON UPDATE foreign key actions as table names', () => {
+    const sqliteCreate = [
+      '-- CreateTable',
+      'CREATE TABLE "base_widgets" (',
+      '    "id" INTEGER NOT NULL PRIMARY KEY,',
+      '    "user_id" BIGINT NOT NULL,',
+      '    CONSTRAINT "base_widgets_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "base_users" ("id") ON DELETE CASCADE ON UPDATE CASCADE',
+      ');',
+    ].join('\n');
+    expect(extractSqlTargetTables(sqliteCreate)).toEqual(['base_widgets']);
+
+    const addFk = [
+      '-- AddForeignKey',
+      'ALTER TABLE "base_widgets" ADD CONSTRAINT "base_widgets_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "base_users"("id") ON DELETE CASCADE ON UPDATE NO ACTION;',
+    ].join('\n');
+    expect(extractSqlTargetTables(addFk)).toEqual(['base_widgets']);
+
+    const result = filterControlPlaneSchemaDiffSql(`${sqliteCreate}\n\n${addFk}\n`, {
+      prismaTables: listPrismaMappedTableNames(MINI_SCHEMA),
+    });
+    expect(result.appliedSql).toContain('CREATE TABLE "base_widgets"');
+    expect(result.appliedSql).toContain('REFERENCES "base_users" ("id") ON DELETE CASCADE');
+    expect(result.appliedSql).not.toContain('ADD CONSTRAINT "base_widgets_user_id_fkey"');
+    expect(result.skipped).toEqual([
+      expect.objectContaining({ header: 'AddForeignKey', tables: ['base_widgets'] }),
+    ]);
+  });
+
   it('preserves unknown tables and still applies Prisma CREATE / SQLite redefine', () => {
     const script = `-- DropTable
 PRAGMA foreign_keys=off;

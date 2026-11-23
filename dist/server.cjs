@@ -1519,6 +1519,28 @@ function releaseRuntimeLock(locksDir, name) {
   } catch {
   }
 }
+function cleanupLegacyRepoRootScratch(repoRoot) {
+  let entries;
+  try {
+    entries = import_fs.default.readdirSync(repoRoot);
+  } catch {
+    return;
+  }
+  for (const name of entries) {
+    const full = import_path2.default.join(repoRoot, name);
+    try {
+      if (!import_fs.default.statSync(full).isFile()) continue;
+    } catch {
+      continue;
+    }
+    const drop = /^settings\.json\.[a-f0-9]+\.tmp$/i.test(name) || name.startsWith("tmp-") || /^t[0-9]\.png$/i.test(name) || name === "eua-usage.jsonl" || name === "knip-out.json" || name === "knip-safe-unexport.json" || /^repair-.*\.log$/i.test(name) || name === "settings.json.clone-oss-snapshot.json";
+    if (!drop) continue;
+    try {
+      import_fs.default.unlinkSync(full);
+    } catch {
+    }
+  }
+}
 function cleanupRuntimeTmpFiles(tmpDir) {
   if (!import_fs.default.existsSync(tmpDir)) return;
   const staleMs = 30 * 60 * 1e3;
@@ -1542,6 +1564,75 @@ var init_RuntimeFileStore = __esm({
     import_path2 = __toESM(require("path"), 1);
     import_crypto = __toESM(require("crypto"), 1);
     LOCK_TTL_MS = 6e4;
+  }
+});
+
+// src/core/runtime/runtimePaths.ts
+var import_path3, WORKSPACE_ROOT, runtimeDirs, EDGE_MODELS_INDEX_PATH, EDGE_APIS_INDEX_PATH, EDGE_MODEL_STUDIO_META_INDEX_PATH, RECORD_POLICIES_INDEX_PATH, SSH_HUB_INDEX_PATH, RDP_HUB_INDEX_PATH, FILE_HUB_INDEX_PATH, SQL_CONSOLE_COLLECTIONS_INDEX_PATH, HTTP_CONNECTIONS_INDEX_PATH, HTTP_WORKSHOP_COLLECTIONS_INDEX_PATH, SERVER_FUNCTIONS_INDEX_PATH;
+var init_runtimePaths = __esm({
+  "src/core/runtime/runtimePaths.ts"() {
+    import_path3 = __toESM(require("path"), 1);
+    WORKSPACE_ROOT = "workspace";
+    runtimeDirs = {
+      root: WORKSPACE_ROOT,
+      workspace: WORKSPACE_ROOT,
+      /** Shared atomic-write / helper temp for every workspace module — safe to gitignore. */
+      workspaceTemp: import_path3.default.join(WORKSPACE_ROOT, "temp"),
+      workspaceAssets: import_path3.default.join(WORKSPACE_ROOT, "assets"),
+      serverFunctions: import_path3.default.join(WORKSPACE_ROOT, "server-functions"),
+      serverFunctionsCustom: import_path3.default.join(WORKSPACE_ROOT, "server-functions", "custom"),
+      serverFunctionsBuiltin: import_path3.default.join(WORKSPACE_ROOT, "server-functions", "builtin"),
+      serverFunctionsLocks: import_path3.default.join(WORKSPACE_ROOT, "server-functions", "locks"),
+      designer: import_path3.default.join(WORKSPACE_ROOT, "designer"),
+      designerDrafts: import_path3.default.join(WORKSPACE_ROOT, "designer", "drafts"),
+      designerSnapshots: import_path3.default.join(WORKSPACE_ROOT, "designer", "snapshots"),
+      designerPreviewLogs: import_path3.default.join(WORKSPACE_ROOT, "designer", "preview-logs"),
+      designerExports: import_path3.default.join(WORKSPACE_ROOT, "designer", "exports"),
+      platformRegistry: import_path3.default.join(WORKSPACE_ROOT, "platform-registry"),
+      edgeModels: import_path3.default.join(WORKSPACE_ROOT, "edge-models"),
+      edgeApis: import_path3.default.join(WORKSPACE_ROOT, "edge-apis"),
+      edgeModelStudioMeta: import_path3.default.join(WORKSPACE_ROOT, "edge-model-studio-meta"),
+      edgeModelsLocks: import_path3.default.join(WORKSPACE_ROOT, "edge-models", "locks"),
+      edgeApisLocks: import_path3.default.join(WORKSPACE_ROOT, "edge-apis", "locks"),
+      edgeModelStudioMetaLocks: import_path3.default.join(WORKSPACE_ROOT, "edge-model-studio-meta", "locks"),
+      recordPolicies: import_path3.default.join(WORKSPACE_ROOT, "record-policies"),
+      recordPoliciesLocks: import_path3.default.join(WORKSPACE_ROOT, "record-policies", "locks"),
+      recordPolicyBindings: import_path3.default.join(WORKSPACE_ROOT, "record-policy-bindings"),
+      recordPolicyBindingsLocks: import_path3.default.join(WORKSPACE_ROOT, "record-policy-bindings", "locks"),
+      querySurfaceBindings: import_path3.default.join(WORKSPACE_ROOT, "query-surface-bindings"),
+      querySurfaceBindingsLocks: import_path3.default.join(WORKSPACE_ROOT, "query-surface-bindings", "locks"),
+      appearancePresets: import_path3.default.join(WORKSPACE_ROOT, "appearance"),
+      appearancePresetsLocks: import_path3.default.join(WORKSPACE_ROOT, "appearance", "locks"),
+      sshHub: import_path3.default.join(WORKSPACE_ROOT, "ssh-hub"),
+      sshHubLocks: import_path3.default.join(WORKSPACE_ROOT, "ssh-hub", "locks"),
+      rdpHub: import_path3.default.join(WORKSPACE_ROOT, "rdp-hub"),
+      rdpHubLocks: import_path3.default.join(WORKSPACE_ROOT, "rdp-hub", "locks"),
+      fileHub: import_path3.default.join(WORKSPACE_ROOT, "file-hub"),
+      fileHubLocks: import_path3.default.join(WORKSPACE_ROOT, "file-hub", "locks"),
+      sqlConsole: import_path3.default.join(WORKSPACE_ROOT, "sql-console"),
+      sqlConsoleLocks: import_path3.default.join(WORKSPACE_ROOT, "sql-console", "locks"),
+      httpConnections: import_path3.default.join(WORKSPACE_ROOT, "http-connections"),
+      httpConnectionsLocks: import_path3.default.join(WORKSPACE_ROOT, "http-connections", "locks"),
+      appendoo: import_path3.default.join(WORKSPACE_ROOT, "appendoo"),
+      models: import_path3.default.join(WORKSPACE_ROOT, "models"),
+      modelsEmbeddings: import_path3.default.join(WORKSPACE_ROOT, "models", "embeddings"),
+      platform: import_path3.default.join(WORKSPACE_ROOT, "platform"),
+      platformFonts: import_path3.default.join(WORKSPACE_ROOT, "platform", "fonts"),
+      platformPwa: import_path3.default.join(WORKSPACE_ROOT, "platform", "pwa"),
+      feedbackAttachments: import_path3.default.join(WORKSPACE_ROOT, "feedback-attachments"),
+      directMessageAttachments: import_path3.default.join(WORKSPACE_ROOT, "direct-message-attachments")
+    };
+    EDGE_MODELS_INDEX_PATH = import_path3.default.join(runtimeDirs.edgeModels, "index.json");
+    EDGE_APIS_INDEX_PATH = import_path3.default.join(runtimeDirs.edgeApis, "index.json");
+    EDGE_MODEL_STUDIO_META_INDEX_PATH = import_path3.default.join(runtimeDirs.edgeModelStudioMeta, "index.json");
+    RECORD_POLICIES_INDEX_PATH = import_path3.default.join(runtimeDirs.recordPolicies, "index.json");
+    SSH_HUB_INDEX_PATH = import_path3.default.join(runtimeDirs.sshHub, "index.json");
+    RDP_HUB_INDEX_PATH = import_path3.default.join(runtimeDirs.rdpHub, "index.json");
+    FILE_HUB_INDEX_PATH = import_path3.default.join(runtimeDirs.fileHub, "index.json");
+    SQL_CONSOLE_COLLECTIONS_INDEX_PATH = import_path3.default.join(runtimeDirs.sqlConsole, "collections.json");
+    HTTP_CONNECTIONS_INDEX_PATH = import_path3.default.join(runtimeDirs.httpConnections, "index.json");
+    HTTP_WORKSHOP_COLLECTIONS_INDEX_PATH = import_path3.default.join(runtimeDirs.httpConnections, "collections.json");
+    SERVER_FUNCTIONS_INDEX_PATH = import_path3.default.join(runtimeDirs.serverFunctions, "index.json");
   }
 });
 
@@ -2417,11 +2508,11 @@ var init_controlPlaneUrlPassword = __esm({
 });
 
 // src/server/db/controlPlaneDatabase.ts
-var import_fs2, import_path3, PROVIDER_ALIASES, normalizeControlPlaneProvider, escapeSqlServerValue2, encodeCredential, readDefaultDataSourceRecord, providerFromDefaultDataSource, buildPostgresUrlFromLegacySettings, buildUrlFromDefaultDataSource, readDatabaseBlock, resolveStoredControlPlaneProvider, readControlPlaneDatabaseSettings, defaultSqliteControlPlanePath, SQLITE_SIDECAR_SUFFIXES, toPosixPath, parseSqliteControlPlaneFilePath, ensureSqliteControlPlaneDirectory, buildSqliteControlPlaneUrl, toInstallSqliteDatabasePath, removeSqliteControlPlaneFiles;
+var import_fs2, import_path4, PROVIDER_ALIASES, normalizeControlPlaneProvider, escapeSqlServerValue2, encodeCredential, readDefaultDataSourceRecord, providerFromDefaultDataSource, buildPostgresUrlFromLegacySettings, buildUrlFromDefaultDataSource, readDatabaseBlock, resolveStoredControlPlaneProvider, readControlPlaneDatabaseSettings, defaultSqliteControlPlanePath, SQLITE_SIDECAR_SUFFIXES, toPosixPath, parseSqliteControlPlaneFilePath, ensureSqliteControlPlaneDirectory, buildSqliteControlPlaneUrl, toInstallSqliteDatabasePath, removeSqliteControlPlaneFiles;
 var init_controlPlaneDatabase = __esm({
   "src/server/db/controlPlaneDatabase.ts"() {
     import_fs2 = __toESM(require("fs"), 1);
-    import_path3 = __toESM(require("path"), 1);
+    import_path4 = __toESM(require("path"), 1);
     init_controlPlaneProviders();
     init_sqlServerAddress();
     init_dataSourceSecrets();
@@ -2537,7 +2628,7 @@ var init_controlPlaneDatabase = __esm({
       const engine = provider !== "postgresql" ? "prisma" : explicitEngine === "pg-pool" ? "pg-pool" : "prisma";
       return { provider, url, engine };
     };
-    defaultSqliteControlPlanePath = () => import_path3.default.join(process.cwd(), "data", "appendo-control.db");
+    defaultSqliteControlPlanePath = () => import_path4.default.join(process.cwd(), "data", "appendo-control.db");
     SQLITE_SIDECAR_SUFFIXES = ["", "-wal", "-shm", "-journal"];
     toPosixPath = (filePath) => filePath.replace(/\\/g, "/");
     parseSqliteControlPlaneFilePath = (urlOrPath) => {
@@ -2550,19 +2641,19 @@ var init_controlPlaneDatabase = __esm({
       } else if (/^\/\/localhost\//i.test(raw)) {
         raw = raw.replace(/^\/\/localhost\//i, "");
       }
-      return import_path3.default.resolve(raw);
+      return import_path4.default.resolve(raw);
     };
     ensureSqliteControlPlaneDirectory = (urlOrPath) => {
-      const dir = import_path3.default.dirname(parseSqliteControlPlaneFilePath(urlOrPath));
+      const dir = import_path4.default.dirname(parseSqliteControlPlaneFilePath(urlOrPath));
       if (!import_fs2.default.existsSync(dir)) {
         import_fs2.default.mkdirSync(dir, { recursive: true });
       }
     };
-    buildSqliteControlPlaneUrl = (filePath = defaultSqliteControlPlanePath()) => `file:${toPosixPath(import_path3.default.resolve(filePath))}`;
+    buildSqliteControlPlaneUrl = (filePath = defaultSqliteControlPlanePath()) => `file:${toPosixPath(import_path4.default.resolve(filePath))}`;
     toInstallSqliteDatabasePath = (filePath) => {
       const resolved = parseSqliteControlPlaneFilePath(filePath);
-      const relative = import_path3.default.relative(process.cwd(), resolved);
-      if (relative && !relative.startsWith("..") && !import_path3.default.isAbsolute(relative)) {
+      const relative = import_path4.default.relative(process.cwd(), resolved);
+      if (relative && !relative.startsWith("..") && !import_path4.default.isAbsolute(relative)) {
         return toPosixPath(relative);
       }
       return toPosixPath(resolved);
@@ -2920,20 +3011,20 @@ var init_prismaCliSqlServerUrl = __esm({
 });
 
 // src/server/db/controlPlaneSchemaPush.ts
-var import_fs3, import_os2, import_path4, import_node_child_process, SCHEMA_PATH, GENERATED_CLASS_PATH, readGeneratedPrismaActiveProvider, generatePrismaClientForRuntimeProvider, readActiveSchemaProvider, PROVIDERS_WITHOUT_MULTIPLE_CASCADE_PATHS, patchReferentialActionsForRestrictedProviders, patchPrismaSchemaForProvider, buildProviderPatchedSchemaContent, createProviderSchemaSession, quoteCliArg, AI_AGENT_ENV_KEYS, isAiAgentEnvKey, CONTROL_PLANE_SCHEMA_PUSH_CONSENT, buildPrismaCliEnv, dropLegacyPostgresBaseViews, writeTempPrismaConfig, isMissingDatabaseError, ensureSqliteFileExists, migrateDiffToSchema, CONTROL_PLANE_SCHEMA_PUSH_DESTRUCTIVE_ENV, isDestructiveControlPlaneSchemaPushRequested, applyAdditiveControlPlaneSchema, bufferToUtf8, formatPrismaCliFailure, runPrismaCliCapture, runPrismaCli, generatePrismaClient, UNICODE_UPGRADE_SCRIPT, prepareSqlServerDatabaseForSchemaPush, pushPrismaSchema, INSTALL_WIZARD_SCHEMA_RESET_CONSENT, forceResetControlPlaneSchemaWithPrisma, pushControlPlaneSchema, restoreDefaultPrismaGenerate, reconcilePrismaClientAfterSchemaOperation;
+var import_fs3, import_os2, import_path5, import_node_child_process, SCHEMA_PATH, GENERATED_CLASS_PATH, readGeneratedPrismaActiveProvider, generatePrismaClientForRuntimeProvider, readActiveSchemaProvider, PROVIDERS_WITHOUT_MULTIPLE_CASCADE_PATHS, patchReferentialActionsForRestrictedProviders, patchPrismaSchemaForProvider, buildProviderPatchedSchemaContent, createProviderSchemaSession, quoteCliArg, AI_AGENT_ENV_KEYS, isAiAgentEnvKey, CONTROL_PLANE_SCHEMA_PUSH_CONSENT, buildPrismaCliEnv, dropLegacyPostgresBaseViews, writeTempPrismaConfig, isMissingDatabaseError, ensureSqliteFileExists, migrateDiffToSchema, CONTROL_PLANE_SCHEMA_PUSH_DESTRUCTIVE_ENV, isDestructiveControlPlaneSchemaPushRequested, applyAdditiveControlPlaneSchema, bufferToUtf8, formatPrismaCliFailure, runPrismaCliCapture, runPrismaCli, generatePrismaClient, UNICODE_UPGRADE_SCRIPT, prepareSqlServerDatabaseForSchemaPush, pushPrismaSchema, INSTALL_WIZARD_SCHEMA_RESET_CONSENT, forceResetControlPlaneSchemaWithPrisma, pushControlPlaneSchema, restoreDefaultPrismaGenerate, reconcilePrismaClientAfterSchemaOperation;
 var init_controlPlaneSchemaPush = __esm({
   "src/server/db/controlPlaneSchemaPush.ts"() {
     import_fs3 = __toESM(require("fs"), 1);
     import_os2 = __toESM(require("os"), 1);
-    import_path4 = __toESM(require("path"), 1);
+    import_path5 = __toESM(require("path"), 1);
     import_node_child_process = require("node:child_process");
     init_controlPlaneDatabase();
     init_controlPlaneSchemaDiff();
     init_controlPlaneSchemaProtectedTables();
     init_generatedPrismaClientRuntime();
     init_prismaCliSqlServerUrl();
-    SCHEMA_PATH = import_path4.default.join(process.cwd(), "prisma", "schema.prisma");
-    GENERATED_CLASS_PATH = import_path4.default.join(process.cwd(), "src", "generated", "prisma", "internal", "class.ts");
+    SCHEMA_PATH = import_path5.default.join(process.cwd(), "prisma", "schema.prisma");
+    GENERATED_CLASS_PATH = import_path5.default.join(process.cwd(), "src", "generated", "prisma", "internal", "class.ts");
     readGeneratedPrismaActiveProvider = () => {
       try {
         const content = import_fs3.default.readFileSync(GENERATED_CLASS_PATH, "utf8");
@@ -3002,7 +3093,7 @@ var init_controlPlaneSchemaPush = __esm({
     buildProviderPatchedSchemaContent = (provider, original = import_fs3.default.readFileSync(SCHEMA_PATH, "utf8"), options2 = {}) => {
       let patched = patchPrismaSchemaForProvider(provider, original, options2);
       if (readActiveSchemaProvider(original) !== provider) {
-        const absoluteOutput = import_path4.default.join(process.cwd(), "src", "generated", "prisma").replace(/\\/g, "/");
+        const absoluteOutput = import_path5.default.join(process.cwd(), "src", "generated", "prisma").replace(/\\/g, "/");
         patched = patched.replace(
           /output\s*=\s*"\.\.\/src\/generated\/prisma"/,
           `output   = "${absoluteOutput}"`
@@ -3016,7 +3107,7 @@ var init_controlPlaneSchemaPush = __esm({
         return { schemaPath: SCHEMA_PATH, cleanup: () => {
         } };
       }
-      const tempPath = import_path4.default.join(
+      const tempPath = import_path5.default.join(
         import_os2.default.tmpdir(),
         `appendo-control-plane-${provider}-${options2.sqliteIntegerIds ? "sql-" : ""}${process.pid}.prisma`
       );
@@ -3080,7 +3171,7 @@ var init_controlPlaneSchemaPush = __esm({
       }
     };
     writeTempPrismaConfig = (schemaPath, url) => {
-      const configPath = import_path4.default.join(import_os2.default.tmpdir(), `appendo-control-plane-config-${process.pid}.ts`);
+      const configPath = import_path5.default.join(import_os2.default.tmpdir(), `appendo-control-plane-config-${process.pid}.ts`);
       const content = `export default {
   schema: ${JSON.stringify(schemaPath)},
   datasource: {
@@ -3166,7 +3257,7 @@ ${preview}
           process.stdout.write("Control-plane schema already matches Prisma models (no additive changes).\n");
           return { appliedSql: "", skippedCount: filtered.skipped.length };
         }
-        const sqlPath = import_path4.default.join(import_os2.default.tmpdir(), `appendo-control-plane-apply-${process.pid}.sql`);
+        const sqlPath = import_path5.default.join(import_os2.default.tmpdir(), `appendo-control-plane-apply-${process.pid}.sql`);
         import_fs3.default.writeFileSync(sqlPath, filtered.appliedSql, "utf8");
         try {
           runPrismaCli([
@@ -3225,7 +3316,7 @@ ${preview}
       runPrismaCli(["generate", "--schema", quoteCliArg(schemaPath)], url);
       compileGeneratedPrismaClientForNode({ force: true });
     };
-    UNICODE_UPGRADE_SCRIPT = import_path4.default.join(process.cwd(), "scripts", "sqlserver-unicode-upgrade.ts");
+    UNICODE_UPGRADE_SCRIPT = import_path5.default.join(process.cwd(), "scripts", "sqlserver-unicode-upgrade.ts");
     prepareSqlServerDatabaseForSchemaPush = (url) => {
       const settingsPath = process.env.APPENDO_SETTINGS_PATH?.trim();
       (0, import_node_child_process.execSync)(`npx tsx ${quoteCliArg(UNICODE_UPGRADE_SCRIPT)}`, {
@@ -4569,15 +4660,16 @@ __export(settingsFile_exports, {
   validateRuntimeSettings: () => validateRuntimeSettings,
   writeSettingsObject: () => writeSettingsObject
 });
-var import_fs4, import_path5, SETTINGS_PATH, resolveActiveSettingsPath, SETTINGS_OBJECT_CACHE_TTL_MS, cachedSettingsObject, invalidateSettingsObjectCache, readSettingsFileMtimeMs, DEV_ACCESS_TOKEN_SECRET2, DEV_REFRESH_TOKEN_SECRET2, parsePort, parsePositiveInt, parseBooleanLike, normalizeNodeEnv, buildDefaultRuntimeSettings, normalizeRuntimeSettings, RUNTIME_PROVIDER_ALIASES, canonicalRuntimeDatabaseProvider, inferRuntimeDatabaseProvider, readSettingsObject, writeSettingsObject, readRuntimeSettings, resolveListenPort, ensureRuntimeSettings, failSettings, validateRuntimeSettings, readViteDevSettings;
+var import_fs4, import_path6, SETTINGS_PATH, resolveActiveSettingsPath, SETTINGS_OBJECT_CACHE_TTL_MS, cachedSettingsObject, invalidateSettingsObjectCache, readSettingsFileMtimeMs, DEV_ACCESS_TOKEN_SECRET2, DEV_REFRESH_TOKEN_SECRET2, parsePort, parsePositiveInt, parseBooleanLike, normalizeNodeEnv, buildDefaultRuntimeSettings, normalizeRuntimeSettings, RUNTIME_PROVIDER_ALIASES, canonicalRuntimeDatabaseProvider, inferRuntimeDatabaseProvider, readSettingsObject, legacyRepoRootScratchCleaned, writeSettingsObject, readRuntimeSettings, resolveListenPort, ensureRuntimeSettings, failSettings, validateRuntimeSettings, readViteDevSettings;
 var init_settingsFile = __esm({
   "src/server/config/settingsFile.ts"() {
     import_fs4 = __toESM(require("fs"), 1);
-    import_path5 = __toESM(require("path"), 1);
+    import_path6 = __toESM(require("path"), 1);
     init_RuntimeFileStore();
+    init_runtimePaths();
     init_controlPlaneProviders();
     init_nodeCapabilities();
-    SETTINGS_PATH = import_path5.default.join(process.cwd(), "settings.json");
+    SETTINGS_PATH = import_path6.default.join(process.cwd(), "settings.json");
     resolveActiveSettingsPath = () => {
       const fromEnv = process.env.APPENDO_SETTINGS_PATH?.trim();
       if (fromEnv && import_fs4.default.existsSync(fromEnv)) {
@@ -4751,9 +4843,15 @@ var init_settingsFile = __esm({
         throw new Error(`Failed to read ${settingsPath}: ${message}`);
       }
     };
+    legacyRepoRootScratchCleaned = false;
     writeSettingsObject = (settingsPath, value) => {
-      const tmpDir = import_path5.default.dirname(import_path5.default.resolve(settingsPath));
-      atomicWriteText(settingsPath, JSON.stringify(value, null, 2), tmpDir);
+      ensureRuntimeDirs([runtimeDirs.workspaceTemp]);
+      if (!legacyRepoRootScratchCleaned) {
+        cleanupLegacyRepoRootScratch(process.cwd());
+        legacyRepoRootScratchCleaned = true;
+      }
+      cleanupRuntimeTmpFiles(runtimeDirs.workspaceTemp);
+      atomicWriteText(settingsPath, JSON.stringify(value, null, 2), runtimeDirs.workspaceTemp);
       invalidateSettingsObjectCache();
       if (settingsPath === SETTINGS_PATH) {
         void Promise.resolve().then(() => (init_prismaHelpers(), prismaHelpers_exports)).then(({ invalidateControlPlaneProviderCache: invalidateControlPlaneProviderCache2 }) => {
@@ -5765,11 +5863,11 @@ var init_pinoDbStreams = __esm({
 });
 
 // src/core/logging/PinoRuntime.ts
-var import_fs5, import_path6, import_pino, levelToPino, buildPinoOptions, pinoInstance, authAuditPinoInstance, fileDestination, getLogFilePath, getAuthAuditPinoLogger, initPinoRuntime, flushPinoDestinations, shutdownLogPersistence2;
+var import_fs5, import_path7, import_pino, levelToPino, buildPinoOptions, pinoInstance, authAuditPinoInstance, fileDestination, getLogFilePath, getAuthAuditPinoLogger, initPinoRuntime, flushPinoDestinations, shutdownLogPersistence2;
 var init_PinoRuntime = __esm({
   "src/core/logging/PinoRuntime.ts"() {
     import_fs5 = __toESM(require("fs"), 1);
-    import_path6 = __toESM(require("path"), 1);
+    import_path7 = __toESM(require("path"), 1);
     import_pino = __toESM(require("pino"), 1);
     init_settingsFile();
     init_Logger();
@@ -5804,7 +5902,7 @@ var init_PinoRuntime = __esm({
     pinoInstance = null;
     authAuditPinoInstance = null;
     fileDestination = null;
-    getLogFilePath = () => import_path6.default.join(process.cwd(), "logs", "app.log");
+    getLogFilePath = () => import_path7.default.join(process.cwd(), "logs", "app.log");
     getAuthAuditPinoLogger = () => authAuditPinoInstance;
     initPinoRuntime = (pool, settings) => {
       const persistenceReady = tryInitLogPersistence(pool, settings);
@@ -5813,7 +5911,7 @@ var init_PinoRuntime = __esm({
       if (persistenceReady && (!logDbBatcher2 || !authAuditDbBatcher2)) {
         throw new Error("Log persistence batchers failed to initialize.");
       }
-      const logDir = import_path6.default.join(process.cwd(), "logs");
+      const logDir = import_path7.default.join(process.cwd(), "logs");
       if (!import_fs5.default.existsSync(logDir)) {
         import_fs5.default.mkdirSync(logDir, { recursive: true });
       }
@@ -6671,10 +6769,10 @@ var init_installSettingsStore = __esm({
 });
 
 // src/server/db/controlPlaneInstall.ts
-var import_path7, escapeSqlServerValue3, encodeCredential2, buildControlPlaneUrlFromInstallPayload, buildControlPlaneDatabaseSettingsFromInstallPayload, persistControlPlaneDatabaseSettings, readInstallDatabaseDraftFromSettings, prepareControlPlaneDatabase, controlPlaneHasSchema, resetControlPlaneSchema, connectedMessageForProvider;
+var import_path8, escapeSqlServerValue3, encodeCredential2, buildControlPlaneUrlFromInstallPayload, buildControlPlaneDatabaseSettingsFromInstallPayload, persistControlPlaneDatabaseSettings, readInstallDatabaseDraftFromSettings, prepareControlPlaneDatabase, controlPlaneHasSchema, resetControlPlaneSchema, connectedMessageForProvider;
 var init_controlPlaneInstall = __esm({
   "src/server/db/controlPlaneInstall.ts"() {
-    import_path7 = __toESM(require("path"), 1);
+    import_path8 = __toESM(require("path"), 1);
     init_controlPlaneProviders();
     init_sqlServerAddress();
     init_settingsFile();
@@ -6707,7 +6805,7 @@ var init_controlPlaneInstall = __esm({
           return `mysql://${user}:${password}@${payload.host}:${payload.port}/${database}`;
         }
         case "sqlite": {
-          const filePath = import_path7.default.isAbsolute(payload.database) ? payload.database : import_path7.default.join(process.cwd(), payload.database);
+          const filePath = import_path8.default.isAbsolute(payload.database) ? payload.database : import_path8.default.join(process.cwd(), payload.database);
           return buildSqliteControlPlaneUrl(filePath);
         }
         case "sqlserver": {
@@ -7921,8 +8019,8 @@ var init_changeReasonVocab = __esm({
         ]
       }
     };
-    familyFolderIdForRoute = (method, path132) => {
-      const withoutQuery = path132.split("?")[0]?.trim() || "/";
+    familyFolderIdForRoute = (method, path131) => {
+      const withoutQuery = path131.split("?")[0]?.trim() || "/";
       const normalized = withoutQuery.length > 1 && withoutQuery.endsWith("/") ? withoutQuery.slice(0, -1) : withoutQuery;
       const key = `${method.toUpperCase()} ${normalized}`;
       for (const family of Object.values(RECORD_CHANGE_REASON_FAMILIES)) {
@@ -7975,8 +8073,8 @@ var init_platformApiChangeReason = __esm({
     USERS_SCOPE_CHANGE_REASON = optionalBoth();
     ROLE_CATALOG_CHANGE_REASON = optionalBoth();
     SAMPLE_MOCK_CHANGE_REASON = optionalBoth(RECORD_CHANGE_REASON_SAMPLE_MOCK);
-    catalogRouteKey = (method, path132) => {
-      const withoutQuery = path132.split("?")[0]?.trim() || "/";
+    catalogRouteKey = (method, path131) => {
+      const withoutQuery = path131.split("?")[0]?.trim() || "/";
       const normalized = withoutQuery.length > 1 && withoutQuery.endsWith("/") ? withoutQuery.slice(0, -1) : withoutQuery;
       return `${method.toUpperCase()} ${normalized}`;
     };
@@ -7997,14 +8095,14 @@ var init_platformApiChangeReason = __esm({
       "DELETE /api/sample-mock/records/:id": SAMPLE_MOCK_CHANGE_REASON
     };
     CHANGE_REASON_SETTINGS_DENY = /\/(reset-password|change-password|login|logout|refresh|execute)(\/|$)/i;
-    namedApiAllowsChangeReasonSettings = (method, path132) => {
+    namedApiAllowsChangeReasonSettings = (method, path131) => {
       const m = method.toUpperCase();
       if (m === "GET" || m === "HEAD" || m === "OPTIONS" || m === "POST") return false;
-      if (CHANGE_REASON_SETTINGS_DENY.test(path132)) return false;
+      if (CHANGE_REASON_SETTINGS_DENY.test(path131)) return false;
       return m === "PUT" || m === "PATCH" || m === "DELETE";
     };
     dataApiOperationAllowsChangeReason = (kind) => kind === "update" || kind === "patch" || kind === "delete";
-    functionChangeReasonFallback = (method, path132) => FUNCTION_CHANGE_REASON_FALLBACKS[catalogRouteKey(method, path132)];
+    functionChangeReasonFallback = (method, path131) => FUNCTION_CHANGE_REASON_FALLBACKS[catalogRouteKey(method, path131)];
   }
 });
 
@@ -10398,14 +10496,14 @@ var init_requestAls = __esm({
 });
 
 // src/server/app.ts
-var import_express2, import_compression, import_cookie_parser, import_fs7, import_path8, createApp, applyBaseMiddleware, IMMUTABLE_MAX_AGE_MS, STATIC_ASSET_MAX_AGE_MS, PRECOMPRESSED_CONTENT_TYPES, createPrecompressedAssetsMiddleware, createSpaDistStaticHandler, createPlatformAssetStaticHandler, applyErrorMiddleware, setupGracefulShutdown, listenOnAvailablePort;
+var import_express2, import_compression, import_cookie_parser, import_fs7, import_path9, createApp, applyBaseMiddleware, IMMUTABLE_MAX_AGE_MS, STATIC_ASSET_MAX_AGE_MS, PRECOMPRESSED_CONTENT_TYPES, createPrecompressedAssetsMiddleware, createSpaDistStaticHandler, createPlatformAssetStaticHandler, applyErrorMiddleware, setupGracefulShutdown, listenOnAvailablePort;
 var init_app = __esm({
   "src/server/app.ts"() {
     import_express2 = __toESM(require("express"), 1);
     import_compression = __toESM(require("compression"), 1);
     import_cookie_parser = __toESM(require("cookie-parser"), 1);
     import_fs7 = __toESM(require("fs"), 1);
-    import_path8 = __toESM(require("path"), 1);
+    import_path9 = __toESM(require("path"), 1);
     init_Logger();
     init_env();
     init_authSecrets();
@@ -10532,7 +10630,7 @@ var init_app = __esm({
         next();
         return;
       }
-      const ext = import_path8.default.extname(pathname);
+      const ext = import_path9.default.extname(pathname);
       const contentType = PRECOMPRESSED_CONTENT_TYPES[ext];
       if (!contentType) {
         next();
@@ -10548,7 +10646,7 @@ var init_app = __esm({
       }
       const relativePath = pathname.replace(/^\/assets\//, "");
       for (const candidate of candidates) {
-        const filePath = import_path8.default.join(distPath, "assets", `${relativePath}${candidate.suffix}`);
+        const filePath = import_path9.default.join(distPath, "assets", `${relativePath}${candidate.suffix}`);
         if (import_fs7.default.existsSync(filePath)) {
           res.setHeader("Content-Encoding", candidate.encoding);
           res.setHeader("Content-Type", contentType);
@@ -11791,7 +11889,7 @@ function ensurePackageStorageDirs() {
   }
 }
 function packageIndexPath() {
-  return import_path9.default.join(resolvePackageStorageRoot(), "index.json");
+  return import_path10.default.join(resolvePackageStorageRoot(), "index.json");
 }
 function makeEmptyIndex() {
   return {
@@ -11830,7 +11928,7 @@ function writePackageIndex(index) {
   atomicWriteText2(packageIndexPath(), JSON.stringify(index, null, 2));
 }
 function readInstallState(packageId) {
-  const p = import_path9.default.join(packageDirs.installed, `${packageId}.install-state.json`);
+  const p = import_path10.default.join(packageDirs.installed, `${packageId}.install-state.json`);
   if (!import_fs8.default.existsSync(p)) return null;
   try {
     return JSON.parse(import_fs8.default.readFileSync(p, "utf8"));
@@ -11845,20 +11943,20 @@ function isPackageActivelyInstalled(packageId) {
 }
 function atomicWriteText2(targetPath, content) {
   const opId = import_crypto4.default.randomBytes(8).toString("hex");
-  const tmpPath = import_path9.default.join(packageDirs.tmp, `${import_path9.default.basename(targetPath)}.${opId}.tmp`);
+  const tmpPath = import_path10.default.join(packageDirs.tmp, `${import_path10.default.basename(targetPath)}.${opId}.tmp`);
   import_fs8.default.mkdirSync(packageDirs.tmp, { recursive: true });
   import_fs8.default.writeFileSync(tmpPath, content, "utf8");
   import_fs8.default.renameSync(tmpPath, targetPath);
 }
 function atomicWriteBinary(targetPath, content) {
   const opId = import_crypto4.default.randomBytes(8).toString("hex");
-  const tmpPath = import_path9.default.join(packageDirs.tmp, `${import_path9.default.basename(targetPath)}.${opId}.tmp`);
+  const tmpPath = import_path10.default.join(packageDirs.tmp, `${import_path10.default.basename(targetPath)}.${opId}.tmp`);
   import_fs8.default.mkdirSync(packageDirs.tmp, { recursive: true });
   import_fs8.default.writeFileSync(tmpPath, content);
   import_fs8.default.renameSync(tmpPath, targetPath);
 }
 function lockFilePath2(name) {
-  return import_path9.default.join(packageDirs.locks, `${name}.lock`);
+  return import_path10.default.join(packageDirs.locks, `${name}.lock`);
 }
 function acquirePackageLock(name) {
   import_fs8.default.mkdirSync(packageDirs.locks, { recursive: true });
@@ -11944,7 +12042,7 @@ function createStandardizedEvent(evt, eventId, timestamp) {
 function appendPackageEvent(evt) {
   const now = /* @__PURE__ */ new Date();
   const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-  const eventPath = import_path9.default.join(packageDirs.events, `events-${month}.jsonl`);
+  const eventPath = import_path10.default.join(packageDirs.events, `events-${month}.jsonl`);
   const eventId = `evt-${now.getTime()}-${import_crypto4.default.randomBytes(4).toString("hex")}`;
   const line = JSON.stringify(createStandardizedEvent(evt, eventId, now.toISOString()));
   import_fs8.default.mkdirSync(packageDirs.events, { recursive: true });
@@ -11983,7 +12081,7 @@ function parseEventFiles() {
   for (const fileName of import_fs8.default.readdirSync(packageDirs.events)) {
     const m = monthFileRe.exec(fileName);
     if (!m) continue;
-    const fullPath = import_path9.default.join(packageDirs.events, fileName);
+    const fullPath = import_path10.default.join(packageDirs.events, fileName);
     try {
       const stat = import_fs8.default.statSync(fullPath);
       files.push({ fileName, fullPath, yearMonth: m[1], bytes: stat.size });
@@ -12046,10 +12144,10 @@ function enforcePackageEventRetention() {
   };
 }
 function deploymentAppliedPath(packageId) {
-  return import_path9.default.join(packageDirs.deployments, `${packageId}.deployment-applied.json`);
+  return import_path10.default.join(packageDirs.deployments, `${packageId}.deployment-applied.json`);
 }
 function platformCapabilitiesAppliedPath(packageId) {
-  return import_path9.default.join(packageDirs.deployments, `${packageId}.platform-capabilities-applied.json`);
+  return import_path10.default.join(packageDirs.deployments, `${packageId}.platform-capabilities-applied.json`);
 }
 function readDeploymentApplied(packageId) {
   const p = deploymentAppliedPath(packageId);
@@ -12135,7 +12233,7 @@ function cleanupPackageTmpFiles() {
   const now = Date.now();
   try {
     for (const f of import_fs8.default.readdirSync(packageDirs.tmp)) {
-      const p = import_path9.default.join(packageDirs.tmp, f);
+      const p = import_path10.default.join(packageDirs.tmp, f);
       try {
         const stat = import_fs8.default.statSync(p);
         if (now - stat.mtimeMs > staleMs) import_fs8.default.unlinkSync(p);
@@ -12145,11 +12243,11 @@ function cleanupPackageTmpFiles() {
   } catch {
   }
 }
-var import_fs8, import_path9, import_crypto4, PACKAGE_STORAGE_ROOT, packageDirs, LOCK_TTL_MS2;
+var import_fs8, import_path10, import_crypto4, PACKAGE_STORAGE_ROOT, packageDirs, LOCK_TTL_MS2;
 var init_PackageFileStore = __esm({
   "src/core/packages/PackageFileStore.ts"() {
     import_fs8 = __toESM(require("fs"), 1);
-    import_path9 = __toESM(require("path"), 1);
+    import_path10 = __toESM(require("path"), 1);
     init_settingsFile();
     import_crypto4 = __toESM(require("crypto"), 1);
     init_deploymentApplied();
@@ -12160,37 +12258,37 @@ var init_PackageFileStore = __esm({
         return resolvePackageStorageRoot();
       },
       get artifacts() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "artifacts");
+        return import_path10.default.join(resolvePackageStorageRoot(), "artifacts");
       },
       get manifests() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "manifests");
+        return import_path10.default.join(resolvePackageStorageRoot(), "manifests");
       },
       get installed() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "installed");
+        return import_path10.default.join(resolvePackageStorageRoot(), "installed");
       },
       get deployments() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "deployments");
+        return import_path10.default.join(resolvePackageStorageRoot(), "deployments");
       },
       get objects() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "objects");
+        return import_path10.default.join(resolvePackageStorageRoot(), "objects");
       },
       get runtimes() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "runtimes");
+        return import_path10.default.join(resolvePackageStorageRoot(), "runtimes");
       },
       get dependencies() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "dependencies");
+        return import_path10.default.join(resolvePackageStorageRoot(), "dependencies");
       },
       get events() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "events");
+        return import_path10.default.join(resolvePackageStorageRoot(), "events");
       },
       get locks() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "locks");
+        return import_path10.default.join(resolvePackageStorageRoot(), "locks");
       },
       get tmp() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "tmp");
+        return import_path10.default.join(resolvePackageStorageRoot(), "tmp");
       },
       get snapshots() {
-        return import_path9.default.join(resolvePackageStorageRoot(), "snapshots");
+        return import_path10.default.join(resolvePackageStorageRoot(), "snapshots");
       }
     };
     LOCK_TTL_MS2 = 6e4;
@@ -12384,75 +12482,6 @@ var SEGMENT_PATTERN;
 var init_functionNaming = __esm({
   "src/core/functions/functionNaming.ts"() {
     SEGMENT_PATTERN = /[^a-z0-9._-]+/g;
-  }
-});
-
-// src/core/runtime/runtimePaths.ts
-var import_path10, WORKSPACE_ROOT, runtimeDirs, EDGE_MODELS_INDEX_PATH, EDGE_APIS_INDEX_PATH, EDGE_MODEL_STUDIO_META_INDEX_PATH, RECORD_POLICIES_INDEX_PATH, SSH_HUB_INDEX_PATH, RDP_HUB_INDEX_PATH, FILE_HUB_INDEX_PATH, SQL_CONSOLE_COLLECTIONS_INDEX_PATH, HTTP_CONNECTIONS_INDEX_PATH, HTTP_WORKSHOP_COLLECTIONS_INDEX_PATH, SERVER_FUNCTIONS_INDEX_PATH;
-var init_runtimePaths = __esm({
-  "src/core/runtime/runtimePaths.ts"() {
-    import_path10 = __toESM(require("path"), 1);
-    WORKSPACE_ROOT = "workspace";
-    runtimeDirs = {
-      root: WORKSPACE_ROOT,
-      workspace: WORKSPACE_ROOT,
-      /** Shared atomic-write / helper temp for every workspace module — safe to gitignore. */
-      workspaceTemp: import_path10.default.join(WORKSPACE_ROOT, "temp"),
-      workspaceAssets: import_path10.default.join(WORKSPACE_ROOT, "assets"),
-      serverFunctions: import_path10.default.join(WORKSPACE_ROOT, "server-functions"),
-      serverFunctionsCustom: import_path10.default.join(WORKSPACE_ROOT, "server-functions", "custom"),
-      serverFunctionsBuiltin: import_path10.default.join(WORKSPACE_ROOT, "server-functions", "builtin"),
-      serverFunctionsLocks: import_path10.default.join(WORKSPACE_ROOT, "server-functions", "locks"),
-      designer: import_path10.default.join(WORKSPACE_ROOT, "designer"),
-      designerDrafts: import_path10.default.join(WORKSPACE_ROOT, "designer", "drafts"),
-      designerSnapshots: import_path10.default.join(WORKSPACE_ROOT, "designer", "snapshots"),
-      designerPreviewLogs: import_path10.default.join(WORKSPACE_ROOT, "designer", "preview-logs"),
-      designerExports: import_path10.default.join(WORKSPACE_ROOT, "designer", "exports"),
-      platformRegistry: import_path10.default.join(WORKSPACE_ROOT, "platform-registry"),
-      edgeModels: import_path10.default.join(WORKSPACE_ROOT, "edge-models"),
-      edgeApis: import_path10.default.join(WORKSPACE_ROOT, "edge-apis"),
-      edgeModelStudioMeta: import_path10.default.join(WORKSPACE_ROOT, "edge-model-studio-meta"),
-      edgeModelsLocks: import_path10.default.join(WORKSPACE_ROOT, "edge-models", "locks"),
-      edgeApisLocks: import_path10.default.join(WORKSPACE_ROOT, "edge-apis", "locks"),
-      edgeModelStudioMetaLocks: import_path10.default.join(WORKSPACE_ROOT, "edge-model-studio-meta", "locks"),
-      recordPolicies: import_path10.default.join(WORKSPACE_ROOT, "record-policies"),
-      recordPoliciesLocks: import_path10.default.join(WORKSPACE_ROOT, "record-policies", "locks"),
-      recordPolicyBindings: import_path10.default.join(WORKSPACE_ROOT, "record-policy-bindings"),
-      recordPolicyBindingsLocks: import_path10.default.join(WORKSPACE_ROOT, "record-policy-bindings", "locks"),
-      querySurfaceBindings: import_path10.default.join(WORKSPACE_ROOT, "query-surface-bindings"),
-      querySurfaceBindingsLocks: import_path10.default.join(WORKSPACE_ROOT, "query-surface-bindings", "locks"),
-      appearancePresets: import_path10.default.join(WORKSPACE_ROOT, "appearance"),
-      appearancePresetsLocks: import_path10.default.join(WORKSPACE_ROOT, "appearance", "locks"),
-      sshHub: import_path10.default.join(WORKSPACE_ROOT, "ssh-hub"),
-      sshHubLocks: import_path10.default.join(WORKSPACE_ROOT, "ssh-hub", "locks"),
-      rdpHub: import_path10.default.join(WORKSPACE_ROOT, "rdp-hub"),
-      rdpHubLocks: import_path10.default.join(WORKSPACE_ROOT, "rdp-hub", "locks"),
-      fileHub: import_path10.default.join(WORKSPACE_ROOT, "file-hub"),
-      fileHubLocks: import_path10.default.join(WORKSPACE_ROOT, "file-hub", "locks"),
-      sqlConsole: import_path10.default.join(WORKSPACE_ROOT, "sql-console"),
-      sqlConsoleLocks: import_path10.default.join(WORKSPACE_ROOT, "sql-console", "locks"),
-      httpConnections: import_path10.default.join(WORKSPACE_ROOT, "http-connections"),
-      httpConnectionsLocks: import_path10.default.join(WORKSPACE_ROOT, "http-connections", "locks"),
-      appendoo: import_path10.default.join(WORKSPACE_ROOT, "appendoo"),
-      models: import_path10.default.join(WORKSPACE_ROOT, "models"),
-      modelsEmbeddings: import_path10.default.join(WORKSPACE_ROOT, "models", "embeddings"),
-      platform: import_path10.default.join(WORKSPACE_ROOT, "platform"),
-      platformFonts: import_path10.default.join(WORKSPACE_ROOT, "platform", "fonts"),
-      platformPwa: import_path10.default.join(WORKSPACE_ROOT, "platform", "pwa"),
-      feedbackAttachments: import_path10.default.join(WORKSPACE_ROOT, "feedback-attachments"),
-      directMessageAttachments: import_path10.default.join(WORKSPACE_ROOT, "direct-message-attachments")
-    };
-    EDGE_MODELS_INDEX_PATH = import_path10.default.join(runtimeDirs.edgeModels, "index.json");
-    EDGE_APIS_INDEX_PATH = import_path10.default.join(runtimeDirs.edgeApis, "index.json");
-    EDGE_MODEL_STUDIO_META_INDEX_PATH = import_path10.default.join(runtimeDirs.edgeModelStudioMeta, "index.json");
-    RECORD_POLICIES_INDEX_PATH = import_path10.default.join(runtimeDirs.recordPolicies, "index.json");
-    SSH_HUB_INDEX_PATH = import_path10.default.join(runtimeDirs.sshHub, "index.json");
-    RDP_HUB_INDEX_PATH = import_path10.default.join(runtimeDirs.rdpHub, "index.json");
-    FILE_HUB_INDEX_PATH = import_path10.default.join(runtimeDirs.fileHub, "index.json");
-    SQL_CONSOLE_COLLECTIONS_INDEX_PATH = import_path10.default.join(runtimeDirs.sqlConsole, "collections.json");
-    HTTP_CONNECTIONS_INDEX_PATH = import_path10.default.join(runtimeDirs.httpConnections, "index.json");
-    HTTP_WORKSHOP_COLLECTIONS_INDEX_PATH = import_path10.default.join(runtimeDirs.httpConnections, "collections.json");
-    SERVER_FUNCTIONS_INDEX_PATH = import_path10.default.join(runtimeDirs.serverFunctions, "index.json");
   }
 });
 
@@ -17190,13 +17219,13 @@ var init_agentValidators = __esm({
       if (!isRecord2(input)) {
         throw new AiValidationError("pageContext must be an object.");
       }
-      const path132 = String(input.path ?? "").trim();
+      const path131 = String(input.path ?? "").trim();
       const pageLabel = String(input.pageLabel ?? "").trim();
-      if (!path132 || !pageLabel) {
+      if (!path131 || !pageLabel) {
         throw new AiValidationError("pageContext requires path and pageLabel.");
       }
       return {
-        path: path132,
+        path: path131,
         pageLabel,
         pageKey: parseOptionalString(input.pageKey)?.trim() || void 0,
         pageDescription: parseOptionalString(input.pageDescription)?.trim() || void 0,
@@ -18595,23 +18624,23 @@ var init_canonicalJson = __esm({
       const prototype = Object.getPrototypeOf(value);
       return prototype === Object.prototype || prototype === null;
     };
-    normalize = (value, path132) => {
+    normalize = (value, path131) => {
       if (value === null) return null;
       if (typeof value === "string") return value;
       if (typeof value === "boolean") return value;
       if (typeof value === "number") {
-        if (!Number.isFinite(value)) throw new TypeError(`Canonical JSON rejects non-finite number at ${path132}.`);
+        if (!Number.isFinite(value)) throw new TypeError(`Canonical JSON rejects non-finite number at ${path131}.`);
         return value;
       }
-      if (Array.isArray(value)) return value.map((item2, index) => normalize(item2, `${path132}[${index}]`));
+      if (Array.isArray(value)) return value.map((item2, index) => normalize(item2, `${path131}[${index}]`));
       if (isPlainObject(value)) {
         const output = {};
         for (const key of Object.keys(value).sort((left, right) => left < right ? -1 : left > right ? 1 : 0)) {
-          output[key] = normalize(value[key], `${path132}.${key}`);
+          output[key] = normalize(value[key], `${path131}.${key}`);
         }
         return output;
       }
-      throw new TypeError(`Canonical JSON rejects ${typeof value} at ${path132}.`);
+      throw new TypeError(`Canonical JSON rejects ${typeof value} at ${path131}.`);
     };
   }
 });
@@ -20191,9 +20220,9 @@ function resolvePathRoot(root, context) {
     }
   }
 }
-function resolvePath(path132, context) {
-  let current = resolvePathRoot(path132.root, context);
-  for (const segment of path132.segments) {
+function resolvePath(path131, context) {
+  let current = resolvePathRoot(path131.root, context);
+  for (const segment of path131.segments) {
     if (current === MISSING) return MISSING;
     if (current === null || typeof current !== "object") return MISSING;
     if (typeof segment === "number") {
@@ -31669,12 +31698,12 @@ var init_bindingLovRegistry = __esm({
       if (!isRecord5(value)) {
         return void 0;
       }
-      const path132 = typeof value.path === "string" ? value.path.trim() : "";
-      if (!path132) {
+      const path131 = typeof value.path === "string" ? value.path.trim() : "";
+      if (!path131) {
         return void 0;
       }
       const format = value.format === "csv" || value.format === "json" ? value.format : void 0;
-      return { path: path132, format };
+      return { path: path131, format };
     };
     sanitizeDataSourceDefinition = (value, fallbackId) => {
       if (!isRecord5(value)) {
@@ -31767,7 +31796,7 @@ var init_bindingApiHelpers = __esm({
         )
       );
     };
-    isNestedPayloadPath = (path132) => path132.includes(".");
+    isNestedPayloadPath = (path131) => path131.includes(".");
     createFetchConfigKey = (endpointTemplate, urlParams, headers) => JSON.stringify({ endpointTemplate, urlParams, headers });
   }
 });
@@ -32322,8 +32351,8 @@ var init_bindingResourceModel = __esm({
         update: resource.operations.update?.endpoint.trim() || base
       };
     };
-    readNestedContextValue = (context, path132) => {
-      const segments = path132.split(".").map((segment) => segment.trim()).filter(Boolean);
+    readNestedContextValue = (context, path131) => {
+      const segments = path131.split(".").map((segment) => segment.trim()).filter(Boolean);
       let cursor = context;
       for (const segment of segments) {
         if (cursor && typeof cursor === "object" && segment in cursor) {
@@ -33096,8 +33125,8 @@ var init_visibilityConditionEngine = __esm({
       }
       return true;
     };
-    buildStorePathAccessExpression = (root, path132) => {
-      const chain = path132.split(".").filter(Boolean).map((segment) => {
+    buildStorePathAccessExpression = (root, path131) => {
+      const chain = path131.split(".").filter(Boolean).map((segment) => {
         if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(segment)) {
           return `.${segment}`;
         }
@@ -33106,8 +33135,8 @@ var init_visibilityConditionEngine = __esm({
       return `${root}${chain}`;
     };
     compileDesignerConditionExpression = (condition) => {
-      const formatPathChain = (root, path132) => {
-        const chain = path132.split(".").filter(Boolean).map((segment) => {
+      const formatPathChain = (root, path131) => {
+        const chain = path131.split(".").filter(Boolean).map((segment) => {
           if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(segment)) {
             return `?.${segment}`;
           }
@@ -33121,15 +33150,15 @@ var init_visibilityConditionEngine = __esm({
       }
       compiled = compiled.replace(
         /\bstore\.([A-Za-z0-9_.-]+)/g,
-        (_, path132) => formatPathChain("designerStore", path132)
+        (_, path131) => formatPathChain("designerStore", path131)
       );
       compiled = compiled.replace(
         /\bdata\.([A-Za-z0-9_.-]+)/g,
-        (_, path132) => formatPathChain("dataContext", path132)
+        (_, path131) => formatPathChain("dataContext", path131)
       );
       compiled = compiled.replace(
         /\bdataContext\.([A-Za-z0-9_.-]+)/g,
-        (_, path132) => formatPathChain("dataContext", path132)
+        (_, path131) => formatPathChain("dataContext", path131)
       );
       return compiled;
     };
@@ -33459,7 +33488,6 @@ __export(excludedModuleStub_exports, {
   EXTX_INSTITUTES_ID_COLUMN_HEADER_CLASS: () => EXTX_INSTITUTES_ID_COLUMN_HEADER_CLASS,
   EXTX_INSTITUTES_OBJECT_NAME: () => EXTX_INSTITUTES_OBJECT_NAME,
   EXTX_LOGIN_PUBLIC_PATH: () => EXTX_LOGIN_PUBLIC_PATH,
-  EXTX_MEMBERSHIP_DECISION_NOTE_SUBJECT_PRIORITY: () => EXTX_MEMBERSHIP_DECISION_NOTE_SUBJECT_PRIORITY,
   EXTX_MEMBERS_ALL_LIST_MEMBERSHIP_ON_COLUMN_WIDTH: () => EXTX_MEMBERS_ALL_LIST_MEMBERSHIP_ON_COLUMN_WIDTH,
   EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_CELL_CLASS: () => EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_CELL_CLASS,
   EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_WIDTH: () => EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_WIDTH,
@@ -33632,7 +33660,6 @@ __export(excludedModuleStub_exports, {
   applyExtxNakhebinVoterNameDisplayLines: () => applyExtxNakhebinVoterNameDisplayLines,
   attachExtxInstituteLogoUrlToRow: () => attachExtxInstituteLogoUrlToRow,
   attachExtxInstituteLogoUrlsToRows: () => attachExtxInstituteLogoUrlsToRows,
-  attachExtxMemberRejectionListParityFields: () => attachExtxMemberRejectionListParityFields,
   attachExtxNakhebinElectoralDivisionPaths: () => attachExtxNakhebinElectoralDivisionPaths,
   attachExtxRegionElectoralPathsByRegionId: () => attachExtxRegionElectoralPathsByRegionId,
   attachListAddrProvinceTitles: () => attachListAddrProvinceTitles,
@@ -33666,8 +33693,6 @@ __export(excludedModuleStub_exports, {
   collectExtxMemberListScopedEditChromeFromGridFetches: () => collectExtxMemberListScopedEditChromeFromGridFetches,
   collectPortalxDeploymentRoutesFromRegistry: () => collectPortalxDeploymentRoutesFromRegistry,
   columnKeyTriggersListScopedEdit: () => columnKeyTriggersListScopedEdit,
-  connectLegacyReadPool: () => connectLegacyReadPool,
-  controlPlaneHasLegacyExtxMembersTable: () => controlPlaneHasLegacyExtxMembersTable,
   createDefaultExtxMemberImageFixListFilters: () => createDefaultExtxMemberImageFixListFilters,
   createExtxMemberImageFixListFiltersForSimpleSearch: () => createExtxMemberImageFixListFiltersForSimpleSearch,
   decodeExtxMemberDossierId: () => decodeExtxMemberDossierId,
@@ -33745,8 +33770,6 @@ __export(excludedModuleStub_exports, {
   extxPublicPortalHomeUrl: () => extxPublicPortalHomeUrl,
   extxSelfRegistrationDevPortalPublicUrl: () => extxSelfRegistrationDevPortalPublicUrl,
   extxTrackRegistrationPublicUrl: () => extxTrackRegistrationPublicUrl,
-  fetchLegacyExtxRoles: () => fetchLegacyExtxRoles,
-  fetchLegacyPlatformRolesByAction: () => fetchLegacyPlatformRolesByAction,
   filterPortalxHostRowsUnlessInstalled: () => filterPortalxHostRowsUnlessInstalled,
   filterPortalxNavigationUnlessInstalled: () => filterPortalxNavigationUnlessInstalled,
   filterPortalxNavigationsUnlessInstalled: () => filterPortalxNavigationsUnlessInstalled,
@@ -33818,7 +33841,6 @@ __export(excludedModuleStub_exports, {
   leafTitleFromGeoPath: () => leafTitleFromGeoPath,
   legacyExtxActionKey: () => legacyExtxActionKey,
   legacyExtxRoleIdToPlatformRoleName: () => legacyExtxRoleIdToPlatformRoleName,
-  listExtxMemberTarghinMembers: () => listExtxMemberTarghinMembers,
   listPortalxPackageDbInstallFiles: () => listPortalxPackageDbInstallFiles,
   listScopeLegacyNeedsInstituteCharacterColumn: () => listScopeLegacyNeedsInstituteCharacterColumn,
   listSelfRegistrationDevPortalChannelEntries: () => listSelfRegistrationDevPortalChannelEntries,
@@ -33827,7 +33849,6 @@ __export(excludedModuleStub_exports, {
   loadExtxMemberUsernamesForUserIds: () => loadExtxMemberUsernamesForUserIds,
   loadImageFixTodoFileKindCodes: () => loadImageFixTodoFileKindCodes,
   localizeExtxMemberDirectoryListWhereFields: () => localizeExtxMemberDirectoryListWhereFields,
-  mapLegacyExtxRoleRow: () => mapLegacyExtxRoleRow,
   markImageFixEditorMemberVisited: () => markImageFixEditorMemberVisited,
   mergeExtxInstitutesDataApiRequestBody: () => mergeExtxInstitutesDataApiRequestBody,
   mergeExtxMemberDirectoryLegacyFilterQueryParams: () => mergeExtxMemberDirectoryLegacyFilterQueryParams,
@@ -33855,7 +33876,6 @@ __export(excludedModuleStub_exports, {
   publicPathForRegistrationChannel: () => publicPathForRegistrationChannel,
   publishPortalxPlatformRegistryFromSnapshot: () => publishPortalxPlatformRegistryFromSnapshot,
   pushAppEndOPortalxTree: () => pushAppEndOPortalxTree,
-  rankExtxMembershipDecisionNoteSubject: () => rankExtxMembershipDecisionNoteSubject,
   readExtxMemberImageFixListFiltersFromQuery: () => readExtxMemberImageFixListFiltersFromQuery,
   readExtxMemberImageFixListFiltersFromStore: () => readExtxMemberImageFixListFiltersFromStore,
   readExtxMemberImageFixThumbRow: () => readExtxMemberImageFixThumbRow,
@@ -33863,8 +33883,6 @@ __export(excludedModuleStub_exports, {
   readExtxNakhebinVoterNameLine1: () => readExtxNakhebinVoterNameLine1,
   readExtxNakhebinVoterNameLine2: () => readExtxNakhebinVoterNameLine2,
   readImageFixEditorPageMember: () => readImageFixEditorPageMember,
-  readLegacyConn: () => readLegacyConn,
-  readLegacyGeoPatchCenterStats: () => readLegacyGeoPatchCenterStats,
   refreshExtxImageFixMemberList: () => refreshExtxImageFixMemberList,
   registerExtxFamilyHouseholdDialogOpener: () => registerExtxFamilyHouseholdDialogOpener,
   registerExtxImageFixEditorDialogOpener: () => registerExtxImageFixEditorDialogOpener,
@@ -33924,7 +33942,6 @@ __export(excludedModuleStub_exports, {
   resolveExtxPublicPortalNativeTitle: () => resolveExtxPublicPortalNativeTitle,
   resolveExtxStackedLinesTextAlignFromGridColumn: () => resolveExtxStackedLinesTextAlignFromGridColumn,
   resolveImageFixEditorNextMember: () => resolveImageFixEditorNextMember,
-  resolveLegacyGeoIdForPatch: () => resolveLegacyGeoIdForPatch,
   resolveListMembershipOnRegistrationFallback: () => resolveListMembershipOnRegistrationFallback,
   resolveMemberDirectoryFaceImageUrl: () => resolveMemberDirectoryFaceImageUrl,
   resolveMemberDirectoryListElectoralRegionRef: () => resolveMemberDirectoryListElectoralRegionRef,
@@ -33957,7 +33974,6 @@ __export(excludedModuleStub_exports, {
   splitExtxGeoPathDisplaySegments: () => splitExtxGeoPathDisplaySegments,
   splitExtxHouseholdMemberNameLines: () => splitExtxHouseholdMemberNameLines,
   splitExtxMemberAreaColumnDisplay: () => splitExtxMemberAreaColumnDisplay,
-  splitExtxMembershipDecisionNoteBody: () => splitExtxMembershipDecisionNoteBody,
   splitExtxNewlineCellLines: () => splitExtxNewlineCellLines,
   splitExtxResidenceSummaryLines: () => splitExtxResidenceSummaryLines,
   splitExtxTitlePath: () => splitExtxTitlePath,
@@ -33968,8 +33984,7 @@ __export(excludedModuleStub_exports, {
   useExtxNavPageShellHeader: () => useExtxNavPageShellHeader,
   useExtxRejectedLocalManageListRuntime: () => useExtxRejectedLocalManageListRuntime,
   useExtxRejectionListRuntime: () => useExtxRejectionListRuntime,
-  useOpenExtxGeoResponsibilityInlineListDialog: () => useOpenExtxGeoResponsibilityInlineListDialog,
-  withLegacyReadOnlyIntent: () => withLegacyReadOnlyIntent
+  useOpenExtxGeoResponsibilityInlineListDialog: () => useOpenExtxGeoResponsibilityInlineListDialog
 });
 function makeExcludedStub(exportName) {
   const call = (...args) => {
@@ -33998,7 +34013,7 @@ function makeExcludedStub(exportName) {
     }
   });
 }
-var excludedModuleStub, excludedModuleStub_default, ALL_EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELD_KEYS, APPENDO_PORTALX_REPO_NAME, EXTX_ALLOCATED_MEMBERSHIP_USERNAME_LEN, EXTX_ALLOCATED_MEMBERSHIP_USERNAME_PATTERN, EXTX_CANDIDATE_PIPELINE_STAGES, EXTX_COURSES_ACTIVITIES_ROUTE_BINDING_ID, EXTX_DEFAULT_PUBLIC_CULTURE, EXTX_DEPRECATED_MEMBERSHIP_STATUS_SHORT_NAMES, EXTX_ELECTORAL_DIVISION_FALLBACK_FIELD, EXTX_FAMILY_HOUSEHOLD_CELL_CLICK_BEHAVIOR, EXTX_FAMILY_HOUSEHOLD_CELL_CLICK_KIND, EXTX_GEO_RESPONSIBILITY_LEVELS, EXTX_GEO_RESPONSIBILITY_ROLES, EXTX_GEO_RESPONSIBILITY_ROW_ACTIONS_COLUMN_WIDTH_PX, EXTX_IMAGE_FIX_EDITOR_CELL_CLICK_KIND, EXTX_IMAGE_FIX_LIST_ACTIONS_COLUMN_WIDTH, EXTX_IMAGE_FIX_LIST_DOCUMENTS_COLUMN_WIDTH, EXTX_IMAGE_FIX_LIST_MEMBER_COLUMN_CELL_CLASS, EXTX_IMAGE_FIX_LIST_MEMBER_COLUMN_WIDTH, EXTX_IMAGE_FIX_LIST_REGISTERED_COLUMN_WIDTH, EXTX_IMAGE_FIX_NAV_ORDER, EXTX_IMAGE_FIX_REGISTRATION_THUMB_BORDER_PX, EXTX_IMAGE_FIX_REGISTRATION_THUMB_GAP_PX, EXTX_IMAGE_FIX_REGISTRATION_THUMB_SIZE_PX, EXTX_INSTITUTES_ID_COLUMN_CELL_CLASS, EXTX_INSTITUTES_ID_COLUMN_HEADER_CLASS, EXTX_INSTITUTES_OBJECT_NAME, EXTX_LOGIN_PUBLIC_PATH, EXTX_MEMBERSHIP_DECISION_NOTE_SUBJECT_PRIORITY, EXTX_MEMBERS_ALL_LIST_MEMBERSHIP_ON_COLUMN_WIDTH, EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_CELL_CLASS, EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_WIDTH, EXTX_MEMBERS_ALL_LIST_RESIDENCE_COLUMN_CELL_CLASS, EXTX_MEMBERS_ALL_LIST_RESIDENCE_COLUMN_WIDTH, EXTX_MEMBERS_ALL_LIST_SEGMENT, EXTX_MEMBERS_ALL_PAGE_NAME, EXTX_MEMBER_DIRECTORY_ALL_PEOPLE_FOOTER_SORT_OPTIONS, EXTX_MEMBER_DIRECTORY_CANONICAL_FOOTER_SORT_OPTIONS, EXTX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS, EXTX_MEMBER_DIRECTORY_DEFAULT_SORT_FIELD, EXTX_MEMBER_DIRECTORY_ELECTORAL_COLUMN_CELL_CLASS, EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELDS, EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_STORE_PREFIX, EXTX_MEMBER_DIRECTORY_LIST_BUILTIN_CACHE_GENERATION, EXTX_MEMBER_DIRECTORY_LIST_FACE_COLUMN_CELL_CLASS, EXTX_MEMBER_DIRECTORY_LIST_FACE_COLUMN_WIDTH, EXTX_MEMBER_DIRECTORY_MEMBERSHIP_FILTER_STORE_PATH, EXTX_MEMBER_DIRECTORY_PAGE_LEGACY_READ, EXTX_MEMBER_DIRECTORY_SCOPED_FOOTER_SORT_OPTIONS, EXTX_MEMBER_DIRECTORY_SUPPRESSED_GRID_COLUMN_KEYS, EXTX_MEMBER_DOSSIER_CELL_CLICK_BEHAVIOR, EXTX_MEMBER_DOSSIER_NAVIGATE_TARGET, EXTX_MEMBER_DOSSIER_RETURN_LIST_QUERY, EXTX_MEMBER_DOSSIER_SECTIONS, EXTX_MEMBER_FACE_CAPTION_TRACKING_CLASS, EXTX_MEMBER_FACE_CAPTION_TRACKING_FIELD, EXTX_MEMBER_FACE_CAPTION_USERNAME_CLASS, EXTX_MEMBER_FACE_CAPTION_USERNAME_FIELD, EXTX_MEMBER_FACE_SUBTLE_ACTIVE_APPLIED_CLASS, EXTX_MEMBER_FACE_SUBTLE_HOVER_APPLIED_CLASS, EXTX_MEMBER_FACE_SUBTLE_HOVER_CLASS, EXTX_MEMBER_HISTORY_COLUMN_MARKS, EXTX_MEMBER_HISTORY_SNAPSHOT_SQL, EXTX_MEMBER_IMAGE_FIX_DOC_FILTER_KEYS, EXTX_MEMBER_IMAGE_FIX_DOC_FILTER_KEY_TO_KIND_SLUG, EXTX_MEMBER_IMAGE_FIX_FOOTER_SORT_OPTIONS, EXTX_MEMBER_IMAGE_FIX_LIST_LEGACY_SCOPE, EXTX_MEMBER_IMAGE_FIX_LIST_THUMB_KIND_SLUGS, EXTX_MEMBER_IMAGE_FIX_PAGE_NAME, EXTX_MEMBER_IMAGE_FIX_QUEUE_KIND_SLUGS, EXTX_MEMBER_INQUIRY_PUBLIC_PATH, EXTX_MEMBER_INSTITUTES_GRID_COLUMN, EXTX_MEMBER_LEGACY_CHANGE_JSON_FIELD_MAP, EXTX_MEMBER_LIST_AVATAR_IMAGE_CLASS, EXTX_MEMBER_LIST_AVATAR_PLACEHOLDER_CLASS, EXTX_MEMBER_LIST_FACE_REGISTRATION_KIND_SLUGS, EXTX_MEMBER_LIST_SCOPED_EDIT_BY_LEGACY_CODE, EXTX_MEMBER_LIST_SCOPED_EDIT_GOV_LEGACY, EXTX_MEMBER_LIST_STRUCTURED_FIELD_BY_FIELD_LEGACY_SCOPES, EXTX_MEMBER_NAKHEBIN_LIST_COLUMN_1_WIDTH, EXTX_MEMBER_NAKHEBIN_LIST_COLUMN_2_WIDTH, EXTX_MEMBER_NAKHEBIN_LIST_NAME_COLUMN_CELL_CLASS, EXTX_MEMBER_NAKHEBIN_LIST_NAME_COLUMN_WIDTH, EXTX_MEMBER_QUICK_SEARCH_DEFINITION, EXTX_MEMBER_QUICK_SEARCH_LEGACY_LIST_SCOPE, EXTX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE, EXTX_MEMBER_QUICK_SEARCH_NAV_ORDER, EXTX_MEMBER_QUICK_SEARCH_NAV_SEPARATOR_BEFORE, EXTX_MEMBER_QUICK_SEARCH_PAGE_NAME, EXTX_MEMBER_REJECTED_LOCAL_MANAGE_FACE_COLUMN_CELL_CLASS, EXTX_MEMBER_REJECTED_LOCAL_MANAGE_FACE_COLUMN_WIDTH, EXTX_MEMBER_REJECTION_LIST_DIRECTORY_READ_FIELDS, EXTX_MEMBER_REJECTION_LIST_LEGACY_SCOPES, EXTX_MEMBER_REJECTION_LIST_LOCKED_COLUMN_IDS, EXTX_MEMBER_REJECTION_LIST_PARITY_ROW_FIELDS, EXTX_MEMBER_SEGMENT_LIST_COLUMN_LABEL_KEYS, EXTX_MEMBER_SEGMENT_LIST_DEFINITIONS, EXTX_MONTADHEMIN_INSTITUTE_FILTER_QUERY_PARAM, EXTX_MONTADHEMIN_INSTITUTE_FILTER_STORE_PATH, EXTX_MONTADHEMIN_INSTITUTE_MATCH_QUERY_PARAM, EXTX_MONTADHEMIN_INSTITUTE_MATCH_STORE_PATH, EXTX_MONTADHEMIN_MEMBER_LIST_LEGACY_SCOPE, EXTX_MY_PROFILE_PUBLIC_PATH, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_CELL_CLASS, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_HEADER_CLASS, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_KEYS, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_WIDTH, EXTX_NAKHEBIN_MEMBER_LINK_CELL_CLICK_BEHAVIOR, EXTX_NAKHEBIN_NAV_ORDER, EXTX_NAKHEBIN_NAV_SEPARATOR_BEFORE, EXTX_NAKHEBIN_PAGE_LEGACY_READ, EXTX_ORG_MEMBERSHIP_TRANSFER_PAGE_LEGACY_READ, EXTX_PHONE_TEXT_DOSSIER_CLASS, EXTX_PHONE_TEXT_GRID_PRIMARY_CLASS, EXTX_PHONE_TEXT_GRID_SECONDARY_CLASS, EXTX_PHONE_TEXT_INPUT_CLASS, EXTX_PHONE_TEXT_SM_CLASS, EXTX_PHONE_TEXT_XS_CLASS, EXTX_PLATFORM_PORTAL_BRAND_ABOUT_BODY_EN, EXTX_PLATFORM_PORTAL_BRAND_ABOUT_BODY_EN_LEGACY, EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL, EXTX_PLATFORM_PORTAL_BRAND_TITLE_EN, EXTX_PLATFORM_PORTAL_BRAND_TITLE_EN_LEGACY, EXTX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE, EXTX_PLATFORM_PORTAL_SHELL_KEY, EXTX_PORTAL_ROUTE_SEGMENT, EXTX_PUBLIC_PORTAL_CULTURE_CHROME, EXTX_PUBLIC_PORTAL_SEGMENT, EXTX_REGISTERED_MEMBERS_NAV_SEPARATOR_AFTER_MONTADHEMIN, EXTX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH, EXTX_SELF_REGISTRATION_PUBLIC_PATHS, EXTX_TRACK_REGISTRATION_PUBLIC_PATH, ExtxElectoralDivisionPathCell, ExtxElectoralProvinceFallbackCell, ExtxFamilyHouseholdDialogHost, ExtxFamilyHouseholdLinkTrigger, ExtxGeoResponsibilityInlineListDialogHost, ExtxGeoResponsibilityInlineListDialogProvider, ExtxHouseholdRegisteredIconCell, ExtxImageFixListToolbar, ExtxImageFixMemberActionsCell, ExtxImageFixPageDialogHost, ExtxImageFixRegistrationThumbsCell, ExtxImageFixRuntimeDialogs, ExtxInstituteLogoUploadField, ExtxLegacyFieldFilterBarToggle, ExtxLoginPortalLinks, ExtxMemberAreaColumnPathCell, ExtxMemberAvatarWithMembershipCode, ExtxMemberDirectoryElectoralDivisionGridCell, ExtxMemberDirectoryGridFaceCell, ExtxMemberDirectoryLegacyFieldByFieldPanel, ExtxMemberDirectoryLegacyFilterBarPanel, ExtxMemberDirectoryLegacyMembershipCheckboxes, ExtxMemberListScopedEditRuntimeDialogs, ExtxMemberListToolbarActionsEnd, ExtxMemberListToolbarRefreshControl, ExtxMemberPersonalDocumentsLinkCell, ExtxNewlineStackedLinesCell, ExtxPublicInquiry, ExtxPublicLogin, ExtxPublicMyProfile, ExtxRegistrationDevPortal, ExtxRejectedLocalManageListRuntimeProvider, ExtxRejectionListRuntimeContext, ExtxRejectionListRuntimeProvider, ExtxSelfRegistration, ExtxStackedLinesCell, ExtxTrackRegistration, MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_IQ, MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_IR, MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_US, PORTALX_CORE_UI_PAGE_EXPORTS, PORTALX_CULTURE_KEYS_ENTRY, PORTALX_HOST_PAGE_KEYS, PORTALX_LEGACY_CORE_LOADER_TO_PAGE_KEY, PORTALX_MOUNT_PATH_PREFIX, PORTALX_PACKAGE_ID, PORTALX_PACKAGE_NAME, PORTALX_PACKAGE_UI_PREBUILT_MAX_BYTES, PORTALX_PACKAGE_VERSION, PORTALX_PORTAL_SEGMENT, PORTALX_REGISTRY_SNAPSHOT_ROOT, PORTAL_BROWSER_DOCUMENT_TITLE_SEPARATOR, PortalxPackagePublicGate, appendExtxMemberDossierReturnListToPath, appendExtxMemberImageFixListFiltersToSearchParams, appendExtxWaitedListMembershipActionsColumn, appendoPortalxStagingDir, applyExtxInstitutesLogoFromDataApiBody, applyExtxMemberDirectoryElectoralColumnCellAlign, applyExtxMemberDirectoryListFaceColumnWidth, applyExtxMemberListScopedEditCharacterColumnChrome, applyExtxMemberNakhebinListNameColumnWidth, applyExtxMembersAllListMembershipOnColumnWidth, applyExtxMembersAllListPhoneColumnWidth, applyExtxMembersAllListResidenceColumnWidth, applyExtxNakhebinListVotedColumnCenter, applyExtxNakhebinVoterNameDisplayLines, attachExtxInstituteLogoUrlToRow, attachExtxInstituteLogoUrlsToRows, attachExtxMemberRejectionListParityFields, attachExtxNakhebinElectoralDivisionPaths, attachExtxRegionElectoralPathsByRegionId, attachListAddrProvinceTitles, buildClearExtxMemberDirectoryLegacyFilterStorePatches, buildExtxIdentityComponentsCultureKeysEn, buildExtxIdentityComponentsCultureKeysIq, buildExtxMemberDirectoryFooterSortOptions, buildExtxMemberDirectoryLegacyFilterCultureKeysEn, buildExtxMemberDirectoryLegacyFilterCultureKeysIq, buildExtxMemberDirectoryLegacyFilterQueryParams, buildExtxMemberDirectoryListScopeWhere, buildExtxMemberDossierEditRelativePath, buildExtxMemberDossierReturnListQuery, buildExtxMemberDossierViewRelativePath, buildExtxMemberImageFixListFilterStorePatches, buildExtxMemberListRouteAllowRoles, buildExtxMemberListScopedEditCultureKeysEn, buildExtxMemberListScopedEditCultureKeysIq, buildExtxMemberSegmentListExtraGridColumns, buildExtxMembersAllListRelativePath, buildExtxMontadheminInstituteFilterSelectOptions, buildExtxNavPageShellHeaderOverride, buildExtxPublicCulturePath, buildInstituteCharacterScopedEditProfile, buildPortalxCultureKeys, buildPortalxPackageDbObjects, buildPortalxUiSourceFiles, buildPortalxVerticalAppPackageSpec, clearNonAllocatedExtxMemberDirectoryUsernameFields, coercePortalxPackagePageModule, collectExtxMemberListScopedEditChromeFromGridFetches, collectPortalxDeploymentRoutesFromRegistry, columnKeyTriggersListScopedEdit, connectLegacyReadPool, controlPlaneHasLegacyExtxMembersTable, createDefaultExtxMemberImageFixListFilters, createExtxMemberImageFixListFiltersForSimpleSearch, decodeExtxMemberDossierId, defaultExtxPlatformPortalBrand, documentIsExtxMemberImageFixListDocument, documentUsesExtxFamilyHouseholdCellClick, documentUsesExtxImageFixEditorCellClick, documentUsesExtxImageFixPageChrome, enforceExtxImageFixListActionsColumnGridDef, enforceExtxImageFixListDocumentsColumnGridDef, enforceExtxImageFixListMemberColumnGridDef, enforceExtxImageFixListRegisteredColumnGridDef, enforceExtxInstitutesIdColumnGridDef, enforceExtxMemberDirectoryElectoralColumnGridDef, enforceExtxMemberDirectoryJobTypePlaceColumnGridDef, enforceExtxMemberDirectoryListFaceColumnGridDef, enforceExtxMemberDirectorySegmentListRtlColumnGridDef, enforceExtxMemberNakhebinListNameColumnGridDef, enforceExtxMemberRejectionListElectoralAsGovernorateColumnGridDef, enforceExtxMemberRejectionListParityColumnGridDef, enforceExtxMembersAllListMembershipOnColumnGridDef, enforceExtxMembersAllListNakhebinColumnGridDef, enforceExtxMembersAllListPhoneColumnGridDef, enforceExtxMembersAllListResidenceColumnGridDef, enforceExtxNakhebinListVotedColumnGridDef, enforceExtxNakhebinListWrapTextColumnGridDef, enrichExtxGenderCodeTitles, enrichExtxMemberDirectoryListRows, enrichExtxMemberDirectoryRows, enrichExtxNakhebinListRows, ensureExtxBusinessRuleDocTable, ensureExtxCoursesActivitiesSchema, ensureExtxDbObjects, ensureExtxGeoResponsibilitySchema, ensureExtxMasoolinPerformanceDbPrerequisites, ensureExtxMemberDirectoryListRuntime, ensureExtxMemberDossierSatellitesSchema, ensureExtxMemberImageFixEditorSchema, ensureExtxMemberPhoneRequestsSchema, ensureExtxMembersSelfRegistrationSchema, ensureExtxNakhebinPhoneSchema, ensurePortalxPortalShellBrand, ensurePortalxRegistrySnapshotFromWorkspace, executeExtxMemberDirectoryGetOne, executeExtxMemberDirectoryList, extxCandidatePipelinePathSegment, extxCandidatePipelineStageFromSegment, extxFinanceEdgeCompatReady, extxFinanceMasoolinDeferredReady, extxFinanceMasoolinEdgeReady, extxFinanceMasoolinInstallReady, extxFinanceMasoolinProcessReady, extxFinanceMasoolinSchemaReady, extxFinancePaymentProcsReady, extxFinancePaymentReadsReady, extxFinancePaymentTablesReady, extxFinancePaymentViewsReady, extxFinancePaymentWritesReady, extxGeoResponsibilityAllGateRoleNames, extxGeoResponsibilityApproveRoleNames, extxGeoResponsibilityCanAccessSection, extxGeoResponsibilityNominateRoleNames, extxGeoResponsibilityPatchRoleNames, extxLegacyImportParityReady, extxLegacyImportParityTablesReady, extxMemberDirectoryLegacyFilterStorePath, extxMemberDirectoryRowShowsFamilyHouseholdLink, extxMemberFaceCaptionTextClass, extxMemberImageFixListFiltersAffectQuery, extxMemberRowToHistorySnapshot, extxPrimarySelfRegistrationPublicUrl, extxPublicLoginUrl, extxPublicMemberMyProfileUrl, extxPublicPortalHomeUrl, extxSelfRegistrationDevPortalPublicUrl, extxTrackRegistrationPublicUrl, fetchLegacyExtxRoles, fetchLegacyPlatformRolesByAction, filterPortalxHostRowsUnlessInstalled, filterPortalxNavigationUnlessInstalled, filterPortalxNavigationsUnlessInstalled, findExtxGeoResponsibilityRoleSpec, findExtxGeoResponsibilityRoleSpecByRoleName, findExtxMemberListScopedEditProfileForPage, findExtxMemberSegmentListByLegacyCode, findExtxMemberSegmentListByPageName, formatExtxElectoralPathUpToGeoLevel, formatExtxGeoElectoralPathForDisplay, formatExtxGeoResponsibilityNodeColumnDisplay, formatExtxMemberListMembershipOnCaption, formatExtxPersonListNameSecondLine, formatPortalBrowserDocumentTitle, getExtxBusinessRuleDocModel, getExtxMemberDirectoryLegacyFilterFieldDef, gridColumnHasExtxFamilyHouseholdCellClick, imageFixTodoMemberIdsSubquery, insertAfterLockedMemberColumns, insertExtxMemberRejectionListParityColumns, installExtxSchemaSqlServer, isAppEndPlaceholderPortalAboutBody, isAppEndPlaceholderPortalAboutTitle, isAppEndPlaceholderPortalTitle, isDeprecatedExtxMembershipStatusShortName, isExtxAllocatedMembershipUsernameFormat, isExtxGeoResponsibilityLevel, isExtxInstitutesEdgeModel, isExtxInstitutesListGrid, isExtxLegacyProvinceFamilyComposite, isExtxMemberApplicantQueueGridColumnKeys, isExtxMemberDirectoryDataApiOperation, isExtxMemberDirectoryElectoralStyleGridColumnId, isExtxMemberDirectoryGetOneFunctionId, isExtxMemberDirectoryListApiEndpoint, isExtxMemberDirectoryListFaceColumn, isExtxMemberDirectoryListFunctionId, isExtxMemberDirectoryListScopeQueryParams, isExtxMemberDirectoryManagedFunctionId, isExtxMemberDirectorySegmentListGrid, isExtxMemberDossierSoftNavigation, isExtxMemberImageFixListFromScope, isExtxMemberImageFixListScope, isExtxMemberListStructuredFieldByFieldLegacyScope, isExtxMemberNakhebinListNameColumn, isExtxMemberQuickSearchListScope, isExtxMemberRejectionListCompactMemberColumnLayout, isExtxMemberRejectionListLegacyScope, isExtxMembersAllListGrid, isExtxMembershipUsernamePlaceholder, isExtxNakhebinListDataApiOperation, isExtxNakhebinListGrid, isExtxPlatformSeedPortalAboutBody, isExtxPlatformSeedPortalAboutTitle, isExtxPublicPortalPathname, isMemberIdPlaceholderUsername, isPlaceholderAppEndPortalBrand, isPortalxCorePageLoaderRef, isPortalxHostPageKey, isPortalxHostPlatformRow, isPortalxMountPathPrefix, isPortalxPackageEnabledOnBoot, isPortalxPackageUiPageKey, isPortalxPortalInRuntimeConfig, isPortalxPublicBootDocumentTitlePath, isPortalxPublicPathname, isPortalxRoutePattern, isPortalxRuntimeEnabled, leafTitleFromGeoPath, legacyExtxActionKey, legacyExtxRoleIdToPlatformRoleName, listExtxMemberTarghinMembers, listPortalxPackageDbInstallFiles, listScopeLegacyNeedsInstituteCharacterColumn, listSelfRegistrationDevPortalChannelEntries, listSelfRegistrationPublicChannelEntries, loadExtxMemberListScopeContext, loadExtxMemberUsernamesForUserIds, loadImageFixTodoFileKindCodes, localizeExtxMemberDirectoryListWhereFields, mapLegacyExtxRoleRow, markImageFixEditorMemberVisited, mergeExtxInstitutesDataApiRequestBody, mergeExtxMemberDirectoryLegacyFilterQueryParams, mergeExtxMemberListScopedEditDesignerColumns, mirrorMemberDirectoryListFaceAvatarUrlFields, mountExtxRoutes, normalizeExtxHouseholdDisplayName, normalizeExtxInstituteLogoUrl, normalizeExtxMemberDirectoryRowsForFaceCaption, normalizeMemberDirectoryListScopeLegacyParam, omitExtxMemberRejectedLocalManageCreatedAtColumn, omitExtxMemberRejectedLocalManageMembershipStatusUpdatedOnColumn, omitExtxMemberRejectedLocalManagePhoneColumn, omitExtxMemberRejectionListGovernorateColumn, openExtxFamilyHouseholdFromDesignerGrid, openExtxImageFixEditorFromDesignerGrid, openExtxMemberListScopedEditFromDesignerGrid, parseExtxMemberDirectoryGridListScopeLegacy, parseExtxMemberDirectoryListScopeFromDesignerQueryParam, parseExtxMemberDirectoryListScopeQuery, parseExtxMemberDossierIdFromPathname, parseExtxMemberDossierReturnList, parseExtxMemberDossierRoute, patchExtxMemberImageFixListFiltersToStore, publicPathForRegistrationChannel, publishPortalxPlatformRegistryFromSnapshot, pushAppEndOPortalxTree, rankExtxMembershipDecisionNoteSubject, readExtxMemberImageFixListFiltersFromQuery, readExtxMemberImageFixListFiltersFromStore, readExtxMemberImageFixThumbRow, readExtxMemberListScopedEditListScope, readExtxNakhebinVoterNameLine1, readExtxNakhebinVoterNameLine2, readImageFixEditorPageMember, readLegacyConn, readLegacyGeoPatchCenterStats, refreshExtxImageFixMemberList, registerExtxFamilyHouseholdDialogOpener, registerExtxImageFixEditorDialogOpener, registerExtxImageFixListRefreshHandler, registerExtxMemberListScopedEditDialogOpener, registerExtxMemberListScopedEditListScope, registerImageFixEditorPageMembers, reorderExtxMemberDirectoryElectoralColumnThird, requireExtxCoursesActivitiesAccess, requireExtxMemberRashhPickerAccess, requirePortalxPackage, resetExtxDbObjectsInstallState, resetExtxMemberPhoneRequestsSchemaState, resetImageFixEditorSessionVisited, resolveAppEndOPortalxClonePath, resolveAvatarUsernamesForUserIds, resolveExtxAllocatedMembershipUsername, resolveExtxCoursesActivitiesApiAllowRoles, resolveExtxElectoralDivisionCellDisplay, resolveExtxElectoralProvinceTitle, resolveExtxFamilyHouseholdQueryFromRow, resolveExtxFamilyHouseholdQueryFromRowAsync, resolveExtxInstituteDisplayLogoUrl, resolveExtxLegacyFieldFilterToolbarChrome, resolveExtxMemberDirectoryFamilyCode, resolveExtxMemberDirectoryFooterSortOptions, resolveExtxMemberDirectoryListFaceCaption, resolveExtxMemberDirectoryListFaceCaptionForScope, resolveExtxMemberDirectoryListFaceColumnWidthForScope, resolveExtxMemberDirectoryListScopeLegacy, resolveExtxMemberDirectoryListScopeWhere, resolveExtxMemberDirectoryListWhereFieldCultureKey, resolveExtxMemberDirectoryQueryLang, resolveExtxMemberDossierBackMountRelativePath, resolveExtxMemberDossierRouteFromLocation, resolveExtxMemberDossierViewNavigateTarget, resolveExtxMemberFaceCaption, resolveExtxMemberFaceCaptionFromIdentity, resolveExtxMemberFaceCaptionFromMemberFields, resolveExtxMemberImageFixListFaceAvatarUrl, resolveExtxMemberJobTypePlaceLines, resolveExtxMemberListPageLegacyReadAction, resolveExtxMemberListScopedEditProfile, resolveExtxMemberListScopedEditProfileForListScope, resolveExtxMemberMembershipListActionsFromPathname, resolveExtxMemberMembershipListActionsKind, resolveExtxMemberRejectionListActionsFromLegacyScope, resolveExtxMemberRowAllocatedUsername, resolveExtxMemberSegmentLegacyReadAction, resolveExtxNavPageShellDescription, resolveExtxPortalDataApiQueryLang, resolveExtxPublicBootPageTitle, resolveExtxPublicCultureFromPathname, resolveExtxPublicPortalBootDocumentTitle, resolveExtxPublicPortalCultureAboutTitle, resolveExtxPublicPortalCultureTagline, resolveExtxPublicPortalNativeTitle, resolveExtxStackedLinesTextAlignFromGridColumn, resolveImageFixEditorNextMember, resolveLegacyGeoIdForPatch, resolveListMembershipOnRegistrationFallback, resolveMemberDirectoryFaceImageUrl, resolveMemberDirectoryListElectoralRegionRef, resolvePortalSegmentBootDocumentTitle, resolvePortalxPublicBootPageTitleForPath, resolvePortalxShellBootDocumentTitle, resolveRegistrationChannelFromPublicPath, rowShowsExtxFamilyHouseholdCellClick, rowShowsExtxImageFixEditorCellClick, rowShowsExtxMemberListScopedEditCellClick, segmentListDefaultSortField, segmentListHasScopedEdit, segmentListShouldShowMembershipOnColumn, shouldAllowRegistrationPersonalPhotoInListFaceColumn, shouldEnrichImageFixRegistrationThumbsForListScope, shouldEnrichListFaceAvatarsFromRegistrationForListScope, shouldEnrichMemberInstitutesSummaryForListScope, shouldHideExtxMemberDirectoryGridColumn, shouldHideExtxMemberQuickSearchGridColumn, shouldHideMemberDirectoryQueueFamilyUiColumns, shouldHideMemberDirectoryTrackingCodeColumn, shouldHideMemberNakhebinFamilyRecordColumnOnMemberDirectoryGrid, shouldHideMemberRegisteredIconColumnOnMemberDirectoryGrid, shouldHideMembershipOnColumnOnMemberDirectoryGrid, shouldMergeExtxMemberDirectoryLegacyFilterQueryParams, shouldReplacePortalxRegistryDocumentTitle, splitExtxElectoralDivisionGridPath, splitExtxElectoralDivisionPath, splitExtxElectoralGeoPathFieldParts, splitExtxGeoPathDisplaySegments, splitExtxHouseholdMemberNameLines, splitExtxMemberAreaColumnDisplay, splitExtxMembershipDecisionNoteBody, splitExtxNewlineCellLines, splitExtxResidenceSummaryLines, splitExtxTitlePath, stripExtxInstituteLogoFieldsFromSequelizePayload, stripExtxPublicCulturePortalPrefix, unpublishPortalxPlatformRegistry, useExtxLegacyFieldFilterBarMode, useExtxNavPageShellHeader, useExtxRejectedLocalManageListRuntime, useExtxRejectionListRuntime, useOpenExtxGeoResponsibilityInlineListDialog, withLegacyReadOnlyIntent;
+var excludedModuleStub, excludedModuleStub_default, ALL_EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELD_KEYS, APPENDO_PORTALX_REPO_NAME, EXTX_ALLOCATED_MEMBERSHIP_USERNAME_LEN, EXTX_ALLOCATED_MEMBERSHIP_USERNAME_PATTERN, EXTX_CANDIDATE_PIPELINE_STAGES, EXTX_COURSES_ACTIVITIES_ROUTE_BINDING_ID, EXTX_DEFAULT_PUBLIC_CULTURE, EXTX_DEPRECATED_MEMBERSHIP_STATUS_SHORT_NAMES, EXTX_ELECTORAL_DIVISION_FALLBACK_FIELD, EXTX_FAMILY_HOUSEHOLD_CELL_CLICK_BEHAVIOR, EXTX_FAMILY_HOUSEHOLD_CELL_CLICK_KIND, EXTX_GEO_RESPONSIBILITY_LEVELS, EXTX_GEO_RESPONSIBILITY_ROLES, EXTX_GEO_RESPONSIBILITY_ROW_ACTIONS_COLUMN_WIDTH_PX, EXTX_IMAGE_FIX_EDITOR_CELL_CLICK_KIND, EXTX_IMAGE_FIX_LIST_ACTIONS_COLUMN_WIDTH, EXTX_IMAGE_FIX_LIST_DOCUMENTS_COLUMN_WIDTH, EXTX_IMAGE_FIX_LIST_MEMBER_COLUMN_CELL_CLASS, EXTX_IMAGE_FIX_LIST_MEMBER_COLUMN_WIDTH, EXTX_IMAGE_FIX_LIST_REGISTERED_COLUMN_WIDTH, EXTX_IMAGE_FIX_NAV_ORDER, EXTX_IMAGE_FIX_REGISTRATION_THUMB_BORDER_PX, EXTX_IMAGE_FIX_REGISTRATION_THUMB_GAP_PX, EXTX_IMAGE_FIX_REGISTRATION_THUMB_SIZE_PX, EXTX_INSTITUTES_ID_COLUMN_CELL_CLASS, EXTX_INSTITUTES_ID_COLUMN_HEADER_CLASS, EXTX_INSTITUTES_OBJECT_NAME, EXTX_LOGIN_PUBLIC_PATH, EXTX_MEMBERS_ALL_LIST_MEMBERSHIP_ON_COLUMN_WIDTH, EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_CELL_CLASS, EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_WIDTH, EXTX_MEMBERS_ALL_LIST_RESIDENCE_COLUMN_CELL_CLASS, EXTX_MEMBERS_ALL_LIST_RESIDENCE_COLUMN_WIDTH, EXTX_MEMBERS_ALL_LIST_SEGMENT, EXTX_MEMBERS_ALL_PAGE_NAME, EXTX_MEMBER_DIRECTORY_ALL_PEOPLE_FOOTER_SORT_OPTIONS, EXTX_MEMBER_DIRECTORY_CANONICAL_FOOTER_SORT_OPTIONS, EXTX_MEMBER_DIRECTORY_DATA_API_TIMEOUT_MS, EXTX_MEMBER_DIRECTORY_DEFAULT_SORT_FIELD, EXTX_MEMBER_DIRECTORY_ELECTORAL_COLUMN_CELL_CLASS, EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_FIELDS, EXTX_MEMBER_DIRECTORY_LEGACY_FILTER_STORE_PREFIX, EXTX_MEMBER_DIRECTORY_LIST_BUILTIN_CACHE_GENERATION, EXTX_MEMBER_DIRECTORY_LIST_FACE_COLUMN_CELL_CLASS, EXTX_MEMBER_DIRECTORY_LIST_FACE_COLUMN_WIDTH, EXTX_MEMBER_DIRECTORY_MEMBERSHIP_FILTER_STORE_PATH, EXTX_MEMBER_DIRECTORY_PAGE_LEGACY_READ, EXTX_MEMBER_DIRECTORY_SCOPED_FOOTER_SORT_OPTIONS, EXTX_MEMBER_DIRECTORY_SUPPRESSED_GRID_COLUMN_KEYS, EXTX_MEMBER_DOSSIER_CELL_CLICK_BEHAVIOR, EXTX_MEMBER_DOSSIER_NAVIGATE_TARGET, EXTX_MEMBER_DOSSIER_RETURN_LIST_QUERY, EXTX_MEMBER_DOSSIER_SECTIONS, EXTX_MEMBER_FACE_CAPTION_TRACKING_CLASS, EXTX_MEMBER_FACE_CAPTION_TRACKING_FIELD, EXTX_MEMBER_FACE_CAPTION_USERNAME_CLASS, EXTX_MEMBER_FACE_CAPTION_USERNAME_FIELD, EXTX_MEMBER_FACE_SUBTLE_ACTIVE_APPLIED_CLASS, EXTX_MEMBER_FACE_SUBTLE_HOVER_APPLIED_CLASS, EXTX_MEMBER_FACE_SUBTLE_HOVER_CLASS, EXTX_MEMBER_HISTORY_COLUMN_MARKS, EXTX_MEMBER_HISTORY_SNAPSHOT_SQL, EXTX_MEMBER_IMAGE_FIX_DOC_FILTER_KEYS, EXTX_MEMBER_IMAGE_FIX_DOC_FILTER_KEY_TO_KIND_SLUG, EXTX_MEMBER_IMAGE_FIX_FOOTER_SORT_OPTIONS, EXTX_MEMBER_IMAGE_FIX_LIST_LEGACY_SCOPE, EXTX_MEMBER_IMAGE_FIX_LIST_THUMB_KIND_SLUGS, EXTX_MEMBER_IMAGE_FIX_PAGE_NAME, EXTX_MEMBER_IMAGE_FIX_QUEUE_KIND_SLUGS, EXTX_MEMBER_INQUIRY_PUBLIC_PATH, EXTX_MEMBER_INSTITUTES_GRID_COLUMN, EXTX_MEMBER_LEGACY_CHANGE_JSON_FIELD_MAP, EXTX_MEMBER_LIST_AVATAR_IMAGE_CLASS, EXTX_MEMBER_LIST_AVATAR_PLACEHOLDER_CLASS, EXTX_MEMBER_LIST_FACE_REGISTRATION_KIND_SLUGS, EXTX_MEMBER_LIST_SCOPED_EDIT_BY_LEGACY_CODE, EXTX_MEMBER_LIST_SCOPED_EDIT_GOV_LEGACY, EXTX_MEMBER_LIST_STRUCTURED_FIELD_BY_FIELD_LEGACY_SCOPES, EXTX_MEMBER_NAKHEBIN_LIST_COLUMN_1_WIDTH, EXTX_MEMBER_NAKHEBIN_LIST_COLUMN_2_WIDTH, EXTX_MEMBER_NAKHEBIN_LIST_NAME_COLUMN_CELL_CLASS, EXTX_MEMBER_NAKHEBIN_LIST_NAME_COLUMN_WIDTH, EXTX_MEMBER_QUICK_SEARCH_DEFINITION, EXTX_MEMBER_QUICK_SEARCH_LEGACY_LIST_SCOPE, EXTX_MEMBER_QUICK_SEARCH_LIST_PAGE_SIZE, EXTX_MEMBER_QUICK_SEARCH_NAV_ORDER, EXTX_MEMBER_QUICK_SEARCH_NAV_SEPARATOR_BEFORE, EXTX_MEMBER_QUICK_SEARCH_PAGE_NAME, EXTX_MEMBER_REJECTED_LOCAL_MANAGE_FACE_COLUMN_CELL_CLASS, EXTX_MEMBER_REJECTED_LOCAL_MANAGE_FACE_COLUMN_WIDTH, EXTX_MEMBER_REJECTION_LIST_DIRECTORY_READ_FIELDS, EXTX_MEMBER_REJECTION_LIST_LEGACY_SCOPES, EXTX_MEMBER_REJECTION_LIST_LOCKED_COLUMN_IDS, EXTX_MEMBER_REJECTION_LIST_PARITY_ROW_FIELDS, EXTX_MEMBER_SEGMENT_LIST_COLUMN_LABEL_KEYS, EXTX_MEMBER_SEGMENT_LIST_DEFINITIONS, EXTX_MONTADHEMIN_INSTITUTE_FILTER_QUERY_PARAM, EXTX_MONTADHEMIN_INSTITUTE_FILTER_STORE_PATH, EXTX_MONTADHEMIN_INSTITUTE_MATCH_QUERY_PARAM, EXTX_MONTADHEMIN_INSTITUTE_MATCH_STORE_PATH, EXTX_MONTADHEMIN_MEMBER_LIST_LEGACY_SCOPE, EXTX_MY_PROFILE_PUBLIC_PATH, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_CELL_CLASS, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_HEADER_CLASS, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_KEYS, EXTX_NAKHEBIN_LIST_VOTED_COLUMN_WIDTH, EXTX_NAKHEBIN_MEMBER_LINK_CELL_CLICK_BEHAVIOR, EXTX_NAKHEBIN_NAV_ORDER, EXTX_NAKHEBIN_NAV_SEPARATOR_BEFORE, EXTX_NAKHEBIN_PAGE_LEGACY_READ, EXTX_ORG_MEMBERSHIP_TRANSFER_PAGE_LEGACY_READ, EXTX_PHONE_TEXT_DOSSIER_CLASS, EXTX_PHONE_TEXT_GRID_PRIMARY_CLASS, EXTX_PHONE_TEXT_GRID_SECONDARY_CLASS, EXTX_PHONE_TEXT_INPUT_CLASS, EXTX_PHONE_TEXT_SM_CLASS, EXTX_PHONE_TEXT_XS_CLASS, EXTX_PLATFORM_PORTAL_BRAND_ABOUT_BODY_EN, EXTX_PLATFORM_PORTAL_BRAND_ABOUT_BODY_EN_LEGACY, EXTX_PLATFORM_PORTAL_BRAND_LOGO_URL, EXTX_PLATFORM_PORTAL_BRAND_TITLE_EN, EXTX_PLATFORM_PORTAL_BRAND_TITLE_EN_LEGACY, EXTX_PLATFORM_PORTAL_BRAND_WINDOW_TITLE, EXTX_PLATFORM_PORTAL_SHELL_KEY, EXTX_PORTAL_ROUTE_SEGMENT, EXTX_PUBLIC_PORTAL_CULTURE_CHROME, EXTX_PUBLIC_PORTAL_SEGMENT, EXTX_REGISTERED_MEMBERS_NAV_SEPARATOR_AFTER_MONTADHEMIN, EXTX_SELF_REGISTRATION_DEV_PORTAL_PUBLIC_PATH, EXTX_SELF_REGISTRATION_PUBLIC_PATHS, EXTX_TRACK_REGISTRATION_PUBLIC_PATH, ExtxElectoralDivisionPathCell, ExtxElectoralProvinceFallbackCell, ExtxFamilyHouseholdDialogHost, ExtxFamilyHouseholdLinkTrigger, ExtxGeoResponsibilityInlineListDialogHost, ExtxGeoResponsibilityInlineListDialogProvider, ExtxHouseholdRegisteredIconCell, ExtxImageFixListToolbar, ExtxImageFixMemberActionsCell, ExtxImageFixPageDialogHost, ExtxImageFixRegistrationThumbsCell, ExtxImageFixRuntimeDialogs, ExtxInstituteLogoUploadField, ExtxLegacyFieldFilterBarToggle, ExtxLoginPortalLinks, ExtxMemberAreaColumnPathCell, ExtxMemberAvatarWithMembershipCode, ExtxMemberDirectoryElectoralDivisionGridCell, ExtxMemberDirectoryGridFaceCell, ExtxMemberDirectoryLegacyFieldByFieldPanel, ExtxMemberDirectoryLegacyFilterBarPanel, ExtxMemberDirectoryLegacyMembershipCheckboxes, ExtxMemberListScopedEditRuntimeDialogs, ExtxMemberListToolbarActionsEnd, ExtxMemberListToolbarRefreshControl, ExtxMemberPersonalDocumentsLinkCell, ExtxNewlineStackedLinesCell, ExtxPublicInquiry, ExtxPublicLogin, ExtxPublicMyProfile, ExtxRegistrationDevPortal, ExtxRejectedLocalManageListRuntimeProvider, ExtxRejectionListRuntimeContext, ExtxRejectionListRuntimeProvider, ExtxSelfRegistration, ExtxStackedLinesCell, ExtxTrackRegistration, MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_IQ, MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_IR, MEMBER_DOSSIER_CHANGE_LOG_TRANSLATIONS_US, PORTALX_CORE_UI_PAGE_EXPORTS, PORTALX_CULTURE_KEYS_ENTRY, PORTALX_HOST_PAGE_KEYS, PORTALX_LEGACY_CORE_LOADER_TO_PAGE_KEY, PORTALX_MOUNT_PATH_PREFIX, PORTALX_PACKAGE_ID, PORTALX_PACKAGE_NAME, PORTALX_PACKAGE_UI_PREBUILT_MAX_BYTES, PORTALX_PACKAGE_VERSION, PORTALX_PORTAL_SEGMENT, PORTALX_REGISTRY_SNAPSHOT_ROOT, PORTAL_BROWSER_DOCUMENT_TITLE_SEPARATOR, PortalxPackagePublicGate, appendExtxMemberDossierReturnListToPath, appendExtxMemberImageFixListFiltersToSearchParams, appendExtxWaitedListMembershipActionsColumn, appendoPortalxStagingDir, applyExtxInstitutesLogoFromDataApiBody, applyExtxMemberDirectoryElectoralColumnCellAlign, applyExtxMemberDirectoryListFaceColumnWidth, applyExtxMemberListScopedEditCharacterColumnChrome, applyExtxMemberNakhebinListNameColumnWidth, applyExtxMembersAllListMembershipOnColumnWidth, applyExtxMembersAllListPhoneColumnWidth, applyExtxMembersAllListResidenceColumnWidth, applyExtxNakhebinListVotedColumnCenter, applyExtxNakhebinVoterNameDisplayLines, attachExtxInstituteLogoUrlToRow, attachExtxInstituteLogoUrlsToRows, attachExtxNakhebinElectoralDivisionPaths, attachExtxRegionElectoralPathsByRegionId, attachListAddrProvinceTitles, buildClearExtxMemberDirectoryLegacyFilterStorePatches, buildExtxIdentityComponentsCultureKeysEn, buildExtxIdentityComponentsCultureKeysIq, buildExtxMemberDirectoryFooterSortOptions, buildExtxMemberDirectoryLegacyFilterCultureKeysEn, buildExtxMemberDirectoryLegacyFilterCultureKeysIq, buildExtxMemberDirectoryLegacyFilterQueryParams, buildExtxMemberDirectoryListScopeWhere, buildExtxMemberDossierEditRelativePath, buildExtxMemberDossierReturnListQuery, buildExtxMemberDossierViewRelativePath, buildExtxMemberImageFixListFilterStorePatches, buildExtxMemberListRouteAllowRoles, buildExtxMemberListScopedEditCultureKeysEn, buildExtxMemberListScopedEditCultureKeysIq, buildExtxMemberSegmentListExtraGridColumns, buildExtxMembersAllListRelativePath, buildExtxMontadheminInstituteFilterSelectOptions, buildExtxNavPageShellHeaderOverride, buildExtxPublicCulturePath, buildInstituteCharacterScopedEditProfile, buildPortalxCultureKeys, buildPortalxPackageDbObjects, buildPortalxUiSourceFiles, buildPortalxVerticalAppPackageSpec, clearNonAllocatedExtxMemberDirectoryUsernameFields, coercePortalxPackagePageModule, collectExtxMemberListScopedEditChromeFromGridFetches, collectPortalxDeploymentRoutesFromRegistry, columnKeyTriggersListScopedEdit, createDefaultExtxMemberImageFixListFilters, createExtxMemberImageFixListFiltersForSimpleSearch, decodeExtxMemberDossierId, defaultExtxPlatformPortalBrand, documentIsExtxMemberImageFixListDocument, documentUsesExtxFamilyHouseholdCellClick, documentUsesExtxImageFixEditorCellClick, documentUsesExtxImageFixPageChrome, enforceExtxImageFixListActionsColumnGridDef, enforceExtxImageFixListDocumentsColumnGridDef, enforceExtxImageFixListMemberColumnGridDef, enforceExtxImageFixListRegisteredColumnGridDef, enforceExtxInstitutesIdColumnGridDef, enforceExtxMemberDirectoryElectoralColumnGridDef, enforceExtxMemberDirectoryJobTypePlaceColumnGridDef, enforceExtxMemberDirectoryListFaceColumnGridDef, enforceExtxMemberDirectorySegmentListRtlColumnGridDef, enforceExtxMemberNakhebinListNameColumnGridDef, enforceExtxMemberRejectionListElectoralAsGovernorateColumnGridDef, enforceExtxMemberRejectionListParityColumnGridDef, enforceExtxMembersAllListMembershipOnColumnGridDef, enforceExtxMembersAllListNakhebinColumnGridDef, enforceExtxMembersAllListPhoneColumnGridDef, enforceExtxMembersAllListResidenceColumnGridDef, enforceExtxNakhebinListVotedColumnGridDef, enforceExtxNakhebinListWrapTextColumnGridDef, enrichExtxGenderCodeTitles, enrichExtxMemberDirectoryListRows, enrichExtxMemberDirectoryRows, enrichExtxNakhebinListRows, ensureExtxBusinessRuleDocTable, ensureExtxCoursesActivitiesSchema, ensureExtxDbObjects, ensureExtxGeoResponsibilitySchema, ensureExtxMasoolinPerformanceDbPrerequisites, ensureExtxMemberDirectoryListRuntime, ensureExtxMemberDossierSatellitesSchema, ensureExtxMemberImageFixEditorSchema, ensureExtxMemberPhoneRequestsSchema, ensureExtxMembersSelfRegistrationSchema, ensureExtxNakhebinPhoneSchema, ensurePortalxPortalShellBrand, ensurePortalxRegistrySnapshotFromWorkspace, executeExtxMemberDirectoryGetOne, executeExtxMemberDirectoryList, extxCandidatePipelinePathSegment, extxCandidatePipelineStageFromSegment, extxFinanceEdgeCompatReady, extxFinanceMasoolinDeferredReady, extxFinanceMasoolinEdgeReady, extxFinanceMasoolinInstallReady, extxFinanceMasoolinProcessReady, extxFinanceMasoolinSchemaReady, extxFinancePaymentProcsReady, extxFinancePaymentReadsReady, extxFinancePaymentTablesReady, extxFinancePaymentViewsReady, extxFinancePaymentWritesReady, extxGeoResponsibilityAllGateRoleNames, extxGeoResponsibilityApproveRoleNames, extxGeoResponsibilityCanAccessSection, extxGeoResponsibilityNominateRoleNames, extxGeoResponsibilityPatchRoleNames, extxLegacyImportParityReady, extxLegacyImportParityTablesReady, extxMemberDirectoryLegacyFilterStorePath, extxMemberDirectoryRowShowsFamilyHouseholdLink, extxMemberFaceCaptionTextClass, extxMemberImageFixListFiltersAffectQuery, extxMemberRowToHistorySnapshot, extxPrimarySelfRegistrationPublicUrl, extxPublicLoginUrl, extxPublicMemberMyProfileUrl, extxPublicPortalHomeUrl, extxSelfRegistrationDevPortalPublicUrl, extxTrackRegistrationPublicUrl, filterPortalxHostRowsUnlessInstalled, filterPortalxNavigationUnlessInstalled, filterPortalxNavigationsUnlessInstalled, findExtxGeoResponsibilityRoleSpec, findExtxGeoResponsibilityRoleSpecByRoleName, findExtxMemberListScopedEditProfileForPage, findExtxMemberSegmentListByLegacyCode, findExtxMemberSegmentListByPageName, formatExtxElectoralPathUpToGeoLevel, formatExtxGeoElectoralPathForDisplay, formatExtxGeoResponsibilityNodeColumnDisplay, formatExtxMemberListMembershipOnCaption, formatExtxPersonListNameSecondLine, formatPortalBrowserDocumentTitle, getExtxBusinessRuleDocModel, getExtxMemberDirectoryLegacyFilterFieldDef, gridColumnHasExtxFamilyHouseholdCellClick, imageFixTodoMemberIdsSubquery, insertAfterLockedMemberColumns, insertExtxMemberRejectionListParityColumns, installExtxSchemaSqlServer, isAppEndPlaceholderPortalAboutBody, isAppEndPlaceholderPortalAboutTitle, isAppEndPlaceholderPortalTitle, isDeprecatedExtxMembershipStatusShortName, isExtxAllocatedMembershipUsernameFormat, isExtxGeoResponsibilityLevel, isExtxInstitutesEdgeModel, isExtxInstitutesListGrid, isExtxLegacyProvinceFamilyComposite, isExtxMemberApplicantQueueGridColumnKeys, isExtxMemberDirectoryDataApiOperation, isExtxMemberDirectoryElectoralStyleGridColumnId, isExtxMemberDirectoryGetOneFunctionId, isExtxMemberDirectoryListApiEndpoint, isExtxMemberDirectoryListFaceColumn, isExtxMemberDirectoryListFunctionId, isExtxMemberDirectoryListScopeQueryParams, isExtxMemberDirectoryManagedFunctionId, isExtxMemberDirectorySegmentListGrid, isExtxMemberDossierSoftNavigation, isExtxMemberImageFixListFromScope, isExtxMemberImageFixListScope, isExtxMemberListStructuredFieldByFieldLegacyScope, isExtxMemberNakhebinListNameColumn, isExtxMemberQuickSearchListScope, isExtxMemberRejectionListCompactMemberColumnLayout, isExtxMemberRejectionListLegacyScope, isExtxMembersAllListGrid, isExtxMembershipUsernamePlaceholder, isExtxNakhebinListDataApiOperation, isExtxNakhebinListGrid, isExtxPlatformSeedPortalAboutBody, isExtxPlatformSeedPortalAboutTitle, isExtxPublicPortalPathname, isMemberIdPlaceholderUsername, isPlaceholderAppEndPortalBrand, isPortalxCorePageLoaderRef, isPortalxHostPageKey, isPortalxHostPlatformRow, isPortalxMountPathPrefix, isPortalxPackageEnabledOnBoot, isPortalxPackageUiPageKey, isPortalxPortalInRuntimeConfig, isPortalxPublicBootDocumentTitlePath, isPortalxPublicPathname, isPortalxRoutePattern, isPortalxRuntimeEnabled, leafTitleFromGeoPath, legacyExtxActionKey, legacyExtxRoleIdToPlatformRoleName, listPortalxPackageDbInstallFiles, listScopeLegacyNeedsInstituteCharacterColumn, listSelfRegistrationDevPortalChannelEntries, listSelfRegistrationPublicChannelEntries, loadExtxMemberListScopeContext, loadExtxMemberUsernamesForUserIds, loadImageFixTodoFileKindCodes, localizeExtxMemberDirectoryListWhereFields, markImageFixEditorMemberVisited, mergeExtxInstitutesDataApiRequestBody, mergeExtxMemberDirectoryLegacyFilterQueryParams, mergeExtxMemberListScopedEditDesignerColumns, mirrorMemberDirectoryListFaceAvatarUrlFields, mountExtxRoutes, normalizeExtxHouseholdDisplayName, normalizeExtxInstituteLogoUrl, normalizeExtxMemberDirectoryRowsForFaceCaption, normalizeMemberDirectoryListScopeLegacyParam, omitExtxMemberRejectedLocalManageCreatedAtColumn, omitExtxMemberRejectedLocalManageMembershipStatusUpdatedOnColumn, omitExtxMemberRejectedLocalManagePhoneColumn, omitExtxMemberRejectionListGovernorateColumn, openExtxFamilyHouseholdFromDesignerGrid, openExtxImageFixEditorFromDesignerGrid, openExtxMemberListScopedEditFromDesignerGrid, parseExtxMemberDirectoryGridListScopeLegacy, parseExtxMemberDirectoryListScopeFromDesignerQueryParam, parseExtxMemberDirectoryListScopeQuery, parseExtxMemberDossierIdFromPathname, parseExtxMemberDossierReturnList, parseExtxMemberDossierRoute, patchExtxMemberImageFixListFiltersToStore, publicPathForRegistrationChannel, publishPortalxPlatformRegistryFromSnapshot, pushAppEndOPortalxTree, readExtxMemberImageFixListFiltersFromQuery, readExtxMemberImageFixListFiltersFromStore, readExtxMemberImageFixThumbRow, readExtxMemberListScopedEditListScope, readExtxNakhebinVoterNameLine1, readExtxNakhebinVoterNameLine2, readImageFixEditorPageMember, refreshExtxImageFixMemberList, registerExtxFamilyHouseholdDialogOpener, registerExtxImageFixEditorDialogOpener, registerExtxImageFixListRefreshHandler, registerExtxMemberListScopedEditDialogOpener, registerExtxMemberListScopedEditListScope, registerImageFixEditorPageMembers, reorderExtxMemberDirectoryElectoralColumnThird, requireExtxCoursesActivitiesAccess, requireExtxMemberRashhPickerAccess, requirePortalxPackage, resetExtxDbObjectsInstallState, resetExtxMemberPhoneRequestsSchemaState, resetImageFixEditorSessionVisited, resolveAppEndOPortalxClonePath, resolveAvatarUsernamesForUserIds, resolveExtxAllocatedMembershipUsername, resolveExtxCoursesActivitiesApiAllowRoles, resolveExtxElectoralDivisionCellDisplay, resolveExtxElectoralProvinceTitle, resolveExtxFamilyHouseholdQueryFromRow, resolveExtxFamilyHouseholdQueryFromRowAsync, resolveExtxInstituteDisplayLogoUrl, resolveExtxLegacyFieldFilterToolbarChrome, resolveExtxMemberDirectoryFamilyCode, resolveExtxMemberDirectoryFooterSortOptions, resolveExtxMemberDirectoryListFaceCaption, resolveExtxMemberDirectoryListFaceCaptionForScope, resolveExtxMemberDirectoryListFaceColumnWidthForScope, resolveExtxMemberDirectoryListScopeLegacy, resolveExtxMemberDirectoryListScopeWhere, resolveExtxMemberDirectoryListWhereFieldCultureKey, resolveExtxMemberDirectoryQueryLang, resolveExtxMemberDossierBackMountRelativePath, resolveExtxMemberDossierRouteFromLocation, resolveExtxMemberDossierViewNavigateTarget, resolveExtxMemberFaceCaption, resolveExtxMemberFaceCaptionFromIdentity, resolveExtxMemberFaceCaptionFromMemberFields, resolveExtxMemberImageFixListFaceAvatarUrl, resolveExtxMemberJobTypePlaceLines, resolveExtxMemberListPageLegacyReadAction, resolveExtxMemberListScopedEditProfile, resolveExtxMemberListScopedEditProfileForListScope, resolveExtxMemberMembershipListActionsFromPathname, resolveExtxMemberMembershipListActionsKind, resolveExtxMemberRejectionListActionsFromLegacyScope, resolveExtxMemberRowAllocatedUsername, resolveExtxMemberSegmentLegacyReadAction, resolveExtxNavPageShellDescription, resolveExtxPortalDataApiQueryLang, resolveExtxPublicBootPageTitle, resolveExtxPublicCultureFromPathname, resolveExtxPublicPortalBootDocumentTitle, resolveExtxPublicPortalCultureAboutTitle, resolveExtxPublicPortalCultureTagline, resolveExtxPublicPortalNativeTitle, resolveExtxStackedLinesTextAlignFromGridColumn, resolveImageFixEditorNextMember, resolveListMembershipOnRegistrationFallback, resolveMemberDirectoryFaceImageUrl, resolveMemberDirectoryListElectoralRegionRef, resolvePortalSegmentBootDocumentTitle, resolvePortalxPublicBootPageTitleForPath, resolvePortalxShellBootDocumentTitle, resolveRegistrationChannelFromPublicPath, rowShowsExtxFamilyHouseholdCellClick, rowShowsExtxImageFixEditorCellClick, rowShowsExtxMemberListScopedEditCellClick, segmentListDefaultSortField, segmentListHasScopedEdit, segmentListShouldShowMembershipOnColumn, shouldAllowRegistrationPersonalPhotoInListFaceColumn, shouldEnrichImageFixRegistrationThumbsForListScope, shouldEnrichListFaceAvatarsFromRegistrationForListScope, shouldEnrichMemberInstitutesSummaryForListScope, shouldHideExtxMemberDirectoryGridColumn, shouldHideExtxMemberQuickSearchGridColumn, shouldHideMemberDirectoryQueueFamilyUiColumns, shouldHideMemberDirectoryTrackingCodeColumn, shouldHideMemberNakhebinFamilyRecordColumnOnMemberDirectoryGrid, shouldHideMemberRegisteredIconColumnOnMemberDirectoryGrid, shouldHideMembershipOnColumnOnMemberDirectoryGrid, shouldMergeExtxMemberDirectoryLegacyFilterQueryParams, shouldReplacePortalxRegistryDocumentTitle, splitExtxElectoralDivisionGridPath, splitExtxElectoralDivisionPath, splitExtxElectoralGeoPathFieldParts, splitExtxGeoPathDisplaySegments, splitExtxHouseholdMemberNameLines, splitExtxMemberAreaColumnDisplay, splitExtxNewlineCellLines, splitExtxResidenceSummaryLines, splitExtxTitlePath, stripExtxInstituteLogoFieldsFromSequelizePayload, stripExtxPublicCulturePortalPrefix, unpublishPortalxPlatformRegistry, useExtxLegacyFieldFilterBarMode, useExtxNavPageShellHeader, useExtxRejectedLocalManageListRuntime, useExtxRejectionListRuntime, useOpenExtxGeoResponsibilityInlineListDialog;
 var init_excludedModuleStub = __esm({
   "src/oss/excludedModuleStub.ts"() {
     excludedModuleStub = makeExcludedStub("default");
@@ -34031,7 +34046,6 @@ var init_excludedModuleStub = __esm({
     EXTX_INSTITUTES_ID_COLUMN_HEADER_CLASS = makeExcludedStub("EXTX_INSTITUTES_ID_COLUMN_HEADER_CLASS");
     EXTX_INSTITUTES_OBJECT_NAME = makeExcludedStub("EXTX_INSTITUTES_OBJECT_NAME");
     EXTX_LOGIN_PUBLIC_PATH = makeExcludedStub("EXTX_LOGIN_PUBLIC_PATH");
-    EXTX_MEMBERSHIP_DECISION_NOTE_SUBJECT_PRIORITY = makeExcludedStub("EXTX_MEMBERSHIP_DECISION_NOTE_SUBJECT_PRIORITY");
     EXTX_MEMBERS_ALL_LIST_MEMBERSHIP_ON_COLUMN_WIDTH = makeExcludedStub("EXTX_MEMBERS_ALL_LIST_MEMBERSHIP_ON_COLUMN_WIDTH");
     EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_CELL_CLASS = makeExcludedStub("EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_CELL_CLASS");
     EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_WIDTH = makeExcludedStub("EXTX_MEMBERS_ALL_LIST_PHONE_COLUMN_WIDTH");
@@ -34204,7 +34218,6 @@ var init_excludedModuleStub = __esm({
     applyExtxNakhebinVoterNameDisplayLines = makeExcludedStub("applyExtxNakhebinVoterNameDisplayLines");
     attachExtxInstituteLogoUrlToRow = makeExcludedStub("attachExtxInstituteLogoUrlToRow");
     attachExtxInstituteLogoUrlsToRows = makeExcludedStub("attachExtxInstituteLogoUrlsToRows");
-    attachExtxMemberRejectionListParityFields = makeExcludedStub("attachExtxMemberRejectionListParityFields");
     attachExtxNakhebinElectoralDivisionPaths = makeExcludedStub("attachExtxNakhebinElectoralDivisionPaths");
     attachExtxRegionElectoralPathsByRegionId = makeExcludedStub("attachExtxRegionElectoralPathsByRegionId");
     attachListAddrProvinceTitles = makeExcludedStub("attachListAddrProvinceTitles");
@@ -34238,8 +34251,6 @@ var init_excludedModuleStub = __esm({
     collectExtxMemberListScopedEditChromeFromGridFetches = makeExcludedStub("collectExtxMemberListScopedEditChromeFromGridFetches");
     collectPortalxDeploymentRoutesFromRegistry = makeExcludedStub("collectPortalxDeploymentRoutesFromRegistry");
     columnKeyTriggersListScopedEdit = makeExcludedStub("columnKeyTriggersListScopedEdit");
-    connectLegacyReadPool = makeExcludedStub("connectLegacyReadPool");
-    controlPlaneHasLegacyExtxMembersTable = makeExcludedStub("controlPlaneHasLegacyExtxMembersTable");
     createDefaultExtxMemberImageFixListFilters = makeExcludedStub("createDefaultExtxMemberImageFixListFilters");
     createExtxMemberImageFixListFiltersForSimpleSearch = makeExcludedStub("createExtxMemberImageFixListFiltersForSimpleSearch");
     decodeExtxMemberDossierId = makeExcludedStub("decodeExtxMemberDossierId");
@@ -34316,8 +34327,6 @@ var init_excludedModuleStub = __esm({
     extxPublicPortalHomeUrl = makeExcludedStub("extxPublicPortalHomeUrl");
     extxSelfRegistrationDevPortalPublicUrl = makeExcludedStub("extxSelfRegistrationDevPortalPublicUrl");
     extxTrackRegistrationPublicUrl = makeExcludedStub("extxTrackRegistrationPublicUrl");
-    fetchLegacyExtxRoles = makeExcludedStub("fetchLegacyExtxRoles");
-    fetchLegacyPlatformRolesByAction = makeExcludedStub("fetchLegacyPlatformRolesByAction");
     filterPortalxHostRowsUnlessInstalled = makeExcludedStub("filterPortalxHostRowsUnlessInstalled");
     filterPortalxNavigationUnlessInstalled = makeExcludedStub("filterPortalxNavigationUnlessInstalled");
     filterPortalxNavigationsUnlessInstalled = makeExcludedStub("filterPortalxNavigationsUnlessInstalled");
@@ -34389,7 +34398,6 @@ var init_excludedModuleStub = __esm({
     leafTitleFromGeoPath = makeExcludedStub("leafTitleFromGeoPath");
     legacyExtxActionKey = makeExcludedStub("legacyExtxActionKey");
     legacyExtxRoleIdToPlatformRoleName = makeExcludedStub("legacyExtxRoleIdToPlatformRoleName");
-    listExtxMemberTarghinMembers = makeExcludedStub("listExtxMemberTarghinMembers");
     listPortalxPackageDbInstallFiles = makeExcludedStub("listPortalxPackageDbInstallFiles");
     listScopeLegacyNeedsInstituteCharacterColumn = makeExcludedStub("listScopeLegacyNeedsInstituteCharacterColumn");
     listSelfRegistrationDevPortalChannelEntries = makeExcludedStub("listSelfRegistrationDevPortalChannelEntries");
@@ -34398,7 +34406,6 @@ var init_excludedModuleStub = __esm({
     loadExtxMemberUsernamesForUserIds = makeExcludedStub("loadExtxMemberUsernamesForUserIds");
     loadImageFixTodoFileKindCodes = makeExcludedStub("loadImageFixTodoFileKindCodes");
     localizeExtxMemberDirectoryListWhereFields = makeExcludedStub("localizeExtxMemberDirectoryListWhereFields");
-    mapLegacyExtxRoleRow = makeExcludedStub("mapLegacyExtxRoleRow");
     markImageFixEditorMemberVisited = makeExcludedStub("markImageFixEditorMemberVisited");
     mergeExtxInstitutesDataApiRequestBody = makeExcludedStub("mergeExtxInstitutesDataApiRequestBody");
     mergeExtxMemberDirectoryLegacyFilterQueryParams = makeExcludedStub("mergeExtxMemberDirectoryLegacyFilterQueryParams");
@@ -34426,7 +34433,6 @@ var init_excludedModuleStub = __esm({
     publicPathForRegistrationChannel = makeExcludedStub("publicPathForRegistrationChannel");
     publishPortalxPlatformRegistryFromSnapshot = makeExcludedStub("publishPortalxPlatformRegistryFromSnapshot");
     pushAppEndOPortalxTree = makeExcludedStub("pushAppEndOPortalxTree");
-    rankExtxMembershipDecisionNoteSubject = makeExcludedStub("rankExtxMembershipDecisionNoteSubject");
     readExtxMemberImageFixListFiltersFromQuery = makeExcludedStub("readExtxMemberImageFixListFiltersFromQuery");
     readExtxMemberImageFixListFiltersFromStore = makeExcludedStub("readExtxMemberImageFixListFiltersFromStore");
     readExtxMemberImageFixThumbRow = makeExcludedStub("readExtxMemberImageFixThumbRow");
@@ -34434,8 +34440,6 @@ var init_excludedModuleStub = __esm({
     readExtxNakhebinVoterNameLine1 = makeExcludedStub("readExtxNakhebinVoterNameLine1");
     readExtxNakhebinVoterNameLine2 = makeExcludedStub("readExtxNakhebinVoterNameLine2");
     readImageFixEditorPageMember = makeExcludedStub("readImageFixEditorPageMember");
-    readLegacyConn = makeExcludedStub("readLegacyConn");
-    readLegacyGeoPatchCenterStats = makeExcludedStub("readLegacyGeoPatchCenterStats");
     refreshExtxImageFixMemberList = makeExcludedStub("refreshExtxImageFixMemberList");
     registerExtxFamilyHouseholdDialogOpener = makeExcludedStub("registerExtxFamilyHouseholdDialogOpener");
     registerExtxImageFixEditorDialogOpener = makeExcludedStub("registerExtxImageFixEditorDialogOpener");
@@ -34495,7 +34499,6 @@ var init_excludedModuleStub = __esm({
     resolveExtxPublicPortalNativeTitle = makeExcludedStub("resolveExtxPublicPortalNativeTitle");
     resolveExtxStackedLinesTextAlignFromGridColumn = makeExcludedStub("resolveExtxStackedLinesTextAlignFromGridColumn");
     resolveImageFixEditorNextMember = makeExcludedStub("resolveImageFixEditorNextMember");
-    resolveLegacyGeoIdForPatch = makeExcludedStub("resolveLegacyGeoIdForPatch");
     resolveListMembershipOnRegistrationFallback = makeExcludedStub("resolveListMembershipOnRegistrationFallback");
     resolveMemberDirectoryFaceImageUrl = makeExcludedStub("resolveMemberDirectoryFaceImageUrl");
     resolveMemberDirectoryListElectoralRegionRef = makeExcludedStub("resolveMemberDirectoryListElectoralRegionRef");
@@ -34528,7 +34531,6 @@ var init_excludedModuleStub = __esm({
     splitExtxGeoPathDisplaySegments = makeExcludedStub("splitExtxGeoPathDisplaySegments");
     splitExtxHouseholdMemberNameLines = makeExcludedStub("splitExtxHouseholdMemberNameLines");
     splitExtxMemberAreaColumnDisplay = makeExcludedStub("splitExtxMemberAreaColumnDisplay");
-    splitExtxMembershipDecisionNoteBody = makeExcludedStub("splitExtxMembershipDecisionNoteBody");
     splitExtxNewlineCellLines = makeExcludedStub("splitExtxNewlineCellLines");
     splitExtxResidenceSummaryLines = makeExcludedStub("splitExtxResidenceSummaryLines");
     splitExtxTitlePath = makeExcludedStub("splitExtxTitlePath");
@@ -34540,7 +34542,6 @@ var init_excludedModuleStub = __esm({
     useExtxRejectedLocalManageListRuntime = makeExcludedStub("useExtxRejectedLocalManageListRuntime");
     useExtxRejectionListRuntime = makeExcludedStub("useExtxRejectionListRuntime");
     useOpenExtxGeoResponsibilityInlineListDialog = makeExcludedStub("useOpenExtxGeoResponsibilityInlineListDialog");
-    withLegacyReadOnlyIntent = makeExcludedStub("withLegacyReadOnlyIntent");
   }
 });
 
@@ -35154,14 +35155,14 @@ var init_bindingSessionEngine = __esm({
       return resolved;
     };
     collectNodeSessionAsStoreReadBindings = (node) => collectNodeSessionReadBindings(node).map((binding) => {
-      const path132 = binding.storePath.includes(".") ? binding.storePath.slice(binding.storePath.indexOf(".") + 1) : binding.storePath;
+      const path131 = binding.storePath.includes(".") ? binding.storePath.slice(binding.storePath.indexOf(".") + 1) : binding.storePath;
       const segmentId = binding.storePath.split(".")[0] ?? "user";
       return {
         bindingKey: binding.bindingKey,
         nodeId: binding.nodeId,
         targetProp: binding.targetProp,
         segmentId,
-        path: path132,
+        path: path131,
         storePath: binding.storePath,
         definition: binding.definition
       };
@@ -35187,14 +35188,14 @@ var init_bindingStoreEngine = __esm({
         return null;
       }
       const segmentId = remainder.slice(0, dotIndex).trim();
-      const path132 = remainder.slice(dotIndex + 1).trim();
-      if (!segmentId || !path132) {
+      const path131 = remainder.slice(dotIndex + 1).trim();
+      if (!segmentId || !path131) {
         return null;
       }
       return {
         segmentId,
-        path: path132,
-        storePath: `${segmentId}.${path132}`
+        path: path131,
+        storePath: `${segmentId}.${path131}`
       };
     };
     storeBindingKeyForPath = (storePath) => `${STORE_BINDING_KEY_PREFIX}${storePath.trim()}`;
@@ -35308,23 +35309,23 @@ var init_bindingStoreEngine = __esm({
       const cycles = [];
       const visiting = /* @__PURE__ */ new Set();
       const visited = /* @__PURE__ */ new Set();
-      const visit = (path132, trail) => {
-        if (visiting.has(path132)) {
-          cycles.push([...trail, path132].join(" \u2192 "));
+      const visit = (path131, trail) => {
+        if (visiting.has(path131)) {
+          cycles.push([...trail, path131].join(" \u2192 "));
           return;
         }
-        if (visited.has(path132)) {
+        if (visited.has(path131)) {
           return;
         }
-        visiting.add(path132);
-        for (const next of edges2.get(path132) ?? []) {
-          visit(next, [...trail, path132]);
+        visiting.add(path131);
+        for (const next of edges2.get(path131) ?? []) {
+          visit(next, [...trail, path131]);
         }
-        visiting.delete(path132);
-        visited.add(path132);
+        visiting.delete(path131);
+        visited.add(path131);
       };
-      for (const path132 of edges2.keys()) {
-        visit(path132, []);
+      for (const path131 of edges2.keys()) {
+        visit(path131, []);
       }
       return cycles;
     };
@@ -35466,15 +35467,15 @@ var init_bindingFormulaEngine = __esm({
       const store = /* @__PURE__ */ new Set();
       const data = /* @__PURE__ */ new Set();
       for (const match of expression.matchAll(/\bstore\.([A-Za-z0-9_.-]+)/g)) {
-        const path132 = match[1]?.trim();
-        if (path132) {
-          store.add(path132);
+        const path131 = match[1]?.trim();
+        if (path131) {
+          store.add(path131);
         }
       }
       for (const match of expression.matchAll(/\b(?:data|dataContext)\.([A-Za-z0-9_.-]+)/g)) {
-        const path132 = match[1]?.trim();
-        if (path132) {
-          data.add(path132);
+        const path131 = match[1]?.trim();
+        if (path131) {
+          data.add(path131);
         }
       }
       return {
@@ -38069,13 +38070,13 @@ var init_bindingDynamicActionsEngine = __esm({
       return false;
     };
     normalizeNavigatePlaceholderPath = (rawPath) => {
-      let path132 = rawPath.trim();
-      if (path132.startsWith("store.")) {
-        path132 = path132.slice("store.".length);
-      } else if (path132.startsWith("item.")) {
-        path132 = path132.slice("item.".length);
+      let path131 = rawPath.trim();
+      if (path131.startsWith("store.")) {
+        path131 = path131.slice("store.".length);
+      } else if (path131.startsWith("item.")) {
+        path131 = path131.slice("item.".length);
       }
-      return path132;
+      return path131;
     };
     resolveNavigateTargetExpressionForCodegen = (template, responseExpression) => {
       const parts = [];
@@ -40110,7 +40111,7 @@ var init_bindingApiCodegen = __esm({
       if (entries.length === 0) {
         return "{}";
       }
-      return `{ ${entries.map(([key, path132]) => `${JSON.stringify(key)}: ${JSON.stringify(path132)}`).join(", ")} }`;
+      return `{ ${entries.map(([key, path131]) => `${JSON.stringify(key)}: ${JSON.stringify(path131)}`).join(", ")} }`;
     };
     renderHeadersRecordLiteral = (headers) => {
       const entries = Object.entries(headers);
@@ -52952,8 +52953,8 @@ function invalidateClientBundleCacheIfRevisionChanged() {
 async function fetchTranslationBundleFromApi(bundleId) {
   invalidateClientBundleCacheIfRevisionChanged();
   const revision = getCultureTranslationOverridesRevision();
-  const path132 = revision > 0 ? `/api/platform/culture-translations/bundle/${encodeURIComponent(bundleId)}?revision=${revision}` : `/api/platform/culture-translations/bundle/${encodeURIComponent(bundleId)}`;
-  const response = await invokeFetch(path132, {
+  const path131 = revision > 0 ? `/api/platform/culture-translations/bundle/${encodeURIComponent(bundleId)}?revision=${revision}` : `/api/platform/culture-translations/bundle/${encodeURIComponent(bundleId)}`;
+  const response = await invokeFetch(path131, {
     method: "GET",
     credentials: "include",
     cache: "no-store"
@@ -54746,11 +54747,11 @@ var init_designerDataGridRuntime = __esm({
     init_designerGridAggregation();
     resolveEffectiveAppTableGridQueryMode = (gridQueryMode, serverQueryEnabled) => gridQueryMode === "server" && serverQueryEnabled ? "server" : "client";
     readResponseTotalCount = (payload, totalPath) => {
-      const path132 = totalPath?.trim();
-      if (!path132 || !payload || typeof payload !== "object") {
+      const path131 = totalPath?.trim();
+      if (!path131 || !payload || typeof payload !== "object") {
         return void 0;
       }
-      const segments = path132.split(".").map((segment) => segment.trim()).filter(Boolean);
+      const segments = path131.split(".").map((segment) => segment.trim()).filter(Boolean);
       let cursor = payload;
       for (const segment of segments) {
         if (cursor && typeof cursor === "object" && segment in cursor) {
@@ -59663,8 +59664,8 @@ var init_catalog = __esm({
       for (const row of DESIGNER_CATALOG_IDENTITY) {
         if (!row.paletteItemId || !row.componentId) continue;
         const keys = getCatalogBindableOptions(row.componentId).map((option2) => {
-          const path132 = option2.propPath ?? option2.id;
-          return path132.includes(".") ? path132.split(".").pop() : path132;
+          const path131 = option2.propPath ?? option2.id;
+          return path131.includes(".") ? path131.split(".").pop() : path131;
         });
         if (keys.length === 0) continue;
         derived[row.paletteItemId] = [.../* @__PURE__ */ new Set([...derived[row.paletteItemId] ?? [], ...keys])];
@@ -72534,7 +72535,7 @@ var init_schemas3 = __esm({
         }).optional()
       })
     }).superRefine((recipe, context) => {
-      const add4 = (path132, message) => context.addIssue({ code: "custom", path: path132, message });
+      const add4 = (path131, message) => context.addIssue({ code: "custom", path: path131, message });
       if (!recipe.recipeId.startsWith(`${recipe.experienceMode}-`)) add4(["recipeId"], "Recipe ID is incompatible with experience mode.");
       if (recipe.experienceMode === "app" && (recipe.capabilities.authentication !== "authenticated" || !recipe.capabilities.userPreferences)) add4(["capabilities"], "App mode requires authenticated user preferences.");
       if (recipe.capabilities.userPreferences && recipe.capabilities.authentication !== "authenticated") add4(["capabilities", "userPreferences"], "User preferences require authentication.");
@@ -76393,8 +76394,8 @@ ${uiOverride}` : base;
             lines.push("\u2026 (truncated)");
             break;
           }
-          const path132 = buildDesignerComponentPath(draft.folder || "general", draft.name);
-          lines.push(`- ${draft.name} \xB7 id=${draft.id} \xB7 path=${path132}`);
+          const path131 = buildDesignerComponentPath(draft.folder || "general", draft.name);
+          lines.push(`- ${draft.name} \xB7 id=${draft.id} \xB7 path=${path131}`);
         }
       }
       return lines.join("\n");
@@ -77400,7 +77401,7 @@ var init_proposalValidator = __esm({
       }
       let totalLines = 0;
       changeSets.forEach((changeSet) => {
-        const path132 = extractPath(changeSet);
+        const path131 = extractPath(changeSet);
         if (options2.mode === "plan") {
           if (changeSet.kind !== "file_patch") {
             violations.push({
@@ -77519,7 +77520,7 @@ var init_proposalValidator = __esm({
             });
           }
         });
-        if (path132 && userIntentPaths.size > 0 && changeSet.kind === "file_patch") {
+        if (path131 && userIntentPaths.size > 0 && changeSet.kind === "file_patch") {
           const matchesIntent = [...userIntentPaths].some((intentPath) => changeSet.path.includes(intentPath) || intentPath.includes(changeSet.path));
           if (!matchesIntent) {
             violations.push({
@@ -79208,8 +79209,8 @@ var init_searchCodebase = __esm({
     };
     slimSearchMatches = (matches, includeText) => {
       if (includeText) return matches;
-      return matches.map(({ path: path132, line, column, pageKey, label }) => {
-        const slim = { path: path132, line, column };
+      return matches.map(({ path: path131, line, column, pageKey, label }) => {
+        const slim = { path: path131, line, column };
         if (pageKey) slim.pageKey = pageKey;
         if (label) slim.label = label;
         return slim;
@@ -80361,12 +80362,12 @@ var init_agentActivityLabels = __esm({
           };
         }
         case "read_file": {
-          const path132 = readStringArg(args, "path") || "\u2026";
+          const path131 = readStringArg(args, "path") || "\u2026";
           return {
             kind,
-            title: `Reading ${path132}`,
-            titleEn: `Reading ${path132}`,
-            detail: path132,
+            title: `Reading ${path131}`,
+            titleEn: `Reading ${path131}`,
+            detail: path131,
             intention: "To review file contents before editing"
           };
         }
@@ -80403,12 +80404,12 @@ var init_agentActivityLabels = __esm({
           };
         }
         case "draft_file_patch": {
-          const path132 = readStringArg(args, "path") || "\u2026";
+          const path131 = readStringArg(args, "path") || "\u2026";
           return {
             kind,
-            title: `Drafting file patch ${path132}`,
-            titleEn: `Drafting file patch ${path132}`,
-            detail: path132,
+            title: `Drafting file patch ${path131}`,
+            titleEn: `Drafting file patch ${path131}`,
+            detail: path131,
             intention: "To apply a code change in an allowlisted file"
           };
         }
@@ -80469,12 +80470,12 @@ var init_agentActivityLabels = __esm({
           };
         }
         case "list_dir": {
-          const path132 = readStringArg(args, "path") || "root";
+          const path131 = readStringArg(args, "path") || "root";
           return {
             kind,
-            title: `Listing directory ${path132}`,
-            titleEn: `Listing directory ${path132}`,
-            detail: path132,
+            title: `Listing directory ${path131}`,
+            titleEn: `Listing directory ${path131}`,
+            detail: path131,
             intention: "To explore folder structure"
           };
         }
@@ -89194,8 +89195,8 @@ var init_managedFunctionRouteRegistry = __esm({
       "/api/idea-foundry",
       "/api/workbooks"
     ];
-    normalizeRequestPath = (path132) => {
-      const withoutQuery = path132.split("?")[0] || "/";
+    normalizeRequestPath = (path131) => {
+      const withoutQuery = path131.split("?")[0] || "/";
       if (withoutQuery.length > 1 && withoutQuery.endsWith("/")) {
         return withoutQuery.slice(0, -1);
       }
@@ -91127,8 +91128,8 @@ var init_builtinFunctionRegistry_service = __esm({
     init_BuiltinFunctionMetadataStore();
     init_systemApiRoutes();
     init_builtinFunctionRuntimeFields();
-    normalizeRequestPath2 = (path132) => {
-      const withoutQuery = path132.split("?")[0] || "/";
+    normalizeRequestPath2 = (path131) => {
+      const withoutQuery = path131.split("?")[0] || "/";
       if (withoutQuery.length > 1 && withoutQuery.endsWith("/")) {
         return withoutQuery.slice(0, -1);
       }
@@ -92052,7 +92053,7 @@ var init_buildManagedFunctionOpenApi = __esm({
         return null;
       }
     };
-    resolveTestPayloadForOpenApi = (raw, metadata, code, method, path132) => {
+    resolveTestPayloadForOpenApi = (raw, metadata, code, method, path131) => {
       const parsed = parseTestPayload(raw);
       if (parsed && Object.keys(parsed).length > 0) {
         return parsed;
@@ -92065,7 +92066,7 @@ var init_buildManagedFunctionOpenApi = __esm({
         }
       }
       if (code?.trim()) {
-        const generated = buildTestPayloadFromScript(code, method, path132);
+        const generated = buildTestPayloadFromScript(code, method, path131);
         return Object.keys(generated).length > 0 ? generated : null;
       }
       return null;
@@ -92462,8 +92463,8 @@ var init_buildManagedFunctionOpenApi = __esm({
 function toApiSlug(value) {
   return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 63) || "item";
 }
-function deriveRouteSuffixFromManagedPath(path132) {
-  const normalized = path132?.trim() ?? "";
+function deriveRouteSuffixFromManagedPath(path131) {
+  const normalized = path131?.trim() ?? "";
   if (!normalized.startsWith("/api/")) {
     return null;
   }
@@ -93326,7 +93327,7 @@ var init_serverFunctionDocCatalog = __esm({
       "/api/ready",
       "/api/project-standards"
     ];
-    isIncludedBuiltInDocRoute = (path132) => !EXCLUDED_BUILTIN_DOC_PREFIXES.some((prefix) => path132 === prefix || path132.startsWith(`${prefix}/`));
+    isIncludedBuiltInDocRoute = (path131) => !EXCLUDED_BUILTIN_DOC_PREFIXES.some((prefix) => path131 === prefix || path131.startsWith(`${prefix}/`));
   }
 });
 
@@ -101472,9 +101473,9 @@ async function computeDisplayTitlePathsForCulture(nodeIds, cultureId, bundle4) {
     }
     const chain = collectBaseInfoAncestorIds(nodeId);
     const segments = chain.map((id) => rowsById.get(id)).filter((row) => Boolean(row)).map((row) => resolveRowLabel(row, normalizedCultureId, bundle4));
-    const path132 = joinBaseInfoTitlePathSegments(segments);
-    memo.set(memoKey, path132);
-    return path132;
+    const path131 = joinBaseInfoTitlePathSegments(segments);
+    memo.set(memoKey, path131);
+    return path131;
   };
   const paths = /* @__PURE__ */ new Map();
   for (const nodeId of nodeIds) {
@@ -101738,9 +101739,9 @@ var init_baseInfoTitlePath = __esm({
       }
       const ancestorIds = collectBaseInfoAncestorIds(row.id);
       const segments = ancestorIds.map((id) => rowsById.get(id)).filter((ancestor) => Boolean(ancestor)).map((ancestor) => resolveBaseInfoTitlePathSegment(ancestor, cultureId, bundle4));
-      const path132 = joinBaseInfoTitlePathSegments(segments);
-      memo.set(memoKey, path132);
-      return path132;
+      const path131 = joinBaseInfoTitlePathSegments(segments);
+      memo.set(memoKey, path131);
+      return path131;
     };
     enabledCultureIds = () => {
       const fromBuiltin = [...BUILTIN_CULTURE_PACK_IDS];
@@ -107214,9 +107215,9 @@ var init_analyticsOptions = __esm({
           return [];
         }
         const row = entry;
-        const path132 = typeof row.path === "string" ? row.path.trim() : "";
+        const path131 = typeof row.path === "string" ? row.path.trim() : "";
         const type = typeof row.type === "string" ? row.type.trim() : "string";
-        return path132 ? [{ path: path132, type: type || "string" }] : [];
+        return path131 ? [{ path: path131, type: type || "string" }] : [];
       }) : void 0;
       const language = record.language === "DAX" || record.language === "MDX" ? record.language : void 0;
       return {
@@ -107857,10 +107858,10 @@ var init_pivotExecute = __esm({
       return "flat-sql";
     };
     analyticsOptionsOf = (dataSource) => parseDataSourceAnalyticsOptions(dataSource.options);
-    callOlapBridge = async (dataSource, path132, init) => {
+    callOlapBridge = async (dataSource, path131, init) => {
       const options2 = analyticsOptionsOf(dataSource);
       const base = dataSource.host.trim().replace(/\/$/, "");
-      const url = `${base}${path132.startsWith("/") ? path132 : `/${path132}`}`;
+      const url = `${base}${path131.startsWith("/") ? path131 : `/${path131}`}`;
       const response = await fetch(url, {
         method: init?.method ?? "GET",
         headers: {
@@ -109840,15 +109841,15 @@ var init_dashboardHomeShortcuts = __esm({
       return `custom:${draft.path}`;
     };
     createDashboardHomeShortcut = (draft) => {
-      const path132 = normalizeDashboardHomeShortcutPath(draft.path);
+      const path131 = normalizeDashboardHomeShortcutPath(draft.path);
       const label = draft.label.trim();
-      if (!path132 || !label || isDashboardHomePageKey(draft.pageKey)) {
+      if (!path131 || !label || isDashboardHomePageKey(draft.pageKey)) {
         return null;
       }
       const shortcut = {
-        id: createDashboardHomeShortcutId({ ...draft, path: path132 }),
+        id: createDashboardHomeShortcutId({ ...draft, path: path131 }),
         kind: draft.kind,
-        path: path132,
+        path: path131,
         label
       };
       if (draft.pageKey?.trim() && !isDashboardHomePageKey(draft.pageKey)) {
@@ -111202,14 +111203,14 @@ var init_serverFunctionManualParity = __esm({
       const name = sanitizeFunctionSegment(input.name) || "unnamed";
       const functionId = trimmedExistingId?.includes(".") ? trimmedExistingId : buildManagedFunctionId(folder, name);
       const method = normalizeHttpMethod(input.method) ?? "GET";
-      const path132 = input.path?.trim() || buildManagedServerFunctionPath(folder, name);
+      const path131 = input.path?.trim() || buildManagedServerFunctionPath(folder, name);
       const testPayload = input.testPayload?.trim() || defaultTestPayloadForMethod(method);
       return {
         functionId,
         name,
         folder,
         method,
-        path: path132,
+        path: path131,
         testPayload
       };
     };
@@ -111568,7 +111569,7 @@ var init_draftFilePatch = __esm({
     init_diffZones();
     init_fastApplyOutcomeTelemetry();
     DRAFT_FILE_PATCH_TOOL_NAME = "draft_file_patch";
-    resolvePatchedContent = (path132, beforeContent, contentArg, patchArg) => {
+    resolvePatchedContent = (path131, beforeContent, contentArg, patchArg) => {
       const content = contentArg.trim();
       const patch = patchArg.trim();
       if (content && patch) {
@@ -111595,10 +111596,10 @@ var init_draftFilePatch = __esm({
         }
         const applied = applyFastApplyPatch(beforeContent, patch);
         if (!applied.ok) {
-          recordFastApplyOutcome({ path: path132, blockCount: parseFastApplyBlocks(patch).length, failureReason: applied.error });
+          recordFastApplyOutcome({ path: path131, blockCount: parseFastApplyBlocks(patch).length, failureReason: applied.error });
           return { ok: false, summary: applied.error, error: "patch_apply_failed" };
         }
-        recordFastApplyOutcome({ path: path132, blockCount: applied.blockCount, healedBlockCount: applied.healedBlockCount });
+        recordFastApplyOutcome({ path: path131, blockCount: applied.blockCount, healedBlockCount: applied.healedBlockCount });
         return {
           ok: true,
           content: applied.content,
@@ -112644,11 +112645,11 @@ var init_marketplaceIdentityProviderPolicy = __esm({
         if (!api2 || typeof api2 !== "object" || Array.isArray(api2)) {
           continue;
         }
-        const path132 = api2.path;
-        if (typeof path132 !== "string") {
+        const path131 = api2.path;
+        if (typeof path131 !== "string") {
           continue;
         }
-        if (FORBIDDEN_AUTH_ROUTE_PREFIXES.some((prefix) => path132.includes(prefix))) {
+        if (FORBIDDEN_AUTH_ROUTE_PREFIXES.some((prefix) => path131.includes(prefix))) {
           errors.push("Marketplace plugins cannot register auth OAuth/SAML API routes.");
           break;
         }
@@ -112984,8 +112985,8 @@ function validatePortalSegmentSlug(segment) {
   }
   return null;
 }
-function normalizePortalPagePath(segment, path132) {
-  const trimmed = String(path132 || "").trim().replace(/^\/+/, "").replace(/\/+$/, "");
+function normalizePortalPagePath(segment, path131) {
+  const trimmed = String(path131 || "").trim().replace(/^\/+/, "").replace(/\/+$/, "");
   const normalizedSegment = segment.trim();
   if (!trimmed) {
     return normalizedSegment === STUDIO_PORTAL_SEGMENT ? toPortalRoutePattern("") : normalizedSegment;
@@ -112998,11 +112999,11 @@ function normalizePortalPagePath(segment, path132) {
   }
   return `${normalizedSegment}/${trimmed}`;
 }
-function portalPageBindingPattern(segment, path132) {
-  return toPortalRelativePattern(normalizePortalPagePath(segment, path132));
+function portalPageBindingPattern(segment, path131) {
+  return toPortalRelativePattern(normalizePortalPagePath(segment, path131));
 }
-function experiencePageIdentityKey(segment, path132, pageKey) {
-  return `${normalizePortalPagePath(segment, path132)}::${pageKey.trim()}`;
+function experiencePageIdentityKey(segment, path131, pageKey) {
+  return `${normalizePortalPagePath(segment, path131)}::${pageKey.trim()}`;
 }
 function defaultHomePortal(shellKey = HOME_SHELL_KEY) {
   return {
@@ -116960,8 +116961,8 @@ var init_webTools = __esm({
       try {
         let results = [];
         if (settings.provider === "brave") {
-          const path132 = searchType === "news" ? "https://api.search.brave.com/res/v1/news/search" : searchType === "images" ? "https://api.search.brave.com/res/v1/images/search" : "https://api.search.brave.com/res/v1/web/search";
-          const url = new URL(path132);
+          const path131 = searchType === "news" ? "https://api.search.brave.com/res/v1/news/search" : searchType === "images" ? "https://api.search.brave.com/res/v1/images/search" : "https://api.search.brave.com/res/v1/web/search";
+          const url = new URL(path131);
           url.searchParams.set("q", query);
           url.searchParams.set("count", String(maxResults));
           const response = await fetchImpl(url.toString(), {
@@ -122211,14 +122212,14 @@ function bindingsToPortalPages(bindings, portal, otherSegments) {
     if (!binding.enabled || !bindingBelongsToPortal(binding, portal, otherSegments)) {
       continue;
     }
-    const path132 = bindingRoutePatternToPortalPagePath(portal, binding.routePattern);
-    const identity = experiencePageIdentityKey(portal.segment, path132, binding.pageKey);
+    const path131 = bindingRoutePatternToPortalPagePath(portal, binding.routePattern);
+    const identity = experiencePageIdentityKey(portal.segment, path131, binding.pageKey);
     if (seenIdentities.has(identity)) {
       continue;
     }
     seenIdentities.add(identity);
     pages.push({
-      path: path132,
+      path: path131,
       pageKey: binding.pageKey,
       auth: binding.auth ?? null,
       nav: binding.nav ?? null
@@ -123896,7 +123897,7 @@ async function appendDesignerPageToPortalMenu(portalSegment, input, actor) {
   const explicitLoaderRef = input.loaderRef?.trim() || "";
   const loaderRef = designerLoaderRef || (explicitLoaderRef && !explicitLoaderRef.startsWith("designer:") ? explicitLoaderRef : void 0);
   const defaultPath = designerLoaderRef || `${pageKey}/`;
-  const path132 = input.path?.trim() || defaultPath;
+  const path131 = input.path?.trim() || defaultPath;
   const manifestService = getDefaultExperienceManifestService();
   const { manifest } = await manifestService.getManifest();
   if (!manifest) {
@@ -123911,7 +123912,7 @@ async function appendDesignerPageToPortalMenu(portalSegment, input, actor) {
     throw new Error(`Page "${pageKey}" is already assigned to portal "${trimmedSegment}".`);
   }
   const nextPage = {
-    path: path132,
+    path: path131,
     pageKey,
     ...loaderRef ? { loaderRef } : {},
     nav: { label: navLabel }
@@ -124689,13 +124690,13 @@ var init_changeSet_service = __esm({
         const navLabel = typeof menuEntry.navLabel === "string" && menuEntry.navLabel.trim() ? menuEntry.navLabel.trim() : name;
         const pageKey = typeof menuEntry.pageKey === "string" && menuEntry.pageKey.trim() ? menuEntry.pageKey.trim() : buildDesignerComponentPath(folder, name);
         if (!portalSegment || !pageKey) return;
-        const path132 = typeof menuEntry.path === "string" ? menuEntry.path.trim() : void 0;
+        const path131 = typeof menuEntry.path === "string" ? menuEntry.path.trim() : void 0;
         const loaderRef = typeof menuEntry.loaderRef === "string" ? menuEntry.loaderRef.trim() : void 0;
         const actor = { userId: null, username: "ai-agent" };
         try {
           await appendDesignerPageToPortalMenu(
             portalSegment,
-            { pageKey, path: path132, navLabel, loaderRef },
+            { pageKey, path: path131, navLabel, loaderRef },
             actor
           );
         } catch (error) {
@@ -127159,7 +127160,7 @@ var init_workspaceArtifactStore = __esm({
   "src/shared/lib/appendoo/workspaceArtifactStore.ts"() {
     import_node_crypto10 = require("node:crypto");
     init_engineeringWorkspaceScaffold();
-    fingerprint = (path132, content) => (0, import_node_crypto10.createHash)("sha256").update(`${path132}:${content}`).digest("hex").slice(0, 16);
+    fingerprint = (path131, content) => (0, import_node_crypto10.createHash)("sha256").update(`${path131}:${content}`).digest("hex").slice(0, 16);
     WorkspaceArtifactStore = class {
       constructor() {
         this.artifacts = /* @__PURE__ */ new Map();
@@ -127179,8 +127180,8 @@ var init_workspaceArtifactStore = __esm({
         this.artifacts.set(normalized, record);
         return record;
       }
-      read(path132) {
-        return this.artifacts.get(path132.replace(/\\/g, "/"));
+      read(path131) {
+        return this.artifacts.get(path131.replace(/\\/g, "/"));
       }
       list(prefix) {
         const normalizedPrefix = prefix.replace(/\\/g, "/");
@@ -128497,7 +128498,7 @@ var init_builderProtocolScaffold = __esm({
       validatedCapabilities: input.validatedCapabilities ?? []
     });
     validateBuilderMutationPaths = (paths) => {
-      const errors = paths.filter((path132) => isActiveRootMutation(path132)).map((path132) => `Active-root mutation rejected: ${path132}`);
+      const errors = paths.filter((path131) => isActiveRootMutation(path131)).map((path131) => `Active-root mutation rejected: ${path131}`);
       return {
         ok: errors.length === 0,
         phase: "validate",
@@ -128611,41 +128612,41 @@ export default async function handler() {
       return scaffoldDesignerDraftJson(context);
     };
     writeBuilderWorkspaceArtifacts = (context, mutationPaths) => {
-      for (const path132 of mutationPaths) {
-        if (path132.endsWith(".metadata.json")) {
+      for (const path131 of mutationPaths) {
+        if (path131.endsWith(".metadata.json")) {
           workspaceArtifactStore.write({
-            path: path132,
+            path: path131,
             content: scaffoldMetadataJson(context),
             contentType: "application/json"
           });
           continue;
         }
-        if (path132.includes("/workspace/server-functions/custom/") && path132.endsWith(".ts")) {
+        if (path131.includes("/workspace/server-functions/custom/") && path131.endsWith(".ts")) {
           workspaceArtifactStore.write({
-            path: path132,
+            path: path131,
             content: scaffoldServerFunctionSource(context),
             contentType: "text/typescript"
           });
           continue;
         }
-        if (path132.endsWith("/draft.json")) {
+        if (path131.endsWith("/draft.json")) {
           workspaceArtifactStore.write({
-            path: path132,
+            path: path131,
             content: resolveDesignerDraftJson(context),
             contentType: "application/json"
           });
           continue;
         }
-        if (path132.includes("/workspace/platform-registry/routes/") && path132.endsWith(".json")) {
+        if (path131.includes("/workspace/platform-registry/routes/") && path131.endsWith(".json")) {
           workspaceArtifactStore.write({
-            path: path132,
+            path: path131,
             content: scaffoldExperienceRouteJson(context),
             contentType: "application/json"
           });
           continue;
         }
         workspaceArtifactStore.write({
-          path: path132,
+          path: path131,
           content: `// AppEndoo workspace artifact scaffold for ${context.changeNode.operationType}
 `,
           contentType: "text/plain"
@@ -128664,10 +128665,10 @@ var init_builderExecuteScaffold = __esm({
     init_builderWorkspaceWriter();
     fingerprint2 = (seed) => (0, import_node_crypto11.createHash)("sha256").update(seed).digest("hex").slice(0, 16);
     runPreviewScaffold = (context, mutationPaths) => {
-      const plannedMutations = mutationPaths.map((path132) => ({
+      const plannedMutations = mutationPaths.map((path131) => ({
         artifactId: context.changeNode.nodeId,
-        path: path132,
-        fingerprint: fingerprint2(`${context.operationId}:${path132}:preview`),
+        path: path131,
+        fingerprint: fingerprint2(`${context.operationId}:${path131}:preview`),
         mutation: "modified"
       }));
       return {
@@ -128680,10 +128681,10 @@ var init_builderExecuteScaffold = __esm({
     runExecuteScaffold = (context, mutationPaths = resolveBuilderPrimitivePaths(context.changeNode)) => {
       const paths = mutationPaths.length > 0 ? mutationPaths : resolveBuilderPrimitivePaths(context.changeNode);
       writeBuilderWorkspaceArtifacts(context, paths);
-      const mutations = paths.map((path132) => ({
+      const mutations = paths.map((path131) => ({
         artifactId: context.changeNode.nodeId,
-        path: path132,
-        fingerprint: fingerprint2(`${context.operationId}:${path132}:execute`),
+        path: path131,
+        fingerprint: fingerprint2(`${context.operationId}:${path131}:execute`),
         mutation: "modified"
       }));
       return {
@@ -130484,15 +130485,15 @@ var init_tsAstSymbolExtractor = __esm({
     isExported = (node) => Boolean(ts5.canHaveModifiers(node) && ts5.getModifiers(node)?.some((m) => m.kind === ts5.SyntaxKind.ExportKeyword));
     isPascalCase = (name) => /^[A-Z]/.test(name);
     lineOf = (sourceFile, pos) => sourceFile.getLineAndCharacterOfPosition(pos).line + 1;
-    extractSymbolsFromSourceAst = (path132, content) => {
-      const sourceFile = ts5.createSourceFile(path132, content, ts5.ScriptTarget.Latest, true, ts5.ScriptKind.TSX);
+    extractSymbolsFromSourceAst = (path131, content) => {
+      const sourceFile = ts5.createSourceFile(path131, content, ts5.ScriptTarget.Latest, true, ts5.ScriptKind.TSX);
       const symbols = [];
       const pushSymbol = (name, kind, node) => {
         symbols.push({
-          symbolId: `${path132}:${name}:${lineOf(sourceFile, node.getStart(sourceFile))}`,
+          symbolId: `${path131}:${name}:${lineOf(sourceFile, node.getStart(sourceFile))}`,
           name,
           kind,
-          path: path132,
+          path: path131,
           startLine: lineOf(sourceFile, node.getStart(sourceFile)),
           endLine: lineOf(sourceFile, node.getEnd())
         });
@@ -130520,9 +130521,9 @@ var init_tsAstSymbolExtractor = __esm({
       visit(sourceFile);
       return symbols;
     };
-    extractReferencesFromSourceAst = (path132, content, symbolName) => {
+    extractReferencesFromSourceAst = (path131, content, symbolName) => {
       if (!symbolName.trim()) return [];
-      const sourceFile = ts5.createSourceFile(path132, content, ts5.ScriptTarget.Latest, true, ts5.ScriptKind.TSX);
+      const sourceFile = ts5.createSourceFile(path131, content, ts5.ScriptTarget.Latest, true, ts5.ScriptKind.TSX);
       const refs = [];
       const classify = (node) => {
         const parent = node.parent;
@@ -130617,7 +130618,7 @@ var init_codebaseExtractorRegistry = __esm({
       { kind: "type", pattern: /^\s*export\s+type\s+([A-Za-z0-9_]+)/ },
       { kind: "component", pattern: /^\s*export\s+(?:default\s+)?function\s+([A-Z][A-Za-z0-9_]*)\s*\(/ }
     ];
-    ingestStructuralSymbolsFromFileRegex = (path132, content) => {
+    ingestStructuralSymbolsFromFileRegex = (path131, content) => {
       const lines = content.split(/\r?\n/);
       const symbols = [];
       lines.forEach((line, index) => {
@@ -130625,10 +130626,10 @@ var init_codebaseExtractorRegistry = __esm({
           const match = line.match(entry.pattern);
           if (!match?.[1]) continue;
           symbols.push({
-            symbolId: `${path132}:${match[1]}:${index + 1}`,
+            symbolId: `${path131}:${match[1]}:${index + 1}`,
             name: match[1],
             kind: entry.kind,
-            path: path132,
+            path: path131,
             startLine: index + 1,
             endLine: index + 1
           });
@@ -130638,21 +130639,21 @@ var init_codebaseExtractorRegistry = __esm({
       return symbols;
     };
     TS_SOURCE_PATTERN = /\.tsx?$/i;
-    ingestStructuralSymbolsFromFile = (path132, content) => {
-      if (!TS_SOURCE_PATTERN.test(path132)) {
-        return ingestStructuralSymbolsFromFileRegex(path132, content);
+    ingestStructuralSymbolsFromFile = (path131, content) => {
+      if (!TS_SOURCE_PATTERN.test(path131)) {
+        return ingestStructuralSymbolsFromFileRegex(path131, content);
       }
       try {
-        return extractSymbolsFromSourceAst(path132, content);
+        return extractSymbolsFromSourceAst(path131, content);
       } catch (error) {
         logger.warn("codebaseExtractorRegistry", "AST symbol extraction failed \u2014 falling back to regex extractor", {
-          path: path132,
+          path: path131,
           error: error instanceof Error ? error.message : String(error)
         });
-        return ingestStructuralSymbolsFromFileRegex(path132, content);
+        return ingestStructuralSymbolsFromFileRegex(path131, content);
       }
     };
-    detectExtractorSignals = (path132, content) => {
+    detectExtractorSignals = (path131, content) => {
       const signals = [];
       const registry = getCodebaseExtractorRegistry();
       const matchers = [
@@ -130700,21 +130701,21 @@ var init_codebaseStructuralScaffold = __esm({
       fileRecords.clear();
       fileContents.clear();
     };
-    indexStructuralFile = (path132, content) => {
+    indexStructuralFile = (path131, content) => {
       const contentHash = hashContent3(content);
-      const existing = fileRecords.get(path132);
+      const existing = fileRecords.get(path131);
       if (existing?.contentHash === contentHash) {
         return {
           skipped: true,
-          symbols: symbolIndex.get(path132) ?? [],
+          symbols: symbolIndex.get(path131) ?? [],
           extractors: []
         };
       }
-      const symbols = ingestStructuralSymbolsFromFile(path132, content);
-      symbolIndex.set(path132, symbols);
-      fileContents.set(path132, content);
-      fileRecords.set(path132, {
-        path: path132,
+      const symbols = ingestStructuralSymbolsFromFile(path131, content);
+      symbolIndex.set(path131, symbols);
+      fileContents.set(path131, content);
+      fileRecords.set(path131, {
+        path: path131,
         contentHash,
         indexedAt: (/* @__PURE__ */ new Date()).toISOString(),
         symbolCount: symbols.length
@@ -130722,7 +130723,7 @@ var init_codebaseStructuralScaffold = __esm({
       return {
         skipped: false,
         symbols,
-        extractors: detectExtractorSignals(path132, content)
+        extractors: detectExtractorSignals(path131, content)
       };
     };
     findSymbol = (name, scopePaths) => {
@@ -130739,17 +130740,17 @@ var init_codebaseStructuralScaffold = __esm({
       const needle = symbolName.trim();
       if (!needle) return [];
       const references = [];
-      for (const [path132, content] of fileContents.entries()) {
-        if (scopePaths?.length && !scopePaths.some((scope) => path132.startsWith(scope))) continue;
-        if (TS_SOURCE_PATTERN2.test(path132)) {
+      for (const [path131, content] of fileContents.entries()) {
+        if (scopePaths?.length && !scopePaths.some((scope) => path131.startsWith(scope))) continue;
+        if (TS_SOURCE_PATTERN2.test(path131)) {
           try {
-            const astRefs = extractReferencesFromSourceAst(path132, content, needle);
+            const astRefs = extractReferencesFromSourceAst(path131, content, needle);
             for (const ref of astRefs) {
               references.push({
-                symbolId: `${path132}:ref:${needle}:${ref.startLine}:${ref.kind}`,
+                symbolId: `${path131}:ref:${needle}:${ref.startLine}:${ref.kind}`,
                 name: needle,
                 kind: "const",
-                path: path132,
+                path: path131,
                 startLine: ref.startLine,
                 endLine: ref.endLine
               });
@@ -130757,31 +130758,31 @@ var init_codebaseStructuralScaffold = __esm({
             continue;
           } catch (error) {
             logger.warn("codebaseStructuralScaffold", "AST reference extraction failed \u2014 falling back to substring match", {
-              path: path132,
+              path: path131,
               error: error instanceof Error ? error.message : String(error)
             });
           }
         }
         if (!content.includes(needle)) continue;
         references.push({
-          symbolId: `${path132}:ref:${needle}`,
+          symbolId: `${path131}:ref:${needle}`,
           name: needle,
           kind: "const",
-          path: path132,
+          path: path131,
           startLine: content.split(/\r?\n/).findIndex((line) => line.includes(needle)) + 1,
           endLine: content.split(/\r?\n/).findIndex((line) => line.includes(needle)) + 1
         });
       }
       return references;
     };
-    getSourceSlice = (path132, startLine, endLine) => {
-      const content = fileContents.get(path132);
+    getSourceSlice = (path131, startLine, endLine) => {
+      const content = fileContents.get(path131);
       if (!content) return null;
       const lines = content.split(/\r?\n/);
       const slice = lines.slice(Math.max(0, startLine - 1), endLine);
       if (slice.length === 0) return null;
       return {
-        path: path132,
+        path: path131,
         startLine,
         endLine,
         text: slice.join("\n")
@@ -130927,14 +130928,14 @@ var init_codebaseRetrieval_service = __esm({
       resolveScopePathsFromFeatureNode(node) {
         return resolveFeatureSearchRoots(node);
       }
-      indexFile(path132, content) {
-        return indexStructuralFile(path132, content);
+      indexFile(path131, content) {
+        return indexStructuralFile(path131, content);
       }
       findSymbol(name, scopePaths) {
         return findSymbol(name, scopePaths);
       }
-      getSourceSlice(path132, startLine, endLine) {
-        return getSourceSlice(path132, startLine, endLine);
+      getSourceSlice(path131, startLine, endLine) {
+        return getSourceSlice(path131, startLine, endLine);
       }
       getHealth() {
         return {
@@ -131430,7 +131431,7 @@ var init_verificationGraders = __esm({
     init_builderProtocolScaffold();
     init_builderPrimitivePaths();
     WORKSPACE_ARTIFACT_PREFIX = "appendoo/ws/";
-    normalizePath = (path132) => path132.replace(/\\/g, "/").trim();
+    normalizePath = (path131) => path131.replace(/\\/g, "/").trim();
     baseResult = (grader, started) => ({
       graderId: grader.graderId,
       version: grader.version,
@@ -131460,31 +131461,31 @@ var init_verificationGraders = __esm({
           sourceRefs: []
         };
       }
-      const driftPaths = mutationPaths.filter((path132) => {
-        const normalized = normalizePath(path132);
+      const driftPaths = mutationPaths.filter((path131) => {
+        const normalized = normalizePath(path131);
         return !normalized.startsWith(expectedPrefix) && !normalized.startsWith(WORKSPACE_ARTIFACT_PREFIX);
       });
       return {
         ...baseResult(grader, started),
         grade: driftPaths.length === 0 ? "PASS" : "FAIL",
         evidence: driftPaths.length === 0 ? [`All mutations under ${WORKSPACE_ARTIFACT_PREFIX}`] : [],
-        diagnostics: driftPaths.map((path132) => `Workspace drift detected: ${path132}`),
+        diagnostics: driftPaths.map((path131) => `Workspace drift detected: ${path131}`),
         sourceRefs: mutationPaths
       };
     };
     gradeProjectStandards = (grader, mutationPaths) => {
       const started = Date.now();
       const diagnostics = [];
-      for (const path132 of mutationPaths) {
-        const normalized = normalizePath(path132);
+      for (const path131 of mutationPaths) {
+        const normalized = normalizePath(path131);
         if (normalized.includes("..")) {
-          diagnostics.push(`Path traversal rejected: ${path132}`);
+          diagnostics.push(`Path traversal rejected: ${path131}`);
         }
         if (normalized.startsWith("/")) {
-          diagnostics.push(`Absolute path rejected: ${path132}`);
+          diagnostics.push(`Absolute path rejected: ${path131}`);
         }
         if (/^[a-zA-Z]:/.test(normalized)) {
-          diagnostics.push(`Drive path rejected: ${path132}`);
+          diagnostics.push(`Drive path rejected: ${path131}`);
         }
       }
       const activeRoot = validateBuilderMutationPaths(mutationPaths);
@@ -131501,7 +131502,7 @@ var init_verificationGraders = __esm({
     };
     gradeServerFunctionOpenApi = (grader, mutationPaths) => {
       const started = Date.now();
-      const serverFunctionPaths = mutationPaths.filter((path132) => path132.includes("/workspace/server-functions/"));
+      const serverFunctionPaths = mutationPaths.filter((path131) => path131.includes("/workspace/server-functions/"));
       if (serverFunctionPaths.length === 0) {
         return {
           ...baseResult(grader, started),
@@ -131511,16 +131512,16 @@ var init_verificationGraders = __esm({
           sourceRefs: []
         };
       }
-      const invalid = serverFunctionPaths.filter((path132) => !path132.endsWith(".ts") && !path132.endsWith(".metadata.json"));
+      const invalid = serverFunctionPaths.filter((path131) => !path131.endsWith(".ts") && !path131.endsWith(".metadata.json"));
       return {
         ...baseResult(grader, started),
         grade: invalid.length === 0 ? "PASS" : "FAIL",
         evidence: invalid.length === 0 ? ["Server function artifact extensions valid."] : [],
-        diagnostics: invalid.map((path132) => `Invalid server function artifact: ${path132}`),
+        diagnostics: invalid.map((path131) => `Invalid server function artifact: ${path131}`),
         sourceRefs: serverFunctionPaths
       };
     };
-    filterPaths = (mutationPaths, segment) => mutationPaths.filter((path132) => normalizePath(path132).includes(segment));
+    filterPaths = (mutationPaths, segment) => mutationPaths.filter((path131) => normalizePath(path131).includes(segment));
     gradeFsdDependency = (grader, mutationPaths) => {
       const started = Date.now();
       if (mutationPaths.length === 0) {
@@ -131533,15 +131534,15 @@ var init_verificationGraders = __esm({
         };
       }
       const forbiddenSegments = ["/src/features/", "/src/app/", "/src/server/routes/"];
-      const violations = mutationPaths.filter((path132) => {
-        const normalized = normalizePath(path132);
+      const violations = mutationPaths.filter((path131) => {
+        const normalized = normalizePath(path131);
         return forbiddenSegments.some((segment) => normalized.includes(segment)) && !normalized.startsWith(WORKSPACE_ARTIFACT_PREFIX);
       });
       return {
         ...baseResult(grader, started),
         grade: violations.length === 0 ? "PASS" : "FAIL",
         evidence: violations.length === 0 ? ["No active-root FSD segments in workspace mutations."] : [],
-        diagnostics: violations.map((path132) => `FSD dependency violation: ${path132}`),
+        diagnostics: violations.map((path131) => `FSD dependency violation: ${path131}`),
         sourceRefs: mutationPaths
       };
     };
@@ -131556,15 +131557,15 @@ var init_verificationGraders = __esm({
           sourceRefs: []
         };
       }
-      const invalid = mutationPaths.filter((path132) => {
-        const normalized = normalizePath(path132);
+      const invalid = mutationPaths.filter((path131) => {
+        const normalized = normalizePath(path131);
         return normalized.includes("/src/core/") || normalized.includes("/src/layouts/");
       });
       return {
         ...baseResult(grader, started),
         grade: invalid.length === 0 ? "PASS" : "FAIL",
         evidence: invalid.length === 0 ? ["Workspace mutations avoid core/layout active roots."] : [],
-        diagnostics: invalid.map((path132) => `Clean architecture violation: ${path132}`),
+        diagnostics: invalid.map((path131) => `Clean architecture violation: ${path131}`),
         sourceRefs: mutationPaths
       };
     };
@@ -131581,13 +131582,13 @@ var init_verificationGraders = __esm({
         };
       }
       const diagnostics = [];
-      for (const path132 of migrationPaths) {
-        const normalized = normalizePath(path132);
+      for (const path131 of migrationPaths) {
+        const normalized = normalizePath(path131);
         if (!normalized.endsWith(".sql")) {
-          diagnostics.push(`Migration must use .sql extension: ${path132}`);
+          diagnostics.push(`Migration must use .sql extension: ${path131}`);
         }
         if (/edge.?db|control-plane|base_tables/i.test(normalized)) {
-          diagnostics.push(`Control-plane migration rejected: ${path132}`);
+          diagnostics.push(`Control-plane migration rejected: ${path131}`);
         }
       }
       return {
@@ -131610,12 +131611,12 @@ var init_verificationGraders = __esm({
           sourceRefs: []
         };
       }
-      const invalid = schemaPaths.filter((path132) => !normalizePath(path132).endsWith(".json"));
+      const invalid = schemaPaths.filter((path131) => !normalizePath(path131).endsWith(".json"));
       return {
         ...baseResult(grader, started),
         grade: invalid.length === 0 ? "PASS" : "FAIL",
         evidence: invalid.length === 0 ? ["Data-source schema artifacts use JSON."] : [],
-        diagnostics: invalid.map((path132) => `Invalid schema artifact: ${path132}`),
+        diagnostics: invalid.map((path131) => `Invalid schema artifact: ${path131}`),
         sourceRefs: schemaPaths
       };
     };
@@ -131632,13 +131633,13 @@ var init_verificationGraders = __esm({
         };
       }
       const draftRoots = /* @__PURE__ */ new Set();
-      for (const path132 of designerPaths) {
-        const match = normalizePath(path132).match(/^(.*\/workspace\/designer\/drafts\/[^/]+)/);
+      for (const path131 of designerPaths) {
+        const match = normalizePath(path131).match(/^(.*\/workspace\/designer\/drafts\/[^/]+)/);
         if (match?.[1]) {
           draftRoots.add(match[1]);
         }
       }
-      const missingBindings = [...draftRoots].filter((root) => !designerPaths.some((path132) => normalizePath(path132) === `${root}/draft.json`));
+      const missingBindings = [...draftRoots].filter((root) => !designerPaths.some((path131) => normalizePath(path131) === `${root}/draft.json`));
       return {
         ...baseResult(grader, started),
         grade: missingBindings.length === 0 ? "PASS" : "FAIL",
@@ -131659,12 +131660,12 @@ var init_verificationGraders = __esm({
           sourceRefs: []
         };
       }
-      const invalid = routePaths.filter((path132) => !normalizePath(path132).endsWith(".json"));
+      const invalid = routePaths.filter((path131) => !normalizePath(path131).endsWith(".json"));
       return {
         ...baseResult(grader, started),
         grade: invalid.length === 0 ? "PASS" : "FAIL",
         evidence: invalid.length === 0 ? ["Route artifacts registered as JSON."] : [],
-        diagnostics: invalid.map((path132) => `Invalid route artifact: ${path132}`),
+        diagnostics: invalid.map((path131) => `Invalid route artifact: ${path131}`),
         sourceRefs: routePaths
       };
     };
@@ -131680,12 +131681,12 @@ var init_verificationGraders = __esm({
           sourceRefs: []
         };
       }
-      const invalid = permissionPaths.filter((path132) => !normalizePath(path132).endsWith(".json"));
+      const invalid = permissionPaths.filter((path131) => !normalizePath(path131).endsWith(".json"));
       return {
         ...baseResult(grader, started),
         grade: invalid.length === 0 ? "PASS" : "FAIL",
         evidence: invalid.length === 0 ? ["Permission artifacts registered as JSON."] : [],
-        diagnostics: invalid.map((path132) => `Invalid permission artifact: ${path132}`),
+        diagnostics: invalid.map((path131) => `Invalid permission artifact: ${path131}`),
         sourceRefs: permissionPaths
       };
     };
@@ -131701,12 +131702,12 @@ var init_verificationGraders = __esm({
           sourceRefs: []
         };
       }
-      const invalid = packagePaths.filter((path132) => !normalizePath(path132).endsWith("/manifest.json"));
+      const invalid = packagePaths.filter((path131) => !normalizePath(path131).endsWith("/manifest.json"));
       return {
         ...baseResult(grader, started),
         grade: invalid.length === 0 ? "PASS" : "FAIL",
         evidence: invalid.length === 0 ? ["Package mutations target manifest.json."] : [],
-        diagnostics: invalid.map((path132) => `Invalid package manifest path: ${path132}`),
+        diagnostics: invalid.map((path131) => `Invalid package manifest path: ${path131}`),
         sourceRefs: packagePaths
       };
     };
@@ -131731,12 +131732,12 @@ var init_verificationGraders = __esm({
         };
       }
       const expectedRoot = `${WORKSPACE_ARTIFACT_PREFIX}${changeSetId}`;
-      const unbound = mutationPaths.filter((path132) => !normalizePath(path132).startsWith(expectedRoot));
+      const unbound = mutationPaths.filter((path131) => !normalizePath(path131).startsWith(expectedRoot));
       return {
         ...baseResult(grader, started),
         grade: unbound.length === 0 ? "PASS" : "FAIL",
         evidence: unbound.length === 0 ? [`Mutations bound to changeSet ${changeSetId}.`] : [],
-        diagnostics: unbound.map((path132) => `Capability binding drift: ${path132}`),
+        diagnostics: unbound.map((path131) => `Capability binding drift: ${path131}`),
         sourceRefs: mutationPaths
       };
     };
@@ -132013,7 +132014,7 @@ var init_packageSnapshotFinalizeScaffold = __esm({
   "src/shared/lib/appendoo/packageSnapshotFinalizeScaffold.ts"() {
     import_node_crypto14 = require("node:crypto");
     PACKAGE_SNAPSHOT_MANIFEST_VERSION = "1.0.0";
-    fingerprintArtifact = (path132, revisionFingerprint) => (0, import_node_crypto14.createHash)("sha256").update(`${revisionFingerprint}:${path132}`).digest("hex").slice(0, 16);
+    fingerprintArtifact = (path131, revisionFingerprint) => (0, import_node_crypto14.createHash)("sha256").update(`${revisionFingerprint}:${path131}`).digest("hex").slice(0, 16);
     buildPackageSnapshotManifest = (mutationPaths, revisionFingerprint) => mutationPaths.map((artifactPath) => ({
       path: artifactPath,
       fingerprint: fingerprintArtifact(artifactPath, revisionFingerprint)
@@ -132290,8 +132291,8 @@ function buildPackageManifest(spec) {
     }
   };
 }
-function shouldOmitEntry(path132, omitEntries) {
-  return omitEntries?.includes(path132) ?? false;
+function shouldOmitEntry(path131, omitEntries) {
+  return omitEntries?.includes(path131) ?? false;
 }
 function buildPackageZipBuffer(spec, options2) {
   const manifest = buildPackageManifest(spec);
@@ -133837,9 +133838,9 @@ var init_applicationScopeResolver = __esm({
           ownerPackageId: input.ownerPackageId?.trim() || packageId
         };
       }
-      const path132 = input.path?.trim();
-      if (!path132) return null;
-      const { cultureId, remainderPath } = resolveCultureFromPathname(path132);
+      const path131 = input.path?.trim();
+      if (!path131) return null;
+      const { cultureId, remainderPath } = resolveCultureFromPathname(path131);
       const { portalSegment, pageSegments } = parsePortalFromRemainder(remainderPath);
       const mountId = resolveMountId(portalSegment);
       const pageKey = inferPageKey(input.pageKey, pageSegments);
@@ -135462,14 +135463,14 @@ var init_email_service = __esm({
       }
       return { delivered: true, mode: "smtp" };
     };
-    buildAppLink = (path132) => {
+    buildAppLink = (path131) => {
       const fromEnv = (process.env.APP_URL || "").trim();
       const fromSettings = (readRuntimeSettings().appUrl || "").trim();
       const base = (fromEnv || fromSettings).replace(/\/+$/, "");
       if (base) {
-        return `${base}${path132.startsWith("/") ? path132 : `/${path132}`}`;
+        return `${base}${path131.startsWith("/") ? path131 : `/${path131}`}`;
       }
-      return path132;
+      return path131;
     };
   }
 });
@@ -140402,9 +140403,9 @@ var init_functionChangeReason = __esm({
       const parsed = changeReasonPolicySchema.safeParse(stored);
       return parsed.success ? parsed.data : fallback;
     };
-    resolveFunctionChangeReason = async (method, path132, fallback) => {
+    resolveFunctionChangeReason = async (method, path131, fallback) => {
       await builtinFunctionRegistry.ensureLoaded();
-      const match = builtinFunctionRegistry.resolve(method, path132);
+      const match = builtinFunctionRegistry.resolve(method, path131);
       return parseFunctionMetadataChangeReason(match?.record.metadataJson, fallback);
     };
   }
@@ -151384,7 +151385,7 @@ var init_buildTransformPrompt = __esm({
 });
 
 // src/server/services/ai/fieldAssist.service.ts
-var import_node_path18, VALID_ACTIONS, assertAiSettings, FieldAssistService;
+var VALID_ACTIONS, assertAiSettings, FieldAssistService;
 var init_fieldAssist_service = __esm({
   "src/server/services/ai/fieldAssist.service.ts"() {
     init_AiManager();
@@ -151401,7 +151402,7 @@ var init_fieldAssist_service = __esm({
     init_euaSettingsResolver();
     init_euaVision_service();
     init_euaUsageLog_service();
-    import_node_path18 = __toESM(require("node:path"), 1);
+    init_runtimePaths();
     init_buildTransformPrompt();
     init_fieldAssistModelResolver();
     VALID_ACTIONS = /* @__PURE__ */ new Set([
@@ -151426,7 +151427,7 @@ var init_fieldAssist_service = __esm({
         this.visionService = visionService;
       }
       logUsage(entry) {
-        getEuaUsageLogService(import_node_path18.default.dirname(SETTINGS_PATH)).append(entry);
+        getEuaUsageLogService(runtimeDirs.workspaceTemp).append(entry);
       }
       getStatus() {
         const settings = aiManager.getSettings();
@@ -157502,8 +157503,8 @@ var init_builtInFunctionAccess_middleware = __esm({
     init_auth_middleware();
     init_builtinFunctionRegistry_service();
     init_builtInFunctionRuntime_middleware();
-    normalizeRequestPath3 = (path132) => {
-      const withoutQuery = path132.split("?")[0] || "/";
+    normalizeRequestPath3 = (path131) => {
+      const withoutQuery = path131.split("?")[0] || "/";
       if (withoutQuery.length > 1 && withoutQuery.endsWith("/")) {
         return withoutQuery.slice(0, -1);
       }
@@ -160076,9 +160077,9 @@ async function callHttpConnection(connection, input) {
   if (!operation) {
     throw new Error(`Operation "${input.operationId}" is not part of this connection's imported OpenAPI spec.`);
   }
-  const path132 = fillOpenApiPathParams(operation.path, input.pathParams);
+  const path131 = fillOpenApiPathParams(operation.path, input.pathParams);
   const baseUrl = connection.baseUrl.replace(/\/+$/, "");
-  const fullUrlString = `${baseUrl}${path132.startsWith("/") ? "" : "/"}${path132}`;
+  const fullUrlString = `${baseUrl}${path131.startsWith("/") ? "" : "/"}${path131}`;
   const url = await validateMcpRemoteUrl(fullUrlString);
   if (input.query) {
     for (const [key, value] of Object.entries(input.query)) {
@@ -160826,9 +160827,9 @@ var init_collectionsStore = __esm({
 });
 
 // src/server/services/http-connections/assertionEvaluator.ts
-function getByDotPath(value, path132) {
-  if (!path132) return value;
-  return path132.split(".").reduce((acc, segment) => {
+function getByDotPath(value, path131) {
+  if (!path131) return value;
+  return path131.split(".").reduce((acc, segment) => {
     if (acc === void 0 || acc === null || typeof acc !== "object") {
       return void 0;
     }
@@ -161650,9 +161651,9 @@ var init_api_talk_routes = __esm({
           const collectionId = createdCollection.id;
           let created = 0;
           for (const operation of spec.operations) {
-            const path132 = operation.path.replace(/\{([a-zA-Z0-9_]+)\}/g, (_match, key) => `{{${key}}}`);
+            const path131 = operation.path.replace(/\{([a-zA-Z0-9_]+)\}/g, (_match, key) => `{{${key}}}`);
             const base = (spec.baseUrl ?? "").replace(/\/+$/, "");
-            const url = `${base}${path132.startsWith("/") ? "" : "/"}${path132}`;
+            const url = `${base}${path131.startsWith("/") ? "" : "/"}${path131}`;
             await createRequest({
               collectionId,
               name: operation.summary || operation.operationId,
@@ -162169,11 +162170,11 @@ var init_file_manager_controller = __esm({
 });
 
 // src/server/domain/file-manager/pathScope.ts
-var import_node_fs16, import_node_path19, FILE_MANAGER_WORKSPACE_DIR, FILE_MANAGER_DENIED_PATTERNS, FILE_MANAGER_TEXT_MAX_BYTES, FILE_MANAGER_BINARY_MAX_BYTES, FILE_MANAGER_ZIP_MAX_BYTES, FILE_MANAGER_UPLOAD_MAX_BYTES, FILE_MANAGER_UPLOAD_MAX_FILES, FILE_MANAGER_HIDDEN_ENTRY_NAMES, isFileManagerHiddenEntryName, IMAGE_EXTENSIONS, TEXT_EXTENSIONS, TEXT_BASENAMES, normalizeFileManagerRelativePath, getFileManagerRepoRoot, isFileManagerDeniedPath, isWithinRoot, validateZipEntryExtractPath, scopeRootRelativePath, resolveFileManagerPath, ensureFileManagerWorkspaceDirectory, sanitizeFileManagerEntryName, resolveFileManagerParentPath, isFileManagerPathInsideDirectory, getFileManagerExtension, getFileManagerBasename, isLikelyUtf8TextBuffer, isFileManagerImagePath, isFileManagerZipPath, isFileManagerTextPath, resolveMonacoLanguage, resolveMimeType;
+var import_node_fs16, import_node_path18, FILE_MANAGER_WORKSPACE_DIR, FILE_MANAGER_DENIED_PATTERNS, FILE_MANAGER_TEXT_MAX_BYTES, FILE_MANAGER_BINARY_MAX_BYTES, FILE_MANAGER_ZIP_MAX_BYTES, FILE_MANAGER_UPLOAD_MAX_BYTES, FILE_MANAGER_UPLOAD_MAX_FILES, FILE_MANAGER_HIDDEN_ENTRY_NAMES, isFileManagerHiddenEntryName, IMAGE_EXTENSIONS, TEXT_EXTENSIONS, TEXT_BASENAMES, normalizeFileManagerRelativePath, getFileManagerRepoRoot, isFileManagerDeniedPath, isWithinRoot, validateZipEntryExtractPath, scopeRootRelativePath, resolveFileManagerPath, ensureFileManagerWorkspaceDirectory, sanitizeFileManagerEntryName, resolveFileManagerParentPath, isFileManagerPathInsideDirectory, getFileManagerExtension, getFileManagerBasename, isLikelyUtf8TextBuffer, isFileManagerImagePath, isFileManagerZipPath, isFileManagerTextPath, resolveMonacoLanguage, resolveMimeType;
 var init_pathScope = __esm({
   "src/server/domain/file-manager/pathScope.ts"() {
     import_node_fs16 = __toESM(require("node:fs"), 1);
-    import_node_path19 = __toESM(require("node:path"), 1);
+    import_node_path18 = __toESM(require("node:path"), 1);
     FILE_MANAGER_WORKSPACE_DIR = "workspace";
     FILE_MANAGER_DENIED_PATTERNS = [
       /^\.env/i,
@@ -162258,14 +162259,14 @@ var init_pathScope = __esm({
       "codeowners"
     ]);
     normalizeFileManagerRelativePath = (input) => input.replace(/\\/g, "/").replace(/^\.\/+/, "").replace(/\/+$/, "").trim();
-    getFileManagerRepoRoot = () => import_node_path19.default.resolve(process.cwd());
+    getFileManagerRepoRoot = () => import_node_path18.default.resolve(process.cwd());
     isFileManagerDeniedPath = (relativePath) => {
       const normalized = normalizeFileManagerRelativePath(relativePath);
       return FILE_MANAGER_DENIED_PATTERNS.some((pattern) => pattern.test(normalized));
     };
     isWithinRoot = (absolutePath, rootAbsolute) => {
-      const relative = import_node_path19.default.relative(rootAbsolute, absolutePath);
-      return relative === "" || !relative.startsWith("..") && !import_node_path19.default.isAbsolute(relative);
+      const relative = import_node_path18.default.relative(rootAbsolute, absolutePath);
+      return relative === "" || !relative.startsWith("..") && !import_node_path18.default.isAbsolute(relative);
     };
     validateZipEntryExtractPath = (destinationRootAbsolute, entryName, scope) => {
       const normalized = entryName.replace(/\\/g, "/");
@@ -162273,15 +162274,15 @@ var init_pathScope = __esm({
         return { ok: false, error: "Zip archive contains invalid entry paths." };
       }
       const repoRoot = getFileManagerRepoRoot();
-      const destinationRoot = import_node_path19.default.resolve(destinationRootAbsolute);
-      const absolutePath = import_node_path19.default.resolve(destinationRoot, normalized);
+      const destinationRoot = import_node_path18.default.resolve(destinationRootAbsolute);
+      const absolutePath = import_node_path18.default.resolve(destinationRoot, normalized);
       if (!isWithinRoot(absolutePath, destinationRoot)) {
         return { ok: false, error: "Zip archive contains path traversal entries." };
       }
       if (!isWithinRoot(absolutePath, repoRoot)) {
         return { ok: false, error: "Zip entry escapes project root." };
       }
-      const relativePath = import_node_path19.default.relative(repoRoot, absolutePath).replace(/\\/g, "/");
+      const relativePath = import_node_path18.default.relative(repoRoot, absolutePath).replace(/\\/g, "/");
       const resolved = resolveFileManagerPath(relativePath, scope);
       if (!resolved.ok) {
         return { ok: false, error: resolved.error };
@@ -162294,7 +162295,7 @@ var init_pathScope = __esm({
       const scopeRootRelative = scopeRootRelativePath(scope);
       const normalizedInput = normalizeFileManagerRelativePath(input);
       const relativePath = normalizedInput || scopeRootRelative;
-      if (import_node_path19.default.isAbsolute(relativePath) || /^[a-zA-Z]:/.test(relativePath)) {
+      if (import_node_path18.default.isAbsolute(relativePath) || /^[a-zA-Z]:/.test(relativePath)) {
         return { ok: false, error: "Absolute paths are not allowed." };
       }
       if (relativePath.split("/").some((segment) => segment === "..")) {
@@ -162309,7 +162310,7 @@ var init_pathScope = __esm({
       if (isFileManagerDeniedPath(relativePath)) {
         return { ok: false, error: `Path "${relativePath}" is not accessible.` };
       }
-      const absolutePath = import_node_path19.default.resolve(repoRoot, relativePath);
+      const absolutePath = import_node_path18.default.resolve(repoRoot, relativePath);
       if (!isWithinRoot(absolutePath, repoRoot)) {
         return { ok: false, error: "Path escapes the project root." };
       }
@@ -162317,10 +162318,10 @@ var init_pathScope = __esm({
       try {
         realAbsolutePath = import_node_fs16.default.realpathSync(absolutePath);
       } catch {
-        const parent = import_node_path19.default.dirname(absolutePath);
+        const parent = import_node_path18.default.dirname(absolutePath);
         try {
           const realParent = import_node_fs16.default.realpathSync(parent);
-          realAbsolutePath = import_node_path19.default.join(realParent, import_node_path19.default.basename(absolutePath));
+          realAbsolutePath = import_node_path18.default.join(realParent, import_node_path18.default.basename(absolutePath));
         } catch {
           realAbsolutePath = absolutePath;
         }
@@ -162328,7 +162329,7 @@ var init_pathScope = __esm({
       if (!isWithinRoot(realAbsolutePath, repoRoot)) {
         return { ok: false, error: "Path escapes the project root." };
       }
-      const resolvedRelative = import_node_path19.default.relative(repoRoot, realAbsolutePath).replace(/\\/g, "/");
+      const resolvedRelative = import_node_path18.default.relative(repoRoot, realAbsolutePath).replace(/\\/g, "/");
       if (isFileManagerDeniedPath(resolvedRelative)) {
         return { ok: false, error: `Path "${resolvedRelative}" is not accessible.` };
       }
@@ -162346,7 +162347,7 @@ var init_pathScope = __esm({
       };
     };
     ensureFileManagerWorkspaceDirectory = () => {
-      const workspacePath = import_node_path19.default.join(getFileManagerRepoRoot(), FILE_MANAGER_WORKSPACE_DIR);
+      const workspacePath = import_node_path18.default.join(getFileManagerRepoRoot(), FILE_MANAGER_WORKSPACE_DIR);
       import_node_fs16.default.mkdirSync(workspacePath, { recursive: true });
     };
     sanitizeFileManagerEntryName = (name) => {
@@ -162361,7 +162362,7 @@ var init_pathScope = __esm({
     };
     resolveFileManagerParentPath = (relativePath, scope) => {
       const normalized = normalizeFileManagerRelativePath(relativePath);
-      const parent = normalizeFileManagerRelativePath(import_node_path19.default.dirname(normalized));
+      const parent = normalizeFileManagerRelativePath(import_node_path18.default.dirname(normalized));
       if (parent === "." || parent === "") {
         return scope === "workspace" ? FILE_MANAGER_WORKSPACE_DIR : "";
       }
@@ -162379,12 +162380,12 @@ var init_pathScope = __esm({
       return candidate.startsWith(`${directory}/`);
     };
     getFileManagerExtension = (filePath) => {
-      const extension = import_node_path19.default.extname(filePath).toLowerCase();
+      const extension = import_node_path18.default.extname(filePath).toLowerCase();
       return extension || null;
     };
     getFileManagerBasename = (filePath) => {
       const normalized = normalizeFileManagerRelativePath(filePath);
-      return import_node_path19.default.basename(normalized).toLowerCase();
+      return import_node_path18.default.basename(normalized).toLowerCase();
     };
     isLikelyUtf8TextBuffer = (buffer4) => {
       if (buffer4.length === 0) {
@@ -162704,11 +162705,11 @@ var init_zipArchive = __esm({
 });
 
 // src/server/services/file-manager.service.ts
-var import_node_fs17, import_node_path20, import_adm_zip5, propagateServiceFailure, toIsoString11, pathExists, createMoveStagingEntryName, relocateFileManagerEntry, mapEntry, FileManagerService;
+var import_node_fs17, import_node_path19, import_adm_zip5, propagateServiceFailure, toIsoString11, pathExists, createMoveStagingEntryName, relocateFileManagerEntry, mapEntry, FileManagerService;
 var init_file_manager_service = __esm({
   "src/server/services/file-manager.service.ts"() {
     import_node_fs17 = require("node:fs");
-    import_node_path20 = __toESM(require("node:path"), 1);
+    import_node_path19 = __toESM(require("node:path"), 1);
     import_adm_zip5 = __toESM(require("adm-zip"), 1);
     init_types8();
     init_pathScope();
@@ -162743,8 +162744,8 @@ var init_file_manager_service = __esm({
       if (name === "." || name === "..") {
         return null;
       }
-      const childAbsolutePath = import_node_path20.default.join(absolutePath, name);
-      const relativePath = import_node_path20.default.relative(repoRoot, childAbsolutePath).replace(/\\/g, "/");
+      const childAbsolutePath = import_node_path19.default.join(absolutePath, name);
+      const relativePath = import_node_path19.default.relative(repoRoot, childAbsolutePath).replace(/\\/g, "/");
       let stat;
       try {
         stat = await import_node_fs17.promises.stat(childAbsolutePath);
@@ -162765,14 +162766,14 @@ var init_file_manager_service = __esm({
       async getConfig() {
         ensureFileManagerWorkspaceDirectory();
         const repoRoot = getFileManagerRepoRoot();
-        const workspaceAbsolutePath = import_node_path20.default.join(repoRoot, FILE_MANAGER_WORKSPACE_DIR);
+        const workspaceAbsolutePath = import_node_path19.default.join(repoRoot, FILE_MANAGER_WORKSPACE_DIR);
         return {
           ok: true,
           body: {
             defaultScope: "workspace",
             workspaceDir: FILE_MANAGER_WORKSPACE_DIR,
             workspaceExists: await pathExists(workspaceAbsolutePath),
-            projectRootLabel: import_node_path20.default.basename(repoRoot) || repoRoot
+            projectRootLabel: import_node_path19.default.basename(repoRoot) || repoRoot
           }
         };
       }
@@ -163014,7 +163015,7 @@ var init_file_manager_service = __esm({
         return {
           ok: true,
           body: {
-            name: import_node_path20.default.basename(resolved.relativePath),
+            name: import_node_path19.default.basename(resolved.relativePath),
             path: resolved.relativePath,
             kind: "file",
             sizeBytes: updatedStat.size,
@@ -163043,8 +163044,8 @@ var init_file_manager_service = __esm({
           return { ok: false, status: 400, error: "Parent path is not a directory." };
         }
         const repoRoot = getFileManagerRepoRoot();
-        const targetAbsolutePath = import_node_path20.default.join(parentResolved.absolutePath, sanitizedName);
-        const targetRelativePath = import_node_path20.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
+        const targetAbsolutePath = import_node_path19.default.join(parentResolved.absolutePath, sanitizedName);
+        const targetRelativePath = import_node_path19.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
         const targetResolved = resolveFileManagerPath(targetRelativePath, scope);
         if (targetResolved.ok === false) {
           return { ok: false, status: 400, error: targetResolved.error };
@@ -163086,8 +163087,8 @@ var init_file_manager_service = __esm({
           return { ok: false, status: 400, error: "Parent path is not a directory." };
         }
         const repoRoot = getFileManagerRepoRoot();
-        const targetAbsolutePath = import_node_path20.default.join(parentResolved.absolutePath, sanitizedName);
-        const targetRelativePath = import_node_path20.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
+        const targetAbsolutePath = import_node_path19.default.join(parentResolved.absolutePath, sanitizedName);
+        const targetRelativePath = import_node_path19.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
         const targetResolved = resolveFileManagerPath(targetRelativePath, scope);
         if (targetResolved.ok === false) {
           return { ok: false, status: 400, error: targetResolved.error };
@@ -163122,7 +163123,7 @@ var init_file_manager_service = __esm({
           return { ok: false, status: 404, error: "Path not found." };
         }
         const repoRoot = getFileManagerRepoRoot();
-        const parentRelativePath = normalizeFileManagerRelativePath(import_node_path20.default.dirname(resolved.relativePath));
+        const parentRelativePath = normalizeFileManagerRelativePath(import_node_path19.default.dirname(resolved.relativePath));
         const parentScopePath = parentRelativePath === "." ? FILE_MANAGER_WORKSPACE_DIR : parentRelativePath;
         const parentResolved = resolveFileManagerPath(
           scope === "workspace" && parentRelativePath === "." ? FILE_MANAGER_WORKSPACE_DIR : parentScopePath,
@@ -163131,8 +163132,8 @@ var init_file_manager_service = __esm({
         if (parentResolved.ok === false) {
           return { ok: false, status: 400, error: parentResolved.error };
         }
-        const targetAbsolutePath = import_node_path20.default.join(parentResolved.absolutePath, sanitizedName);
-        const targetRelativePath = import_node_path20.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
+        const targetAbsolutePath = import_node_path19.default.join(parentResolved.absolutePath, sanitizedName);
+        const targetRelativePath = import_node_path19.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
         const targetResolved = resolveFileManagerPath(targetRelativePath, scope);
         if (targetResolved.ok === false) {
           return { ok: false, status: 400, error: targetResolved.error };
@@ -163195,10 +163196,10 @@ var init_file_manager_service = __esm({
         if (sourceStat.isDirectory() && isFileManagerPathInsideDirectory(sourceResolved.relativePath, destinationResolved.relativePath)) {
           return { ok: false, status: 400, error: "Cannot move a folder into its own subfolder." };
         }
-        const entryName = import_node_path20.default.basename(sourceResolved.relativePath);
+        const entryName = import_node_path19.default.basename(sourceResolved.relativePath);
         const repoRoot = getFileManagerRepoRoot();
-        const targetAbsolutePath = import_node_path20.default.join(destinationResolved.absolutePath, entryName);
-        const targetRelativePath = import_node_path20.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
+        const targetAbsolutePath = import_node_path19.default.join(destinationResolved.absolutePath, entryName);
+        const targetRelativePath = import_node_path19.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
         const targetResolved = resolveFileManagerPath(targetRelativePath, scope);
         if (targetResolved.ok === false) {
           return { ok: false, status: 400, error: targetResolved.error };
@@ -163226,7 +163227,7 @@ var init_file_manager_service = __esm({
           );
           if (sourceInsideTarget) {
             const stagingName = createMoveStagingEntryName();
-            const stagingAbsolutePath = import_node_path20.default.join(destinationResolved.absolutePath, stagingName);
+            const stagingAbsolutePath = import_node_path19.default.join(destinationResolved.absolutePath, stagingName);
             await relocateFileManagerEntry(sourceResolved.absolutePath, stagingAbsolutePath, sourceStat.isDirectory());
             if (existingStat.isDirectory()) {
               await import_node_fs17.promises.rm(targetResolved.absolutePath, { recursive: true, force: true });
@@ -163342,7 +163343,7 @@ var init_file_manager_service = __esm({
         const uploaded = [];
         const skipped = [];
         for (const file of files) {
-          const baseName = import_node_path20.default.basename(file.originalName.replace(/\\/g, "/"));
+          const baseName = import_node_path19.default.basename(file.originalName.replace(/\\/g, "/"));
           const sanitizedName = sanitizeFileManagerEntryName(baseName);
           if (!sanitizedName) {
             skipped.push({ name: baseName || file.originalName, reason: "Invalid file name." });
@@ -163355,8 +163356,8 @@ var init_file_manager_service = __esm({
             });
             continue;
           }
-          const targetAbsolutePath = import_node_path20.default.join(parentResolved.absolutePath, sanitizedName);
-          const targetRelativePath = import_node_path20.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
+          const targetAbsolutePath = import_node_path19.default.join(parentResolved.absolutePath, sanitizedName);
+          const targetRelativePath = import_node_path19.default.relative(repoRoot, targetAbsolutePath).replace(/\\/g, "/");
           const targetResolved = resolveFileManagerPath(targetRelativePath, scope);
           if (targetResolved.ok === false) {
             skipped.push({ name: sanitizedName, reason: targetResolved.error });
@@ -163411,14 +163412,14 @@ var init_file_manager_service = __esm({
           return { ok: false, status: 413, error: `Zip file exceeds ${FILE_MANAGER_ZIP_MAX_BYTES} bytes extract limit.` };
         }
         const repoRoot = getFileManagerRepoRoot();
-        const parentAbsolutePath = import_node_path20.default.dirname(resolved.absolutePath);
-        const folderName = import_node_path20.default.basename(resolved.relativePath, ".zip");
+        const parentAbsolutePath = import_node_path19.default.dirname(resolved.absolutePath);
+        const folderName = import_node_path19.default.basename(resolved.relativePath, ".zip");
         const sanitizedFolderName = sanitizeFileManagerEntryName(folderName);
         if (!sanitizedFolderName) {
           return { ok: false, status: 400, error: "Invalid extract destination name." };
         }
-        const destinationAbsolutePath = import_node_path20.default.join(parentAbsolutePath, sanitizedFolderName);
-        const destinationRelativePath = import_node_path20.default.relative(repoRoot, destinationAbsolutePath).replace(/\\/g, "/");
+        const destinationAbsolutePath = import_node_path19.default.join(parentAbsolutePath, sanitizedFolderName);
+        const destinationRelativePath = import_node_path19.default.relative(repoRoot, destinationAbsolutePath).replace(/\\/g, "/");
         const destinationResolved = resolveFileManagerPath(destinationRelativePath, scope);
         if (destinationResolved.ok === false) {
           return { ok: false, status: 400, error: destinationResolved.error };
@@ -163448,12 +163449,12 @@ var init_file_manager_service = __esm({
         }
         await import_node_fs17.promises.mkdir(destinationResolved.absolutePath, { recursive: true });
         for (const entry of entries) {
-          const targetPath = import_node_path20.default.join(destinationResolved.absolutePath, entry.entryName);
+          const targetPath = import_node_path19.default.join(destinationResolved.absolutePath, entry.entryName);
           if (entry.isDirectory || entry.entryName.endsWith("/")) {
             await import_node_fs17.promises.mkdir(targetPath, { recursive: true });
             continue;
           }
-          await import_node_fs17.promises.mkdir(import_node_path20.default.dirname(targetPath), { recursive: true });
+          await import_node_fs17.promises.mkdir(import_node_path19.default.dirname(targetPath), { recursive: true });
           await import_node_fs17.promises.writeFile(targetPath, entry.getData());
         }
         return {
@@ -163863,7 +163864,7 @@ var init_file_manager_service = __esm({
         if (parentPath && !zipEntryExists(opened.body.zip, parentPath)) {
           return { ok: false, status: 404, error: "Destination folder not found in zip archive." };
         }
-        const entryName = sanitizeFileManagerEntryName(import_node_path20.default.basename(sourceResolved.relativePath));
+        const entryName = sanitizeFileManagerEntryName(import_node_path19.default.basename(sourceResolved.relativePath));
         if (!entryName) {
           return { ok: false, status: 400, error: "Invalid source file name." };
         }
@@ -163899,7 +163900,7 @@ var init_file_manager_service = __esm({
         const uploaded = [];
         const skipped = [];
         for (const file of files) {
-          const baseName = import_node_path20.default.basename(file.originalName.replace(/\\/g, "/"));
+          const baseName = import_node_path19.default.basename(file.originalName.replace(/\\/g, "/"));
           const sanitizedName = sanitizeFileManagerEntryName(baseName);
           if (!sanitizedName) {
             skipped.push({ name: baseName || file.originalName, reason: "Invalid file name." });
@@ -164008,12 +164009,12 @@ var init_file_manager_routes = __esm({
 });
 
 // src/server/services/git/gitNativeConfig.ts
-var import_node_child_process5, import_node_fs18, import_node_path21, import_node_util4, execFileAsync5, STANDARD_WORKSPACE_GITIGNORE, runGit2, runGitConfig, isGitRepository, initGitRepository, ensureWorkspaceGitignore, ensureOriginRemote, setUpstreamTracking, branchExistsLocally, checkoutOrCreateBranch, readGitRemoteOrigin, readGitDefaultBranch;
+var import_node_child_process5, import_node_fs18, import_node_path20, import_node_util4, execFileAsync5, STANDARD_WORKSPACE_GITIGNORE, runGit2, runGitConfig, isGitRepository, initGitRepository, ensureWorkspaceGitignore, ensureOriginRemote, setUpstreamTracking, branchExistsLocally, checkoutOrCreateBranch, readGitRemoteOrigin, readGitDefaultBranch;
 var init_gitNativeConfig = __esm({
   "src/server/services/git/gitNativeConfig.ts"() {
     import_node_child_process5 = require("node:child_process");
     import_node_fs18 = __toESM(require("node:fs"), 1);
-    import_node_path21 = __toESM(require("node:path"), 1);
+    import_node_path20 = __toESM(require("node:path"), 1);
     import_node_util4 = require("node:util");
     init_gitRunner();
     init_pathAllowlist();
@@ -164060,7 +164061,7 @@ workspace/feedback-attachments/
         return null;
       }
     };
-    isGitRepository = (cwd = getRepoRoot()) => import_node_fs18.default.existsSync(import_node_path21.default.join(cwd, ".git"));
+    isGitRepository = (cwd = getRepoRoot()) => import_node_fs18.default.existsSync(import_node_path20.default.join(cwd, ".git"));
     initGitRepository = async (defaultBranch, cwd = getRepoRoot()) => {
       const branch = validateGitBranchName(defaultBranch) ?? "main";
       try {
@@ -164071,7 +164072,7 @@ workspace/feedback-attachments/
       }
     };
     ensureWorkspaceGitignore = (cwd = getRepoRoot()) => {
-      const gitignorePath = import_node_path21.default.join(cwd, ".gitignore");
+      const gitignorePath = import_node_path20.default.join(cwd, ".gitignore");
       if (import_node_fs18.default.existsSync(gitignorePath)) {
         return false;
       }
@@ -164178,10 +164179,10 @@ var init_gitRuntime = __esm({
 });
 
 // src/server/services/git/gitConnection.ts
-var import_node_path22, import_node_child_process6, import_node_util5, execFileAsync6, resolveGitToken, redactCredentialsInMessage, buildGitExecEnv, execGitLsRemote, evaluateNativeGitIntegrationReadiness, shouldAutoEnableGitFromNative, runGitLsRemote, resolveGitStatusSnapshot;
+var import_node_path21, import_node_child_process6, import_node_util5, execFileAsync6, resolveGitToken, redactCredentialsInMessage, buildGitExecEnv, execGitLsRemote, evaluateNativeGitIntegrationReadiness, shouldAutoEnableGitFromNative, runGitLsRemote, resolveGitStatusSnapshot;
 var init_gitConnection = __esm({
   "src/server/services/git/gitConnection.ts"() {
-    import_node_path22 = __toESM(require("node:path"), 1);
+    import_node_path21 = __toESM(require("node:path"), 1);
     import_node_child_process6 = require("node:child_process");
     import_node_util5 = require("node:util");
     init_gitRunner();
@@ -164205,7 +164206,7 @@ var init_gitConnection = __esm({
         GIT_TERMINAL_PROMPT: "0"
       };
       if (auth.kind === "ssh_key_path" && auth.sshKeyPath?.trim()) {
-        const keyPath = import_node_path22.default.isAbsolute(auth.sshKeyPath) ? auth.sshKeyPath : import_node_path22.default.join(process.cwd(), auth.sshKeyPath);
+        const keyPath = import_node_path21.default.isAbsolute(auth.sshKeyPath) ? auth.sshKeyPath : import_node_path21.default.join(process.cwd(), auth.sshKeyPath);
         env2.GIT_SSH_COMMAND = `ssh -i "${keyPath}" -o BatchMode=yes -o StrictHostKeyChecking=accept-new`;
       }
       return env2;
@@ -164393,12 +164394,12 @@ var init_gitCredentialVault = __esm({
 });
 
 // src/server/services/git/gitCredentialStore.ts
-var import_node_child_process7, import_node_fs19, import_node_path23, import_node_util6, execFileAsync7, CREDENTIAL_FILE_NAME, resolveCredentialPath, incomingToken, assertNoLegacyTokenField, readCredentialFile, persistCredentialFile, approveHttpsCredential, readGitCredentials, writeGitCredentials, clearGitCredentials, hasGitCredential;
+var import_node_child_process7, import_node_fs19, import_node_path22, import_node_util6, execFileAsync7, CREDENTIAL_FILE_NAME, resolveCredentialPath, incomingToken, assertNoLegacyTokenField, readCredentialFile, persistCredentialFile, approveHttpsCredential, readGitCredentials, writeGitCredentials, clearGitCredentials, hasGitCredential;
 var init_gitCredentialStore = __esm({
   "src/server/services/git/gitCredentialStore.ts"() {
     import_node_child_process7 = require("node:child_process");
     import_node_fs19 = __toESM(require("node:fs"), 1);
-    import_node_path23 = __toESM(require("node:path"), 1);
+    import_node_path22 = __toESM(require("node:path"), 1);
     import_node_util6 = require("node:util");
     init_constants9();
     init_validators4();
@@ -164406,7 +164407,7 @@ var init_gitCredentialStore = __esm({
     init_gitCredentialVault();
     execFileAsync7 = (0, import_node_util6.promisify)(import_node_child_process7.execFile);
     CREDENTIAL_FILE_NAME = ".appendo-git-credentials.json";
-    resolveCredentialPath = () => import_node_path23.default.join(process.cwd(), CREDENTIAL_FILE_NAME);
+    resolveCredentialPath = () => import_node_path22.default.join(process.cwd(), CREDENTIAL_FILE_NAME);
     incomingToken = (auth) => {
       const trimmed = auth.token?.trim() ?? "";
       if (!trimmed || trimmed === REDACTED_GIT_TOKEN) {
@@ -164829,15 +164830,15 @@ var init_git_controller = __esm({
           res.json(result.body);
         }, "Failed to checkout git branch.");
         this.getDiff = asyncHandler(async (req, res) => {
-          const path132 = typeof req.query.path === "string" ? req.query.path : "";
+          const path131 = typeof req.query.path === "string" ? req.query.path : "";
           const staged = req.query.staged === "true" || req.query.staged === "1";
           const section2 = typeof req.query.section === "string" ? req.query.section : void 0;
-          if (!path132.trim()) {
+          if (!path131.trim()) {
             res.status(400).json({ success: false, error: "path query parameter is required." });
             return;
           }
           const parsedSection = section2 === "staged" || section2 === "unstaged" || section2 === "untracked" ? section2 : void 0;
-          const result = await this.gitService.getDiff(path132, staged, parsedSection);
+          const result = await this.gitService.getDiff(path131, staged, parsedSection);
           res.json(result.body);
         }, "Failed to read git diff.");
         this.stage = asyncHandler(async (req, res) => {
@@ -164956,18 +164957,18 @@ var init_git_controller = __esm({
           res.json(result.body);
         }, "Failed to apply git workflow template.");
         this.getWorkflowFile = asyncHandler(async (req, res) => {
-          const path132 = typeof req.query.path === "string" ? req.query.path : void 0;
-          const result = this.gitService.getWorkflowFile(path132);
+          const path131 = typeof req.query.path === "string" ? req.query.path : void 0;
+          const result = this.gitService.getWorkflowFile(path131);
           res.json(result.body);
         }, "Failed to read git workflow file.");
         this.saveWorkflowFile = asyncHandler(async (req, res) => {
-          const path132 = typeof req.body?.path === "string" ? req.body.path : "";
+          const path131 = typeof req.body?.path === "string" ? req.body.path : "";
           const content = typeof req.body?.content === "string" ? req.body.content : "";
-          if (!path132.trim()) {
+          if (!path131.trim()) {
             res.status(400).json({ success: false, error: "path is required." });
             return;
           }
-          const result = this.gitService.saveWorkflowFile(path132, content);
+          const result = this.gitService.saveWorkflowFile(path131, content);
           res.json(result.body);
         }, "Failed to save git workflow file.");
       }
@@ -165016,23 +165017,23 @@ var init_gitPorcelainParser = __esm({
         behind: Number.parseInt(match[2], 10) || 0
       };
     };
-    buildEntry = (path132, section2, statusCode) => ({
-      path: path132,
+    buildEntry = (path131, section2, statusCode) => ({
+      path: path131,
       section: section2,
       statusCode,
-      denied: isDeniedPath(path132)
+      denied: isDeniedPath(path131)
     });
     OBJECT_NAME_PATTERN = /^[0-9a-f]{40}$/i;
     splitPorcelainRecord = (line) => {
       const tabIndex = line.indexOf("	");
       if (tabIndex >= 0) {
-        const path133 = line.slice(tabIndex + 1).trim();
-        if (!path133) {
+        const path132 = line.slice(tabIndex + 1).trim();
+        if (!path132) {
           return null;
         }
         return {
           headerPart: line.slice(0, tabIndex).trim(),
-          path: path133
+          path: path132
         };
       }
       const parts = line.trim().split(/\s+/);
@@ -165044,16 +165045,16 @@ var init_gitPorcelainParser = __esm({
         return null;
       }
       const pathStartIndex = objectNameIndexes[objectNameIndexes.length - 1] + 1;
-      const path132 = parts.slice(pathStartIndex).join(" ").trim();
-      if (!path132) {
+      const path131 = parts.slice(pathStartIndex).join(" ").trim();
+      if (!path131) {
         return null;
       }
       return {
         headerPart: parts.slice(0, pathStartIndex).join(" "),
-        path: path132
+        path: path131
       };
     };
-    parseStatusEntries = (headerPart, path132, stagedCode = "R", unstagedCode = "R") => {
+    parseStatusEntries = (headerPart, path131, stagedCode = "R", unstagedCode = "R") => {
       const header = headerPart.trim().split(/\s+/);
       const xy = header[1] ?? "";
       if (xy.length !== 2) {
@@ -165062,10 +165063,10 @@ var init_gitPorcelainParser = __esm({
       const [indexStatus, worktreeStatus] = xy;
       const entries = [];
       if (STAGED_INDEX_STATUS.has(indexStatus)) {
-        entries.push(buildEntry(path132, "staged", indexStatus === "R" ? stagedCode : indexStatus));
+        entries.push(buildEntry(path131, "staged", indexStatus === "R" ? stagedCode : indexStatus));
       }
       if (UNSTAGED_WORKTREE_STATUS.has(worktreeStatus)) {
-        entries.push(buildEntry(path132, "unstaged", worktreeStatus === "R" ? unstagedCode : worktreeStatus));
+        entries.push(buildEntry(path131, "unstaged", worktreeStatus === "R" ? unstagedCode : worktreeStatus));
       }
       return entries;
     };
@@ -165114,9 +165115,9 @@ var init_gitPorcelainParser = __esm({
           continue;
         }
         if (line.startsWith("? ")) {
-          const path132 = line.slice(2).trim();
-          if (path132) {
-            entries.push(buildEntry(path132, "untracked", "U"));
+          const path131 = line.slice(2).trim();
+          if (path131) {
+            entries.push(buildEntry(path131, "untracked", "U"));
           }
         }
       }
@@ -165132,13 +165133,13 @@ var init_gitPorcelainParser = __esm({
 });
 
 // src/server/services/git/gitWorkspace.ts
-var import_node_fs20, import_node_path24, DEFAULT_DIFF_CONTEXT_LINES, readGitBlob, readWorkingTreeFile, readGitDiffSides, assertGitRepositoryOrThrow, validatePathsOrThrow, assertGitCommandSuccess, getGitChanges, parseGitDiffSection, getGitDiff, stageGitPaths, unstageGitPaths, discardGitChanges, listGitBranches, checkoutGitBranch;
+var import_node_fs20, import_node_path23, DEFAULT_DIFF_CONTEXT_LINES, readGitBlob, readWorkingTreeFile, readGitDiffSides, assertGitRepositoryOrThrow, validatePathsOrThrow, assertGitCommandSuccess, getGitChanges, parseGitDiffSection, getGitDiff, stageGitPaths, unstageGitPaths, discardGitChanges, listGitBranches, checkoutGitBranch;
 var init_gitWorkspace = __esm({
   "src/server/services/git/gitWorkspace.ts"() {
     init_gitTools();
     init_gitRunner();
     import_node_fs20 = __toESM(require("node:fs"), 1);
-    import_node_path24 = __toESM(require("node:path"), 1);
+    import_node_path23 = __toESM(require("node:path"), 1);
     init_HttpError();
     init_gitPorcelainParser();
     DEFAULT_DIFF_CONTEXT_LINES = 3;
@@ -165154,7 +165155,7 @@ var init_gitWorkspace = __esm({
       if (!repoCheck.ok) {
         return "";
       }
-      const absolutePath = import_node_path24.default.join(repoCheck.repoRoot, relativePath);
+      const absolutePath = import_node_path23.default.join(repoCheck.repoRoot, relativePath);
       try {
         if (!import_node_fs20.default.existsSync(absolutePath) || !import_node_fs20.default.statSync(absolutePath).isFile()) {
           return "";
@@ -165226,8 +165227,8 @@ var init_gitWorkspace = __esm({
       }
       return staged ? "staged" : "unstaged";
     };
-    getGitDiff = async (path132, staged, sectionInput) => {
-      const pathResult = validateGitPath(path132);
+    getGitDiff = async (path131, staged, sectionInput) => {
+      const pathResult = validateGitPath(path131);
       if (!pathResult.ok) {
         throw new HttpError2(400, pathResult.error);
       }
@@ -165716,23 +165717,23 @@ var init_workflowTemplates = __esm({
 });
 
 // src/server/services/git/gitWorkflowTemplates.ts
-var import_node_fs21, import_node_path25, import_node_url2, resolveWorkflowTemplatesDir, templatesDir, resolveDefaultWorkflowPath, resolveTargetPath, readTemplateContent, targetExistsInRepo, listGitWorkflowTemplates, applyGitWorkflowTemplate, readGitWorkflowFile, saveGitWorkflowFile;
+var import_node_fs21, import_node_path24, import_node_url2, resolveWorkflowTemplatesDir, templatesDir, resolveDefaultWorkflowPath, resolveTargetPath, readTemplateContent, targetExistsInRepo, listGitWorkflowTemplates, applyGitWorkflowTemplate, readGitWorkflowFile, saveGitWorkflowFile;
 var init_gitWorkflowTemplates = __esm({
   "src/server/services/git/gitWorkflowTemplates.ts"() {
     import_node_fs21 = __toESM(require("node:fs"), 1);
-    import_node_path25 = __toESM(require("node:path"), 1);
+    import_node_path24 = __toESM(require("node:path"), 1);
     import_node_url2 = require("node:url");
     init_gitRunner();
     init_HttpError();
     init_workflowTemplates();
     resolveWorkflowTemplatesDir = () => {
-      const bundledDir = import_node_path25.default.join(process.cwd(), "src/server/services/git/workflowTemplates");
-      if (import_node_fs21.default.existsSync(import_node_path25.default.join(bundledDir, "ci-node-test.yml"))) {
+      const bundledDir = import_node_path24.default.join(process.cwd(), "src/server/services/git/workflowTemplates");
+      if (import_node_fs21.default.existsSync(import_node_path24.default.join(bundledDir, "ci-node-test.yml"))) {
         return bundledDir;
       }
       try {
-        const moduleDir = import_node_path25.default.join(import_node_path25.default.dirname((0, import_node_url2.fileURLToPath)(require("node:url").pathToFileURL(require("node:path").resolve(process.cwd(), "src/server/services/git/gitWorkflowTemplates.ts")).href)), "workflowTemplates");
-        if (import_node_fs21.default.existsSync(import_node_path25.default.join(moduleDir, "ci-node-test.yml"))) {
+        const moduleDir = import_node_path24.default.join(import_node_path24.default.dirname((0, import_node_url2.fileURLToPath)(require("node:url").pathToFileURL(require("node:path").resolve(process.cwd(), "src/server/services/git/gitWorkflowTemplates.ts")).href)), "workflowTemplates");
+        if (import_node_fs21.default.existsSync(import_node_path24.default.join(moduleDir, "ci-node-test.yml"))) {
           return moduleDir;
         }
       } catch {
@@ -165762,13 +165763,13 @@ var init_gitWorkflowTemplates = __esm({
       if (!template) {
         throw new HttpError2(400, `Unknown workflow template: ${templateId}`);
       }
-      const absoluteTemplatePath = import_node_path25.default.join(templatesDir, template.fileName);
+      const absoluteTemplatePath = import_node_path24.default.join(templatesDir, template.fileName);
       if (!import_node_fs21.default.existsSync(absoluteTemplatePath)) {
         throw new HttpError2(500, `Workflow template file is missing: ${template.fileName}`);
       }
       return import_node_fs21.default.readFileSync(absoluteTemplatePath, "utf8");
     };
-    targetExistsInRepo = (repoRoot, relativePath) => import_node_fs21.default.existsSync(import_node_path25.default.join(repoRoot, relativePath));
+    targetExistsInRepo = (repoRoot, relativePath) => import_node_fs21.default.existsSync(import_node_path24.default.join(repoRoot, relativePath));
     listGitWorkflowTemplates = () => {
       const repoCheck = assertGitRepository();
       const repoRoot = repoCheck.ok ? repoCheck.repoRoot : null;
@@ -165798,7 +165799,7 @@ var init_gitWorkflowTemplates = __esm({
       if (pathResult.ok === false) {
         throw new HttpError2(400, pathResult.error);
       }
-      const absolutePath = import_node_path25.default.join(repoCheck.repoRoot, pathResult.relativePath);
+      const absolutePath = import_node_path24.default.join(repoCheck.repoRoot, pathResult.relativePath);
       const created = !import_node_fs21.default.existsSync(absolutePath);
       if (!created && input.overwrite !== true) {
         throw new HttpError2(
@@ -165807,7 +165808,7 @@ var init_gitWorkflowTemplates = __esm({
         );
       }
       const content = readTemplateContent(templateId);
-      import_node_fs21.default.mkdirSync(import_node_path25.default.dirname(absolutePath), { recursive: true });
+      import_node_fs21.default.mkdirSync(import_node_path24.default.dirname(absolutePath), { recursive: true });
       import_node_fs21.default.writeFileSync(absolutePath, content, "utf8");
       return {
         success: true,
@@ -165827,7 +165828,7 @@ var init_gitWorkflowTemplates = __esm({
       if (pathResult.ok === false) {
         throw new HttpError2(400, pathResult.error);
       }
-      const absolutePath = import_node_path25.default.join(repoCheck.repoRoot, pathResult.relativePath);
+      const absolutePath = import_node_path24.default.join(repoCheck.repoRoot, pathResult.relativePath);
       if (import_node_fs21.default.existsSync(absolutePath)) {
         return {
           path: pathResult.relativePath,
@@ -165856,8 +165857,8 @@ var init_gitWorkflowTemplates = __esm({
       if (pathResult.ok === false) {
         throw new HttpError2(400, pathResult.error);
       }
-      const absolutePath = import_node_path25.default.join(repoCheck.repoRoot, pathResult.relativePath);
-      import_node_fs21.default.mkdirSync(import_node_path25.default.dirname(absolutePath), { recursive: true });
+      const absolutePath = import_node_path24.default.join(repoCheck.repoRoot, pathResult.relativePath);
+      import_node_fs21.default.mkdirSync(import_node_path24.default.dirname(absolutePath), { recursive: true });
       import_node_fs21.default.writeFileSync(absolutePath, content, "utf8");
       return {
         success: true,
@@ -166476,8 +166477,8 @@ var init_git_service = __esm({
         const result = await checkoutGitBranch(payload.branch);
         return { body: { success: true, result } };
       }
-      async getDiff(path132, staged, section2) {
-        const diff = await getGitDiff(path132, staged, section2);
+      async getDiff(path131, staged, section2) {
+        const diff = await getGitDiff(path131, staged, section2);
         return { body: { success: true, diff } };
       }
       async stage(paths) {
@@ -166534,12 +166535,12 @@ var init_git_service = __esm({
         const result = applyGitWorkflowTemplate(input);
         return { body: { success: true, result } };
       }
-      getWorkflowFile(path132) {
-        const workflowFile = readGitWorkflowFile(path132);
+      getWorkflowFile(path131) {
+        const workflowFile = readGitWorkflowFile(path131);
         return { body: { success: true, workflowFile } };
       }
-      saveWorkflowFile(path132, content) {
-        const result = saveGitWorkflowFile(path132, content);
+      saveWorkflowFile(path131, content) {
+        const result = saveGitWorkflowFile(path131, content);
         return { body: { success: true, result } };
       }
     };
@@ -166740,15 +166741,15 @@ function quotePosixShellSingle(value) {
   return `'${value.replace(/'/g, `'\\''`)}'`;
 }
 function buildSshInitialCdInput(initialPath) {
-  const path132 = sanitizeSshInitialPath(initialPath);
-  if (!path132 || path132 === "~") {
+  const path131 = sanitizeSshInitialPath(initialPath);
+  if (!path131 || path131 === "~") {
     return null;
   }
-  if (path132.startsWith("~/")) {
-    return `cd -- ~/${quotePosixShellSingle(path132.slice(2))}
+  if (path131.startsWith("~/")) {
+    return `cd -- ~/${quotePosixShellSingle(path131.slice(2))}
 `;
   }
-  return `cd -- ${quotePosixShellSingle(path132)}
+  return `cd -- ${quotePosixShellSingle(path131)}
 `;
 }
 var SSH_HUB_DEFAULT_PORT, SSH_HUB_MIN_PORT, SSH_HUB_MAX_PORT, SSH_HUB_MAX_NAME_LENGTH, SSH_HUB_MAX_NOTE_LENGTH, SSH_HUB_MAX_TAGS, SSH_HUB_MAX_TAG_LENGTH, SSH_HUB_MAX_PATH_LENGTH, SSH_HUB_MAX_PATH_SEGMENT_LENGTH, IPV4_RE, HOSTNAME_RE, IPV6_RE, USERNAME_RE, CONTROL_CHARS_RE;
@@ -167293,10 +167294,10 @@ var init_ssh_hub_routes = __esm({
 
 // src/server/services/libraries/developerLibrariesStore.ts
 function getDeveloperLibrariesRoot(projectRoot = process.cwd()) {
-  return import_node_path26.default.join(projectRoot, PACKAGE_STORAGE_ROOT, DEVELOPER_LIBRARIES_DIRNAME);
+  return import_node_path25.default.join(projectRoot, PACKAGE_STORAGE_ROOT, DEVELOPER_LIBRARIES_DIRNAME);
 }
 function getDeveloperLibrariesManifestPath(projectRoot = process.cwd()) {
-  return import_node_path26.default.join(getDeveloperLibrariesRoot(projectRoot), DEVELOPER_LIBRARIES_MANIFEST_NAME);
+  return import_node_path25.default.join(getDeveloperLibrariesRoot(projectRoot), DEVELOPER_LIBRARIES_MANIFEST_NAME);
 }
 function ensureDeveloperLibrariesStore(projectRoot = process.cwd()) {
   const root = getDeveloperLibrariesRoot(projectRoot);
@@ -167323,7 +167324,7 @@ function readDeveloperLibrariesManifest(projectRoot = process.cwd()) {
   }
 }
 function readInstalledPackageVersion(packageName, fromRoot) {
-  const pkgPath = import_node_path26.default.join(fromRoot, "node_modules", ...packageName.split("/"), "package.json");
+  const pkgPath = import_node_path25.default.join(fromRoot, "node_modules", ...packageName.split("/"), "package.json");
   try {
     const parsed = JSON.parse(import_node_fs23.default.readFileSync(pkgPath, "utf8"));
     return typeof parsed.version === "string" ? parsed.version : "";
@@ -167343,7 +167344,7 @@ function readDependencyMap(value) {
 }
 function readHostPackageDependencies(projectRoot = process.cwd()) {
   try {
-    const parsed = JSON.parse(import_node_fs23.default.readFileSync(import_node_path26.default.join(projectRoot, "package.json"), "utf8"));
+    const parsed = JSON.parse(import_node_fs23.default.readFileSync(import_node_path25.default.join(projectRoot, "package.json"), "utf8"));
     return {
       ...readDependencyMap(parsed.dependencies),
       ...readDependencyMap(parsed.optionalDependencies)
@@ -167352,11 +167353,11 @@ function readHostPackageDependencies(projectRoot = process.cwd()) {
     return {};
   }
 }
-var import_node_fs23, import_node_path26, DEVELOPER_LIBRARIES_DIRNAME, DEVELOPER_LIBRARIES_MANIFEST_NAME, EMPTY_LIBS_MANIFEST;
+var import_node_fs23, import_node_path25, DEVELOPER_LIBRARIES_DIRNAME, DEVELOPER_LIBRARIES_MANIFEST_NAME, EMPTY_LIBS_MANIFEST;
 var init_developerLibrariesStore = __esm({
   "src/server/services/libraries/developerLibrariesStore.ts"() {
     import_node_fs23 = __toESM(require("node:fs"), 1);
-    import_node_path26 = __toESM(require("node:path"), 1);
+    import_node_path25 = __toESM(require("node:path"), 1);
     init_PackageFileStore();
     DEVELOPER_LIBRARIES_DIRNAME = "libs";
     DEVELOPER_LIBRARIES_MANIFEST_NAME = "package.json";
@@ -167372,7 +167373,7 @@ var init_developerLibrariesStore = __esm({
 // src/server/services/remote-hubs/requireRemoteHubLibrary.ts
 function libsRequire() {
   ensureDeveloperLibrariesStore();
-  return (0, import_node_module.createRequire)(import_node_path27.default.join(getDeveloperLibrariesRoot(), "package.json"));
+  return (0, import_node_module.createRequire)(import_node_path26.default.join(getDeveloperLibrariesRoot(), "package.json"));
 }
 function requireRemoteHubLibrary(specifier) {
   try {
@@ -167394,11 +167395,11 @@ function resolveRemoteHubLibraryPath(specifier) {
     );
   }
 }
-var import_node_module, import_node_path27;
+var import_node_module, import_node_path26;
 var init_requireRemoteHubLibrary = __esm({
   "src/server/services/remote-hubs/requireRemoteHubLibrary.ts"() {
     import_node_module = require("node:module");
-    import_node_path27 = __toESM(require("node:path"), 1);
+    import_node_path26 = __toESM(require("node:path"), 1);
     init_developerLibrariesStore();
   }
 });
@@ -169273,12 +169274,12 @@ async function withFileHubSession(userId, connectionId, fn2) {
 async function resolveHomePath(session) {
   if (session.kind === "sftp") {
     return await new Promise((resolve, reject) => {
-      session.sftp.realpath(".", (error, path132) => {
+      session.sftp.realpath(".", (error, path131) => {
         if (error) {
           reject(new FileHubSessionError(error.message));
           return;
         }
-        resolve(path132 && path132.startsWith("/") ? path132 : `/${path132 || ""}`);
+        resolve(path131 && path131.startsWith("/") ? path131 : `/${path131 || ""}`);
       });
     });
   }
@@ -169499,23 +169500,23 @@ async function resolveWorkingPath(userId, connectionId, requested) {
   return withFileHubSession(userId, connectionId, (session) => resolveHomePath(session));
 }
 async function listFileHubPath(userId, connectionId, remotePath) {
-  const path132 = await resolveWorkingPath(userId, connectionId, remotePath);
-  const items = await withFileHubSession(userId, connectionId, (session) => listRemoteEntries(session, path132));
+  const path131 = await resolveWorkingPath(userId, connectionId, remotePath);
+  const items = await withFileHubSession(userId, connectionId, (session) => listRemoteEntries(session, path131));
   items.sort((left, right) => {
     if (left.type !== right.type) {
       return left.type === "directory" ? -1 : 1;
     }
     return left.name.localeCompare(right.name, void 0, { sensitivity: "base" });
   });
-  return { path: path132, items };
+  return { path: path131, items };
 }
 async function mkdirFileHubPath(userId, connectionId, remotePath) {
-  const path132 = requirePath(remotePath, "Remote path");
-  if (path132 === "/") {
+  const path131 = requirePath(remotePath, "Remote path");
+  if (path131 === "/") {
     throw new FileHubSessionError("Cannot create the root directory.", 400);
   }
-  await withFileHubSession(userId, connectionId, (session) => mkdirRemote(session, path132));
-  return path132;
+  await withFileHubSession(userId, connectionId, (session) => mkdirRemote(session, path131));
+  return path131;
 }
 async function renameFileHubPath(userId, connectionId, oldPath, newPath) {
   const from = requirePath(oldPath, "Source path");
@@ -169533,12 +169534,12 @@ async function renameFileHubPath(userId, connectionId, oldPath, newPath) {
   return { oldPath: from, newPath: to };
 }
 async function deleteFileHubPath(userId, connectionId, remotePath, type) {
-  const path132 = requirePath(remotePath, "Remote path");
-  if (path132 === "/") {
+  const path131 = requirePath(remotePath, "Remote path");
+  if (path131 === "/") {
     throw new FileHubSessionError("Cannot delete the root directory.", 400);
   }
-  await withFileHubSession(userId, connectionId, (session) => removeRemote(session, path132, type));
-  return path132;
+  await withFileHubSession(userId, connectionId, (session) => removeRemote(session, path131, type));
+  return path131;
 }
 function buildUploadPath(remoteDir, fileName) {
   const directory = requirePath(remoteDir, "Remote directory");
@@ -169555,18 +169556,18 @@ async function pipeUploadToRemote(userId, connectionId, remotePath, source) {
   });
 }
 async function pipeDownloadFromRemote(userId, connectionId, remotePath, dest, onReady) {
-  const path132 = requirePath(remotePath, "Remote path");
-  if (path132 === "/") {
+  const path131 = requirePath(remotePath, "Remote path");
+  if (path131 === "/") {
     throw new FileHubSessionError("Cannot download a directory.", 400);
   }
   let size = null;
   await withFileHubSession(userId, connectionId, async (session) => {
-    size = await statRemoteSize(session, path132);
-    onReady?.({ path: path132, size });
-    const source = createRemoteReadStream(session, path132);
+    size = await statRemoteSize(session, path131);
+    onReady?.({ path: path131, size });
+    const source = createRemoteReadStream(session, path131);
     await (0, import_promises4.pipeline)(source, dest);
   });
-  return { path: path132, size };
+  return { path: path131, size };
 }
 var import_promises4;
 var init_fileHubFiles = __esm({
@@ -169673,8 +169674,8 @@ var init_file_hub_controller = __esm({
             return;
           }
           try {
-            const path132 = await mkdirFileHubPath(userIdFromRequest(req), connectionId, req.body?.remotePath);
-            res.json({ success: true, path: path132 });
+            const path131 = await mkdirFileHubPath(userIdFromRequest(req), connectionId, req.body?.remotePath);
+            res.json({ success: true, path: path131 });
           } catch (error) {
             if (handleKnownError(error, res)) {
               return;
@@ -169715,8 +169716,8 @@ var init_file_hub_controller = __esm({
             return;
           }
           try {
-            const path132 = await deleteFileHubPath(userIdFromRequest(req), connectionId, req.body?.remotePath, type);
-            res.json({ success: true, path: path132 });
+            const path131 = await deleteFileHubPath(userIdFromRequest(req), connectionId, req.body?.remotePath, type);
+            res.json({ success: true, path: path131 });
           } catch (error) {
             if (handleKnownError(error, res)) {
               return;
@@ -169737,8 +169738,8 @@ var init_file_hub_controller = __esm({
               connectionId,
               remotePath,
               res,
-              ({ path: path132, size }) => {
-                const fileName = basenameRemotePath(path132) || "download";
+              ({ path: path131, size }) => {
+                const fileName = basenameRemotePath(path131) || "download";
                 const asciiName = fileName.replace(/[^\x20-\x7E]/g, "_").replace(/"/g, "");
                 res.setHeader("Content-Type", "application/octet-stream");
                 res.setHeader("X-Content-Type-Options", "nosniff");
@@ -171964,11 +171965,11 @@ var init_runtime = __esm({
     TEMPLATE_TOKEN_RE = /\{\{\s*([^}]+?)\s*\}\}/g;
     BINDING_TOKEN_PREFIX = "bindings.";
     isRecord35 = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
-    readPath = (input, path132) => {
-      if (!path132 || !path132.trim()) {
+    readPath = (input, path131) => {
+      if (!path131 || !path131.trim()) {
         return input;
       }
-      return path132.split(".").map((segment) => segment.trim()).filter((segment) => segment.length > 0).reduce((current, segment) => {
+      return path131.split(".").map((segment) => segment.trim()).filter((segment) => segment.length > 0).reduce((current, segment) => {
         if (isRecord35(current)) {
           return current[segment];
         }
@@ -172010,9 +172011,9 @@ var init_runtime = __esm({
     collectBindingDependencies = (definition) => {
       const refs = /* @__PURE__ */ new Set();
       if (typeof definition.sourcePath === "string") {
-        const path132 = definition.sourcePath.trim();
-        if (path132.startsWith(BINDING_TOKEN_PREFIX)) {
-          const key = path132.slice(BINDING_TOKEN_PREFIX.length).trim();
+        const path131 = definition.sourcePath.trim();
+        if (path131.startsWith(BINDING_TOKEN_PREFIX)) {
+          const key = path131.slice(BINDING_TOKEN_PREFIX.length).trim();
           if (key.length > 0) {
             refs.add(key);
           }
@@ -174209,12 +174210,12 @@ var init_packageFunctions = __esm({
 var toHttpMethodLogId, isLogsApiRoutePath, resolveDefaultRouteLoggingEnabled;
 var init_httpMethodLogId = __esm({
   "src/shared/lib/httpMethodLogId.ts"() {
-    toHttpMethodLogId = (method, path132) => `HTTP ${String(method || "GET").toUpperCase()} ${path132}`;
-    isLogsApiRoutePath = (path132) => {
-      const normalized = path132.split("?")[0] || "";
+    toHttpMethodLogId = (method, path131) => `HTTP ${String(method || "GET").toUpperCase()} ${path131}`;
+    isLogsApiRoutePath = (path131) => {
+      const normalized = path131.split("?")[0] || "";
       return normalized === "/api/logs" || normalized.startsWith("/api/logs/");
     };
-    resolveDefaultRouteLoggingEnabled = (path132) => !isLogsApiRoutePath(path132);
+    resolveDefaultRouteLoggingEnabled = (path131) => !isLogsApiRoutePath(path131);
   }
 });
 
@@ -174355,17 +174356,17 @@ var init_mappers = __esm({
       metadataJson: parseMetadataJson(item2.metadata_json ?? item2.metadataJson),
       accessControl: parseFunctionAccessControl(item2.access_control ?? item2.accessControl)
     });
-    getFallbackBuiltInCode = (method, path132) => INITIAL_FUNCTIONS.find((item2) => item2.isBuiltIn && item2.method === method && item2.path === path132)?.code;
+    getFallbackBuiltInCode = (method, path131) => INITIAL_FUNCTIONS.find((item2) => item2.isBuiltIn && item2.method === method && item2.path === path131)?.code;
     mapSystemFunction = (item2) => {
       const method = item2.method || "GET";
-      const path132 = String(item2.path || "/api/unknown");
-      const fallbackCode = getFallbackBuiltInCode(method, path132);
+      const path131 = String(item2.path || "/api/unknown");
+      const fallbackCode = getFallbackBuiltInCode(method, path131);
       return {
         id: String(item2.id),
         name: String(item2.name || "system-route"),
         folder: String(item2.folder || "system"),
         method,
-        path: path132,
+        path: path131,
         code: String(item2.code || fallbackCode || ""),
         language: DEFAULT_SERVER_FUNCTION_LANGUAGE,
         testPayload: String(
@@ -174378,7 +174379,7 @@ var init_mappers = __esm({
         timeoutMs: 1500,
         runtimeVersion: "v20.x",
         useGlobalConfig: true,
-        enableLogs: typeof item2.enableLogs === "boolean" ? item2.enableLogs : typeof item2.enable_logs === "boolean" ? item2.enable_logs : resolveDefaultRouteLoggingEnabled(path132),
+        enableLogs: typeof item2.enableLogs === "boolean" ? item2.enableLogs : typeof item2.enable_logs === "boolean" ? item2.enable_logs : resolveDefaultRouteLoggingEnabled(path131),
         isBuiltIn: item2.isBuiltIn === false ? false : true,
         packageId: typeof item2.packageId === "string" ? item2.packageId : void 0,
         packageDisplayName: typeof item2.packageDisplayName === "string" ? item2.packageDisplayName : void 0,
@@ -174468,8 +174469,8 @@ function applyBootstrapMethodLogConfigs(routes, savedConfigs) {
     ...sanitizeMethodLogConfigs(savedConfigs)
   });
 }
-function readRouteLoggingEnabled(method, path132) {
-  return logger.getMethodConfig(toHttpMethodLogId(method, path132)).enabled;
+function readRouteLoggingEnabled(method, path131) {
+  return logger.getMethodConfig(toHttpMethodLogId(method, path131)).enabled;
 }
 var init_methodLogConfig = __esm({
   "src/server/utils/methodLogConfig.ts"() {
@@ -176731,8 +176732,8 @@ function runActionResolutionValidation(model) {
     }
     for (const fieldPointer of definition.definition.secretReferenceFields) {
       const literalPaths = scanSecretReferenceField(node.config, node.input, fieldPointer);
-      for (const path132 of literalPaths) {
-        issues.push({ code: WORKFLOW_ERROR_REGISTRY.DEF_INVALID_AWM, severity: "ERROR", message: `${kindLabel} node "${node.key}" has a literal string value at secret-reference field "${path132}" \u2014 secrets MUST be referenced indirectly, never as a literal in the draft/revision.`, nodeKey: node.key, path: path132 });
+      for (const path131 of literalPaths) {
+        issues.push({ code: WORKFLOW_ERROR_REGISTRY.DEF_INVALID_AWM, severity: "ERROR", message: `${kindLabel} node "${node.key}" has a literal string value at secret-reference field "${path131}" \u2014 secrets MUST be referenced indirectly, never as a literal in the draft/revision.`, nodeKey: node.key, path: path131 });
       }
     }
     if (node.kind === "ACTION" && node.compensation) {
@@ -183909,8 +183910,8 @@ var init_workflows_controller = __esm({
         }, "Failed to load reference catalog.", { onError: handleWorkflowError });
         this.compileReference = asyncHandler(async (req, res) => {
           const { descriptor, segments } = req.body;
-          const path132 = compileWorkflowReference(descriptor, segments ?? []);
-          res.json({ success: true, path: path132 });
+          const path131 = compileWorkflowReference(descriptor, segments ?? []);
+          res.json({ success: true, path: path131 });
         }, "Failed to compile reference.", { onError: handleWorkflowError });
         this.runWorkflowExecute = asyncHandler(async (req, res) => {
           const body = req.body;
@@ -190086,10 +190087,10 @@ var init_safeRegex = __esm({
 });
 
 // src/server/domain/workflow/actions/corePack/templateEngine.ts
-function resolvePath2(context, path132) {
-  if (path132 === "." || path132 === "this") return context;
+function resolvePath2(context, path131) {
+  if (path131 === "." || path131 === "this") return context;
   let current = context;
-  for (const segment of path132.split(".")) {
+  for (const segment of path131.split(".")) {
     if (current === null || current === void 0) return void 0;
     if (Array.isArray(current)) {
       const index = Number(segment);
@@ -190140,17 +190141,17 @@ function parseNodes(tokens, cursor, closingKinds) {
       continue;
     }
     if (token.kind === "each-open") {
-      const path132 = token.path;
+      const path131 = token.path;
       cursor.i += 1;
       const body = parseNodes(tokens, cursor, /* @__PURE__ */ new Set(["each-close"]));
-      if (tokens[cursor.i]?.kind !== "each-close") throw new TemplateSyntaxError(`{{#each ${path132}}} is missing its {{/each}}.`);
+      if (tokens[cursor.i]?.kind !== "each-close") throw new TemplateSyntaxError(`{{#each ${path131}}} is missing its {{/each}}.`);
       cursor.i += 1;
-      nodes2.push({ kind: "each", path: path132, body });
+      nodes2.push({ kind: "each", path: path131, body });
       continue;
     }
     if (token.kind === "if-open" || token.kind === "unless-open") {
       const negate = token.kind === "unless-open";
-      const path132 = token.path;
+      const path131 = token.path;
       const closeKind = negate ? "unless-close" : "if-close";
       cursor.i += 1;
       const thenBody = parseNodes(tokens, cursor, new Set(negate ? [closeKind] : [closeKind, "if-else"]));
@@ -190160,10 +190161,10 @@ function parseNodes(tokens, cursor, closingKinds) {
         elseBody = parseNodes(tokens, cursor, /* @__PURE__ */ new Set([closeKind]));
       }
       if (tokens[cursor.i]?.kind !== closeKind) {
-        throw new TemplateSyntaxError(`{{#${negate ? "unless" : "if"} ${path132}}} is missing its {{/${negate ? "unless" : "if"}}}.`);
+        throw new TemplateSyntaxError(`{{#${negate ? "unless" : "if"} ${path131}}} is missing its {{/${negate ? "unless" : "if"}}}.`);
       }
       cursor.i += 1;
-      nodes2.push({ kind: "if", path: path132, negate, thenBody, elseBody });
+      nodes2.push({ kind: "if", path: path131, negate, thenBody, elseBody });
       continue;
     }
     throw new TemplateSyntaxError(`Unexpected {{/${token.kind.replace("-close", "")}}} with no matching opening tag.`);
@@ -192188,8 +192189,8 @@ async function writeWorkflowFile(relativePath, content, scope, createIfMissing) 
   if (existing.ok) return existing;
   if (!createIfMissing || existing.status !== 404) return existing;
   const normalized = relativePath.replace(/\\/g, "/");
-  const fileName = import_node_path28.default.posix.basename(normalized);
-  const parentPath = import_node_path28.default.posix.dirname(normalized);
+  const fileName = import_node_path27.default.posix.basename(normalized);
+  const parentPath = import_node_path27.default.posix.dirname(normalized);
   if (!fileName || fileName === "." || fileName === "..") {
     return { ok: false, status: 400, error: "Invalid file path." };
   }
@@ -192197,10 +192198,10 @@ async function writeWorkflowFile(relativePath, content, scope, createIfMissing) 
   if (!created.ok) return created;
   return fileManager.writeContent(normalized, content, scope);
 }
-var import_node_path28, DEFAULT_SCOPE, fileManager, inlineObjectSchema, fileReadDefinition, fileWriteDefinition, fileReadExecutor, fileWriteExecutor;
+var import_node_path27, DEFAULT_SCOPE, fileManager, inlineObjectSchema, fileReadDefinition, fileWriteDefinition, fileReadExecutor, fileWriteExecutor;
 var init_fileActions = __esm({
   "src/server/domain/workflow/actions/corePack/fileActions.ts"() {
-    import_node_path28 = __toESM(require("node:path"), 1);
+    import_node_path27 = __toESM(require("node:path"), 1);
     init_file_manager_service();
     DEFAULT_SCOPE = "workspace";
     fileManager = new FileManagerService();
@@ -192352,8 +192353,8 @@ async function writeBinaryFile(relativePath, buffer4, scope) {
   if (!normalized || normalized.includes("..")) {
     return { ok: false, errorCode: "DOCUMENT_PATH_INVALID", safeMessage: "output path must be a safe relative path." };
   }
-  const parentPath = import_node_path29.default.posix.dirname(normalized);
-  const fileName = import_node_path29.default.posix.basename(normalized);
+  const parentPath = import_node_path28.default.posix.dirname(normalized);
+  const fileName = import_node_path28.default.posix.basename(normalized);
   if (!fileName || fileName === "." || fileName === "..") {
     return { ok: false, errorCode: "DOCUMENT_PATH_INVALID", safeMessage: "output path must include a file name." };
   }
@@ -192418,10 +192419,10 @@ function extractPdfLatinText(buffer4) {
   }
   return chunks.join(" ").replace(/\s+/g, " ").trim();
 }
-var import_node_path29, import_node_zlib3, import_pdf_lib2, import_docx, DEFAULT_SCOPE2, fileManager2, inlineObjectSchema2, documentPdfGenerateDefinition, documentDocxGenerateDefinition, documentPdfGenerateExecutor, documentDocxGenerateExecutor, inflatePdfContentStreams, documentPdfExtractTextDefinition, documentPdfExtractTextExecutor;
+var import_node_path28, import_node_zlib3, import_pdf_lib2, import_docx, DEFAULT_SCOPE2, fileManager2, inlineObjectSchema2, documentPdfGenerateDefinition, documentDocxGenerateDefinition, documentPdfGenerateExecutor, documentDocxGenerateExecutor, inflatePdfContentStreams, documentPdfExtractTextDefinition, documentPdfExtractTextExecutor;
 var init_documentActions = __esm({
   "src/server/domain/workflow/actions/corePack/documentActions.ts"() {
-    import_node_path29 = __toESM(require("node:path"), 1);
+    import_node_path28 = __toESM(require("node:path"), 1);
     import_node_zlib3 = require("node:zlib");
     import_pdf_lib2 = require("pdf-lib");
     import_docx = require("docx");
@@ -196931,8 +196932,8 @@ var init_data_api_controller = __esm({
         if (!first) {
           return "Invalid request.";
         }
-        const path132 = first.path.length > 0 ? first.path.join(".") : "body";
-        return `${path132}: ${first.message}`;
+        const path131 = first.path.length > 0 ? first.path.join(".") : "body";
+        return `${path131}: ${first.message}`;
       }
       return error instanceof Error ? error.message : fallback;
     };
@@ -197290,10 +197291,10 @@ var init_edgeModelDatasheet_service = __esm({
         return void 0;
       }
       const record = error;
-      const path132 = record.errors?.[0]?.path;
-      if (typeof path132 === "string") {
-        const match = columns.find((column) => column.field === path132 || column.name === path132);
-        return match?.field ?? path132;
+      const path131 = record.errors?.[0]?.path;
+      if (typeof path131 === "string") {
+        const match = columns.find((column) => column.field === path131 || column.name === path131);
+        return match?.field ?? path131;
       }
       if (record.fields && typeof record.fields === "object") {
         const name = Object.keys(record.fields)[0];
@@ -210578,25 +210579,25 @@ function entryFromExports(exportsField, depth = 0) {
   return null;
 }
 function resolveInstalledPackageEntry(specifier) {
-  const packageDir = import_node_path30.default.join(process.cwd(), "node_modules", specifier);
-  const packageJsonPath = import_node_path30.default.join(packageDir, "package.json");
+  const packageDir = import_node_path29.default.join(process.cwd(), "node_modules", specifier);
+  const packageJsonPath = import_node_path29.default.join(packageDir, "package.json");
   if (!import_node_fs26.default.existsSync(packageJsonPath)) {
     throw new Error(`Installed package "${specifier}" was not found at ${packageDir}.`);
   }
   const pkg = JSON.parse(import_node_fs26.default.readFileSync(packageJsonPath, "utf8"));
   const relativeEntry = entryFromExports(pkg.exports) ?? (typeof pkg.module === "string" ? pkg.module : null) ?? (typeof pkg.main === "string" ? pkg.main : null) ?? "index.js";
-  return import_node_path30.default.resolve(packageDir, relativeEntry);
+  return import_node_path29.default.resolve(packageDir, relativeEntry);
 }
 async function importInstalledPackageNamespace(specifier) {
   const resolved = resolveInstalledPackageEntry(specifier);
   const href = (0, import_node_url3.pathToFileURL)(resolved).href;
   return await import(href);
 }
-var import_node_fs26, import_node_path30, import_node_url3;
+var import_node_fs26, import_node_path29, import_node_url3;
 var init_importInstalledPackageNamespace = __esm({
   "src/server/services/package-runtime/importInstalledPackageNamespace.ts"() {
     import_node_fs26 = __toESM(require("node:fs"), 1);
-    import_node_path30 = __toESM(require("node:path"), 1);
+    import_node_path29 = __toESM(require("node:path"), 1);
     import_node_url3 = require("node:url");
   }
 });
@@ -215582,8 +215583,8 @@ var init_packages_routes = __esm({
           res.status(401).json({ error: "Connection Required", message: `No active connection for provider family ${familyId}.` });
           return;
         }
-        const path132 = req.path.toLowerCase();
-        if (path132.includes("product") || path132.includes("item") || path132.includes("inventory")) {
+        const path131 = req.path.toLowerCase();
+        if (path131.includes("product") || path131.includes("item") || path131.includes("inventory")) {
           res.json([
             { id: 1001, name: "External API Coffee Beans", price: 18.5, stock: 45 },
             { id: 1002, name: "External API Green Tea", price: 12, stock: 60 }
@@ -219839,8 +219840,8 @@ var normalizeApiRelativePath, matchesPrefix2, PACKAGE_RUNTIME_PATH, isUniversalA
 var init_nodeCapabilityRoutes = __esm({
   "src/shared/nodeCapabilityRoutes.ts"() {
     init_nodeCapabilities();
-    normalizeApiRelativePath = (path132) => {
-      const withoutQuery = path132.split("?")[0] || "/";
+    normalizeApiRelativePath = (path131) => {
+      const withoutQuery = path131.split("?")[0] || "/";
       const trimmed = withoutQuery.startsWith("/api") ? withoutQuery.slice(4) || "/" : withoutQuery;
       if (trimmed.length > 1 && trimmed.endsWith("/")) {
         return trimmed.slice(0, -1);
@@ -219866,103 +219867,103 @@ var init_nodeCapabilityRoutes = __esm({
     };
     CAPABILITY_ROUTE_RULES = [
       {
-        test: (path132) => matchesPrefix2(path132, "/jobs"),
+        test: (path131) => matchesPrefix2(path131, "/jobs"),
         capabilities: ["worker"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/scheduler"),
+        test: (path131) => matchesPrefix2(path131, "/scheduler"),
         capabilities: ["worker"]
       },
       {
-        test: (path132) => PACKAGE_RUNTIME_PATH.test(path132),
+        test: (path131) => PACKAGE_RUNTIME_PATH.test(path131),
         capabilities: ["service", "platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/packages"),
+        test: (path131) => matchesPrefix2(path131, "/packages"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/package"),
+        test: (path131) => matchesPrefix2(path131, "/package"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/platform"),
+        test: (path131) => matchesPrefix2(path131, "/platform"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/settings"),
+        test: (path131) => matchesPrefix2(path131, "/settings"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/settings-attributes"),
+        test: (path131) => matchesPrefix2(path131, "/settings-attributes"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/users"),
+        test: (path131) => matchesPrefix2(path131, "/users"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/data-api"),
+        test: (path131) => matchesPrefix2(path131, "/data-api"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/functions"),
+        test: (path131) => matchesPrefix2(path131, "/functions"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/core"),
+        test: (path131) => matchesPrefix2(path131, "/core"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/component-designer"),
+        test: (path131) => matchesPrefix2(path131, "/component-designer"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/appearance"),
+        test: (path131) => matchesPrefix2(path131, "/appearance"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/workflows"),
+        test: (path131) => matchesPrefix2(path131, "/workflows"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/cache"),
+        test: (path131) => matchesPrefix2(path131, "/cache"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/git"),
+        test: (path131) => matchesPrefix2(path131, "/git"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/logs"),
+        test: (path131) => matchesPrefix2(path131, "/logs"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/docs"),
+        test: (path131) => matchesPrefix2(path131, "/docs"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/slots"),
+        test: (path131) => matchesPrefix2(path131, "/slots"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/dashboard"),
+        test: (path131) => matchesPrefix2(path131, "/dashboard"),
         capabilities: ["platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/profile"),
+        test: (path131) => matchesPrefix2(path131, "/profile"),
         capabilities: ["service", "platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/base-info"),
+        test: (path131) => matchesPrefix2(path131, "/base-info"),
         capabilities: ["service", "platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/ai"),
+        test: (path131) => matchesPrefix2(path131, "/ai"),
         capabilities: ["service", "platform"]
       },
       {
-        test: (path132) => matchesPrefix2(path132, "/mcp"),
+        test: (path131) => matchesPrefix2(path131, "/mcp"),
         capabilities: ["platform"]
       }
     ];
@@ -225110,12 +225111,12 @@ var init_platform_controller = __esm({
         this.appendPortalPageMenu = asyncHandler(async (req, res) => {
           const segment = typeof req.params.segment === "string" ? req.params.segment : "";
           const pageKey = typeof req.body?.pageKey === "string" ? req.body.pageKey : "";
-          const path132 = typeof req.body?.path === "string" ? req.body.path : void 0;
+          const path131 = typeof req.body?.path === "string" ? req.body.path : void 0;
           const navLabel = typeof req.body?.navLabel === "string" ? req.body.navLabel : "";
           const loaderRef = typeof req.body?.loaderRef === "string" ? req.body.loaderRef : void 0;
           const portal = await appendDesignerPageToPortalMenu(
             segment,
-            { pageKey, path: path132, navLabel, loaderRef },
+            { pageKey, path: path131, navLabel, loaderRef },
             toActorContext(req, true)
           );
           res.json({ success: true, portal });
@@ -228646,7 +228647,7 @@ var init_install_service = __esm({
             this.deps.settingsPath,
             "cache",
             stripped2,
-            (path132, blob) => saveCacheSettingsToFile(path132, blob)
+            (path131, blob) => saveCacheSettingsToFile(path131, blob)
           );
           await cacheManager.loadSettings(current2);
           return {
@@ -228689,7 +228690,7 @@ var init_install_service = __esm({
           this.deps.settingsPath,
           "cache",
           stripped,
-          (path132, blob) => saveCacheSettingsToFile(path132, blob)
+          (path131, blob) => saveCacheSettingsToFile(path131, blob)
         );
         await cacheManager.loadSettings(current);
         return {

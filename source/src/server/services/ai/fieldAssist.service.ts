@@ -47,7 +47,7 @@ import { hydrateAiSettingsSecrets } from '../../domain/security/credentialVault/
 import { resolveEuaCapabilities } from './euaSettingsResolver';
 import { EuaVisionService } from './euaVision.service';
 import { getEuaUsageLogService } from './euaUsageLog.service';
-import path from 'node:path';
+import { runtimeDirs } from '../../../core/runtime/runtimePaths';
 import {
   buildTransformSystemPrompt,
   mergeSelectionTransform,
@@ -90,7 +90,7 @@ export class FieldAssistService {
     ok: boolean;
     error?: string;
   }): void {
-    getEuaUsageLogService(path.dirname(SETTINGS_PATH)).append(entry);
+    getEuaUsageLogService(runtimeDirs.workspaceTemp).append(entry);
   }
 
   getStatus() {

@@ -11,9 +11,11 @@
  * real error/rejection IS the finding, captured verbatim in the JSON report this script writes.
  *
  * Usage: npx tsx scripts/build-workflow-20-scenarios.ts
- * Output: <scratchpad>/workflow-20-scenarios-report.json (one entry per scenario, real evidence)
+ * Output: a JSON report under the OS temp directory (one entry per scenario, real evidence).
  */
 import { writeFileSync } from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { initPrismaControlPlane, closePrismaControlPlane } from '../src/server/db/prismaControlPlane';
 import { SETTINGS_PATH } from '../src/server/config/settingsFile';
 import { registerCoreActionPack } from '../src/server/domain/workflow/actions/corePack';
@@ -914,7 +916,7 @@ async function main() {
   await run('S19', 'Date-Specific Execution — run at a specific date/time', 'Scheduling', scenario19);
   await run('S20', 'Sized-based DB Cleanup — scheduled database cleanup with size condition', 'Scheduling', scenario20);
 
-  const outPath = '/path/to/home\\AppData\\Local\\Temp\\claude\\c--Workspace-Projects-AppEndO\\a112fd2e-4885-41b5-8ba0-4e82c05d39f9\\scratchpad\\workflow-20-scenarios-report.json';
+  const outPath = path.join(os.tmpdir(), 'workflow-20-scenarios-report.json');
   writeFileSync(outPath, JSON.stringify(results, (_k, v) => (typeof v === 'bigint' ? v.toString() : v), 2), 'utf8');
   console.log(`\n\nWrote report: ${outPath}`);
   console.log('\nSummary:');

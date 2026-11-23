@@ -2,7 +2,7 @@
 
 Platform releases published on [AppEndO-Release](https://github.com/mirshahreza/AppEndO-Release/releases). Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [0.0.17] - Unreleased
+## [0.0.17] - 2026-11-23
 
 ### Security
 

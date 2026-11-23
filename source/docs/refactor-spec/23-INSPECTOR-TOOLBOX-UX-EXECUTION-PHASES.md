@@ -42,7 +42,7 @@
 
 ## ۰. زمینه‌ی معماری مشترک
 
-پروژه یک ابزار طراحی بصری (Vite+React+TypeScript+Tailwind، کتابخانه‌ی کامپوننت HeroUI) در `d:\Project\AppEndO` است. دو سطح UI هدف این بازطراحی:
+پروژه یک ابزار طراحی بصری (Vite+React+TypeScript+Tailwind، کتابخانه‌ی کامپوننت HeroUI) در ریشهٔ همین مخزن است. دو سطح UI هدف این بازطراحی:
 
 - **Inspector** (`src/features/component-designer/components/DesignerInspector.tsx` و ~۱۶ کامپوننت فیلد کمکی در همان پوشه) — پنل ویرایش تنظیمات نود انتخاب‌شده روی بوم.
 - **Toolbox** (`src/features/component-designer/components/DesignerToolbox.tsx`, `PaletteCard.tsx`, و منطق دسته‌بندی در `src/features/component-designer/hooks/useDesignerPalette.ts` + `src/domain/component-designer/catalog.ts`) — پنل شناور drag-source با ~۱۵۵+ آیتم.

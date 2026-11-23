@@ -1,6 +1,7 @@
 /**
  * RuntimeFileStore — shared atomic write, file locking, and tmp cleanup
  * for workspace artifact directories under project-root `workspace/` (use `runtimeDirs.workspaceTemp`).
+ * Never use the repo root as `tmpDir` for atomic writes — orphaned `settings.json.*.tmp` pollute the tree.
  */
 
 import fs from 'fs';
@@ -116,6 +117,39 @@ export function releaseRuntimeLock(locksDir: string, name: string): void {
     if (fs.existsSync(p)) fs.unlinkSync(p);
   } catch {
     // ignore
+  }
+}
+
+/** One-time hygiene: drop historic scratch files that belonged at repo root before workspace/temp. */
+export function cleanupLegacyRepoRootScratch(repoRoot: string): void {
+  let entries: string[];
+  try {
+    entries = fs.readdirSync(repoRoot);
+  } catch {
+    return;
+  }
+  for (const name of entries) {
+    const full = path.join(repoRoot, name);
+    try {
+      if (!fs.statSync(full).isFile()) continue;
+    } catch {
+      continue;
+    }
+    const drop =
+      /^settings\.json\.[a-f0-9]+\.tmp$/i.test(name)
+      || name.startsWith('tmp-')
+      || /^t[0-9]\.png$/i.test(name)
+      || name === 'eua-usage.jsonl'
+      || name === 'knip-out.json'
+      || name === 'knip-safe-unexport.json'
+      || /^repair-.*\.log$/i.test(name)
+      || name === 'settings.json.clone-oss-snapshot.json';
+    if (!drop) continue;
+    try {
+      fs.unlinkSync(full);
+    } catch {
+      // ignore
+    }
   }
 }
 

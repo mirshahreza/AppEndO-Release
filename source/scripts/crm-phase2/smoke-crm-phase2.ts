@@ -67,7 +67,7 @@ const createCustomerUser = async (
   const stamp = `${Date.now()}-${userSeq}`;
   const createUser = await request('POST', '/api/users', token, {
     email: `crm-smoke-${stamp}@example.com`,
-    password: 'Sm0ke!Passw0rd',
+    password: '<your-admin-password>',
     roles: ['CUSTOMER'],
     personTypeCode: PERSON_TYPE_INDIVIDUAL_ID,
     firstName: 'Smoke',

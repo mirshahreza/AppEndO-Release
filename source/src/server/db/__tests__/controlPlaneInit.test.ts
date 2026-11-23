@@ -102,7 +102,7 @@ describe('controlPlaneInit', () => {
   it('closes Prisma before sqlite schema push and reopens afterwards', async () => {
     vi.mocked(readControlPlaneDatabaseSettings).mockReturnValueOnce({
       provider: 'sqlite',
-      url: 'file:C:/tmp/appendo-control.db',
+      url: 'file:./data/appendo-control.db',
       engine: 'prisma',
     });
     prismaMocks.isPrismaControlPlaneReady.mockReturnValue(true);
@@ -112,7 +112,7 @@ describe('controlPlaneInit', () => {
     expect(prismaMocks.closePrismaControlPlane).toHaveBeenCalledTimes(1);
     expect(pushControlPlaneSchema).toHaveBeenCalledWith({
       provider: 'sqlite',
-      url: 'file:C:/tmp/appendo-control.db',
+      url: 'file:./data/appendo-control.db',
       engine: 'prisma',
     });
     expect(prismaMocks.initPrismaControlPlane).toHaveBeenCalledWith('/tmp/settings.json');

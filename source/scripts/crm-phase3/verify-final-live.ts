@@ -70,7 +70,7 @@ const main = async () => {
   console.log('[CRM final live-verify] 2) create a customer + ticket, render their edit routes');
   const seq = Date.now();
   const userCreate = await request('POST', '/api/users', token, {
-    email: `crmfinal${seq}@example.test`, password: 'Passw0rd!123', role: '', roles: ['CUSTOMER'],
+    email: `crmfinal${seq}@example.test`, password: '<your-admin-password>', role: '', roles: ['CUSTOMER'],
     personTypeCode: PERSON_TYPE_INDIVIDUAL_ID, firstName: 'Final', lastName: `Verify ${seq}`,
   });
   assert(userCreate.status === 200 || userCreate.status === 201, `user create failed: ${userCreate.status} ${JSON.stringify(userCreate.json)}`);

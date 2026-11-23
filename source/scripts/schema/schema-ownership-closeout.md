@@ -20,7 +20,7 @@ npm run test:portalx-package
 npm run qa:portalx-list-routes
 ```
 
-**QA login (this dev DB):** `identifier=admin` + `P#ssC0de`. Clear stale `APPENDO_DEV_PASSWORD=admin123` in the shell if login fails.
+**QA login (this dev DB):** `identifier=admin` + `<your-admin-password>`. Clear stale `APPENDO_DEV_PASSWORD=admin123` in the shell if login fails.
 
 **Expected gates (`schema:finance-parity-probe`):** `legacyImportParityTables` · `legacyImportParityViews` · `financePaymentTables` · `financeEdgeCompat` = true; `paymentProcCount` ≥ 16.
 

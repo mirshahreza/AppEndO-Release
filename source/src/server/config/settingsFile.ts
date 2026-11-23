@@ -1,7 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-import { atomicWriteText } from '../../core/runtime/RuntimeFileStore';
+import {
+  atomicWriteText,
+  cleanupLegacyRepoRootScratch,
+  cleanupRuntimeTmpFiles,
+  ensureRuntimeDirs,
+} from '../../core/runtime/RuntimeFileStore';
+import { runtimeDirs } from '../../core/runtime/runtimePaths';
 import {
   DEFAULT_CONTROL_PLANE_PROVIDER,
   controlPlaneProviderFromDataSourceType,
@@ -243,12 +249,19 @@ export const readSettingsObject = (settingsPath: string = SETTINGS_PATH): Record
   }
 };
 
+let legacyRepoRootScratchCleaned = false;
+
 export const writeSettingsObject = (
   settingsPath: string,
   value: Record<string, unknown>,
 ) => {
-  const tmpDir = path.dirname(path.resolve(settingsPath));
-  atomicWriteText(settingsPath, JSON.stringify(value, null, 2), tmpDir);
+  ensureRuntimeDirs([runtimeDirs.workspaceTemp]);
+  if (!legacyRepoRootScratchCleaned) {
+    cleanupLegacyRepoRootScratch(process.cwd());
+    legacyRepoRootScratchCleaned = true;
+  }
+  cleanupRuntimeTmpFiles(runtimeDirs.workspaceTemp);
+  atomicWriteText(settingsPath, JSON.stringify(value, null, 2), runtimeDirs.workspaceTemp);
   invalidateSettingsObjectCache();
   if (settingsPath === SETTINGS_PATH) {
     void import('../domain/users/prismaHelpers').then(({ invalidateControlPlaneProviderCache }) => {

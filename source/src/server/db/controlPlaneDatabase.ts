@@ -193,7 +193,7 @@ export const ensureSqliteControlPlaneDirectory = (urlOrPath: string): void => {
   }
 };
 
-/** Prisma SQLite URLs use forward slashes, including on Windows (`file:C:/path/db`). */
+/** Prisma SQLite URLs use forward slashes, including when the file path is absolute. */
 export const buildSqliteControlPlaneUrl = (filePath = defaultSqliteControlPlanePath()): string =>
   `file:${toPosixPath(path.resolve(filePath))}`;
 

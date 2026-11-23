@@ -1,0 +1,1 @@
+import{j as i}from"./react-vendor-DelaA65R.js";import{a as o}from"./builtInFilter-5WCx2ZMd.js";import{a as l}from"./AiFieldAssistSectionContext-Dlp1fw47.js";const s=({value:t,onChange:e})=>i.jsx(l,{value:t,onChange:e,ariaLabel:"BuiltIn",allLabel:"All",hint:"Filter by whether the item is built-in. Independent of type.",options:[...o]});export{s as T};
